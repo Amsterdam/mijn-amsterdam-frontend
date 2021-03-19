@@ -38,9 +38,9 @@ export function isRecentItem(
   return (
     steps.some(
       (step) =>
-        step.title === 'beslissing' &&
+        step.title === 'besluit' &&
         isRecentCase(step.datePublished, compareDate)
-    ) || steps.every((step) => step.title !== 'beslissing')
+    ) || steps.every((step) => step.title !== 'besluit')
   );
 }
 
@@ -132,7 +132,7 @@ export function findStepsContent(
   contentLabels: LabelData
 ) {
   const stepsContent: ProductStepLabels & {
-    beslissing?: FocusStepContent;
+    besluit?: FocusStepContent;
   } = {};
 
   const labelContent = findProductContent(product, contentLabels);
@@ -145,14 +145,14 @@ export function findStepsContent(
 
       if (stepData && stepContent) {
         if (
-          stepTitle === 'beslissing' &&
+          stepTitle === 'besluit' &&
           product.decision &&
           product.decision in stepContent
         ) {
           stepsContent[stepTitle] = (stepContent as FocusStepContentDecision)[
             product.decision
           ];
-        } else if (stepTitle !== 'beslissing') {
+        } else if (stepTitle !== 'besluit') {
           stepsContent[stepTitle] = stepContent as FocusStepContent;
         }
       }
@@ -166,6 +166,11 @@ function normalizeFocusSourceProductStep(
   product: FocusProductFromSource,
   [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource]
 ) {
+  // NOTE: Translation at base level to prevent mixed terms with similar meaning.
+  if (stepTitle === 'beslissing') {
+    stepTitle = 'besluit';
+  }
+
   const stepNormalized: FocusProductStep = {
     id: stepTitle,
     title: stepTitle,
@@ -268,7 +273,7 @@ export function fillStepContent(
       isActive: getLatestStep(product.steps) === stepData.title,
       isChecked: true,
     },
-    stepData.title === 'beslissing' ? { decision: product.decision } : null
+    stepData.title === 'besluit' ? { decision: product.decision } : null
   );
 }
 

@@ -203,7 +203,7 @@ export async function fetchFOCUSTozoGenerated(
       .filter(
         (item) =>
           isRecentCase(item.datePublished, compareDate) ||
-          item.status !== stepStatusLabels.beslissing
+          item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)
       .filter((recentCase) => recentCase !== null);

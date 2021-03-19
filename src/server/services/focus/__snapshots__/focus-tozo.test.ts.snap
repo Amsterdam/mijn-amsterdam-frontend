@@ -350,7 +350,7 @@ Object {
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-09-28T00:00:00+01:00",
+      "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
       "id": "3578630920",
       "link": Object {
@@ -660,13 +660,61 @@ Object {
           "status": "Besluit",
           "title": "besluit",
         },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 2 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "878258780",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 2 terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 2: U moet (een deel van) uw Tozo 2 terugbetalen.",
+          "product": "Tozo 2",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 2 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2955255800",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 2 terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 2: U moet (een deel van) uw Tozo 2 terugbetalen.",
+          "product": "Tozo 2",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
+        },
       ],
       "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)",
       "type": "Tozo",
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-10-01",
+      "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-02-05T00:00:00+01:00",
       "id": "685054265",
       "link": Object {
@@ -674,7 +722,7 @@ Object {
         "to": "/inkomen/tozo/3/685054265",
       },
       "productTitle": "Tozo 3",
-      "status": "Voorschot",
+      "status": "Besluit",
       "steps": Array [
         Object {
           "datePublished": "2020-02-05T00:00:00+01:00",
@@ -976,13 +1024,103 @@ Object {
           "status": "Voorschot",
           "title": "voorschot",
         },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "792",
+              "title": "Tozo 3 inkomstenwijziging",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2074786951",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben uw inkomstenwijziging ontvangen",
+          "product": "Tozo 3",
+          "status": "Inkomstenwijziging",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 3 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "25650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2240698991",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 3 terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 3: U moet (een deel van) uw Tozo 3 terugbetalen.",
+          "product": "Tozo 3",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 3 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "25645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "783215435",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 3 terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 3: U moet (een deel van) uw Tozo 3 terugbetalen.",
+          "product": "Tozo 3",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "792",
+              "title": "Tozo 3 inkomstenwijziging",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2074786951",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben uw inkomstenwijziging ontvangen",
+          "product": "Tozo 3",
+          "status": "Inkomstenwijziging",
+          "title": "verklaring",
+        },
       ],
       "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)",
       "type": "Tozo",
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2021-03-27T00:00:00+01:00",
+      "datePublished": "2021-04-10T00:00:00+01:00",
       "dateStart": "2021-03-27T00:00:00+01:00",
       "id": "1579672147",
       "link": Object {
@@ -1247,6 +1385,96 @@ Object {
           "product": "Tozo 4",
           "status": "Besluit",
           "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "794",
+              "title": "Tozo 4 inkomstenwijziging",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3710172774",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben uw inkomstenwijziging ontvangen",
+          "product": "Tozo 4",
+          "status": "Inkomstenwijziging",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 4 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "35650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "10172137",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 4 terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: U moet (een deel van) uw Tozo 4 terugbetalen.",
+          "product": "Tozo 4",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-04-02T00:00:00+01:00",
+          "description": "<p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-02T00:00:00+01:00",
+              "id": "794",
+              "title": "Tozo 4 inkomstenwijziging",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3609879814",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 02 april om 01.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben uw inkomstenwijziging ontvangen",
+          "product": "Tozo 4",
+          "status": "Inkomstenwijziging",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-04-10T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 4 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-10T00:00:00+01:00",
+              "id": "35645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "534514702",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 4 terugbetalen. (besluit: 10 april 2021).",
+          "notificationTitle": "Tozo 4: U moet (een deel van) uw Tozo 4 terugbetalen.",
+          "product": "Tozo 4",
+          "status": "Terugvorderingsbesluit",
+          "title": "terugvordering",
         },
       ],
       "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",

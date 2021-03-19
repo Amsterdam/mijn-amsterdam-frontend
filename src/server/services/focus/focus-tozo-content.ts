@@ -35,7 +35,7 @@ const aanvraagLabels: FocusStepContent = {
 const inkomstenVerklaringLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `Wij hebben uw inkomstenwijziging ${document.productTitle} ontvangen`,
+      `${document.productTitle}: Wij hebben uw inkomstenwijziging ontvangen`,
     description: (document) =>
       `Wij hebben uw inkomstenwijziging ${
         document.productTitle
@@ -44,11 +44,32 @@ const inkomstenVerklaringLabels: FocusStepContent = {
         `dd MMMM 'om' HH.mm 'uur'`
       )}`,
   },
-  status: stepLabels.aanvraag,
+  status: stepLabels.inkomstenwijziging,
+  description: (document) =>
+    `<p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>`,
+};
+
+const terugvorderingLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: U moet (een deel van) uw ${productName(
+        document,
+        false
+      )} terugbetalen.`,
+    description: (document) =>
+      `U moet (een deel van) uw ${productName(
+        document,
+        false
+      )} terugbetalen. (besluit: ${defaultDateFormat(
+        document.datePublished
+      )}).`,
+  },
+  status: stepLabels.terugvorderingsbesluit,
   description: (document) =>
     `<p>
-        Wij hebben uw inkomstenwijziging ${document.productTitle} ontvangen.
-      </p>`,
+    U moet (een deel van) uw ${productName(document, false)} terugbetalen.
+    Bekijk de brief voor meer details.
+    </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const voorschotToekennenLabels: FocusStepContent = {
@@ -90,7 +111,7 @@ const toekennenLabels: FocusStepContent = {
         document.datePublished
       )}).`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>
           U hebt recht op ${productName(document)}. Bekijk de brief
@@ -107,7 +128,7 @@ const afwijzenLabels: FocusStepContent = {
         document
       )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>
         U hebt geen recht op ${productName(
@@ -122,7 +143,7 @@ const buitenBehandelingLabels: FocusStepContent = {
       `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -133,7 +154,7 @@ const intrekkenLabels: FocusStepContent = {
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -144,7 +165,7 @@ const vrijeBeschikkingLabels: FocusStepContent = {
     description: (document) =>
       `Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag.`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag. Bekijk de brief voor meer details.</p>`,
 };
@@ -285,15 +306,6 @@ export const tozoDocumentLabelSet: Record<
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
-  '790': {
-    omschrijving: 'Tozo 2 inkomstenwijziging',
-    documentTitle: 'Tozo 2 inkomstenwijziging',
-    stepType: 'verklaring',
-    labels: inkomstenVerklaringLabels,
-    product: 'Tozo 2',
-    productSpecific: '',
-  },
-
   '175336': {
     omschrijving: 'Tozo2 Toekennen',
     labels: toekennenLabels,
@@ -391,6 +403,32 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'besluit',
   },
 
+  // Na besluit
+  '790': {
+    omschrijving: 'Tozo 2 inkomstenwijziging',
+    documentTitle: 'Tozo 2 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 2',
+    productSpecific: '',
+  },
+  '175650': {
+    omschrijving: 'Tozo 2 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 2',
+    productSpecific: '',
+  },
+  '175645': {
+    omschrijving: 'Tozo 2 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 2',
+    productSpecific: '',
+  },
+
   // TOZO 3
   '785': {
     omschrijving:
@@ -400,14 +438,6 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
-  },
-  '792': {
-    omschrijving: 'Tozo3 inkomstenwijziging',
-    documentTitle: 'Tozo3 inkomstenwijziging',
-    stepType: 'verklaring',
-    labels: inkomstenVerklaringLabels,
-    product: 'Tozo 3',
-    productSpecific: '',
   },
   '175309': {
     omschrijving: 'Tozo3 Toekennen',
@@ -506,6 +536,32 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Brief betaling voorschot',
   },
 
+  // Na besluit
+  '792': {
+    omschrijving: 'Tozo 3 inkomstenwijziging',
+    documentTitle: 'Tozo 3 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 3',
+    productSpecific: '',
+  },
+  '1725650': {
+    omschrijving: 'Tozo 3 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 3',
+    productSpecific: '',
+  },
+  '1725645': {
+    omschrijving: 'Tozo 3 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 3',
+    productSpecific: '',
+  },
+
   // TOZO 4
   '800': {
     omschrijving:
@@ -516,15 +572,6 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 4',
     productSpecific: '',
   },
-  '794': {
-    omschrijving: 'Tozo 4 inkomstenwijziging',
-    documentTitle: 'Tozo 4 inkomstenwijziging',
-    stepType: 'verklaring',
-    labels: inkomstenVerklaringLabels,
-    product: 'Tozo 4',
-    productSpecific: '',
-  },
-
   '175654': {
     omschrijving: 'Tozo 4 Toekennen',
     documentTitle: 'Besluit toekenning uitkering',
@@ -605,37 +652,29 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 4',
     productSpecific: 'uitkering',
   },
-  // '????': {
-  //   omschrijving: 'Tozo 4 Terugvordering voorschot',
-  //   documentTitle: 'Tozo 4 Terugvordering voorschot',
-  //   stepType: '',
-  //   labels: voorschotToekennenLabels,
-  //   product: 'Tozo 4',
-  //   productSpecific: '',
-  // },
-  // '????': {
-  //   omschrijving: 'Tozo 4 Intrekken met terugvordering voorschot',
-  //   documentTitle: 'Tozo 4 Intrekken met terugvordering voorschot',
-  //   stepType: '',
-  //   labels: voorschotToekennenLabels,
-  //   product: 'Tozo 4',
-  //   productSpecific: '',
-  // },
-
-  // '????': {
-  //   omschrijving: 'Tozo 4 Terugvorderingsbesluit',
-  //   documentTitle: 'Tozo 4 Terugvorderingsbesluit',
-  //   stepType: '',
-  //   labels: voorschotToekennenLabels,
-  //   product: 'Tozo 4',
-  //   productSpecific: '',
-  // },
-  // '????': {
-  //   omschrijving: 'Tozo4',
-  //   documentTitle: 'Tozo4',
-  //   stepType: '',
-  //   labels: voorschotToekennenLabels,
-  //   product: 'Tozo 4',
-  //   productSpecific: '',
-  // },
+  // Na besluit
+  '794': {
+    omschrijving: 'Tozo 4 inkomstenwijziging',
+    documentTitle: 'Tozo 4 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 4',
+    productSpecific: '',
+  },
+  '1735650': {
+    omschrijving: 'Tozo 4 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 4',
+    productSpecific: '',
+  },
+  '1735645': {
+    omschrijving: 'Tozo 4 Terugvorderingsbesluit',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'terugvordering',
+    labels: terugvorderingLabels,
+    product: 'Tozo 4',
+    productSpecific: '',
+  },
 };

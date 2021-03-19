@@ -142,11 +142,11 @@ Array [
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-28T15:05:51+02:00",
+    "datePublished": "2019-07-25T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -188,11 +188,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-07T15:05:51+02:00",
+    "datePublished": "2019-04-11T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -234,11 +234,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-08T15:05:51+02:00",
+    "datePublished": "2019-05-19T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -287,11 +287,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-07-03T15:05:52+02:00",
+    "datePublished": "2019-06-13T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -597,18 +597,18 @@ Array [
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-28T15:05:51+02:00",
+    "datePublished": "2019-07-25T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/4147155538",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Besluit",
+    "status": "In behandeling",
     "steps": Array [
       Object {
         "datePublished": "2019-07-24T15:05:51+02:00",
@@ -664,62 +664,29 @@ Array [
         ",
         "documents": Array [],
         "id": "inBehandeling",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "In behandeling",
         "title": "inBehandeling",
-      },
-      Object {
-        "datePublished": "2019-07-28T15:05:51+02:00",
-        "decision": "toekenning",
-        "description": "
-            <p>
-              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
-              details.
-            </p>
-            <p>
-              <a
-                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
-                rel=\\"external noopener noreferrer\\"
-              >
-                Bekijk hier de betaaldata van de uitkering
-              </a>
-            </p>
-          ",
-        "documents": Array [
-          Object {
-            "datePublished": "2019-07-28T15:05:51+02:00",
-            "id": "660000000000005",
-            "title": "Afwijzen Levensonderhoud (BIJ)",
-            "type": "pdf",
-            "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
-          },
-        ],
-        "id": "beslissing",
-        "isActive": true,
-        "isChecked": true,
-        "product": "Bijstandsuitkering",
-        "status": "Besluit",
-        "title": "beslissing",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-07T15:05:51+02:00",
+    "datePublished": "2019-04-11T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/4147155538",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Besluit",
+    "status": "In behandeling",
     "steps": Array [
       Object {
         "datePublished": "2019-04-09T15:05:51+02:00",
@@ -775,49 +742,29 @@ Array [
         ",
         "documents": Array [],
         "id": "inBehandeling",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "In behandeling",
         "title": "inBehandeling",
-      },
-      Object {
-        "datePublished": "2019-05-07T15:05:51+02:00",
-        "decision": "afwijzing",
-        "description": "U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
-        "documents": Array [
-          Object {
-            "datePublished": "2019-05-07T15:05:51+02:00",
-            "id": "660000000000007",
-            "title": "Afwijzen Levensonderhoud",
-            "type": "pdf",
-            "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
-          },
-        ],
-        "id": "beslissing",
-        "isActive": true,
-        "isChecked": true,
-        "product": "Bijstandsuitkering",
-        "status": "Besluit",
-        "title": "beslissing",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-08T15:05:51+02:00",
+    "datePublished": "2019-05-19T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/2371148170",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Besluit",
+    "status": "Informatie nodig",
     "steps": Array [
       Object {
         "datePublished": "2019-05-09T15:05:51+02:00",
@@ -897,62 +844,29 @@ Array [
         ",
         "documents": Array [],
         "id": "herstelTermijn",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Informatie nodig",
         "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-06-08T15:05:51+02:00",
-        "decision": "toekenning",
-        "description": "
-            <p>
-              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
-              details.
-            </p>
-            <p>
-              <a
-                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
-                rel=\\"external noopener noreferrer\\"
-              >
-                Bekijk hier de betaaldata van de uitkering
-              </a>
-            </p>
-          ",
-        "documents": Array [
-          Object {
-            "datePublished": "2019-06-08T15:05:51+02:00",
-            "id": "660000000000009",
-            "title": "Toekennen Levensonderhoud (BIJ)",
-            "type": "pdf",
-            "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
-          },
-        ],
-        "id": "beslissing",
-        "isActive": true,
-        "isChecked": true,
-        "product": "Bijstandsuitkering",
-        "status": "Besluit",
-        "title": "beslissing",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-07-03T15:05:52+02:00",
+    "datePublished": "2019-06-13T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/2371148170",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Besluit",
+    "status": "Informatie nodig",
     "steps": Array [
       Object {
         "datePublished": "2019-06-08T15:05:52+02:00",
@@ -1039,31 +953,11 @@ Array [
         ",
         "documents": Array [],
         "id": "herstelTermijn",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Informatie nodig",
         "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-07-03T15:05:52+02:00",
-        "decision": "buitenbehandeling",
-        "description": "Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.",
-        "documents": Array [
-          Object {
-            "datePublished": "2019-07-03T15:05:52+02:00",
-            "id": "660000000000011",
-            "title": "Niet in behandeling nemen",
-            "type": "pdf",
-            "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
-          },
-        ],
-        "id": "beslissing",
-        "isActive": true,
-        "isChecked": true,
-        "product": "Bijstandsuitkering",
-        "status": "Besluit",
-        "title": "beslissing",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -1217,11 +1111,11 @@ Array [
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-28T15:05:51+02:00",
+    "datePublished": "2019-07-25T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1264,11 +1158,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-07T15:05:51+02:00",
+    "datePublished": "2019-04-11T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "4147155538",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1311,11 +1205,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-08T15:05:51+02:00",
+    "datePublished": "2019-05-19T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1365,11 +1259,11 @@ Array [
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-07-03T15:05:52+02:00",
+    "datePublished": "2019-06-13T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "2371148170",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [

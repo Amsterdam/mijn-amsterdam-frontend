@@ -44,7 +44,7 @@ const toekennenLabels: FocusStepContent = {
         document.datePublished
       )}).`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>
           U hebt recht op ${document.productTitle}. Bekijk de brief
@@ -60,7 +60,7 @@ const afwijzenLabels: FocusStepContent = {
         document.productTitle
       } (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>
         U hebt geen recht op ${document.productTitle}. Bekijk de brief voor meer details.
@@ -73,7 +73,7 @@ const intrekkenLabels: FocusStepContent = {
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -84,7 +84,7 @@ const buitenBehandelingLabels: FocusStepContent = {
       `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
-  status: stepLabels.beslissing,
+  status: stepLabels.besluit,
   description: (document) =>
     `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -151,6 +151,3 @@ export const tonkDocumentLabelSet: Record<
     stepType: 'besluit',
   },
 };
-// TODO: Add later?
-// 6147                     TONK Herzien met terugvordering
-// 6148                     TONK Intrekken met terugvordering
