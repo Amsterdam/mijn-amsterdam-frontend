@@ -4,6 +4,7 @@ import {
   IconAlert,
   IconBelastingen,
   IconBurgerZaken,
+  IconErfpacht,
   IconGarbage,
   IconHomeCommercial,
   IconInkomen,
@@ -13,11 +14,8 @@ import {
   IconSiaMeldingen,
   IconStadspas,
   IconTips,
-  IconErfpacht,
-  IconZorg,
-  IconAlert,
   IconVergunningen,
-  IconHomeCommercial,
+  IconZorg,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
