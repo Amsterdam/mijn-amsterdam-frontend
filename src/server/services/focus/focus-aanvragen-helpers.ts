@@ -31,7 +31,6 @@ import {
   TextPartContents,
 } from './focus-types';
 
-/** Checks if an item returned from the api is considered recent */
 export function isRecentItem(
   steps: Array<{ title: string; datePublished: string }>,
   compareDate: Date
@@ -194,7 +193,6 @@ function normalizeFocusSourceProductStep(
 
 export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
   const steps = Object.entries(product.processtappen)
-    // Filter out steps that don't have any data assiciated
     .filter(
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
         stepEntry[1] !== null
@@ -234,7 +232,7 @@ export function fillStepContent(
       additionalInformationStep.aantalDagenHerstelTermijn || 0;
   }
 
-  // deadline corresponding to the 'inBehandeling' step.
+  // Deadline date used to generate a status text for the 'inBehandeling' step.
   const decisionDeadline1 = calculateDecisionDeadline(
     product.dateStart,
     product.dienstverleningstermijn,
@@ -242,7 +240,7 @@ export function fillStepContent(
     0
   );
 
-  // deadline for the Municiaplity corresponding to the 'herstelTermijn' step.
+  // Deadline date for the Municiaplity used to generate a status text for the 'herstelTermijn / Meer informatie' step.
   const decisionDeadline2 = calculateDecisionDeadline(
     product.dateStart,
     product.dienstverleningstermijn,
@@ -250,7 +248,7 @@ export function fillStepContent(
     aantalDagenHerstelTermijn
   );
 
-  // deadline for the Client (Civilian) corresponding to the 'herstelTermijn' step.
+  // Deadline date for the Client (Civilian) used to generate a status text for the 'herstelTermijn / Meer informatie' step.
   const userActionDeadline = calculateUserActionDeadline(
     stepData.datePublished,
     aantalDagenHerstelTermijn
@@ -292,7 +290,6 @@ export function transformFocusProductSteps(
     .filter((stepData): stepData is FocusItemStep => stepData !== null);
 }
 
-// This function transforms the source data from the api into readable/presentable messages for the client.
 export function transformFocusProduct(
   product: FocusProduct,
   contentLabels: LabelData
@@ -383,7 +380,7 @@ export function translateFocusProduct(
   return prod;
 }
 
-// Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
+// This applies to Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
 export function isNotificationActual(datePublished: string, compareDate: Date) {
   const difference = differenceInMonths(compareDate, new Date(datePublished));
   return difference < MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS;

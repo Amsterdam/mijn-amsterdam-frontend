@@ -1,4 +1,3 @@
-import { Chapters } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -52,17 +51,19 @@ export function createTozoResult(
     return apiSuccesResult([]);
   }
 
-  // Aggregate all aanvraag step documents and combine into 1
+  /**
+   * Aggregate all aanvraag step documents and combine into 1.
+   * For every aanvraag document received we only show 1 status step.
+   * All these documents are applicable to 1 decision that will be made about the aanvraag.
+   **/
   let aanvraagSteps: Record<string, FocusItemStep> = {};
   const otherSteps: FocusItemStep[] = [];
 
   for (const step of tozoSteps) {
     if (step && step.title === 'aanvraag') {
       if (step?.product && !aanvraagSteps[step.product]) {
-        // step is not present, cache the step
         aanvraagSteps[step.product] = step;
       } else if (step?.product) {
-        // step is present, add documents
         aanvraagSteps[step.product].documents.push(...step.documents);
       }
     } else if (step) {

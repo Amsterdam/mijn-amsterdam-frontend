@@ -116,7 +116,7 @@ const toekennenLabels: FocusStepContent = {
     `<p>
           U hebt recht op ${productName(document)}. Bekijk de brief
           voor meer details.
-        </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+        </p><p>Als uw een wijziging in uw inkomen wilt doorgeven klik dan <a rel="external noopener noreferrer" class="inline" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">hier</a></p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {

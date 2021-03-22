@@ -163,7 +163,7 @@ export async function fetchFOCUSSpecificationsGenerated(
     );
 
     if (jaaropgaven.length && isActualJaaropgave) {
-      // Only the latest Jaaropgave gets a notification
+      // Only the latest Jaaropgave gets a notification.
       notifications.push(
         transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
       );
@@ -176,7 +176,7 @@ export async function fetchFOCUSSpecificationsGenerated(
     );
 
     if (uitkeringsspecificaties.length && isActualUitkering) {
-      // Only the latest Uitkeringspecificatie gets a notification
+      // Only the latest Uitkeringspecificatie gets a notification.
       notifications.push(
         transformIncomeSpecificationNotification(
           'uitkering',
