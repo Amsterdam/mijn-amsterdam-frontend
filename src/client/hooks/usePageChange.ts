@@ -3,6 +3,7 @@ import { matchPath, useLocation } from 'react-router-dom';
 import {
   CustomTrackingUrls,
   DocumentTitles,
+  IS_AP,
   PageTitleMain,
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
@@ -68,6 +69,12 @@ export function usePageChange() {
       const title = DocumentTitles[route]
         ? DocumentTitles[route]
         : `[undefined] ${location.pathname}`;
+      if (!IS_AP && title.startsWith('[undefined]')) {
+        console.info(
+          'Unknown page title encountered for path',
+          location.pathname
+        );
+      }
       trackPageViewWithProfileType(
         termReplace(title),
         CustomTrackingUrls[location.pathname] || location.pathname,
