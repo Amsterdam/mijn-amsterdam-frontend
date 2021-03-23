@@ -36,7 +36,7 @@ const inkomstenVerklaringLabels: FocusStepContent = {
   notification: {
     title: (document) =>
       `${productName(
-        document.productTitle,
+        document,
         false
       )}: Wij hebben uw inkomstenwijziging ontvangen`,
     description: (document) =>
@@ -55,10 +55,7 @@ const inkomstenVerklaringLabels: FocusStepContent = {
 const terugvorderingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(
-        document.productTitle,
-        false
-      )}: U moet (een deel van) uw ${productName(
+      `${productName(document, false)}: U moet (een deel van) uw ${productName(
         document,
         false
       )} terugbetalen.`,
@@ -82,7 +79,7 @@ const voorschotToekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => {
       return `${productName(
-        document.productTitle,
+        document,
         false
       )}: Wij hebben een voorschot betaald`;
     },
@@ -152,10 +149,7 @@ const afwijzenLabels: FocusStepContent = {
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(
-        document.productTitle,
-        false
-      )}: Wij behandelen uw aanvraag niet meer`,
+      `${productName(document, false)}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.besluit,
