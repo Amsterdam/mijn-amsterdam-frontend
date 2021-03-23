@@ -35,7 +35,10 @@ const aanvraagLabels: FocusStepContent = {
 const inkomstenVerklaringLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: Wij hebben uw inkomstenwijziging ontvangen`,
+      `${productName(
+        document.productTitle,
+        false
+      )}: Wij hebben uw inkomstenwijziging ontvangen`,
     description: (document) =>
       `Wij hebben uw inkomstenwijziging ${
         document.productTitle
@@ -52,7 +55,10 @@ const inkomstenVerklaringLabels: FocusStepContent = {
 const terugvorderingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: U moet (een deel van) uw ${productName(
+      `${productName(
+        document.productTitle,
+        false
+      )}: U moet (een deel van) uw ${productName(
         document,
         false
       )} terugbetalen.`,
@@ -75,7 +81,10 @@ const terugvorderingLabels: FocusStepContent = {
 const voorschotToekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => {
-      return `${document.productTitle}: Wij hebben een voorschot betaald`;
+      return `${productName(
+        document.productTitle,
+        false
+      )}: Wij hebben een voorschot betaald`;
     },
     description: (document) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt.`,
@@ -90,7 +99,8 @@ const voorschotToekennenLabels: FocusStepContent = {
 
 const herstelTermijnLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Meer informatie nodig`,
+    title: (document) =>
+      `${productName(document.productTitle, false)}: Meer informatie nodig`,
     description: (document) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -142,7 +152,10 @@ const afwijzenLabels: FocusStepContent = {
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
+      `${productName(
+        document.productTitle,
+        false
+      )}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.besluit,
@@ -152,7 +165,8 @@ const buitenBehandelingLabels: FocusStepContent = {
 
 const intrekkenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Aanvraag ingetrokken`,
+    title: (document) =>
+      `${productName(document.productTitle, false)}: Aanvraag ingetrokken`,
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
@@ -163,7 +177,8 @@ const intrekkenLabels: FocusStepContent = {
 
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Besluit aanvraag`,
+    title: (document) =>
+      `${productName(document.productTitle, false)}: Besluit aanvraag`,
     description: (document) =>
       `Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag.`,
   },
