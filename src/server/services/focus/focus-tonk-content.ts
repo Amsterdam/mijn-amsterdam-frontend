@@ -25,7 +25,8 @@ const aanvraagLabels: FocusStepContent = {
 
 const herstelTermijnLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Meer informatie nodig`,
+    title: (document) =>
+      `${productName(document, false)}: Meer informatie nodig`,
     description: (document) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -39,7 +40,8 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
+    title: (document) =>
+      `${productName(document, false)}: Uw aanvraag is toegekend`,
     description: (document) =>
       `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
         document.datePublished
@@ -55,7 +57,8 @@ const toekennenLabels: FocusStepContent = {
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
+    title: (document) =>
+      `${productName(document, false)}: Uw aanvraag is afgewezen`,
     description: (document) =>
       `U hebt geen recht op ${productName(
         document
@@ -72,7 +75,8 @@ const afwijzenLabels: FocusStepContent = {
 
 const intrekkenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Aanvraag ingetrokken`,
+    title: (document) =>
+      `${productName(document, false)}: Aanvraag ingetrokken`,
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
@@ -84,7 +88,7 @@ const intrekkenLabels: FocusStepContent = {
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
+      `${productName(document, false)}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.besluit,
