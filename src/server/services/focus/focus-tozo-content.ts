@@ -100,7 +100,7 @@ const voorschotToekennenLabels: FocusStepContent = {
 const herstelTermijnLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(document.productTitle, false)}: Meer informatie nodig`,
+      `${productName(document, false)}: Meer informatie nodig`,
     description: (document) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -166,7 +166,7 @@ const buitenBehandelingLabels: FocusStepContent = {
 const intrekkenLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(document.productTitle, false)}: Aanvraag ingetrokken`,
+      `${productName(document, false)}: Aanvraag ingetrokken`,
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
@@ -177,8 +177,7 @@ const intrekkenLabels: FocusStepContent = {
 
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${productName(document.productTitle, false)}: Besluit aanvraag`,
+    title: (document) => `${productName(document, false)}: Besluit aanvraag`,
     description: (document) =>
       `Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag.`,
   },
