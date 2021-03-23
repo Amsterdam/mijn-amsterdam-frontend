@@ -112,7 +112,7 @@
     );
   }
   &--end {
-     background: linear-gradient(
+    background: linear-gradient(
       to bottom,
       $color-neutral-grey3 0%,
       $color-neutral-grey3 3rem,
@@ -143,7 +143,7 @@
   width: 2rem;
   height: 2rem;
   top: 2rem;
-  left: calc(50% - .9rem);
+  left: calc(50% - 0.9rem);
 
   background-color: $color-neutral-grey3;
   background-repeat: no-repeat;
@@ -172,7 +172,8 @@
   &--highlight {
     background-color: $color-neutral-grey1;
 
-    &, + .ListItem {
+    &,
+    + .ListItem {
       @include select(StatusLine_ListItemInner) {
         border-top: 0;
       }
@@ -206,7 +207,7 @@
     }
 
     &--description {
-      @include media-q(">tablet") {
+      @include media-q('>tablet') {
         flex: 0 0 38rem;
       }
     }
