@@ -114,9 +114,11 @@ const toekennenLabels: FocusStepContent = {
   status: stepLabels.besluit,
   description: (document) =>
     `<p>
-          U hebt recht op ${productName(document)}. Bekijk de brief
-          voor meer details.
-        </p><p>Als uw een wijziging in uw inkomen wilt doorgeven klik dan <a rel="external noopener noreferrer" class="inline" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">hier</a></p>`,
+        U hebt recht op ${productName(document)}. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? Kijk dan bij <a rel="external noopener noreferrer" class="inline" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Wijziging of inkomsten doorgeven</a>.</p>
+      `,
 };
 
 const afwijzenLabels: FocusStepContent = {
