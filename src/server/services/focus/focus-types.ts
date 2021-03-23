@@ -159,7 +159,7 @@ export type FocusTonkLabelSet = {
   documentTitle: string;
   product: 'TONK';
   stepType: FocusTonkStepType;
-  productSpecific?: '';
+  productSpecific?: string;
 };
 
 export type FocusTozoStepType =

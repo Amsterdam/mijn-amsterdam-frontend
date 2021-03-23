@@ -3,7 +3,7 @@ import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
 import { FocusStepContent, FocusTozoLabelSet } from './focus-types';
 
-function productName(
+export function productName(
   document: Pick<FocusDocument, 'productTitle' | 'productSpecific'>,
   includeArticle: boolean = true
 ) {

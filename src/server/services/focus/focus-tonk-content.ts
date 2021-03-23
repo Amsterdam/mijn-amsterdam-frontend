@@ -1,6 +1,7 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
+import { productName } from './focus-tozo-content';
 import { FocusStepContent, FocusTonkLabelSet } from './focus-types';
 
 const aanvraagLabels: FocusStepContent = {
@@ -40,14 +41,14 @@ const toekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
     description: (document) =>
-      `U hebt recht op ${document.productTitle} (besluit: ${defaultDateFormat(
+      `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
         document.datePublished
       )}).`,
   },
   status: stepLabels.besluit,
   description: (document) =>
     `<p>
-          U hebt recht op ${document.productTitle}. Bekijk de brief
+          U hebt recht op ${productName(document)}. Bekijk de brief
           voor meer details.
         </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -56,14 +57,16 @@ const afwijzenLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
     description: (document) =>
-      `U hebt geen recht op ${
-        document.productTitle
-      } (besluit: ${defaultDateFormat(document.datePublished)}).`,
+      `U hebt geen recht op ${productName(
+        document
+      )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.besluit,
   description: (document) =>
     `<p>
-        U hebt geen recht op ${document.productTitle}. Bekijk de brief voor meer details.
+        U hebt geen recht op ${productName(
+          document
+        )}. Bekijk de brief voor meer details.
       </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
@@ -86,7 +89,9 @@ const buitenBehandelingLabels: FocusStepContent = {
   },
   status: stepLabels.besluit,
   description: (document) =>
-    `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>Wij behandelen uw aanvraag voor ${productName(
+      document
+    )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 export const tonkDocumentLabelSet: Record<
@@ -99,6 +104,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Aanvraag TONK',
     product: 'TONK',
     stepType: 'aanvraag',
+    productSpecific: 'uitkering',
   },
   '176137': {
     omschrijving: 'TONK hersteltermijn',
@@ -106,6 +112,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Brief meer informatie',
     product: 'TONK',
     stepType: 'herstelTermijn',
+    productSpecific: 'uitkering',
   },
   '176138': {
     omschrijving: 'TONK intrekken',
@@ -113,6 +120,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Brief intrekken TONK aanvraag',
     product: 'TONK',
     stepType: 'intrekken',
+    productSpecific: 'uitkering',
   },
   '176149': {
     omschrijving: 'TONK toekennen',
@@ -120,6 +128,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Besluit toekenning',
     product: 'TONK',
     stepType: 'besluit',
+    productSpecific: 'uitkering',
   },
   '176156': {
     omschrijving: 'TONK toekennen via batch',
@@ -127,6 +136,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Besluit toekenning',
     product: 'TONK',
     stepType: 'besluit',
+    productSpecific: 'uitkering',
   },
   '176145': {
     omschrijving: 'TONK afwijzen',
@@ -134,6 +144,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Besluit afwijzing',
     product: 'TONK',
     stepType: 'besluit',
+    productSpecific: 'uitkering',
   },
   '176155': {
     omschrijving: 'TONK afwijzen via batch',
@@ -141,13 +152,14 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Besluit afwijzing',
     product: 'TONK',
     stepType: 'besluit',
+    productSpecific: 'uitkering',
   },
   '176146': {
     omschrijving: 'TONK Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
     product: 'TONK',
-    productSpecific: '',
+    productSpecific: 'uitkering',
     stepType: 'besluit',
   },
 };
