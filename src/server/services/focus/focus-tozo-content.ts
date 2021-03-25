@@ -432,7 +432,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 2',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '175645': {
     omschrijving: 'Tozo 2 Terugvorderingsbesluit',
@@ -440,7 +440,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 2',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
 
   // TOZO 3
@@ -565,7 +565,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 3',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '1725645': {
     omschrijving: 'Tozo 3 Terugvorderingsbesluit',
@@ -573,7 +573,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 3',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
 
   // TOZO 4
@@ -681,7 +681,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '1735645': {
     omschrijving: 'Tozo 4 Terugvorderingsbesluit',
@@ -689,6 +689,6 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
 };
