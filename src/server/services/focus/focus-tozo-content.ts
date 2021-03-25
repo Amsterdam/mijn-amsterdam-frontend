@@ -35,9 +35,9 @@ const aanvraagLabels: FocusStepContent = {
 const inkomstenVerklaringLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: Wij hebben uw inkomstenwijziging ontvangen`,
+      `${document.productTitle}: Wij hebben een wijziging van uw inkomsten ontvangen`,
     description: (document) =>
-      `Wij hebben uw inkomstenwijziging ${
+      `Wij hebben een wijziging van uw inkomsten voor ${
         document.productTitle
       } ontvangen op ${dateFormat(
         document.datePublished,
@@ -47,13 +47,13 @@ const inkomstenVerklaringLabels: FocusStepContent = {
   status: stepLabels.inkomstenwijziging,
   description: (document) =>
     `
-    <p>Wij hebben uw inkomstenwijziging ${
+    <p>Wij hebben een wijziging van uw inkomsten voor ${
       document.productTitle
     } ontvangen op ${dateFormat(
       document.datePublished,
       `dd MMMM 'om' HH.mm 'uur'`
     )}</p>
-    <p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>`,
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>`,
 };
 
 const terugvorderingLabels: FocusStepContent = {
@@ -61,7 +61,7 @@ const terugvorderingLabels: FocusStepContent = {
     title: (document) =>
       `${document.productTitle}: U moet (een deel van) uw uitkering terugbetalen.`,
     description: (document) =>
-      `U moet (een deel van) uw ${productName(
+      `U moet (een deel van) de ${productName(
         document,
         false
       )} terugbetalen. (besluit: ${defaultDateFormat(
@@ -411,7 +411,7 @@ export const tozoDocumentLabelSet: Record<
   // Na besluit
   '790': {
     omschrijving: 'Tozo 2 inkomstenwijziging',
-    documentTitle: 'Tozo 2 inkomstenwijziging',
+    documentTitle: 'Wijziging inkomsten Tozo 2',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 2',
@@ -544,7 +544,7 @@ export const tozoDocumentLabelSet: Record<
   // Na besluit
   '792': {
     omschrijving: 'Tozo 3 inkomstenwijziging',
-    documentTitle: 'Tozo 3 inkomstenwijziging',
+    documentTitle: 'Wijziging inkomsten Tozo 3',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 3',
@@ -657,10 +657,11 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 4',
     productSpecific: 'uitkering',
   },
+
   // Na besluit
   '794': {
     omschrijving: 'Tozo 4 inkomstenwijziging',
-    documentTitle: 'Tozo 4 inkomstenwijziging',
+    documentTitle: 'Wijziging inkomsten Tozo 4',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 4',

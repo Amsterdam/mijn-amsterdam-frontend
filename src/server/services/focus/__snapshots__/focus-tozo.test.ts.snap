@@ -691,7 +691,7 @@ Object {
           "id": "878258780",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 2",
           "status": "Terugvorderings- besluit",
@@ -716,7 +716,7 @@ Object {
           "id": "2955255800",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 2",
           "status": "Terugvorderings- besluit",
@@ -1047,13 +1047,13 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "
-    <p>Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
-    <p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "792",
-              "title": "Tozo 3 inkomstenwijziging",
+              "title": "Wijziging inkomsten Tozo 3",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1061,8 +1061,8 @@ Object {
           "id": "2074786951",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur",
-          "notificationTitle": "Tozo 3: Wij hebben uw inkomstenwijziging ontvangen",
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 3",
           "status": "Inkomstenwijziging",
           "title": "verklaring",
@@ -1086,7 +1086,7 @@ Object {
           "id": "2240698991",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 3",
           "status": "Terugvorderings- besluit",
@@ -1111,7 +1111,7 @@ Object {
           "id": "783215435",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 3",
           "status": "Terugvorderings- besluit",
@@ -1120,13 +1120,13 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "
-    <p>Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
-    <p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "792",
-              "title": "Tozo 3 inkomstenwijziging",
+              "title": "Wijziging inkomsten Tozo 3",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1134,8 +1134,8 @@ Object {
           "id": "2074786951",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 3 ontvangen op 27 maart om 00.00 uur",
-          "notificationTitle": "Tozo 3: Wij hebben uw inkomstenwijziging ontvangen",
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 3",
           "status": "Inkomstenwijziging",
           "title": "verklaring",
@@ -1421,13 +1421,13 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "
-    <p>Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 27 maart om 00.00 uur</p>
-    <p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "794",
-              "title": "Tozo 4 inkomstenwijziging",
+              "title": "Wijziging inkomsten Tozo 4",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1435,8 +1435,8 @@ Object {
           "id": "3710172774",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 27 maart om 00.00 uur",
-          "notificationTitle": "Tozo 4: Wij hebben uw inkomstenwijziging ontvangen",
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 4",
           "status": "Inkomstenwijziging",
           "title": "verklaring",
@@ -1460,7 +1460,7 @@ Object {
           "id": "10172137",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 4 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 4 uitkering terugbetalen. (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 4",
           "status": "Terugvorderings- besluit",
@@ -1469,13 +1469,13 @@ Object {
         Object {
           "datePublished": "2021-04-02T00:00:00+01:00",
           "description": "
-    <p>Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 02 april om 01.00 uur</p>
-    <p>Als uw inkomsten zijn verwerkt en u krijgt een nabetaling ziet u dat op uw uitkeringspecificatie. Als u moet terugbetalen ontvangt u daarover een terugvorderingsbesluit.</p>",
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-02T00:00:00+01:00",
               "id": "794",
-              "title": "Tozo 4 inkomstenwijziging",
+              "title": "Wijziging inkomsten Tozo 4",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1483,8 +1483,8 @@ Object {
           "id": "3609879814",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw inkomstenwijziging Tozo 4 ontvangen op 02 april om 01.00 uur",
-          "notificationTitle": "Tozo 4: Wij hebben uw inkomstenwijziging ontvangen",
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 4",
           "status": "Inkomstenwijziging",
           "title": "verklaring",
@@ -1508,7 +1508,7 @@ Object {
           "id": "534514702",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 4 uitkering terugbetalen. (besluit: 10 april 2021).",
+          "notificationDescription": "U moet (een deel van) de Tozo 4 uitkering terugbetalen. (besluit: 10 april 2021).",
           "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 4",
           "status": "Terugvorderings- besluit",
