@@ -129,7 +129,7 @@ export const tonkDocumentLabelSet: Record<
   '176149': {
     omschrijving: 'TONK toekennen',
     labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning',
+    documentTitle: 'Besluit toekenning uitkering',
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
@@ -137,7 +137,7 @@ export const tonkDocumentLabelSet: Record<
   '176156': {
     omschrijving: 'TONK toekennen via batch',
     labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning',
+    documentTitle: 'Besluit toekenning uitkering',
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
