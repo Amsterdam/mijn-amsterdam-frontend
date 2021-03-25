@@ -25,8 +25,7 @@ const aanvraagLabels: FocusStepContent = {
 
 const herstelTermijnLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${productName(document, false)}: Meer informatie nodig`,
+    title: (document) => `${document.productTitle}: Meer informatie nodig`,
     description: (document) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -40,8 +39,7 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${productName(document, false)}: Uw aanvraag is toegekend`,
+    title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
     description: (document) =>
       `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
         document.datePublished
@@ -57,8 +55,7 @@ const toekennenLabels: FocusStepContent = {
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${productName(document, false)}: Uw aanvraag is afgewezen`,
+    title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
     description: (document) =>
       `U hebt geen recht op ${productName(
         document
@@ -75,12 +72,11 @@ const afwijzenLabels: FocusStepContent = {
 
 const intrekkenLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${productName(document, false)}: Aanvraag ingetrokken`,
+    title: (document) => `${document.productTitle}: Aanvraag ingetrokken`,
     description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
-  status: stepLabels.besluit,
+  status: stepLabels.brief,
   description: (document) =>
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -88,7 +84,7 @@ const intrekkenLabels: FocusStepContent = {
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(document, false)}: Wij behandelen uw aanvraag niet meer`,
+      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
     description: (document) => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.besluit,
@@ -121,7 +117,7 @@ export const tonkDocumentLabelSet: Record<
   '176138': {
     omschrijving: 'TONK intrekken',
     labels: intrekkenLabels,
-    documentTitle: 'Brief intrekken TONK aanvraag',
+    documentTitle: 'Brief intrekking TONK aanvraag',
     product: 'TONK',
     stepType: 'intrekken',
     productSpecific: 'uitkering',

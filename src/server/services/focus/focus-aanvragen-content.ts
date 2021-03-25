@@ -12,6 +12,7 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   terugvorderingsbesluit: 'Terugvorderings- besluit',
   inkomstenwijziging: 'Inkomstenwijziging',
   bezwaar: 'Bezwaar',
+  brief: 'Brief',
 };
 
 // NOTE: MUST Keep in this order
