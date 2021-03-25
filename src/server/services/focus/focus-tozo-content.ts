@@ -35,10 +35,7 @@ const aanvraagLabels: FocusStepContent = {
 const inkomstenVerklaringLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${productName(
-        document,
-        false
-      )}: Wij hebben uw inkomstenwijziging ontvangen`,
+      `${document.productTitle}: Wij hebben uw inkomstenwijziging ontvangen`,
     description: (document) =>
       `Wij hebben uw inkomstenwijziging ${
         document.productTitle
@@ -62,10 +59,7 @@ const inkomstenVerklaringLabels: FocusStepContent = {
 const terugvorderingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
-      `${document.productTitle}: U moet (een deel van) uw ${productName(
-        document,
-        false
-      )} terugbetalen.`,
+      `${document.productTitle}: U moet (een deel van) uw uitkering terugbetalen.`,
     description: (document) =>
       `U moet (een deel van) uw ${productName(
         document,
@@ -86,10 +80,7 @@ const terugvorderingLabels: FocusStepContent = {
 const voorschotToekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => {
-      return `${productName(
-        document,
-        false
-      )}: Wij hebben een voorschot betaald`;
+      return `${document.productTitle}: Wij hebben een voorschot betaald`;
     },
     description: (document) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt.`,
