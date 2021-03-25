@@ -1064,7 +1064,7 @@ Object {
           "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
           "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 3",
-          "status": "Inkomstenwijziging",
+          "status": "Wijziging inkomsten",
           "title": "verklaring",
         },
         Object {
@@ -1137,7 +1137,7 @@ Object {
           "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
           "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 3",
-          "status": "Inkomstenwijziging",
+          "status": "Wijziging inkomsten",
           "title": "verklaring",
         },
       ],
@@ -1438,7 +1438,7 @@ Object {
           "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur",
           "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 4",
-          "status": "Inkomstenwijziging",
+          "status": "Wijziging inkomsten",
           "title": "verklaring",
         },
         Object {
@@ -1486,7 +1486,7 @@ Object {
           "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur",
           "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
           "product": "Tozo 4",
-          "status": "Inkomstenwijziging",
+          "status": "Wijziging inkomsten",
           "title": "verklaring",
         },
         Object {

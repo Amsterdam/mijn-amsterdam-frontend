@@ -10,7 +10,7 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   herstelTermijn: 'Informatie nodig',
   besluit: 'Besluit',
   terugvorderingsbesluit: 'Terugvorderings- besluit',
-  inkomstenwijziging: 'Inkomstenwijziging',
+  inkomstenwijziging: 'Wijziging inkomsten',
   bezwaar: 'Bezwaar',
   brief: 'Brief',
 };
