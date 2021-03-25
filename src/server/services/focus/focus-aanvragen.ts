@@ -17,6 +17,7 @@ import {
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
 import { FocusItem, FocusProduct, FocusProductFromSource } from './focus-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 export const MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS = 2;
 export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
@@ -88,7 +89,11 @@ export async function fetchFOCUSAanvragenGenerated(
     const items = FOCUS_AANVRAGEN.content as FocusItem[];
 
     notifications = items
-      .filter((item) => isNotificationActual(item.datePublished, compareDate))
+      .filter(
+        (item) =>
+          !IS_PRODUCTION ||
+          isNotificationActual(item.datePublished, compareDate)
+      )
       .map((focusItem) => createFocusNotification(focusItem, contentLabels));
 
     cases = items
