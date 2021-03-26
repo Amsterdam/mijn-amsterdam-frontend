@@ -6,19 +6,25 @@
         "registerjaar": "2015-03-09T00:00:00Z",
         "aktenummer": "67YUHAK-IO",
         "type": "Huwelijksakte",
-        "documenten": []
+        "documenten": [
+          "/bla/bla/bla.pdf"
+        ]
       },
       {
         "registerjaar": "1967-11-10T00:00:00Z",
         "aktenummer": "77566AS",
         "type": "Geboorteakte",
-        "documenten": []
+        "documenten": [
+          "/bla/bla/bla.pdf"
+        ]
       },
       {
         "registerjaar": "1967-11-10T00:00:00Z",
         "aktenummer": "YHJ5567",
         "type": "Akte van geregistreerd partnerschap",
-        "documenten": []
+        "documenten": [
+          "/bla/bla/bla.pdf"
+        ]
       }
     ]
   }

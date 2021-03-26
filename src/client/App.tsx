@@ -40,7 +40,7 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import {
   Accessibility,
   Burgerzaken,
-  BurgerzakenDetail,
+  BurgerzakenIDKaart,
   Dashboard,
   GarbageInformation,
   GeneralInfo,
@@ -59,6 +59,7 @@ import {
   Zorg,
   ZorgDetail,
 } from './pages';
+import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
@@ -167,7 +168,11 @@ function AppAuthenticated() {
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
-            component={BurgerzakenDetail}
+            component={BurgerzakenIDKaart}
+          />
+          <Route
+            path={AppRoutes['BURGERZAKEN/AKTE']}
+            component={BurgerzakenAkte}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (

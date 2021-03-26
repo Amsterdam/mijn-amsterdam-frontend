@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import BurgerzakenDetail from './BurgerzakenDetail';
+import BurgerzakenDetail from './BurgerzakenIDKaart';
 
 const identiteitsbewijzen = [
   {

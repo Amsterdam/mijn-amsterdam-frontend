@@ -18,7 +18,7 @@ import {
 import styles from './BurgerzakenDetail.module.scss';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default function BurgerzakenDetail() {
+export default function BurgerzakenIDKaart() {
   const { BRP } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
