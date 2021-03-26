@@ -25,7 +25,7 @@ export default function BurgerzakenIDKaart() {
 
   const Akte = AKTES.content?.find((item) => item.id === id);
   const noContent = !isLoading && !Akte;
-  console.log(Akte?.documents);
+
   return (
     <DetailPage>
       <PageHeading

@@ -12,7 +12,7 @@ interface AkteFromSource {
   registerjaar: string;
   documenten: string[];
   type:
-    | 'Huwelijkskate'
+    | 'Huwelijksakte'
     | 'Akte van geregistreerd partnerschap'
     | 'Geboorteakte';
 }
