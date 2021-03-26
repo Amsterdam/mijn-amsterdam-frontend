@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
-import { BffEndpoints } from './config';
+import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
+import { axiosRequest } from './helpers/source-api-request';
 import { fetchBRP, fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
   loadFeatureDetail,
@@ -169,19 +170,17 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
   if (!apiName) {
     res.send('No api name specified');
   }
-  const sessionID = res.locals.sessionID;
-  const headers = getPassthroughRequestHeaders(req);
-  const params = queryParams(req);
+  if (apiName in ApiConfig) {
+    const headers = getPassthroughRequestHeaders(req);
+    let rs = null;
 
-  let rs = null;
-  switch (apiName) {
-    case 'BRP':
-      rs = await fetchBRP(sessionID, headers);
-      break;
-
-    default:
-      break;
+    rs = await axiosRequest.request(
+      getApiConfig(apiName as SourceApiKey, {
+        headers,
+      })
+    );
+    res.json(rs);
   }
-  res.json(rs);
+  res.status(404);
   next();
 });

@@ -50,7 +50,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   postponeFetch: false,
 };
 
-type SourceApiKey =
+export type SourceApiKey =
   | 'AUTH'
   | 'WMO'
   | 'FOCUS_COMBINED'
