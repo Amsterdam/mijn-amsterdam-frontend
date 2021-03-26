@@ -279,7 +279,7 @@ export const tozoDocumentLabelSet: Record<
   '175331': {
     omschrijving: 'Tozo Intrekken',
     labels: intrekkenLabels,
-    documentTitle: 'Brief intrekking Tozo 1 aanvraag',
+    documentTitle: 'Brief intrekking aanvraag',
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'intrekken',
@@ -346,7 +346,7 @@ export const tozoDocumentLabelSet: Record<
   '175341': {
     omschrijving: 'Tozo2 Intrekken',
     labels: intrekkenLabels,
-    documentTitle: 'Brief intrekking Tozo 2 aanvraag',
+    documentTitle: 'Brief intrekking aanvraag',
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'intrekken',
@@ -411,7 +411,7 @@ export const tozoDocumentLabelSet: Record<
   // Na besluit
   '790': {
     omschrijving: 'Tozo 2 inkomstenwijziging',
-    documentTitle: 'Wijziging inkomsten Tozo 2',
+    documentTitle: 'Wijziging inkomsten',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 2',
@@ -522,7 +522,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     product: 'Tozo 3',
     productSpecific: '',
-    documentTitle: 'Brief intrekking Tozo 3 aanvraag',
+    documentTitle: 'Brief intrekking aanvraag',
   },
   '175371': {
     omschrijving: 'Tozo3 Afwijzen via batch',
@@ -544,7 +544,7 @@ export const tozoDocumentLabelSet: Record<
   // Na besluit
   '792': {
     omschrijving: 'Tozo 3 inkomstenwijziging',
-    documentTitle: 'Wijziging inkomsten Tozo 3',
+    documentTitle: 'Wijziging inkomsten',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 3',
@@ -619,7 +619,7 @@ export const tozoDocumentLabelSet: Record<
   },
   '175670': {
     omschrijving: 'Tozo  4 Intrekken',
-    documentTitle: 'Brief intrekking Tozo 4 aanvraag',
+    documentTitle: 'Brief intrekking aanvraag',
     stepType: 'intrekken',
     labels: intrekkenLabels,
     product: 'Tozo 4',
@@ -661,7 +661,7 @@ export const tozoDocumentLabelSet: Record<
   // Na besluit
   '794': {
     omschrijving: 'Tozo 4 inkomstenwijziging',
-    documentTitle: 'Wijziging inkomsten Tozo 4',
+    documentTitle: 'Wijziging inkomsten',
     stepType: 'verklaring',
     labels: inkomstenVerklaringLabels,
     product: 'Tozo 4',

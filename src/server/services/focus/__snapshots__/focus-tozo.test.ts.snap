@@ -292,7 +292,7 @@ Object {
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
               "id": "21806203814",
-              "title": "Brief intrekking Tozo 1 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
@@ -496,7 +496,7 @@ Object {
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
               "id": "21806203821",
-              "title": "Brief intrekking Tozo 2 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
@@ -983,7 +983,7 @@ Object {
             Object {
               "datePublished": "2020-10-01",
               "id": "",
-              "title": "Brief intrekking Tozo 3 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=",
             },
@@ -1053,7 +1053,7 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "792",
-              "title": "Wijziging inkomsten Tozo 3",
+              "title": "Wijziging inkomsten",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1126,7 +1126,7 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "792",
-              "title": "Wijziging inkomsten Tozo 3",
+              "title": "Wijziging inkomsten",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1309,7 +1309,7 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "5670",
-              "title": "Brief intrekking Tozo 4 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1427,7 +1427,7 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "794",
-              "title": "Wijziging inkomsten Tozo 4",
+              "title": "Wijziging inkomsten",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1475,7 +1475,7 @@ Object {
             Object {
               "datePublished": "2021-04-02T00:00:00+01:00",
               "id": "794",
-              "title": "Wijziging inkomsten Tozo 4",
+              "title": "Wijziging inkomsten",
               "type": "pdf",
               "url": "/test-api/",
             },
