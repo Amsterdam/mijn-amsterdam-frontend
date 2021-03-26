@@ -4,7 +4,7 @@ import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
-import { fetchCMSCONTENT, loadClusterDatasets } from './services';
+import { fetchBRP, fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
   loadFeatureDetail,
   loadPolylineFeatures,
@@ -163,3 +163,25 @@ router.get(
     next();
   }
 );
+
+router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
+  const apiName = req.params.apiName;
+  if (!apiName) {
+    res.send('No api name specified');
+  }
+  const sessionID = res.locals.sessionID;
+  const headers = getPassthroughRequestHeaders(req);
+  const params = queryParams(req);
+
+  let rs = null;
+  switch (apiName) {
+    case 'BRP':
+      rs = await fetchBRP(sessionID, headers);
+      break;
+
+    default:
+      break;
+  }
+  res.json(rs);
+  next();
+});
