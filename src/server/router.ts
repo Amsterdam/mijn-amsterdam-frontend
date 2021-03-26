@@ -179,8 +179,15 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
         headers,
       })
     );
-    res.json(rs);
+    if (rs.status === 200) {
+      res.json(rs.data);
+    } else {
+      res.status(rs.status);
+      res.json(rs.statusText);
+    }
+  } else {
+    res.status(404);
   }
-  res.status(404);
+
   next();
 });
