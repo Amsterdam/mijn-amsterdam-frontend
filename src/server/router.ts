@@ -167,26 +167,20 @@ router.get(
 
 router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
   const apiName = req.params.apiName;
-  if (!apiName) {
-    res.send('No api name specified');
-  }
-  if (apiName in ApiConfig) {
+  if (apiName && apiName in ApiConfig) {
     const headers = getPassthroughRequestHeaders(req);
-    let rs = null;
 
-    rs = await axiosRequest.request(
-      getApiConfig(apiName as SourceApiKey, {
-        headers,
-      })
-    );
-    if (rs.status === 200) {
+    try {
+      const rs = await axiosRequest.request(
+        getApiConfig(apiName as SourceApiKey, {
+          headers,
+        })
+      );
       res.json(rs.data);
-    } else {
-      res.status(rs.status);
-      res.json(rs.statusText);
+    } catch (error) {
+      res.status(error?.response?.status || 500);
+      res.json(error.message || 'Error requesting api data');
     }
-  } else {
-    res.status(404);
   }
 
   next();
