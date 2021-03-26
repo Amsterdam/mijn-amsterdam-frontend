@@ -33,10 +33,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<BurgerzakenDetail />', () => {
-  const routeEntry = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
+  const routeEntry = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
     id: identiteitsbewijzen[0].id,
   });
-  const routePath = AppRoutes.BURGERZAKEN_DOCUMENT;
+  const routePath = AppRoutes['BURGERZAKEN/ID-KAART'];
 
   const Component = () => (
     <MockApp

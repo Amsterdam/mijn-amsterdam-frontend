@@ -1,8 +1,19 @@
 import { apiDependencyError, apiSuccesResult } from '../../universal/helpers';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { dateSort } from '../../universal/helpers/date';
+import { generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../universal/config/routes';
 
-export interface Akte {}
+export interface Akte {
+  aktenummer: string;
+  registerjaar: string;
+  documenten: string[];
+  type:
+    | 'Huwelijkskate'
+    | 'Akte van geregistreerd partnerschap'
+    | 'Geboorteakte';
+}
 
 interface AKTESDataFromSource {
   content: {
@@ -14,7 +25,19 @@ interface AKTESDataFromSource {
 export type AKTESData = Akte[];
 
 function transformAKTESData(responseData: AKTESDataFromSource) {
-  return responseData.content.aktes;
+  return responseData.content.aktes
+    .sort(dateSort('registerjaar', 'desc'))
+    .map((akte) => {
+      return {
+        ...akte,
+        link: {
+          to: generatePath(AppRoutes['BURGERZAKEN/AKTE'], {
+            id: akte.aktenummer,
+          }),
+          title: akte.type,
+        },
+      };
+    });
 }
 
 function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {

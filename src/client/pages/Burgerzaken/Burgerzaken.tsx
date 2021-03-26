@@ -17,19 +17,25 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
 
-const DISPLAY_PROPS = {
+const DISPLAY_PROPS_ID_KAARTEN = {
   title: '',
   datumAfloop: 'Geldig tot',
 };
 
+const DISPLAY_PROPS_AKTES = {
+  type: '',
+  aktenummer: 'Aktenummer',
+  registerjaar: 'Registerjaar',
+};
+
 export default function Burgerzeken() {
-  const { BRP } = useAppStateGetter();
+  const { BRP, AKTES } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
-    const items = BRP.content?.identiteitsbewijzen.map((item) => {
+    const items = BRP.content.identiteitsbewijzen.map((item) => {
       return {
         ...item,
         datumAfloop: defaultDateFormat(item.datumAfloop),
@@ -38,6 +44,19 @@ export default function Burgerzeken() {
     return addTitleLinkComponent(items);
   }, [BRP.content]);
 
+  const aktes = useMemo(() => {
+    if (!AKTES.content?.length) {
+      return [];
+    }
+    const items = AKTES.content.map((item) => {
+      return {
+        ...item,
+        registerjaar: defaultDateFormat(item.registerjaar),
+      };
+    });
+    return addTitleLinkComponent(items, 'type');
+  }, [AKTES.content]);
+
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
       <PageHeading isLoading={isLoading(BRP)} icon={<ChapterIcon />}>
@@ -45,43 +64,75 @@ export default function Burgerzeken() {
       </PageHeading>
       <PageContent>
         <p>
-          Hier ziet u tot wanneer uw paspoort of ID-kaart geldig is. Als u
-          doorklikt ziet u ook het documentnummer en de datum van uitgifte.
+          Hieronder vindt u informatie over uw officiële documenten, zoals uw
+          paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan
+          ziet u hier de aankondiging.
         </p>
         <p>
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/"
           >
-            Meer informatie over paspoort en ID-kaart
+            Overzicht en aanvragen bij burgerzaken
           </Linkd>
         </p>
         <MaintenanceNotifications page="burgerzaken" />
         {isError(BRP) && (
           <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
+            <p>We kunnen op dit moment geen ID-kaarten tonen.</p>
+          </Alert>
+        )}
+        {isError(AKTES) && (
+          <Alert type="warning">
+            <p>We kunnen op dit moment geen aktes tonen.</p>
           </Alert>
         )}
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-offical-documents"
-        title="Mijn huidige documenten"
-        className={styles.SectionCollapsibleDocuments}
-        noItemsMessage="Wij kunnen nog geen officiële documenten tonen."
+        title="Mijn ID-kaarten"
+        className={styles.SectionCollapsibleIdKaarten}
+        noItemsMessage="Wij kunnen nog geen ID-kaarten tonen."
         startCollapsed={false}
         hasItems={!!documentItems.length}
         isLoading={isLoading(BRP)}
         track={{
-          category: 'Burgerzaken overzicht / Huidige documenten',
+          category: 'Burgerzaken overzicht / ID-kaarten',
           name: 'Datatabel',
         }}
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS}
+          displayProps={DISPLAY_PROPS_ID_KAARTEN}
           items={documentItems}
         />
       </SectionCollapsible>
+      {!!aktes.length && (
+        <>
+          <SectionCollapsible
+            id="SectionCollapsible-aktes"
+            title="Mijn aktes"
+            className={styles.SectionCollapsibleAktes}
+            startCollapsed={true}
+            hasItems={true}
+            isLoading={false}
+            track={{
+              category: 'Burgerzaken overzicht / Mijn Aktes',
+              name: 'Datatabel',
+            }}
+          >
+            <Table
+              className={styles.AktesTable}
+              displayProps={DISPLAY_PROPS_AKTES}
+              items={aktes}
+            />
+          </SectionCollapsible>
+          <p className={styles.AktesDisclaimer}>
+            Alleen akte indien rechtsfeit in amsterdam Akte is niet rechtsgeldig
+            oid
+          </p>
+        </>
+      )}
     </OverviewPage>
   );
 }

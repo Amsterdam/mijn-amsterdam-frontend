@@ -166,7 +166,7 @@ function AppAuthenticated() {
           />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route
-            path={AppRoutes.BURGERZAKEN_DOCUMENT}
+            path={AppRoutes['BURGERZAKEN/ID-KAART']}
             component={BurgerzakenDetail}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
