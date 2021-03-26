@@ -61,7 +61,7 @@ const terugvorderingLabels: FocusStepContent = {
     title: (document) =>
       `${document.productTitle}: U moet (een deel van) uw uitkering terugbetalen.`,
     description: (document) =>
-      `U moet (een deel van) de ${productName(
+      `U moet (een deel van) uw ${productName(
         document,
         false
       )} terugbetalen. (besluit: ${defaultDateFormat(
