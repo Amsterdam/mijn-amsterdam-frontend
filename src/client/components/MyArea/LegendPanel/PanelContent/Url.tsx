@@ -1,5 +1,5 @@
-import Linkd from '../../Button/Button';
-import InfoDetail from '../../InfoDetail/InfoDetail';
+import Linkd from '../../../Button/Button';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 interface UrlProps {
   url: string;

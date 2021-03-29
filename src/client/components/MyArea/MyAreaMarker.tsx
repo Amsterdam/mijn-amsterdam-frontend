@@ -8,6 +8,7 @@ import L, {
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 import iconUrl from '../../assets/icons/home.svg';
+import markerIconUrl from '../../assets/icons/map/pin.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './MyArea.module.scss';
@@ -93,7 +94,7 @@ interface HomeIconMarkerProps {
   zoom?: number;
 }
 
-export const HomeIconMarker = function HomeIconMarker({
+export function HomeIconMarker({
   center,
   zoom = LOCATION_ZOOM,
   label = '',
@@ -128,4 +129,41 @@ export const HomeIconMarker = function HomeIconMarker({
       alt="Thuislocatie icoon"
     />
   );
-};
+}
+
+interface HomeIconMarkerProps {
+  center: LatLngLiteral;
+  label: string;
+  zoom?: number;
+}
+
+export function CustomLatLonMarker({
+  center,
+  zoom = LOCATION_ZOOM,
+  label = '',
+}: HomeIconMarkerProps) {
+  const mapRef = useMapRef();
+
+  const doCenter = useCallback(() => {
+    if (!mapRef.current) {
+      return null;
+    }
+    if (mapRef.current.getCenter().lat !== center.lat) {
+      mapRef.current.setView(center, zoom);
+    }
+  }, [zoom, center, mapRef]);
+
+  useEffect(() => {
+    doCenter();
+  }, [doCenter]);
+
+  return (
+    <MyAreaMarker
+      iconUrl={markerIconUrl}
+      onClick={doCenter}
+      latlng={center}
+      label={label}
+      alt="Locatie icoon"
+    />
+  );
+}

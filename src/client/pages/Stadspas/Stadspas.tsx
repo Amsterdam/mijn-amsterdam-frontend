@@ -92,7 +92,14 @@ export default function Stadspas() {
 
   return (
     <OverviewPage className={styles.Stadspas}>
-      <PageHeading isLoading={false} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={false}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.STADSPAS}
       </PageHeading>
       <PageContent>

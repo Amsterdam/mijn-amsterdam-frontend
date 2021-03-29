@@ -16,7 +16,6 @@ export interface StatusLineItem {
   documents: GenericDocument[];
   isActive?: boolean;
   isChecked?: boolean;
-  isHighlight?: boolean;
   altDocumentContent?: AltDocumentContent;
   [key: string]: any;
 }

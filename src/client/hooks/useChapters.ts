@@ -26,6 +26,7 @@ function isChapterActive(
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
+    SIA,
     HOME,
     KVK,
   }: AppState
@@ -69,6 +70,12 @@ function isChapterActive(
         (FeatureToggle.milieuzoneApiActive
           ? MILIEUZONE.content?.isKnown
           : false)
+      );
+
+    case Chapters.SIA:
+      return (
+        !isLoading(SIA) &&
+        (FeatureToggle.siaActive ? SIA.content?.length : false)
       );
 
     case Chapters.AFVAL:

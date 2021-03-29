@@ -1,5 +1,5 @@
-import InfoDetail from '../../InfoDetail/InfoDetail';
-import InnerHtml from '../../InnerHtml/InnerHtml';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
+import InnerHtml from '../../../InnerHtml/InnerHtml';
 import styles from './PanelContent.module.scss';
 
 interface DescriptionProps {

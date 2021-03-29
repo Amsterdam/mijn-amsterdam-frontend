@@ -2,20 +2,20 @@ import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import {
   CSSProperties,
+  MouseEvent,
   PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
   useRef,
-  MouseEvent,
 } from 'react';
 import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { IconChevronRight } from '../../assets/icons';
-import { useWidescreen } from '../../hooks/media.hook';
-import { CloseButton } from '../Button/Button';
+import { IconChevronRight } from '../../../assets/icons';
+import { useWidescreen } from '../../../hooks/media.hook';
+import { CloseButton } from '../../Button/Button';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible

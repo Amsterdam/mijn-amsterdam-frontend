@@ -1,48 +1,41 @@
 import {
   BaseLayerToggle,
+  constants,
   Map,
   ViewerContainer,
   Zoom,
 } from '@amsterdam/arm-core';
-import { constants } from '@amsterdam/arm-core';
+import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
-import L, { TileLayerOptions } from 'leaflet';
+import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import {
-  useTermReplacement,
   getElementSize,
-  useWidescreen,
   useAppStateGetter,
+  useTermReplacement,
+  useWidescreen,
 } from '../../hooks';
+import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
-  useFetchPanelFeature,
-  useLoadingFeature,
-  useResetMyAreaState,
-} from './MyArea.hooks';
+  PanelState,
+  WIDE_PANEL_TIP_WIDTH,
+  WIDE_PANEL_WIDTH,
+} from './LegendPanel/PanelComponent';
+import { useLegendPanelCycle } from './LegendPanel/panelCycle';
+import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { HomeIconMarker } from './MyAreaMarker';
-import {
-  PanelComponent,
-  PanelState,
-  usePanelStateCycle,
-  WIDE_PANEL_TIP_WIDTH,
-  WIDE_PANEL_WIDTH,
-} from './MyAreaPanelComponent';
-import { MyAreaLegendPanel } from './MyAreaPanels';
-import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { useSetLoadingFeature } from './MyArea.hooks';
-import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -64,12 +57,12 @@ const MyAreaMapOffset = styled.div`
   position: relative;
 `;
 
-const MyAreaContainer = styled.div`
+const MyAreaContainer = styled.div<{ height?: string }>`
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  height: ${(props) => props.height || '100vh'};
 `;
 
 const MyAreaMap = styled(Map)`
@@ -97,37 +90,73 @@ function AttributionToggle() {
   return null;
 }
 
-interface MyAreaProps {
+interface QueryConfig {
+  datasetIds?: string;
+  centerMarkerLabel?: string;
+  centerMarkerCoordinate?: string;
+}
+
+function getQueryConfig(query: string): QueryConfig {
+  return Object.fromEntries(new URLSearchParams(query).entries());
+}
+
+export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
   showHeader?: boolean;
   zoom?: number;
+  centerMarker?: { latlng: LatLngLiteral; label: string };
+  height?: string;
+  activeBaseLayerType?: BaseLayerType;
 }
 
 export default function MyArea({
   datasetIds,
   showPanels = true,
   showHeader = true,
+  centerMarker,
   zoom = HOOD_ZOOM,
+  height,
+  activeBaseLayerType = BaseLayerType.Topo,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
-  const isLandscape = useMedia('(orientation: landscape)');
   const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
-  const center = HOME.content?.latlng;
-  const [loadingFeature] = useLoadingFeature();
-  const prevFilterPanelState = useRef<PanelState | null>(null);
+
+  // Params passed by query will override all other options
+  const customConfig = getQueryConfig(location.search);
+
   const mapContainerRef = useRef(null);
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
-  const resetMyAreaState = useResetMyAreaState();
 
-  useFetchPanelFeature();
-  const setLoadingFeature = useSetLoadingFeature();
+  const centerMarkerLabel =
+    centerMarker?.label || customConfig.centerMarkerLabel || '';
+  const coordinate =
+    centerMarker?.latlng || customConfig.centerMarkerCoordinate || null;
 
-  const mapOptions: Partial<L.MapOptions> = useMemo(() => {
+  const center = useMemo(() => {
+    let center = DEFAULT_MAP_OPTIONS.center;
+
+    if (typeof coordinate === 'string') {
+      const [lat, lng] = coordinate.split(',').map((n) => parseFloat(n));
+      if (lat && lng) {
+        center = { lat, lng };
+      }
+    } else if (centerMarker) {
+      center = centerMarker.latlng;
+    } else if (HOME.content?.latlng) {
+      center = HOME.content?.latlng;
+    }
+
+    return center;
+  }, [coordinate, centerMarker, HOME.content]);
+
+  const mapOptions: Partial<
+    L.MapOptions & { center: LatLngLiteral }
+  > = useMemo(() => {
     const options = {
       ...DEFAULT_MAP_OPTIONS,
       zoom,
@@ -139,105 +168,18 @@ export default function MyArea({
   }, [center, zoom]);
 
   const datasetIdsRequested = useMemo(() => {
-    if (location.search) {
-      const queryParams = new URLSearchParams(location.search);
-      const ids = queryParams?.get('datasetIds')?.split(',');
+    if (customConfig.datasetIds) {
+      const ids = customConfig.datasetIds?.split(',');
       if (ids?.length) {
         return ids;
       }
     }
-    if (Array.isArray(datasetIds) && datasetIds.length) {
+    if (Array.isArray(datasetIds)) {
       return datasetIds;
     }
     return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const panelCycle = useMemo(() => {
-    if (isWideScreen) {
-      return {
-        filters: [PanelState.Open, PanelState.Tip],
-        detail: [PanelState.Closed, PanelState.Open],
-      };
-    }
-    if (isLandscape) {
-      return {
-        filters: [PanelState.Tip, PanelState.Open],
-        detail: [PanelState.Closed, PanelState.Open],
-      };
-    }
-    return {
-      filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
-      detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
-    };
-  }, [isWideScreen, isLandscape]);
-
-  const filterPanelCycle = usePanelStateCycle(
-    'filters',
-    panelCycle.filters,
-    PanelState.Preview
-  );
-  const { state: filterState, set: setFilterPanelState } = filterPanelCycle;
-
-  const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
-  const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
-
-  useEffect(() => {
-    if (isWideScreen) {
-      setFilterPanelState(PanelState.Open);
-    }
-  }, [isWideScreen, setFilterPanelState]);
-
-  // Reset state on unmount
-  useEffect(() => {
-    return () => {
-      detailPanelCycle.reset();
-      filterPanelCycle.reset();
-      resetMyAreaState();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetMyAreaState]);
-
-  // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
-  useEffect(() => {
-    if (!loadingFeature) {
-      return;
-    }
-    if (isNarrowScreen) {
-      if (isLandscape) {
-        setDetailPanelState(PanelState.Open);
-      } else {
-        setDetailPanelState(PanelState.Preview);
-      }
-    } else {
-      setDetailPanelState(PanelState.Open);
-    }
-    // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
-  }, [loadingFeature, isNarrowScreen, setDetailPanelState, isLandscape]);
-
-  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
-  useEffect(() => {
-    if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
-      prevFilterPanelState.current = filterState;
-      setFilterPanelState(PanelState.Tip);
-    } else if (
-      detailState === PanelState.Closed &&
-      prevFilterPanelState.current
-    ) {
-      setFilterPanelState(prevFilterPanelState.current);
-      prevFilterPanelState.current = null;
-    }
-  }, [detailState, filterState, setFilterPanelState]);
-
-  const mapOffset = useMemo(() => {
-    if (isWideScreen) {
-      if (filterState === PanelState.Open || detailState === PanelState.Open) {
-        return { left: WIDE_PANEL_WIDTH };
-      }
-      return { left: WIDE_PANEL_TIP_WIDTH };
-    }
-    return;
-  }, [isWideScreen, detailState, filterState]);
 
   const mapLayers = useMemo(() => {
     return {
@@ -246,25 +188,50 @@ export default function MyArea({
     };
   }, []);
 
+  const { detailState, filterState } = useLegendPanelCycle();
+
+  const mapOffset = useMemo(() => {
+    if (!showPanels) {
+      return { left: '0' };
+    }
+    if (isWideScreen) {
+      if (filterState === PanelState.Open || detailState === PanelState.Open) {
+        return { left: WIDE_PANEL_WIDTH };
+      }
+      return { left: WIDE_PANEL_TIP_WIDTH };
+    }
+    return;
+  }, [isWideScreen, showPanels, detailState, filterState]);
+
+  const hasDatasetIdsToLoad =
+    !!datasetIdsRequested?.length || datasetIdsRequested === undefined;
+
   return (
     <ThemeProvider>
-      <MyAreaContainer>
-        <MaintenanceNotifications page="buurt" />
+      <MyAreaContainer height={height}>
+        {hasDatasetIdsToLoad && <MaintenanceNotifications page="buurt" />}
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset id="skip-to-id-Map">
             <MyAreaMap
               fullScreen={true}
-              aria-label={`Uitgebreide kaart van ${termReplace(
+              aria-label={`Kaart van ${termReplace(
                 ChapterTitles.BUURT
               ).toLowerCase()}`}
               options={mapOptions}
             >
               <AttributionToggle />
-              {HOME.content?.address && !!center && (
+              {!coordinate && HOME.content?.address && HOME.content?.latlng && (
                 <HomeIconMarker
                   label={getFullAddress(HOME.content.address, true)}
-                  center={center}
+                  center={HOME.content?.latlng}
+                  zoom={zoom}
+                />
+              )}
+              {coordinate && mapOptions.center && (
+                <CustomLatLonMarker
+                  label={centerMarkerLabel || 'Gekozen locatie'}
+                  center={mapOptions.center}
                   zoom={zoom}
                 />
               )}
@@ -273,6 +240,7 @@ export default function MyArea({
                 topLeft={
                   isNarrowScreen && (
                     <BaseLayerToggle
+                      activeLayer={activeBaseLayerType}
                       aerialLayers={mapLayers.aerial}
                       topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
@@ -280,24 +248,43 @@ export default function MyArea({
                   )
                 }
                 topRight={
-                  isNarrowScreen &&
-                  HOME.content?.address &&
-                  HOME.content?.latlng && (
-                    <HomeControlButton
-                      zoom={zoom}
-                      latlng={HOME.content.latlng}
-                    />
+                  isNarrowScreen && (
+                    <>
+                      {coordinate && mapOptions.center && (
+                        <MyAreaCustomLocationControlButton
+                          zoom={zoom}
+                          latlng={mapOptions.center}
+                        />
+                      )}
+                      {!coordinate &&
+                        HOME.content?.address &&
+                        HOME.content?.latlng && (
+                          <HomeControlButton
+                            zoom={zoom}
+                            latlng={HOME.content.latlng}
+                          />
+                        )}
+                      <Zoom />
+                    </>
                   )
                 }
                 bottomRight={
                   isWideScreen && (
                     <>
-                      {HOME.content?.address && HOME.content?.latlng && (
-                        <HomeControlButton
+                      {coordinate && mapOptions.center && (
+                        <MyAreaCustomLocationControlButton
                           zoom={zoom}
-                          latlng={HOME.content.latlng}
+                          latlng={mapOptions.center}
                         />
                       )}
+                      {!coordinate &&
+                        HOME.content?.address &&
+                        HOME.content?.latlng && (
+                          <HomeControlButton
+                            zoom={zoom}
+                            latlng={HOME.content.latlng}
+                          />
+                        )}
                       <Zoom />
                     </>
                   )
@@ -305,6 +292,7 @@ export default function MyArea({
                 bottomLeft={
                   isWideScreen && (
                     <BaseLayerToggle
+                      activeLayer={activeBaseLayerType}
                       aerialLayers={mapLayers.aerial}
                       topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
@@ -313,7 +301,9 @@ export default function MyArea({
                 }
               />
 
-              <MyAreaDatasets datasetIds={datasetIdsRequested} />
+              {hasDatasetIdsToLoad && (
+                <MyAreaDatasets datasetIds={datasetIdsRequested} />
+              )}
             </MyAreaMap>
             {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
@@ -321,26 +311,7 @@ export default function MyArea({
           </MyAreaMapOffset>
 
           {!!showPanels && (
-            <>
-              <PanelComponent
-                id="filters"
-                cycle={filterPanelCycle}
-                availableHeight={panelComponentAvailableHeight}
-              >
-                <MyAreaLegendPanel />
-              </PanelComponent>
-              <PanelComponent
-                id="detail"
-                cycle={detailPanelCycle}
-                availableHeight={panelComponentAvailableHeight}
-                onClose={() => setLoadingFeature(null)}
-                showCloseButton={
-                  isWideScreen || detailState === PanelState.Open
-                }
-              >
-                <MyAreaDetailPanel />
-              </PanelComponent>
-            </>
+            <LegendPanel availableHeight={panelComponentAvailableHeight} />
           )}
         </MyAreaMapContainer>
       </MyAreaContainer>

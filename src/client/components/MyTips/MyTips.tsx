@@ -5,6 +5,7 @@ import { isExternalUrl } from '../../../universal/helpers';
 import { directApiUrlByProfileType } from '../../../universal/helpers/utils';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
+import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 import {
   trackItemClick,
   trackItemPresentation,
@@ -26,12 +27,10 @@ export interface TipProps {
 function tipTitle(title: string) {
   return `Tip: ${title}`;
 }
+
 function tipFlipTitle(title: string) {
   return `Tip flip: ${title}`;
 }
-
-const PLACEHOLDER_URL =
-  'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
 
 function tipTrackingCategory(category: string, isPersonalized: boolean) {
   return isPersonalized
@@ -40,7 +39,7 @@ function tipTrackingCategory(category: string, isPersonalized: boolean) {
 }
 
 const Tip = ({ tip, profileType }: TipProps) => {
-  const [imgUrl, setImgUrl] = useState(PLACEHOLDER_URL);
+  const [imgUrl, setImgUrl] = useState(PLACEHOLDER_IMAGE_URL);
 
   const tipImgUrl = tip.imgUrl
     ? directApiUrlByProfileType(tip.imgUrl, profileType)

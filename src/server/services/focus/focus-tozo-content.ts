@@ -1,4 +1,7 @@
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  defaultDateTimeFormat,
+} from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
 import { FocusStepContent, FocusTozoLabelSet } from './focus-types';
@@ -20,10 +23,7 @@ const aanvraagLabels: FocusStepContent = {
     description: (document) =>
       `Wij hebben uw aanvraag ${
         document.productTitle
-      } ontvangen op ${dateFormat(
-        document.datePublished,
-        `dd MMMM 'om' HH.mm 'uur'`
-      )}`,
+      } ontvangen op ${defaultDateTimeFormat(document.datePublished)}`,
   },
   status: stepLabels.aanvraag,
   description: (document) =>
@@ -39,20 +39,14 @@ const inkomstenVerklaringLabels: FocusStepContent = {
     description: (document) =>
       `Wij hebben een wijziging van uw inkomsten voor ${
         document.productTitle
-      } ontvangen op ${dateFormat(
-        document.datePublished,
-        `dd MMMM 'om' HH.mm 'uur'`
-      )}`,
+      } ontvangen op ${defaultDateTimeFormat(document.datePublished)}`,
   },
   status: stepLabels.inkomstenwijziging,
   description: (document) =>
     `
     <p>Wij hebben een wijziging van uw inkomsten voor ${
       document.productTitle
-    } ontvangen op ${dateFormat(
-      document.datePublished,
-      `dd MMMM 'om' HH.mm 'uur'`
-    )}</p>
+    } ontvangen op ${defaultDateTimeFormat(document.datePublished)}</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>`,
 };
 

@@ -1,9 +1,12 @@
 import { Heading, themeColor } from '@amsterdam/asc-ui';
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { DATASETS, getDatasetCategoryId } from '../../../../universal/config';
+import {
+  DATASETS,
+  getDatasetCategoryId,
+} from '../../../../../universal/config';
 import JsonString from './JsonString';
-import { usePhoneScreen } from '../../../hooks/media.hook';
+import { usePhoneScreen } from '../../../../hooks/media.hook';
 
 const SuperTitle = styled(Heading)`
   font-size: 1.6rem;
