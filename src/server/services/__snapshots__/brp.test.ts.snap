@@ -50,7 +50,7 @@ Object {
       "id": "een-hash-van-documentnummer-1",
       "link": Object {
         "title": "paspoort",
-        "to": "/burgerzaken/document/een-hash-van-documentnummer-1",
+        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-1",
       },
       "title": "paspoort",
     },
@@ -62,7 +62,7 @@ Object {
       "id": "een-hash-van-documentnummer-2",
       "link": Object {
         "title": "europese identiteitskaart",
-        "to": "/burgerzaken/document/een-hash-van-documentnummer-2",
+        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-2",
       },
       "title": "ID-kaart",
     },
