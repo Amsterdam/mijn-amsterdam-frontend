@@ -59,10 +59,6 @@ function transformAKTESData(responseData: AKTESDataFromSource): AKTESData {
     });
 }
 
-function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
-  return [];
-}
-
 export async function fetchAKTES(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
@@ -72,6 +68,10 @@ export async function fetchAKTES(
   });
 
   return requestData<AKTESData>(options, sessionID, passthroughRequestHeaders);
+}
+
+function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
+  return [];
 }
 
 export async function fetchAKTESGenerated(
