@@ -121,7 +121,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
   BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp` },
-  AKTES: { url: `${BFF_MS_API_BASE_URL}/aktes/aktes` },
+  AKTES: {
+    url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
+    postponeFetch: !FeatureToggle.aktesActive,
+  },
   ERFPACHT: { url: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht` },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {

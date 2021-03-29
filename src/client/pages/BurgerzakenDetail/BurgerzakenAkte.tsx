@@ -51,16 +51,18 @@ export default function BurgerzakenIDKaart() {
           <>
             <InfoDetail label="Aktenummer" value={Akte.aktenummer} />
             <InfoDetail label="Registerjaar" value={Akte.registerjaar} />
-            <InfoDetail
-              el="div"
-              label="Download PDF"
-              value={
-                <DocumentList
-                  documents={Akte?.documents}
-                  isExpandedView={false}
-                />
-              }
-            />
+            {!!Akte?.documents?.length && (
+              <InfoDetail
+                el="div"
+                label="Download PDF"
+                value={
+                  <DocumentList
+                    documents={Akte?.documents}
+                    isExpandedView={false}
+                  />
+                }
+              />
+            )}
           </>
         )}
       </PageContent>

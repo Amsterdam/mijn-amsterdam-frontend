@@ -190,9 +190,21 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
-                  <span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/burgerzaken/akte/70669889"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
                     Huwelijksakte
-                  </span>
+                  </a>
                 </td>
                 <td
                   class="DisplayProp"
@@ -225,9 +237,21 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
-                  <span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/burgerzaken/akte/4150191554"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
                     Geboorteakte
-                  </span>
+                  </a>
                 </td>
                 <td
                   class="DisplayProp"
@@ -260,9 +284,21 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
-                  <span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/burgerzaken/akte/1975027871"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
                     Akte van geregistreerd partnerschap
-                  </span>
+                  </a>
                 </td>
                 <td
                   class="DisplayProp"
