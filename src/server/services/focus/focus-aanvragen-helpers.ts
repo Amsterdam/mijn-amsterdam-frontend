@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/node';
 import { addDays, differenceInMonths, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
 import {
+  dateSort,
   defaultDateFormat,
   hash,
   isRecentCase,
@@ -30,7 +31,6 @@ import {
   TextPartContents,
 } from './focus-types';
 
-/** Checks if an item returned from the api is considered recent */
 export function isRecentItem(
   steps: Array<{ title: string; datePublished: string }>,
   compareDate: Date
@@ -38,9 +38,9 @@ export function isRecentItem(
   return (
     steps.some(
       (step) =>
-        step.title === 'beslissing' &&
+        step.title === 'besluit' &&
         isRecentCase(step.datePublished, compareDate)
-    ) || steps.every((step) => step.title !== 'beslissing')
+    ) || steps.every((step) => step.title !== 'besluit')
   );
 }
 
@@ -132,7 +132,7 @@ export function findStepsContent(
   contentLabels: LabelData
 ) {
   const stepsContent: ProductStepLabels & {
-    beslissing?: FocusStepContent;
+    besluit?: FocusStepContent;
   } = {};
 
   const labelContent = findProductContent(product, contentLabels);
@@ -145,14 +145,14 @@ export function findStepsContent(
 
       if (stepData && stepContent) {
         if (
-          stepTitle === 'beslissing' &&
+          stepTitle === 'besluit' &&
           product.decision &&
           product.decision in stepContent
         ) {
           stepsContent[stepTitle] = (stepContent as FocusStepContentDecision)[
             product.decision
           ];
-        } else if (stepTitle !== 'beslissing') {
+        } else if (stepTitle !== 'besluit') {
           stepsContent[stepTitle] = stepContent as FocusStepContent;
         }
       }
@@ -166,6 +166,11 @@ function normalizeFocusSourceProductStep(
   product: FocusProductFromSource,
   [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource]
 ) {
+  // NOTE: Translation at base level to prevent mixed terms with similar meaning.
+  if (stepTitle === 'beslissing') {
+    stepTitle = 'besluit';
+  }
+
   const stepNormalized: FocusProductStep = {
     id: stepTitle,
     title: stepTitle,
@@ -187,29 +192,26 @@ function normalizeFocusSourceProductStep(
 }
 
 export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
-  const processSteps = product.processtappen;
-
   const steps = Object.entries(product.processtappen)
-    // Filter out steps that don't have any data assiciated
     .filter(
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
         stepEntry[1] !== null
     )
-    .map((step) => normalizeFocusSourceProductStep(product, step));
+    .map((step) => normalizeFocusSourceProductStep(product, step))
+    .sort(dateSort('datePublished', 'asc'));
 
-  const latestStep = getLatestStep(steps);
-  const id = hash(`${product._id}-${latestStep}`);
+  const lastStep = steps[steps.length - 1];
+  const firstStep = steps[0];
+  const id = hash(`${product._id}-${lastStep.title}`);
 
   return {
     id,
     title: product.naam,
     type: product.soortProduct,
-    decision: product.typeBesluit
-      ? getDecision(product.typeBesluit)
-      : undefined,
+    decision: product.typeBesluit ? getDecision(product.typeBesluit) : null,
     steps,
-    datePublished: processSteps[latestStep]?.datum || '',
-    dateStart: processSteps.aanvraag?.datum || '',
+    datePublished: lastStep.datePublished,
+    dateStart: firstStep.datePublished,
     dienstverleningstermijn: product.dienstverleningstermijn,
     inspanningsperiode: product.inspanningsperiode,
   };
@@ -230,7 +232,7 @@ export function fillStepContent(
       additionalInformationStep.aantalDagenHerstelTermijn || 0;
   }
 
-  // deadline corresponding to the 'inBehandeling' step.
+  // Deadline date used to generate a status text for the 'inBehandeling' step.
   const decisionDeadline1 = calculateDecisionDeadline(
     product.dateStart,
     product.dienstverleningstermijn,
@@ -238,7 +240,7 @@ export function fillStepContent(
     0
   );
 
-  // deadline for the Municiaplity corresponding to the 'herstelTermijn' step.
+  // Deadline date for the Municiaplity used to generate a status text for the 'herstelTermijn / Meer informatie' step.
   const decisionDeadline2 = calculateDecisionDeadline(
     product.dateStart,
     product.dienstverleningstermijn,
@@ -246,7 +248,7 @@ export function fillStepContent(
     aantalDagenHerstelTermijn
   );
 
-  // deadline for the Client (Civilian) corresponding to the 'herstelTermijn' step.
+  // Deadline date for the Client (Civilian) used to generate a status text for the 'herstelTermijn / Meer informatie' step.
   const userActionDeadline = calculateUserActionDeadline(
     stepData.datePublished,
     aantalDagenHerstelTermijn
@@ -268,7 +270,7 @@ export function fillStepContent(
       isActive: getLatestStep(product.steps) === stepData.title,
       isChecked: true,
     },
-    stepData.title === 'beslissing' ? { decision: product.decision } : null
+    stepData.title === 'besluit' ? { decision: product.decision } : null
   );
 }
 
@@ -288,7 +290,6 @@ export function transformFocusProductSteps(
     .filter((stepData): stepData is FocusItemStep => stepData !== null);
 }
 
-// This function transforms the source data from the api into readable/presentable messages for the client.
 export function transformFocusProduct(
   product: FocusProduct,
   contentLabels: LabelData
@@ -379,7 +380,7 @@ export function translateFocusProduct(
   return prod;
 }
 
-// Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
+// This applies to Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
 export function isNotificationActual(datePublished: string, compareDate: Date) {
   const difference = differenceInMonths(compareDate, new Date(datePublished));
   return difference < MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS;

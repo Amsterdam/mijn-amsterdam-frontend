@@ -8,10 +8,10 @@ import {
   IconMilieuzone,
   IconMyNotifications,
   IconTips,
-  IconWonen,
+  IconVergunningen,
+  IconErfpacht,
   IconZorg,
   IconAlert,
-  IconVergunningen,
   IconHomeCommercial,
 } from '../assets/icons';
 
@@ -30,7 +30,7 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.NOTIFICATIONS]: IconMyNotifications,
   [Chapters.ROOT]: IconBurgerZaken,
   [Chapters.TIPS]: IconTips,
-  [Chapters.ERFPACHT]: IconWonen,
+  [Chapters.ERFPACHT]: IconErfpacht,
   [Chapters.ZORG]: IconZorg,
   [Chapters.VERGUNNINGEN]: IconVergunningen,
   [Chapters.KVK]: IconHomeCommercial,

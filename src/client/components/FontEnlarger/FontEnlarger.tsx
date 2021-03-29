@@ -31,13 +31,13 @@ export default function FontEnlarger({ children }: ComponentProps) {
           event.key.toLowerCase() === 'escape' && hide();
         }}
         aria-label="Uitleg tekst vergroten"
+        aria-labelledby="show-font-enlarger-info"
         aria-expanded={isVisible}
-        id="show-font-enlarger-info"
       >
         A &#43; &minus;
       </button>
       <p
-        aria-labelledby="show-font-enlarger-info"
+        id="show-font-enlarger-info"
         hidden={!isVisible}
         className={styles.FontEnlargerPopup}
       >

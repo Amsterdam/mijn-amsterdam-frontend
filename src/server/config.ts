@@ -50,7 +50,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   postponeFetch: false,
 };
 
-type SourceApiKey =
+export type SourceApiKey =
   | 'AUTH'
   | 'WMO'
   | 'FOCUS_COMBINED'
@@ -151,6 +151,7 @@ export const BffEndpoints = {
   CMS_MAINTENANCE_NOTIFICATIONS: `/public/services/cms/maintenance-notifications`,
   MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
   CACHE_OVERVIEW: `/status/cache`,
+  API_DIRECT: `/direct/:apiName`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [

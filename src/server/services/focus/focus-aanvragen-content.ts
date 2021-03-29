@@ -8,8 +8,11 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
   inBehandeling: 'In behandeling',
   herstelTermijn: 'Informatie nodig',
-  beslissing: 'Besluit',
+  besluit: 'Besluit',
+  terugvorderingsbesluit: 'Terugvorderings- besluit',
+  inkomstenwijziging: 'Wijziging inkomsten',
   bezwaar: 'Bezwaar',
+  brief: 'Brief',
 };
 
 // NOTE: MUST Keep in this order
@@ -17,7 +20,7 @@ export const processSteps: StepTitle[] = [
   'aanvraag',
   'inBehandeling',
   'herstelTermijn',
-  'beslissing',
+  'besluit',
 ];
 
 export const stepStatusLabels = stepLabels;
@@ -133,7 +136,7 @@ export const contentLabels: LabelData = {
           </p>
         `,
       },
-      beslissing: {
+      besluit: {
         afwijzing: {
           notification: {
             title: (product) => `${product.title}: Uw aanvraag is afgewezen`,
@@ -142,7 +145,7 @@ export const contentLabels: LabelData = {
                 product.datePublished
               )}).`,
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             'U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
         },
@@ -154,7 +157,7 @@ export const contentLabels: LabelData = {
                 product.datePublished
               )}).`,
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             `
             <p>
@@ -177,7 +180,7 @@ export const contentLabels: LabelData = {
               `${product.title}: Wij behandelen uw aanvraag niet meer`,
             description: (product) => `Bekijk de brief voor meer details.`,
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },
@@ -255,7 +258,7 @@ export const contentLabels: LabelData = {
           </p>
         `,
       },
-      beslissing: {
+      besluit: {
         afwijzing: {
           notification: {
             title: (product) => `${product.title}: Uw aanvraag is afgewezen`,
@@ -264,7 +267,7 @@ export const contentLabels: LabelData = {
                 product.datePublished
               )}).`,
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             'U hebt geen recht op een Stadspas. Bekijk de brief voor meer details.',
         },
@@ -274,7 +277,7 @@ export const contentLabels: LabelData = {
             description: (product) =>
               'U hebt recht op een Stadspas. Bekijk de brief voor meer details.',
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             `
             <p>
@@ -293,7 +296,7 @@ export const contentLabels: LabelData = {
               `${product.title}: Wij behandelen uw aanvraag niet meer`,
             description: (product) => `Bekijk de brief voor meer details.`,
           },
-          status: stepLabels.beslissing,
+          status: stepLabels.besluit,
           description: (product) =>
             'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },

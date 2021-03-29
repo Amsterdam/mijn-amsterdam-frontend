@@ -349,8 +349,8 @@ describe('FOCUS_AANVRAGEN service', () => {
     expect(
       testData
         .map(normalizeFocusSourceProduct)
-        .filter(product => focusAanvragenProducten.includes(product.title))
-        .map(product => translateFocusProduct(product, titleTranslations))
+        .filter((product) => focusAanvragenProducten.includes(product.title))
+        .map((product) => translateFocusProduct(product, titleTranslations))
     ).toMatchSnapshot();
   });
 
@@ -358,9 +358,9 @@ describe('FOCUS_AANVRAGEN service', () => {
     expect(
       testData
         .map(normalizeFocusSourceProduct)
-        .filter(product => focusAanvragenProducten.includes(product.title))
-        .map(product => translateFocusProduct(product, titleTranslations))
-        .map(product => transformFocusProduct(product, contentLabels))
+        .filter((product) => focusAanvragenProducten.includes(product.title))
+        .map((product) => translateFocusProduct(product, titleTranslations))
+        .map((product) => transformFocusProduct(product, contentLabels))
     ).toMatchSnapshot();
   });
 
@@ -368,7 +368,7 @@ describe('FOCUS_AANVRAGEN service', () => {
     const steps = [
       {
         datePublished: '2020-05-07',
-        title: 'beslissing',
+        title: 'besluit',
       },
     ] as FocusItemStep[];
 
@@ -402,11 +402,12 @@ describe('FOCUS_AANVRAGEN service', () => {
       },
       {
         datePublished: '2020-05-07',
-        title: 'beslissing',
+        title: 'besluit',
       },
     ] as FocusProductStep[];
-    expect(getLatestStep(steps)).toBe('beslissing');
+    expect(getLatestStep(steps)).toBe('besluit');
   });
+
   it('get the correct step', () => {
     const steps = [
       {

@@ -132,7 +132,7 @@ export async function fetchFOCUSTonkGenerated(
       .filter(
         (item) =>
           isRecentCase(item.datePublished, compareDate) ||
-          item.status !== stepStatusLabels.beslissing
+          item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)
       .filter((recentCase) => recentCase !== null);

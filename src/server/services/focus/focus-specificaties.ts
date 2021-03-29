@@ -1,5 +1,5 @@
 import { differenceInMonths, format } from 'date-fns';
-import { Chapters } from '../../../universal/config';
+import { Chapters, IS_PRODUCTION } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
 import {
   dateFormat,
@@ -156,27 +156,31 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    const isActualJaaropgave = isNotificationActual(
-      'jaaropgave',
-      jaaropgaven[0].datePublished,
-      new Date()
-    );
+    const isActualJaaropgave =
+      !IS_PRODUCTION ||
+      isNotificationActual(
+        'jaaropgave',
+        jaaropgaven[0].datePublished,
+        new Date()
+      );
 
     if (jaaropgaven.length && isActualJaaropgave) {
-      // Only the latest Jaaropgave gets a notification
+      // Only the latest Jaaropgave gets a notification.
       notifications.push(
         transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
       );
     }
 
-    const isActualUitkering = isNotificationActual(
-      'uitkering',
-      uitkeringsspecificaties[0].datePublished,
-      new Date()
-    );
+    const isActualUitkering =
+      !IS_PRODUCTION ||
+      isNotificationActual(
+        'uitkering',
+        uitkeringsspecificaties[0].datePublished,
+        new Date()
+      );
 
     if (uitkeringsspecificaties.length && isActualUitkering) {
-      // Only the latest Uitkeringspecificatie gets a notification
+      // Only the latest Uitkeringspecificatie gets a notification.
       notifications.push(
         transformIncomeSpecificationNotification(
           'uitkering',

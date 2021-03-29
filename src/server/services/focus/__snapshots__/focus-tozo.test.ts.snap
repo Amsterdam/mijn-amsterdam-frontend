@@ -98,9 +98,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 1 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 1 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -114,7 +116,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 1 uitkering (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 1 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 1: Uw aanvraag is toegekend",
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "besluit",
@@ -213,9 +215,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 1 lening. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 1 lening. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -229,7 +233,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 1 lening (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 1 lening: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 1: Uw aanvraag is toegekend",
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "besluit",
@@ -237,9 +241,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 1 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 1 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -253,7 +259,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 1 uitkering (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 1 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 1: Uw aanvraag is toegekend",
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "besluit",
@@ -276,7 +282,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 1 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 1: Aanvraag ingetrokken",
           "product": "Tozo 1",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -286,7 +292,7 @@ Object {
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
               "id": "21806203814",
-              "title": "Brief intrekken Tozo 1 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
@@ -297,7 +303,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 1 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 1: Aanvraag ingetrokken",
           "product": "Tozo 1",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -350,7 +356,7 @@ Object {
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-09-28T00:00:00+01:00",
+      "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
       "id": "3578630920",
       "link": Object {
@@ -387,9 +393,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 2 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 2 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -403,7 +411,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 2 uitkering (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 2 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 2: Uw aanvraag is toegekend",
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",
@@ -434,9 +442,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 2 lening. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 2 lening. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -450,7 +460,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 2 lening (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 2 lening: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 2: Uw aanvraag is toegekend",
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",
@@ -486,7 +496,7 @@ Object {
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
               "id": "21806203821",
-              "title": "Brief intrekken Tozo 2 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
@@ -497,7 +507,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 2 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 2: Aanvraag ingetrokken",
           "product": "Tozo 2",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -562,7 +572,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 2 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 2: Aanvraag ingetrokken",
           "product": "Tozo 2",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -616,9 +626,11 @@ Object {
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op de Tozo 2 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 2 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-03-17T00:00:00+01:00",
@@ -632,7 +644,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 2 uitkering (besluit: 17 maart 2020).",
-          "notificationTitle": "Tozo 2 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 2: Uw aanvraag is toegekend",
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",
@@ -660,13 +672,63 @@ Object {
           "status": "Besluit",
           "title": "besluit",
         },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 2 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "878258780",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 2",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 2 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2955255800",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 2 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 2",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
       ],
       "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)",
       "type": "Tozo",
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-10-01",
+      "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-02-05T00:00:00+01:00",
       "id": "685054265",
       "link": Object {
@@ -674,7 +736,7 @@ Object {
         "to": "/inkomen/tozo/3/685054265",
       },
       "productTitle": "Tozo 3",
-      "status": "Voorschot",
+      "status": "Besluit",
       "steps": Array [
         Object {
           "datePublished": "2020-02-05T00:00:00+01:00",
@@ -703,9 +765,11 @@ Object {
         Object {
           "datePublished": "2020-10-01",
           "description": "<p>
-          U hebt recht op de Tozo 3 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 3 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-10-01",
@@ -719,7 +783,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 3 uitkering (besluit: 01 oktober 2020).",
-          "notificationTitle": "Tozo 3 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 3: Uw aanvraag is toegekend",
           "product": "Tozo 3",
           "status": "Besluit",
           "title": "besluit",
@@ -775,9 +839,11 @@ Object {
         Object {
           "datePublished": "2020-10-01",
           "description": "<p>
-          U hebt recht op de Tozo 3 uitkering. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 3 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-10-01",
@@ -791,7 +857,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 3 uitkering (besluit: 01 oktober 2020).",
-          "notificationTitle": "Tozo 3 uitkering: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 3: Uw aanvraag is toegekend",
           "product": "Tozo 3",
           "status": "Besluit",
           "title": "besluit",
@@ -858,7 +924,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 3 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 3: Aanvraag ingetrokken",
           "product": "Tozo 3",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "besluit",
         },
         Object {
@@ -887,9 +953,11 @@ Object {
         Object {
           "datePublished": "2020-10-01",
           "description": "<p>
-          U hebt recht op de Tozo 3 lening. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 3 lening. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2020-10-01",
@@ -903,7 +971,7 @@ Object {
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 3 lening (besluit: 01 oktober 2020).",
-          "notificationTitle": "Tozo 3 lening: Uw aanvraag is toegekend",
+          "notificationTitle": "Tozo 3: Uw aanvraag is toegekend",
           "product": "Tozo 3",
           "status": "Besluit",
           "title": "besluit",
@@ -915,7 +983,7 @@ Object {
             Object {
               "datePublished": "2020-10-01",
               "id": "",
-              "title": "Brief intrekken Tozo 3 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/focus/document?id=",
             },
@@ -926,7 +994,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 3 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 3: Aanvraag ingetrokken",
           "product": "Tozo 3",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -976,13 +1044,109 @@ Object {
           "status": "Voorschot",
           "title": "voorschot",
         },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "792",
+              "title": "Wijziging inkomsten",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2074786951",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
+          "product": "Tozo 3",
+          "status": "Wijziging inkomsten",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 3 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "25650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2240698991",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 3",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 3 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "25645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "783215435",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 3 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 3",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "792",
+              "title": "Wijziging inkomsten",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2074786951",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 3: Wij hebben een wijziging van uw inkomsten ontvangen",
+          "product": "Tozo 3",
+          "status": "Wijziging inkomsten",
+          "title": "verklaring",
+        },
       ],
       "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)",
       "type": "Tozo",
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2021-03-27T00:00:00+01:00",
+      "datePublished": "2021-04-10T00:00:00+01:00",
       "dateStart": "2021-03-27T00:00:00+01:00",
       "id": "1579672147",
       "link": Object {
@@ -1019,9 +1183,11 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op Tozo 4. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 4 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1034,7 +1200,7 @@ Object {
           "id": "3307440798",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationDescription": "U hebt recht op de Tozo 4 uitkering (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
           "product": "Tozo 4",
           "status": "Besluit",
@@ -1089,9 +1255,11 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op Tozo 4. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 4 lening. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1104,7 +1272,7 @@ Object {
           "id": "2350097180",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationDescription": "U hebt recht op de Tozo 4 lening (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
           "product": "Tozo 4",
           "status": "Besluit",
@@ -1141,7 +1309,7 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "5670",
-              "title": "Brief intrekken Tozo 4 aanvraag",
+              "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -1152,7 +1320,7 @@ Object {
           "notificationDescription": "U hebt uw Tozo 4 aanvraag ingetrokken.",
           "notificationTitle": "Tozo 4: Aanvraag ingetrokken",
           "product": "Tozo 4",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
@@ -1227,9 +1395,11 @@ Object {
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op Tozo 4. Bekijk de brief
-          voor meer details.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+        U hebt recht op de Tozo 4 uitkering. Bekijk de brief
+        voor meer details.
+      </p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel=\\"external noopener noreferrer\\" class=\\"inline\\" href=\\"https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/\\">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      ",
           "documents": Array [
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1242,11 +1412,107 @@ Object {
           "id": "2398874460",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationDescription": "U hebt recht op de Tozo 4 uitkering (besluit: 27 maart 2021).",
           "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
           "product": "Tozo 4",
           "status": "Besluit",
           "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "794",
+              "title": "Wijziging inkomsten",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3710172774",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
+          "product": "Tozo 4",
+          "status": "Wijziging inkomsten",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 4 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "35650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "10172137",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 4 uitkering terugbetalen. (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 4",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-04-02T00:00:00+01:00",
+          "description": "
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-02T00:00:00+01:00",
+              "id": "794",
+              "title": "Wijziging inkomsten",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3609879814",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur",
+          "notificationTitle": "Tozo 4: Wij hebben een wijziging van uw inkomsten ontvangen",
+          "product": "Tozo 4",
+          "status": "Wijziging inkomsten",
+          "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-04-10T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 4 uitkering terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-10T00:00:00+01:00",
+              "id": "35645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "534514702",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 4 uitkering terugbetalen. (besluit: 10 april 2021).",
+          "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 4",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
         },
       ],
       "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",

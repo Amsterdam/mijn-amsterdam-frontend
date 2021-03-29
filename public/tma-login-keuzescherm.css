@@ -131,3 +131,17 @@ h3.form-heading {
 .form-info {
   margin-top: 0;
 }
+
+.eherkenning-logo {
+  width: 175px;
+  display: block;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.eherkenning-niveaus {
+  height: 24px;
+  width: auto;
+  display: block;
+  margin-top: 20px;
+}
