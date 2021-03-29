@@ -46,10 +46,7 @@ const inkomstenVerklaringLabels: FocusStepContent = {
     `
     <p>Wij hebben een wijziging van uw inkomsten voor ${
       document.productTitle
-    } ontvangen op ${dateFormat(
-      document.datePublished,
-      `dd MMMM 'om' HH.mm 'uur'`
-    )}</p>
+    } ontvangen op ${defaultDateTimeFormat(document.datePublished)}</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>`,
 };
 
