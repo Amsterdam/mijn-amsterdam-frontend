@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import BurgerzakenDetail from './BurgerzakenIDKaart';
+import BurgerzakenIDKaart from './BurgerzakenIDKaart';
 
 const identiteitsbewijzen = [
   {
@@ -32,7 +32,7 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-describe('<BurgerzakenDetail />', () => {
+describe('<BurgerzakenIDKaart />', () => {
   const routeEntry = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
     id: identiteitsbewijzen[0].id,
   });
@@ -42,7 +42,7 @@ describe('<BurgerzakenDetail />', () => {
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={BurgerzakenDetail}
+      component={BurgerzakenIDKaart}
       initializeState={initializeState}
     />
   );

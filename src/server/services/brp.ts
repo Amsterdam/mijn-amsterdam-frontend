@@ -161,7 +161,7 @@ export function transformBRPData(responseData: BRPDataFromSource) {
     // Transform Identiteitsbewijzen
     Object.assign(responseData, {
       identiteitsbewijzen: responseData.identiteitsbewijzen.map((document) => {
-        const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
+        const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
           id: document.id,
         });
         return Object.assign({}, document, {

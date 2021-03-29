@@ -1,7 +1,7 @@
 export { default as AlphaPage } from './AlphaPage/AlphaPage';
 export { default as Accessibility } from './Accessibility/Accessibility';
 export { default as Burgerzaken } from './Burgerzaken/Burgerzaken';
-export { default as BurgerzakenDetail } from './BurgerzakenDetail/BurgerzakenDetail';
+export { default as BurgerzakenIDKaart } from './BurgerzakenDetail/BurgerzakenIDKaart';
 export { default as Dashboard } from './Dashboard/Dashboard';
 export { default as GarbageInformation } from './GarbageInformation/GarbageInformation';
 export { default as GeneralInfo } from './GeneralInfo/GeneralInfo';
