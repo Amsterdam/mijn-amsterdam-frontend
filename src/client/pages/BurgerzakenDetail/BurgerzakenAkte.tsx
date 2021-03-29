@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
-  defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
@@ -15,9 +14,9 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import styles from './BurgerzakenDetail.module.scss';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import DocumentList from '../../components/DocumentList/DocumentList';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './BurgerzakenDetail.module.scss';
 
 export default function BurgerzakenIDKaart() {
   const { AKTES } = useAppStateGetter();
@@ -51,10 +50,7 @@ export default function BurgerzakenIDKaart() {
         {!!Akte && (
           <>
             <InfoDetail label="Aktenummer" value={Akte.aktenummer} />
-            <InfoDetail
-              label="Registerjaar"
-              value={defaultDateFormat(Akte.registerjaar)}
-            />
+            <InfoDetail label="Registerjaar" value={Akte.registerjaar} />
             <InfoDetail
               el="div"
               label="Download PDF"

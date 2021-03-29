@@ -3,7 +3,7 @@
     "isKnown": true,
     "aktes": [
       {
-        "registerjaar": "2015-03-09T00:00:00Z",
+        "registerjaar": "2015",
         "aktenummer": "67YUHAK-IO",
         "type": "Huwelijksakte",
         "documenten": [
@@ -11,7 +11,7 @@
         ]
       },
       {
-        "registerjaar": "1967-11-10T00:00:00Z",
+        "registerjaar": "2003",
         "aktenummer": "77566AS",
         "type": "Geboorteakte",
         "documenten": [
@@ -19,7 +19,7 @@
         ]
       },
       {
-        "registerjaar": "1967-11-10T00:00:00Z",
+        "registerjaar": "1967",
         "aktenummer": "YHJ5567",
         "type": "Akte van geregistreerd partnerschap",
         "documenten": [

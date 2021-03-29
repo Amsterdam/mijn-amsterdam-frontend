@@ -24,8 +24,30 @@ const identiteitsbewijzen = [
   },
 ];
 
+const aktes = [
+  {
+    registerjaar: '2015',
+    aktenummer: '67YUHAK-IO',
+    type: 'Huwelijksakte',
+    documenten: ['/bla/bla/bla.pdf'],
+  },
+  {
+    registerjaar: '2003',
+    aktenummer: '77566AS',
+    type: 'Geboorteakte',
+    documenten: ['/bla/bla/bla.pdf'],
+  },
+  {
+    registerjaar: '1967',
+    aktenummer: 'YHJ5567',
+    type: 'Akte van geregistreerd partnerschap',
+    documenten: ['/bla/bla/bla.pdf'],
+  },
+];
+
 const testState: any = {
   BRP: { status: 'OK', content: { identiteitsbewijzen } },
+  AKTES: { status: 'OK', content: aktes },
 };
 
 function initializeState(snapshot: MutableSnapshot) {

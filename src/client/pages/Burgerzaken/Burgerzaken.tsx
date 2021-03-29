@@ -51,7 +51,7 @@ export default function Burgerzeken() {
     const items = AKTES.content.map((item) => {
       return {
         ...item,
-        registerjaar: defaultDateFormat(item.registerjaar),
+        registerjaar: item.registerjaar,
       };
     });
     return addTitleLinkComponent(items, 'type');
@@ -69,10 +69,7 @@ export default function Burgerzeken() {
           ziet u hier de aankondiging.
         </p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/"
-          >
+          <Linkd external={true} href="https://www.amsterdam.nl/burgerzaken">
             Overzicht en aanvragen bij burgerzaken
           </Linkd>
         </p>
