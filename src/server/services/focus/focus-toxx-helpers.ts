@@ -1,8 +1,14 @@
 import { generatePath } from 'react-router-dom';
-import { API_BASE_PATH, Chapters } from '../../../universal/config';
+import {
+  API_BASE_PATH,
+  Chapters,
+  IS_PRODUCTION,
+} from '../../../universal/config';
 import { dateFormat, hash } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
+import { isNotificationActual } from './focus-aanvragen-helpers';
 import { FocusDocument } from './focus-combined';
+import { stepLabels } from './focus-aanvragen-content';
 import {
   FocusItem,
   FocusItemStep,
@@ -151,7 +157,9 @@ export function createToxxItem({
     dateStart: steps[0].datePublished,
     datePublished: steps[steps.length - 1].datePublished, // Use the date from latest step
     title,
-    status: steps[steps.length - 1].status,
+    status: steps.some((step) => step.status === stepLabels.besluit)
+      ? stepLabels.besluit
+      : steps[steps.length - 1].status,
     productTitle,
     type: 'Tozo',
     chapter: Chapters.INKOMEN,
@@ -164,18 +172,24 @@ export function createToxxItem({
 }
 
 export function createToxxItemStepNotifications(
-  item: FocusItem
+  item: FocusItem,
+  compareDate: Date
 ): MyNotification[] {
-  return item.steps.map((step) => ({
-    id: hash(`notification-${step.id}`),
-    datePublished: step.datePublished,
-    chapter: Chapters.INKOMEN,
-    title:
-      step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
-    description: step.notificationDescription || '',
-    link: {
-      to: item.link.to,
-      title: 'Bekijk hoe het met uw aanvraag staat',
-    },
-  }));
+  return item.steps
+    .filter(
+      (step) =>
+        !IS_PRODUCTION || isNotificationActual(step.datePublished, compareDate)
+    )
+    .map((step) => ({
+      id: hash(`notification-${step.id}`),
+      datePublished: step.datePublished,
+      chapter: Chapters.INKOMEN,
+      title:
+        step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
+      description: step.notificationDescription || '',
+      link: {
+        to: item.link.to,
+        title: 'Bekijk hoe het met uw aanvraag staat',
+      },
+    }));
 }

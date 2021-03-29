@@ -1,4 +1,3 @@
-import { Chapters } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -52,17 +51,19 @@ export function createTozoResult(
     return apiSuccesResult([]);
   }
 
-  // Aggregate all aanvraag step documents and combine into 1
+  /**
+   * Aggregate all aanvraag step documents and combine into 1.
+   * For every aanvraag document received we only show 1 status step.
+   * All these documents are applicable to 1 decision that will be made about the aanvraag.
+   **/
   let aanvraagSteps: Record<string, FocusItemStep> = {};
   const otherSteps: FocusItemStep[] = [];
 
   for (const step of tozoSteps) {
     if (step && step.title === 'aanvraag') {
       if (step?.product && !aanvraagSteps[step.product]) {
-        // step is not present, cache the step
         aanvraagSteps[step.product] = step;
       } else if (step?.product) {
-        // step is present, add documents
         aanvraagSteps[step.product].documents.push(...step.documents);
       }
     } else if (step) {
@@ -196,32 +197,14 @@ export async function fetchFOCUSTozoGenerated(
     const compareDate = new Date();
 
     const notifications: MyNotification[] = TOZO.content.flatMap((item) =>
-      createToxxItemStepNotifications(item)
+      createToxxItemStepNotifications(item, compareDate)
     );
-
-    if (
-      FeatureToggle.tozo4PreNotificationactive &&
-      !TOZO.content.some((item) => item.productTitle === 'Tozo 4')
-    ) {
-      notifications.push({
-        chapter: Chapters.INKOMEN,
-        datePublished: '2021-03-01',
-        isAlert: false,
-        hideDatePublished: false,
-        id: `focus-tozo4-notification`,
-        title: `Tozo 4`,
-        description: `Hebt u Tozo 4 aangevraagd (aanvragen vanaf 1 maart 2021)? Wij
-                werken er hard aan om ook die aanvraag in Mijn Amsterdam te
-                tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
-                verschijnen.`,
-      });
-    }
 
     const cases: MyCase[] = TOZO.content
       .filter(
         (item) =>
           isRecentCase(item.datePublished, compareDate) ||
-          item.status !== stepStatusLabels.beslissing
+          item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)
       .filter((recentCase) => recentCase !== null);

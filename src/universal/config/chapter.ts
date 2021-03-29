@@ -70,6 +70,7 @@ export const DocumentTitles = {
   [AppRoutes[
     'INKOMEN/BIJSTANDSUITKERING'
   ]]: `Bijstandsuitkering | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,

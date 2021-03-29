@@ -553,18 +553,98 @@
         "url": "",
         "description": "Tozo4 Toekennen via batch",
         "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "794",
+        "documentCodeId": "794",
+        "type": "",
+        "url": "",
+        "description": "Tozo 4 inkomstenwijziging",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "794",
+        "documentCodeId": "794",
+        "type": "",
+        "url": "",
+        "description": "Tozo 4 inkomstenwijziging",
+        "datePublished": "2021-04-02T00:00:00+01:00"
+      },
+      {
+        "id": "35650",
+        "documentCodeId": "1735650",
+        "type": "",
+        "url": "",
+        "description": "Tozo 4 Terugvorderingsbesluit",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "35645",
+        "documentCodeId": "1735645",
+        "type": "",
+        "url": "",
+        "description": "Tozo 4 Terugvorderingsbesluit",
+        "datePublished": "2021-04-10T00:00:00+01:00"
+      },
+      {
+        "id": "792",
+        "documentCodeId": "792",
+        "type": "",
+        "url": "",
+        "description": "Tozo 3 inkomstenwijziging",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "25650",
+        "documentCodeId": "1725650",
+        "type": "",
+        "url": "",
+        "description": "Tozo 3 Terugvorderingsbesluit",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "25645",
+        "documentCodeId": "1725645",
+        "type": "",
+        "url": "",
+        "description": "Tozo 3 Terugvorderingsbesluit",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "792",
+        "documentCodeId": "792",
+        "type": "",
+        "url": "",
+        "description": "Tozo 2 inkomstenwijziging",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5650",
+        "documentCodeId": "175650",
+        "type": "",
+        "url": "",
+        "description": "Tozo 2 Terugvorderingsbesluit",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5645",
+        "documentCodeId": "175645",
+        "type": "",
+        "url": "",
+        "description": "Tozo 2 Terugvorderingsbesluit",
+        "datePublished": "2021-03-27T00:00:00+01:00"
       }
     ],
     "uitkeringsspecificaties": [
       {
-        "datePublished": "2018-12-15T00:00:00+01:00",
+        "datePublished": "2021-02-16T00:00:00+01:00",
         "id": "22091571",
         "title": "Uitkeringsspecificatie",
         "type": "Participatiewet",
         "url": "focus/document?id=22091571&isBulk=false&isDms=false"
       },
       {
-        "datePublished": "2020-03-17T00:00:00+01:00",
+        "datePublished": "2021-01-16T00:00:00+01:00",
         "id": "22035411",
         "title": "Uitkeringsspecificatie",
         "type": "Participatiewet",

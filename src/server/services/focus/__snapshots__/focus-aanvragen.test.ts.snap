@@ -5,7 +5,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -45,7 +45,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -91,7 +91,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -125,17 +125,17 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "aantalDagenHerstelTermijn": 10,
         "datePublished": "2019-07-06T15:05:52+02:00",
         "documents": Array [],
         "id": "herstelTermijn",
         "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-07-04T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
       },
     ],
     "title": "Stadspas",
@@ -146,7 +146,7 @@ Array [
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -164,6 +164,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-07-28T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -174,14 +180,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-07-25T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
@@ -192,7 +192,7 @@ Array [
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -210,6 +210,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -220,14 +226,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-04-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
@@ -238,7 +238,7 @@ Array [
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -256,6 +256,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-06-08T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -266,21 +279,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 20,
-        "datePublished": "2019-05-19T15:05:51+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-05-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
@@ -291,7 +291,7 @@ Array [
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -316,6 +316,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
         "documents": Array [
           Object {
@@ -326,21 +339,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 15,
-        "datePublished": "2019-06-13T15:05:52+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-06-11T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
@@ -349,7 +349,7 @@ Array [
   Object {
     "datePublished": "2020-05-12T00:00:00+02:00",
     "dateStart": "2020-05-12T00:00:00+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 28,
     "id": "3471293669",
     "inspanningsperiode": 28,
@@ -372,7 +372,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -423,7 +423,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -499,7 +499,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -601,11 +601,11 @@ Array [
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -696,12 +696,12 @@ Array [
             "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
+        "id": "besluit",
         "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Besluit",
-        "title": "beslissing",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -712,11 +712,11 @@ Array [
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -794,12 +794,12 @@ Array [
             "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
+        "id": "besluit",
         "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Besluit",
-        "title": "beslissing",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -810,11 +810,11 @@ Array [
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -929,12 +929,12 @@ Array [
             "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
+        "id": "besluit",
         "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Besluit",
-        "title": "beslissing",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -945,11 +945,11 @@ Array [
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -1058,12 +1058,12 @@ Array [
             "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
+        "id": "besluit",
         "isActive": true,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Besluit",
-        "title": "beslissing",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -1077,7 +1077,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -1118,7 +1118,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -1165,7 +1165,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -1200,17 +1200,17 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "aantalDagenHerstelTermijn": 10,
         "datePublished": "2019-07-06T15:05:52+02:00",
         "documents": Array [],
         "id": "herstelTermijn",
         "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-07-04T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
       },
     ],
     "title": "Stadspas",
@@ -1221,7 +1221,7 @@ Array [
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1240,6 +1240,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-07-28T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1250,14 +1256,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-07-25T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -1268,7 +1268,7 @@ Array [
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1287,6 +1287,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1297,14 +1303,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-04-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -1315,7 +1315,7 @@ Array [
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1334,6 +1334,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-06-08T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1344,21 +1357,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 20,
-        "datePublished": "2019-05-19T15:05:51+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-05-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -1369,7 +1369,7 @@ Array [
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "399318441",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1395,6 +1395,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
         "documents": Array [
           Object {
@@ -1405,21 +1418,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 15,
-        "datePublished": "2019-06-13T15:05:52+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-06-11T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",

@@ -10,13 +10,17 @@ import { contentLabels, titleTranslations } from './focus-aanvragen-content';
 import {
   createFocusNotification,
   createFocusRecentCase,
+  isNotificationActual,
   isRecentItem,
   normalizeFocusSourceProduct,
   transformFocusProduct,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
 import { FocusItem, FocusProduct, FocusProductFromSource } from './focus-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
+export const MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS = 2;
+export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -44,8 +48,6 @@ export function fetchFOCUS(
 
   return sourceDataNormalized;
 }
-
-export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 
 export async function fetchFOCUSAanvragen(
   sessionID: SessionID,
@@ -86,15 +88,17 @@ export async function fetchFOCUSAanvragenGenerated(
   if (FOCUS_AANVRAGEN.status === 'OK') {
     const items = FOCUS_AANVRAGEN.content as FocusItem[];
 
-    notifications =
-      items.map((focusItem) =>
-        createFocusNotification(focusItem, contentLabels)
-      ) || [];
+    notifications = items
+      .filter(
+        (item) =>
+          !IS_PRODUCTION ||
+          isNotificationActual(item.datePublished, compareDate)
+      )
+      .map((focusItem) => createFocusNotification(focusItem, contentLabels));
 
-    cases =
-      items
-        .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
-        .map((focusItem) => createFocusRecentCase(focusItem)) || [];
+    cases = items
+      .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
+      .map((focusItem) => createFocusRecentCase(focusItem));
 
     return apiSuccesResult({
       cases,

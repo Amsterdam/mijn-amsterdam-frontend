@@ -18,7 +18,6 @@ import {
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 
@@ -186,7 +185,6 @@ export default function InkomenSpecificaties() {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
-        <AlertDocumentDownloadsDisabled />
       </PageContent>
       <Section
         className={styles.TableSection}
@@ -318,6 +316,7 @@ export default function InkomenSpecificaties() {
             </Button>
           </p>
         )}
+        {currentPage !== 1 && <p>Pagina {currentPage}</p>}
         {!!itemsFiltered.length && (
           <Table
             className={styles.SpecificationsTable}

@@ -1,10 +1,11 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
-import { BffEndpoints } from './config';
+import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
-import { fetchCMSCONTENT, loadClusterDatasets } from './services';
+import { axiosRequest } from './helpers/source-api-request';
+import { fetchBRP, fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
   loadFeatureDetail,
   loadPolylineFeatures,
@@ -163,3 +164,24 @@ router.get(
     next();
   }
 );
+
+router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
+  const apiName = req.params.apiName;
+  if (apiName && apiName in ApiConfig) {
+    const headers = getPassthroughRequestHeaders(req);
+
+    try {
+      const rs = await axiosRequest.request(
+        getApiConfig(apiName as SourceApiKey, {
+          headers,
+        })
+      );
+      res.json(rs.data);
+    } catch (error) {
+      res.status(error?.response?.status || 500);
+      res.json(error.message || 'Error requesting api data');
+    }
+  }
+
+  next();
+});

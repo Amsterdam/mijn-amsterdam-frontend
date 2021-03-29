@@ -125,14 +125,14 @@ export async function fetchFOCUSTonkGenerated(
     const compareDate = new Date();
 
     const notifications: MyNotification[] = TONK.content.flatMap((item) =>
-      createToxxItemStepNotifications(item)
+      createToxxItemStepNotifications(item, compareDate)
     );
 
     const cases: MyCase[] = TONK.content
       .filter(
         (item) =>
           isRecentCase(item.datePublished, compareDate) ||
-          item.status !== stepStatusLabels.beslissing
+          item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)
       .filter((recentCase) => recentCase !== null);

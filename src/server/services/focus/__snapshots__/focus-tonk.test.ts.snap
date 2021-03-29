@@ -73,12 +73,12 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
-          "description": "<p>U hebt uw TONK aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
+          "description": "<p>U hebt uw TONK aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
               "id": "176138",
-              "title": "Brief intrekken TONK aanvraag",
+              "title": "Brief intrekking TONK aanvraag",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -89,20 +89,20 @@ Object {
           "notificationDescription": "U hebt uw TONK aanvraag ingetrokken.",
           "notificationTitle": "TONK: Aanvraag ingetrokken",
           "product": "TONK",
-          "status": "Besluit",
+          "status": "Brief",
           "title": "intrekken",
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op TONK. Bekijk de brief
+          U hebt recht op de TONK uitkering. Bekijk de brief
           voor meer details.
-        </p>",
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
               "id": "176149",
-              "title": "Besluit toekenning",
+              "title": "Besluit toekenning uitkering",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -110,7 +110,7 @@ Object {
           "id": "923227155",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op TONK (besluit: 05 april 2021).",
+          "notificationDescription": "U hebt recht op de TONK uitkering (besluit: 05 april 2021).",
           "notificationTitle": "TONK: Uw aanvraag is toegekend",
           "product": "TONK",
           "status": "Besluit",
@@ -119,14 +119,14 @@ Object {
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
           "description": "<p>
-          U hebt recht op TONK. Bekijk de brief
+          U hebt recht op de TONK uitkering. Bekijk de brief
           voor meer details.
-        </p>",
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
               "id": "176156",
-              "title": "Besluit toekenning",
+              "title": "Besluit toekenning uitkering",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -134,7 +134,7 @@ Object {
           "id": "2631313149",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op TONK (besluit: 05 april 2021).",
+          "notificationDescription": "U hebt recht op de TONK uitkering (besluit: 05 april 2021).",
           "notificationTitle": "TONK: Uw aanvraag is toegekend",
           "product": "TONK",
           "status": "Besluit",
@@ -143,8 +143,8 @@ Object {
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
           "description": "<p>
-        U hebt geen recht op TONK. Bekijk de brief voor meer details.
-      </p>",
+        U hebt geen recht op de TONK uitkering. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
@@ -157,7 +157,7 @@ Object {
           "id": "1894271519",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt geen recht op TONK (besluit: 05 april 2021).",
+          "notificationDescription": "U hebt geen recht op de TONK uitkering (besluit: 05 april 2021).",
           "notificationTitle": "TONK: Uw aanvraag is afgewezen",
           "product": "TONK",
           "status": "Besluit",
@@ -166,8 +166,8 @@ Object {
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
           "description": "<p>
-        U hebt geen recht op TONK. Bekijk de brief voor meer details.
-      </p>",
+        U hebt geen recht op de TONK uitkering. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
@@ -180,7 +180,7 @@ Object {
           "id": "1737112318",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt geen recht op TONK (besluit: 05 april 2021).",
+          "notificationDescription": "U hebt geen recht op de TONK uitkering (besluit: 05 april 2021).",
           "notificationTitle": "TONK: Uw aanvraag is afgewezen",
           "product": "TONK",
           "status": "Besluit",
@@ -188,7 +188,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
-          "description": "<p>Wij behandelen uw aanvraag voor TONK niet meer. Bekijk de brief voor meer details.</p>",
+          "description": "<p>Wij behandelen uw aanvraag voor de TONK uitkering niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",

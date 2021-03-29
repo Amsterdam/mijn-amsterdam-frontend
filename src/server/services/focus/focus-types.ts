@@ -4,9 +4,8 @@ export type StepTitle =
   | 'aanvraag'
   | 'inBehandeling'
   | 'herstelTermijn'
-  | 'beslissing'
+  | 'besluit'
   | 'bezwaar'
-  | 'verklaring'
   | string;
 
 // The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
@@ -70,7 +69,7 @@ export interface FocusProduct {
   dateStart: string;
   datePublished: string;
   type: ProductType;
-  decision?: DecisionFormatted;
+  decision?: DecisionFormatted | null;
   steps: FocusProductStep[];
   dienstverleningstermijn?: number;
   inspanningsperiode?: number;
@@ -87,7 +86,7 @@ export interface FocusItemStep {
   product?: string;
   isActive?: boolean;
   isChecked?: boolean;
-  decision?: DecisionFormatted;
+  decision?: DecisionFormatted | null;
   notificationTitle?: string;
   notificationDescription?: string;
 }
@@ -134,7 +133,7 @@ export interface ProductStepLabels {
   inBehandeling?: FocusStepContent;
   herstelTermijn?: FocusStepContent;
   bezwaar?: FocusStepContent;
-  beslissing?: FocusStepContentDecision;
+  besluit?: FocusStepContentDecision;
   link?: LinkContents;
   [key: string]: any;
 }
@@ -160,7 +159,7 @@ export type FocusTonkLabelSet = {
   documentTitle: string;
   product: 'TONK';
   stepType: FocusTonkStepType;
-  productSpecific?: '';
+  productSpecific?: string;
 };
 
 export type FocusTozoStepType =
@@ -170,6 +169,7 @@ export type FocusTozoStepType =
   | 'intrekken'
   | 'vrijeBeschikking'
   | 'voorschot'
+  | 'terugvordering'
   | 'verklaring';
 
 export type FocusTozoLabelSet = {
