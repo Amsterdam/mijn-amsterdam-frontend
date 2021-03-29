@@ -25,6 +25,7 @@ export const FeatureToggle = {
   irmaActive: !IS_AP,
   siaActive: !IS_AP,
   siaApiActive: !IS_AP,
+  aktesActive: !IS_AP,
 };
 
 export const DAYS_KEEP_RECENT = 28;

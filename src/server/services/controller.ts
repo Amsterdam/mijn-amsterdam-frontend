@@ -10,6 +10,7 @@ import {
   sendMessage,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
+import { fetchAKTES } from './aktes';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
@@ -53,6 +54,7 @@ function getServiceTipsMap(profileType: ProfileType) {
  * The service methods
  */
 const BRP = callService(fetchBRP);
+const AKTES = callService(fetchAKTES);
 const CMS_CONTENT = callService(fetchCMSCONTENT);
 const CMS_MAINTENANCE_NOTIFICATIONS = callService(
   fetchMaintenanceNotificationsActual
@@ -109,6 +111,7 @@ const CASES = async (sessionID: SessionID, req: Request) =>
 // Store all services for type derivation
 const SERVICES_INDEX = {
   BRP,
+  AKTES,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
@@ -135,7 +138,7 @@ export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = ServicesType;
-type PrivateCommercialServices = ServicesType;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -164,6 +167,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     BRP,
+    AKTES,
     BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,

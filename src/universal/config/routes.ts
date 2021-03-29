@@ -4,7 +4,8 @@ export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
-  BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
+  'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+  'BURGERZAKEN/AKTE': '/burgerzaken/akte/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
@@ -35,6 +36,10 @@ export const AppRoutes: Record<string, string> = {
 };
 
 export const AppRoutesRedirect = [
+  {
+    from: '/burgerzaken/document/:id',
+    to: AppRoutes['BURGERZAKEN/ID-KAART'],
+  },
   {
     from: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
     to: AppRoutes['STADSPAS/AANVRAAG'],

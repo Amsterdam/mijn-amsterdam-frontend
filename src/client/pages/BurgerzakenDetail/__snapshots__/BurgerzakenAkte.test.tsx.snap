@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
+exports[`<BurgerzakenAkte /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
     class="Page DetailPage"
@@ -41,7 +41,7 @@ exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Document
+          Huwelijksakte
         </h2>
       </div>
     </header>
@@ -54,12 +54,12 @@ exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Label"
         >
-          Documentnummer
+          Aktenummer
         </span>
         <span
           class="Value"
         >
-          PP57XKG54
+          67YUHAK-IO
         </span>
       </p>
       <p
@@ -68,28 +68,54 @@ exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Label"
         >
-          Datum uitgifte
+          Registerjaar
         </span>
         <span
           class="Value"
         >
-          15 oktober 2015
+          2015
         </span>
       </p>
-      <p
+      <div
         class="InfoDetail"
       >
         <span
           class="Label"
         >
-          Geldig tot
+          Download PDF
         </span>
         <span
           class="Value"
         >
-          15 oktober 2025
+          <ul
+            class="DocumentList"
+          >
+            <li
+              class="DocumentListItem"
+            >
+              <span
+                class="DocumentLinkWrap"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd DocumentLink"
+                  href="/bla/bla/bla.pdf"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Download.svg
+                  </svg>
+                  Huwelijksakte
+                </a>
+              </span>
+            </li>
+          </ul>
         </span>
-      </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>

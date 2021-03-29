@@ -1,6 +1,7 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
 import AFVAL from './json/afvalophaalgebieden.json';
+import AKTES from './json/aktes.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
@@ -63,6 +64,16 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return await loadMockApiResponseJson(BRP);
+    },
+  },
+  [ApiUrls.AKTES]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(AKTES);
     },
   },
   [ApiUrls.WMO]: {
