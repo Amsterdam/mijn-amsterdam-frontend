@@ -5,7 +5,10 @@ import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
 export const DEV_USER_TYPE_HEADER: string = 'x-user-type';
 export const ICL_COOKIE_NAME: string = 'icl'; // Is commercial login
-export const BFF_REQUEST_CACHE_ENABLED = true;
+export const BFF_REQUEST_CACHE_ENABLED =
+  typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
+    ? process.env.BFF_REQUEST_CACHE_ENABLED === 'true'
+    : true;
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url

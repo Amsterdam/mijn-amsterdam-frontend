@@ -17,7 +17,7 @@ interface AkteFromSource {
     | 'Geboorteakte';
 }
 
-interface AKTESDataFromSource {
+export interface AKTESDataFromSource {
   content: {
     isKnown: boolean;
     aktes: AkteFromSource[];
@@ -32,8 +32,10 @@ export interface Akte extends AkteFromSource {
 
 export type AKTESData = Akte[];
 
-function transformAKTESData(responseData: AKTESDataFromSource): AKTESData {
-  return responseData.content.aktes
+export function transformAKTESData(
+  responseData: AKTESDataFromSource
+): AKTESData {
+  return responseData?.content?.aktes
     .sort(dateSort('registerjaar', 'desc'))
     .map((akte) => {
       const id = hash(akte.aktenummer);
