@@ -5,6 +5,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { MyCase } from '../../universal/types/App.types';
 import { ExternalUrls } from '../../client/config/app';
+import { FeatureToggle } from '../../universal/config/app';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -118,7 +119,9 @@ export async function fetchMILIEUZONEGenerated(
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
     return apiSuccesResult({
       notifications: MILIEUZONE.content.notifications,
-      cases: extractRecentCases(MILIEUZONE.content.notifications),
+      cases: FeatureToggle.milieuzoneRecentCasesActive
+        ? extractRecentCases(MILIEUZONE.content.notifications)
+        : [],
     });
   }
   return apiDependencyError({ MILIEUZONE });

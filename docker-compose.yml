@@ -9,6 +9,7 @@ services:
     environment:
       - BFF_DISABLE_MOCK_ADAPTER=true
       - BFF_ENV=test
+      - BFF_REQUEST_CACHE_ENABLED=false
       - REACT_APP_ENV=test
       - TZ=Europe/Amsterdam
     entrypoint: npm run bff-api:test
@@ -21,6 +22,7 @@ services:
     environment:
       - BFF_DISABLE_MOCK_ADAPTER=true
       - BFF_ENV=test
+      - BFF_REQUEST_CACHE_ENABLED=false
       - REACT_APP_ENV=test
       - TZ=Europe/Amsterdam
     entrypoint: npm test
@@ -34,7 +36,7 @@ services:
       dockerfile: Dockerfile
       target: serve-ot-bff
     expose:
-      - "3000"
+      - '3000'
     environment:
       - BFF_ENV=development
       - PORT=3000
