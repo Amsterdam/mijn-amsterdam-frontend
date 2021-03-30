@@ -30,7 +30,7 @@ interface MILIEUZONESourceData {
 function extractRecentCases(notifications: MyNotification[]) {
   const cases: MyCase[] = [];
   for (const notification of notifications) {
-    if (notification.id.endsWith('-F3')) {
+    if (notification.id.endsWith('-M1')) {
       const recentCase: MyCase = {
         ...notification,
         id: `${notification.id}-case`,
