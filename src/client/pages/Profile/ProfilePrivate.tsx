@@ -116,8 +116,7 @@ export default function Profile() {
         {!isLoading(BRP) && !isMokum(BRP.content) && (
           <p>
             U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
-            gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud
-            adres in Amsterdam of een parkeerbon.
+            gegevens die de gemeente Amsterdam van u heeft.
           </p>
         )}
         {hasDutchAndOtherNationalities(BRP.content) && (
