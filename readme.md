@@ -3,7 +3,7 @@
 Hi and welcome to the **Mijn-Amsterdam** front-end repository!
 
 This repo is the main codebase for the web application found at [mijn.amsterdam.nl](https://mijn.amsterdam.nl) which
-is a portal for official communication with the municipality of Amsterdam. The application consits of 2 main parts:
+is a portal for official communication with the municipality of Amsterdam. The application consists of 2 main parts:
 
 - React application
 - Node Express back-end-for-frontend (BFF)
@@ -20,7 +20,7 @@ $ npm start
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring).
-Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/main/package.json#L17).
+Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/main/package.json#L26).
 
 ## React application
 
@@ -32,7 +32,7 @@ Not all browsers in the world are supported. The targeted browsers can be found 
 There is no super strict convention (yet) for grouping components, functions, types etc. For larger components we might want to separate for example additional components, helpers, config and constants
 into other files as done in `src/client/pages/Profile` or `src/server/services/focus`.
 
-A blueprint for basic components can be found in `components/AlphaComponent/`. A blueprint for page components is locataed in `pages/AlphaPage`.
+A blueprint for basic components can be found in `components/AlphaComponent/`. A blueprint for page components is located in `pages/AlphaPage`.
 To generate a component based on these blueprints you can either copy/paste rename stuff or use a tool like `npm install -g generact` which can
 be used to duplicate any component and assign it a specific name.
 
@@ -63,7 +63,6 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Testing and development
 
-- `puppeteer` for fiddling with screenshot regression testing (not built into pipeline or any other frequently used process)
 - `cypress` for e2e testing
 - `ts-node` for BFF development
 
