@@ -105,8 +105,8 @@ export const datasetIcons: Record<
   },
   wior: {
     wior: (
-      <DatasetIcon style={{ backgroundColor: themeColors.primary.main }}>
-        <IconWior fill={themeColors.tint.level1} />
+      <DatasetIcon style={{ backgroundColor: themeColors.support.focus }}>
+        <IconWior fill={themeColors.tint.level7} />
       </DatasetIcon>
     ),
   },

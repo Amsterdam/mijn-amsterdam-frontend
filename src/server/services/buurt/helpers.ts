@@ -478,7 +478,7 @@ export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
     case 'hardlooproute':
       return 'purple';
     case 'wior':
-      return '#004699';
+      return '#FEC813';
     default:
       return 'black';
   }
