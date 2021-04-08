@@ -1,8 +1,6 @@
 import { InfoDetail } from '../../..';
-import GenericBase from './GenericBase';
-import JsonString from './JsonString';
-import Url from './Url';
 import DateStartEnd from './DateStartEnd';
+import GenericBase from './GenericBase';
 
 interface MyArePanelContentWIORProps {
   panelItem: any;
