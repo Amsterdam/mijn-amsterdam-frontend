@@ -21,15 +21,6 @@ export default function MyArePanelContentWIOR({
       {!!panelItem.projectnaam && (
         <InfoDetail label="Projectnaam" value={panelItem.projectnaam} />
       )}
-      {!!panelItem.typeWerkzaamheden && (
-        <InfoDetail
-          label="Soort werkzaamheden"
-          value={panelItem.typeWerkzaamheden}
-        />
-      )}
-      {!!panelItem.indicatieKleinwerk && (
-        <InfoDetail label="Kleine klus" value={panelItem.indicatieKleinwerk} />
-      )}
       {!!panelItem.beschrijving && (
         <InfoDetail label="Werkzaamheden" value={panelItem.beschrijving} />
       )}
@@ -38,6 +29,22 @@ export default function MyArePanelContentWIOR({
           label="Geplande uitvoering"
           dateStart={panelItem.datumStartUitvoering}
           dateEnd={panelItem.datumEindeUitvoering}
+        />
+      )}
+      {!!panelItem.typeWerkzaamheden && (
+        <InfoDetail
+          label="Soort werkzaamheden"
+          value={panelItem.typeWerkzaamheden}
+        />
+      )}
+      {!!panelItem.indicatieKleinwerk && (
+        <InfoDetail
+          label="Kleine klus"
+          value={
+            panelItem.indicatieKleinwerk === 'Yes'
+              ? 'Ja'
+              : panelItem.indicatieKleinwerk
+          }
         />
       )}
     </GenericBase>

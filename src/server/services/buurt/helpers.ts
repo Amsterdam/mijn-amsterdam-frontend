@@ -418,7 +418,7 @@ export function datasetApiResult(
   };
 }
 
-export function getPolylineColor(datasetId: DatasetId, feature: any) {
+export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
   switch (datasetId) {
     case 'sportveld':
       switch (feature.sportfunctie) {
@@ -477,8 +477,10 @@ export function getPolylineColor(datasetId: DatasetId, feature: any) {
       return 'green';
     case 'hardlooproute':
       return 'purple';
+    case 'wior':
+      return '#004699';
     default:
-      return 'purple';
+      return 'black';
   }
 }
 
@@ -518,7 +520,7 @@ export function transformDsoApiListResponse(
         );
 
         if (hasShapeGeometry) {
-          properties.color = getPolylineColor(datasetId, feature);
+          properties.color = getFeaturePolylineColor(datasetId, feature);
           if (config?.zIndex) {
             properties.zIndex = config.zIndex;
           }

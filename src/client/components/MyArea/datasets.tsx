@@ -105,7 +105,7 @@ export const datasetIcons: Record<
   },
   wior: {
     wior: (
-      <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
+      <DatasetIcon style={{ backgroundColor: themeColors.primary.main }}>
         <IconWior fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
@@ -350,13 +350,4 @@ export function getIconHtml(feature: MaPointFeature) {
 
   return renderToStaticMarkup(icon || iconDefault);
 }
-export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
-  parkeerzones: {
-    ...DEFAULT_POLYLINE_OPTIONS,
-    color: themeColors.supplement.yellow,
-  },
-  parkeerzones_uitzondering: {
-    ...DEFAULT_POLYLINE_OPTIONS,
-    color: themeColors.supplement.pink,
-  },
-};
+export const POLYLINE_DATASET_OPTIONS: Record<string, PolylineOptions> = {};
