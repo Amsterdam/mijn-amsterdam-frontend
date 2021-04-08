@@ -20,6 +20,7 @@ enum zIndexPane {
   BEDRIJVENINVESTERINGSZONES = '651',
   PARKEERZONES_UITZONDERING = '660',
   HARDLOOPROUTE = '670',
+  WIOR = '671',
   SPORTPARK = '680',
   SPORTVELD = '690',
 }
@@ -89,6 +90,7 @@ export interface DatasetConfig {
   // NOTE: The ID key also has to be added to the `additionalStaticPropertyNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticPropertyNames` can be left empty.
   idKeyList?: string;
   idKeyDetail?: string;
+  geometryKey?: string;
 }
 
 function dsoApiListUrl(
@@ -96,11 +98,13 @@ function dsoApiListUrl(
   pageSize: number = 1000,
   datasetId?: DatasetId
 ) {
-  const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
-  const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,geometry`;
-  const pageSizeParam = `&_pageSize=${pageSize}`;
-
   return (datasetConfig: DatasetConfig) => {
+    const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
+    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,${
+      datasetConfig.geometryKey || 'geometry'
+    }`;
+    const pageSizeParam = `&_pageSize=${pageSize}`;
+
     const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
     const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
 
@@ -112,6 +116,8 @@ function dsoApiListUrl(
       apiUrl +
       (propertyNames.length ? ',' + propertyNames.join(',') : '') +
       pageSizeParam;
+
+    console.log('dsoApiUrl', dsoApiUrl);
 
     return dsoApiUrl;
   };
@@ -256,6 +262,15 @@ export const datasetEndpoints: Record<
     additionalStaticPropertyNames: ['naam'],
     idKeyList: 'naam',
     idKeyDetail: 'naam',
+  },
+  wior: {
+    listUrl: dsoApiListUrl('wior/wior'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/wior/wior/',
+    transformList: transformDsoApiListResponse,
+    featureType: 'MultiPolygon',
+    zIndex: zIndexPane.WIOR,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    geometryKey: 'geometrie',
   },
 };
 

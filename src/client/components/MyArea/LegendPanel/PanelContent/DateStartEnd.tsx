@@ -6,6 +6,7 @@ interface DateStartEndProps {
   dateEnd?: string;
   timeStart?: string;
   timeEnd?: string;
+  label?: string;
 }
 
 export default function DateStartEnd({
@@ -13,10 +14,11 @@ export default function DateStartEnd({
   timeStart,
   dateEnd,
   timeEnd,
+  label,
 }: DateStartEndProps) {
   return (
     <>
-      <InfoDetailGroup>
+      <InfoDetailGroup label={label}>
         {dateStart && (
           <InfoDetail
             label={`Datum ${dateStart !== dateEnd ? 'van' : ''}`}

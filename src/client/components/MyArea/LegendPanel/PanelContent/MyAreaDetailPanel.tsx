@@ -1,5 +1,4 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
-
 import styled from 'styled-components';
 import {
   DatasetCategoryId,
@@ -15,6 +14,7 @@ import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
+import MyArePanelContentWIOR from './Wior';
 
 const MyAreaPanelContent = styled.div`
   padding: ${themeSpacing(4, 0, 4, 0)};
@@ -68,6 +68,13 @@ function MyAreaPanelContentSwitch({
     case 'bedrijveninvesteringszones':
       return (
         <MyArePanelContentBedrijvenInvesteringsZones
+          datasetId={feature?.datasetId}
+          panelItem={feature}
+        />
+      );
+    case 'wior':
+      return (
+        <MyArePanelContentWIOR
           datasetId={feature?.datasetId}
           panelItem={feature}
         />

@@ -493,10 +493,11 @@ export function transformDsoApiListResponse(
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
+  const geometryKey = config.geometryKey || 'geometry';
 
   if (results && results.length) {
     for (const feature of results) {
-      if (feature.geometry?.coordinates) {
+      if (feature[geometryKey]?.coordinates) {
         const id = config.idKeyList
           ? encodeURIComponent(
               String(
@@ -513,7 +514,7 @@ export function transformDsoApiListResponse(
         };
 
         const hasShapeGeometry = POLYLINE_GEOMETRY_TYPES.includes(
-          feature.geometry.type
+          feature[geometryKey].type
         );
 
         if (hasShapeGeometry) {
@@ -522,14 +523,14 @@ export function transformDsoApiListResponse(
             properties.zIndex = config.zIndex;
           }
           // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
-          feature.geometry.coordinates = recursiveCoordinateSwap(
-            feature.geometry.coordinates
+          feature[geometryKey].coordinates = recursiveCoordinateSwap(
+            feature[geometryKey].coordinates
           );
         }
 
         collection.push({
           type: 'Feature',
-          geometry: feature.geometry,
+          geometry: feature[geometryKey],
           properties: createFeaturePropertiesFromPropertyFilterConfig(
             datasetId,
             properties,

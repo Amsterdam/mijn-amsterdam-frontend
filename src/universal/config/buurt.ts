@@ -234,6 +234,23 @@ export const DATASETS: DatasetCategories = {
       },
     },
   },
+  wior: {
+    title: 'Werk in de openbare ruimte (WIOR)',
+    datasets: {
+      wior: {
+        title: 'Werk in de openbare ruimte (WIOR)',
+        filters: {
+          indicatieKleinwerk: {
+            title: 'Kleine klus',
+            valueConfig: {
+              Null: { title: 'Nee' },
+              Yes: { title: 'Ja' },
+            },
+          },
+        },
+      },
+    },
+  },
   bedrijveninvesteringszones: {
     title: 'Bedrijveninvesteringszones',
     profileType: ['commercial', 'private-commercial'],

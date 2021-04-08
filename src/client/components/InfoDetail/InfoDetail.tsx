@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 export interface InfoDetailGroupProps {
   children: ComponentChildren;
+  label?: string;
 }
 
 export interface InfoDetailProps {
@@ -14,8 +15,13 @@ export interface InfoDetailProps {
   className?: string;
 }
 
-export function InfoDetailGroup({ children }: InfoDetailGroupProps) {
-  return <div className={styles.InfoDetailGroup}>{children}</div>;
+export function InfoDetailGroup({ children, label }: InfoDetailGroupProps) {
+  return (
+    <div className={styles.InfoDetailGroup}>
+      {!!label && <h4 className={styles.Label}>{label}</h4>}
+      <div className={styles.InfoDetailGroupContent}>{children}</div>
+    </div>
+  );
 }
 
 export default function InfoDetail({

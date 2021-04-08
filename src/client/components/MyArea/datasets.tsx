@@ -33,6 +33,7 @@ import {
   IconVolleybal,
   IconSportpark,
   IconZwembad,
+  IconWior,
 } from '../../assets/icons/map';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
@@ -99,6 +100,13 @@ export const datasetIcons: Record<
     evenementen: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
         <IconEvenement fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
+  wior: {
+    wior: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
+        <IconWior fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },

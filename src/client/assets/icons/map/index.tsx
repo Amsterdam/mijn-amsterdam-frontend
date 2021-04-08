@@ -29,3 +29,4 @@ export { ReactComponent as IconTafeltennis } from './tafeltennis.svg';
 export { ReactComponent as IconJeuDeBoules } from './jeuDeBoules.svg';
 export { ReactComponent as IconHardlopen } from './hardlopen.svg';
 export { ReactComponent as IconPin } from './pin.svg';
+export { ReactComponent as IconWior } from './pin.svg';
