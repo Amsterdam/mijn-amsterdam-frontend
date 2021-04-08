@@ -1,4 +1,5 @@
 import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
+import { format } from 'date-fns';
 import Supercluster from 'supercluster';
 import {
   DatasetCategoryId,
@@ -264,7 +265,13 @@ export const datasetEndpoints: Record<
     idKeyDetail: 'naam',
   },
   wior: {
-    listUrl: dsoApiListUrl('wior/wior'),
+    listUrl: () => {
+      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,indicatieKleinwerk&_pageSize=2000&datumEindeUitvoering[gte]=${format(
+        new Date(),
+        'yyyy-MM-dd'
+      )}`;
+      return url;
+    },
     detailUrl: 'https://api.data.amsterdam.nl/v1/wior/wior/',
     transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
