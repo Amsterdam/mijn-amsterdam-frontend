@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -264,5 +264,65 @@ describe('<Profile />', () => {
       />
     );
     expect(render(<Component />).asFragment()).toMatchSnapshot();
+  });
+
+  it('Shows foreign nationalities', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            persoon: {
+              ...responseData.persoon,
+              nationaliteiten: [
+                {
+                  omschrijving: 'Armeense',
+                },
+                {
+                  omschrijving: 'Turkse',
+                },
+              ],
+            },
+          } as any)
+        )}
+      />
+    );
+    render(<Component />);
+    expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
+  });
+
+  it('Only shows dutch nationality', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            persoon: {
+              ...responseData.persoon,
+              nationaliteiten: [
+                {
+                  omschrijving: 'Nederlandse',
+                },
+                {
+                  omschrijving: 'Armeense',
+                },
+                {
+                  omschrijving: 'Turkse',
+                },
+              ],
+            },
+          } as any)
+        )}
+      />
+    );
+    render(<Component />);
+    expect(screen.getByText('Nederlandse')).toBeInTheDocument();
+    expect(screen.queryByText('Armeense, Turkse')).toBeNull();
   });
 });
