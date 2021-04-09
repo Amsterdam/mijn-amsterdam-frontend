@@ -25,17 +25,16 @@ import {
   IconSkate,
   IconSport,
   IconSporthal,
+  IconSportpark,
   IconSportveld,
   IconSportzaal,
   IconTafeltennis,
   IconTennis,
   IconVoetbal,
   IconVolleybal,
-  IconSportpark,
-  IconZwembad,
   IconWior,
+  IconZwembad,
 } from '../../assets/icons/map';
-import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
