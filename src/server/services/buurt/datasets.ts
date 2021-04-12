@@ -1,5 +1,5 @@
 import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
-import { format } from 'date-fns';
+import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import {
   DatasetCategoryId,
@@ -117,8 +117,6 @@ function dsoApiListUrl(
       apiUrl +
       (propertyNames.length ? ',' + propertyNames.join(',') : '') +
       pageSizeParam;
-
-    console.log('dsoApiUrl', dsoApiUrl);
 
     return dsoApiUrl;
   };
@@ -266,14 +264,14 @@ export const datasetEndpoints: Record<
   },
   wior: {
     listUrl: () => {
-      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,indicatieKleinwerk&_pageSize=2000&datumEindeUitvoering[gte]=${format(
+      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,datumStartUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
         new Date(),
         'yyyy-MM-dd'
       )}`;
       return url;
     },
     detailUrl: 'https://api.data.amsterdam.nl/v1/wior/wior/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformWiorApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.WIOR,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -388,7 +386,7 @@ export function transformHardlooproutesResponse(
   responseData: any
 ) {
   const features = transformDsoApiListResponse(datasetId, config, responseData);
-  //0-5 km, 6-10 km en meer dan10km.
+
   const groups = [
     { label: '0-5 km', range: [0, 6] },
     { label: '6-10 km', range: [6, 11] },
@@ -405,4 +403,49 @@ export function transformHardlooproutesResponse(
     }
   }
   return features;
+}
+
+export function transformWiorApiListResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = getApiEmbeddedResponse(datasetId, responseData);
+
+  if (!features) {
+    return [];
+  }
+
+  // Starts within
+  const dateRanges = [
+    { label: '0 Lopend', range: [-Infinity, 0] },
+    { label: '1 0-1-jaar', range: [0, 1] },
+    { label: '2 1-3-jaar', range: [1, 3] },
+    { label: '3 >3-jaar', range: [3, Infinity] },
+    { label: '4 Onbekend', range: [] },
+  ];
+
+  for (const feature of features) {
+    const start = feature.datumStartUitvoering;
+    if (start) {
+      const startsWithinYears =
+        differenceInDays(new Date(start), Date.now()) / 365;
+
+      if (startsWithinYears < 0) {
+        feature.datumStartUitvoering = dateRanges[0].label;
+      } else {
+        const dateRange = dateRanges.find((dateRange) => {
+          return (
+            startsWithinYears >= dateRange.range[0] &&
+            startsWithinYears < dateRange.range[1]
+          );
+        });
+        feature.datumStartUitvoering = dateRange?.label || 'Onbekend';
+      }
+    } else {
+      feature.datumStartUitvoering = 'Onbekend';
+    }
+  }
+
+  return transformDsoApiListResponse(datasetId, config, { features });
 }

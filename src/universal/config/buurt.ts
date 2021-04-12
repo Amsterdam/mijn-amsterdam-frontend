@@ -240,11 +240,14 @@ export const DATASETS: DatasetCategories = {
       wior: {
         title: 'Werk in de openbare ruimte (WIOR)',
         filters: {
-          indicatieKleinwerk: {
-            title: 'Kleine klus',
+          datumStartUitvoering: {
+            title: 'Aanvang werkzaamheden',
             valueConfig: {
-              Null: { title: 'Nee' },
-              Yes: { title: 'Ja' },
+              '0 Lopend': { title: 'Lopend' },
+              '1 0-1-jaar': { title: '0-1 jaar' },
+              '2 1-3-jaar': { title: '1-3 jaar' },
+              '3 >3-jaar': { title: '>3 jaar' },
+              '4 Onbekend': { title: 'Onbekend' },
             },
           },
         },

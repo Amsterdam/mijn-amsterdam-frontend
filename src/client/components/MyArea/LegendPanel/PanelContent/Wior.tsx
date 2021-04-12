@@ -13,7 +13,7 @@ export default function MyArePanelContentWIOR({
 }: MyArePanelContentWIORProps) {
   return (
     <GenericBase
-      title={panelItem.wiorNummer}
+      title={`Projectnummer: ${panelItem.wiorNummer}`}
       supTitle="Werk in de openbare ruimte (WIOR)"
     >
       {!!panelItem.projectnaam && (
@@ -27,22 +27,6 @@ export default function MyArePanelContentWIOR({
           label="Geplande uitvoering"
           dateStart={panelItem.datumStartUitvoering}
           dateEnd={panelItem.datumEindeUitvoering}
-        />
-      )}
-      {!!panelItem.typeWerkzaamheden && (
-        <InfoDetail
-          label="Soort werkzaamheden"
-          value={panelItem.typeWerkzaamheden}
-        />
-      )}
-      {!!panelItem.indicatieKleinwerk && (
-        <InfoDetail
-          label="Kleine klus"
-          value={
-            panelItem.indicatieKleinwerk === 'Yes'
-              ? 'Ja'
-              : panelItem.indicatieKleinwerk
-          }
         />
       )}
     </GenericBase>

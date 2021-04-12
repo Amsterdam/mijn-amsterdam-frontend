@@ -33,8 +33,6 @@ export function DatasetCategoryPanel() {
     });
   }, [profileType]);
 
-  console.log('datasets', Object.entries(DATASETS));
-
   return (
     <CategoryPanel id="skip-to-id-LegendPanel">
       {datasets
