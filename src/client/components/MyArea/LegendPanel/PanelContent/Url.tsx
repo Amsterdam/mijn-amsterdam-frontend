@@ -13,7 +13,10 @@ export default function Url({
   label = 'Meer informatie',
 }: UrlProps) {
   const theUrl =
-    url.startsWith('www.') || !url.startsWith('http') ? `https://${url}` : url;
+    url.startsWith('www.') ||
+    (!url.startsWith('http') && !url.startsWith('mailto'))
+      ? `https://${url}`
+      : url;
   return (
     <InfoDetail
       label={label}
