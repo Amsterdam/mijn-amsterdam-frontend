@@ -52,16 +52,13 @@ export function DatasetPropertyFilterPanel({
 }: DatasetPropertyFilterPanelProps) {
   const profileType = useProfileTypeValue();
   const valuesSorted = useMemo(
-    () =>
-      Object.entries(values)
-        .map(([propertyValue, count]) => {
-          let label = propertyValue;
-          if (property.transformValueLabel) {
-            label = property.transformValueLabel(label);
-          }
-          return [propertyValue, count, label] as const;
-        })
-        .sort(sortAlpha('2')), // Sort on label
+    () => {
+      const valueEntries = Object.entries(values);
+      if (property.sort) {
+        return valueEntries.sort(sortAlpha('0', property.sort));
+      }
+      return valueEntries;
+    }, // Sort on label
     [values, property]
   );
 
@@ -72,7 +69,7 @@ export function DatasetPropertyFilterPanel({
       )}
       {!valuesSorted.length && <span>laden...</span>}
       <PanelList>
-        {valuesSorted.map(([value, featureCount, label], index) => {
+        {valuesSorted.map(([value, featureCount], index) => {
           const { isChecked } = filterItemCheckboxState(
             activeFilters,
             datasetId,
@@ -84,7 +81,7 @@ export function DatasetPropertyFilterPanel({
             <PanelListItem key={`property-${datasetId + propertyName + index}`}>
               <DatasetControlCheckbox
                 isChecked={isChecked}
-                id={datasetId + propertyName + label}
+                id={datasetId + propertyName + value}
                 isDimmed={valuesRefined ? !valuesRefined[value] : false}
                 label={
                   <>
@@ -92,7 +89,7 @@ export function DatasetPropertyFilterPanel({
                       datasetId,
                       getIconChildIdFromValue(datasetId, value)
                     ) || ''}
-                    {label}
+                    {value}
                     {featureCount >= 1 ? (
                       <FeatureCount>
                         (
@@ -112,7 +109,7 @@ export function DatasetPropertyFilterPanel({
                   trackEventWithProfileType(
                     {
                       category: MY_AREA_TRACKING_CATEGORY,
-                      name: `Filter: ${propertyName} ${label}`,
+                      name: `Filter: ${propertyName} ${value}`,
                       action: isChecked ? 'Uit' : 'Aan',
                     },
                     profileType

@@ -418,11 +418,11 @@ export function transformWiorApiListResponse(
 
   // Starts within
   const dateRanges = [
-    { label: '0 Lopend', range: [-Infinity, 0] },
-    { label: '1 0-1-jaar', range: [0, 1] },
-    { label: '2 1-3-jaar', range: [1, 3] },
-    { label: '3 >3-jaar', range: [3, Infinity] },
-    { label: '4 Onbekend', range: [] },
+    { label: 'Lopend', range: [-Infinity, 0] },
+    { label: '0-1 jaar', range: [0, 1] },
+    { label: '1-3 jaar', range: [1, 3] },
+    { label: '>3 jaar', range: [3, Infinity] },
+    { label: 'Onbekend', range: [] },
   ];
 
   for (const feature of features) {

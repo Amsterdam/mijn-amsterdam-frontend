@@ -31,9 +31,9 @@ export interface DatasetProperty {
   values?: DatasetPropertyValueWithCount;
   valuesRefined?: DatasetPropertyValueWithCount;
   valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>; // The key of the valueConfig should always start with a cappital letter as the values are Capitalized on the BFF
-  title?: string;
   excludeValues?: string[];
-  transformValueLabel?: (value: any) => any;
+  title?: string;
+  sort?: 'asc' | 'desc';
 }
 
 export type DatasetPropertyFilter = Record<
@@ -71,10 +71,12 @@ export const DATASETS: DatasetCategories = {
         title: 'Afvalcontainers',
         filters: {
           fractie_omschrijving: {
+            sort: 'asc',
             excludeValues: excludeFractieOmschrijving,
           },
           geadopteerd_ind: {
             title: 'Geadopteerd',
+            sort: 'asc',
             valueConfig: {
               True: { title: 'Ja' },
               Undefined: { title: 'Nee' },
@@ -92,7 +94,9 @@ export const DATASETS: DatasetCategories = {
       parkeerzones: {
         title: 'Parkeervergunningen',
         filters: {
-          gebiedsnaam: {},
+          gebiedsnaam: {
+            sort: 'asc',
+          },
         },
       },
       parkeerzones_uitzondering: {
@@ -108,9 +112,11 @@ export const DATASETS: DatasetCategories = {
         filters: {
           onderwerp: {
             title: 'Onderwerp',
+            sort: 'asc',
           },
           categorie: {
             title: 'Categorie',
+            sort: 'asc',
           },
         },
       },
@@ -129,18 +135,21 @@ export const DATASETS: DatasetCategories = {
         filters: {
           indicatieStadspas: {
             title: 'Stadspasvergoeding jeugd',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
           },
           indicatieAangepastSporten: {
             title: 'Aangepast sporten',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
           },
           typeSport: {
             title: 'Sport',
+            sort: 'asc',
           },
         },
       },
@@ -151,12 +160,14 @@ export const DATASETS: DatasetCategories = {
         filters: {
           indicatieToegankelijkMindervaliden: {
             title: 'Toegankelijk voor minder validen',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
           },
           indicatieVoorzieningenMindervaliden: {
             title: 'Voorzieningen voor minder validen',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
@@ -168,15 +179,18 @@ export const DATASETS: DatasetCategories = {
         filters: {
           type: {
             title: 'Type',
+            sort: 'asc',
           },
           indicatieToegankelijkMindervaliden: {
             title: 'Toegankelijk voor minder validen',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
           },
           indicatieVoorzieningenMindervaliden: {
             title: 'Voorzieningen voor minder validen',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Nee' },
             },
@@ -187,19 +201,21 @@ export const DATASETS: DatasetCategories = {
         title: 'Openbare sportplek',
         filters: {
           sportvoorziening: {
-            // title: 'Sportvoorziening',
+            sort: 'asc',
             valueConfig: {
               Null: { title: 'Onbekend' },
             },
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Onbekend' },
             },
           },
           soortLocatie: {
             title: 'Soort locatie',
+            sort: 'asc',
             valueConfig: {
               '': { title: 'Onbekend' },
             },
@@ -211,6 +227,7 @@ export const DATASETS: DatasetCategories = {
         filters: {
           lengte: {
             title: 'Lengte',
+            sort: 'asc',
           },
         },
       },
@@ -220,12 +237,14 @@ export const DATASETS: DatasetCategories = {
         filters: {
           sportfunctie: {
             title: '',
+            sort: 'asc',
             valueConfig: {
               Null: { title: 'Overig' },
             },
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
+            sort: 'asc',
             valueConfig: {
               Null: { title: 'Onbekend' },
             },
@@ -243,11 +262,11 @@ export const DATASETS: DatasetCategories = {
           datumStartUitvoering: {
             title: 'Aanvang werkzaamheden',
             valueConfig: {
-              '0 Lopend': { title: 'Lopend' },
-              '1 0-1-jaar': { title: '0-1 jaar' },
-              '2 1-3-jaar': { title: '1-3 jaar' },
-              '3 >3-jaar': { title: '>3 jaar' },
-              '4 Onbekend': { title: 'Onbekend' },
+              Lopend: { title: 'Lopende werkzaamheden' },
+              '0-1 jaar': { title: 'Binnen 1 jaar' },
+              '1-3 jaar': { title: 'Over 1 tot 3 jaar' },
+              '>3 jaar': { title: 'Over meer dan 3 jaar' },
+              Onbekend: { title: 'Onbekend' },
             },
           },
         },

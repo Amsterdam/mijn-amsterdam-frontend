@@ -221,9 +221,7 @@ export function createDynamicFilterConfig(
       }
 
       // Get property value from object.filters or from object itself
-      const value = capitalizeFirstLetter(
-        String((feature?.properties || feature)[propertyName])
-      );
+      const value = capitalizeFirstLetter(String(featureProps[propertyName]));
 
       // Check if value is excluded
       if (filterConfig[propertyName]?.excludeValues?.includes(value)) {
@@ -232,13 +230,24 @@ export function createDynamicFilterConfig(
 
       if (!filters[propertyName]) {
         const values: DatasetPropertyValueWithCount = {};
-        // Set incoming values to 0
+
+        // Pre-fill the filters with property names from the value config so we can maintain order in which the properties
+        // defined in the valueConfig are maintained.
+        if (filterConfig[propertyName].valueConfig) {
+          for (const [value, { title }] of Object.entries(
+            filterConfig[propertyName].valueConfig!
+          )) {
+            values[title || value] = 0;
+          }
+        }
+        // Reset the count of existing values encountered in the passed filter config
         if (filterConfig[propertyName].values) {
           // Assumes value is already capitalized;
           for (const value of Object.keys(filterConfig[propertyName].values!)) {
             values[value] = 0;
           }
         }
+
         filters[propertyName] = {
           values,
         };
@@ -295,8 +304,13 @@ export function refineFilterSelection(
     for (const [propertyName, propertyFilterConfig] of Object.entries(
       filters
     )) {
+      const filterConfigPayload = filters;
       if (propertyFilterConfig.values) {
-        const refined = createDynamicFilterConfig(datasetId, features, filters);
+        const refined = createDynamicFilterConfig(
+          datasetId,
+          features,
+          filterConfigPayload
+        );
 
         if (refined[propertyName]) {
           filtersRefined[datasetId][propertyName].valuesRefined =
