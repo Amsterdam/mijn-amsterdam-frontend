@@ -20,7 +20,7 @@ export const FeatureToggle = {
   kvkActive: true,
   residentCountActive: true,
   sportDatasetsActive: true,
-  wiorDatasetActive: !IS_PRODUCTION,
+  wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
   siaActive: !IS_AP,
