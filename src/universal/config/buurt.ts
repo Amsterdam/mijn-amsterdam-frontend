@@ -254,6 +254,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   wior: {
+    isDisabled: !FeatureToggle.wiorDatasetActive,
     title: 'Werk in de openbare ruimte (WIOR)',
     datasets: {
       wior: {
