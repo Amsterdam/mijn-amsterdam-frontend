@@ -603,7 +603,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 4',
     productSpecific: 'lening',
   },
-  '175668': {
+  '175689': {
     omschrijving: 'Tozo 4 Hersteltermijn',
     documentTitle: 'Brief meer informatie',
     stepType: 'herstelTermijn',
