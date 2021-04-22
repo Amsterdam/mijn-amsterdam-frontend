@@ -165,8 +165,8 @@ export default function VergunningDetail() {
               <InfoDetail
                 label="Vanaf"
                 value={
-                  (VergunningItem?.dateFrom
-                    ? defaultDateFormat(VergunningItem.dateFrom)
+                  (VergunningItem?.dateStart
+                    ? defaultDateFormat(VergunningItem.dateStart)
                     : '-') +
                   (VergunningItem?.timeStart
                     ? ' - ' + VergunningItem.timeStart

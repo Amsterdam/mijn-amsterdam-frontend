@@ -23,7 +23,7 @@ export interface VergunningSource {
   identifier: string;
   caseType: string;
   dateRequest: string;
-  dateFrom: string | null;
+  dateStart: string | null;
   dateEnd: string | null; // datum t/m
   timeStart: string | null;
   timeEnd: string | null;
