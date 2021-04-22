@@ -151,15 +151,22 @@ export default function Profile() {
                     BRP.content?.persoon.datumVertrekUitNederland
                   )
                 : 'enige tijd'}{' '}
-              in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+              in de Basisregistratie Personen (BRP) met de melding ‘vertrokken –
+              onbekend waarheen’.
             </p>
             <p>
-              U kunt uw huidige adres doorgeven bij het Stadsloket.{' '}
+              Als u in de BRP staat met de melding ‘vertrokken – onbekend
+              waarheen’ bent u onvindbaar voor de overheid. De overheid
+              beschouwt u dan niet langer als inwoner van Nederland en u kunt
+              geen gebruik meer maken van overheidsdiensten. U krijgt
+              bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen
+              meer. Geef uw adres zo snel mogelijk door aan de gemeente.{' '}
               <LinkdInline
                 external={true}
+                aria-label="Meer informatie over de melding `vertrokken - onbekend waarheen`"
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
-                U moet hiervoor een afspraak maken.
+                Meer informatie
               </LinkdInline>
             </p>
           </Alert>
