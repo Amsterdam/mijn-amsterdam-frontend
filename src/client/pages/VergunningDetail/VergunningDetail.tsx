@@ -169,7 +169,7 @@ export default function VergunningDetail() {
                     ? defaultDateFormat(VergunningItem.dateStart)
                     : '-') +
                   (VergunningItem?.timeStart
-                    ? ' - ' + VergunningItem.timeStart
+                    ? ' - ' + VergunningItem.timeStart + ' uur'
                     : '')
                 }
               />
@@ -180,7 +180,7 @@ export default function VergunningDetail() {
                     ? defaultDateFormat(VergunningItem.dateEnd)
                     : '-') +
                   (VergunningItem?.timeEnd
-                    ? ' - ' + VergunningItem.timeEnd
+                    ? ' - ' + VergunningItem.timeEnd + ' uur'
                     : '')
                 }
               />

@@ -305,8 +305,8 @@ Array [
     },
     "location": "Reguliersdwarsstraat 63 1012AA",
     "status": "Afgehandeld",
-    "timeEnd": null,
-    "timeStart": null,
+    "timeEnd": "16:00",
+    "timeStart": "10:00",
     "title": "Slopen",
   },
   Object {
