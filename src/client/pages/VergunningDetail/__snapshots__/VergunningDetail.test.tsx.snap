@@ -121,7 +121,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
             <span
               class="Value"
             >
-              02 juli 2020
+              02 juli 2020 - 10:00 uur
             </span>
           </p>
           <p
@@ -135,7 +135,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
             <span
               class="Value"
             >
-              02 juli 2020
+              02 juli 2020 - 16:00 uur
             </span>
           </p>
         </div>
