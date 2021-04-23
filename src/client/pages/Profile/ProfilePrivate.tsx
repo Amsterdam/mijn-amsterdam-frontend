@@ -155,12 +155,12 @@ export default function Profile() {
               Onbekend Waarheen (VOW)’.
             </p>
             <p>
-              Als u in de BRP staat met de melding ‘vertrokken – onbekend
-              waarheen’ bent u onvindbaar voor de overheid. De overheid
-              beschouwt u dan niet langer als inwoner van Nederland en u kunt
-              geen gebruik meer maken van overheidsdiensten. U krijgt
-              bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen
-              meer. Geef uw adres zo snel mogelijk door aan de gemeente.{' '}
+              Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen
+              (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u
+              dan niet langer als inwoner van Nederland en u kunt geen gebruik
+              meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen
+              paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres
+              zo snel mogelijk door aan de gemeente.{' '}
               <LinkdInline
                 external={true}
                 aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
