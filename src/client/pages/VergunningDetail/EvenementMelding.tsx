@@ -38,7 +38,7 @@ export function EvenementMelding({
             (vergunning?.dateStart
               ? defaultDateFormat(vergunning.dateStart)
               : '-') +
-            (vergunning?.timeStart ? ' - ' + vergunning.timeStart : '')
+            (vergunning?.timeStart ? ` - ${vergunning.timeStart} uur` : '')
           }
         />
         <InfoDetail
@@ -46,7 +46,8 @@ export function EvenementMelding({
           value={
             (vergunning?.dateEnd
               ? defaultDateFormat(vergunning.dateEnd)
-              : '-') + (vergunning?.timeEnd ? ' - ' + vergunning.timeEnd : '')
+              : '-') +
+            (vergunning?.timeEnd ? ` - ${vergunning.timeEnd} uur` : '')
           }
         />
       </InfoDetailGroup>

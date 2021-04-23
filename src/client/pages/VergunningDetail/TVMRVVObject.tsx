@@ -21,7 +21,7 @@ export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
             (vergunning?.dateStart
               ? defaultDateFormat(vergunning.dateStart)
               : '-') +
-            (vergunning?.timeStart ? ' - ' + vergunning.timeStart : '')
+            (vergunning?.timeStart ? ` - ${vergunning.timeStart} uur` : '')
           }
         />
         <InfoDetail
@@ -29,7 +29,8 @@ export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
           value={
             (vergunning?.dateEnd
               ? defaultDateFormat(vergunning.dateEnd)
-              : '-') + (vergunning?.timeEnd ? ' - ' + vergunning.timeEnd : '')
+              : '-') +
+            (vergunning?.timeEnd ? ` - ${vergunning.timeEnd} uur` : '')
           }
         />
       </InfoDetailGroup>
