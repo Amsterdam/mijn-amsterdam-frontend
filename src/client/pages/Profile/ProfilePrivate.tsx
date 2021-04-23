@@ -151,8 +151,8 @@ export default function Profile() {
                     BRP.content?.persoon.datumVertrekUitNederland
                   )
                 : 'enige tijd'}{' '}
-              in de Basisregistratie Personen (BRP) met de melding ‘vertrokken –
-              onbekend waarheen’.
+              in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken
+              Onbekend Waarheen (VOW)’.
             </p>
             <p>
               Als u in de BRP staat met de melding ‘vertrokken – onbekend
@@ -163,7 +163,7 @@ export default function Profile() {
               meer. Geef uw adres zo snel mogelijk door aan de gemeente.{' '}
               <LinkdInline
                 external={true}
-                aria-label="Meer informatie over de melding `vertrokken - onbekend waarheen`"
+                aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
                 Meer informatie

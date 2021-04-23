@@ -144,8 +144,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
-      title: 'Vertrokken - onbekend waarheen',
-      description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
+      title: 'Vertrokken Onbekend Waarheen (VOW)',
+      description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
         to: AppRoutes.BRP,
         title: 'Meer informatie',
