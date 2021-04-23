@@ -248,14 +248,14 @@ Array [
   Object {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "U staat sinds 01 januari 1967 in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
+    "description": "U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
     "id": "brpVertrokkenOnbekendWaarheen",
     "isAlert": true,
     "link": Object {
       "title": "Meer informatie",
       "to": "/persoonlijke-gegevens",
     },
-    "title": "Vertrokken - onbekend waarheen",
+    "title": "Vertrokken Onbekend Waarheen (VOW)",
   },
 ]
 `;
