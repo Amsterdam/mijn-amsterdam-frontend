@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
+exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
     class="Page DetailPage"

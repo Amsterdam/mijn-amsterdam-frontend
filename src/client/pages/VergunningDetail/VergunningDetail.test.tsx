@@ -18,13 +18,6 @@ const testState = {
   },
 };
 
-const testState2 = {
-  VERGUNNINGEN: {
-    status: 'OK',
-    content: [],
-  },
-};
-
 function state(state: any) {
   function initializeState(snapshot: MutableSnapshot) {
     snapshot.set(appStateAtom, state);
@@ -33,7 +26,7 @@ function state(state: any) {
   return initializeState;
 }
 
-describe('<Vergunningen />', () => {
+describe('<VergunningDetail />', () => {
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
     id: content[0].id,
   });
