@@ -1,125 +1,30 @@
-import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Vergunning,
-  VergunningDocument,
-} from '../../../server/services/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  directApiUrlByProfileType,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-import {
-  apiPristineResult,
-  ApiResponse,
-  apiSuccesResult,
-} from '../../../universal/helpers/api';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
-  DocumentList,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../components/InfoDetail/InfoDetail';
-import StatusLine, {
-  StatusLineItem,
-} from '../../components/StatusLine/StatusLine';
-import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { DocumentDetails } from './DocumentDetails';
+import { ERVV } from './ERVV';
+import { EvenementMelding } from './EvenementMelding';
+import { GPK } from './GPK';
+import { GPP } from './GPP';
+import { Omzettingsvergunning } from './Omzettingsvergunning';
+import { StatusLineItems } from './StatusLineItems';
+import { TVMRVVObject } from './TVMRVVObject';
 import styles from './VergunningDetail.module.scss';
-
-function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
-  const statusLineItems: StatusLineItem[] = useMemo(() => {
-    if (!VergunningItem) {
-      return [];
-    }
-
-    const isDone = VergunningItem.status === 'Afgehandeld';
-    return [
-      {
-        id: 'item-1',
-        status: 'Ontvangen',
-        datePublished: VergunningItem.dateRequest,
-        description: '',
-        documents: [],
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'item-2',
-        status: 'In behandeling',
-        datePublished: VergunningItem.dateRequest,
-        description: '',
-        documents: [],
-        isActive: !isDone,
-        isChecked: true,
-      },
-      {
-        id: 'item-3',
-        status: 'Afgehandeld',
-        datePublished: VergunningItem.dateDecision || '',
-        description: '',
-        documents: [],
-        isActive: isDone,
-        isChecked: isDone,
-      },
-    ];
-  }, [VergunningItem]);
-
-  return statusLineItems;
-}
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
-  // Set-up the documents api source
-  const [
-    {
-      data: { content: documents },
-      isLoading: isLoadingDocuments,
-    },
-    fetchDocuments,
-  ] = useDataApi<ApiResponse<VergunningDocument[]>>(
-    {
-      postpone: true,
-      transformResponse: ({ content }) => {
-        if (!content) {
-          return [];
-        }
-        return apiSuccesResult(
-          content.map((document: VergunningDocument) =>
-            // Some documents don't have titles, assign a default title.
-            Object.assign(document, { title: document.title || 'Document' })
-          )
-        );
-      },
-    },
-    apiPristineResult([])
-  );
   const { id } = useParams<{ id: string }>();
-  const profileType = useProfileTypeValue();
-  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
-  const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
-  const statusLineItems = useVergunningStatusLineItems(VergunningItem);
-  const documentsUrl = VergunningItem?.documentsUrl
-    ? directApiUrlByProfileType(VergunningItem?.documentsUrl, profileType)
-    : false;
-
-  // Fetch the documents for this Item
-  useEffect(() => {
-    if (documentsUrl) {
-      fetchDocuments({
-        url: documentsUrl,
-      });
-    }
-  }, [documentsUrl, fetchDocuments]);
+  const Vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
 
   return (
     <DetailPage>
@@ -131,7 +36,7 @@ export default function VergunningDetail() {
         }}
         isLoading={isLoading(VERGUNNINGEN)}
       >
-        {VergunningItem?.caseType || 'Vergunning'}
+        {Vergunning?.caseType || 'Vergunning'}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
@@ -143,81 +48,28 @@ export default function VergunningDetail() {
         {isLoading(VERGUNNINGEN) && (
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
-        {!isLoading(VERGUNNINGEN) && (
+        {!isLoading(VERGUNNINGEN) && Vergunning && (
           <>
-            <InfoDetail
-              label="Kenmerk"
-              value={VergunningItem?.identifier || '-'}
-            />
-            <InfoDetail
-              label="Soort vergunning"
-              value={VergunningItem?.caseType || '-'}
-            />
-            <InfoDetail
-              label="Omschrijving"
-              value={VergunningItem?.title || '-'}
-            />
-            <InfoDetail
-              label="Locatie"
-              value={VergunningItem?.location || '-'}
-            />
-            <InfoDetailGroup>
-              <InfoDetail
-                label="Vanaf"
-                value={
-                  (VergunningItem?.dateStart
-                    ? defaultDateFormat(VergunningItem.dateStart)
-                    : '-') +
-                  (VergunningItem?.timeStart
-                    ? ' - ' + VergunningItem.timeStart + ' uur'
-                    : '')
-                }
-              />
-              <InfoDetail
-                label="Tot en met"
-                value={
-                  (VergunningItem?.dateEnd
-                    ? defaultDateFormat(VergunningItem.dateEnd)
-                    : '-') +
-                  (VergunningItem?.timeEnd
-                    ? ' - ' + VergunningItem.timeEnd + ' uur'
-                    : '')
-                }
-              />
-            </InfoDetailGroup>
-            {!!VergunningItem?.decision && (
-              <InfoDetail label="Resultaat" value={VergunningItem.decision} />
+            {Vergunning.caseType === 'TVM - RVV - Object' && (
+              <TVMRVVObject vergunning={Vergunning} />
             )}
-
-            <InfoDetail
-              el="div"
-              label="Documenten"
-              value={
-                isLoadingDocuments ? (
-                  <LoadingContent
-                    barConfig={[
-                      ['100%', '2rem', '1rem'],
-                      ['100%', '2rem', '1rem'],
-                    ]}
-                  />
-                ) : !!documents?.length ? (
-                  <DocumentList documents={documents} isExpandedView={true} />
-                ) : (
-                  <span>Geen documenten beschikbaar</span>
-                )
-              }
-            />
+            {Vergunning.caseType === 'GPK' && <GPK vergunning={Vergunning} />}
+            {Vergunning.caseType === 'GPP' && <GPP vergunning={Vergunning} />}
+            {Vergunning.caseType === 'E-RVV' && (
+              <ERVV vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === 'Omzettingsvergunning' && (
+              <Omzettingsvergunning vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === 'EvenementMelding' && (
+              <EvenementMelding vergunning={Vergunning} />
+            )}
+            <DocumentDetails vergunning={Vergunning} />
           </>
         )}
       </PageContent>
-      {!!statusLineItems.length && (
-        <StatusLine
-          className={styles.VergunningStatus}
-          trackCategory={`Vergunningen detail / status`}
-          items={statusLineItems}
-          showToggleMore={false}
-          id={`vergunning-detail-${id}`}
-        />
+      {!isLoading(VERGUNNINGEN) && Vergunning && (
+        <StatusLineItems vergunning={Vergunning} />
       )}
     </DetailPage>
   );

@@ -107,12 +107,12 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                  Soort vergunning
+                  Kenmerk
                 </th>
                 <th
                   class="DisplayProp"
                 >
-                  Kenmerk
+                  Soort vergunning
                 </th>
                 <th
                   class="DisplayProp"
@@ -141,7 +141,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597197
                   </a>
                 </td>
                 <td
@@ -150,10 +150,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597197
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -188,7 +188,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597196
                   </a>
                 </td>
                 <td
@@ -197,10 +197,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597196
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -235,7 +235,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597195
                   </a>
                 </td>
                 <td
@@ -244,10 +244,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597195
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -282,7 +282,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597194
                   </a>
                 </td>
                 <td
@@ -291,10 +291,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597194
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -329,7 +329,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597193
                   </a>
                 </td>
                 <td
@@ -338,10 +338,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597193
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -376,7 +376,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1592761
                   </a>
                 </td>
                 <td
@@ -385,10 +385,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1592761
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -423,7 +423,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1592552
                   </a>
                 </td>
                 <td
@@ -432,10 +432,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1592552
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -470,7 +470,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1592521
                   </a>
                 </td>
                 <td
@@ -479,10 +479,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1592521
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -495,6 +495,392 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     03 mei 2020
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible SectionCollapsibleCurrent"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Voorlopige vergunningen en ontheffingen
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Kenmerk
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Aangevraagd
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/1515509663"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1597204
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    24 juni 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/3607311896"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1597203
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    24 juni 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/926876057"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1597202
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    24 juni 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/3240785464"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1597199
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    24 juni 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/2952768564"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1595179
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    17 juni 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/2618219588"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/615500
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    31 december 2019
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/detail/4195945502"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/20/1597205
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    TVM - RVV - Object
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    13 juni 2019
                   </span>
                 </td>
               </tr>
@@ -540,12 +926,12 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                  Soort vergunning
+                  Kenmerk
                 </th>
                 <th
                   class="DisplayProp"
                 >
-                  Kenmerk
+                  Soort vergunning
                 </th>
                 <th
                   class="DisplayProp"
@@ -574,7 +960,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597204
                   </a>
                 </td>
                 <td
@@ -583,10 +969,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597204
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -621,7 +1007,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597203
                   </a>
                 </td>
                 <td
@@ -630,10 +1016,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597203
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -668,7 +1054,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597202
                   </a>
                 </td>
                 <td
@@ -677,10 +1063,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597202
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -715,7 +1101,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597199
                   </a>
                 </td>
                 <td
@@ -724,10 +1110,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597199
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -762,7 +1148,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1595179
                   </a>
                 </td>
                 <td
@@ -771,10 +1157,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1595179
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -809,7 +1195,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/615500
                   </a>
                 </td>
                 <td
@@ -818,10 +1204,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/615500
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td
@@ -856,7 +1242,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    TVM - RVV - Object
+                    Z/20/1597205
                   </a>
                 </td>
                 <td
@@ -865,10 +1251,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Kenmerk:
+                    Soort vergunning:
                   </span>
                   <span>
-                    Z/20/1597205
+                    TVM - RVV - Object
                   </span>
                 </td>
                 <td

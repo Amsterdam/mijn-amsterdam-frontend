@@ -20,14 +20,14 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
 const DISPLAY_PROPS = {
-  caseType: 'Soort vergunning',
   identifier: 'Kenmerk',
+  caseType: 'Soort vergunning',
   dateRequest: 'Aangevraagd',
 };
 
 const DISPLAY_PROPS_HISTORY = {
-  caseType: 'Soort vergunning',
   identifier: 'Kenmerk',
+  caseType: 'Soort vergunning',
   decision: 'Resultaat',
 };
 
@@ -50,10 +50,16 @@ export default function Vergunningen() {
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
-    return addTitleLinkComponent(items, 'caseType');
+    return addTitleLinkComponent(items, 'identifier');
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
+    return vergunningen.filter(
+      (vergunning) => vergunning.status === 'Afgehandeld'
+    );
+  }, [vergunningen]);
+
+  const vergunningenCurrent = useMemo(() => {
     return vergunningen.filter(
       (vergunning) => vergunning.status === 'Afgehandeld'
     );
@@ -114,9 +120,29 @@ export default function Vergunningen() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
+        />
+      </SectionCollapsible>
+      <SectionCollapsible
+        id="SectionCollapsible-vergunningen-current"
+        title="Voorlopige vergunningen en ontheffingen"
+        hasItems={!!vergunningenCurrent.length}
+        startCollapsed={true}
+        className={styles.SectionCollapsibleCurrent}
+        isLoading={isLoading(VERGUNNINGEN)}
+        track={{
+          category:
+            'Vergunningen overzicht / Voorlopige vergunningen en ontheffingen',
+          name: 'Datatabel',
+        }}
+      >
+        <Table
+          className={styles.Table}
+          titleKey="identifier"
+          displayProps={DISPLAY_PROPS}
+          items={vergunningenCurrent}
         />
       </SectionCollapsible>
       <SectionCollapsible
@@ -134,7 +160,7 @@ export default function Vergunningen() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
           items={vergunningenPrevious}
         />

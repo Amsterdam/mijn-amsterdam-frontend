@@ -17,33 +17,78 @@ import { differenceInMonths } from 'date-fns';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
-export interface VergunningSource {
+export interface VergunningBase {
+  caseType: string;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
   title: string;
   identifier: string;
-  caseType: string;
   dateRequest: string;
-  dateStart: string | null;
-  dateEnd: string | null; // datum t/m
-  timeStart: string | null;
-  timeEnd: string | null;
-  isActual: boolean;
-  kenteken: string | null;
-  location: string | null;
   decision: string | null;
   dateDecision?: string | null;
+  isActual: boolean;
   documentsUrl: string | null;
-}
-
-export type VergunningenSourceData = {
-  content?: VergunningSource[];
-  status: 'OK' | 'ERROR';
-};
-
-export interface Vergunning extends VergunningSource {
   id: string;
   link: LinkProps;
 }
+
+export interface TVMRVVObject extends VergunningBase {
+  caseType: 'TVM - RVV - Object';
+  dateStart: string | null;
+  dateEnd: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
+  location: string | null;
+}
+
+export interface GPK extends VergunningBase {
+  caseType: 'GPK';
+  driverPassenger: 'driver' | 'passenger';
+  location: string | null;
+  requestReason: string | null;
+}
+
+export interface GPP extends VergunningBase {
+  caseType: 'GPP';
+  location: string | null;
+  kenteken: string | null;
+}
+
+export interface EvenementMelding extends VergunningBase {
+  caseType: 'EvenementMelding';
+  location: string | null;
+  visitorCount: number | null;
+  activities: string | null;
+  eventType: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
+export interface Omzettingsvergunning extends VergunningBase {
+  caseType: 'Omzettingsvergunning';
+  location: string | null;
+}
+
+export interface ERVV extends VergunningBase {
+  caseType: 'E-RVV';
+  dateStart: string | null;
+  dateEnd: string | null;
+  location: string | null;
+}
+
+export type Vergunning =
+  | TVMRVVObject
+  | GPK
+  | GPP
+  | EvenementMelding
+  | Omzettingsvergunning
+  | ERVV;
+
+export type VergunningenSourceData = {
+  content?: Vergunning[];
+  status: 'OK' | 'ERROR';
+};
 
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
@@ -103,9 +148,17 @@ export function createVergunningNotification(item: Vergunning) {
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
-  const dateEnd = new Date(
-    `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
-  );
+
+  // let dateEnd = item.dateEnd ? new Date(item.dateEnd) : new Date();
+
+  // switch (item.caseType) {
+  //   case 'EvenementenMelding':
+  //   case 'TVM - RVV - Object':
+  //     dateEnd = new Date(
+  //       `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
+  //     );
+  // }
+
   switch (true) {
     case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
       description = `Uw vergunningsaanvraag ${item.caseType} is niet verleend`;
@@ -125,10 +178,10 @@ export function createVergunningNotification(item: Vergunning) {
     case item.status === 'Afgehandeld':
       description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
       break;
-    case new Date() >= dateEnd:
-      title = 'Uw vergunning is verlopen';
-      description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
-      break;
+    // case new Date() >= dateEnd:
+    //   title = 'Uw vergunning is verlopen';
+    //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+    //   break;
   }
 
   return {
