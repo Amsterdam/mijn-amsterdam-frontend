@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd, { Button } from '../Button/Button';
@@ -47,7 +47,7 @@ export default function MyAreaHeader({
       {showCloseButton && (
         <Button
           onClick={() => {
-            history.goBack();
+            history.push(AppRoutes.ROOT);
           }}
         >
           Kaart sluiten
