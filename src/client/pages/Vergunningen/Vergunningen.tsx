@@ -8,12 +8,11 @@ import {
   Alert,
   ChapterIcon,
   Linkd,
-  // Linkd,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -54,12 +53,6 @@ export default function Vergunningen() {
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
-    return vergunningen.filter(
-      (vergunning) => vergunning.status === 'Afgehandeld'
-    );
-  }, [vergunningen]);
-
-  const vergunningenCurrent = useMemo(() => {
     return vergunningen.filter(
       (vergunning) => vergunning.status === 'Afgehandeld'
     );
@@ -121,26 +114,6 @@ export default function Vergunningen() {
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
-        />
-      </SectionCollapsible>
-      <SectionCollapsible
-        id="SectionCollapsible-vergunningen-current"
-        title="Voorlopige vergunningen en ontheffingen"
-        hasItems={!!vergunningenCurrent.length}
-        startCollapsed={true}
-        className={styles.SectionCollapsibleCurrent}
-        isLoading={isLoading(VERGUNNINGEN)}
-        track={{
-          category:
-            'Vergunningen overzicht / Voorlopige vergunningen en ontheffingen',
-          name: 'Datatabel',
-        }}
-      >
-        <Table
-          className={styles.Table}
-          titleKey="identifier"
-          displayProps={DISPLAY_PROPS}
-          items={vergunningenCurrent}
         />
       </SectionCollapsible>
       <SectionCollapsible
