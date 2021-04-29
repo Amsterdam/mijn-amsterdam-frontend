@@ -49,7 +49,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
       class="PageContent"
     >
       <p>
-        Hier ziet u een overzicht van uw aanvragen voor vergunningen en ontheffingen. Op dit moment ziet u hier uw aanvragen voor een RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een objectvergunning. Andere vergunningen komen er later bij.
+        Hier ziet u een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.
       </p>
       <p>
         <a

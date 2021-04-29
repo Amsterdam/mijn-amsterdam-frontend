@@ -86,9 +86,7 @@ export default function Vergunningen() {
       <PageContent>
         <p>
           Hier ziet u een overzicht van uw aanvragen voor vergunningen en
-          ontheffingen. Op dit moment ziet u hier uw aanvragen voor een
-          RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een
-          objectvergunning. Andere vergunningen komen er later bij.
+          ontheffingen bij gemeente Amsterdam.
         </p>
         <p>
           <Linkd
