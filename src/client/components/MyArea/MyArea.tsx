@@ -11,7 +11,6 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
@@ -30,6 +29,7 @@ import {
   WIDE_PANEL_WIDTH,
 } from './LegendPanel/PanelComponent';
 import { useLegendPanelCycle } from './LegendPanel/panelCycle';
+import { getQueryConfig } from './MyArea.hooks';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
@@ -90,16 +90,6 @@ function AttributionToggle() {
   return null;
 }
 
-interface QueryConfig {
-  datasetIds?: string;
-  centerMarkerLabel?: string;
-  centerMarkerCoordinate?: string;
-}
-
-function getQueryConfig(query: string): QueryConfig {
-  return Object.fromEntries(new URLSearchParams(query).entries());
-}
-
 export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
@@ -123,36 +113,34 @@ export default function MyArea({
   const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
-  const location = useLocation();
 
   // Params passed by query will override all other options
-  const customConfig = getQueryConfig(location.search);
+  const customConfig = useMemo(() => {
+    return getQueryConfig();
+  }, []);
 
   const mapContainerRef = useRef(null);
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
 
-  const centerMarkerLabel =
-    centerMarker?.label || customConfig.centerMarkerLabel || '';
-  const coordinate =
-    centerMarker?.latlng || customConfig.centerMarkerCoordinate || null;
+  const centerMarkerLabel = centerMarker?.label;
+  const centerMarkerLatLng = centerMarker?.latlng;
+
+  zoom = customConfig.zoom || zoom;
 
   const center = useMemo(() => {
     let center = DEFAULT_MAP_OPTIONS.center;
 
-    if (typeof coordinate === 'string') {
-      const [lat, lng] = coordinate.split(',').map((n) => parseFloat(n));
-      if (lat && lng) {
-        center = { lat, lng };
-      }
-    } else if (centerMarker) {
-      center = centerMarker.latlng;
+    if (customConfig.center) {
+      center = customConfig.center;
+    } else if (centerMarkerLatLng) {
+      center = centerMarkerLatLng;
     } else if (HOME.content?.latlng) {
       center = HOME.content?.latlng;
     }
 
     return center;
-  }, [coordinate, centerMarker, HOME.content]);
+  }, [centerMarkerLatLng, HOME.content, customConfig.center]);
 
   const mapOptions: Partial<
     L.MapOptions & { center: LatLngLiteral }
@@ -166,20 +154,6 @@ export default function MyArea({
     }
     return options;
   }, [center, zoom]);
-
-  const datasetIdsRequested = useMemo(() => {
-    if (customConfig.datasetIds) {
-      const ids = customConfig.datasetIds?.split(',');
-      if (ids?.length) {
-        return ids;
-      }
-    }
-    if (Array.isArray(datasetIds)) {
-      return datasetIds;
-    }
-    return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const mapLayers = useMemo(() => {
     return {
@@ -203,13 +177,10 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
-  const hasDatasetIdsToLoad =
-    !!datasetIdsRequested?.length || datasetIdsRequested === undefined;
-
   return (
     <ThemeProvider>
       <MyAreaContainer height={height}>
-        {hasDatasetIdsToLoad && <MaintenanceNotifications page="buurt" />}
+        <MaintenanceNotifications page="buurt" />
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset id="skip-to-id-Map">
@@ -221,14 +192,16 @@ export default function MyArea({
               options={mapOptions}
             >
               <AttributionToggle />
-              {!coordinate && HOME.content?.address && HOME.content?.latlng && (
-                <HomeIconMarker
-                  label={getFullAddress(HOME.content.address, true)}
-                  center={HOME.content?.latlng}
-                  zoom={zoom}
-                />
-              )}
-              {coordinate && mapOptions.center && (
+              {!centerMarkerLatLng &&
+                HOME.content?.address &&
+                HOME.content?.latlng && (
+                  <HomeIconMarker
+                    label={getFullAddress(HOME.content.address, true)}
+                    center={HOME.content?.latlng}
+                    zoom={zoom}
+                  />
+                )}
+              {centerMarkerLatLng && mapOptions.center && (
                 <CustomLatLonMarker
                   label={centerMarkerLabel || 'Gekozen locatie'}
                   center={mapOptions.center}
@@ -250,13 +223,13 @@ export default function MyArea({
                 topRight={
                   isNarrowScreen && (
                     <>
-                      {coordinate && mapOptions.center && (
+                      {centerMarkerLatLng && mapOptions.center && (
                         <MyAreaCustomLocationControlButton
                           zoom={zoom}
                           latlng={mapOptions.center}
                         />
                       )}
-                      {!coordinate &&
+                      {!centerMarkerLatLng &&
                         HOME.content?.address &&
                         HOME.content?.latlng && (
                           <HomeControlButton
@@ -271,13 +244,13 @@ export default function MyArea({
                 bottomRight={
                   isWideScreen && (
                     <>
-                      {coordinate && mapOptions.center && (
+                      {centerMarkerLatLng && mapOptions.center && (
                         <MyAreaCustomLocationControlButton
                           zoom={zoom}
                           latlng={mapOptions.center}
                         />
                       )}
-                      {!coordinate &&
+                      {!centerMarkerLatLng &&
                         HOME.content?.address &&
                         HOME.content?.latlng && (
                           <HomeControlButton
@@ -300,10 +273,7 @@ export default function MyArea({
                   )
                 }
               />
-
-              {hasDatasetIdsToLoad && (
-                <MyAreaDatasets datasetIds={datasetIdsRequested} />
-              )}
+              <MyAreaDatasets />
             </MyAreaMap>
             {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />

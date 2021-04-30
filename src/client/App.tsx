@@ -103,6 +103,8 @@ function AppAuthenticated() {
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
 
+  const [pathname, search] = redirectAfterLogin.split('?');
+
   return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
     <Switch>
       <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
@@ -114,15 +116,15 @@ function AppAuthenticated() {
         <Switch>
           <Redirect
             from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-            to={redirectAfterLogin}
+            to={{ pathname, search }}
           />
           <Redirect
             from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-            to={redirectAfterLogin}
+            to={{ pathname, search }}
           />
           <Redirect
             from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
-            to={redirectAfterLogin}
+            to={{ pathname, search }}
           />
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />

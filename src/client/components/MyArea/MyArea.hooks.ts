@@ -1,9 +1,13 @@
+import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LeafletEvent } from 'leaflet';
+import { LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   atom,
+  AtomEffect,
+  DefaultValue,
+  selector,
   useRecoilState,
   useRecoilValue,
   useResetRecoilState,
@@ -15,6 +19,7 @@ import {
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import {
+  ACTIVE_DATASET_IDS_INITIAL,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
@@ -38,19 +43,50 @@ const NO_DATA_ERROR_RESPONSE = {
   ],
 };
 
-const activeDatasetIdsAtom = atom<string[]>({
+const activeDatasetIdsDefaultValue = selector({
+  key: 'activeDatasetIds/Default',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    const defaultValue = queryConfig?.datasetIds?.length
+      ? queryConfig.datasetIds
+      : ACTIVE_DATASET_IDS_INITIAL;
+    return defaultValue;
+  },
+});
+
+const persistOnUnload_UNSTABLE: AtomEffect<any> = ({ onSet, setSelf }) => {
+  onSet((state, oldState) => {
+    // This will persist the state across page navigation as the default value is set upon unloading of the atom.
+    // The atom will not be re-initialized when used again so it appears we can't have 'dynamic' default values. For example a default values derived from URL params.
+    if (state instanceof DefaultValue) {
+      setSelf(oldState);
+    }
+  });
+};
+
+const activeDatasetIdsAtom = atom<DatasetId[]>({
   key: 'activeDatasetIds',
-  default: [],
+  default: activeDatasetIdsDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetIds() {
   return useRecoilState(activeDatasetIdsAtom);
 }
 
+const activeDatasetFiltersDefaultValue = selector({
+  key: 'activeDatasetIdsDefaultValue',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    return queryConfig?.filters || {};
+  },
+});
+
 // The currently active (selected) filter set
 const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
   key: 'activeDatasetFilters',
-  default: {},
+  default: activeDatasetFiltersDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetFilters() {
@@ -209,33 +245,29 @@ type DatasetResponseContent = {
 };
 
 export function useFetchFeatures() {
-  const map = useMapInstance();
   const abortSignal = useRef<CancelTokenSource>();
 
   return useCallback(
     async (
       datasetIds: DatasetId[],
-      filters: DatasetFilterSelection | null
+      filters: DatasetFilterSelection | null,
+      zoom: number,
+      bbox: [number, number, number, number]
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
       abortSignal.current?.cancel();
 
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
-      const bounds = map.getBounds();
+
       try {
         const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
           data: {
             datasetIds,
             filters,
-            bbox: [
-              bounds.getWest(),
-              bounds.getSouth(),
-              bounds.getEast(),
-              bounds.getNorth(),
-            ],
-            zoom: map.getZoom(),
+            bbox,
+            zoom,
           },
           method: 'POST',
           cancelToken: tokenSource.token,
@@ -248,7 +280,7 @@ export function useFetchFeatures() {
       }
       return null;
     },
-    [map]
+    []
   );
 }
 
@@ -305,6 +337,7 @@ export function useControlItemChange() {
 
           break;
       }
+
       setActiveDatasetIds(datasetIds);
 
       // Remove the filters of inActive datasets
@@ -403,4 +436,21 @@ export function useResetMyAreaState() {
     resetLoadingFeatureAtom,
     resetSelectedFeatureAtom,
   ]);
+}
+
+export interface QueryConfig {
+  datasetIds?: DatasetId[];
+  filters?: DatasetFilterSelection;
+  zoom?: number;
+  center?: LatLngLiteral;
+}
+
+export function getQueryConfig(): QueryConfig {
+  return Object.fromEntries(
+    Array.from(new URLSearchParams(window.location.search).entries())
+      .map(([k, v]) => {
+        return [k, v ? JSON.parse(v) : undefined];
+      })
+      .filter(([, v]) => !!v)
+  );
 }
