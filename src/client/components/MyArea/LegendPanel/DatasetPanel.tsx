@@ -69,9 +69,11 @@ export function DatasetPanel({
   );
 
   const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
-  const initialState = hasFilters
-    ? CollapsedState.Expanded
-    : CollapsedState.Collapsed;
+
+  const initialState =
+    datasetId in activeFilters
+      ? CollapsedState.Expanded
+      : CollapsedState.Collapsed;
   return (
     <>
       {(!hasFilters || !isChecked) && datasetControl}

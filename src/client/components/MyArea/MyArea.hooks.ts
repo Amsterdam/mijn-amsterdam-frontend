@@ -3,6 +3,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   atom,
   AtomEffect,
@@ -18,6 +19,7 @@ import {
   MaPolylineFeature,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
+import { AppRoutes } from '../../../universal/config';
 import {
   ACTIVE_DATASET_IDS_INITIAL,
   DatasetFilterSelection,
@@ -109,18 +111,26 @@ interface LoadingFeature {
   isError?: boolean;
 }
 
+const loadingFeatureDefaultValue = selector({
+  key: 'loadingFeature/Default',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    const defaultValue = queryConfig?.loadingFeature
+      ? queryConfig?.loadingFeature
+      : null;
+    return defaultValue;
+  },
+});
+
 // The state of the feature currently / last indicated to be loaded
 export const loadingFeatureAtom = atom<LoadingFeature | null>({
   key: 'loadingFeature',
-  default: null,
+  default: loadingFeatureDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useLoadingFeature() {
   return useRecoilState(loadingFeatureAtom);
-}
-
-export function useSetLoadingFeature() {
-  return useSetRecoilState(loadingFeatureAtom);
 }
 
 type SelectedFeature = any;
@@ -246,19 +256,26 @@ type DatasetResponseContent = {
 
 export function useFetchFeatures() {
   const abortSignal = useRef<CancelTokenSource>();
-
+  const map = useMapInstance();
   return useCallback(
     async (
       datasetIds: DatasetId[],
-      filters: DatasetFilterSelection | null,
-      zoom: number,
-      bbox: [number, number, number, number]
+      filters: DatasetFilterSelection | null
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
       abortSignal.current?.cancel();
 
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
+
+      const mapBounds = map.getBounds();
+      const bbox: [number, number, number, number] = [
+        mapBounds.getWest(),
+        mapBounds.getSouth(),
+        mapBounds.getEast(),
+        mapBounds.getNorth(),
+      ];
+      const zoom = map.getZoom();
 
       try {
         const response = await axios({
@@ -403,9 +420,15 @@ export function useFilterControlItemChange() {
 
       activeFiltersUpdate[datasetId] = {
         ...activeFiltersUpdate[datasetId],
-        [propertyName]: { values: filterValues },
       };
-
+      if (Object.keys(filterValues).length) {
+        activeFiltersUpdate[datasetId][propertyName] = { values: filterValues };
+      } else if (propertyName in activeFiltersUpdate[datasetId]) {
+        delete activeFiltersUpdate[datasetId][propertyName];
+      }
+      if (!Object.keys(activeFiltersUpdate[datasetId]).length) {
+        delete activeFiltersUpdate[datasetId];
+      }
       setActiveFilters(activeFiltersUpdate);
     },
     [activeFilters, setActiveFilters]
@@ -443,6 +466,7 @@ export interface QueryConfig {
   filters?: DatasetFilterSelection;
   zoom?: number;
   center?: LatLngLiteral;
+  loadingFeature?: { id: string; datasetId: DatasetId };
 }
 
 export function getQueryConfig(): QueryConfig {
@@ -453,4 +477,34 @@ export function getQueryConfig(): QueryConfig {
       })
       .filter(([, v]) => !!v)
   );
+}
+
+export function useReflectUrlState() {
+  const map = useMapInstance();
+  const history = useHistory();
+
+  const [activeDatasetIds] = useActiveDatasetIds();
+  const [activeFilters] = useActiveDatasetFilters();
+  const [loadingFeature] = useLoadingFeature();
+
+  const loadingFeatureStr =
+    loadingFeature && !loadingFeature?.isError
+      ? JSON.stringify(loadingFeature)
+      : null;
+  const datasetIdsStr = activeDatasetIds.length
+    ? JSON.stringify(activeDatasetIds)
+    : '';
+  const filtersStr = Object.entries(activeFilters).length
+    ? JSON.stringify(activeFilters)
+    : '';
+
+  useEffect(() => {
+    const url = `${
+      AppRoutes.BUURT
+    }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
+      map.getCenter()
+    )}&loadingFeature=${loadingFeatureStr}`;
+
+    history.replace(url);
+  }, [datasetIdsStr, filtersStr, loadingFeatureStr, history, map]);
 }

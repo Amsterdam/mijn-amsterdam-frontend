@@ -111,7 +111,6 @@ export default function MyAreaDetailPanel() {
   }
 
   const datasetCategoryId = getDatasetCategoryId(selectedFeature.datasetId);
-  // const isLoading = selectedFeature.id !== loadingFeature.id;
 
   return (
     <MyAreaPanelContent>

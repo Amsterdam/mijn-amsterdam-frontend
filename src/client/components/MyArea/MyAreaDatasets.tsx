@@ -1,18 +1,15 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
-import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/buurt';
-import { useWhyDidYouUpdate } from '../../hooks/useWhyDidYouUpdate';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import {
   useActiveDatasetFilters,
@@ -20,6 +17,7 @@ import {
   useDatasetFilterSelection,
   useFetchFeatures,
   useOnMarkerClick,
+  useReflectUrlState,
   useSelectedFeatureCSS,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
@@ -28,7 +26,9 @@ import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 export function MyAreaDatasets() {
   const map = useMapInstance();
-  const history = useHistory();
+
+  useReflectUrlState();
+
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
@@ -49,46 +49,17 @@ export function MyAreaDatasets() {
   ).callback;
 
   const fetchFeatures = useFetchFeatures();
-
   const [activeDatasetIds] = useActiveDatasetIds();
   const [activeFilters] = useActiveDatasetFilters();
-
-  const activeDatasetIdsStr = activeDatasetIds.join(',');
-  const activeFiltersStr = JSON.stringify(activeFilters);
-
-  // console.log('INIITALALAL', activeDatasetIds, activeFilters);
 
   const fetch = useCallback(
     async (
       activeDatasetIds: DatasetId[],
       activeFilters: DatasetFilterSelection
     ) => {
-      const datasetIdsStr = activeDatasetIds.length
-        ? JSON.stringify(activeDatasetIds)
-        : '';
-      const filtersStr = Object.entries(activeFilters).length
-        ? JSON.stringify(activeFilters)
-        : '';
-      const mapBounds = map.getBounds();
-      const bounds: [number, number, number, number] = [
-        mapBounds.getWest(),
-        mapBounds.getSouth(),
-        mapBounds.getEast(),
-        mapBounds.getNorth(),
-      ];
-      const url = `${
-        AppRoutes.BUURT
-      }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
-        map.getCenter()
-      )}`;
-
-      history.replace(url);
-
       const responseContent = await fetchFeatures(
         activeDatasetIds,
-        activeFilters,
-        map.getZoom(),
-        bounds
+        activeFilters
       );
 
       if (responseContent) {
@@ -108,13 +79,7 @@ export function MyAreaDatasets() {
       }
       setFeaturesLoadingDebounced(false);
     },
-    [
-      fetchFeatures,
-      setFilterSelection,
-      setFeaturesLoadingDebounced,
-      history,
-      map,
-    ]
+    [fetchFeatures, setFilterSelection, setFeaturesLoadingDebounced]
   );
 
   const fetchDebounced = useDebouncedCallback(fetch, 100);
@@ -135,9 +100,7 @@ export function MyAreaDatasets() {
 
   // Effect fetches everytime datasets are de/activated or filter selection is changed.
   useEffect(() => {
-    const activeDatasetIds = activeDatasetIdsStr.split(',');
     if (activeDatasetIds.length) {
-      const activeFilters = JSON.parse(activeFiltersStr);
       setFeaturesLoadingDebounced(true);
       fetchDebounced.callback(activeDatasetIds, activeFilters);
     } else {
@@ -151,8 +114,8 @@ export function MyAreaDatasets() {
     setClusterFeatures,
     setPolylineFeatures,
     setErrorResults,
-    activeDatasetIdsStr,
-    activeFiltersStr,
+    activeDatasetIds,
+    activeFilters,
     setFeaturesLoadingDebounced,
   ]);
 
