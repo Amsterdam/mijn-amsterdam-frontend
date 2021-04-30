@@ -1,4 +1,7 @@
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
+import {
+  defaultDateTimeFormat,
+  defaultDateFormat,
+} from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
 import { productName } from './focus-tozo-content';
@@ -11,10 +14,7 @@ const aanvraagLabels: FocusStepContent = {
     description: (document) =>
       `Wij hebben uw aanvraag ${
         document.productTitle
-      } ontvangen op ${dateFormat(
-        document.datePublished,
-        `dd MMMM 'om' HH.mm 'uur'`
-      )}`,
+      } ontvangen op ${defaultDateTimeFormat(document.datePublished)}`,
   },
   status: stepLabels.aanvraag,
   description: (document) =>

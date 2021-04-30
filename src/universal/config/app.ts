@@ -11,7 +11,6 @@ export const FeatureToggle = {
   focusUitkeringsspecificatiesActive: true,
   identiteitsbewijzenActive: true,
   tonkActive: true,
-  tozo4Active: !IS_PRODUCTION,
   eherkenningActive: true,
   vergunningenActive: true,
   cmsFooterActive: true,
@@ -21,8 +20,13 @@ export const FeatureToggle = {
   kvkActive: true,
   residentCountActive: true,
   sportDatasetsActive: true,
+  wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
+  siaActive: !IS_AP,
+  siaApiActive: !IS_AP,
+  aktesActive: !IS_AP,
+  milieuzoneRecentCasesActive: !IS_AP,
 };
 
 export const DAYS_KEEP_RECENT = 28;

@@ -1,0 +1,41 @@
+{
+  "content": [
+    {
+      "category": "Fietswrak",
+      "datePublished": "2021-03-02",
+      "dateModified": "2021-03-02",
+      "dateClosed": null,
+      "dateIncidentStart": "2021-03-02",
+      "dateIncidentEnd": "2021-03-02",
+      "status": "Gemeld",
+      "deadline": "2021-03-12",
+      "priority": "normal",
+      "description": "Er staat een fiets al meer dan een jaar op deze plek, met lekke banden etc.",
+      "identifier": "SIA-09786",
+      "address": "Bilderdijkstraat 157-3 1053KP Amsterdam",
+      "latlon": [52.3717228,4.8927377],
+      "email": "j.vandergroenen@gmail.com",
+      "phone": "0612312345",
+      "attachments": ["data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==", "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="]
+    },
+    {
+      "category": "Bouwwerkzaamheden",
+      "datePublished": "2021-03-02",
+      "dateModified": "2021-03-02",
+      "dateClosed": "2021-03-02",
+      "dateIncidentStart": "2021-03-02",
+      "dateIncidentEnd": "2021-03-02",
+      "status": "Afgesloten",
+      "deadline": "2021-03-12",
+      "priority": "high",
+      "description": "Ze zijn al 2 jaar aan het boren, ik ben het spuugzat!",
+      "identifier": "SIA-123123",
+      "address": "Bilderdijkstraat 157-3 1053KP Amsterdam",
+      "latlon": [52.3717228,4.8927377],
+      "email": "j.vandergroenen@gmail.com",
+      "phone": "0612312345",
+      "attachments": []
+    }
+  ],
+  "status": "OK"
+}

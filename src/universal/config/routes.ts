@@ -2,8 +2,10 @@ import { generatePath } from 'react-router-dom';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
+  HOME: '/',
   BURGERZAKEN: '/burgerzaken',
-  BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
+  'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+  'BURGERZAKEN/AKTE': '/burgerzaken/akte/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
@@ -16,11 +18,14 @@ export const AppRoutes: Record<string, string> = {
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
 
+  SIA: '/meldingen',
+  'SIA/DETAIL': '/meldingen/detail/:id',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
+  API2_LOGIN: '/api2/login',
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
@@ -31,6 +36,10 @@ export const AppRoutes: Record<string, string> = {
 };
 
 export const AppRoutesRedirect = [
+  {
+    from: '/burgerzaken/document/:id',
+    to: AppRoutes['BURGERZAKEN/ID-KAART'],
+  },
   {
     from: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
     to: AppRoutes['STADSPAS/AANVRAAG'],
@@ -74,7 +83,12 @@ export const AppRoutesRedirect = [
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
 ];
 
-export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
+export const PublicRoutes = [
+  AppRoutes.API_LOGIN,
+  AppRoutes.API1_LOGIN,
+  AppRoutes.API2_LOGIN,
+  AppRoutes.ACCESSIBILITY,
+];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
   (path) => !PublicRoutes.includes(path)

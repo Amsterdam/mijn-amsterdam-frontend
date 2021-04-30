@@ -3,6 +3,9 @@ import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { MyCase } from '../../universal/types/App.types';
+import { ExternalUrls } from '../../client/config/app';
+import { FeatureToggle } from '../../universal/config/app';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -25,9 +28,31 @@ interface MILIEUZONESourceData {
   message?: string;
 }
 
+function extractRecentCases(notifications: MyNotification[]) {
+  const cases: MyCase[] = [];
+  for (const notification of notifications) {
+    if (notification.id.endsWith('-M1')) {
+      const recentCase: MyCase = {
+        ...notification,
+        id: `${notification.id}-case`,
+        title: 'Milieuzone aanvraag / ontheffing',
+        link: {
+          ...(notification.link || {
+            to: ExternalUrls.SSO_MILIEUZONE || '/',
+            title: 'Mileuzone ontheffingen en aanvragen',
+          }),
+          rel: 'external noopener noreferrer',
+        },
+      };
+      cases.push(recentCase);
+    }
+  }
+  return cases;
+}
+
 function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map(notification => ({
+    ? notifications.map((notification) => ({
         ...notification,
         chapter: Chapters.MILIEUZONE,
       }))
@@ -50,10 +75,10 @@ function transformMILIEUZONEData(
   };
 }
 
-export async function fetchMILIEUZONE(
+async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  includeNotifications: boolean = false
+  includeGenerated: boolean = false
 ) {
   const response = await requestData<MILIEUZONEData>(
     getApiConfig('MILIEUZONE', {
@@ -63,7 +88,7 @@ export async function fetchMILIEUZONE(
     passthroughRequestHeaders
   );
 
-  if (!includeNotifications) {
+  if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
         ? omit(response.content, ['notifications'])
@@ -74,21 +99,30 @@ export async function fetchMILIEUZONE(
   return response;
 }
 
+export async function fetchMILIEUZONE(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return fetchSource(sessionID, passthroughRequestHeaders);
+}
+
 export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const MILIEUZONE = await fetchMILIEUZONE(
+  const MILIEUZONE = await fetchSource(
     sessionID,
     passthroughRequestHeaders,
     true
   );
+
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
-    if (MILIEUZONE.content.notifications) {
-      return apiSuccesResult({
-        notifications: MILIEUZONE.content.notifications,
-      });
-    }
+    return apiSuccesResult({
+      notifications: MILIEUZONE.content.notifications,
+      cases: FeatureToggle.milieuzoneRecentCasesActive
+        ? extractRecentCases(MILIEUZONE.content.notifications)
+        : [],
+    });
   }
   return apiDependencyError({ MILIEUZONE });
 }

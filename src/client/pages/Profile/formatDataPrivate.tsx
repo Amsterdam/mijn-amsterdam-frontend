@@ -3,6 +3,7 @@ import {
   defaultDateFormat,
   entries,
   getFullAddress,
+  hasDutchNationality,
 } from '../../../universal/helpers';
 import {
   Adres,
@@ -49,14 +50,21 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   ],
   nationaliteiten: [
     'Nationaliteit',
-    (nationaliteiten: BRPData['persoon']['nationaliteiten']) =>
-      nationaliteiten?.some(
-        ({ omschrijving }) => omschrijving === 'Nederlandse'
-      ) ? (
-        'Nederlandse'
-      ) : (
-        <>&mdash;</>
-      ),
+    (
+      nationaliteiten: BRPData['persoon']['nationaliteiten'],
+      _item,
+      BRPData
+    ) => {
+      if (!BRPData) {
+        return <>&mdash;</>;
+      }
+      if (hasDutchNationality(BRPData)) {
+        return 'Nederlandse';
+      }
+      return nationaliteiten
+        .map((nationaliteit) => nationaliteit.omschrijving)
+        .join(', ');
+    },
   ],
   omschrijvingBurgerlijkeStaat: [
     'Burgerlijke staat',

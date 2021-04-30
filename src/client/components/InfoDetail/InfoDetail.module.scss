@@ -1,27 +1,43 @@
 @import '../../styles/_global.scss';
 
+.Label {
+  padding-bottom: 0.4rem;
+  display: block;
+  margin: 0;
+}
+
+.Value {
+  color: $color-black;
+  display: block;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
 .InfoDetail {
   border-top: 0.1rem solid $color-neutral-grey2;
   padding-bottom: 2.5rem;
   padding-top: 1.6rem;
   color: $color-neutral-grey4;
   margin: 0;
-
-  .Label {
-    padding-bottom: .4rem;
-    display: block;
-  }
-
-  .Value {
-    color: $color-black;
-    display: block;
-    font-weight: 500;
-    font-size: 1.8rem;
-  }
 }
 
 .InfoDetailGroup {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  > .Label {
+    margin-top: 1.6rem;
+    font-weight: normal;
+    font-size: 1.6rem;
+    color: $color-neutral-grey4;
+  }
+}
+
+.InfoDetailGroupContent {
   display: flex;
+
+  .InfoDetail {
+    border-top: 0;
+  }
+
   > * {
     flex: 1;
   }

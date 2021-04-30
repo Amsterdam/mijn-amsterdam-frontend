@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BurgerzakenIDKaart /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Burgerzaken"
+          class="ChapterIcon"
+          fill="black"
+        >
+          burgerzaken.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/burgerzaken"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Burgerzaken
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Document
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <p
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Documentnummer
+        </span>
+        <span
+          class="Value"
+        >
+          PP57XKG54
+        </span>
+      </p>
+      <p
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Datum uitgifte
+        </span>
+        <span
+          class="Value"
+        >
+          15 oktober 2015
+        </span>
+      </p>
+      <p
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Geldig tot
+        </span>
+        <span
+          class="Value"
+        >
+          15 oktober 2025
+        </span>
+      </p>
+    </div>
+  </main>
+</DocumentFragment>
+`;

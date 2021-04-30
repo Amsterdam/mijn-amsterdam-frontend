@@ -25,16 +25,16 @@ import {
   IconSkate,
   IconSport,
   IconSporthal,
+  IconSportpark,
   IconSportveld,
   IconSportzaal,
   IconTafeltennis,
   IconTennis,
   IconVoetbal,
   IconVolleybal,
-  IconSportpark,
+  IconWior,
   IconZwembad,
 } from '../../assets/icons/map';
-import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
@@ -99,6 +99,13 @@ export const datasetIcons: Record<
     evenementen: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
         <IconEvenement fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
+  wior: {
+    wior: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.focus }}>
+        <IconWior fill={themeColors.tint.level7} />
       </DatasetIcon>
     ),
   },
@@ -342,13 +349,4 @@ export function getIconHtml(feature: MaPointFeature) {
 
   return renderToStaticMarkup(icon || iconDefault);
 }
-export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
-  parkeerzones: {
-    ...DEFAULT_POLYLINE_OPTIONS,
-    color: themeColors.supplement.yellow,
-  },
-  parkeerzones_uitzondering: {
-    ...DEFAULT_POLYLINE_OPTIONS,
-    color: themeColors.supplement.pink,
-  },
-};
+export const POLYLINE_DATASET_OPTIONS: Record<string, PolylineOptions> = {};

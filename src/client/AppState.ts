@@ -33,6 +33,8 @@ export const PRISTINE_APPSTATE: AppState = {
   ERFPACHT: apiPristineResult({ isKnown: false }),
   BELASTINGEN: apiPristineResult({ isKnown: true }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
+  AKTES: apiPristineResult([]),
+  SIA: apiPristineResult([]),
 
   // Related
   BRP: apiPristineResult(null),

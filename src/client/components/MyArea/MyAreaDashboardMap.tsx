@@ -1,18 +1,15 @@
 import { BaseLayer, Map } from '@amsterdam/arm-core';
 import { ThemeProvider } from '@amsterdam/asc-ui';
+import { LatLngLiteral } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
 import styled from 'styled-components';
-import { ChapterTitles } from '../../../universal/config';
-import { HOOD_ZOOM } from '../../../universal/config/buurt';
-import { getFullAddress } from '../../../universal/helpers/brp';
+import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
+import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { LatLngLiteral } from 'leaflet';
-import { isLoading } from '../../../universal/helpers';
+import { HomeIconMarker } from './MyAreaMarker';
 
 const DasboardMap = styled(Map)`
   position: absolute;

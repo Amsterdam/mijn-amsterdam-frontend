@@ -107,34 +107,38 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
       <div
         class="InfoDetailGroup"
       >
-        <p
-          class="InfoDetail"
+        <div
+          class="InfoDetailGroupContent"
         >
-          <span
-            class="Label"
+          <p
+            class="InfoDetail"
           >
-            Vanaf
-          </span>
-          <span
-            class="Value"
+            <span
+              class="Label"
+            >
+              Vanaf
+            </span>
+            <span
+              class="Value"
+            >
+              02 juli 2020 - 10:00 uur
+            </span>
+          </p>
+          <p
+            class="InfoDetail"
           >
-            02 juli 2020
-          </span>
-        </p>
-        <p
-          class="InfoDetail"
-        >
-          <span
-            class="Label"
-          >
-            Tot en met
-          </span>
-          <span
-            class="Value"
-          >
-            02 juli 2020
-          </span>
-        </p>
+            <span
+              class="Label"
+            >
+              Tot en met
+            </span>
+            <span
+              class="Value"
+            >
+              02 juli 2020 - 16:00 uur
+            </span>
+          </p>
+        </div>
       </div>
       <p
         class="InfoDetail"

@@ -54,10 +54,10 @@ function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
   };
 }
 
-export async function fetchERFPACHT(
+async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  includeNotifications: boolean = false
+  includeGenerated: boolean = false
 ) {
   const response = await requestData<ERFPACHTData>(
     getApiConfig('ERFPACHT', {
@@ -67,7 +67,7 @@ export async function fetchERFPACHT(
     passthroughRequestHeaders
   );
 
-  if (!includeNotifications) {
+  if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
         ? omit(response.content, ['notifications'])
@@ -78,11 +78,18 @@ export async function fetchERFPACHT(
   return response;
 }
 
+export async function fetchERFPACHT(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return fetchSource(sessionID, passthroughRequestHeaders);
+}
+
 export async function fetchERFPACHTGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const ERFPACHT = await fetchERFPACHT(
+  const ERFPACHT = await fetchSource(
     sessionID,
     passthroughRequestHeaders,
     true

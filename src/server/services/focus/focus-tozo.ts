@@ -158,7 +158,7 @@ export function createTozoResult(
     tozoItems.push(tozo3Item);
   }
 
-  if (FeatureToggle.tozo4Active && tozo4Item) {
+  if (tozo4Item) {
     tozoItems.push(tozo4Item);
   }
 

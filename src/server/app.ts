@@ -90,8 +90,12 @@ app.use((req: Request, res: Response) => {
   }
 });
 
-app.listen(BFF_PORT, () => {
+const server = app.listen(BFF_PORT, () => {
   console.info(
     `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDebug}]`
   );
 });
+
+// From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
+server.keepAliveTimeout = 60 * 1000;
+server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`

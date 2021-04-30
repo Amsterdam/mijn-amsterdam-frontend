@@ -10,9 +10,13 @@ const pageConfig = {
     // hasCollapsiblePanels: true, // Only expanded initially at the moment
     pathname: '/burgerzaken',
   },
-  BURGERZAKEN_DOCUMENT: {
+  BURGERZAKEN_IDKAART: {
     isDetailPage: true,
-    pathname: '/burgerzaken/document/:id',
+    pathname: '/burgerzaken/id-kaart/:id',
+  },
+  BURGERZAKEN_AKTE: {
+    isDetailPage: true,
+    pathname: '/burgerzaken/akte/:id',
   },
   ZORG: {
     hasCollapsiblePanels: true,

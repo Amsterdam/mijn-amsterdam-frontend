@@ -13,6 +13,7 @@ exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
+          aria-label="Burgerzaken"
           class="ChapterIcon"
           fill="black"
         >

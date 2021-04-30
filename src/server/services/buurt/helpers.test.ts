@@ -353,6 +353,7 @@ describe('Buurt helpers', () => {
     const dynamicFilterConfig = {
       soortOndergrond: {
         values: {
+          Onbekend: 0,
           SoortOndergrond1: 1,
           SoortOndergrond2: 2,
           SoortOndergrond3: 1,
@@ -360,6 +361,7 @@ describe('Buurt helpers', () => {
       },
       sportvoorziening: {
         values: {
+          Onbekend: 0,
           Sportvoorziening1: 1,
           Sportvoorziening2: 2,
           Sportvoorziening3: 1,

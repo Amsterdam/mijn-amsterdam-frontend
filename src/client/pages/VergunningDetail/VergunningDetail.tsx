@@ -52,7 +52,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: false,
         isChecked: true,
-        isHighlight: false,
       },
       {
         id: 'item-2',
@@ -62,7 +61,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: !isDone,
         isChecked: true,
-        isHighlight: !isDone,
       },
       {
         id: 'item-3',
@@ -72,7 +70,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: isDone,
         isChecked: isDone,
-        isHighlight: isDone,
       },
     ];
   }, [VergunningItem]);
@@ -168,11 +165,11 @@ export default function VergunningDetail() {
               <InfoDetail
                 label="Vanaf"
                 value={
-                  (VergunningItem?.dateFrom
-                    ? defaultDateFormat(VergunningItem.dateFrom)
+                  (VergunningItem?.dateStart
+                    ? defaultDateFormat(VergunningItem.dateStart)
                     : '-') +
                   (VergunningItem?.timeStart
-                    ? ' - ' + VergunningItem.timeStart
+                    ? ' - ' + VergunningItem.timeStart + ' uur'
                     : '')
                 }
               />
@@ -183,7 +180,7 @@ export default function VergunningDetail() {
                     ? defaultDateFormat(VergunningItem.dateEnd)
                     : '-') +
                   (VergunningItem?.timeEnd
-                    ? ' - ' + VergunningItem.timeEnd
+                    ? ' - ' + VergunningItem.timeEnd + ' uur'
                     : '')
                 }
               />

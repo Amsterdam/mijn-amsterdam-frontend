@@ -6,7 +6,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -23,6 +23,21 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -50,16 +65,17 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
         </svg>
          
         <p>
-          U staat sinds 01 januari 1967 in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
         </p>
         <p>
-          U kunt uw huidige adres doorgeven bij het Stadsloket. 
+          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
+            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
-            U moet hiervoor een afspraak maken.
+            Meer informatie
           </a>
         </p>
       </div>
@@ -1390,7 +1406,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -1407,6 +1423,21 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -1434,16 +1465,17 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
         </svg>
          
         <p>
-          U staat sinds 01 januari 1967 in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
         </p>
         <p>
-          U kunt uw huidige adres doorgeven bij het Stadsloket. 
+          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
+            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
-            U moet hiervoor een afspraak maken.
+            Meer informatie
           </a>
         </p>
       </div>
@@ -2687,7 +2719,7 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -2704,6 +2736,21 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -2718,7 +2765,7 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
       </p>
       <p>
-        U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud adres in Amsterdam of een parkeerbon.
+        U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen gegevens die de gemeente Amsterdam van u heeft.
       </p>
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
@@ -2734,16 +2781,17 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
         </svg>
          
         <p>
-          U staat sinds 01 januari 1967 in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
         </p>
         <p>
-          U kunt uw huidige adres doorgeven bij het Stadsloket. 
+          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
+            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
-            U moet hiervoor een afspraak maken.
+            Meer informatie
           </a>
         </p>
       </div>
@@ -3013,7 +3061,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -3030,6 +3078,21 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -3057,16 +3120,17 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
         </svg>
          
         <p>
-          U staat sinds 01 januari 1967 in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
         </p>
         <p>
-          U kunt uw huidige adres doorgeven bij het Stadsloket. 
+          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
+            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
-            U moet hiervoor een afspraak maken.
+            Meer informatie
           </a>
         </p>
       </div>

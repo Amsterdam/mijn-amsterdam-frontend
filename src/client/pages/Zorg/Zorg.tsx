@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
@@ -41,7 +41,14 @@ export default function Zorg() {
 
   return (
     <OverviewPage className={styles.ZorgOverviewPage}>
-      <PageHeading isLoading={isLoading(WMO)} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={isLoading(WMO)}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.ZORG}
       </PageHeading>
       <PageContent>

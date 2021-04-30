@@ -340,6 +340,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           class="CaseItem"
         >
           <a
+            class="Button Button__plain Button__lean Linkd"
             href="/lopende-zaak-1"
           >
             <svg

@@ -104,7 +104,14 @@ export default function Inkomen() {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageHeading isLoading={false} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={false}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.INKOMEN}
       </PageHeading>
       <PageContent>

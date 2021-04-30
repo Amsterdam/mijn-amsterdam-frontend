@@ -221,9 +221,7 @@ export function createDynamicFilterConfig(
       }
 
       // Get property value from object.filters or from object itself
-      const value = capitalizeFirstLetter(
-        String((feature?.properties || feature)[propertyName])
-      );
+      const value = capitalizeFirstLetter(String(featureProps[propertyName]));
 
       // Check if value is excluded
       if (filterConfig[propertyName]?.excludeValues?.includes(value)) {
@@ -232,13 +230,24 @@ export function createDynamicFilterConfig(
 
       if (!filters[propertyName]) {
         const values: DatasetPropertyValueWithCount = {};
-        // Set incoming values to 0
+
+        // Pre-fill the filters with property names from the value config so we can maintain order in which the properties
+        // defined in the valueConfig are maintained.
+        if (filterConfig[propertyName].valueConfig) {
+          for (const [value, { title }] of Object.entries(
+            filterConfig[propertyName].valueConfig!
+          )) {
+            values[title || value] = 0;
+          }
+        }
+        // Reset the count of existing values encountered in the passed filter config
         if (filterConfig[propertyName].values) {
           // Assumes value is already capitalized;
           for (const value of Object.keys(filterConfig[propertyName].values!)) {
             values[value] = 0;
           }
         }
+
         filters[propertyName] = {
           values,
         };
@@ -295,8 +304,13 @@ export function refineFilterSelection(
     for (const [propertyName, propertyFilterConfig] of Object.entries(
       filters
     )) {
+      const filterConfigPayload = filters;
       if (propertyFilterConfig.values) {
-        const refined = createDynamicFilterConfig(datasetId, features, filters);
+        const refined = createDynamicFilterConfig(
+          datasetId,
+          features,
+          filterConfigPayload
+        );
 
         if (refined[propertyName]) {
           filtersRefined[datasetId][propertyName].valuesRefined =
@@ -418,7 +432,7 @@ export function datasetApiResult(
   };
 }
 
-export function getPolylineColor(datasetId: DatasetId, feature: any) {
+export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
   switch (datasetId) {
     case 'sportveld':
       switch (feature.sportfunctie) {
@@ -477,8 +491,10 @@ export function getPolylineColor(datasetId: DatasetId, feature: any) {
       return 'green';
     case 'hardlooproute':
       return 'purple';
+    case 'wior':
+      return '#FEC813';
     default:
-      return 'purple';
+      return 'black';
   }
 }
 
@@ -493,10 +509,11 @@ export function transformDsoApiListResponse(
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
+  const geometryKey = config.geometryKey || 'geometry';
 
   if (results && results.length) {
     for (const feature of results) {
-      if (feature.geometry?.coordinates) {
+      if (feature[geometryKey]?.coordinates) {
         const id = config.idKeyList
           ? encodeURIComponent(
               String(
@@ -513,23 +530,23 @@ export function transformDsoApiListResponse(
         };
 
         const hasShapeGeometry = POLYLINE_GEOMETRY_TYPES.includes(
-          feature.geometry.type
+          feature[geometryKey].type
         );
 
         if (hasShapeGeometry) {
-          properties.color = getPolylineColor(datasetId, feature);
+          properties.color = getFeaturePolylineColor(datasetId, feature);
           if (config?.zIndex) {
             properties.zIndex = config.zIndex;
           }
           // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
-          feature.geometry.coordinates = recursiveCoordinateSwap(
-            feature.geometry.coordinates
+          feature[geometryKey].coordinates = recursiveCoordinateSwap(
+            feature[geometryKey].coordinates
           );
         }
 
         collection.push({
           type: 'Feature',
-          geometry: feature.geometry,
+          geometry: feature[geometryKey],
           properties: createFeaturePropertiesFromPropertyFilterConfig(
             datasetId,
             properties,

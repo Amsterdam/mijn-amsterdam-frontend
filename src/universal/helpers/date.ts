@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format, formatDistanceToNow, parseISO } from 'date-fns';
 
 import { DEFAULT_DATE_FORMAT } from '../config';
 import NL_LOCALE from 'date-fns/locale/nl';
@@ -13,6 +13,14 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
 
 export function defaultDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, DEFAULT_DATE_FORMAT);
+}
+
+export function defaultDateTimeFormat(datestr: string | Date | number) {
+  return dateFormat(datestr, `dd MMMM 'om' HH.mm 'uur'`);
+}
+
+export function formatDurationInWords(datestr: string) {
+  return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
 }
 
 export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
