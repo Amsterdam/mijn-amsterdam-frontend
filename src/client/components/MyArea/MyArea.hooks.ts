@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngLiteral, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   atom,
@@ -297,7 +297,7 @@ export function useFetchFeatures() {
       }
       return null;
     },
-    []
+    [map]
   );
 }
 

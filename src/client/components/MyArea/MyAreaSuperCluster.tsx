@@ -14,7 +14,6 @@ import {
 import { getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
 import styles from './MyAreaDatasets.module.scss';
-import { useLoadingFeature } from './MyArea.hooks';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
