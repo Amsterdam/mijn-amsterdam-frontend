@@ -59,7 +59,18 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
               `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
             );
           }
-          return res.blob();
+          try {
+            return res.blob();
+          } catch (error) {
+            downloadFile(document);
+            Sentry.captureException(error, {
+              extra: {
+                title: document.title,
+                url: document.url,
+                message: 'Res.blob() failed.',
+              },
+            });
+          }
         })
         .then((blob) => {
           const trackingUrl =
