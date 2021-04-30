@@ -1,4 +1,3 @@
-import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngLiteral, LeafletEvent } from 'leaflet';
@@ -194,9 +193,9 @@ export function useSelectedFeatureCSS(
   const map = useMapInstance();
   const loadingFeatureId = loadingFeature?.id;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (map) {
-      map.eachLayer((layer: any) => {
+      for (const layer of Object.values((map as any)._layers) as any[]) {
         const id = layer?.feature?.properties?.id;
         if (
           id &&
@@ -211,8 +210,9 @@ export function useSelectedFeatureCSS(
             ?.classList.remove(selectedFeatureSelector);
 
           element.classList.add(selectedFeatureSelector);
+          break;
         }
-      });
+      }
     }
   }, [map, loadingFeatureId, features]);
 }

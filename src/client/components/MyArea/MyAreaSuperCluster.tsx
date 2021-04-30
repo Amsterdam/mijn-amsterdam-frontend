@@ -14,6 +14,7 @@ import {
 import { getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
 import styles from './MyAreaDatasets.module.scss';
+import { useLoadingFeature } from './MyArea.hooks';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
@@ -59,9 +60,11 @@ export function MaSuperClusterLayer({
   features,
 }: MaSuperClusterLayerProps) {
   const map = useMapInstance();
+
   const markerLayer = useMemo(() => {
     const layer = L.geoJSON<DatasetFeatureProperties>(undefined, {
-      pointToLayer: createClusterMarker,
+      pointToLayer: (feature: MaSuperClusterFeature, latlng: LatLngLiteral) =>
+        createClusterMarker(feature, latlng),
       attribution:
         '<a href="https://api.data.amsterdam.nl/v1/docs">Amsterdam DSO api</a>',
     });
@@ -99,6 +102,10 @@ export function MaSuperClusterLayer({
   }, [map, features]);
 
   useEffect(() => {
+    if (!clusterFeatures.length) {
+      return;
+    }
+
     markerLayer.clearLayers();
 
     if (markerLayer && clusterFeatures.length) {

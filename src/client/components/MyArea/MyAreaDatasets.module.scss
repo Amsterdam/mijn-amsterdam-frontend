@@ -35,6 +35,23 @@
 }
 
 .Feature--selected {
+  > div {
+    &:before {
+      content: '';
+      width: 120%;
+      height: 120%;
+      position: absolute;
+      display: block;
+      background-color: $color-support-focus;
+      // opacity: .8;
+      z-index: -1;
+      border-radius: 50%;
+    }
+    &.MarkerClusterIconLabel:before {
+      width: 150%;
+      height: 150%;
+    }
+  }
   &[stroke] {
     fill: red !important;
     stroke: red !important;
