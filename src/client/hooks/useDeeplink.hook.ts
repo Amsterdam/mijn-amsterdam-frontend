@@ -15,7 +15,7 @@ export function useDeeplinkEntry() {
     location.pathname !== '/' &&
     isPrivateRoute(location.pathname)
   ) {
-    setRouteEntry(location.pathname);
+    setRouteEntry(location.pathname + location.search);
   }
 }
 

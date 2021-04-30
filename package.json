@@ -99,7 +99,7 @@
     "react-scripts": "^4.0.1",
     "react-spring": "^8.0.27",
     "react-swipeable": "^6.0.1",
-    "recoil": "0.1.2",
+    "recoil": "^0.2.0",
     "sanitize-html": "^2.2.0",
     "scrape-it": "^5.2.4",
     "slugme": "^1.1.1",

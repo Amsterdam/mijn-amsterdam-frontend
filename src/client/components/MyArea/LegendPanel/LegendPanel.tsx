@@ -5,7 +5,6 @@ import {
   useFetchPanelFeature,
   useLoadingFeature,
   useResetMyAreaState,
-  useSetLoadingFeature,
 } from '../MyArea.hooks';
 import { DatasetCategoryPanel } from './DatasetCategoryPanel';
 import { PanelComponent, PanelState } from './PanelComponent';
@@ -20,10 +19,9 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
   const isLandscape = useMedia('(orientation: landscape)');
-  const [loadingFeature] = useLoadingFeature();
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
   const resetMyAreaState = useResetMyAreaState();
-  const setLoadingFeature = useSetLoadingFeature();
 
   useFetchPanelFeature();
 
