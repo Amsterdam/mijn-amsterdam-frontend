@@ -15,7 +15,7 @@ import { apiSuccesResult } from '../../universal/helpers/api';
 import { GenericDocument } from '../../universal/types/App.types';
 import { differenceInMonths } from 'date-fns';
 
-const MONTHS_TO_KEEP_NOTIFICATIONS = 6;
+const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -23,7 +23,7 @@ export interface VergunningSource {
   identifier: string;
   caseType: string;
   dateRequest: string;
-  dateFrom: string | null;
+  dateStart: string | null;
   dateEnd: string | null; // datum t/m
   timeStart: string | null;
   timeEnd: string | null;
@@ -100,10 +100,12 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function createVergunningNotification(item: Vergunning) {
-  const title = 'Vergunningsaanvraag';
+  let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
-
+  const dateEnd = new Date(
+    `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
+  );
   switch (true) {
     case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
       description = `Uw vergunningsaanvraag ${item.caseType} is niet verleend`;
@@ -121,6 +123,10 @@ export function createVergunningNotification(item: Vergunning) {
       description = `Uw vergunningsaanvraag ${item.caseType} is geregistreerd`;
       break;
     case item.status === 'Afgehandeld':
+      description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+      break;
+    case new Date() >= dateEnd:
+      title = 'Uw vergunning is verlopen';
       description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
       break;
   }

@@ -10,6 +10,7 @@ import {
   sendMessage,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
+import { fetchAKTES } from './aktes';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
@@ -24,6 +25,7 @@ import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
+import { fetchSIA } from './sia';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
@@ -52,6 +54,7 @@ function getServiceTipsMap(profileType: ProfileType) {
  * The service methods
  */
 const BRP = callService(fetchBRP);
+const AKTES = callService(fetchAKTES);
 const CMS_CONTENT = callService(fetchCMSCONTENT);
 const CMS_MAINTENANCE_NOTIFICATIONS = callService(
   fetchMaintenanceNotificationsActual
@@ -82,6 +85,7 @@ const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBELASTING);
 const MILIEUZONE = callService(fetchMILIEUZONE);
+const SIA = callService(fetchSIA);
 const ERFPACHT = callService(fetchERFPACHT);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
@@ -107,6 +111,7 @@ const CASES = async (sessionID: SessionID, req: Request) =>
 // Store all services for type derivation
 const SERVICES_INDEX = {
   BRP,
+  AKTES,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
@@ -122,6 +127,7 @@ const SERVICES_INDEX = {
   AFVALPUNTEN,
   BELASTINGEN,
   MILIEUZONE,
+  SIA,
   ERFPACHT,
   NOTIFICATIONS,
   CASES,
@@ -132,7 +138,7 @@ export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = ServicesType;
-type PrivateCommercialServices = ServicesType;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -146,6 +152,7 @@ type CommercialServices = Pick<
   | 'HOME'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'SIA'
   | 'VERGUNNINGEN'
 >;
 
@@ -160,6 +167,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     BRP,
+    AKTES,
     BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
@@ -174,6 +182,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
     WMO,
   },
@@ -195,6 +204,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
     WMO,
   },
@@ -209,6 +219,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
   },
 };

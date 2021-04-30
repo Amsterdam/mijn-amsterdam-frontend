@@ -32,6 +32,7 @@ import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
 import styles from './Profile.module.scss';
 import { apiSuccesResult } from '../../../universal/helpers/api';
 import { FeatureToggle } from '../../../universal/config/app';
+import { AppRoutes } from '../../../universal/config';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -93,7 +94,14 @@ export default function Profile() {
 
   return (
     <DetailPage className={styles.Profile}>
-      <PageHeading icon={<ChapterIcon />} isLoading={false}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        icon={<ChapterIcon />}
+        isLoading={false}
+      >
         Mijn gegevens
       </PageHeading>
 
@@ -108,8 +116,7 @@ export default function Profile() {
         {!isLoading(BRP) && !isMokum(BRP.content) && (
           <p>
             U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
-            gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud
-            adres in Amsterdam of een parkeerbon.
+            gegevens die de gemeente Amsterdam van u heeft.
           </p>
         )}
         {hasDutchAndOtherNationalities(BRP.content) && (
@@ -144,15 +151,22 @@ export default function Profile() {
                     BRP.content?.persoon.datumVertrekUitNederland
                   )
                 : 'enige tijd'}{' '}
-              in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+              in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken
+              Onbekend Waarheen (VOW)’.
             </p>
             <p>
-              U kunt uw huidige adres doorgeven bij het Stadsloket.{' '}
+              Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen
+              (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u
+              dan niet langer als inwoner van Nederland en u kunt geen gebruik
+              meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen
+              paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres
+              zo snel mogelijk door aan de gemeente.{' '}
               <LinkdInline
                 external={true}
+                aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
-                U moet hiervoor een afspraak maken.
+                Meer informatie
               </LinkdInline>
             </p>
           </Alert>

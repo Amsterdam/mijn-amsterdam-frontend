@@ -1,16 +1,13 @@
-import { Suspense, lazy } from 'react';
+import { lazy, Suspense } from 'react';
+import { MyAreaProps } from './MyArea';
 import styles from './MyAreaLoadingIndicator.module.scss';
 
 export const MyAreaLazy = lazy(() => import('./MyArea'));
 export const MyAreaDashboardLazy = lazy(() => import('./MyAreaDashboardMap'));
 
-interface MyAreaLoaderProps {
+interface MyAreaLoaderProps extends MyAreaProps {
   isDashboard?: boolean;
   tutorial?: string;
-  datasetIds?: string[];
-  showPanels?: boolean;
-  showHeader?: boolean;
-  zoom?: number;
 }
 
 export default function MyAreaLoader({
@@ -19,12 +16,15 @@ export default function MyAreaLoader({
   datasetIds,
   showPanels = true,
   showHeader = true,
+  centerMarker,
   zoom,
+  height = '100vh',
+  activeBaseLayerType,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
       fallback={
-        <div className={styles.MyAreaLoader} style={{ height: '100vh' }}>
+        <div className={styles.MyAreaLoader} style={{ height }}>
           Loading buurt bundle...
         </div>
       }
@@ -36,7 +36,10 @@ export default function MyAreaLoader({
           datasetIds={datasetIds}
           showPanels={showPanels}
           showHeader={showHeader}
+          centerMarker={centerMarker}
+          activeBaseLayerType={activeBaseLayerType}
           zoom={zoom}
+          height={height}
         />
       )}
     </Suspense>

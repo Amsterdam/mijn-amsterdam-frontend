@@ -2,7 +2,7 @@ import { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
-import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
+import { POLYLINE_DATASET_OPTIONS } from './datasets';
 import { MaPolylineLayer } from './MyAreaPolylineLayer';
 
 const Styles = createGlobalStyle`
@@ -52,7 +52,7 @@ export function MyAreaPolylineDatasets({
           <MaPolylineLayer
             key={datasetId}
             features={features}
-            polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
+            polylineOptions={POLYLINE_DATASET_OPTIONS[datasetId]}
             onMarkerClick={onMarkerClick}
           />
         );

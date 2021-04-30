@@ -28,7 +28,7 @@ interface BELASTINGSourceData {
 
 function transformBelastingNotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map(notification => ({
+    ? notifications.map((notification) => ({
         ...notification,
         chapter: Chapters.BELASTINGEN,
       }))
@@ -53,10 +53,10 @@ function transformBELASTINGENData(
   };
 }
 
-export async function fetchBELASTING(
+async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  includeNotifications: boolean = false
+  includeGenerated: boolean = false
 ) {
   const response = await requestData<BELASTINGENData>(
     getApiConfig('BELASTINGEN', {
@@ -66,10 +66,10 @@ export async function fetchBELASTING(
     passthroughRequestHeaders
   );
 
-  if (!includeNotifications) {
+  if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
-        ? omit(response.content, ['notifications'])
+        ? omit(response.content, ['notifications', 'tips'])
         : null,
     });
   }
@@ -77,11 +77,18 @@ export async function fetchBELASTING(
   return response;
 }
 
+export async function fetchBELASTING(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return fetchSource(sessionID, passthroughRequestHeaders);
+}
+
 export async function fetchBELASTINGGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const BELASTING = await fetchBELASTING(
+  const BELASTING = await fetchSource(
     sessionID,
     passthroughRequestHeaders,
     true

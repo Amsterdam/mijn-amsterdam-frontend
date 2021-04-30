@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BurgerzakenAkte /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Burgerzaken"
+          class="ChapterIcon"
+          fill="black"
+        >
+          burgerzaken.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/burgerzaken"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Burgerzaken
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Huwelijksakte
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <p
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Aktenummer
+        </span>
+        <span
+          class="Value"
+        >
+          67YUHAK-IO
+        </span>
+      </p>
+      <p
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Registerjaar
+        </span>
+        <span
+          class="Value"
+        >
+          2015
+        </span>
+      </p>
+      <div
+        class="InfoDetail"
+      >
+        <span
+          class="Label"
+        >
+          Download PDF
+        </span>
+        <span
+          class="Value"
+        >
+          <ul
+            class="DocumentList"
+          >
+            <li
+              class="DocumentListItem"
+            >
+              <span
+                class="DocumentLinkWrap"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd DocumentLink"
+                  href="/bla/bla/bla.pdf"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Download.svg
+                  </svg>
+                  Huwelijksakte
+                </a>
+              </span>
+            </li>
+          </ul>
+        </span>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

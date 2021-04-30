@@ -1,22 +1,22 @@
+import { Chapter, Chapters } from '../../universal/config';
+import { SVGComponent } from '../../universal/types';
 import {
+  IconAlert,
   IconBelastingen,
   IconBurgerZaken,
+  IconErfpacht,
   IconGarbage,
+  IconHomeCommercial,
   IconInkomen,
-  IconStadspas,
   IconMijnGegevens,
   IconMilieuzone,
   IconMyNotifications,
+  IconSiaMeldingen,
+  IconStadspas,
   IconTips,
   IconVergunningen,
-  IconErfpacht,
   IconZorg,
-  IconAlert,
-  IconHomeCommercial,
 } from '../assets/icons';
-
-import { Chapter, Chapters } from '../../universal/config';
-import { SVGComponent } from '../../universal/types';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.AFVAL]: IconGarbage,
@@ -27,6 +27,7 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.STADSPAS]: IconStadspas,
   [Chapters.BRP]: IconMijnGegevens,
   [Chapters.MILIEUZONE]: IconMilieuzone,
+  [Chapters.SIA]: IconSiaMeldingen,
   [Chapters.NOTIFICATIONS]: IconMyNotifications,
   [Chapters.ROOT]: IconBurgerZaken,
   [Chapters.TIPS]: IconTips,

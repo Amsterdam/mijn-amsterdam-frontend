@@ -1,10 +1,6 @@
 import { generatePath } from 'react-router-dom';
-import {
-  API_BASE_PATH,
-  Chapters,
-  IS_PRODUCTION,
-} from '../../../universal/config';
-import { dateFormat, hash } from '../../../universal/helpers';
+import { API_BASE_PATH, Chapters,IS_PRODUCTION } from '../../../universal/config';
+import { dateFormat,defaultDateTimeFormat, hash } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
 import { isNotificationActual } from './focus-aanvragen-helpers';
 import { FocusDocument } from './focus-combined';
@@ -55,9 +51,8 @@ export function getLabelSet(
 function getDocumentTitle(labelSet: ToxxLabelSet, document: FocusDocument) {
   // Documents of the aanvraag step are formatted differently
   if (labelSet.stepType === 'aanvraag') {
-    return `${labelSet.documentTitle}\n${dateFormat(
-      document.datePublished,
-      `dd MMMM 'om' HH.mm 'uur'`
+    return `${labelSet.documentTitle}\n${defaultDateTimeFormat(
+      document.datePublished
     )}`;
   }
   return labelSet.documentTitle;

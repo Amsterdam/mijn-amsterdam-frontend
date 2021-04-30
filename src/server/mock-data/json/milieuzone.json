@@ -1,19 +1,30 @@
 {
-    "content": {
-        "isKnown": true,
-        "meldingen": [
-            {
-                "datePublished": "2020-02-14",
-                "description": "Vanaf 11-2020 wordt de Milieuzone voor personenauto's uitgebreid.",
-                "id": 4,
-                "priority": 1,
-                "title": "Uitbreiding milieuzones",
-                "url": {
-                    "title": "Verleng uw ontheffing",
-                    "url": "https://example.com/ontheffingen-milieuzone.php"
-                }
-            }
-        ]
-    },
-    "status": "OK"
+  "content": {
+    "isKnown": true,
+    "meldingen": [
+      {
+        "datePublished": "2020-02-14",
+        "description": "Vanaf 11-2020 wordt de Milieuzone voor personenauto's uitgebreid.",
+        "id": "-M2",
+        "priority": 1,
+        "title": "Uitbreiding milieuzones",
+        "link": {
+          "title": "Verleng uw ontheffing",
+          "to": "https://example.com/ontheffingen-milieuzone.php"
+        }
+      },
+      {
+        "datePublished": "2021-02-14",
+        "description": "Vanaf 11-2020 Is uw ontheffing geldig.",
+        "id": "-F3",
+        "priority": 1,
+        "title": "Aanvraag toegekend",
+        "link": {
+          "title": "Verleng uw ontheffing",
+          "to": "https://example.com/ontheffingen-milieuzone.php"
+        }
+      }
+    ]
+  },
+  "status": "OK"
 }

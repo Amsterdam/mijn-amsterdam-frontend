@@ -1,4 +1,5 @@
 import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
+import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import {
   DatasetCategoryId,
@@ -20,6 +21,7 @@ enum zIndexPane {
   BEDRIJVENINVESTERINGSZONES = '651',
   PARKEERZONES_UITZONDERING = '660',
   HARDLOOPROUTE = '670',
+  WIOR = '671',
   SPORTPARK = '680',
   SPORTVELD = '690',
 }
@@ -89,6 +91,7 @@ export interface DatasetConfig {
   // NOTE: The ID key also has to be added to the `additionalStaticPropertyNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticPropertyNames` can be left empty.
   idKeyList?: string;
   idKeyDetail?: string;
+  geometryKey?: string;
 }
 
 function dsoApiListUrl(
@@ -96,11 +99,13 @@ function dsoApiListUrl(
   pageSize: number = 1000,
   datasetId?: DatasetId
 ) {
-  const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
-  const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,geometry`;
-  const pageSizeParam = `&_pageSize=${pageSize}`;
-
   return (datasetConfig: DatasetConfig) => {
+    const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
+    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,${
+      datasetConfig.geometryKey || 'geometry'
+    }`;
+    const pageSizeParam = `&_pageSize=${pageSize}`;
+
     const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
     const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
 
@@ -257,6 +262,21 @@ export const datasetEndpoints: Record<
     idKeyList: 'naam',
     idKeyDetail: 'naam',
   },
+  wior: {
+    listUrl: () => {
+      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,datumStartUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
+        new Date(),
+        'yyyy-MM-dd'
+      )}`;
+      return url;
+    },
+    detailUrl: 'https://api.data.amsterdam.nl/v1/wior/wior/',
+    transformList: transformWiorApiListResponse,
+    featureType: 'MultiPolygon',
+    zIndex: zIndexPane.WIOR,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    geometryKey: 'geometrie',
+  },
 };
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -366,7 +386,7 @@ export function transformHardlooproutesResponse(
   responseData: any
 ) {
   const features = transformDsoApiListResponse(datasetId, config, responseData);
-  //0-5 km, 6-10 km en meer dan10km.
+
   const groups = [
     { label: '0-5 km', range: [0, 6] },
     { label: '6-10 km', range: [6, 11] },
@@ -383,4 +403,49 @@ export function transformHardlooproutesResponse(
     }
   }
   return features;
+}
+
+export function transformWiorApiListResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = getApiEmbeddedResponse(datasetId, responseData);
+
+  if (!features) {
+    return [];
+  }
+
+  // Starts within
+  const dateRanges = [
+    { label: 'Lopend', range: [-Infinity, 0] },
+    { label: '0-1 jaar', range: [0, 1] },
+    { label: '1-3 jaar', range: [1, 3] },
+    { label: '>3 jaar', range: [3, Infinity] },
+    { label: 'Onbekend', range: [] },
+  ];
+
+  for (const feature of features) {
+    const start = feature.datumStartUitvoering;
+    if (start) {
+      const startsWithinYears =
+        differenceInDays(new Date(start), Date.now()) / 365;
+
+      if (startsWithinYears < 0) {
+        feature.datumStartUitvoering = dateRanges[0].label;
+      } else {
+        const dateRange = dateRanges.find((dateRange) => {
+          return (
+            startsWithinYears >= dateRange.range[0] &&
+            startsWithinYears < dateRange.range[1]
+          );
+        });
+        feature.datumStartUitvoering = dateRange?.label || 'Onbekend';
+      }
+    } else {
+      feature.datumStartUitvoering = 'Onbekend';
+    }
+  }
+
+  return transformDsoApiListResponse(datasetId, config, { features });
 }

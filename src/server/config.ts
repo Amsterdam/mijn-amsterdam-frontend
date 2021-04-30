@@ -5,7 +5,10 @@ import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
 export const DEV_USER_TYPE_HEADER: string = 'x-user-type';
 export const ICL_COOKIE_NAME: string = 'icl'; // Is commercial login
-export const BFF_REQUEST_CACHE_ENABLED = true;
+export const BFF_REQUEST_CACHE_ENABLED =
+  typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
+    ? process.env.BFF_REQUEST_CACHE_ENABLED === 'true'
+    : true;
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
@@ -40,8 +43,8 @@ const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
 const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
 
-export const DEFAULT_API_CACHE_TTL_MS = 30 * ONE_SECOND_MS;
-export const DEFAULT_CANCEL_TIMEOUT_MS = 10 * ONE_SECOND_MS;
+export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+export const DEFAULT_CANCEL_TIMEOUT_MS = 20 * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -57,6 +60,7 @@ export type SourceApiKey =
   | 'FOCUS_AANVRAGEN'
   | 'BELASTINGEN'
   | 'MILIEUZONE'
+  | 'SIA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
@@ -65,6 +69,7 @@ export type SourceApiKey =
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
+  | 'AKTES'
   | 'AFVAL'
   | 'KVK';
 
@@ -91,6 +96,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   MILIEUZONE: {
     url: `${BFF_MS_API_BASE_URL}/milieu/get`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
+  },
+  SIA: {
+    url: `${BFF_MS_API_BASE_URL}/sia/get`,
+    postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
@@ -120,6 +129,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
   BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp` },
+  AKTES: {
+    url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
+    postponeFetch: !FeatureToggle.aktesActive,
+  },
   ERFPACHT: { url: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht` },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {

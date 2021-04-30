@@ -1,8 +1,7 @@
 import classnames from 'classnames';
-
-import { NavLink } from 'react-router-dom';
 import { MyCase } from '../../../universal/types';
 import { Colors } from '../../config/app';
+import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -16,14 +15,19 @@ function CaseItem({ item }: CaseItemProps) {
   const {
     title,
     chapter,
-    link: { to },
+    link: { to, rel },
   } = item;
   return (
     <li className={styles.CaseItem}>
-      <NavLink to={to}>
+      <Linkd
+        href={to}
+        icon={null}
+        external={!!rel?.includes('external')}
+        rel={rel}
+      >
         <ChapterIcon fill={Colors.primaryRed} chapter={chapter} />
         {title}
-      </NavLink>
+      </Linkd>
     </li>
   );
 }

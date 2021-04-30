@@ -1,7 +1,7 @@
 /// <reference types="react-scripts" />
 
 import * as Sentry from '@sentry/browser';
-
+import 'react-app-polyfill/stable';
 import ReactDOM from 'react-dom';
 import App from './client/App';
 

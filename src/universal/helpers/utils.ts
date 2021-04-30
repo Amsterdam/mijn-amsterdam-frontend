@@ -87,13 +87,14 @@ export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
 
-export function sortAlpha(key: string) {
+export function sortAlpha(key: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: Record<string, any>, b: Record<string, any>) => {
+    const sortASC = direction === 'asc';
     if (a[key] < b[key]) {
-      return -1;
+      return sortASC ? -1 : 1;
     }
     if (a[key] > b[key]) {
-      return 1;
+      return sortASC ? 1 : -1;
     }
     return 0;
   };

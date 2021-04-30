@@ -168,6 +168,7 @@ export async function requestData<T>(
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
+    // Clears the timeout after the above request promise is settled
     clearTimeout(cancelTimeout);
 
     // Use the cache Deferred for resolving the response
