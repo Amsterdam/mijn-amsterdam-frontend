@@ -14,7 +14,7 @@
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
-    "start": "react-scripts start",
+    "start": "REACT_APP_ENV=development react-scripts start",
     "test": "react-scripts test src/client",
     "test-e2e": "REACT_APP_ENV=e2e; react-scripts build && npm run bff-api:build && concurrently \"npm:serve-build\" \"npx cypress run\" --kill-others --success first",
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
