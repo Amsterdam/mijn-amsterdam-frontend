@@ -23,12 +23,14 @@ export function Location({ location }: LocationProps) {
   );
 
   useEffect(() => {
+    if (bagApi.isDirty) {
+      return;
+    }
     if (isLocationModalOpen) {
       const address = location
         .replace(/\sAmsterdam/gi, '')
         .replace(/([1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2})/i, '')
         .trim();
-      console.log('address', address);
       fetchBag({
         url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
         transformResponse: (response) => {
@@ -45,7 +47,7 @@ export function Location({ location }: LocationProps) {
         },
       });
     }
-  }, [isLocationModalOpen, location, fetchBag]);
+  }, [isLocationModalOpen, location, fetchBag, bagApi.isDirty]);
 
   return (
     <>
@@ -70,15 +72,15 @@ export function Location({ location }: LocationProps) {
           </>
         }
       />
-      {location && !!bagApi.data && (
+      {location && (
         <Modal
           isOpen={isLocationModalOpen}
           onClose={() => setLocationModalOpen(false)}
           title={`Vergunningslocatie`}
           contentWidth={'62rem'}
         >
-          {bagApi.isLoading && <span>laden...</span>}
-          {!!bagApi.data && (
+          {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
+          {!!bagApi.data ? (
             <MyAreaLoader
               showHeader={false}
               showPanels={false}
@@ -91,6 +93,8 @@ export function Location({ location }: LocationProps) {
               }}
               height="40rem"
             />
+          ) : (
+            <p>Adres kan niet getoond worden</p>
           )}
         </Modal>
       )}
