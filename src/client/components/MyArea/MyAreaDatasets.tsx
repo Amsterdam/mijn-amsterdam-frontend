@@ -24,7 +24,11 @@ import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
-export function MyAreaDatasets() {
+interface MyAreaDatasetsProps {
+  datasetIds?: DatasetId[];
+}
+
+export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
 
   useReflectUrlState();
@@ -40,7 +44,7 @@ export function MyAreaDatasets() {
   >([]);
 
   const [isFeaturesLoading, setFeaturesLoading] = useState(
-    !clusterFeatures.length && !polylineFeatures.length
+    !!datasetIds?.length && !clusterFeatures.length && !polylineFeatures.length
   );
 
   const setFeaturesLoadingDebounced = useDebouncedCallback(
@@ -49,8 +53,10 @@ export function MyAreaDatasets() {
   ).callback;
 
   const fetchFeatures = useFetchFeatures();
-  const [activeDatasetIds] = useActiveDatasetIds();
+  const [activeDatasetIdsState] = useActiveDatasetIds();
   const [activeFilters] = useActiveDatasetFilters();
+
+  const activeDatasetIds = datasetIds || activeDatasetIdsState;
 
   const fetch = useCallback(
     async (
