@@ -8,26 +8,25 @@ import {
   Alert,
   ChapterIcon,
   Linkd,
-  // Linkd,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
 const DISPLAY_PROPS = {
-  caseType: 'Soort vergunning',
   identifier: 'Kenmerk',
+  caseType: 'Soort vergunning',
   dateRequest: 'Aangevraagd',
 };
 
 const DISPLAY_PROPS_HISTORY = {
-  caseType: 'Soort vergunning',
   identifier: 'Kenmerk',
+  caseType: 'Soort vergunning',
   decision: 'Resultaat',
 };
 
@@ -50,7 +49,7 @@ export default function Vergunningen() {
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
-    return addTitleLinkComponent(items, 'caseType');
+    return addTitleLinkComponent(items, 'identifier');
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
@@ -80,9 +79,7 @@ export default function Vergunningen() {
       <PageContent>
         <p>
           Hier ziet u een overzicht van uw aanvragen voor vergunningen en
-          ontheffingen. Op dit moment ziet u hier uw aanvragen voor een
-          RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een
-          objectvergunning. Andere vergunningen komen er later bij.
+          ontheffingen bij gemeente Amsterdam.
         </p>
         <p>
           <Linkd
@@ -114,7 +111,7 @@ export default function Vergunningen() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
         />
@@ -134,7 +131,7 @@ export default function Vergunningen() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
           items={vergunningenPrevious}
         />
