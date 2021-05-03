@@ -1,5 +1,6 @@
 import { GPK as GPKType } from '../../../server/services';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
+import { Location } from './Location';
 
 export function GPK({ vergunning }: { vergunning: GPKType }) {
   return (
@@ -10,7 +11,7 @@ export function GPK({ vergunning }: { vergunning: GPKType }) {
         value={vergunning?.caseType || '-'}
       />
       <InfoDetail label="Omschrijving" value={vergunning?.title || '-'} />
-      <InfoDetail label="Locatie" value={vergunning?.location || '-'} />
+      {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetail
         label="Reden aanvraag"
         value={vergunning?.requestReason || '-'}

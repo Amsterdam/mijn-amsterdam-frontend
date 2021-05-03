@@ -1,9 +1,17 @@
 @import '../../styles/_global.scss';
 
 .VergunningDetail {
-
 }
 
 .VergunningStatus {
   margin-top: 4rem;
+}
+
+.MapLink {
+  display: block;
+  font-size: 1.6rem;
+}
+
+.LocationInfo {
+  white-space: pre-wrap;
 }

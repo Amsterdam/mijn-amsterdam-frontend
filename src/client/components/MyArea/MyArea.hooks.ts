@@ -2,7 +2,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { matchPath, useHistory } from 'react-router-dom';
 import {
   atom,
   AtomEffect,
@@ -499,12 +499,20 @@ export function useReflectUrlState() {
     : '';
 
   useEffect(() => {
-    const url = `${
-      AppRoutes.BUURT
-    }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
-      map.getCenter()
-    )}&loadingFeature=${loadingFeatureStr}`;
+    if (
+      matchPath(history.location.pathname, {
+        path: AppRoutes.BUURT,
+        exact: true,
+        strict: false,
+      })
+    ) {
+      const url = `${
+        AppRoutes.BUURT
+      }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
+        map.getCenter()
+      )}&loadingFeature=${loadingFeatureStr}`;
 
-    history.replace(url);
+      history.replace(url);
+    }
   }, [datasetIdsStr, filtersStr, loadingFeatureStr, history, map]);
 }

@@ -3,6 +3,7 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import { Location } from './Location';
 
 export function EvenementMelding({
   vergunning,
@@ -30,7 +31,8 @@ export function EvenementMelding({
         label="Aantal bezoekers"
         value={vergunning?.visitorCount || '-'}
       />
-      <InfoDetail label="Locatie" value={vergunning?.location || '-'} />
+      {!!vergunning.location && <Location location={vergunning.location} />}
+
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"

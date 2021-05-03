@@ -91,7 +91,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         </span>
       </p>
       <p
-        class="InfoDetail"
+        class="InfoDetail LocationInfo"
       >
         <span
           class="Label"
@@ -101,7 +101,12 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Value"
         >
-          Amstel 1 1017AB Amsterdam
+          Amstel 1 1017AB Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
         </span>
       </p>
       <div

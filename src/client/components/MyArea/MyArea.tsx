@@ -273,7 +273,9 @@ export default function MyArea({
                   )
                 }
               />
-              <MyAreaDatasets />
+              {(!!datasetIds?.length || showPanels) && (
+                <MyAreaDatasets datasetIds={datasetIds} />
+              )}
             </MyAreaMap>
             {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />

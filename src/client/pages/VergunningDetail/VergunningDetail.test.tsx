@@ -27,6 +27,7 @@ function state(state: any) {
 }
 
 describe('<VergunningDetail />', () => {
+  (window as any).scrollTo = jest.fn();
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
     id: content[0].id,
   });

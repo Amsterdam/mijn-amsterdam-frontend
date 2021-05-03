@@ -1,5 +1,6 @@
 import { Omzettingsvergunning as OmzettingsvergunningType } from '../../../server/services';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
+import { Location } from './Location';
 
 export function Omzettingsvergunning({
   vergunning,
@@ -14,7 +15,7 @@ export function Omzettingsvergunning({
         value={vergunning?.caseType || '-'}
       />
       <InfoDetail label="Omschrijving" value={vergunning?.title || '-'} />
-      <InfoDetail label="Locatie" value={vergunning?.location || '-'} />
+      {!!vergunning.location && <Location location={vergunning.location} />}
       {!!vergunning?.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

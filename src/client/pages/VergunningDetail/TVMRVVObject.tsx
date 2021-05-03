@@ -3,6 +3,7 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import { Location } from './Location';
 
 export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
   return (
@@ -13,7 +14,7 @@ export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
         value={vergunning?.caseType || '-'}
       />
       <InfoDetail label="Omschrijving" value={vergunning?.title || '-'} />
-      <InfoDetail label="Locatie" value={vergunning?.location || '-'} />
+      {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"
