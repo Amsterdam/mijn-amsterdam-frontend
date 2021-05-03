@@ -41,7 +41,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          TVM - RVV - Object
+          E-RVV
         </h2>
       </div>
     </header>
@@ -59,7 +59,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Value"
         >
-          Z/20/1597204
+          Z/000/000003
         </span>
       </p>
       <p
@@ -73,7 +73,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Value"
         >
-          TVM - RVV - Object
+          E-RVV
         </span>
       </p>
       <p
@@ -87,7 +87,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Value"
         >
-          Slopen
+          Amstel 1 E-RVV aanvraag
         </span>
       </p>
       <p
@@ -101,7 +101,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <span
           class="Value"
         >
-          Reguliersdwarsstraat 63 1012AA
+          Amstel 1 1017AB Amsterdam
         </span>
       </p>
       <div
@@ -121,7 +121,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <span
               class="Value"
             >
-              02 juli 2020 - 10:00 uur
+              26 juli 2020
             </span>
           </p>
           <p
@@ -135,25 +135,11 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <span
               class="Value"
             >
-              02 juli 2020 - 16:00 uur
+              28 juli 2020
             </span>
           </p>
         </div>
       </div>
-      <p
-        class="InfoDetail"
-      >
-        <span
-          class="Label"
-        >
-          Resultaat
-        </span>
-        <span
-          class="Value"
-        >
-          Verleend
-        </span>
-      </p>
       <div
         class="InfoDetail"
       >
@@ -218,51 +204,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <time
                 class="StatusDate"
               >
-                24 juni 2020
-              </time>
-            </div>
-            <div
-              class="Panel Panel--description"
-            >
-              <div
-                class="PanelContent"
-              />
-            </div>
-            <div
-              class="Panel Panel--documents"
-            />
-          </div>
-        </li>
-        <li
-          class="ListItem"
-          style="display: block;"
-        >
-          <div
-            class="ListItemInner"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
-            >
-              <span
-                class="ConnectLine ConnectLine--checked"
-              />
-              <span
-                class="Checkmark Checkmark--checked"
-              />
-            </div>
-            <div
-              class="Panel Panel--status"
-            >
-              <strong
-                class="StatusTitle"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="StatusDate"
-              >
-                24 juni 2020
+                03 mei 2021
               </time>
             </div>
             <div
@@ -289,7 +231,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+                class="ConnectLine ConnectLine--middle-checked-next"
               />
               <span
                 class="Checkmark Checkmark--active Checkmark--checked"
@@ -301,13 +243,52 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <strong
                 class="StatusTitle"
               >
-                Afgehandeld
+                In behandeling
               </strong>
               <time
                 class="StatusDate"
               >
-                02 juli 2020
+                03 mei 2021
               </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
             </div>
             <div
               class="Panel Panel--description"
