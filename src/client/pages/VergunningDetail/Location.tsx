@@ -35,11 +35,7 @@ export function Location({ location }: LocationProps) {
         url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
         transformResponse: (response) => {
           const result1 = response?.results[0];
-          if (
-            result1 &&
-            result1.adres.toLowerCase() === address.toLowerCase() &&
-            result1.centroid
-          ) {
+          if (result1 && result1.adres && result1.centroid) {
             const [lng, lat] = result1.centroid;
             return { lat, lng };
           }
