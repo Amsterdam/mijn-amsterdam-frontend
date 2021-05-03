@@ -54,7 +54,7 @@ export interface GPP extends VergunningBase {
 }
 
 export interface EvenementMelding extends VergunningBase {
-  caseType: 'EvenementMelding';
+  caseType: 'Evenement melding';
   location: string | null;
   visitorCount: number | null;
   activities: string | null;

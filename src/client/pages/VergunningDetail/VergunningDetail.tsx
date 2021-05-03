@@ -61,7 +61,7 @@ export default function VergunningDetail() {
             {Vergunning.caseType === 'Omzettingsvergunning' && (
               <Omzettingsvergunning vergunning={Vergunning} />
             )}
-            {Vergunning.caseType === 'EvenementMelding' && (
+            {Vergunning.caseType === 'Evenement melding' && (
               <EvenementMelding vergunning={Vergunning} />
             )}
             <DocumentDetails vergunning={Vergunning} />
