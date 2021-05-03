@@ -115,10 +115,6 @@ export function HomeIconMarker({
     }
   }, [zoom, center, mapRef]);
 
-  useEffect(() => {
-    doCenter();
-  }, [doCenter]);
-
   return (
     <MyAreaMarker
       key={profileType}

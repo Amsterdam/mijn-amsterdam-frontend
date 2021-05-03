@@ -35,8 +35,8 @@ export const ToggleButton = styled('button')`
 `;
 
 export enum CollapsedState {
-  Expanded,
-  Collapsed,
+  Expanded = 'Expanded',
+  Collapsed = 'Collapsed',
 }
 
 export function isExpanded(state: CollapsedState) {

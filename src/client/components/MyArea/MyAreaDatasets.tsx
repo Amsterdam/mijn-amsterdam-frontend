@@ -1,11 +1,11 @@
 import { useMapInstance } from '@amsterdam/react-maps';
+import { LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
-import { ACTIVE_DATASET_IDS_INITIAL } from '../../../universal/config';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -17,18 +17,18 @@ import {
   useDatasetFilterSelection,
   useFetchFeatures,
   useOnMarkerClick,
+  useReflectUrlState,
   useSelectedFeatureCSS,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
-interface MyAreaDatasetsProps {
-  datasetIds?: string[];
-}
-
-export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
+export function MyAreaDatasets() {
   const map = useMapInstance();
+
+  useReflectUrlState();
+
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
@@ -49,8 +49,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   ).callback;
 
   const fetchFeatures = useFetchFeatures();
-
-  const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
+  const [activeDatasetIds] = useActiveDatasetIds();
   const [activeFilters] = useActiveDatasetFilters();
 
   const fetch = useCallback(
@@ -86,15 +85,18 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const fetchDebounced = useDebouncedCallback(fetch, 100);
 
   // This callback runs whenever the map zooms / pans
-  const onUpdate = useCallback(() => {
-    setFeaturesLoadingDebounced(true);
-    fetchDebounced.callback(activeDatasetIds, activeFilters);
-  }, [
-    fetchDebounced,
-    setFeaturesLoadingDebounced,
-    activeDatasetIds,
-    activeFilters,
-  ]);
+  const onUpdate = useCallback(
+    (event: LeafletEvent) => {
+      setFeaturesLoadingDebounced(true);
+      fetchDebounced.callback(activeDatasetIds, activeFilters);
+    },
+    [
+      fetchDebounced,
+      setFeaturesLoadingDebounced,
+      activeDatasetIds,
+      activeFilters,
+    ]
+  );
 
   // Effect fetches everytime datasets are de/activated or filter selection is changed.
   useEffect(() => {
@@ -124,12 +126,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       pane.style.zIndex = '800';
     }
   }, [map]);
-
-  // Set the initially active datasets
-  useEffect(() => {
-    setActiveDatasetIds(datasetIds ? datasetIds : ACTIVE_DATASET_IDS_INITIAL);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const onMarkerClick = useOnMarkerClick();
 

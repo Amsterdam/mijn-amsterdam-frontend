@@ -9,7 +9,7 @@ import {
 import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon } from '../datasets';
-import MyAreaCollapsiblePanel from './CollapsiblePanel';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
   categoryCheckboxState,
   DatasetControlCheckbox,
@@ -90,8 +90,14 @@ export function DatasetControlPanel({
     );
   }
 
+  const initialState = datasetIds.some((cDatasetId) =>
+    activeDatasetIds.includes(cDatasetId)
+  )
+    ? CollapsedState.Expanded
+    : CollapsedState.Collapsed;
+
   return (
-    <MyAreaCollapsiblePanel title={categoryTitle}>
+    <MyAreaCollapsiblePanel title={categoryTitle} initialState={initialState}>
       <PanelList>
         {Object.entries(category.datasets).map(([datasetId, dataset]) => {
           return (

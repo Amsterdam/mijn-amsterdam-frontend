@@ -1,9 +1,13 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { LatLngLiteral, LeafletEvent } from 'leaflet';
+import { useCallback, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   atom,
+  AtomEffect,
+  DefaultValue,
+  selector,
   useRecoilState,
   useRecoilValue,
   useResetRecoilState,
@@ -14,7 +18,9 @@ import {
   MaPolylineFeature,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
+import { AppRoutes } from '../../../universal/config';
 import {
+  ACTIVE_DATASET_IDS_INITIAL,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
@@ -38,19 +44,50 @@ const NO_DATA_ERROR_RESPONSE = {
   ],
 };
 
-const activeDatasetIdsAtom = atom<string[]>({
+const activeDatasetIdsDefaultValue = selector({
+  key: 'activeDatasetIds/Default',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    const defaultValue = queryConfig?.datasetIds?.length
+      ? queryConfig.datasetIds
+      : ACTIVE_DATASET_IDS_INITIAL;
+    return defaultValue;
+  },
+});
+
+const persistOnUnload_UNSTABLE: AtomEffect<any> = ({ onSet, setSelf }) => {
+  onSet((state, oldState) => {
+    // This will persist the state across page navigation as the default value is set upon unloading of the atom.
+    // The atom will not be re-initialized when used again so it appears we can't have 'dynamic' default values. For example a default values derived from URL params.
+    if (state instanceof DefaultValue) {
+      setSelf(oldState);
+    }
+  });
+};
+
+const activeDatasetIdsAtom = atom<DatasetId[]>({
   key: 'activeDatasetIds',
-  default: [],
+  default: activeDatasetIdsDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetIds() {
   return useRecoilState(activeDatasetIdsAtom);
 }
 
+const activeDatasetFiltersDefaultValue = selector({
+  key: 'activeDatasetIdsDefaultValue',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    return queryConfig?.filters || {};
+  },
+});
+
 // The currently active (selected) filter set
 const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
   key: 'activeDatasetFilters',
-  default: {},
+  default: activeDatasetFiltersDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetFilters() {
@@ -73,18 +110,26 @@ interface LoadingFeature {
   isError?: boolean;
 }
 
+const loadingFeatureDefaultValue = selector({
+  key: 'loadingFeature/Default',
+  get: () => {
+    const queryConfig = getQueryConfig();
+    const defaultValue = queryConfig?.loadingFeature
+      ? queryConfig?.loadingFeature
+      : null;
+    return defaultValue;
+  },
+});
+
 // The state of the feature currently / last indicated to be loaded
 export const loadingFeatureAtom = atom<LoadingFeature | null>({
   key: 'loadingFeature',
-  default: null,
+  default: loadingFeatureDefaultValue,
+  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useLoadingFeature() {
   return useRecoilState(loadingFeatureAtom);
-}
-
-export function useSetLoadingFeature() {
-  return useSetRecoilState(loadingFeatureAtom);
 }
 
 type SelectedFeature = any;
@@ -148,9 +193,9 @@ export function useSelectedFeatureCSS(
   const map = useMapInstance();
   const loadingFeatureId = loadingFeature?.id;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (map) {
-      map.eachLayer((layer: any) => {
+      for (const layer of Object.values((map as any)._layers) as any[]) {
         const id = layer?.feature?.properties?.id;
         if (
           id &&
@@ -165,8 +210,9 @@ export function useSelectedFeatureCSS(
             ?.classList.remove(selectedFeatureSelector);
 
           element.classList.add(selectedFeatureSelector);
+          break;
         }
-      });
+      }
     }
   }, [map, loadingFeatureId, features]);
 }
@@ -209,9 +255,8 @@ type DatasetResponseContent = {
 };
 
 export function useFetchFeatures() {
-  const map = useMapInstance();
   const abortSignal = useRef<CancelTokenSource>();
-
+  const map = useMapInstance();
   return useCallback(
     async (
       datasetIds: DatasetId[],
@@ -222,20 +267,24 @@ export function useFetchFeatures() {
 
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
-      const bounds = map.getBounds();
+
+      const mapBounds = map.getBounds();
+      const bbox: [number, number, number, number] = [
+        mapBounds.getWest(),
+        mapBounds.getSouth(),
+        mapBounds.getEast(),
+        mapBounds.getNorth(),
+      ];
+      const zoom = map.getZoom();
+
       try {
         const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
           data: {
             datasetIds,
             filters,
-            bbox: [
-              bounds.getWest(),
-              bounds.getSouth(),
-              bounds.getEast(),
-              bounds.getNorth(),
-            ],
-            zoom: map.getZoom(),
+            bbox,
+            zoom,
           },
           method: 'POST',
           cancelToken: tokenSource.token,
@@ -305,6 +354,7 @@ export function useControlItemChange() {
 
           break;
       }
+
       setActiveDatasetIds(datasetIds);
 
       // Remove the filters of inActive datasets
@@ -370,9 +420,15 @@ export function useFilterControlItemChange() {
 
       activeFiltersUpdate[datasetId] = {
         ...activeFiltersUpdate[datasetId],
-        [propertyName]: { values: filterValues },
       };
-
+      if (Object.keys(filterValues).length) {
+        activeFiltersUpdate[datasetId][propertyName] = { values: filterValues };
+      } else if (propertyName in activeFiltersUpdate[datasetId]) {
+        delete activeFiltersUpdate[datasetId][propertyName];
+      }
+      if (!Object.keys(activeFiltersUpdate[datasetId]).length) {
+        delete activeFiltersUpdate[datasetId];
+      }
       setActiveFilters(activeFiltersUpdate);
     },
     [activeFilters, setActiveFilters]
@@ -403,4 +459,52 @@ export function useResetMyAreaState() {
     resetLoadingFeatureAtom,
     resetSelectedFeatureAtom,
   ]);
+}
+
+export interface QueryConfig {
+  datasetIds?: DatasetId[];
+  filters?: DatasetFilterSelection;
+  zoom?: number;
+  center?: LatLngLiteral;
+  loadingFeature?: { id: string; datasetId: DatasetId };
+}
+
+export function getQueryConfig(): QueryConfig {
+  return Object.fromEntries(
+    Array.from(new URLSearchParams(window.location.search).entries())
+      .map(([k, v]) => {
+        return [k, v ? JSON.parse(v) : undefined];
+      })
+      .filter(([, v]) => !!v)
+  );
+}
+
+export function useReflectUrlState() {
+  const map = useMapInstance();
+  const history = useHistory();
+
+  const [activeDatasetIds] = useActiveDatasetIds();
+  const [activeFilters] = useActiveDatasetFilters();
+  const [loadingFeature] = useLoadingFeature();
+
+  const loadingFeatureStr =
+    loadingFeature && !loadingFeature?.isError
+      ? JSON.stringify(loadingFeature)
+      : null;
+  const datasetIdsStr = activeDatasetIds.length
+    ? JSON.stringify(activeDatasetIds)
+    : '';
+  const filtersStr = Object.entries(activeFilters).length
+    ? JSON.stringify(activeFilters)
+    : '';
+
+  useEffect(() => {
+    const url = `${
+      AppRoutes.BUURT
+    }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
+      map.getCenter()
+    )}&loadingFeature=${loadingFeatureStr}`;
+
+    history.replace(url);
+  }, [datasetIdsStr, filtersStr, loadingFeatureStr, history, map]);
 }
