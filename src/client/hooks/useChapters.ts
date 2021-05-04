@@ -27,6 +27,7 @@ function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     SIA,
+    TOERISME,
     HOME,
     KVK,
   }: AppState
@@ -104,6 +105,9 @@ function isChapterActive(
 
     case Chapters.KVK:
       return !isLoading(KVK) && !!KVK.content;
+
+    case Chapters.TOERISME:
+      return !isLoading(TOERISME) && !!TOERISME.content?.length;
   }
 
   return false;

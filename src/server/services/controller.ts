@@ -27,6 +27,7 @@ import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
 import { fetchSIA } from './sia';
 import { createTipsRequestData, fetchTIPS } from './tips';
+import { fetchToerisme } from './toerisme';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
 
@@ -65,6 +66,7 @@ const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
 const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
+const TOERISME = callService(fetchToerisme);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
 
@@ -128,6 +130,7 @@ const SERVICES_INDEX = {
   BELASTINGEN,
   MILIEUZONE,
   SIA,
+  TOERISME,
   ERFPACHT,
   NOTIFICATIONS,
   CASES,
@@ -153,6 +156,7 @@ type CommercialServices = Pick<
   | 'KVK'
   | 'MILIEUZONE'
   | 'SIA'
+  | 'TOERISME'
   | 'VERGUNNINGEN'
 >;
 
@@ -183,6 +187,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
+    TOERISME,
     VERGUNNINGEN,
     WMO,
   },
@@ -205,6 +210,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
+    TOERISME,
     VERGUNNINGEN,
     WMO,
   },
@@ -220,6 +226,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
+    TOERISME,
     VERGUNNINGEN,
   },
 };

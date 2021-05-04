@@ -71,6 +71,7 @@ export type SourceApiKey =
   | 'BAG'
   | 'AKTES'
   | 'AFVAL'
+  | 'TOERISME'
   | 'KVK';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
@@ -140,6 +141,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   KVK: {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
+  },
+  TOERISME: {
+    url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
   },
 };
 
