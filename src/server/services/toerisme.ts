@@ -11,10 +11,10 @@ export interface ServiceNameSource {
 export type ServiceNameSourceData = ServiceNameSource[];
 
 // The items you want to output in this api
-export interface Service extends ServiceNameSource {}
+export interface Toerisme extends ServiceNameSource {}
 
 // The root type of the items you want to output in this api
-export type ToerismeData = Service[];
+export type ToerismeData = Toerisme[];
 
 // The function you can use to transform the api source data
 export function transformToerismeData(
