@@ -156,7 +156,6 @@ type CommercialServices = Pick<
   | 'KVK'
   | 'MILIEUZONE'
   | 'SIA'
-  | 'TOERISME'
   | 'VERGUNNINGEN'
 >;
 
@@ -226,7 +225,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
-    TOERISME,
+
     VERGUNNINGEN,
   },
 };

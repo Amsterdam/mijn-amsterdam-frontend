@@ -16,6 +16,7 @@ import {
   IconTips,
   IconVergunningen,
   IconZorg,
+  IconToerisme,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -35,5 +36,6 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.ZORG]: IconZorg,
   [Chapters.VERGUNNINGEN]: IconVergunningen,
   [Chapters.KVK]: IconHomeCommercial,
+  [Chapters.TOERISME]: IconToerisme,
   ALERT: IconAlert,
 };

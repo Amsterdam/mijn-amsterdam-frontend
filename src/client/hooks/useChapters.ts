@@ -107,7 +107,7 @@ function isChapterActive(
       return !isLoading(KVK) && !!KVK.content;
 
     case Chapters.TOERISME:
-      return !isLoading(TOERISME) && !!TOERISME.content?.length;
+      return !isLoading(TOERISME) && !!TOERISME.content;
   }
 
   return false;

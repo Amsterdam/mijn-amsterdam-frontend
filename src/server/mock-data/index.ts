@@ -207,14 +207,14 @@ export const mockDataConfig: MockDataConfig = {
         });
       return JSON.stringify(items);
     },
-    [ApiUrls.TOERISME]: {
-      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-      responseData: async (config: any) => {
-        if (isCommercialUser(config)) {
-          return await loadMockApiResponseJson(TOERISME);
-        }
+  },
+  [ApiUrls.TOERISME]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
         return await loadMockApiResponseJson(TOERISME);
-      },
+      }
+      return await loadMockApiResponseJson(TOERISME);
     },
   },
 };

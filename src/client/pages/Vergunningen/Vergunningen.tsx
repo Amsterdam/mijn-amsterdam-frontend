@@ -32,7 +32,6 @@ const DISPLAY_PROPS_HISTORY = {
 
 export default function Vergunningen() {
   const { VERGUNNINGEN } = useAppStateGetter();
-  console.log(VERGUNNINGEN);
   const vergunningen: Vergunning[] = useMemo(() => {
     if (!VERGUNNINGEN.content?.length) {
       return [];

@@ -110,7 +110,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.TOERISME,
     id: Chapters.TOERISME,
     to: AppRoutes.TOERISME,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private'],
   },
 ];
 

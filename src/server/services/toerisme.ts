@@ -1,33 +1,34 @@
 import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
-import { GenericDocument } from '../../universal/types/App.types';
 
-export interface ServiceNameSource {
-  title: string;
-  documents: GenericDocument[];
+export interface ToerismeDataContent {
+  city: String;
+  houseLetter: String | null;
+  houseNumber: String | null;
+  houseNumberExtension: String | null;
+  postalCode: String | null;
+  registrationNumber: String | null;
+  shortName: String | null;
+  street: String | null;
 }
 
-// The root type of the api source
-export type ServiceNameSourceData = ServiceNameSource[];
+export interface ToerismeSourceData {
+  content: ToerismeDataContent[];
+}
 
-// The items you want to output in this api
-export interface Toerisme extends ServiceNameSource {}
+export interface ToerismeData extends ToerismeDataContent {}
 
-// The root type of the items you want to output in this api
-export type ToerismeData = Toerisme[];
-
-// The function you can use to transform the api source data
 export function transformToerismeData(
-  responseData: ServiceNameSourceData
-): ToerismeData {
-  return responseData;
+  responseData: ToerismeSourceData
+): ToerismeData[] | null {
+  return responseData.content;
 }
 
 export function fetchToerisme(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<ToerismeData>(
+  return requestData<ToerismeData[]>(
     getApiConfig('TOERISME', {
       transformResponse: transformToerismeData,
     }),
