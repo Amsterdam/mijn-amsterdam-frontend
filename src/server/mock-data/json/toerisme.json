@@ -9,7 +9,17 @@
       "registrationNumber":"0363 E7B8 B042 8A92 37E5",
       "shortName":"Schakelstraat",
       "street":"Schakelstraat"
-      }
+      },
+      {
+        "city":"Amsterdam",
+        "houseLetter":null,
+        "houseNumber":"16",
+        "houseNumberExtension":null,
+        "postalCode":"1014AW",
+        "registrationNumber":"0363 E7B8 B042 8A92 37E5",
+        "shortName":"Schakelstraat",
+        "street":"Schakelstraat"
+        }
     ],
   "status":"OK"
 }

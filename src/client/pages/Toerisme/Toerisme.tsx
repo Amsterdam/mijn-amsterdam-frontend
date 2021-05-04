@@ -15,7 +15,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 export default function Toerisme() {
   const { TOERISME } = useAppStateGetter();
   // Wait for design to show multiple instances for now we take the first in array
-  const info = TOERISME?.content?.[0];
+  const info = TOERISME?.content;
   return (
     <Page className={styles.Toerisme}>
       <PageHeading
@@ -47,23 +47,25 @@ export default function Toerisme() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {info && (
+        {info?.map((infoItem) => (
           <Panel className={classnames(styles.Panel)}>
             <Heading size="tiny">
               Landelijk registratienummer toeristisch verhuur
             </Heading>
-            {info.registrationNumber && <p>{info.registrationNumber}</p>}
+            {infoItem.registrationNumber && (
+              <p>{infoItem.registrationNumber}</p>
+            )}
 
             <Heading size="tiny">Adres verhuurde woning</Heading>
             <p>
-              {info.street} {info.houseNumber}
-              {info.houseLetter}
-              {info.houseNumberExtension}
+              {infoItem.street} {infoItem.houseNumber}
+              {infoItem.houseLetter}
+              {infoItem.houseNumberExtension}
               <br />
-              {info.postalCode} {info.city}
+              {infoItem.postalCode} {infoItem.city}
             </p>
           </Panel>
-        )}
+        ))}
       </PageContent>
     </Page>
   );
