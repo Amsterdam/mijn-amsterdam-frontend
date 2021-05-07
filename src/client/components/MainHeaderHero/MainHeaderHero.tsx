@@ -66,7 +66,7 @@ function useHeroSrc() {
     case isChapterPath(AppRoutes.AFVAL):
       imageName = 'afval';
       break;
-    case isChapterPath(AppRoutes.TOERISME):
+    case isChapterPath(AppRoutes.TOERISTISCHE_VERHUUR):
       imageName = 'toerisme';
       break;
     default:

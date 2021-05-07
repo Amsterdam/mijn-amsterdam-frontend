@@ -32,3 +32,5 @@ yarn-error.log*
 /.vscode/settings.json
 screenshots
 /scrape-personas.js
+
+.eslintcache

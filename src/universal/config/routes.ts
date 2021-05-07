@@ -33,7 +33,7 @@ export const AppRoutes: Record<string, string> = {
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/DETAIL': '/vergunningen/detail/:id',
-  TOERISME: '/toeristische-verhuur',
+  TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
 };
 
 export const AppRoutesRedirect = [

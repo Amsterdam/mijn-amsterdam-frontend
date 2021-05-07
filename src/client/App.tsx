@@ -58,7 +58,7 @@ import {
   Vergunningen,
   SiaDetail,
   Sia,
-  Toerisme,
+  ToeristischeVerhuur,
   Zorg,
   ZorgDetail,
 } from './pages';
@@ -192,7 +192,10 @@ function AppAuthenticated() {
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
           <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
           <Route path={AppRoutes.SIA} component={Sia} />
-          <Route path={AppRoutes.TOERISME} component={Toerisme} />
+          <Route
+            path={AppRoutes.TOERISTISCHE_VERHUUR}
+            component={ToeristischeVerhuur}
+          />
           <Route component={NotFound} />
         </Switch>
       </div>

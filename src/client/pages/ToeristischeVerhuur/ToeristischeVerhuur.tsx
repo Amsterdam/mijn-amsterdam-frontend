@@ -1,23 +1,21 @@
+import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import {
+  ChapterIcon,
+  InfoDetail,
+  Linkd,
   Page,
   PageContent,
   PageHeading,
-  Panel,
-  Heading,
 } from '../../components';
-import classnames from 'classnames';
-import styles from './Toerisme.module.scss';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { ChapterIcon, Linkd } from '../../components';
-
 import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './ToeristischeVerhuur.module.scss';
 
-export default function Toerisme() {
-  const { TOERISME } = useAppStateGetter();
+export default function ToeristischeVerhuur() {
+  const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   // Wait for design to show multiple instances for now we take the first in array
-  const info = TOERISME?.content;
+  const info = TOERISTISCHE_VERHUUR?.content;
   return (
-    <Page className={styles.Toerisme}>
+    <Page className={styles.ToeristischeVerhuur}>
       <PageHeading
         backLink={{
           to: AppRoutes.HOME,
@@ -25,7 +23,7 @@ export default function Toerisme() {
         }}
         icon={<ChapterIcon />}
       >
-        {ChapterTitles.TOERISME}
+        {ChapterTitles.TOERISTISCHE_VERHUUR}
       </PageHeading>
       <PageContent>
         <p>
@@ -47,24 +45,25 @@ export default function Toerisme() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {info?.map((infoItem) => (
-          <Panel className={classnames(styles.Panel)}>
-            <Heading size="tiny">
-              Landelijk registratienummer toeristisch verhuur
-            </Heading>
-            {infoItem.registrationNumber && (
-              <p>{infoItem.registrationNumber}</p>
-            )}
-
-            <Heading size="tiny">Adres verhuurde woning</Heading>
-            <p>
-              {infoItem.street} {infoItem.houseNumber}
-              {infoItem.houseLetter}
-              {infoItem.houseNumberExtension}
-              <br />
-              {infoItem.postalCode} {infoItem.city}
-            </p>
-          </Panel>
+        {info?.map((infoItem, index) => (
+          <article key={infoItem.registrationNumber}>
+            <InfoDetail
+              label={'Landelijk registratienummer toeristisch verhuur'}
+              value={infoItem.registrationNumber}
+            />
+            <InfoDetail
+              label={'Adres verhuurde woning'}
+              value={
+                <>
+                  {infoItem.street} {infoItem.houseNumber}
+                  {infoItem.houseLetter}
+                  {infoItem.houseNumberExtension}
+                  <br />
+                  {infoItem.postalCode} {infoItem.city}
+                </>
+              }
+            />
+          </article>
         ))}
       </PageContent>
     </Page>

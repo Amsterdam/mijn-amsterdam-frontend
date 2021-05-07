@@ -1,9 +1,18 @@
 @import '../../styles/_global.scss';
 
+.InfoDetail {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-bottom: 2.5rem;
+  padding-top: 1.6rem;
+  color: $color-neutral-grey4;
+  margin: 0 auto;
+}
+
 .Label {
   padding-bottom: 0.4rem;
   display: block;
   margin: 0;
+  font-weight: normal;
 }
 
 .Value {
@@ -11,14 +20,12 @@
   display: block;
   font-weight: 500;
   font-size: 1.8rem;
-}
-
-.InfoDetail {
-  border-top: 0.1rem solid $color-neutral-grey2;
-  padding-bottom: 2.5rem;
-  padding-top: 1.6rem;
-  color: $color-neutral-grey4;
   margin: 0;
+  padding-right: 16rem;
+
+  @include mq-phone {
+    padding-right: 0;
+  }
 }
 
 .InfoDetailGroup {
@@ -33,6 +40,9 @@
 
 .InfoDetailGroupContent {
   display: flex;
+  @include mq-phone() {
+    display: block;
+  }
 
   .InfoDetail {
     border-top: 0;

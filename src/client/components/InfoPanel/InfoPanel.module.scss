@@ -19,7 +19,6 @@
 }
 
 .InfoPanelCollapsible {
-
   @include select(SectionCollapsible_Title_) {
     @include heading-medium;
     @include mq-phone {
@@ -33,7 +32,7 @@
     }
 
     .InfoPanel {
-      margin-bottom: 2rem;
+      padding-bottom: 2rem;
     }
   }
 }
@@ -46,15 +45,14 @@
 }
 
 .TableWrap {
-
   + .TableWrap {
     &:before {
       content: '';
       display: block;
       left: 0;
-      right:0;
+      right: 0;
       position: absolute;
-      border-top: .1rem solid $color-neutral-grey2;
+      border-top: 0.1rem solid $color-neutral-grey2;
       margin-top: -2rem;
     }
     margin-top: 2rem;
@@ -70,14 +68,13 @@
       span {
         position: absolute;
         right: 2rem;
-        top: .1rem;
+        top: 0.1rem;
       }
     }
   }
 }
 
 .InfoPanelTableItem {
-
 }
 
 .InfoPanelTable {

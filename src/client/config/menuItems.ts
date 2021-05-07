@@ -107,9 +107,9 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
-    title: ChapterTitles.TOERISME,
-    id: Chapters.TOERISME,
-    to: AppRoutes.TOERISME,
+    title: ChapterTitles.TOERISTISCHE_VERHUUR,
+    id: Chapters.TOERISTISCHE_VERHUUR,
+    to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
   },
 ];

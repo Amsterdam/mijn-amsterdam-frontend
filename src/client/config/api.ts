@@ -85,7 +85,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AFVALPUNTEN: 'Afvalpunten',
   KVK: 'Mijn onderneming',
   SIA: 'Mijn meldingen',
-  TOERISME: 'Toeristische verhuur',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
 };
 
 export function getApiErrors(appState: AppState) {

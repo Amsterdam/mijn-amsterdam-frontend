@@ -19,7 +19,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: .6rem;
+  margin-bottom: 0.6rem;
+
+  @include mq-phone {
+    display: block;
+    margin-bottom: 2rem;
+  }
 }
 
 .DocumentList {
@@ -48,6 +53,6 @@
 
 .DownloadError {
   padding-left: 3px;
-  font-size: .8em;
+  font-size: 0.8em;
   white-space: nowrap;
 }
