@@ -57,7 +57,7 @@ export function DocumentDetails({ vergunning }: { vergunning: Vergunning }) {
 
   return (
     <InfoDetail
-      el="div"
+      valueWrapperElement="div"
       label="Documenten"
       value={
         isLoadingDocuments ? (

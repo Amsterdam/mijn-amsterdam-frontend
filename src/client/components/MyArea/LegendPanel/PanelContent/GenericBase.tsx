@@ -7,6 +7,7 @@ import {
 } from '../../../../../universal/config';
 import JsonString from './JsonString';
 import { usePhoneScreen } from '../../../../hooks/media.hook';
+import styles from './GenericBase.module.scss';
 
 const SuperTitle = styled(Heading)`
   font-size: 1.6rem;
@@ -53,7 +54,7 @@ export default function GenericBase({
 }: GenericBaseProps) {
   const isPhone = usePhoneScreen();
   return (
-    <>
+    <div className={styles.GenericBase}>
       {!!supTitle && <SuperTitle as="h4">{supTitle}</SuperTitle>}
       {!!title && (
         <Title as="h3" isPhone={isPhone}>
@@ -61,6 +62,6 @@ export default function GenericBase({
         </Title>
       )}
       {children}
-    </>
+    </div>
   );
 }

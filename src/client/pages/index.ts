@@ -21,5 +21,6 @@ export { default as VergunningDetail } from './VergunningDetail/VergunningDetail
 export { default as Vergunningen } from './Vergunningen/Vergunningen';
 export { default as Sia } from './Sia/Sia';
 export { default as SiaDetail } from './SiaDetail/SiaDetail';
+export { default as ToeristischeVerhuur } from './ToeristischeVerhuur/ToeristischeVerhuur';
 export { default as Zorg } from './Zorg/Zorg';
 export { default as ZorgDetail } from './ZorgDetail/ZorgDetail';

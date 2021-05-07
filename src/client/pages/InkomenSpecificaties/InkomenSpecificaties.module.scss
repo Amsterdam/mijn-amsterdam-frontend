@@ -57,20 +57,19 @@
     height: 1.3rem;
     font-style: normal;
     position: relative;
-    transform: rotate(45deg) translateY(-.6rem) scale(.6);
+    transform: rotate(45deg) translateY(-0.6rem) scale(0.6);
     transform-origin: center;
   }
 
   &Active {
-   i {
-     transform: rotate(-135deg) translateY(-.2rem) scale(.6) translateX(-.8rem);
-   }
+    i {
+      transform: rotate(-135deg) translateY(-0.2rem) scale(0.6)
+        translateX(-0.8rem);
+    }
   }
-
 }
 
 .SearchResetButton {
-
 }
 
 .SearchPanel {

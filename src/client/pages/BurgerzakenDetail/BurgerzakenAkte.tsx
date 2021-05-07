@@ -53,7 +53,7 @@ export default function BurgerzakenIDKaart() {
             <InfoDetail label="Registerjaar" value={Akte.registerjaar} />
             {!!Akte?.documents?.length && (
               <InfoDetail
-                el="div"
+                valueWrapperElement="div"
                 label="Download PDF"
                 value={
                   <DocumentList

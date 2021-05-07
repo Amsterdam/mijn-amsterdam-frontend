@@ -69,21 +69,23 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           De regels voor afval en hergebruik
         </a>
       </p>
-    </div>
-    <div
-      class="Panel Panel AddressPanel"
-    >
-      <h3
-        class="Heading Heading__tiny"
+      <div
+        class="InfoDetail GarbageInfoDetail"
       >
-        Uw adres
-      </h3>
-      <p>
-        Onbekend adres
-      </p>
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Uw adres
+        </h3>
+        <p
+          class="Value"
+        >
+          Onbekend adres
+        </p>
+      </div>
     </div>
     <section
-      class="SectionCollapsible InfoSection"
+      class="SectionCollapsible GarbageSectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -110,50 +112,58 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           class="PanelInner"
         >
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Hoe
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               Aan de weg
             </p>
           </div>
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Buiten zetten
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               vanaf Woensdag 20:00 tot Donderdag 07:00
             </p>
           </div>
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Ophaaldag
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               Donderdag
             </p>
           </div>
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Opmerking
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               Hou het netjes!
             </p>
           </div>
@@ -161,7 +171,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoSection"
+      class="SectionCollapsible GarbageSectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -188,26 +198,30 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           class="PanelInner"
         >
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Hoe
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               In container
             </p>
           </div>
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
             <h3
-              class="Heading Heading__tiny"
+              class="Heading Heading__tiny Label"
             >
               Opmerking
             </h3>
-            <p>
+            <p
+              class="Value"
+            >
               Hou het netjes!
             </p>
           </div>
@@ -215,7 +229,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoSection InfoSectionMap"
+      class="SectionCollapsible GarbageSectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -242,12 +256,19 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           class="PanelInner"
         >
           <div
-            class="Panel Panel"
+            class="InfoDetail GarbageInfoDetail"
           >
-            <p>
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Overzicht in uw buurt
+            </h3>
+            <p
+              class="Value"
+            >
               <a
                 class="Button Button__plain Button__lean Linkd"
-                href="/buurt?datasetIds=afvalcontainers"
+                href="/buurt?datasetIds=[\\"afvalcontainers\\"]"
               >
                 <svg
                   aria-hidden="true"
@@ -258,7 +279,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
                 >
                   Chevron-Right.svg
                 </svg>
-                Klik hier voor een overzicht van alle afvalcontainers in de buurt.
+                Bekijk de afvalcontainer locaties.
               </a>
             </p>
           </div>
@@ -266,7 +287,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoSection InfoSectionGarbagePoints"
+      class="SectionCollapsible GarbageSectionCollapsible Afvalpunten"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -292,61 +313,95 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
         <div
           class="PanelInner"
         >
-          <div
-            class="Panel Panel AfvalPunten"
+          <h3
+            class="Heading Heading__medium AfvalpuntContentHeading"
           >
-            <h3
-              class="Heading Heading__medium AfvalpuntContentHeading"
+            De afvalpuntenweg 
+            <span
+              class="DistanceToHome"
             >
-              De afvalpuntenweg 
-              <span
-                class="DistanceToHome"
-              >
-                +/-34KM
-              </span>
-            </h3>
-            <h3
-              class="Heading Heading__tiny"
+              +/-34KM
+            </span>
+          </h3>
+          <div
+            class="InfoDetail GarbageInfoDetail"
+          >
+            <h4
+              class="Heading Heading__tiny Label"
             >
               Adres
-            </h3>
-            <p>
-              afvalpuntenweg 23, 1067 BA
-            </p>
-            <h3
-              class="Heading Heading__tiny"
+            </h4>
+            <div
+              class="Value"
+            >
+              <p
+                class="NoMargin"
+              >
+                afvalpuntenweg 23, 1067 BA
+              </p>
+            </div>
+          </div>
+          <div
+            class="InfoDetail GarbageInfoDetail"
+          >
+            <h4
+              class="Heading Heading__tiny Label"
             >
               Telefoon
-            </h3>
-            <p>
+            </h4>
+            <p
+              class="Value"
+            >
               <a
                 href="tel:123123123"
               >
                 123123123
               </a>
             </p>
-            <h3
-              class="Heading Heading__tiny"
+          </div>
+          <div
+            class="InfoDetail GarbageInfoDetail"
+          >
+            <h4
+              class="Heading Heading__tiny Label"
             >
               E-mail
-            </h3>
-            <p>
+            </h4>
+            <p
+              class="Value"
+            >
               <a
                 href="mailto:afval@punt.com"
               >
                 afval@punt.com
               </a>
             </p>
-            <h3
-              class="Heading Heading__tiny"
+          </div>
+          <div
+            class="InfoDetail GarbageInfoDetail"
+          >
+            <h4
+              class="Heading Heading__tiny Label"
             >
               Meer informatie
-            </h3>
-            <p>
+            </h4>
+            <p
+              class="Value"
+            >
               <a
-                href="http://example.org/afvalpunt"
+                class="Button Button__plain Button__lean Linkd"
+                href="/http://example.org/afvalpunt"
                 rel="noopener noreferrer"
               >
+                <svg
+                  aria-hidden="true"
+                  class="Icon Icon__left"
+                  fill="#000"
+                  height="14px"
+                  width="14px"
+                >
+                  Chevron-Right.svg
+                </svg>
                 Spullen wegbrengen naar een Afvalpunt
               </a>
             </p>

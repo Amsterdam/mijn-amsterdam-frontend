@@ -211,7 +211,7 @@ export default function Profile() {
 
       {!!brpProfileData?.adres && (
         <InfoPanel
-          className={styles.DefaultPanel}
+          className={classnames(styles.DefaultPanel, styles.AddressPanel)}
           {...formatInfoPanelConfig(panelConfig.adres, BRP)}
           panelData={brpProfileData.adres}
         />

@@ -14,4 +14,5 @@ export * from './generated';
 export * from './milieuzone';
 export * from './tips';
 export * from './vergunningen';
+export * from './toeristische-verhuur';
 export * from './wmo';

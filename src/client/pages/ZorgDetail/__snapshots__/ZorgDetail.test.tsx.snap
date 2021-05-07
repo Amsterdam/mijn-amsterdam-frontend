@@ -48,20 +48,20 @@ exports[`<Zorg /> Matches the Full Page snapshot 1`] = `
     <div
       class="PageContent DetailPageContent"
     >
-      <p
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Aanbieder
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           Mantelzorg B.V
-        </span>
-      </p>
+        </p>
+      </div>
     </div>
     <div
       class="StatusLine"

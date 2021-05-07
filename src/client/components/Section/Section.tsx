@@ -41,7 +41,6 @@ export default function Section({
           {title}
         </Heading>
       )}
-
       {isLoading && (
         <LoadingContent
           barConfig={[
@@ -50,11 +49,9 @@ export default function Section({
           ]}
         />
       )}
-
       {hasNoItemsMessage && !isLoading && !hasItems && (
         <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
       )}
-
       {!isLoading && hasItems && children}
     </section>
   );

@@ -35,6 +35,7 @@ export const PRISTINE_APPSTATE: AppState = {
   MILIEUZONE: apiPristineResult({ isKnown: false }),
   AKTES: apiPristineResult([]),
   SIA: apiPristineResult([]),
+  TOERISTISCHE_VERHUUR: apiPristineResult([]),
 
   // Related
   BRP: apiPristineResult(null),

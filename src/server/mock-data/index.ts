@@ -14,6 +14,7 @@ import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import SIA from './json/sia-meldingen.json';
 import TIPS from './json/tips.json';
+import TOERISTISCHE_VERHUUR from './json/toeristische-verhuur.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 
@@ -205,6 +206,15 @@ export const mockDataConfig: MockDataConfig = {
           });
         });
       return JSON.stringify(items);
+    },
+  },
+  [ApiUrls.TOERISTISCHE_VERHUUR]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR);
+      }
+      return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR);
     },
   },
 };

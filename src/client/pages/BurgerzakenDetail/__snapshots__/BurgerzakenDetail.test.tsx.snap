@@ -48,48 +48,48 @@ exports[`<BurgerzakenDetail /> Matches the Full Page snapshot 1`] = `
     <div
       class="PageContent DetailPageContent"
     >
-      <p
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Documentnummer
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           PP57XKG54
-        </span>
-      </p>
-      <p
+        </p>
+      </div>
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Datum uitgifte
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           15 oktober 2015
-        </span>
-      </p>
-      <p
+        </p>
+      </div>
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Geldig tot
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           15 oktober 2025
-        </span>
-      </p>
+        </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>

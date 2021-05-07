@@ -2,7 +2,7 @@
 
 .SectionCollapsible {
   margin-bottom: 1.8rem;
-  border-bottom: .1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
 }
 
 .CaretIcon {
@@ -17,11 +17,10 @@
 
 .Title {
   position: relative;
-  padding-left: .96em;
-  margin: 0 auto;
+  padding-left: 0.96em;
+  margin-left: 16rem;
   margin-bottom: 1.8rem;
   transform: translateX(-2.2rem);
-  max-width: 64rem;
   white-space: nowrap;
 
   @include mq-tablet() {
@@ -46,7 +45,7 @@
   padding: 0;
   text-align: left;
 
-  &[aria-expanded="true"] .CaretIcon {
+  &[aria-expanded='true'] .CaretIcon {
     transform: translateY(-50%) rotate(90deg);
   }
 }
@@ -55,11 +54,6 @@
   overflow: hidden;
   height: 0;
   position: relative;
-}
-
-.PanelInner {
-  display: flex;
-  flex-direction: column;
 }
 
 .NoItemsMessage {
@@ -71,7 +65,7 @@
   }
   text-indent: 16rem;
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
 }
 
 .ToggleMorePanel {
@@ -82,3 +76,6 @@
   right: 0;
 }
 
+.PanelInner {
+  display: block;
+}

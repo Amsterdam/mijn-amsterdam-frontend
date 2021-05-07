@@ -1,6 +1,6 @@
 import InfoDetail from '../../../InfoDetail/InfoDetail';
 import InnerHtml from '../../../InnerHtml/InnerHtml';
-import styles from './PanelContent.module.scss';
+import styles from './GenericBase.module.scss';
 
 interface DescriptionProps {
   description: string;
@@ -15,7 +15,7 @@ export default function Description({
     <InfoDetail
       className={styles.InfoDetailDescription}
       label={label}
-      el="div"
+      valueWrapperElement="div"
       value={<InnerHtml>{description}</InnerHtml>}
     />
   );

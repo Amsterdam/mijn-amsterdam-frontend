@@ -27,6 +27,7 @@ function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     SIA,
+    TOERISTISCHE_VERHUUR,
     HOME,
     KVK,
   }: AppState
@@ -104,6 +105,12 @@ function isChapterActive(
 
     case Chapters.KVK:
       return !isLoading(KVK) && !!KVK.content;
+
+    case Chapters.TOERISTISCHE_VERHUUR:
+      return (
+        !isLoading(TOERISTISCHE_VERHUUR) &&
+        !!TOERISTISCHE_VERHUUR.content?.length
+      );
   }
 
   return false;

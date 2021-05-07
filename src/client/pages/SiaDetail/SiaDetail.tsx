@@ -203,7 +203,7 @@ export default function SiaDetail() {
             </p>
             {!!SiaItem?.attachments.length && (
               <InfoDetail
-                el="div"
+                valueWrapperElement="div"
                 label="Foto's"
                 value={
                   <div className={styles.Images}>

@@ -1,0 +1,10 @@
+@import '../../../../styles/_global.scss';
+
+.GenericBase {
+  @include select(InfoDetail_Value) {
+    padding-right: 0;
+  }
+}
+.InfoDetailDescription {
+  white-space: pre-wrap;
+}

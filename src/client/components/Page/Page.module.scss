@@ -1,5 +1,19 @@
 @import '../../styles/_global.scss';
 
+@mixin PageContentIndented {
+  @include centered-max($main-boxed-width);
+  padding-left: 16rem;
+
+  @include mq-tablet() {
+    padding-left: 11rem;
+  }
+
+  @include mq-phone() {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 .Page {
   display: block;
 
@@ -18,26 +32,12 @@
 }
 
 .TextPage {
-
   @include select(PageHeading_HeadingInner) {
-    @include centered-max(64rem);;
-    width: calc(100% - 4rem);
-    margin: 0 auto;
-
-    @include mq-tablet() {
-      margin-left: 3rem;
-      margin-right: 3rem;
-    }
-
-    @include mq-phone() {
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
+    @include PageContentIndented;
   }
 }
 
 .OverviewPage {
-
   @include select(PageHeading_HeadingInner) {
     margin-left: 0;
   }
@@ -69,16 +69,9 @@
 }
 
 .PageContent {
-  @include centered-max(64rem);
+  @include PageContentIndented;
 
-  @include mq-tablet() {
-    margin-left: 11.5rem;
-    margin-right: 11.5rem;
-    max-width: none;
-  }
-
-  @include mq-phone() {
-    margin-left: 1rem;
-    margin-right: 1rem;
+  p {
+    max-width: 64rem;
   }
 }

@@ -270,7 +270,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="InfoPanel DefaultPanel AddressPanel"
     >
       <h3
         class="Heading Heading__medium Title"
@@ -1682,7 +1682,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="InfoPanel DefaultPanel AddressPanel"
     >
       <h3
         class="Heading Heading__medium Title"
@@ -2967,7 +2967,7 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="InfoPanel DefaultPanel AddressPanel"
     >
       <h3
         class="Heading Heading__medium Title"
@@ -3325,7 +3325,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="InfoPanel DefaultPanel AddressPanel"
     >
       <h3
         class="Heading Heading__medium Title"
