@@ -48,43 +48,43 @@ exports[`<BurgerzakenAkte /> Matches the Full Page snapshot 1`] = `
     <div
       class="PageContent DetailPageContent"
     >
-      <p
-        class="InfoDetail"
-      >
-        <span
-          class="Label"
-        >
-          Aktenummer
-        </span>
-        <span
-          class="Value"
-        >
-          67YUHAK-IO
-        </span>
-      </p>
-      <p
-        class="InfoDetail"
-      >
-        <span
-          class="Label"
-        >
-          Registerjaar
-        </span>
-        <span
-          class="Value"
-        >
-          2015
-        </span>
-      </p>
       <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Aktenummer
+        </h3>
+        <p
+          class="Value"
+        >
+          67YUHAK-IO
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Registerjaar
+        </h3>
+        <p
+          class="Value"
+        >
+          2015
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Download PDF
-        </span>
-        <span
+        </h3>
+        <div
           class="Value"
         >
           <ul
@@ -114,7 +114,7 @@ exports[`<BurgerzakenAkte /> Matches the Full Page snapshot 1`] = `
               </span>
             </li>
           </ul>
-        </span>
+        </div>
       </div>
     </div>
   </main>

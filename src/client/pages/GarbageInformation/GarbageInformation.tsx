@@ -34,6 +34,10 @@ function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
 }
 
+function GarbageCenterInfoDetail({ ...props }: InfoDetailProps) {
+  return <GarbageInfoDetail {...props} labelElement="h4" />;
+}
+
 function GarbageSectionCollapsible({
   className,
   ...props
@@ -55,7 +59,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
           <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
         )}
       </Heading>
-      <GarbageInfoDetail
+      <GarbageCenterInfoDetail
         label="Adres"
         valueWrapperElement="div"
         value={
@@ -64,15 +68,15 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
           </InnerHtml>
         }
       />
-      <GarbageInfoDetail
+      <GarbageCenterInfoDetail
         label="Telefoon"
         value={<a href={`tel:${item.phone}`}>{item.phone}</a>}
       />
-      <GarbageInfoDetail
+      <GarbageCenterInfoDetail
         label="E-mail"
         value={<a href={`mailto:${item.email}`}>{item.email}</a>}
       />
-      <GarbageInfoDetail
+      <GarbageCenterInfoDetail
         label="Meer informatie"
         value={
           <Linkd href={item.website} rel="noopener noreferrer">

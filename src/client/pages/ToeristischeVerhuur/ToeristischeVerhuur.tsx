@@ -13,7 +13,7 @@ import styles from './ToeristischeVerhuur.module.scss';
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   // Wait for design to show multiple instances for now we take the first in array
-  const info = TOERISTISCHE_VERHUUR?.content;
+  const toeristischeVerhuurItems = TOERISTISCHE_VERHUUR?.content;
   return (
     <Page className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -45,10 +45,10 @@ export default function ToeristischeVerhuur() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {info?.map((infoItem, index) => (
+        {toeristischeVerhuurItems?.map((infoItem, index) => (
           <article key={infoItem.registrationNumber}>
             <InfoDetail
-              label={'Landelijk registratienummer toeristisch verhuur'}
+              label={'Landelijk registratienummer toeristische verhuur'}
               value={infoItem.registrationNumber}
             />
             <InfoDetail

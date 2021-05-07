@@ -48,57 +48,57 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
     <div
       class="PageContent DetailPageContent"
     >
-      <p
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Kenmerk
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           Z/000/000003
-        </span>
-      </p>
-      <p
+        </p>
+      </div>
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Soort vergunning
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           E-RVV
-        </span>
-      </p>
-      <p
+        </p>
+      </div>
+      <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Omschrijving
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           Amstel 1 E-RVV aanvraag
-        </span>
-      </p>
-      <p
+        </p>
+      </div>
+      <div
         class="InfoDetail LocationInfo"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Locatie
-        </span>
-        <span
+        </h3>
+        <p
           class="Value"
         >
           Amstel 1 1017AB Amsterdam 
@@ -107,53 +107,53 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
           >
             Bekijk op de kaart
           </button>
-        </span>
-      </p>
+        </p>
+      </div>
       <div
         class="InfoDetailGroup"
       >
         <div
           class="InfoDetailGroupContent"
         >
-          <p
+          <div
             class="InfoDetail"
           >
-            <span
-              class="Label"
+            <h3
+              class="Heading Heading__tiny Label"
             >
               Vanaf
-            </span>
-            <span
+            </h3>
+            <p
               class="Value"
             >
               26 juli 2020
-            </span>
-          </p>
-          <p
+            </p>
+          </div>
+          <div
             class="InfoDetail"
           >
-            <span
-              class="Label"
+            <h3
+              class="Heading Heading__tiny Label"
             >
               Tot en met
-            </span>
-            <span
+            </h3>
+            <p
               class="Value"
             >
               28 juli 2020
-            </span>
-          </p>
+            </p>
+          </div>
         </div>
       </div>
       <div
         class="InfoDetail"
       >
-        <span
-          class="Label"
+        <h3
+          class="Heading Heading__tiny Label"
         >
           Documenten
-        </span>
-        <span
+        </h3>
+        <div
           class="Value"
         >
           <span
@@ -166,7 +166,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               style="width: 100%; height: 2rem; margin-bottom: 1rem;"
             />
           </span>
-        </span>
+        </div>
       </div>
     </div>
     <div
