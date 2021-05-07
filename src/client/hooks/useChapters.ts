@@ -107,7 +107,10 @@ function isChapterActive(
       return !isLoading(KVK) && !!KVK.content;
 
     case Chapters.TOERISTISCHE_VERHUUR:
-      return !isLoading(TOERISTISCHE_VERHUUR) && !!TOERISTISCHE_VERHUUR.content;
+      return (
+        !isLoading(TOERISTISCHE_VERHUUR) &&
+        !!TOERISTISCHE_VERHUUR.content?.length
+      );
   }
 
   return false;

@@ -19,7 +19,7 @@ export interface ToeristischeVerhuurSourceData {
 export function transformToeristischeVerhuur(
   responseData: ToeristischeVerhuurSourceData
 ): ToeristischeVerhuurItem[] | null {
-  return responseData.content;
+  return responseData.content || [];
 }
 
 export function fetchToeristischeVerhuur(
