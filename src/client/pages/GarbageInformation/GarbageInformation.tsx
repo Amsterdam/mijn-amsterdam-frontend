@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
@@ -12,23 +11,22 @@ import {
   ChapterIcon,
   DetailPage,
   Heading,
+  InfoDetail,
   InnerHtml,
   Linkd,
   LoadingContent,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
-  Panel,
   SectionCollapsible,
-  MaintenanceNotifications,
-  InfoDetail,
 } from '../../components';
+import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
+import { SectionCollapsibleProps } from '../../components/SectionCollapsible/SectionCollapsible';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
-import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
-import { SectionCollapsibleProps } from '../../components/SectionCollapsible/SectionCollapsible';
 
 function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
