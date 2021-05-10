@@ -109,7 +109,8 @@ function isChapterActive(
     case Chapters.TOERISTISCHE_VERHUUR:
       return (
         !isLoading(TOERISTISCHE_VERHUUR) &&
-        !!TOERISTISCHE_VERHUUR.content?.length
+        (!!TOERISTISCHE_VERHUUR.content?.registraties?.length ||
+          !!TOERISTISCHE_VERHUUR.content?.vergunningen?.length)
       );
   }
 

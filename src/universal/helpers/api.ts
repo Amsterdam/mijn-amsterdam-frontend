@@ -6,10 +6,13 @@ export interface ApiErrorResponse<T> {
   id?: string;
 }
 
+export type FailedDependencies = Record<string, ApiErrorResponse<any>>;
+
 export type ApiSuccessResponse<T> = {
   content: T;
   status: 'OK';
   id?: string;
+  failedDependencies?: FailedDependencies;
 };
 
 // This state is used for checking if we are expecting data from the api.
@@ -83,11 +86,36 @@ export function apiErrorResult<T>(
   return errorResponse;
 }
 
-export function apiSuccesResult<T>(content: T): ApiSuccessResponse<T> {
-  return {
+function prop<T, K extends keyof T>(obj: T, key: K) {
+  return obj[key];
+}
+
+export function apiSuccesResult<T>(
+  content: T,
+  failedDependencies?: FailedDependencies
+): ApiSuccessResponse<T> {
+  const result: ApiSuccessResponse<T> = {
     content,
     status: 'OK',
   };
+  if (failedDependencies) {
+    result.failedDependencies = failedDependencies;
+  }
+  return result;
+}
+
+export function getFailedDependencies<T>(results: T) {
+  let failedDependencies: FailedDependencies | undefined = undefined;
+  for (const [key, apiResult] of Object.entries(results)) {
+    if (apiResult.status === 'ERROR') {
+      if (!failedDependencies) {
+        failedDependencies = {};
+      }
+      failedDependencies[key] = apiResult;
+    }
+  }
+
+  return failedDependencies;
 }
 
 export function apiPristineResult<T>(content: T): ApiPristineResponse<T> {

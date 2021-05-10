@@ -41,7 +41,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          E-RVV
+          Evenement melding
         </h2>
       </div>
     </header>
@@ -59,7 +59,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Z/000/000003
+          Z/000/000002
         </p>
       </div>
       <div
@@ -73,7 +73,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          E-RVV
+          Evenement melding
         </p>
       </div>
       <div
@@ -87,7 +87,49 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Amstel 1 E-RVV aanvraag
+          Amstel 1 Evenement melding
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort evenement
+        </h3>
+        <p
+          class="Value"
+        >
+          Dance evenement
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Activiteit tijdens evenement
+        </h3>
+        <p
+          class="Value"
+        >
+          Dansen en plezier maken
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Aantal bezoekers
+        </h3>
+        <p
+          class="Value"
+        >
+          3.000
         </p>
       </div>
       <div
@@ -101,7 +143,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Amstel 1 1017AB Amsterdam 
+          Amstel 1 1011PN Amsterdam 
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -126,7 +168,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              26 juli 2020
+              02 augustus 2020 - 08:00 uur
             </p>
           </div>
           <div
@@ -140,7 +182,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              28 juli 2020
+              02 augustus 2020 - 11:00 uur
             </p>
           </div>
         </div>
@@ -209,7 +251,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <time
                 class="StatusDate"
               >
-                03 mei 2021
+                01 mei 2021
               </time>
             </div>
             <div
@@ -253,7 +295,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <time
                 class="StatusDate"
               >
-                03 mei 2021
+                01 mei 2021
               </time>
             </div>
             <div

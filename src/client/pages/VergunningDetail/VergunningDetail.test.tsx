@@ -28,8 +28,9 @@ function state(state: any) {
 
 describe('<VergunningDetail />', () => {
   (window as any).scrollTo = jest.fn();
+  const vergunning = content.find((v) => v.caseType === 'Evenement melding');
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-    id: content[0].id,
+    id: vergunning?.id,
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
