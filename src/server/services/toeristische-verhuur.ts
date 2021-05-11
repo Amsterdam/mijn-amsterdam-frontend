@@ -1,3 +1,4 @@
+import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiSuccesResult,
@@ -49,6 +50,12 @@ export async function fetchToeristischeVerhuur(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.toeristischeVerhuurActive) {
+    return apiSuccesResult({
+      vergunningen: [],
+      registraties: [],
+    });
+  }
   const registratiesRequest = fetchRegistraties(
     sessionID,
     passthroughRequestHeaders
