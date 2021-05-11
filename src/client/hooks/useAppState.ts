@@ -9,12 +9,12 @@ import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
-// Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF.
+// Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF because these services are based on
+// addresses that likely change whenever someone toggles between the private-commercial/privte profiles.
 const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
   'HOME',
   'AFVAL',
   'AFVALPUNTEN',
-  'BUURT',
   'CMS_CONTENT',
 ];
 
