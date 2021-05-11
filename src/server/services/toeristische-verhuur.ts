@@ -1,7 +1,17 @@
-import { requestData } from '../helpers';
+import { AppRoutes } from '../../universal/config/routes';
+import {
+  apiSuccesResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
+import {
+  fetchVergunningen,
+  toeristischeVerhuurVergunningTypes,
+} from './vergunningen';
 
-export interface ToeristischeVerhuurItem {
+export interface ToeristischeVerhuurRegistratie {
   city: string;
   houseLetter: string | null;
   houseNumber: string | null;
@@ -12,25 +22,66 @@ export interface ToeristischeVerhuurItem {
   street: string | null;
 }
 
-export interface ToeristischeVerhuurSourceData {
-  content: ToeristischeVerhuurItem[];
+export interface ToeristischeVerhuurRegistratiesSourceData {
+  content: ToeristischeVerhuurRegistratie[];
 }
 
 export function transformToeristischeVerhuur(
-  responseData: ToeristischeVerhuurSourceData
-): ToeristischeVerhuurItem[] | null {
+  responseData: ToeristischeVerhuurRegistratiesSourceData
+): ToeristischeVerhuurRegistratie[] | null {
   return responseData.content || [];
 }
 
-export function fetchToeristischeVerhuur(
+function fetchRegistraties(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<ToeristischeVerhuurItem[]>(
-    getApiConfig('TOERISTISCHE_VERHUUR', {
+  return requestData<ToeristischeVerhuurRegistratie[]>(
+    getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
       transformResponse: transformToeristischeVerhuur,
     }),
     sessionID,
     passthroughRequestHeaders
+  );
+}
+
+export async function fetchToeristischeVerhuur(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const registratiesRequest = fetchRegistraties(
+    sessionID,
+    passthroughRequestHeaders
+  );
+
+  const vergunningenRequest = fetchVergunningen(
+    sessionID,
+    passthroughRequestHeaders,
+    {
+      appRoute: AppRoutes.TOERISTISCHE_VERHUUR,
+      filter: (vergunning) =>
+        toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+    }
+  );
+
+  const [
+    registratiesResponse,
+    vergunningenResponse,
+  ] = await Promise.allSettled([registratiesRequest, vergunningenRequest]);
+
+  const registraties = getSettledResult(registratiesResponse);
+  const vergunningen = getSettledResult(vergunningenResponse);
+
+  const failedDependencies = getFailedDependencies({
+    registraties,
+    vergunningen,
+  });
+
+  return apiSuccesResult(
+    {
+      registraties: registraties.content,
+      vergunningen: vergunningen.content,
+    },
+    failedDependencies
   );
 }

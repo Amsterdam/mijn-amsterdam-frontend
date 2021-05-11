@@ -4,13 +4,15 @@ import { render, screen } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import toeristischeVerhuurItems from '../../../server/mock-data/json/toeristische-verhuur.json';
+import toeristischeVerhuurRegistraties from '../../../server/mock-data/json/registraties-toeristische-verhuur.json';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 
 const testState: any = {
-  TOERISTISCHE_VERHUUR: toeristischeVerhuurItems,
+  TOERISTISCHE_VERHUUR: {
+    content: { registraties: toeristischeVerhuurRegistraties.content },
+  },
 };
 
 function initializeState(snapshot: MutableSnapshot) {
