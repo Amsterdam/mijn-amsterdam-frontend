@@ -86,8 +86,8 @@ export async function fetchToeristischeVerhuur(
 
   return apiSuccesResult(
     {
-      registraties: registraties.content,
-      vergunningen: vergunningen.content,
+      registraties: registraties.content || [],
+      vergunningen: vergunningen.content || [],
     },
     failedDependencies
   );

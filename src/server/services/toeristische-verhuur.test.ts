@@ -41,7 +41,7 @@ describe('Toeristische verhuur service', () => {
 
     const response = await fetchToeristischeVerhuur('x', { x: 'saml' });
 
-    expect(!!response.content.registraties?.length).toBe(true);
+    expect(response.content.registraties?.length).toBeGreaterThan(0);
 
     for (const registratie of response.content.registraties!) {
       expect(typeof registratie.registrationNumber).toBe('string');
@@ -55,13 +55,40 @@ describe('Toeristische verhuur service', () => {
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
       )
     ).toBe(true);
-    // const response = await fetchAllVergunningen('x', { x: 'saml' });
-    // const successResponse = {
-    //   status: 'OK',
-    //   content: transformVergunningenData(DUMMY_RESPONSE),
-    // };
-    // expect(response).toStrictEqual(successResponse);
   });
 
-  it('Should respond with failed dependencies', async () => {});
+  it('Should respond with 1 failed dependency', async () => {
+    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
+    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
+
+    const response = await fetchToeristischeVerhuur('x', { x: 'saml' });
+
+    expect(response.content.registraties?.length).toBeGreaterThan(0);
+    expect(response.content.vergunningen?.length).toBe(0);
+    expect(response.failedDependencies?.vergunningen).toStrictEqual({
+      status: 'ERROR',
+      content: null,
+      message: 'Error: Request failed with status code 500',
+    });
+  });
+
+  it('Should respond with 2 failed dependencies', async () => {
+    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
+    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_ERROR;
+
+    const response = await fetchToeristischeVerhuur('x', { x: 'saml' });
+
+    expect(response.content.registraties?.length).toBe(0);
+    expect(response.content.vergunningen?.length).toBe(0);
+    expect(response.failedDependencies?.vergunningen).toStrictEqual({
+      status: 'ERROR',
+      content: null,
+      message: 'Error: Request failed with status code 500',
+    });
+    expect(response.failedDependencies?.registraties).toStrictEqual({
+      status: 'ERROR',
+      content: null,
+      message: 'Error: Request failed with status code 500',
+    });
+  });
 });
