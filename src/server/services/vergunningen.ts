@@ -17,6 +17,14 @@ import { differenceInMonths } from 'date-fns';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
+export const toeristischeVerhuurVergunningTypes: Array<
+  VergunningBase['caseType']
+> = [
+  'Vakantieverhuur',
+  'Vakantieverhuur afmelding',
+  'Vakantieverhuur vergunningaanvraag',
+];
+
 export interface VergunningBase {
   caseType: string;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -77,13 +85,37 @@ export interface ERVV extends VergunningBase {
   location: string | null;
 }
 
+export interface Vakantieverhuur extends VergunningBase {
+  caseType: 'Vakantieverhuur';
+  dateStart: string | null;
+  dateEnd: string | null;
+  location: string | null;
+}
+
+export interface VakantieverhuurAfmelding extends VergunningBase {
+  caseType: 'Vakantieverhuur afmelding';
+  dateStart: string | null;
+  dateEnd: string | null;
+  location: string | null;
+}
+
+export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
+  caseType: 'Vakantieverhuur vergunningsaanvraag';
+  dateStart: string | null;
+  dateEnd: string | null;
+  location: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
   | GPP
   | EvenementMelding
   | Omzettingsvergunning
-  | ERVV;
+  | ERVV
+  | Vakantieverhuur
+  | VakantieverhuurAfmelding
+  | VakantieverhuurVergunningaanvraag;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];
@@ -96,6 +128,11 @@ export interface VergunningDocument extends GenericDocument {
 
 export type VergunningenData = Vergunning[];
 
+export interface VergunningOptions {
+  filter?: (vergunning: Vergunning) => boolean;
+  appRoute?: string;
+}
+
 export function transformVergunningenData(
   responseData: VergunningenSourceData
 ): VergunningenData {
@@ -103,25 +140,26 @@ export function transformVergunningenData(
     return [];
   }
 
-  const vergunningen: Vergunning[] = responseData?.content?.map((item) => {
+  let vergunningen: Vergunning[] = responseData?.content?.map((item) => {
     const id = hash(
       `vergunning-${item.identifier || item.caseType + item.dateRequest}`
     );
     const vergunning = Object.assign({}, item, {
       id,
-      link: {
-        to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-          id,
-        }),
-        title: item.identifier,
-      },
     });
     return vergunning;
   });
+
   return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
-export function fetchVergunningen(
+const vergunningOptionsDefault: VergunningOptions = {
+  appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
+  filter: (vergunning) =>
+    !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+};
+
+export function fetchAllVergunningen(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -132,6 +170,42 @@ export function fetchVergunningen(
     sessionID,
     passthroughRequestHeaders
   );
+}
+
+export async function fetchVergunningen(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
+  options: VergunningOptions = vergunningOptionsDefault
+) {
+  const response = await fetchAllVergunningen(
+    sessionID,
+    passthroughRequestHeaders
+  );
+
+  if (response.status === 'OK') {
+    let { content: vergunningen } = response;
+    vergunningen = vergunningen.map((vergunning) => {
+      return {
+        ...vergunning,
+        link: {
+          to: options?.appRoute
+            ? generatePath(options.appRoute, {
+                id: vergunning.id,
+              })
+            : '/',
+          title: vergunning.identifier,
+        },
+      };
+    });
+
+    if (options?.filter) {
+      vergunningen = vergunningen.filter(options.filter);
+    }
+
+    return apiSuccesResult(vergunningen);
+  }
+
+  return response;
 }
 
 export function createVergunningRecentCase(item: Vergunning): MyCase {

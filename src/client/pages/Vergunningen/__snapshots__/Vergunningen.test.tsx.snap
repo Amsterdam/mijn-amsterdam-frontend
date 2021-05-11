@@ -128,21 +128,139 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/4137452018"
+                  Z/000/000004
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000003
-                  </a>
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vakantieverhuur
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000005
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vakantieverhuur
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000006
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vakantieverhuur afmelding
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000007
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vakantieverhuur vergunningaanvraag
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000003
                 </td>
                 <td
                   class="DisplayProp"
@@ -175,21 +293,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/3816162611"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000002
-                  </a>
+                  Z/000/000002
                 </td>
                 <td
                   class="DisplayProp"
@@ -222,21 +326,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/2872449652"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000005
-                  </a>
+                  Z/000/000009
                 </td>
                 <td
                   class="DisplayProp"
@@ -269,21 +359,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/2551160245"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000004
-                  </a>
+                  Z/000/000008
                 </td>
                 <td
                   class="DisplayProp"
@@ -316,21 +392,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/1467362160"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000001
-                  </a>
+                  Z/000/000001
                 </td>
                 <td
                   class="DisplayProp"
@@ -363,21 +425,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/1862294070"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597197
-                  </a>
+                  Z/20/1597197
                 </td>
                 <td
                   class="DisplayProp"
@@ -410,21 +458,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/881727095"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597196
-                  </a>
+                  Z/20/1597196
                 </td>
                 <td
                   class="DisplayProp"
@@ -457,21 +491,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/1619362356"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597195
-                  </a>
+                  Z/20/1597195
                 </td>
                 <td
                   class="DisplayProp"
@@ -504,21 +524,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/638795381"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597194
-                  </a>
+                  Z/20/1597194
                 </td>
                 <td
                   class="DisplayProp"
@@ -551,21 +557,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/1608378930"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597193
-                  </a>
+                  Z/20/1597193
                 </td>
                 <td
                   class="DisplayProp"
@@ -598,21 +590,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/4043653692"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1592761
-                  </a>
+                  Z/20/1592761
                 </td>
                 <td
                   class="DisplayProp"
@@ -645,21 +623,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/2226696250"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1592521
-                  </a>
+                  Z/20/1592521
                 </td>
                 <td
                   class="DisplayProp"
@@ -749,21 +713,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/1515509663"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597204
-                  </a>
+                  Z/20/1597204
                 </td>
                 <td
                   class="DisplayProp"
@@ -796,21 +746,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/3607311896"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597203
-                  </a>
+                  Z/20/1597203
                 </td>
                 <td
                   class="DisplayProp"
@@ -843,21 +779,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/926876057"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597202
-                  </a>
+                  Z/20/1597202
                 </td>
                 <td
                   class="DisplayProp"
@@ -890,21 +812,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/3240785464"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597199
-                  </a>
+                  Z/20/1597199
                 </td>
                 <td
                   class="DisplayProp"
@@ -937,21 +845,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/2952768564"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1595179
-                  </a>
+                  Z/20/1595179
                 </td>
                 <td
                   class="DisplayProp"
@@ -984,21 +878,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/2618219588"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/615500
-                  </a>
+                  Z/20/615500
                 </td>
                 <td
                   class="DisplayProp"
@@ -1031,21 +911,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/detail/4195945502"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/20/1597205
-                  </a>
+                  Z/20/1597205
                 </td>
                 <td
                   class="DisplayProp"
