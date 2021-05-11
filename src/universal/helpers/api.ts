@@ -86,10 +86,6 @@ export function apiErrorResult<T>(
   return errorResponse;
 }
 
-function prop<T, K extends keyof T>(obj: T, key: K) {
-  return obj[key];
-}
-
 export function apiSuccesResult<T>(
   content: T,
   failedDependencies?: FailedDependencies
