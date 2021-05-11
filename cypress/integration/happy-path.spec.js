@@ -112,7 +112,9 @@ describe('The happy path', () => {
       selectComponent('MainHeader_logo').should('exist');
 
       // Wait until loading has stopped
-      selectComponent('LoadingContent_LoadingContent').should('not.exist');
+      cy.get(
+        '[class*="MyChaptersPanel_Links"] [class*="LoadingContent_LoadingContent'
+      ).should('not.exist');
 
       if (isPermanentPage) {
         // Click the first link to this page
@@ -154,8 +156,6 @@ describe('The happy path', () => {
           expandCollapsiblePanels();
         }
       }
-
-      // selectComponent('LoadingContent_LoadingContent').should('not.exist');
     });
   }
 });
