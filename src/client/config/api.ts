@@ -7,7 +7,9 @@ import {
 } from '../../universal/config';
 import { IS_ACCEPTANCE } from '../../universal/config/env';
 import { isError } from '../../universal/helpers';
+import { ApiResponse } from '../../universal/helpers/api';
 import { AppState } from '../AppState';
+import { Error } from '../components/ErrorMessages/ErrorMessages';
 
 // Will be determined after we've been redirected by TMA
 export const IS_COMMERCIAL_PATH_MATCH =
@@ -85,24 +87,61 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AFVALPUNTEN: 'Afvalpunten',
   KVK: 'Mijn onderneming',
   SIA: 'Mijn meldingen',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
+  TOERISTISCHE_VERHUUR_vergunningen:
+    'Toeristische verhuur: Vergunningen + meldingen',
+  TOERISTISCHE_VERHUUR_registraties:
+    'Toeristische verhuur: Registratienummers + meldingen',
 };
 
-export function getApiErrors(appState: AppState) {
+function createErrorDisplayData(
+  stateKey: string,
+  apiResponseData: ApiResponse<any>
+): Error {
+  const name = ErrorNames[stateKey] || stateKey;
+  let errorMessage =
+    ('message' in apiResponseData ? apiResponseData.message : null) ||
+    'Communicatie met api mislukt.';
+  return {
+    stateKey,
+    name,
+    error: errorMessage,
+  };
+}
+
+export function getApiErrors(appState: AppState): Error[] {
   return !!appState
     ? Object.entries(appState)
-        .filter(([, apiResponseData]: any) => {
-          return isError(apiResponseData);
+        .filter(([, apiResponseData]: [string, ApiResponse<any>]) => {
+          return (
+            isError(apiResponseData) ||
+            (apiResponseData.status === 'OK' &&
+              apiResponseData.failedDependencies)
+          );
         })
-        .map(([stateKey, apiResponseData]: any) => {
-          const name = ErrorNames[stateKey] || stateKey;
-          return {
-            stateKey,
-            name,
-            error:
-              ('message' in apiResponseData ? apiResponseData.message : null) ||
-              'Communicatie met api mislukt.',
-          };
+        .flatMap(([stateKey, apiResponseData]: [string, ApiResponse<any>]) => {
+          const apiErrors = [];
+
+          if (
+            apiResponseData.status === 'OK' &&
+            apiResponseData?.failedDependencies
+          ) {
+            for (const [
+              stateDependencyKey,
+              apiDependencyResponseData,
+            ] of Object.entries(apiResponseData.failedDependencies)) {
+              apiErrors.push(
+                createErrorDisplayData(
+                  `${stateKey}_${stateDependencyKey}`,
+                  apiDependencyResponseData
+                )
+              );
+            }
+          } else {
+            apiErrors.push(createErrorDisplayData(stateKey, apiResponseData));
+          }
+
+          return apiErrors;
         })
     : [];
 }

@@ -68,7 +68,9 @@ const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
 const TOERISTISCHE_VERHUUR = callService(fetchToeristischeVerhuur);
 const WMO = callService(fetchWMO);
-const VERGUNNINGEN = callService(fetchVergunningen);
+
+const VERGUNNINGEN = (sessionID: SessionID, req: Request) =>
+  fetchVergunningen(sessionID, getPassthroughRequestHeaders(req));
 
 // Location, address, based services
 const HOME = (sessionID: SessionID, req: Request) =>

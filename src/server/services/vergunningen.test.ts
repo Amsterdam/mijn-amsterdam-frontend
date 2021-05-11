@@ -4,7 +4,7 @@ import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
-  fetchVergunningen,
+  fetchAllVergunningen,
   transformVergunningenData,
   VergunningenSourceData,
   fetchVergunningenGenerated,
@@ -36,7 +36,7 @@ describe('Vergunningen service', () => {
 
   it('FetchVergunningen: should respond with a success response', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
-    const response = await fetchVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', { x: 'saml' });
     const successResponse = {
       status: 'OK',
       content: transformVergunningenData(DUMMY_RESPONSE),
@@ -46,7 +46,7 @@ describe('Vergunningen service', () => {
 
   it('should should respond with an empty list', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_2;
-    const response = await fetchVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', { x: 'saml' });
     const successResponse = {
       status: 'OK',
       content: [],
@@ -56,7 +56,7 @@ describe('Vergunningen service', () => {
 
   it('should should respond with an empty list', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_3;
-    const response = await fetchVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', { x: 'saml' });
     const errorResponse = {
       content: null,
       message: 'Error: Request failed with status code 500',
