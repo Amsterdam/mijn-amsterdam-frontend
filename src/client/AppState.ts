@@ -38,6 +38,7 @@ export const PRISTINE_APPSTATE: AppState = {
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],
+    daysLeft: 30,
   }),
 
   // Related

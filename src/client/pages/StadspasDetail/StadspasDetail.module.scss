@@ -9,7 +9,7 @@
   margin-bottom: 5rem;
 
   + .PageContentStadspasInfo {
-    border-top: .1rem solid $color-neutral-grey2;
+    border-top: 0.1rem solid $color-neutral-grey2;
   }
 }
 
@@ -29,7 +29,6 @@
     margin-left: 1rem;
     margin-right: 1rem;
   }
-
 }
 
 .PageContentStadspasInfo {
@@ -81,7 +80,7 @@
     // Legend color
     &:before {
       content: '';
-      top: .6rem;
+      top: 0.6rem;
       position: absolute;
       left: 0;
       width: 1rem;
@@ -102,7 +101,7 @@
   }
 
   .AmountLeft {
-    margin-left: .2rem;
+    margin-left: 0.2rem;
     .Label {
       text-align: right;
       right: 0;
@@ -123,7 +122,6 @@
       background-color: $color-neutral-grey4;
     }
   }
-
 }
 
 .ToggleTransactionsOveview {
@@ -155,7 +153,7 @@
   }
 
   &.withActiveTransactionsOverview {
-    border-width: .1rem;
+    border-width: 0.1rem;
   }
 }
 
@@ -169,10 +167,10 @@
 }
 
 .TransactionLabels {
-  border-bottom: .1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
   font-weight: bold;
   color: $color-neutral-grey4;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 
   span:last-child {
     float: right;
@@ -182,7 +180,7 @@
 .Transaction {
   padding: 0;
   margin: 0;
-  border-bottom: .1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
   padding-bottom: 2rem;
   margin-bottom: 1rem;
 }

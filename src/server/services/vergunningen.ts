@@ -100,7 +100,7 @@ export interface VakantieverhuurAfmelding extends VergunningBase {
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
-  caseType: 'Vakantieverhuur vergunningsaanvraag';
+  caseType: 'Vakantieverhuur vergunningaanvraag';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
