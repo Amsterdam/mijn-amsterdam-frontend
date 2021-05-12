@@ -27,6 +27,7 @@ export const FeatureToggle = {
   siaApiActive: !IS_AP,
   aktesActive: !IS_AP,
   milieuzoneRecentCasesActive: !IS_AP,
+  toeristischeVerhuurActive: !IS_AP,
 };
 
 export const DAYS_KEEP_RECENT = 28;

@@ -153,12 +153,6 @@ export function transformVergunningenData(
   return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
-const vergunningOptionsDefault: VergunningOptions = {
-  appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: (vergunning) =>
-    !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
-};
-
 export function fetchAllVergunningen(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
@@ -171,6 +165,12 @@ export function fetchAllVergunningen(
     passthroughRequestHeaders
   );
 }
+
+const vergunningOptionsDefault: VergunningOptions = {
+  appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
+  filter: (vergunning) =>
+    !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+};
 
 export async function fetchVergunningen(
   sessionID: SessionID,
@@ -218,7 +218,7 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
   };
 }
 
-export function createVergunningNotification(item: Vergunning) {
+export function createVergunningNotification(item: Vergunning): MyNotification {
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
@@ -271,7 +271,10 @@ export function createVergunningNotification(item: Vergunning) {
   };
 }
 
-function isActualNotification(datePublished: string, compareDate: Date) {
+function isActualNotification(
+  datePublished: string,
+  compareDate: Date
+): boolean {
   return (
     differenceInMonths(compareDate, new Date(datePublished)) <
     MONTHS_TO_KEEP_NOTIFICATIONS

@@ -144,6 +144,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
+    postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
   },
 };
 

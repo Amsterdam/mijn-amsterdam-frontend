@@ -190,12 +190,18 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
-          <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
-          <Route path={AppRoutes.SIA} component={Sia} />
-          <Route
-            path={AppRoutes.TOERISTISCHE_VERHUUR}
-            component={ToeristischeVerhuur}
-          />
+          {FeatureToggle.siaActive && (
+            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+          )}
+          {FeatureToggle.siaActive && (
+            <Route path={AppRoutes.SIA} component={Sia} />
+          )}
+          {FeatureToggle.toeristischeVerhuurActive && (
+            <Route
+              path={AppRoutes.TOERISTISCHE_VERHUUR}
+              component={ToeristischeVerhuur}
+            />
+          )}
           <Route component={NotFound} />
         </Switch>
       </div>

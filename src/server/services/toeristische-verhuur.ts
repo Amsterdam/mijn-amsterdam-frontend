@@ -1,4 +1,5 @@
 import { DAYS_LEFT_TO_RENT } from '../../universal/config';
+import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiSuccesResult,
@@ -125,6 +126,12 @@ export async function fetchToeristischeVerhuur(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.toeristischeVerhuurActive) {
+    return apiSuccesResult({
+      vergunningen: [],
+      registraties: [],
+    });
+  }
   const registratiesRequest = fetchRegistraties(
     sessionID,
     passthroughRequestHeaders
@@ -160,15 +167,17 @@ export async function fetchToeristischeVerhuur(
 
   return apiSuccesResult(
     {
-      registraties: registraties.content,
-      vergunningen: transformVergunningenToVerhuur(
-        vergunningen.content as VakantieverhuurVergunningen[]
-      ),
-      daysLeft: daysLeftInCalendarYear(
-        vergunningen.content?.filter(
-          (x) => x.caseType === 'Vakantieverhuur'
-        ) as Vakantieverhuur[]
-      ),
+      registraties: registraties.content || [],
+      vergunningen:
+        transformVergunningenToVerhuur(
+          vergunningen.content as VakantieverhuurVergunningen[]
+        ) ?? [],
+      daysLeft:
+        daysLeftInCalendarYear(
+          vergunningen.content?.filter(
+            (x) => x.caseType === 'Vakantieverhuur'
+          ) as Vakantieverhuur[]
+        ) ?? 30,
     },
     failedDependencies
   );
