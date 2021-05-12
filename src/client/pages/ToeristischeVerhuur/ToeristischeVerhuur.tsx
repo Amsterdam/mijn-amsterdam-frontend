@@ -144,7 +144,7 @@ export default function ToeristischeVerhuur() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {content?.registraties?.map((infoItem, index) => (
+        {content?.registraties?.map((infoItem) => (
           <article key={infoItem.registrationNumber}>
             <InfoDetail
               label={'Landelijk registratienummer toeristische verhuur'}
