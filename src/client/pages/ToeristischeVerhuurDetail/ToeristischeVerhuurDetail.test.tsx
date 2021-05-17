@@ -9,12 +9,12 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
 
-const content = transformVergunningenData(vergunningenData as any);
+const vergunningen = transformVergunningenData(vergunningenData as any);
 
 const testState = {
-  VERGUNNINGEN: {
+  TOERISTISCHE_VERHUUR: {
     status: 'OK',
-    content,
+    content: vergunningen,
   },
 };
 
@@ -28,11 +28,11 @@ function state(state: any) {
 
 describe('<ToeristischVerhuurDetail />', () => {
   (window as any).scrollTo = jest.fn();
-  const vergunning = content.find((v) => v.caseType === 'Evenement melding');
-  const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
+  const vergunning = vergunningen.find((v) => v.caseType === 'Vakantieverhuur');
+  const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
     id: vergunning?.id,
   });
-  const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
+  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'];
 
   let Component = () => (
     <MockApp
