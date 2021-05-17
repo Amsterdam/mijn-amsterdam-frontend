@@ -1,7 +1,9 @@
-import { DAYS_LEFT_TO_RENT } from '../../universal/config';
+import { Chapters, DAYS_LEFT_TO_RENT } from '../../universal/config';
 import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
+import { isRecentCase } from '../../universal/helpers';
 import {
+  apiDependencyError,
   apiSuccesResult,
   getFailedDependencies,
   getSettledResult,
@@ -12,14 +14,17 @@ import {
   isCurrentYear,
   isDateInPast,
 } from '../../universal/helpers/date';
+import { MyCase, MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
   fetchVergunningen,
+  isActualNotification,
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
   VakantieverhuurAfmelding,
   VakantieverhuurVergunningaanvraag,
+  Vergunning,
 } from './vergunningen';
 
 export interface ToeristischeVerhuurRegistratie {
@@ -33,17 +38,18 @@ export interface ToeristischeVerhuurRegistratie {
   street: string | null;
 }
 
-interface TransformedVakantieverhuur extends Vakantieverhuur {
+export interface TransformedVakantieverhuur extends Vakantieverhuur {
   isPast: boolean;
   duration: number | null;
 }
 
-interface TransformedVakantieverhuurAfmelding extends VakantieverhuurAfmelding {
+export interface TransformedVakantieverhuurAfmelding
+  extends VakantieverhuurAfmelding {
   isPast: boolean;
   duration: number | null;
 }
 
-interface TransformedVakantieverhuurVergunningaanvraag
+export interface TransformedVakantieverhuurVergunningaanvraag
   extends VakantieverhuurVergunningaanvraag {
   isPast: boolean;
   duration: number | null;
@@ -91,7 +97,7 @@ function transformVergunningenToVerhuur(
   return (
     vergunningen?.map((item) => ({
       ...item,
-      dateRequest: defaultDateFormat(item.dateRequest),
+      dateRequest: item.dateRequest,
       dateEnd: item.dateEnd ? defaultDateFormat(item.dateEnd) : null,
       dateStart: item.dateStart ? defaultDateFormat(item.dateStart) : null,
       isPast: item.dateEnd ? isDateInPast(item.dateEnd, new Date()) : false,
@@ -130,6 +136,7 @@ export async function fetchToeristischeVerhuur(
     return apiSuccesResult({
       vergunningen: [],
       registraties: [],
+      daysLeft: DAYS_LEFT_TO_RENT,
     });
   }
   const registratiesRequest = fetchRegistraties(
@@ -141,7 +148,7 @@ export async function fetchToeristischeVerhuur(
     sessionID,
     passthroughRequestHeaders,
     {
-      appRoute: AppRoutes.TOERISTISCHE_VERHUUR,
+      appRoute: AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
       filter: (
         vergunning
       ): vergunning is
@@ -159,6 +166,12 @@ export async function fetchToeristischeVerhuur(
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
+  const daysLeft =
+    daysLeftInCalendarYear(
+      vergunningen.content?.filter(
+        (x) => x.caseType === 'Vakantieverhuur'
+      ) as Vakantieverhuur[]
+    ) ?? DAYS_LEFT_TO_RENT;
 
   const failedDependencies = getFailedDependencies({
     registraties,
@@ -172,13 +185,119 @@ export async function fetchToeristischeVerhuur(
         transformVergunningenToVerhuur(
           vergunningen.content as VakantieverhuurVergunningen[]
         ) ?? [],
-      daysLeft:
-        daysLeftInCalendarYear(
-          vergunningen.content?.filter(
-            (x) => x.caseType === 'Vakantieverhuur'
-          ) as Vakantieverhuur[]
-        ) ?? 30,
+      daysLeft,
     },
     failedDependencies
   );
+}
+
+function createVergunningRecentCase(item: Vergunning): MyCase {
+  return {
+    id: `vergunning-${item.id}-case`,
+    title: `Vakantie verhuur ${item.identifier}`,
+    link: item.link,
+    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    datePublished: item.dateRequest,
+  };
+}
+
+function createVergunningNotification(item: Vergunning): MyNotification {
+  let title = 'Vakantieverhuur';
+  let description = 'Er is een update in uw vergunningsaanvraag.';
+  let datePublished = item.dateRequest;
+
+  // let dateEnd = item.dateEnd ? new Date(item.dateEnd) : new Date();
+
+  // switch (item.caseType) {
+  //   case 'EvenementenMelding':
+  //   case 'TVM - RVV - Object':
+  //     dateEnd = new Date(
+  //       `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
+  //     );
+  // }
+
+  switch (true) {
+    case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
+      description = `Uw ${item.caseType} is niet verleend`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status === 'Afgehandeld' && item.decision === 'Ingetrokken':
+      description = `Uw ${item.caseType} is ingetrokken`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status === 'Afgehandeld' && item.decision === 'Verleend':
+      description = `Uw ${item.caseType} is verleend`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status !== 'Afgehandeld':
+      description = `Uw ${item.caseType} is geregistreerd`;
+      break;
+    case item.status === 'Afgehandeld':
+      description = `Uw ${item.caseType} is afgehandeld`;
+      break;
+    // case new Date() >= dateEnd:
+    //   title = 'Uw vergunning is verlopen';
+    //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+    //   break;
+  }
+
+  return {
+    id: `vergunning-${item.id}-notification`,
+    datePublished,
+    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    title,
+    description,
+    link: {
+      to: item.link.to,
+      title: 'Bekijk details',
+    },
+  };
+}
+
+export async function fetchToeristischeVerhuurGenerated(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
+  compareDate?: Date
+) {
+  const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
+    sessionID,
+    passthroughRequestHeaders
+  );
+
+  if (TOERISTISCHE_VERHUUR.status === 'OK') {
+    const compareToDate = compareDate || new Date();
+
+    const cases: MyCase[] = Array.isArray(
+      TOERISTISCHE_VERHUUR?.content?.vergunningen
+    )
+      ? TOERISTISCHE_VERHUUR?.content?.vergunningen
+          .filter(
+            (vergunning) =>
+              vergunning.status !== 'Afgehandeld' ||
+              (vergunning.dateDecision &&
+                isRecentCase(vergunning.dateDecision, compareToDate))
+          )
+          .map(createVergunningRecentCase)
+      : [];
+
+    const notifications: MyNotification[] = Array.isArray(
+      TOERISTISCHE_VERHUUR?.content?.vergunningen
+    )
+      ? TOERISTISCHE_VERHUUR?.content?.vergunningen
+          .filter(
+            (vergunning) =>
+              vergunning.status !== 'Afgehandeld' ||
+              (vergunning.dateDecision &&
+                isActualNotification(vergunning.dateDecision, compareToDate))
+          )
+          .map(createVergunningNotification)
+      : [];
+
+    return apiSuccesResult({
+      cases,
+      notifications,
+    });
+  }
+
+  return apiDependencyError({ TOERISTISCHE_VERHUUR });
 }

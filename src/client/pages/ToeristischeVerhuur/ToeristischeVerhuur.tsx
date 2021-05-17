@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
+import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 
 const DISPLAY_PROPS_VERHUUR = {
   dateRequest: 'Ontvangen op',
@@ -54,6 +55,7 @@ export default function ToeristischeVerhuur() {
       .map((item) => {
         return {
           ...item,
+          dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
     return addTitleLinkComponent(items ?? [], 'dateRequest');
@@ -72,6 +74,7 @@ export default function ToeristischeVerhuur() {
             item.title.length > 45
               ? item.title.slice(0, 40) + '...'
               : item.title,
+          dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
     return addTitleLinkComponent(items ?? [], 'identifier');
@@ -144,27 +147,29 @@ export default function ToeristischeVerhuur() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {content?.registraties?.map((infoItem) => (
-          <article key={infoItem.registrationNumber}>
-            <InfoDetail
-              label={'Landelijk registratienummer toeristische verhuur'}
-              value={infoItem.registrationNumber}
-            />
-            <InfoDetail
-              className={styles.NoBorder}
-              label={'Adres verhuurde woning'}
-              value={
-                <>
-                  {infoItem.street} {infoItem.houseNumber}
-                  {infoItem.houseLetter}
-                  {infoItem.houseNumberExtension}
-                  <br />
-                  {infoItem.postalCode} {infoItem.city}
-                </>
-              }
-            />
-          </article>
-        ))}
+        {content?.registraties?.map(
+          (infoItem: ToeristischeVerhuurRegistratie) => (
+            <article key={infoItem.registrationNumber}>
+              <InfoDetail
+                label={'Landelijk registratienummer toeristische verhuur'}
+                value={infoItem.registrationNumber}
+              />
+              <InfoDetail
+                className={styles.NoBorder}
+                label={'Adres verhuurde woning'}
+                value={
+                  <>
+                    {infoItem.street} {infoItem.houseNumber}
+                    {infoItem.houseLetter}
+                    {infoItem.houseNumberExtension}
+                    <br />
+                    {infoItem.postalCode} {infoItem.city}
+                  </>
+                }
+              />
+            </article>
+          )
+        )}
         <div className={styles.Detail}>
           <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
             U heeft nog {content?.daysLeft ?? 30} dagen dat u uw woning mag

@@ -271,7 +271,7 @@ export function createVergunningNotification(item: Vergunning): MyNotification {
   };
 }
 
-function isActualNotification(
+export function isActualNotification(
   datePublished: string,
   compareDate: Date
 ): boolean {

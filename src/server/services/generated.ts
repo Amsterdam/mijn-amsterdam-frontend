@@ -12,6 +12,7 @@ import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
+import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchSIAGenerated } from './sia';
@@ -75,12 +76,14 @@ export async function fetchGenerated(
       erfpachtGeneratedResult,
       maintenanceNotifications,
       siaGeneratedResult,
+      toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
       fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
       fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
       fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
       fetchMaintenanceNotificationsDashboard(sessionID),
       fetchSIAGenerated(sessionID, passthroughRequestHeaders),
+      fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
     ]);
 
     const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
@@ -88,6 +91,9 @@ export async function fetchGenerated(
     const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
     const maintenanceNotificationsResult = getSettledResult(
       maintenanceNotifications
+    );
+    const toeristischeVerhuurGenerated = getSettledResult(
+      toeristischeVerhuurGeneratedResult
     );
     const siaNotificationsResult = getSettledResult(siaGeneratedResult);
 
@@ -97,6 +103,7 @@ export async function fetchGenerated(
       erfpachtGenerated,
       maintenanceNotificationsResult,
       siaNotificationsResult,
+      toeristischeVerhuurGenerated,
     ]);
   }
 
@@ -113,6 +120,7 @@ export async function fetchGenerated(
     maintenanceNotifications,
     siaGeneratedResult,
     stadspasSaldoGeneratedResult,
+    toeristischeVerhuurGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -126,6 +134,7 @@ export async function fetchGenerated(
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchSIAGenerated(sessionID, passthroughRequestHeaders),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
+    fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -144,6 +153,9 @@ export async function fetchGenerated(
   const maintenanceNotificationsResult = getSettledResult(
     maintenanceNotifications
   );
+  const toeristischeVerhuurGenerated = getSettledResult(
+    toeristischeVerhuurGeneratedResult
+  );
   const siaNotificationsResult = getSettledResult(siaGeneratedResult);
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
 
@@ -158,6 +170,7 @@ export async function fetchGenerated(
     vergunningenGenerated,
     erfpachtGenerated,
     maintenanceNotificationsResult,
+    toeristischeVerhuurGenerated,
     siaNotificationsResult,
     stadspasGenerated,
   ]);

@@ -62,7 +62,6 @@ export default function Vergunningen() {
       (vergunning) => vergunning.status !== 'Afgehandeld'
     );
   }, [vergunningen]);
-
   return (
     <OverviewPage className={styles.Vergunningen}>
       <PageHeading
