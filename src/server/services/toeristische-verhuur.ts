@@ -210,7 +210,6 @@ function createVergunningNotification(
 
   const monthsTillEnd = item.dateEnd ? monthsFromNow(item.dateEnd) : undefined;
   const isActive = item.dateEnd ? new Date() < new Date(item.dateEnd) : false;
-  console.log(item.caseType, monthsTillEnd);
   if (
     item.caseType === 'B&B Vergunning' ||
     item.caseType === 'Vakantieverhuur vergunningaanvraag'
