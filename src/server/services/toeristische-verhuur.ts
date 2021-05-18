@@ -2,7 +2,6 @@ import { format } from 'date-fns';
 import { Chapters, DAYS_LEFT_TO_RENT } from '../../universal/config';
 import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
-import { isRecentCase } from '../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -16,7 +15,7 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../universal/helpers/date';
-import { MyCase, MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
@@ -27,7 +26,6 @@ import {
   Vakantieverhuur,
   VakantieverhuurAfmelding,
   VakantieverhuurVergunningaanvraag,
-  Vergunning,
 } from './vergunningen';
 
 export interface ToeristischeVerhuurRegistratie {
@@ -212,6 +210,7 @@ function createVergunningNotification(
 
   const monthsTillEnd = item.dateEnd ? monthsFromNow(item.dateEnd) : undefined;
   const isActive = item.dateEnd ? new Date() < new Date(item.dateEnd) : false;
+  console.log(item.caseType, monthsTillEnd);
   if (
     item.caseType === 'B&B Vergunning' ||
     item.caseType === 'Vakantieverhuur vergunningaanvraag'

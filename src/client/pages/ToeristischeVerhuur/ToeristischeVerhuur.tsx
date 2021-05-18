@@ -28,14 +28,14 @@ const DISPLAY_PROPS_VERHUUR = {
 const DISPLAY_PROPS_VERGUNNING_ACTUAL = {
   identifier: 'Huidige vergunning',
   dateStart: 'Vanaf',
-  dateEnd: 'Tot en met',
+  dateEnd: 'Tot',
   location: 'Adres',
 };
 
 const DISPLAY_PROPS_VERGUNNING_PREVIOUS = {
   identifier: 'Eerder vergunningen',
   dateStart: 'Vanaf',
-  dateEnd: 'Tot en met',
+  dateEnd: 'Tot',
   location: 'Adres',
 };
 
@@ -207,7 +207,7 @@ export default function ToeristischeVerhuur() {
       <SectionCollapsible
         id="SectionCollapsible-vergunning-aanvraag"
         title="Vergunning vakantieverhuur"
-        noItemsMessage="U hebt geen lopende aanvragen."
+        noItemsMessage="U heeft geen lopende aanvragen."
         hasItems={!!actualVergunningen?.length || !!previousVergunningen.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
@@ -236,7 +236,7 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-planned-verhuur"
           title={`Geplande verhuur (${plannedVerhuur?.length})`}
-          noItemsMessage="U hebt geen lopende aanvragen."
+          noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!plannedVerhuur?.length}
           startCollapsed={false}
           className={styles.SectionCollapsibleCurrent}
@@ -258,7 +258,7 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-cancled-verhuur"
           title={`Afgemelde verhuur (${canceldVerhuur?.length})`}
-          noItemsMessage="U hebt geen lopende aanvragen."
+          noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!canceldVerhuur?.length}
           startCollapsed={false}
           className={styles.SectionCollapsibleCurrent}
@@ -280,7 +280,7 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-previous-verhuur"
           title={`Afgelopen verhuur (${previousVerhuur?.length})`}
-          noItemsMessage="U hebt geen lopende aanvragen."
+          noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!previousVerhuur?.length}
           startCollapsed={false}
           className={styles.SectionCollapsibleCurrent}
@@ -302,7 +302,7 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-BBvergunning-aanvraag"
           title="Vergunning bed and breakfast"
-          noItemsMessage="U hebt geen lopende aanvragen."
+          noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={
             !!BBActualVergunningen?.length || !!BBPreviousVergunningen.length
           }
