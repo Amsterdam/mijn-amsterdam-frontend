@@ -23,6 +23,7 @@ export const toeristischeVerhuurVergunningTypes: Array<
   'Vakantieverhuur',
   'Vakantieverhuur afmelding',
   'Vakantieverhuur vergunningaanvraag',
+  'B&B Vergunning',
 ];
 
 export interface VergunningBase {
@@ -106,6 +107,13 @@ export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
   location: string | null;
 }
 
+export interface BBVergunning extends VergunningBase {
+  caseType: 'B&B Vergunning';
+  location: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -115,6 +123,7 @@ export type Vergunning =
   | ERVV
   | Vakantieverhuur
   | VakantieverhuurAfmelding
+  | BBVergunning
   | VakantieverhuurVergunningaanvraag;
 
 export type VergunningenSourceData = {

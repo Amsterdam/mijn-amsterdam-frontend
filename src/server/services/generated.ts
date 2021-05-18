@@ -39,7 +39,6 @@ export function getGeneratedItemsFromApiResults(
       cases.push(...(content['cases'] as MyCase[]));
     }
   }
-
   const notificationsResult = notifications
     .map((notification) => {
       if (notification.description) {
@@ -57,7 +56,6 @@ export function getGeneratedItemsFromApiResults(
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
-
   return {
     CASES: apiSuccesResult(cases.sort(dateSort('datePublished', 'desc'))),
     NOTIFICATIONS: apiSuccesResult(notificationsResult),

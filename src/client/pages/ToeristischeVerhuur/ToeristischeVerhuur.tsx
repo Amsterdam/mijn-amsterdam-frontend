@@ -66,7 +66,11 @@ export default function ToeristischeVerhuur() {
       return [];
     }
     const items = content?.vergunningen
-      ?.filter((x) => x.caseType === 'Vakantieverhuur vergunningaanvraag')
+      ?.filter(
+        (x) =>
+          x.caseType === 'Vakantieverhuur vergunningaanvraag' ||
+          x.caseType === 'B&B Vergunning'
+      )
       .map((item) => {
         return {
           ...item,
@@ -87,12 +91,25 @@ export default function ToeristischeVerhuur() {
         !vergunning.isPast
     );
   }, [vergunningen]);
+  const BBActualVergunningen = useMemo(() => {
+    return vergunningen?.filter(
+      (vergunning) =>
+        vergunning.caseType === 'B&B Vergunning' && !vergunning.isPast
+    );
+  }, [vergunningen]);
 
   const previousVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
         vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' &&
         vergunning.isPast
+    );
+  }, [vergunningen]);
+
+  const BBPreviousVergunningen = useMemo(() => {
+    return vergunningen?.filter(
+      (vergunning) =>
+        vergunning.caseType === 'B&B Vergunning' && vergunning.isPast
     );
   }, [vergunningen]);
 
@@ -115,7 +132,6 @@ export default function ToeristischeVerhuur() {
         vergunning.caseType === 'Vakantieverhuur' && vergunning.isPast
     );
   }, [verhuur]);
-
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -209,7 +225,7 @@ export default function ToeristischeVerhuur() {
         />
         {!!previousVergunningen.length && (
           <Table
-            className={styles.Table}
+            className={styles.TableTop}
             titleKey="identifier"
             displayProps={DISPLAY_PROPS_VERGUNNING_PREVIOUS}
             items={previousVergunningen}
@@ -241,7 +257,7 @@ export default function ToeristischeVerhuur() {
       {!!canceldVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-cancled-verhuur"
-          title={`Afgemeld verhuur (${canceldVerhuur?.length})`}
+          title={`Afgemelde verhuur (${canceldVerhuur?.length})`}
           noItemsMessage="U hebt geen lopende aanvragen."
           hasItems={!!canceldVerhuur?.length}
           startCollapsed={false}
@@ -280,6 +296,38 @@ export default function ToeristischeVerhuur() {
             displayProps={DISPLAY_PROPS_VERHUUR}
             items={previousVerhuur}
           />
+        </SectionCollapsible>
+      )}
+      {(!!BBActualVergunningen?.length || !!BBPreviousVergunningen.length) && (
+        <SectionCollapsible
+          id="SectionCollapsible-BBvergunning-aanvraag"
+          title="Vergunning bed and breakfast"
+          noItemsMessage="U hebt geen lopende aanvragen."
+          hasItems={
+            !!BBActualVergunningen?.length || !!BBPreviousVergunningen.length
+          }
+          startCollapsed={false}
+          className={styles.SectionCollapsibleCurrent}
+          isLoading={isLoading(TOERISTISCHE_VERHUUR)}
+          track={{
+            category: 'Toeristische verhuur / Vergunning vakantieverhuur',
+            name: 'Datatabel',
+          }}
+        >
+          <Table
+            className={styles.Table}
+            titleKey="identifier"
+            displayProps={DISPLAY_PROPS_VERGUNNING_ACTUAL}
+            items={BBActualVergunningen}
+          />
+          {!!BBPreviousVergunningen.length && (
+            <Table
+              className={styles.TableTop}
+              titleKey="identifier"
+              displayProps={DISPLAY_PROPS_VERGUNNING_PREVIOUS}
+              items={BBPreviousVergunningen}
+            />
+          )}
         </SectionCollapsible>
       )}
     </OverviewPage>

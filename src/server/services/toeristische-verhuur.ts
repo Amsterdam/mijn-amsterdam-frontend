@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { Chapters, DAYS_LEFT_TO_RENT } from '../../universal/config';
 import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
@@ -13,11 +14,13 @@ import {
   formatDurationBetweenDates,
   isCurrentYear,
   isDateInPast,
+  monthsFromNow,
 } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
+  BBVergunning,
   fetchVergunningen,
   isActualNotification,
   toeristischeVerhuurVergunningTypes,
@@ -55,14 +58,21 @@ export interface TransformedVakantieverhuurVergunningaanvraag
   duration: number | null;
 }
 
+export interface TransformedBBVergunning extends BBVergunning {
+  isPast: boolean;
+  duration: number | null;
+}
+
 export type VakantieverhuurVergunningen =
   | Vakantieverhuur
   | VakantieverhuurAfmelding
+  | BBVergunning
   | VakantieverhuurVergunningaanvraag;
 
 export type TransformedVakantieverhuurVergunningen =
   | TransformedVakantieverhuur
   | TransformedVakantieverhuurAfmelding
+  | TransformedBBVergunning
   | TransformedVakantieverhuurVergunningaanvraag;
 
 export interface ToeristischeVerhuurRegistratiesSourceData {
@@ -91,7 +101,7 @@ export const daysLeftInCalendarYear = (items: Vakantieverhuur[]): number => {
   }, DAYS_LEFT_TO_RENT);
 };
 
-function transformVergunningenToVerhuur(
+export function transformVergunningenToVerhuur(
   vergunningen: VakantieverhuurVergunningen[] | null
 ): TransformedVakantieverhuurVergunningen[] | null {
   return (
@@ -191,56 +201,66 @@ export async function fetchToeristischeVerhuur(
   );
 }
 
-function createVergunningRecentCase(item: Vergunning): MyCase {
-  return {
-    id: `vergunning-${item.id}-case`,
-    title: `Vakantie verhuur ${item.identifier}`,
-    link: item.link,
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
-    datePublished: item.dateRequest,
-  };
-}
-
-function createVergunningNotification(item: Vergunning): MyNotification {
+function createVergunningNotification(
+  item: VakantieverhuurVergunningen
+): MyNotification {
   let title = 'Vakantieverhuur';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
+  let cta = 'Bekijk uw aanvraag';
+  let linkTo = item.link.to;
 
-  // let dateEnd = item.dateEnd ? new Date(item.dateEnd) : new Date();
+  const monthsTillEnd = item.dateEnd ? monthsFromNow(item.dateEnd) : undefined;
+  const isActive = item.dateEnd ? new Date() < new Date(item.dateEnd) : false;
+  if (
+    item.caseType === 'B&B Vergunning' ||
+    item.caseType === 'Vakantieverhuur vergunningaanvraag'
+  ) {
+    switch (true) {
+      case item.status === 'Ontvangen' &&
+        isActualNotification(item.dateRequest, new Date()):
+        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
+        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} ontvangen`;
+        datePublished = item.dateRequest;
+        break;
+      case item.status === 'Afgehandeld' &&
+        isActualNotification(item.dateRequest, new Date()):
+        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
+        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} afgehandeld`;
+        datePublished = item.dateDecision || item.dateRequest;
+        break;
+      case isActive && monthsTillEnd && monthsTillEnd > -3:
+        title = `Uw vergunning gemeentelijke ${item.caseType} loopt af`;
+        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
+        cta = 'Vergunning vakantieverhuur aanvragen';
+        linkTo = 'www.amsterdam.nl';
+        datePublished = format(new Date(), 'yyyy-MM-dd');
 
-  // switch (item.caseType) {
-  //   case 'EvenementenMelding':
-  //   case 'TVM - RVV - Object':
-  //     dateEnd = new Date(
-  //       `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
-  //     );
-  // }
-
-  switch (true) {
-    case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
-      description = `Uw ${item.caseType} is niet verleend`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status === 'Afgehandeld' && item.decision === 'Ingetrokken':
-      description = `Uw ${item.caseType} is ingetrokken`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status === 'Afgehandeld' && item.decision === 'Verleend':
-      description = `Uw ${item.caseType} is verleend`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status !== 'Afgehandeld':
-      description = `Uw ${item.caseType} is geregistreerd`;
-      break;
-    case item.status === 'Afgehandeld':
-      description = `Uw ${item.caseType} is afgehandeld`;
-      break;
-    // case new Date() >= dateEnd:
-    //   title = 'Uw vergunning is verlopen';
-    //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
-    //   break;
+        break;
+      case !isActive && monthsTillEnd && monthsTillEnd < 3:
+        title = `Uw vergunning gemeentelijke ${item.caseType} is verlopen`;
+        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
+        cta = 'Vergunning vakantieverhuur aanvragen';
+        linkTo = 'www.amsterdam.nl';
+        datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+    }
+  } else {
+    switch (true) {
+      case item.caseType === 'Vakantieverhuur afmelding':
+        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
+        title = `Melding vakantieverhuur geannuleerd`;
+        cta = 'Bekijk uw melding';
+        datePublished = item.dateRequest;
+        break;
+      case item.caseType === 'Vakantieverhuur':
+        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
+        title = `Melding vakantieverhuur ontvangen`;
+        cta = 'Bekijk uw melding';
+        datePublished = item.dateRequest;
+        break;
+    }
   }
-
   return {
     id: `vergunning-${item.id}-notification`,
     datePublished,
@@ -248,8 +268,8 @@ function createVergunningNotification(item: Vergunning): MyNotification {
     title,
     description,
     link: {
-      to: item.link.to,
-      title: 'Bekijk details',
+      to: linkTo,
+      title: cta,
     },
   };
 }
@@ -267,35 +287,21 @@ export async function fetchToeristischeVerhuurGenerated(
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const cases: MyCase[] = Array.isArray(
-      TOERISTISCHE_VERHUUR?.content?.vergunningen
-    )
-      ? TOERISTISCHE_VERHUUR?.content?.vergunningen
-          .filter(
-            (vergunning) =>
-              vergunning.status !== 'Afgehandeld' ||
-              (vergunning.dateDecision &&
-                isRecentCase(vergunning.dateDecision, compareToDate))
-          )
-          .map(createVergunningRecentCase)
-      : [];
-
     const notifications: MyNotification[] = Array.isArray(
       TOERISTISCHE_VERHUUR?.content?.vergunningen
     )
-      ? TOERISTISCHE_VERHUUR?.content?.vergunningen
-          .filter(
-            (vergunning) =>
-              vergunning.status !== 'Afgehandeld' ||
-              (vergunning.dateDecision &&
-                isActualNotification(vergunning.dateDecision, compareToDate))
-          )
-          .map(createVergunningNotification)
+      ? TOERISTISCHE_VERHUUR?.content?.vergunningen.map(
+          createVergunningNotification
+        )
       : [];
+    const filteredNotifications = notifications.filter(
+      (notification) =>
+        notification.datePublished &&
+        isActualNotification(notification.datePublished, compareToDate)
+    );
 
     return apiSuccesResult({
-      cases,
-      notifications,
+      notifications: filteredNotifications,
     });
   }
 

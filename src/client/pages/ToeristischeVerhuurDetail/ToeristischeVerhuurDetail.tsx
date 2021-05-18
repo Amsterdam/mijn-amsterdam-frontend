@@ -72,7 +72,8 @@ export default function ToeristischVerhuurDetail() {
               Vergunning.caseType === 'Vakantieverhuur afmelding') && (
               <VakantieVerhuur vergunning={Vergunning} />
             )}
-            {Vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' && (
+            {(Vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' ||
+              Vergunning.caseType === 'B&B Vergunning') && (
               <VergunningVerhuur vergunning={Vergunning} />
             )}
             <DocumentDetails vergunning={Vergunning} />
@@ -88,7 +89,8 @@ export default function ToeristischVerhuurDetail() {
 
       {!isLoading(TOERISTISCHE_VERHUUR) &&
         Vergunning &&
-        Vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' && (
+        (Vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' ||
+          Vergunning.caseType === 'B&B Vergunning') && (
           <StatusLineItems vergunning={Vergunning} />
         )}
     </DetailPage>

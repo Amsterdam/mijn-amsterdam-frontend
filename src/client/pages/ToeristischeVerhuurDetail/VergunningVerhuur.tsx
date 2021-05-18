@@ -1,4 +1,7 @@
-import { TransformedVakantieverhuurVergunningaanvraag as VakantieVergunningType } from '../../../server/services';
+import {
+  TransformedVakantieverhuurVergunningaanvraag as VakantieVergunningType,
+  TransformedBBVergunning as BBVergunningType,
+} from '../../../server/services';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -6,7 +9,7 @@ import InfoDetail, {
 export default function VergunningVerhuur({
   vergunning,
 }: {
-  vergunning: VakantieVergunningType;
+  vergunning: VakantieVergunningType | BBVergunningType;
 }) {
   return (
     <>

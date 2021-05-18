@@ -194,39 +194,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  Z/000/000007
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Vakantieverhuur vergunningaanvraag
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    10 mei 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
                   Z/000/000003
                 </td>
                 <td
@@ -602,6 +569,72 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     Vakantieverhuur
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000007
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vakantieverhuur vergunningaanvraag
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 mei 2020
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/100/000007
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    B&B Vergunning
                   </span>
                 </td>
                 <td

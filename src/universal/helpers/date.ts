@@ -4,6 +4,7 @@ import {
   parseISO,
   differenceInDays,
   isThisYear,
+  differenceInMonths,
 } from 'date-fns';
 
 import { DEFAULT_DATE_FORMAT } from '../config';
@@ -61,8 +62,11 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
 }
 
 export function isCurrentYear(datestr: string) {
-  console.log(datestr, new Date(datestr));
   return isThisYear(new Date(datestr));
+}
+
+export function monthsFromNow(datestr: string) {
+  return differenceInMonths(new Date(datestr), new Date());
 }
 
 export function getMonth(index: number) {
