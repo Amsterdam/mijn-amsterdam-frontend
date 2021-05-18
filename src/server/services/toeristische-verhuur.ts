@@ -78,25 +78,27 @@ export interface ToeristischeVerhuurRegistratiesSourceData {
 }
 
 export const daysLeftInCalendarYear = (items: Vakantieverhuur[]): number => {
-  const itemsThisYear = items.filter((item) => {
+  const itemsThisYear = items?.filter((item) => {
     return item.dateStart ? isCurrentYear(item.dateStart) : undefined;
   });
-  return itemsThisYear.reduce((a, b) => {
-    if (b.dateEnd ? isCurrentYear(b.dateEnd) : undefined) {
-      return (
-        a -
-        (b.dateEnd && b.dateStart
-          ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
-          : 0)
-      );
-    } else {
-      const daysTillEndOfYear =
-        b.dateEnd && b.dateStart
-          ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
-          : 0;
-      return a - daysTillEndOfYear;
-    }
-  }, DAYS_LEFT_TO_RENT);
+  return (
+    itemsThisYear?.reduce((a, b) => {
+      if (b.dateEnd ? isCurrentYear(b.dateEnd) : undefined) {
+        return (
+          a -
+          (b.dateEnd && b.dateStart
+            ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
+            : 0)
+        );
+      } else {
+        const daysTillEndOfYear =
+          b.dateEnd && b.dateStart
+            ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
+            : 0;
+        return a - daysTillEndOfYear;
+      }
+    }, DAYS_LEFT_TO_RENT) ?? DAYS_LEFT_TO_RENT
+  );
 };
 
 export function transformVergunningenToVerhuur(
