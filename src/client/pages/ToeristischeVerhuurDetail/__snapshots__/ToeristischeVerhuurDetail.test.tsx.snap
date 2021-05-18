@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Toeristische verhuur"
+          class="ChapterIcon"
+          fill="black"
+        >
+          toeristische-verhuur.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/toeristische-verhuur"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Toeristische verhuur
+        </a>
+        <h2
+          class="Heading Heading__large"
+        />
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <div
+        class="Alert warning"
+      >
+        <svg
+          aria-hidden="true"
+          class="Icon"
+        >
+          Alert.svg
+        </svg>
+         
+        <p>
+          We kunnen op dit moment geen gegevens tonen.
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

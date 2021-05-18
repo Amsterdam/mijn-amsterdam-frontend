@@ -31,3 +31,5 @@ export const FeatureToggle = {
 };
 
 export const DAYS_KEEP_RECENT = 28;
+
+export const DAYS_LEFT_TO_RENT = 30;

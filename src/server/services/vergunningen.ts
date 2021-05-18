@@ -23,6 +23,7 @@ export const toeristischeVerhuurVergunningTypes: Array<
   'Vakantieverhuur',
   'Vakantieverhuur afmelding',
   'Vakantieverhuur vergunningaanvraag',
+  'B&B Vergunning',
 ];
 
 export interface VergunningBase {
@@ -100,10 +101,17 @@ export interface VakantieverhuurAfmelding extends VergunningBase {
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
-  caseType: 'Vakantieverhuur vergunningsaanvraag';
+  caseType: 'Vakantieverhuur vergunningaanvraag';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
+}
+
+export interface BBVergunning extends VergunningBase {
+  caseType: 'B&B Vergunning';
+  location: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
 }
 
 export type Vergunning =
@@ -115,6 +123,7 @@ export type Vergunning =
   | ERVV
   | Vakantieverhuur
   | VakantieverhuurAfmelding
+  | BBVergunning
   | VakantieverhuurVergunningaanvraag;
 
 export type VergunningenSourceData = {
@@ -271,7 +280,7 @@ export function createVergunningNotification(item: Vergunning): MyNotification {
   };
 }
 
-function isActualNotification(
+export function isActualNotification(
   datePublished: string,
   compareDate: Date
 ): boolean {

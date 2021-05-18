@@ -1,1 +1,44 @@
 @import '../../styles/_global.scss';
+
+.ToeristischeVerhuur {
+  @include select(PageContent) {
+    padding-bottom: $page-content-bottom-space;
+  }
+}
+
+.NoBorder {
+  border-top: none;
+}
+
+.Detail {
+  padding-bottom: 2.5rem;
+  padding-top: 1.6rem;
+}
+
+.DetailText {
+  padding-bottom: 0.4rem;
+  display: block;
+  margin: 0;
+  font-weight: normal;
+  color: $color-neutral-grey4;
+}
+
+.InvertedLabel {
+  color: $color-black;
+  display: block;
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin: 0;
+  padding-right: 16rem;
+
+  @include mq-phone {
+    padding-right: 0;
+  }
+}
+
+.TableTop {
+  margin-top: 2.6rem;
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+}

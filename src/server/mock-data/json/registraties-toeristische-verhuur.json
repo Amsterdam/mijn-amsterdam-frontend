@@ -13,12 +13,12 @@
       {
         "city":"Amsterdam",
         "houseLetter":null,
-        "houseNumber":"22",
+        "houseNumber":"1",
         "houseNumberExtension":null,
-        "postalCode":"1019SZ",
+        "postalCode":"1017AB",
         "registrationNumber":"E7B8 B042 8A92 37E5 0363",
-        "shortName":"Flappiewap",
-        "street":"Flappiewap"
+        "shortName":"Amstel",
+        "street":"Amstel"
         }
     ],
   "status":"OK"

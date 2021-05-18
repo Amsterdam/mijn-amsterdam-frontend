@@ -59,6 +59,7 @@ import {
   SiaDetail,
   Sia,
   ToeristischeVerhuur,
+  ToeristischeVerhuurDetail,
   Zorg,
   ZorgDetail,
 } from './pages';
@@ -195,6 +196,12 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.siaActive && (
             <Route path={AppRoutes.SIA} component={Sia} />
+          )}
+          {FeatureToggle.toeristischeVerhuurActive && (
+            <Route
+              path={AppRoutes['TOERISTISCHE_VERHUUR/DETAIL']}
+              component={ToeristischeVerhuurDetail}
+            />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route

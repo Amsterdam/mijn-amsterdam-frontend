@@ -23,7 +23,6 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<Vergunningen />', () => {
   const routeEntry = generatePath(AppRoutes.VERGUNNINGEN);
   const routePath = AppRoutes.VERGUNNINGEN;
-
   const Component = () => (
     <MockApp
       routeEntry={routeEntry}

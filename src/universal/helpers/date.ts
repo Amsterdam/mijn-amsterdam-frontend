@@ -1,4 +1,11 @@
-import { format, formatDistanceToNow, parseISO } from 'date-fns';
+import {
+  format,
+  formatDistanceToNow,
+  parseISO,
+  differenceInDays,
+  isThisYear,
+  differenceInMonths,
+} from 'date-fns';
 
 import { DEFAULT_DATE_FORMAT } from '../config';
 import NL_LOCALE from 'date-fns/locale/nl';
@@ -23,6 +30,13 @@ export function formatDurationInWords(datestr: string) {
   return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
 }
 
+export function formatDurationBetweenDates(
+  date1: string,
+  date2: string
+): number {
+  return differenceInDays(new Date(date1), new Date(date2));
+}
+
 export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
   const secs = seconds % 60;
   const mins = (seconds - secs) / 60;
@@ -45,6 +59,14 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
     // @ts-ignore
     return direction === 'asc' ? c - d : d - c;
   };
+}
+
+export function isCurrentYear(datestr: string) {
+  return isThisYear(new Date(datestr));
+}
+
+export function monthsFromNow(datestr: string) {
+  return differenceInMonths(new Date(datestr), new Date());
 }
 
 export function getMonth(index: number) {
