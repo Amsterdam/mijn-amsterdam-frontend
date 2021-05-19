@@ -68,8 +68,8 @@ export default function ToeristischeVerhuur() {
     const items = content?.vergunningen
       ?.filter(
         (x) =>
-          x.caseType === 'Vakantieverhuur vergunningaanvraag' ||
-          x.caseType === 'B&B Vergunning'
+          x.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+          x.caseType === 'B&B - vergunning'
       )
       .map((item) => {
         return {
@@ -87,21 +87,21 @@ export default function ToeristischeVerhuur() {
   const actualVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' &&
+        vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
         !vergunning.isPast
     );
   }, [vergunningen]);
   const BBActualVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'B&B Vergunning' && !vergunning.isPast
+        vergunning.caseType === 'B&B - vergunning' && !vergunning.isPast
     );
   }, [vergunningen]);
 
   const previousVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur vergunningaanvraag' &&
+        vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
         vergunning.isPast
     );
   }, [vergunningen]);
@@ -109,7 +109,7 @@ export default function ToeristischeVerhuur() {
   const BBPreviousVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'B&B Vergunning' && vergunning.isPast
+        vergunning.caseType === 'B&B - vergunning' && vergunning.isPast
     );
   }, [vergunningen]);
 

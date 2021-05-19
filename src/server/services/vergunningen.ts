@@ -22,8 +22,8 @@ export const toeristischeVerhuurVergunningTypes: Array<
 > = [
   'Vakantieverhuur',
   'Vakantieverhuur afmelding',
-  'Vakantieverhuur vergunningaanvraag',
-  'B&B Vergunning',
+  'Vakantieverhuur vergunningsaanvraag',
+  'B&B - vergunning',
 ];
 
 export interface VergunningBase {
@@ -101,14 +101,14 @@ export interface VakantieverhuurAfmelding extends VergunningBase {
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
-  caseType: 'Vakantieverhuur vergunningaanvraag';
+  caseType: 'Vakantieverhuur vergunningsaanvraag';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
 }
 
 export interface BBVergunning extends VergunningBase {
-  caseType: 'B&B Vergunning';
+  caseType: 'B&B - vergunning';
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
