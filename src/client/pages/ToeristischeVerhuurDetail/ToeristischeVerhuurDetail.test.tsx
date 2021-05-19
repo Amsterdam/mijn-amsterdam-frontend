@@ -48,3 +48,24 @@ describe('<ToeristischVerhuurDetail />', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 });
+
+describe('<ToeristischVerhuurDetail />', () => {
+  (window as any).scrollTo = jest.fn();
+  const vergunning = vergunningen.find(
+    (v) => v.caseType === 'Vakantieverhuur vergunningaanvraag'
+  );
+  const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
+    id: vergunning?.id,
+  });
+  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'];
+
+  let Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={ToeristischVerhuurDetail}
+      initializeState={state(testState)}
+    />
+  );
+  render(<Component />);
+});
