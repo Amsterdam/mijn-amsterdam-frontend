@@ -74,14 +74,12 @@ export async function fetchGenerated(
       erfpachtGeneratedResult,
       maintenanceNotifications,
       siaGeneratedResult,
-      toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
       fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
       fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
       fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
       fetchMaintenanceNotificationsDashboard(sessionID),
       fetchSIAGenerated(sessionID, passthroughRequestHeaders),
-      fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
     ]);
 
     const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
@@ -89,9 +87,6 @@ export async function fetchGenerated(
     const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
     const maintenanceNotificationsResult = getSettledResult(
       maintenanceNotifications
-    );
-    const toeristischeVerhuurGenerated = getSettledResult(
-      toeristischeVerhuurGeneratedResult
     );
     const siaNotificationsResult = getSettledResult(siaGeneratedResult);
 
@@ -101,7 +96,6 @@ export async function fetchGenerated(
       erfpachtGenerated,
       maintenanceNotificationsResult,
       siaNotificationsResult,
-      toeristischeVerhuurGenerated,
     ]);
   }
 
