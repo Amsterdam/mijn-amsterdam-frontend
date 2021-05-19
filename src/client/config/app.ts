@@ -41,6 +41,7 @@ export const ExternalUrls = {
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
+
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
   AMSTERDAM_COMPLAINTS_FROM:
@@ -48,6 +49,8 @@ export const ExternalUrls = {
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
   AFVAL_MELDING_FORMULIER:
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
+  AFVAL_MELDING:
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D',
   KREFIA: getOtapEnvItem('krefiaDirectLink'),
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
   STADSPAS: 'https://www.amsterdam.nl/stadspas',
