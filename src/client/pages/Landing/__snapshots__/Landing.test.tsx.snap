@@ -164,6 +164,35 @@ exports[`<Landing /> Renders without crashing 1`] = `
           </a>
            voor meer informatie.
         </p>
+        <div
+          class="Alert warning AlertLanding"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon"
+          >
+            Alert.svg
+          </svg>
+           
+          <div
+            class="InnerAlert"
+          >
+            <p>
+              Let op: 
+              <b>
+                vanaf 1 september 2021
+              </b>
+               kunt u alleen nog inloggen met eHerkenning niveau 3. Zorg dat u op tijd overstapt naar eHerkenning niveau 3. Ga naar 
+              <a
+                href="https://eherkenning.nl"
+                rel="noopener noreferrer"
+              >
+                eherkenning.nl
+              </a>
+               voor meer informatie.
+            </p>
+          </div>
+        </div>
       </div>
       <h4
         class="Heading Heading__tiny"
