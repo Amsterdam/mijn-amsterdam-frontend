@@ -601,7 +601,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Vakantieverhuur vergunningaanvraag
+                    Vakantieverhuur vergunningsaanvraag
                   </span>
                 </td>
                 <td
@@ -634,7 +634,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    B&B Vergunning
+                    B&B - vergunning
                   </span>
                 </td>
                 <td
@@ -757,7 +757,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Vakantieverhuur vergunningaanvraag
+                    Vakantieverhuur vergunningsaanvraag
                   </span>
                 </td>
                 <td

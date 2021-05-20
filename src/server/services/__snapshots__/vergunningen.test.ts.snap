@@ -400,7 +400,7 @@ Array [
     "title": "Amstel 1 Vakantieverhuur afmelding",
   },
   Object {
-    "caseType": "Vakantieverhuur vergunningaanvraag",
+    "caseType": "Vakantieverhuur vergunningsaanvraag",
     "dateDecision": null,
     "dateEnd": "2020-05-31",
     "dateRequest": "2021-05-10",
@@ -687,7 +687,7 @@ Array [
     "title": "Amstel 1 Vakantieverhuur 1",
   },
   Object {
-    "caseType": "Vakantieverhuur vergunningaanvraag",
+    "caseType": "Vakantieverhuur vergunningsaanvraag",
     "dateDecision": null,
     "dateEnd": "2021-02-05",
     "dateRequest": "2020-05-10",
@@ -701,7 +701,7 @@ Array [
     "title": "Amstel 1 Vakantieverhuur aanvraag vergunning",
   },
   Object {
-    "caseType": "B&B Vergunning",
+    "caseType": "B&B - vergunning",
     "dateDecision": null,
     "dateEnd": "2021-06-30",
     "dateRequest": "2020-05-10",
