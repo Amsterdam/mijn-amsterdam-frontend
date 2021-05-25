@@ -142,6 +142,11 @@ export default function GarbageInformation() {
                 De regels voor afval en hergebruik
               </Linkd>
             </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
+                Doe een melding als afval is blijven liggen
+              </Linkd>
+            </p>
           </>
         )}
         {profileType !== 'private' && (
@@ -155,6 +160,11 @@ export default function GarbageInformation() {
             <p>
               <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
                 Regels bedrijfsafval in Amsterdam
+              </Linkd>
+            </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
+                Doe een melding als afval is blijven liggen
               </Linkd>
             </p>
           </>

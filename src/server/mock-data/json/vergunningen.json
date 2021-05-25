@@ -82,7 +82,7 @@
       "title": "Amstel 1 Vakantieverhuur afmelding"
     },
     {
-      "caseType": "Vakantieverhuur vergunningaanvraag",
+      "caseType": "Vakantieverhuur vergunningsaanvraag",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": null,
@@ -95,7 +95,7 @@
       "title": "Amstel 1 Vakantieverhuur aanvraag vergunning"
     },
     {
-      "caseType": "B&B Vergunning",
+      "caseType": "B&B - vergunning",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": null,
@@ -108,7 +108,7 @@
       "title": "Amstel 1 B&B aanvraag vergunning"
     },
     {
-      "caseType": "Vakantieverhuur vergunningaanvraag",
+      "caseType": "Vakantieverhuur vergunningsaanvraag",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
