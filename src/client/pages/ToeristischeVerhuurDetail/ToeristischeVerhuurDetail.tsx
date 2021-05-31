@@ -27,8 +27,10 @@ function getHeaderTitle(
       return `${isPast ? 'Afgelopen' : 'Geplande'} verhuur ${dateStart}`;
     case 'Vakantieverhuur afmelding':
       return `Afgemeld verhuur ${dateStart}`;
-    case 'Vergunning tijdelijk vakantie verhuur':
-      return `Afgemeld verhuur ${dateStart}`;
+    case 'Vakantieverhuur vergunningsaanvraag':
+      return `Vergunning tijdelijke vakantie verhuur`;
+    case 'B&B - vergunning':
+      return `Vergunning bed and breakfast`;
     default:
       return caseType;
   }

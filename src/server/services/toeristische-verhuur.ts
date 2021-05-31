@@ -231,31 +231,38 @@ function createVergunningNotification(
         break;
       case isActive && monthsTillEnd && monthsTillEnd > -3:
         title = `Uw vergunning gemeentelijke ${item.caseType} loopt af`;
-        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
+        description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
         cta = 'Vergunning vakantieverhuur aanvragen';
-        linkTo = 'www.amsterdam.nl';
+        linkTo =
+          'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
         datePublished = format(new Date(), 'yyyy-MM-dd');
 
         break;
       case !isActive && monthsTillEnd && monthsTillEnd < 3:
         title = `Uw vergunning gemeentelijke ${item.caseType} is verlopen`;
-        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
+        description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen`;
         cta = 'Vergunning vakantieverhuur aanvragen';
-        linkTo = 'www.amsterdam.nl';
+        linkTo =
+          'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
         datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+      default:
+        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
+        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} ontvangen`;
+        datePublished = item.dateRequest;
         break;
     }
   } else {
     switch (true) {
       case item.caseType === 'Vakantieverhuur afmelding':
-        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
         title = `Melding vakantieverhuur geannuleerd`;
-        cta = 'Bekijk uw melding';
+        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
+        cta = 'Bekijk uw geannuleerde melding';
         datePublished = item.dateRequest;
         break;
       case item.caseType === 'Vakantieverhuur':
-        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
         title = `Melding vakantieverhuur ontvangen`;
+        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
         cta = 'Bekijk uw melding';
         datePublished = item.dateRequest;
         break;
@@ -287,13 +294,26 @@ export async function fetchToeristischeVerhuurGenerated(
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const notifications: MyNotification[] = Array.isArray(
+    const vergunningNotifications: MyNotification[] = Array.isArray(
       TOERISTISCHE_VERHUUR?.content?.vergunningen
     )
       ? TOERISTISCHE_VERHUUR?.content?.vergunningen.map(
           createVergunningNotification
         )
       : [];
+
+    const registrationsNotifications: MyNotification[] = Array.isArray(
+      TOERISTISCHE_VERHUUR?.content?.vergunningen
+    )
+      ? TOERISTISCHE_VERHUUR?.content?.vergunningen.map(
+          createVergunningNotification
+        )
+      : [];
+
+    const notifications = [
+      ...vergunningNotifications,
+      ...registrationsNotifications,
+    ];
     const filteredNotifications = notifications.filter(
       (notification) =>
         notification.datePublished &&

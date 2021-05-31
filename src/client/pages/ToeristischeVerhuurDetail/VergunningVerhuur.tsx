@@ -13,10 +13,9 @@ export default function VergunningVerhuur({
 }) {
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail
-        label="Soort vergunning"
-        value={vergunning?.caseType || '-'}
+        label="Gemeentelijke zaaknummer"
+        value={vergunning?.identifier || '-'}
       />
       <InfoDetailGroup>
         <InfoDetail label="Vanaf" value={vergunning?.dateStart ?? '-'} />

@@ -145,8 +145,8 @@ export default function ToeristischeVerhuur() {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder vind u een overzicht van uw aanvragen voor toeristische
-          verhuur
+          Hieronder vindt u een overzicht van uw aanvragen voor toeristische
+          verhuur.
         </p>
         <p>
           <Linkd
@@ -163,29 +163,6 @@ export default function ToeristischeVerhuur() {
             Meer over toeristenbelasting
           </Linkd>
         </p>
-        {content?.registraties?.map(
-          (infoItem: ToeristischeVerhuurRegistratie) => (
-            <article key={infoItem.registrationNumber}>
-              <InfoDetail
-                label={'Landelijk registratienummer toeristische verhuur'}
-                value={infoItem.registrationNumber}
-              />
-              <InfoDetail
-                className={styles.NoBorder}
-                label={'Adres verhuurde woning'}
-                value={
-                  <>
-                    {infoItem.street} {infoItem.houseNumber}
-                    {infoItem.houseLetter}
-                    {infoItem.houseNumberExtension}
-                    <br />
-                    {infoItem.postalCode} {infoItem.city}
-                  </>
-                }
-              />
-            </article>
-          )
-        )}
         <div className={styles.Detail}>
           <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
             U heeft nog {content?.daysLeft ?? 30} dagen dat u uw woning mag
@@ -196,7 +173,10 @@ export default function ToeristischeVerhuur() {
             ingepland en afgelopen verhuur. Dit is zonder eventuele meldingen
             die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
             Kijk voor meer informatie bij{' '}
-            <LinkdInline external={true} href={'www.amsterdam.nl'}>
+            <LinkdInline
+              external={true}
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
+            >
               Vakantieverhuur melden
             </LinkdInline>
             . Aan de informatie op deze pagina kunnen geen rechten worden
@@ -257,7 +237,7 @@ export default function ToeristischeVerhuur() {
       {!!canceldVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-cancled-verhuur"
-          title={`Afgemelde verhuur (${canceldVerhuur?.length})`}
+          title={`Geanuleerde verhuur (${canceldVerhuur?.length})`}
           noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!canceldVerhuur?.length}
           startCollapsed={false}
@@ -330,6 +310,31 @@ export default function ToeristischeVerhuur() {
           )}
         </SectionCollapsible>
       )}
+      <PageContent>
+        {content?.registraties?.map(
+          (infoItem: ToeristischeVerhuurRegistratie) => (
+            <article key={infoItem.registrationNumber}>
+              <InfoDetail
+                label={'Landelijk registratienummer toeristische verhuur'}
+                value={infoItem.registrationNumber}
+              />
+              <InfoDetail
+                className={styles.NoBorder}
+                label={'Adres verhuurde woning'}
+                value={
+                  <>
+                    {infoItem.street} {infoItem.houseNumber}
+                    {infoItem.houseLetter}
+                    {infoItem.houseNumberExtension}
+                    <br />
+                    {infoItem.postalCode} {infoItem.city}
+                  </>
+                }
+              />
+            </article>
+          )
+        )}
+      </PageContent>
     </OverviewPage>
   );
 }
