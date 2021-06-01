@@ -10,7 +10,10 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { toeristischeVerhuurVergunningTypes } from '../../../server/services/vergunningen';
-import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
+import {
+  ToeristischeVerhuurVergunningen,
+  transformVergunningenToVerhuur,
+} from '../../../server/services/toeristische-verhuur';
 
 const testState: any = {
   TOERISTISCHE_VERHUUR: {
@@ -18,8 +21,9 @@ const testState: any = {
       daysLeft: 26,
       registraties: toeristischeVerhuurRegistraties.content,
       vergunningen: transformVergunningenToVerhuur(
-        (vergunningenData as any)?.content?.filter((vergunning: any) =>
-          toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
+        (vergunningenData as any)?.content?.filter(
+          (vergunning: ToeristischeVerhuurVergunningen) =>
+            toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
         )
       ),
     },

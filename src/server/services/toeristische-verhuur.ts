@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Chapters, DAYS_LEFT_TO_RENT } from '../../universal/config';
+import { Chapters, MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config';
 import { FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
@@ -9,7 +9,6 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import {
-  defaultDateFormat,
   formatDurationBetweenDates,
   isCurrentYear,
   isDateInPast,
@@ -39,27 +38,22 @@ export interface ToeristischeVerhuurRegistratie {
   street: string | null;
 }
 
-export interface TransformedVakantieverhuur extends Vakantieverhuur {
-  isPast: boolean;
-  duration: number | null;
+interface ToeristischeVerhuurVergunningProps {
+  isActual: boolean;
+  duration: number;
 }
 
-export interface TransformedVakantieverhuurAfmelding
-  extends VakantieverhuurAfmelding {
-  isPast: boolean;
-  duration: number | null;
-}
+export type ToeristischeVerhuur = ToeristischeVerhuurVergunningProps &
+  Vakantieverhuur;
 
-export interface TransformedVakantieverhuurVergunningaanvraag
-  extends VakantieverhuurVergunningaanvraag {
-  isPast: boolean;
-  duration: number | null;
-}
+export type ToeristischeVerhuurAfmelding = ToeristischeVerhuurVergunningProps &
+  VakantieverhuurAfmelding;
 
-export interface TransformedBBVergunning extends BBVergunning {
-  isPast: boolean;
-  duration: number | null;
-}
+export type ToeristischeVerhuurVergunningaanvraag = VakantieverhuurVergunningaanvraag &
+  ToeristischeVerhuurVergunningProps;
+
+export type ToeristischeVerhuurBBVergunning = BBVergunning &
+  ToeristischeVerhuurVergunningProps;
 
 export type VakantieverhuurVergunningen =
   | Vakantieverhuur
@@ -67,56 +61,44 @@ export type VakantieverhuurVergunningen =
   | BBVergunning
   | VakantieverhuurVergunningaanvraag;
 
-export type TransformedVakantieverhuurVergunningen =
-  | TransformedVakantieverhuur
-  | TransformedVakantieverhuurAfmelding
-  | TransformedBBVergunning
-  | TransformedVakantieverhuurVergunningaanvraag;
+export type ToeristischeVerhuurVergunningen =
+  | ToeristischeVerhuur
+  | ToeristischeVerhuurAfmelding
+  | ToeristischeVerhuurBBVergunning
+  | ToeristischeVerhuurVergunningaanvraag;
 
 export interface ToeristischeVerhuurRegistratiesSourceData {
   content: ToeristischeVerhuurRegistratie[];
 }
 
-export const daysLeftInCalendarYear = (items: Vakantieverhuur[]): number => {
-  const itemsThisYear = items?.filter((item) => {
-    return item.dateStart ? isCurrentYear(item.dateStart) : undefined;
-  });
-  return (
-    itemsThisYear?.reduce((a, b) => {
-      if (b.dateEnd ? isCurrentYear(b.dateEnd) : undefined) {
-        return (
-          a -
-          (b.dateEnd && b.dateStart
-            ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
-            : 0)
-        );
-      } else {
-        const daysTillEndOfYear =
-          b.dateEnd && b.dateStart
-            ? formatDurationBetweenDates(b.dateEnd, b.dateStart)
-            : 0;
-        return a - daysTillEndOfYear;
-      }
-    }, DAYS_LEFT_TO_RENT) ?? DAYS_LEFT_TO_RENT
-  );
-};
+const MONTHS_NEAR_END = 3;
+
+export function daysRentLeftInCalendarYear(
+  verhuurItems: ToeristischeVerhuur[]
+): number {
+  return verhuurItems
+    .filter(
+      (verhuur) => !!(verhuur.dateStart && isCurrentYear(verhuur.dateStart))
+    )
+    .map((verhuur) => verhuur.duration)
+    .reduce(
+      (total: number, duration: number) => total - duration,
+      MAXIMUM_DAYS_RENT_ALLOWED
+    );
+}
 
 export function transformVergunningenToVerhuur(
-  vergunningen: VakantieverhuurVergunningen[] | null
-): TransformedVakantieverhuurVergunningen[] | null {
-  return (
-    vergunningen?.map((item) => ({
-      ...item,
-      dateRequest: item.dateRequest,
-      dateEnd: item.dateEnd ? defaultDateFormat(item.dateEnd) : null,
-      dateStart: item.dateStart ? defaultDateFormat(item.dateStart) : null,
-      isPast: item.dateEnd ? isDateInPast(item.dateEnd, new Date()) : false,
-      duration:
-        item.dateEnd && item.dateStart
-          ? formatDurationBetweenDates(item.dateEnd, item.dateStart)
-          : null,
-    })) ?? null
-  );
+  vergunningen: VakantieverhuurVergunningen[]
+): ToeristischeVerhuurVergunningen[] {
+  return vergunningen.map((item) => ({
+    ...item,
+    dateRequest: item.dateRequest,
+    isActual: item.dateEnd ? !isDateInPast(item.dateEnd, new Date()) : false,
+    duration:
+      item.dateEnd && item.dateStart
+        ? formatDurationBetweenDates(item.dateEnd, item.dateStart)
+        : 0,
+  }));
 }
 
 export function transformToeristischeVerhuur(
@@ -146,7 +128,7 @@ export async function fetchToeristischeVerhuur(
     return apiSuccesResult({
       vergunningen: [],
       registraties: [],
-      daysLeft: DAYS_LEFT_TO_RENT,
+      daysLeft: MAXIMUM_DAYS_RENT_ALLOWED,
     });
   }
   const registratiesRequest = fetchRegistraties(
@@ -176,12 +158,14 @@ export async function fetchToeristischeVerhuur(
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
-  const daysLeft =
-    daysLeftInCalendarYear(
-      vergunningen.content?.filter(
-        (x) => x.caseType === 'Vakantieverhuur'
-      ) as Vakantieverhuur[]
-    ) ?? DAYS_LEFT_TO_RENT;
+  const verhuurVergunningen = transformVergunningenToVerhuur(
+    vergunningen.content as VakantieverhuurVergunningen[]
+  );
+  const daysLeft = daysRentLeftInCalendarYear(
+    verhuurVergunningen.filter(
+      (verhuur) => verhuur.caseType === 'Vakantieverhuur'
+    ) as ToeristischeVerhuur[]
+  );
 
   const failedDependencies = getFailedDependencies({
     registraties,
@@ -191,10 +175,7 @@ export async function fetchToeristischeVerhuur(
   return apiSuccesResult(
     {
       registraties: registraties.content || [],
-      vergunningen:
-        transformVergunningenToVerhuur(
-          vergunningen.content as VakantieverhuurVergunningen[]
-        ) ?? [],
+      vergunningen: verhuurVergunningen,
       daysLeft,
     },
     failedDependencies
@@ -229,7 +210,7 @@ function createVergunningNotification(
         description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} afgehandeld`;
         datePublished = item.dateDecision || item.dateRequest;
         break;
-      case isActive && monthsTillEnd && monthsTillEnd > -3:
+      case isActive && monthsTillEnd && monthsTillEnd > -MONTHS_NEAR_END:
         title = `Uw vergunning gemeentelijke ${item.caseType} loopt af`;
         description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
         cta = 'Vergunning vakantieverhuur aanvragen';
@@ -238,7 +219,7 @@ function createVergunningNotification(
         datePublished = format(new Date(), 'yyyy-MM-dd');
 
         break;
-      case !isActive && monthsTillEnd && monthsTillEnd < 3:
+      case !isActive && monthsTillEnd && monthsTillEnd < MONTHS_NEAR_END:
         title = `Uw vergunning gemeentelijke ${item.caseType} is verlopen`;
         description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen`;
         cta = 'Vergunning vakantieverhuur aanvragen';

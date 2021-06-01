@@ -46,55 +46,67 @@ export default function ToeristischeVerhuur() {
     if (!content?.vergunningen?.length) {
       return [];
     }
-    const items = content?.vergunningen
-      ?.filter(
-        (x) =>
-          x.caseType === 'Vakantieverhuur' ||
-          x.caseType === 'Vakantieverhuur afmelding'
+    const items = content.vergunningen
+      .filter(
+        (vergunning) =>
+          vergunning.caseType === 'Vakantieverhuur' ||
+          vergunning.caseType === 'Vakantieverhuur afmelding'
       )
-      .map((item) => {
+      .map((vergunning) => {
         return {
-          ...item,
-          dateRequest: defaultDateFormat(item.dateRequest),
+          ...vergunning,
+          dateRequest: defaultDateFormat(vergunning.dateRequest),
+          dateEnd: vergunning.dateEnd
+            ? defaultDateFormat(vergunning.dateEnd)
+            : null,
+          dateStart: vergunning.dateStart
+            ? defaultDateFormat(vergunning.dateStart)
+            : null,
         };
       });
-    return addTitleLinkComponent(items ?? [], 'dateRequest');
+    return addTitleLinkComponent(items, 'dateRequest');
   }, [content?.vergunningen]);
 
   const vergunningen = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [];
     }
-    const items = content?.vergunningen
-      ?.filter(
-        (x) =>
-          x.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-          x.caseType === 'B&B - vergunning'
+    const items = content.vergunningen
+      .filter(
+        (vergunning) =>
+          vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+          vergunning.caseType === 'B&B - vergunning'
       )
-      .map((item) => {
+      .map((vergunning) => {
         return {
-          ...item,
+          ...vergunning,
           title:
-            item.title.length > 45
-              ? item.title.slice(0, 40) + '...'
-              : item.title,
-          dateRequest: defaultDateFormat(item.dateRequest),
+            vergunning.title.length > 45
+              ? vergunning.title.slice(0, 40) + '...'
+              : vergunning.title,
+          dateRequest: defaultDateFormat(vergunning.dateRequest),
+          dateEnd: vergunning.dateEnd
+            ? defaultDateFormat(vergunning.dateEnd)
+            : null,
+          dateStart: vergunning.dateStart
+            ? defaultDateFormat(vergunning.dateStart)
+            : null,
         };
       });
-    return addTitleLinkComponent(items ?? [], 'identifier');
+    return addTitleLinkComponent(items, 'identifier');
   }, [content?.vergunningen]);
 
   const actualVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
         vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
-        !vergunning.isPast
+        vergunning.isActual
     );
   }, [vergunningen]);
   const BBActualVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'B&B - vergunning' && !vergunning.isPast
+        vergunning.caseType === 'B&B - vergunning' && vergunning.isActual
     );
   }, [vergunningen]);
 
@@ -102,18 +114,18 @@ export default function ToeristischeVerhuur() {
     return vergunningen?.filter(
       (vergunning) =>
         vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
-        vergunning.isPast
+        !vergunning.isActual
     );
   }, [vergunningen]);
 
   const BBPreviousVergunningen = useMemo(() => {
     return vergunningen?.filter(
       (vergunning) =>
-        vergunning.caseType === 'B&B - vergunning' && vergunning.isPast
+        vergunning.caseType === 'B&B - vergunning' && !vergunning.isActual
     );
   }, [vergunningen]);
 
-  const canceldVerhuur = useMemo(() => {
+  const cancelledVerhuur = useMemo(() => {
     return verhuur?.filter(
       (vergunning) => vergunning.caseType === 'Vakantieverhuur afmelding'
     );
@@ -122,14 +134,14 @@ export default function ToeristischeVerhuur() {
   const plannedVerhuur = useMemo(() => {
     return verhuur.filter(
       (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && !vergunning.isPast
+        vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual
     );
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
     return verhuur.filter(
       (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && vergunning.isPast
+        vergunning.caseType === 'Vakantieverhuur' && !vergunning.isActual
     );
   }, [verhuur]);
   return (
@@ -216,13 +228,9 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-planned-verhuur"
           title={`Geplande verhuur (${plannedVerhuur?.length})`}
-          noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!plannedVerhuur?.length}
-          startCollapsed={false}
-          className={styles.SectionCollapsibleCurrent}
-          isLoading={isLoading(TOERISTISCHE_VERHUUR)}
           track={{
-            category: 'Toeristische verhuur / Geplanned Verhuur',
+            category: 'Toeristische verhuur / Geplande Verhuur',
             name: 'Datatabel',
           }}
         >
@@ -234,15 +242,11 @@ export default function ToeristischeVerhuur() {
           />
         </SectionCollapsible>
       )}
-      {!!canceldVerhuur.length && (
+      {!!cancelledVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-cancled-verhuur"
-          title={`Geanuleerde verhuur (${canceldVerhuur?.length})`}
-          noItemsMessage="U heeft geen lopende aanvragen."
-          hasItems={!!canceldVerhuur?.length}
-          startCollapsed={false}
-          className={styles.SectionCollapsibleCurrent}
-          isLoading={isLoading(TOERISTISCHE_VERHUUR)}
+          title={`Geanuleerde verhuur (${cancelledVerhuur.length})`}
+          hasItems={!!cancelledVerhuur?.length}
           track={{
             category: 'Toeristische verhuur / afgemeld Verhuur',
             name: 'Datatabel',
@@ -252,19 +256,19 @@ export default function ToeristischeVerhuur() {
             className={styles.Table}
             titleKey="dateRequest"
             displayProps={DISPLAY_PROPS_VERHUUR}
-            items={canceldVerhuur}
+            items={cancelledVerhuur}
           />
         </SectionCollapsible>
       )}
       {!!previousVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-previous-verhuur"
+          className={
+            !BBActualVergunningen?.length ? styles.SectionNoBorderBottom : ''
+          }
           title={`Afgelopen verhuur (${previousVerhuur?.length})`}
           noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={!!previousVerhuur?.length}
-          startCollapsed={false}
-          className={styles.SectionCollapsibleCurrent}
-          isLoading={isLoading(TOERISTISCHE_VERHUUR)}
           track={{
             category: 'Toeristische verhuur / afgemeld Verhuur',
             name: 'Datatabel',
@@ -278,17 +282,15 @@ export default function ToeristischeVerhuur() {
           />
         </SectionCollapsible>
       )}
-      {(!!BBActualVergunningen?.length || !!BBPreviousVergunningen.length) && (
+      {(!!BBActualVergunningen.length || !!BBPreviousVergunningen.length) && (
         <SectionCollapsible
           id="SectionCollapsible-BBvergunning-aanvraag"
-          title="Vergunning bed and breakfast"
+          title="Vergunning bed & breakfast"
+          className={styles.SectionNoBorderBottom}
           noItemsMessage="U heeft geen lopende aanvragen."
           hasItems={
             !!BBActualVergunningen?.length || !!BBPreviousVergunningen.length
           }
-          startCollapsed={false}
-          className={styles.SectionCollapsibleCurrent}
-          isLoading={isLoading(TOERISTISCHE_VERHUUR)}
           track={{
             category: 'Toeristische verhuur / Vergunning vakantieverhuur',
             name: 'Datatabel',
@@ -311,29 +313,26 @@ export default function ToeristischeVerhuur() {
         </SectionCollapsible>
       )}
       <PageContent>
-        {content?.registraties?.map(
-          (infoItem: ToeristischeVerhuurRegistratie) => (
-            <article key={infoItem.registrationNumber}>
-              <InfoDetail
-                label={'Landelijk registratienummer toeristische verhuur'}
-                value={infoItem.registrationNumber}
-              />
-              <InfoDetail
-                className={styles.NoBorder}
-                label={'Adres verhuurde woning'}
-                value={
-                  <>
-                    {infoItem.street} {infoItem.houseNumber}
-                    {infoItem.houseLetter}
-                    {infoItem.houseNumberExtension}
-                    <br />
-                    {infoItem.postalCode} {infoItem.city}
-                  </>
-                }
-              />
-            </article>
-          )
-        )}
+        <InfoDetail
+          label="Registratienummer toeristische verhuur"
+          value={content?.registraties?.map(
+            (registrationItem: ToeristischeVerhuurRegistratie) => (
+              <article
+                key={registrationItem.registrationNumber}
+                className={styles.RegistrationNumber}
+              >
+                {registrationItem.registrationNumber}
+                <br />
+                <>
+                  {registrationItem.street} {registrationItem.houseNumber}
+                  {registrationItem.houseLetter}
+                  {registrationItem.houseNumberExtension}
+                  {registrationItem.postalCode} {registrationItem.city}
+                </>
+              </article>
+            )
+          )}
+        />
       </PageContent>
     </OverviewPage>
   );

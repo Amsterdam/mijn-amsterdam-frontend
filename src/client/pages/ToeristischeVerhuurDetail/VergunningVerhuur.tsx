@@ -1,7 +1,8 @@
 import {
-  TransformedVakantieverhuurVergunningaanvraag as VakantieVergunningType,
-  TransformedBBVergunning as BBVergunningType,
+  ToeristischeVerhuurBBVergunning,
+  ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
+import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -9,7 +10,9 @@ import InfoDetail, {
 export default function VergunningVerhuur({
   vergunning,
 }: {
-  vergunning: VakantieVergunningType | BBVergunningType;
+  vergunning:
+    | ToeristischeVerhuurVergunningaanvraag
+    | ToeristischeVerhuurBBVergunning;
 }) {
   return (
     <>
@@ -18,8 +21,18 @@ export default function VergunningVerhuur({
         value={vergunning?.identifier || '-'}
       />
       <InfoDetailGroup>
-        <InfoDetail label="Vanaf" value={vergunning?.dateStart ?? '-'} />
-        <InfoDetail label="Tot en met" value={vergunning?.dateEnd ?? '-'} />
+        <InfoDetail
+          label="Vanaf"
+          value={
+            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
+          }
+        />
+        <InfoDetail
+          label="Tot"
+          value={
+            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+          }
+        />
       </InfoDetailGroup>
       <InfoDetailGroup>
         <InfoDetail label="Eigenaar woning" value={'-'} />

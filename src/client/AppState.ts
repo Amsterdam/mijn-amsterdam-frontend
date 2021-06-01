@@ -5,7 +5,6 @@ import {
   ServicesType,
 } from '../server/services/controller';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
-import { DAYS_LEFT_TO_RENT } from '../universal/config/app';
 
 export type AppState = {
   [key in ServiceID]: ApiResponse<
@@ -39,7 +38,7 @@ export const PRISTINE_APPSTATE: AppState = {
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],
-    daysLeft: DAYS_LEFT_TO_RENT,
+    daysLeft: 0,
   }),
 
   // Related

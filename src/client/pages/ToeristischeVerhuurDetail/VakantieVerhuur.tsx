@@ -1,6 +1,6 @@
 import {
-  TransformedVakantieverhuur as VakantieVerhuurType,
-  TransformedVakantieverhuurAfmelding as VakantieVerhuurAfmeldingType,
+  ToeristischeVerhuur,
+  ToeristischeVerhuurAfmelding,
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
@@ -10,18 +10,18 @@ import InfoDetail, {
 export default function VakantieVerhuur({
   vergunning,
 }: {
-  vergunning: VakantieVerhuurType | VakantieVerhuurAfmeldingType;
+  vergunning: ToeristischeVerhuur | ToeristischeVerhuurAfmelding;
 }) {
   return (
     <>
       <InfoDetail
         label="Gemeentelijk zaaknummer"
-        value={vergunning?.identifier || '-'}
+        value={vergunning.identifier ?? '-'}
       />
       <InfoDetail
         label="Ontvangen op"
         value={
-          vergunning?.dateRequest
+          vergunning.dateRequest
             ? defaultDateFormat(vergunning.dateRequest)
             : '-'
         }
@@ -29,14 +29,18 @@ export default function VakantieVerhuur({
       <InfoDetailGroup>
         <InfoDetail
           label="Datum start verhuur"
-          value={vergunning?.dateStart ?? '-'}
+          value={
+            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
+          }
         />
         <InfoDetail
           label="Datum einde verhuur"
-          value={vergunning?.dateEnd ?? '-'}
+          value={
+            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+          }
         />
       </InfoDetailGroup>
-      <InfoDetail label={'Adres'} value={vergunning?.location ?? '-'} />
+      <InfoDetail label="Adres" value={vergunning.location ?? '-'} />
     </>
   );
 }

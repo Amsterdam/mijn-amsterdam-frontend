@@ -16,23 +16,22 @@ import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
 import StatusLineItemVerhuur from './StatusLineItemsVerhuur';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
+import { ToeristischeVerhuurVergunningen } from '../../../server/services/toeristische-verhuur';
 
-function getHeaderTitle(
-  caseType: string,
-  dateStart: string,
-  isPast?: boolean
-): string {
-  switch (caseType) {
+function getHeaderTitle(vergunning: ToeristischeVerhuurVergunningen): string {
+  switch (vergunning.caseType) {
     case 'Vakantieverhuur':
-      return `${isPast ? 'Afgelopen' : 'Geplande'} verhuur ${dateStart}`;
+      return `${!vergunning.isActual ? 'Afgelopen' : 'Geplande'} verhuur ${
+        vergunning.dateStart
+      }`;
     case 'Vakantieverhuur afmelding':
-      return `Afgemeld verhuur ${dateStart}`;
+      return `Afgemeld verhuur ${vergunning.dateStart}`;
     case 'Vakantieverhuur vergunningsaanvraag':
       return `Vergunning tijdelijke vakantie verhuur`;
     case 'B&B - vergunning':
       return `Vergunning bed and breakfast`;
     default:
-      return caseType;
+      return 'Onbekende Toeristische verhuur';
   }
 }
 
@@ -52,11 +51,9 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {getHeaderTitle(
-          Vergunning?.caseType ?? '',
-          Vergunning?.dateStart ?? '',
-          Vergunning?.isPast
-        )}
+        {Vergunning
+          ? getHeaderTitle(Vergunning)
+          : ChapterTitles.TOERISTISCHE_VERHUUR}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
@@ -83,16 +80,14 @@ export default function ToeristischVerhuurDetail() {
         )}
       </PageContent>
       {!isLoading(TOERISTISCHE_VERHUUR) &&
-        Vergunning &&
-        (Vergunning.caseType === 'Vakantieverhuur' ||
-          Vergunning.caseType === 'Vakantieverhuur afmelding') && (
+        (Vergunning?.caseType === 'Vakantieverhuur' ||
+          Vergunning?.caseType === 'Vakantieverhuur afmelding') && (
           <StatusLineItemVerhuur vergunning={Vergunning} />
         )}
 
       {!isLoading(TOERISTISCHE_VERHUUR) &&
-        Vergunning &&
-        (Vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-          Vergunning.caseType === 'B&B - vergunning') && (
+        (Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+          Vergunning?.caseType === 'B&B - vergunning') && (
           <StatusLineItems vergunning={Vergunning} />
         )}
     </DetailPage>

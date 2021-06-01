@@ -41,7 +41,7 @@ function state(state: any) {
 describe('<ToeristischVerhuurDetail />', () => {
   (window as any).scrollTo = jest.fn();
   const vergunning = vergunningen?.find(
-    (v) => v.caseType === 'Vakantieverhuur'
+    (vergunning) => vergunning.caseType === 'Vakantieverhuur'
   );
   const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
     id: vergunning?.id,
