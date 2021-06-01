@@ -1,7 +1,62 @@
 {
   "content": {
-    "aandeelhouders": [],
-    "bestuurders": [],
+    "gemachtigden": [],
+     "overigeFunctionarissen": [
+          {
+              "functie": "Commissaris",
+              "naam": "Georges Rudy Janssen van Son",
+              "geboortedatum": "1976-10-1"
+          },
+          {
+              "functie": "Commissaris",
+              "naam": "Jan Jansen",
+              "geboortedatum": "1976-10-1"
+          },
+          {
+              "functie": "Commissaris",
+              "naam": "Boris Johnsson",
+              "geboortedatum": "1976-10-1"
+          },
+          {
+              "functie": "Enig aandeelhouder",
+              "naam": "Kamlawatie Katar",
+              "geboortedatum": "1976-10-1"
+          }
+      ],
+      "bestuurders": [
+          {
+              "functie": "Bestuurder",
+              "soortBevoegdheid": "AlleenZelfstandigBevoegd",
+              "naam": "Wesley Vlag",
+              "geboortedatum": "1976-10-1"
+          },
+          {
+              "functie": "Bestuurder",
+              "soortBevoegdheid": "AlleenZelfstandigBevoegd",
+              "naam": "Hendrika Johanna Theodora Grupstal",
+              "geboortedatum": "1976-10-1"
+          },
+          {
+              "functie": "Bestuurder",
+              "soortBevoegdheid": "AlleenZelfstandigBevoegd",
+              "naam": "Pierre Vlag",
+              "geboortedatum": "date(1976, 10, 1)"
+          },
+          {
+              "functie": "Bestuurder",
+              "soortBevoegdheid": "AlleenZelfstandigBevoegd",
+              "naam": "Dennis Uiersin",
+              "geboortedatum": "1976-10-1"
+          }
+      ],
+      "aansprakelijken": [
+          {
+              "functie": "Vennoot",
+              "geboortedatum": "1992-11-21",
+              "naam": "Cammie Konopka",
+              "soortBevoegdheid": "BeperktBevoegd"
+          }
+      ],
     "mokum": true,
     "onderneming": {
       "datumAanvang": null,
