@@ -11,7 +11,6 @@
 }
 
 .Detail {
-  padding-bottom: 2.5rem;
   padding-top: 1.6rem;
 }
 
@@ -50,4 +49,9 @@
 
 .SectionNoBorderBottom {
   border: 0;
+}
+
+.SectionBorderTop {
+  border-top: 0.1rem $color-neutral-grey2 solid;
+  padding-top: 2rem;
 }
