@@ -36,6 +36,7 @@ export interface ToeristischeVerhuurRegistratie {
   registrationNumber: string | null;
   shortName: string | null;
   street: string | null;
+  agreementDate: string | null;
 }
 
 interface ToeristischeVerhuurVergunningProps {
@@ -262,6 +263,29 @@ function createVergunningNotification(
   };
 }
 
+function createRegistratieNotification(
+  item: ToeristischeVerhuurRegistratie
+): MyNotification {
+  let title =
+    'U heeft een registratienummer tijdelijke vakantie verhuur ontvangen';
+  let description = 'Nieuw landelijk registratienummer';
+  let datePublished = !!item.agreementDate ? item.agreementDate : '';
+  let cta = 'Bekijk uw registratie';
+  let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
+
+  return {
+    id: `toeristiche-verhuur-registratie-${item.registrationNumber}-notification`,
+    datePublished,
+    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    title,
+    description,
+    link: {
+      to: linkTo,
+      title: cta,
+    },
+  };
+}
+
 export async function fetchToeristischeVerhuurGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
@@ -284,10 +308,10 @@ export async function fetchToeristischeVerhuurGenerated(
       : [];
 
     const registrationsNotifications: MyNotification[] = Array.isArray(
-      TOERISTISCHE_VERHUUR?.content?.vergunningen
+      TOERISTISCHE_VERHUUR?.content?.registraties
     )
-      ? TOERISTISCHE_VERHUUR?.content?.vergunningen.map(
-          createVergunningNotification
+      ? TOERISTISCHE_VERHUUR?.content?.registraties.map(
+          createRegistratieNotification
         )
       : [];
 

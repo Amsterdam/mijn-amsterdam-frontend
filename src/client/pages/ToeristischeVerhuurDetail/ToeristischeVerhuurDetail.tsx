@@ -10,11 +10,10 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { DocumentDetails } from './DocumentDetails';
+import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
-import StatusLineItemVerhuur from './StatusLineItemsVerhuur';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 import { ToeristischeVerhuurVergunningen } from '../../../server/services/toeristische-verhuur';
 
@@ -79,17 +78,9 @@ export default function ToeristischVerhuurDetail() {
           </>
         )}
       </PageContent>
-      {!isLoading(TOERISTISCHE_VERHUUR) &&
-        (Vergunning?.caseType === 'Vakantieverhuur' ||
-          Vergunning?.caseType === 'Vakantieverhuur afmelding') && (
-          <StatusLineItemVerhuur vergunning={Vergunning} />
-        )}
-
-      {!isLoading(TOERISTISCHE_VERHUUR) &&
-        (Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-          Vergunning?.caseType === 'B&B - vergunning') && (
-          <StatusLineItems vergunning={Vergunning} />
-        )}
+      {!isLoading(TOERISTISCHE_VERHUUR) && Vergunning && (
+        <StatusLineItems vergunning={Vergunning} />
+      )}
     </DetailPage>
   );
 }

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat, isDateInPast } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ChapterIcon,
@@ -28,6 +28,7 @@ const DISPLAY_PROPS_VERHUUR = {
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
+
   const verhuur = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [];
@@ -53,15 +54,15 @@ export default function ToeristischeVerhuur() {
     return addTitleLinkComponent(items, 'dateRequest');
   }, [content?.vergunningen]);
 
-  const actualVergunning = useMemo(() => {
-    return content?.vergunningen?.find(
+  const actualVergunningen = useMemo(() => {
+    return content?.vergunningen?.filter(
       (vergunning) =>
         vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
         vergunning.isActual
     );
   }, [content?.vergunningen]);
-  const BBActualVergunning = useMemo(() => {
-    return content?.vergunningen?.find(
+  const BBActualVergunningen = useMemo(() => {
+    return content?.vergunningen?.filter(
       (vergunning) =>
         vergunning.caseType === 'B&B - vergunning' && vergunning.isActual
     );
@@ -74,16 +75,18 @@ export default function ToeristischeVerhuur() {
   }, [verhuur]);
 
   const plannedVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual
+    return verhuur.filter((vergunning) =>
+      vergunning.caseType === 'Vakantieverhuur' && vergunning.dateStart
+        ? !isDateInPast(vergunning.dateStart, new Date())
+        : false
     );
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && !vergunning.isActual
+    return verhuur.filter((vergunning) =>
+      vergunning.caseType === 'Vakantieverhuur' && vergunning.dateStart
+        ? isDateInPast(vergunning.dateStart, new Date())
+        : true
     );
   }, [verhuur]);
   return (
@@ -102,51 +105,88 @@ export default function ToeristischeVerhuur() {
           Hieronder vindt u een overzicht van uw aanvragen voor toeristische
           verhuur.
         </p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
-          >
-            Meer informatie over regels voor Particuliere vakantieverhuur
-          </Linkd>
-          <br />
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
-          >
-            Meer over toeristenbelasting
-          </Linkd>
-        </p>
-        <div className={styles.Detail}>
-          <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
-            U heeft nog {content?.daysLeft ?? 30} dagen dat u uw woning mag
-            verhuren.
-          </Heading>
-          <p className={styles.DetailText}>
-            Het aantal resterende nachten is gebaseerd op uw meldingen voor
-            ingepland en afgelopen verhuur. Dit is zonder eventuele meldingen
-            die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
-            Kijk voor meer informatie bij{' '}
-            <LinkdInline
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
-            >
-              Vakantieverhuur melden
-            </LinkdInline>
-            . Aan de informatie op deze pagina kunnen geen rechten worden
-            ontleend.
-          </p>
+        {actualVergunningen?.length && (
           <p>
-            {actualVergunning && (
-              <Linkd external={true} href={actualVergunning.link.to}>
-                Vergunning vakantieverhuur ({actualVergunning.status})
-              </Linkd>
-            )}
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
+            >
+              Meer informatie over regels voor Particuliere vakantieverhuur
+            </Linkd>
             <br />
-            {BBActualVergunning && (
-              <Linkd external={true} href={BBActualVergunning.link.to}>
-                Vergunning Bed & breakfast ({BBActualVergunning.status})
-              </Linkd>
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+            >
+              Meer over toeristenbelasting
+            </Linkd>
+          </p>
+        )}
+        {!actualVergunningen?.length && BBActualVergunningen?.length && (
+          <p>
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
+            >
+              Meer informatie over bed and breakfast
+            </Linkd>
+            <br />
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/regels/"
+            >
+              Regels bed & breakfast
+            </Linkd>
+          </p>
+        )}
+        <div className={styles.Detail}>
+          {!!actualVergunningen?.length && (
+            <>
+              <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
+                U heeft nog {content?.daysLeft ?? 30} dagen dat u uw woning mag
+                verhuren.
+              </Heading>
+              <p className={styles.DetailText}>
+                Het aantal resterende nachten is gebaseerd op uw meldingen voor
+                ingepland en afgelopen verhuur. Dit is zonder eventuele
+                meldingen die dit jaar door een mede-verhuurder of vorige
+                bewoner zijn gedaan. Kijk voor meer informatie bij{' '}
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
+                >
+                  Vakantieverhuur melden
+                </LinkdInline>
+                . Aan de informatie op deze pagina kunnen geen rechten worden
+                ontleend.
+              </p>
+            </>
+          )}
+          <p>
+            {!!actualVergunningen?.length && (
+              <>
+                {actualVergunningen.map((vergunning) => (
+                  <>
+                    <Linkd external={true} href={vergunning.link.to}>
+                      Vergunning vakantieverhuur ({vergunning.status})
+                    </Linkd>
+                    <br />
+                  </>
+                ))}
+              </>
+            )}
+
+            {!!BBActualVergunningen?.length && (
+              <>
+                {BBActualVergunningen.map((vergunning) => (
+                  <>
+                    <Linkd external={true} href={vergunning.link.to}>
+                      Vergunning Bed & breakfast ({vergunning.status})
+                    </Linkd>
+                    <br />
+                  </>
+                ))}
+              </>
             )}
           </p>
         </div>

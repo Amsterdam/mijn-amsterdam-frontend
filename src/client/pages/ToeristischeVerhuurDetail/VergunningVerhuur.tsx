@@ -34,11 +34,13 @@ export default function VergunningVerhuur({
           }
         />
       </InfoDetailGroup>
-      <InfoDetailGroup>
-        <InfoDetail label="Eigenaar woning" value={'-'} />
-        <InfoDetail label="Aanvrager vergunning" value={'-'} />
-      </InfoDetailGroup>
-      <InfoDetail label={'Adres'} value={vergunning?.location ?? '-'} />
+      {vergunning.caseType === 'B&B - vergunning' && (
+        <InfoDetailGroup>
+          <InfoDetail label="Eigenaar woning" value={'-'} />
+          <InfoDetail label="Aanvrager vergunning" value={'-'} />
+        </InfoDetailGroup>
+      )}
+      <InfoDetail label="Adres" value={vergunning?.location ?? '-'} />
     </>
   );
 }
