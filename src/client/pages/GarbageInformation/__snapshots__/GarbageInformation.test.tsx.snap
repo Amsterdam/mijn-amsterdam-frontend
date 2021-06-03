@@ -407,8 +407,8 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="Button Button__plain Button__lean Linkd"
-                href="/http://example.org/afvalpunt"
-                rel="noopener noreferrer"
+                href="http://example.org/afvalpunt"
+                rel="external noopener noreferrer"
               >
                 <svg
                   aria-hidden="true"

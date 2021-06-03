@@ -77,7 +77,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
       <GarbageCenterInfoDetail
         label="Meer informatie"
         value={
-          <Linkd href={item.website} rel="noopener noreferrer">
+          <Linkd href={item.website} external={true}>
             Spullen wegbrengen naar een Afvalpunt
           </Linkd>
         }
