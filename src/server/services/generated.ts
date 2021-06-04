@@ -17,6 +17,8 @@ import { fetchVergunningenGenerated } from './vergunningen';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchSIAGenerated } from './sia';
 import { fetchStadspasSaldoGenerated } from './focus/focus-stadspas';
+import { DEFAULT_API_CACHE_TTL_MS } from '../config';
+import memoize from 'memoizee';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -62,11 +64,12 @@ export function getGeneratedItemsFromApiResults(
   };
 }
 
-export async function fetchGenerated(
+async function fetchServicesGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   profileType: ProfileType
 ) {
+  console.log('jppapapa', sessionID, passthroughRequestHeaders, profileType);
   if (profileType === 'commercial') {
     const [
       milieuzoneGeneratedResult,
@@ -167,3 +170,11 @@ export async function fetchGenerated(
     stadspasGenerated,
   ]);
 }
+
+export const fetchGenerated = memoize(fetchServicesGenerated, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args) {
+    // args is arguments object as accessible in memoized function
+    return args[0] + JSON.stringify(args[1]);
+  },
+});

@@ -227,7 +227,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
-
     VERGUNNINGEN,
   },
 };
