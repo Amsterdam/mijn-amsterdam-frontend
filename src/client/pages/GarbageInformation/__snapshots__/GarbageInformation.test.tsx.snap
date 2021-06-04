@@ -68,8 +68,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           </svg>
           De regels voor afval en hergebruik
         </a>
-      </p>
-      <p>
+        <br />
         <a
           class="Button Button__plain Button__lean Linkd"
           href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
@@ -408,8 +407,8 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="Button Button__plain Button__lean Linkd"
-                href="/http://example.org/afvalpunt"
-                rel="noopener noreferrer"
+                href="http://example.org/afvalpunt"
+                rel="external noopener noreferrer"
               >
                 <svg
                   aria-hidden="true"
