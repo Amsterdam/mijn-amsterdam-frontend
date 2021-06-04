@@ -77,7 +77,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
       <GarbageCenterInfoDetail
         label="Meer informatie"
         value={
-          <Linkd href={item.website} rel="noopener noreferrer">
+          <Linkd href={item.website} external={true}>
             Spullen wegbrengen naar een Afvalpunt
           </Linkd>
         }
@@ -141,8 +141,7 @@ export default function GarbageInformation() {
               <Linkd href={ExternalUrls.AFVAL} external={true}>
                 De regels voor afval en hergebruik
               </Linkd>
-            </p>
-            <p>
+              <br />
               <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
                 Doe een melding als afval is blijven liggen
               </Linkd>
@@ -161,8 +160,7 @@ export default function GarbageInformation() {
               <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
                 Regels bedrijfsafval in Amsterdam
               </Linkd>
-            </p>
-            <p>
+              <br />
               <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
                 Doe een melding als afval is blijven liggen
               </Linkd>
