@@ -15,24 +15,6 @@ import styles from './ToeristischeVerhuurDetail.module.scss';
 import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
-import { ToeristischeVerhuurVergunningen } from '../../../server/services/toeristische-verhuur';
-
-function getHeaderTitle(vergunning: ToeristischeVerhuurVergunningen): string {
-  switch (vergunning.caseType) {
-    case 'Vakantieverhuur':
-      return `${!vergunning.isActual ? 'Afgelopen' : 'Geplande'} verhuur ${
-        vergunning.dateStart
-      }`;
-    case 'Vakantieverhuur afmelding':
-      return `Afgemeld verhuur ${vergunning.dateStart}`;
-    case 'Vakantieverhuur vergunningsaanvraag':
-      return `Vergunning tijdelijke vakantie verhuur`;
-    case 'B&B - vergunning':
-      return `Vergunning bed and breakfast`;
-    default:
-      return 'Onbekende Toeristische verhuur';
-  }
-}
 
 export default function ToeristischVerhuurDetail() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
@@ -50,9 +32,7 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {Vergunning
-          ? getHeaderTitle(Vergunning)
-          : ChapterTitles.TOERISTISCHE_VERHUUR}
+        {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>

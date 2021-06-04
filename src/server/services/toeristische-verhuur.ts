@@ -1,6 +1,10 @@
 import { format } from 'date-fns';
-import { Chapters, MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config';
-import { FeatureToggle } from '../../universal/config';
+import { generatePath } from 'react-router-dom';
+import {
+  Chapters,
+  FeatureToggle,
+  MAXIMUM_DAYS_RENT_ALLOWED,
+} from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiDependencyError,
@@ -9,13 +13,14 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import {
+  defaultDateFormat,
   formatDurationBetweenDates,
   isCurrentYear,
   isDateInPast,
   monthsFromNow,
 } from '../../universal/helpers/date';
 import { MyNotification } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
   BBVergunning,
@@ -26,6 +31,7 @@ import {
   VakantieverhuurAfmelding,
   VakantieverhuurVergunningaanvraag,
 } from './vergunningen';
+import memoize from 'memoizee';
 
 export interface ToeristischeVerhuurRegistratie {
   city: string;
@@ -39,10 +45,42 @@ export interface ToeristischeVerhuurRegistratie {
   agreementDate: string | null;
 }
 
+export interface ToeristischeVerhuurRegistratiesSourceData {
+  content: ToeristischeVerhuurRegistratie[];
+}
+
+export function transformToeristischeVerhuurRegistraties(
+  responseData: ToeristischeVerhuurRegistratiesSourceData
+): ToeristischeVerhuurRegistratie[] | null {
+  return responseData.content || [];
+}
+
+function fetchRegistraties(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return requestData<ToeristischeVerhuurRegistratie[]>(
+    getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
+      transformResponse: transformToeristischeVerhuurRegistraties,
+    }),
+    sessionID,
+    passthroughRequestHeaders
+  );
+}
+
+/** Code to transform and type Decos vergunningen to Toeristische verhuur */
+
 interface ToeristischeVerhuurVergunningProps {
   isActual: boolean;
   duration: number;
 }
+
+// A union of the the source types that are retrieved from the Decos api
+export type VakantieverhuurVergunning =
+  | Vakantieverhuur
+  | VakantieverhuurAfmelding
+  | BBVergunning
+  | VakantieverhuurVergunningaanvraag;
 
 export type ToeristischeVerhuur = ToeristischeVerhuurVergunningProps &
   Vakantieverhuur;
@@ -56,23 +94,29 @@ export type ToeristischeVerhuurVergunningaanvraag = VakantieverhuurVergunningaan
 export type ToeristischeVerhuurBBVergunning = BBVergunning &
   ToeristischeVerhuurVergunningProps;
 
-export type VakantieverhuurVergunningen =
-  | Vakantieverhuur
-  | VakantieverhuurAfmelding
-  | BBVergunning
-  | VakantieverhuurVergunningaanvraag;
-
-export type ToeristischeVerhuurVergunningen =
+export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuur
   | ToeristischeVerhuurAfmelding
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
 
-export interface ToeristischeVerhuurRegistratiesSourceData {
-  content: ToeristischeVerhuurRegistratie[];
-}
+const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
-const MONTHS_NEAR_END = 3;
+function transformToeristischeVerhuurVergunningTitle(
+  caseType: VakantieverhuurVergunning['caseType'],
+  isActual: boolean
+): string {
+  switch (caseType) {
+    case 'Vakantieverhuur':
+      return `${!isActual ? 'Afgelopen' : 'Geplande'} vakantieverhuur`;
+    case 'Vakantieverhuur afmelding':
+      return `Geannuleerde vakantieverhuur`;
+    case 'Vakantieverhuur vergunningsaanvraag':
+      return `Vergunning tijdelijke vakantie verhuur`;
+    case 'B&B - vergunning':
+      return `Vergunning bed and breakfast`;
+  }
+}
 
 export function daysRentLeftInCalendarYear(
   verhuurItems: ToeristischeVerhuur[]
@@ -89,39 +133,30 @@ export function daysRentLeftInCalendarYear(
 }
 
 export function transformVergunningenToVerhuur(
-  vergunningen: VakantieverhuurVergunningen[]
-): ToeristischeVerhuurVergunningen[] {
-  return vergunningen.map((item) => ({
-    ...item,
-    dateRequest: item.dateRequest,
-    isActual: item.dateEnd ? !isDateInPast(item.dateEnd, new Date()) : false,
-    duration:
-      item.dateEnd && item.dateStart
-        ? formatDurationBetweenDates(item.dateEnd, item.dateStart)
-        : 0,
-  }));
+  vergunningen: VakantieverhuurVergunning[]
+): ToeristischeVerhuurVergunning[] {
+  return vergunningen.map((vergunning) => {
+    const isActual = vergunning.dateEnd
+      ? !isDateInPast(vergunning.dateEnd)
+      : false;
+    const title = transformToeristischeVerhuurVergunningTitle(
+      vergunning.caseType,
+      isActual
+    );
+    return {
+      ...vergunning,
+      title,
+      dateRequest: vergunning.dateRequest,
+      isActual,
+      duration:
+        vergunning.dateEnd && vergunning.dateStart
+          ? formatDurationBetweenDates(vergunning.dateEnd, vergunning.dateStart)
+          : 0,
+    };
+  });
 }
 
-export function transformToeristischeVerhuur(
-  responseData: ToeristischeVerhuurRegistratiesSourceData
-): ToeristischeVerhuurRegistratie[] | null {
-  return responseData.content || [];
-}
-
-function fetchRegistraties(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  return requestData<ToeristischeVerhuurRegistratie[]>(
-    getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-      transformResponse: transformToeristischeVerhuur,
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  );
-}
-
-export async function fetchToeristischeVerhuur(
+async function fetchAndTransformToeristischeVerhuur(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -142,12 +177,7 @@ export async function fetchToeristischeVerhuur(
     passthroughRequestHeaders,
     {
       appRoute: AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
-      filter: (
-        vergunning
-      ): vergunning is
-        | Vakantieverhuur
-        | VakantieverhuurAfmelding
-        | VakantieverhuurVergunningaanvraag =>
+      filter: (vergunning): vergunning is VakantieverhuurVergunning =>
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
     }
   );
@@ -159,14 +189,15 @@ export async function fetchToeristischeVerhuur(
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
-  const verhuurVergunningen = transformVergunningenToVerhuur(
-    vergunningen.content as VakantieverhuurVergunningen[]
+  const toeristischeVerhuurVergunningen = transformVergunningenToVerhuur(
+    vergunningen.content as VakantieverhuurVergunning[]
   );
-  const daysLeft = daysRentLeftInCalendarYear(
-    verhuurVergunningen.filter(
-      (verhuur) => verhuur.caseType === 'Vakantieverhuur'
-    ) as ToeristischeVerhuur[]
+
+  const verhuurVergunningen = toeristischeVerhuurVergunningen.filter(
+    (verhuur): verhuur is ToeristischeVerhuur =>
+      verhuur.title === 'Geplande vakantieverhuur'
   );
+  const daysLeft = daysRentLeftInCalendarYear(verhuurVergunningen);
 
   const failedDependencies = getFailedDependencies({
     registraties,
@@ -176,86 +207,140 @@ export async function fetchToeristischeVerhuur(
   return apiSuccesResult(
     {
       registraties: registraties.content || [],
-      vergunningen: verhuurVergunningen,
+      vergunningen: toeristischeVerhuurVergunningen,
       daysLeft,
     },
     failedDependencies
   );
 }
 
+export const fetchToeristischeVerhuur = memoize(
+  fetchAndTransformToeristischeVerhuur,
+  {
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
+    normalizer: function (args) {
+      return args[0] + JSON.stringify(args[1]);
+    },
+  }
+);
+
+function isNearEndDate(vergunning: ToeristischeVerhuurVergunning) {
+  if (!vergunning.dateEnd) {
+    return false;
+  }
+
+  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+  return (
+    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
+    monthsTillEnd >= 0
+  );
+}
+
+function isExpired(vergunning: ToeristischeVerhuurVergunning) {
+  if (!vergunning.dateEnd) {
+    return false;
+  }
+
+  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+  return monthsTillEnd < -NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END;
+}
+
 function createVergunningNotification(
-  item: VakantieverhuurVergunningen
+  item: ToeristischeVerhuurVergunning,
+  items: ToeristischeVerhuurVergunning[]
 ): MyNotification {
-  let title = 'Vakantieverhuur';
-  let description = 'Er is een update in uw vergunningsaanvraag.';
+  let title = 'Toeristische verhuur';
+  let description = 'Er is een update in uw toeristische verhuur overzicht.';
   let datePublished = item.dateRequest;
   let cta = 'Bekijk uw aanvraag';
   let linkTo = item.link.to;
 
-  const monthsTillEnd = item.dateEnd ? monthsFromNow(item.dateEnd) : undefined;
-  const isActive = item.dateEnd ? new Date() < new Date(item.dateEnd) : false;
+  const vergunningTitleLower = item.title.toLowerCase();
+  const ctaLinkToDetail = generatePath(
+    AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
+    {
+      id: item.id,
+    }
+  );
+
   if (
-    item.caseType === 'B&B - vergunning' ||
-    item.caseType === 'Vakantieverhuur vergunningsaanvraag'
+    item.title === 'Vergunning bed and breakfast' ||
+    item.title === 'Vergunning tijdelijke vakantie verhuur'
   ) {
+    const ctaLinkToAanvragen =
+      item.title === 'Vergunning bed and breakfast'
+        ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
+        : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
+
+    const hasActualVergunningOfType = false; // TODO: Find actual vergunningen of same type and not same id
+
     switch (true) {
-      case item.status === 'Ontvangen' &&
-        isActualNotification(item.dateRequest, new Date()):
-        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
-        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} ontvangen`;
+      case isNearEndDate(item) && !hasActualVergunningOfType:
+        title = `Uw ${vergunningTitleLower} loopt af`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
+        cta = `Vergunning aanvragen`;
+        linkTo = ctaLinkToAanvragen;
+        datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+      case isExpired(item) && !hasActualVergunningOfType:
+        title = `Uw ${vergunningTitleLower} is verlopen`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
+        cta = 'Vergunning aanvragen';
+        linkTo = ctaLinkToAanvragen;
+        datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+      case item.status === 'Ontvangen':
+        title = `Aanvraag ${vergunningTitleLower} ontvangen`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ontvangen.`;
+        cta = 'Bekijk uw vergunning';
+        linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
-      case item.status === 'Afgehandeld' &&
-        isActualNotification(item.dateRequest, new Date()):
-        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
-        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} afgehandeld`;
+      case item.status === 'Afgehandeld':
+        title = `Aanvraag ${vergunningTitleLower} afgehandeld`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} afgehandeld.`;
+        cta = 'Bekijk uw vergunning';
+        linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
         break;
-      case isActive && monthsTillEnd && monthsTillEnd > -MONTHS_NEAR_END:
-        title = `Uw vergunning gemeentelijke ${item.caseType} loopt af`;
-        description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan`;
-        cta = 'Vergunning vakantieverhuur aanvragen';
-        linkTo =
-          'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
-        datePublished = format(new Date(), 'yyyy-MM-dd');
-
-        break;
-      case !isActive && monthsTillEnd && monthsTillEnd < MONTHS_NEAR_END:
-        title = `Uw vergunning gemeentelijke ${item.caseType} is verlopen`;
-        description = `Uw vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen`;
-        cta = 'Vergunning vakantieverhuur aanvragen';
-        linkTo =
-          'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
-        datePublished = format(new Date(), 'yyyy-MM-dd');
-        break;
       default:
-        title = `Aanvraag vergunning gemeentelijke ${item.caseType}`;
-        description = `Wij hebben uw aanvraag voor een vergunning ${item.caseType} met gemeentelijk zaaknummer ${item.identifier} ontvangen`;
+        title = `${item.title} in behandeling`;
+        description = `Wij hebben uw aanvraag ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
+        cta = `Bekijk uw ${vergunningTitleLower}`;
+        linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
     }
   } else {
+    const period = !!(item.dateStart && item.dateEnd)
+      ? `van ${defaultDateFormat(item.dateStart)} tot ${defaultDateFormat(
+          item.dateEnd
+        )} `
+      : '';
     switch (true) {
-      case item.caseType === 'Vakantieverhuur afmelding':
-        title = `Melding vakantieverhuur geannuleerd`;
-        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
-        cta = 'Bekijk uw geannuleerde melding';
+      case item.title === 'Geannuleerde vakantieverhuur':
+        title = `Vakantieverhuur geannuleerd`;
+        description = `Wij hebben uw annulering voor vakantieverhuur ${period}ontvangen.`;
+        cta = 'Bekijk uw geannuleerde verhuur';
+        linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
-      case item.caseType === 'Vakantieverhuur':
-        title = `Melding vakantieverhuur ontvangen`;
-        description = `Wij hebben uw melding voor vakantieverhuur ontvangen.`;
-        cta = 'Bekijk uw melding';
+      case item.title === 'Geplande vakantieverhuur':
+        title = `Vakantieverhuur gepland`;
+        description = `Wij hebben uw planning voor vakantieverhuur ${period}ontvangen.`;
+        cta = 'Bekijk uw geplande verhuur';
+        linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
     }
   }
+
   return {
     id: `vergunning-${item.id}-notification`,
     datePublished,
     chapter: Chapters.TOERISTISCHE_VERHUUR,
     title,
-    description,
+    description: description,
     link: {
       to: linkTo,
       title: cta,
@@ -266,12 +351,11 @@ function createVergunningNotification(
 function createRegistratieNotification(
   item: ToeristischeVerhuurRegistratie
 ): MyNotification {
-  let title =
-    'U heeft een registratienummer tijdelijke vakantie verhuur ontvangen';
-  let description = 'Nieuw landelijk registratienummer';
-  let datePublished = !!item.agreementDate ? item.agreementDate : '';
-  let cta = 'Bekijk uw registratie';
-  let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
+  const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
+  const description = `Wij hebben uw landelijke registratienummer voor toeristische verhuur toegekend. Het nummer is ${item.registrationNumber}.`;
+  const datePublished = !!item.agreementDate ? item.agreementDate : '';
+  const cta = 'Bekijk het overzicht toeristische verhuur';
+  const linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 
   return {
     id: `toeristiche-verhuur-registratie-${item.registrationNumber}-notification`,
@@ -299,34 +383,30 @@ export async function fetchToeristischeVerhuurGenerated(
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const vergunningNotifications: MyNotification[] = Array.isArray(
-      TOERISTISCHE_VERHUUR?.content?.vergunningen
-    )
-      ? TOERISTISCHE_VERHUUR?.content?.vergunningen.map(
-          createVergunningNotification
-        )
-      : [];
+    const vergunningen = TOERISTISCHE_VERHUUR.content.vergunningen.filter(
+      (vergunning) => vergunning.title !== 'Afgelopen vakantieverhuur'
+    );
+    const vergunningNotifications = vergunningen.map((vergunning) =>
+      createVergunningNotification(vergunning, vergunningen)
+    );
 
-    const registrationsNotifications: MyNotification[] = Array.isArray(
-      TOERISTISCHE_VERHUUR?.content?.registraties
-    )
-      ? TOERISTISCHE_VERHUUR?.content?.registraties.map(
-          createRegistratieNotification
-        )
-      : [];
+    const registrationsNotifications = TOERISTISCHE_VERHUUR.content.registraties.map(
+      createRegistratieNotification
+    );
 
     const notifications = [
       ...vergunningNotifications,
       ...registrationsNotifications,
     ];
-    const filteredNotifications = notifications.filter(
+
+    const actualNotifications = notifications.filter(
       (notification) =>
-        notification.datePublished &&
+        !!notification.datePublished &&
         isActualNotification(notification.datePublished, compareToDate)
     );
 
     return apiSuccesResult({
-      notifications: filteredNotifications,
+      notifications: actualNotifications,
     });
   }
 

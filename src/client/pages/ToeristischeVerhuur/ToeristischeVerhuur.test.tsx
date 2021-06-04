@@ -11,7 +11,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { toeristischeVerhuurVergunningTypes } from '../../../server/services/vergunningen';
 import {
-  ToeristischeVerhuurVergunningen,
+  ToeristischeVerhuurVergunning,
   transformVergunningenToVerhuur,
 } from '../../../server/services/toeristische-verhuur';
 
@@ -22,7 +22,7 @@ const testState: any = {
       registraties: toeristischeVerhuurRegistraties.content,
       vergunningen: transformVergunningenToVerhuur(
         (vergunningenData as any)?.content?.filter(
-          (vergunning: ToeristischeVerhuurVergunningen) =>
+          (vergunning: ToeristischeVerhuurVergunning) =>
             toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
         )
       ),

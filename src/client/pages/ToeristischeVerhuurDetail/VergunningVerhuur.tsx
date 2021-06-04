@@ -17,7 +17,7 @@ export default function VergunningVerhuur({
   return (
     <>
       <InfoDetail
-        label="Gemeentelijke zaaknummer"
+        label="Gemeentelijk zaaknummer"
         value={vergunning?.identifier ?? '-'}
       />
       <InfoDetailGroup>
