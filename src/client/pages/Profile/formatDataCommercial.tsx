@@ -185,10 +185,13 @@ const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>> = {
 };
 
 const bestuurder: ProfileLabels<Partial<Bestuurder>> = {
-  opgemaakteNaam: 'Naam',
-  geboortedatum: 'Geboortedatum',
-  functietitel: 'Functietitel',
-  bevoegdheid: 'Bevoegdheid',
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  functie: 'Functie',
+  soortBevoegdheid: 'Soort bevoegdheid',
 };
 
 export const kvkInfoLabels = {
