@@ -37,7 +37,7 @@ function useStatusLineItems(
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: false,
+        isActive: vergunning.caseType !== 'Vakantieverhuur afmelding',
         isChecked: true,
       },
     ];
@@ -68,37 +68,35 @@ export default function VakantieVerhuur({
   return (
     <>
       <PageContent className={styles.DetailPageContent}>
-        <>
+        <InfoDetail
+          label="Gemeentelijk zaaknummer"
+          value={vergunning.identifier ?? '-'}
+        />
+        <InfoDetail
+          label="Ontvangen op"
+          value={
+            vergunning.dateRequest
+              ? defaultDateFormat(vergunning.dateRequest)
+              : '-'
+          }
+        />
+        <InfoDetailGroup>
           <InfoDetail
-            label="Gemeentelijk zaaknummer"
-            value={vergunning.identifier ?? '-'}
-          />
-          <InfoDetail
-            label="Ontvangen op"
+            label="Datum start verhuur"
             value={
-              vergunning.dateRequest
-                ? defaultDateFormat(vergunning.dateRequest)
+              vergunning.dateStart
+                ? defaultDateFormat(vergunning.dateStart)
                 : '-'
             }
           />
-          <InfoDetailGroup>
-            <InfoDetail
-              label="Datum start verhuur"
-              value={
-                vergunning.dateStart
-                  ? defaultDateFormat(vergunning.dateStart)
-                  : '-'
-              }
-            />
-            <InfoDetail
-              label="Datum einde verhuur"
-              value={
-                vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-              }
-            />
-          </InfoDetailGroup>
-          <InfoDetail label="Adres" value={vergunning.location ?? '-'} />
-        </>
+          <InfoDetail
+            label="Datum einde verhuur"
+            value={
+              vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+            }
+          />
+        </InfoDetailGroup>
+        <InfoDetail label="Adres" value={vergunning.location ?? '-'} />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

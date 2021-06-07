@@ -142,7 +142,7 @@ export default function VergunningVerhuur({
       {!!statusLineItems.length && (
         <StatusLine
           className={styles.VergunningStatus}
-          trackCategory={`Toeristisch verhuur detail / status`}
+          trackCategory="Toeristisch verhuur detail / status"
           items={statusLineItems}
           showToggleMore={false}
           id={`toeristische-verhuur-detail-${vergunning.id}`}
