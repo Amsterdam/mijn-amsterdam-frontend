@@ -7,7 +7,6 @@ import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,
   fetchToeristischeVerhuur,
-  fetchToeristischeVerhuurGenerated,
   transformToeristischeVerhuurVergunningTitle,
 } from './toeristische-verhuur';
 import { toeristischeVerhuurVergunningTypes } from './vergunningen';
