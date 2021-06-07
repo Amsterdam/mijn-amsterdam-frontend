@@ -102,7 +102,7 @@ export type ToeristischeVerhuurVergunning =
 
 const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
-function transformToeristischeVerhuurVergunningTitle(
+export function transformToeristischeVerhuurVergunningTitle(
   caseType: VakantieverhuurVergunning['caseType'],
   isActual: boolean
 ): string {
@@ -135,6 +135,9 @@ export function daysRentLeftInCalendarYear(
 export function transformVergunningenToVerhuur(
   vergunningen: VakantieverhuurVergunning[]
 ): ToeristischeVerhuurVergunning[] {
+  if (!Array.isArray(vergunningen)) {
+    return [];
+  }
   return vergunningen.map((vergunning) => {
     const isActual = vergunning.dateEnd
       ? !isDateInPast(vergunning.dateEnd)
@@ -189,6 +192,7 @@ async function fetchAndTransformToeristischeVerhuur(
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
+
   const toeristischeVerhuurVergunningen = transformVergunningenToVerhuur(
     vergunningen.content as VakantieverhuurVergunning[]
   );
@@ -246,7 +250,7 @@ function isExpired(vergunning: ToeristischeVerhuurVergunning) {
   return isDateInPast(vergunning.dateEnd);
 }
 
-function createVergunningNotification(
+export function createToeristischeVerhuurNotification(
   item: ToeristischeVerhuurVergunning,
   items: ToeristischeVerhuurVergunning[]
 ): MyNotification {
@@ -254,7 +258,7 @@ function createVergunningNotification(
   let description = 'Er is een update in uw toeristische verhuur overzicht.';
   let datePublished = item.dateRequest;
   let cta = 'Bekijk uw aanvraag';
-  let linkTo = item.link.to;
+  let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 
   const vergunningTitleLower = item.title.toLowerCase();
   const ctaLinkToDetail = generatePath(
@@ -282,14 +286,18 @@ function createVergunningNotification(
     });
 
     switch (true) {
-      case isNearEndDate(item) && !hasOtherValidVergunningOfSameType:
+      case item.decision === 'Verleend' &&
+        isNearEndDate(item) &&
+        !hasOtherValidVergunningOfSameType:
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
         datePublished = format(new Date(), 'yyyy-MM-dd');
         break;
-      case isExpired(item) && !hasOtherValidVergunningOfSameType:
+      case item.decision === 'Verleend' &&
+        isExpired(item) &&
+        !hasOtherValidVergunningOfSameType:
         title = `Uw ${vergunningTitleLower} is verlopen`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
@@ -394,7 +402,7 @@ export async function fetchToeristischeVerhuurGenerated(
       (vergunning) => vergunning.title !== 'Afgelopen vakantieverhuur'
     );
     const vergunningNotifications = vergunningen.map((vergunning) =>
-      createVergunningNotification(vergunning, vergunningen)
+      createToeristischeVerhuurNotification(vergunning, vergunningen)
     );
 
     const registrationsNotifications = TOERISTISCHE_VERHUUR.content.registraties.map(
