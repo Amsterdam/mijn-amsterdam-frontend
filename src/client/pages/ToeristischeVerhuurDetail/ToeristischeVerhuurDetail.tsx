@@ -10,11 +10,9 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
-import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 
 export default function ToeristischVerhuurDetail() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
@@ -34,32 +32,30 @@ export default function ToeristischVerhuurDetail() {
       >
         {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
-
-      <PageContent className={styles.DetailPageContent}>
-        {(isError(TOERISTISCHE_VERHUUR) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
-        )}
-        {isLoading(TOERISTISCHE_VERHUUR) && (
-          <LoadingContent className={styles.LoadingContentInfo} />
-        )}
-        {!isLoading(TOERISTISCHE_VERHUUR) && Vergunning && (
-          <>
-            {(Vergunning.caseType === 'Vakantieverhuur' ||
-              Vergunning.caseType === 'Vakantieverhuur afmelding') && (
-              <VakantieVerhuur vergunning={Vergunning} />
-            )}
-            {(Vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-              Vergunning.caseType === 'B&B - vergunning') && (
-              <VergunningVerhuur vergunning={Vergunning} />
-            )}
-            <DocumentDetails vergunning={Vergunning} />
-          </>
-        )}
-      </PageContent>
-      {!isLoading(TOERISTISCHE_VERHUUR) && Vergunning && (
-        <StatusLineItems vergunning={Vergunning} />
+      {isError(TOERISTISCHE_VERHUUR) ||
+      noContent ||
+      isLoading(TOERISTISCHE_VERHUUR) ? (
+        <PageContent className={styles.DetailPageContent}>
+          {(isError(TOERISTISCHE_VERHUUR) || noContent) && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment geen gegevens tonen.</p>
+            </Alert>
+          )}
+          {isLoading(TOERISTISCHE_VERHUUR) && (
+            <LoadingContent className={styles.LoadingContentInfo} />
+          )}
+        </PageContent>
+      ) : (
+        <>
+          {(Vergunning?.caseType === 'Vakantieverhuur' ||
+            Vergunning?.caseType === 'Vakantieverhuur afmelding') && (
+            <VakantieVerhuur vergunning={Vergunning} />
+          )}
+          {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+            Vergunning?.caseType === 'B&B - vergunning') && (
+            <VergunningVerhuur vergunning={Vergunning} />
+          )}
+        </>
       )}
     </DetailPage>
   );
