@@ -230,7 +230,9 @@ function isNearEndDate(vergunning: ToeristischeVerhuurVergunning) {
   }
 
   const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+
   return (
+    !isExpired(vergunning) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
     monthsTillEnd >= 0
   );
@@ -241,8 +243,7 @@ function isExpired(vergunning: ToeristischeVerhuurVergunning) {
     return false;
   }
 
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
-  return monthsTillEnd < -NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END;
+  return isDateInPast(vergunning.dateEnd);
 }
 
 function createVergunningNotification(
@@ -272,17 +273,23 @@ function createVergunningNotification(
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
         : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
 
-    const hasActualVergunningOfType = false; // TODO: Find actual vergunningen of same type and not same id
+    const hasOtherValidVergunningOfSameType = items.some((otherVergunning) => {
+      return (
+        otherVergunning.caseType === item.caseType &&
+        otherVergunning.identifier !== item.identifier &&
+        !isExpired(otherVergunning)
+      );
+    });
 
     switch (true) {
-      case isNearEndDate(item) && !hasActualVergunningOfType:
+      case isNearEndDate(item) && !hasOtherValidVergunningOfSameType:
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
         datePublished = format(new Date(), 'yyyy-MM-dd');
         break;
-      case isExpired(item) && !hasActualVergunningOfType:
+      case isExpired(item) && !hasOtherValidVergunningOfSameType:
         title = `Uw ${vergunningTitleLower} is verlopen`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
@@ -292,21 +299,21 @@ function createVergunningNotification(
       case item.status === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ontvangen.`;
-        cta = 'Bekijk uw vergunning';
+        cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
       case item.status === 'Afgehandeld':
         title = `Aanvraag ${vergunningTitleLower} afgehandeld`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} afgehandeld.`;
-        cta = 'Bekijk uw vergunning';
+        cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
         break;
       default:
         title = `${item.title} in behandeling`;
         description = `Wij hebben uw aanvraag ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
-        cta = `Bekijk uw ${vergunningTitleLower}`;
+        cta = `Bekijk uw aanvraag`;
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
