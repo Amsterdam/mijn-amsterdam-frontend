@@ -1,10 +1,7 @@
 import { format } from 'date-fns';
+import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import {
-  Chapters,
-  FeatureToggle,
-  MAXIMUM_DAYS_RENT_ALLOWED,
-} from '../../universal/config';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiDependencyError,
@@ -31,7 +28,6 @@ import {
   VakantieverhuurAfmelding,
   VakantieverhuurVergunningaanvraag,
 } from './vergunningen';
-import memoize from 'memoizee';
 
 export interface ToeristischeVerhuurRegistratie {
   city: string;
@@ -319,7 +315,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateDecision || item.dateRequest;
         break;
       default:
-        title = `${item.title} in behandeling`;
+        title = `Aanvraag ${item.title} in behandeling`;
         description = `Wij hebben uw aanvraag ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
         cta = `Bekijk uw aanvraag`;
         linkTo = ctaLinkToDetail;
