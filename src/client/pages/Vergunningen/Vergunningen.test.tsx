@@ -3,7 +3,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
-import { transformVergunningenData } from '../../../server/services/vergunningen';
+import {
+  toeristischeVerhuurVergunningTypes,
+  transformVergunningenData,
+  VergunningenSourceData,
+} from '../../../server/services/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
@@ -12,7 +16,12 @@ import Vergunningen from './Vergunningen';
 const testState: any = {
   VERGUNNINGEN: {
     status: 'OK',
-    content: transformVergunningenData(vergunningenData as any),
+    content: transformVergunningenData(
+      vergunningenData as VergunningenSourceData
+    ).filter(
+      (vergunning) =>
+        !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
+    ),
   },
 };
 
