@@ -10,7 +10,61 @@ import Profile from './ProfileCommercial';
 const responseData = {
   content: {
     aandeelhouders: [],
-    bestuurders: [],
+    gemachtigden: [
+      {
+        functie: 'Boekhouder',
+        naam: 'Georges Rudy Janssen van Son',
+        datumIngangMachtiging: '1976-10-01',
+      },
+    ],
+    overigeFunctionarissen: [
+      {
+        functie: 'Commissaris',
+        naam: 'Georges Rudy Janssen van Son',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Commissaris',
+        naam: 'Jan Jansen',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Commissaris',
+        naam: 'Boris Johnsson',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Enig aandeelhouder',
+        naam: 'Kamlawatie Katar',
+        geboortedatum: '1976-10-01',
+      },
+    ],
+    bestuurders: [
+      {
+        functie: 'Bestuurder',
+        soortBevoegdheid: 'AlleenZelfstandigBevoegd',
+        naam: 'Wesley Vlag',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Bestuurder',
+        soortBevoegdheid: 'AlleenZelfstandigBevoegd',
+        naam: 'Hendrika Johanna Theodora Grupstal',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Bestuurder',
+        soortBevoegdheid: 'AlleenZelfstandigBevoegd',
+        naam: 'Pierre Vlag',
+        geboortedatum: '1976-10-01',
+      },
+      {
+        functie: 'Bestuurder',
+        soortBevoegdheid: 'AlleenZelfstandigBevoegd',
+        naam: 'Dennis Uiersin',
+        geboortedatum: '1976-10-01',
+      },
+    ],
     mokum: true,
     onderneming: {
       datumAanvang: null,
