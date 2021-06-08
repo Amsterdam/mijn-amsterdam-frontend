@@ -65,7 +65,7 @@ describe('<ToeristischVerhuurDetail />', () => {
   expect(screen.getByText('10 juli 2021')).toBeInTheDocument();
   expect(screen.getByText('14 juli 2021')).toBeInTheDocument();
   expect(screen.getByText('Ontvangen')).toBeInTheDocument();
-  expect(screen.getByText('Verleend')).toBeInTheDocument();
+  expect(screen.getByText('Gemeld')).toBeInTheDocument();
 });
 
 describe('<ToeristischVerhuurDetail />, vergunning', () => {
@@ -88,12 +88,11 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
   );
   render(<Component />);
   expect(
-    screen.getAllByText('Vakantieverhuur vergunningsaanvraag').length
+    screen.getAllByText('Vergunning tijdelijke vakantie verhuur').length
   ).toBe(1);
   expect(screen.getByText('Vanaf')).toBeInTheDocument();
-  expect(screen.getByText('Tot en met')).toBeInTheDocument();
+  expect(screen.getByText('Tot')).toBeInTheDocument();
   expect(screen.getByText('01 juni 2019')).toBeInTheDocument();
   expect(screen.getByText('31 mei 2020')).toBeInTheDocument();
-  expect(screen.getByText('In behandeling')).toBeInTheDocument();
-  expect(screen.getByText('Afgehandeld')).toBeInTheDocument();
+  expect(screen.getByText('Verleend')).toBeInTheDocument();
 });
