@@ -47,8 +47,7 @@ export default function ToeristischVerhuurDetail() {
         </PageContent>
       ) : (
         <>
-          {(Vergunning?.caseType === 'Vakantieverhuur' ||
-            Vergunning?.caseType === 'Vakantieverhuur afmelding') && (
+          {Vergunning?.caseType === 'Vakantieverhuur' && (
             <VakantieVerhuur vergunning={Vergunning} />
           )}
           {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||

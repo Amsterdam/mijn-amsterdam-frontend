@@ -38,11 +38,7 @@ export default function ToeristischeVerhuur() {
       return [];
     }
     const items = content.vergunningen
-      .filter(
-        (vergunning) =>
-          vergunning.caseType === 'Vakantieverhuur' ||
-          vergunning.caseType === 'Vakantieverhuur afmelding'
-      )
+      .filter((vergunning) => vergunning.caseType === 'Vakantieverhuur')
       .sort(dateSort('dateStart', 'asc'))
       .map((vergunning) => {
         return {
@@ -87,23 +83,26 @@ export default function ToeristischeVerhuur() {
 
   const cancelledVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) => vergunning.caseType === 'Vakantieverhuur afmelding'
+      (vergunning) =>
+        vergunning.caseType === 'Vakantieverhuur' && vergunning.cancelled
     );
   }, [verhuur]);
 
   const plannedVerhuur = useMemo(() => {
-    return verhuur.filter((vergunning) =>
-      vergunning.caseType === 'Vakantieverhuur' && vergunning.dateStart
-        ? !isDateInPast(vergunning.dateStart, new Date())
-        : false
+    return verhuur.filter(
+      (vergunning) =>
+        vergunning.caseType === 'Vakantieverhuur' &&
+        !vergunning.cancelled &&
+        vergunning.isActual
     );
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
-    return verhuur.filter((vergunning) =>
-      vergunning.caseType === 'Vakantieverhuur' && vergunning.dateStart
-        ? isDateInPast(vergunning.dateStart, new Date())
-        : true
+    return verhuur.filter(
+      (vergunning) =>
+        vergunning.caseType === 'Vakantieverhuur' &&
+        !vergunning.cancelled &&
+        !vergunning.isActual
     );
   }, [verhuur]);
 
