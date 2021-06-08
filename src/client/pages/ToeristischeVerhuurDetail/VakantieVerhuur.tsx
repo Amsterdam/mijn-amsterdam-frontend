@@ -1,7 +1,4 @@
-import {
-  ToeristischeVerhuur,
-  ToeristischeVerhuurAfmelding,
-} from '../../../server/services';
+import { ToeristischeVerhuur } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
@@ -13,9 +10,7 @@ import StatusLine, {
 } from '../../components/StatusLine/StatusLine';
 import { useMemo } from 'react';
 
-function useStatusLineItems(
-  vergunning?: ToeristischeVerhuur | ToeristischeVerhuurAfmelding
-) {
+function useStatusLineItems(vergunning?: ToeristischeVerhuur) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
     if (!vergunning) {
       return [];
@@ -37,15 +32,15 @@ function useStatusLineItems(
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: vergunning.caseType !== 'Vakantieverhuur afmelding',
+        isActive: !vergunning.cancelled,
         isChecked: true,
       },
     ];
-    if (vergunning.caseType === 'Vakantieverhuur afmelding') {
+    if (vergunning.cancelled) {
       statusTrain.push({
         id: 'item-3',
         status: 'Geannuleerd',
-        datePublished: vergunning.dateRequest,
+        datePublished: vergunning.dateCancelled ?? vergunning.dateRequest,
         description: '',
         documents: [],
         isActive: true,
@@ -62,7 +57,7 @@ function useStatusLineItems(
 export default function VakantieVerhuur({
   vergunning,
 }: {
-  vergunning: ToeristischeVerhuur | ToeristischeVerhuurAfmelding;
+  vergunning: ToeristischeVerhuur;
 }) {
   const statusLineItems = useStatusLineItems(vergunning);
   return (

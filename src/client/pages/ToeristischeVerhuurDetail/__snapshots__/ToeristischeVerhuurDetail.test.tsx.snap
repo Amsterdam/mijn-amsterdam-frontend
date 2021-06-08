@@ -41,7 +41,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Geplande verhuur 10 juli 2021
+          Geplande vakantieverhuur
         </h2>
       </div>
     </header>
@@ -126,29 +126,6 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
           Amstel 1 1017AB Amsterdam
         </p>
       </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Documenten
-        </h3>
-        <div
-          class="Value"
-        >
-          <span
-            class="LoadingContent"
-          >
-            <span
-              style="width: 100%; height: 2rem; margin-bottom: 1rem;"
-            />
-            <span
-              style="width: 100%; height: 2rem; margin-bottom: 1rem;"
-            />
-          </span>
-        </div>
-      </div>
     </div>
     <div
       class="StatusLine VergunningStatus"
@@ -229,7 +206,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                Gemeld
               </strong>
               <time
                 class="StatusDate"

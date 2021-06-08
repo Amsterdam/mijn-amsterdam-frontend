@@ -26,7 +26,6 @@ import {
   isActualNotification,
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
-  VakantieverhuurAfmelding,
   VakantieverhuurVergunningaanvraag,
 } from './vergunningen';
 
@@ -75,15 +74,11 @@ interface ToeristischeVerhuurVergunningProps {
 // A union of the the source types that are retrieved from the Decos api
 export type VakantieverhuurVergunning =
   | Vakantieverhuur
-  | VakantieverhuurAfmelding
   | BBVergunning
   | VakantieverhuurVergunningaanvraag;
 
 export type ToeristischeVerhuur = ToeristischeVerhuurVergunningProps &
   Vakantieverhuur;
-
-export type ToeristischeVerhuurAfmelding = ToeristischeVerhuurVergunningProps &
-  VakantieverhuurAfmelding;
 
 export type ToeristischeVerhuurVergunningaanvraag = VakantieverhuurVergunningaanvraag &
   ToeristischeVerhuurVergunningProps;
@@ -93,21 +88,24 @@ export type ToeristischeVerhuurBBVergunning = BBVergunning &
 
 export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuur
-  | ToeristischeVerhuurAfmelding
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
 
 const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export function transformToeristischeVerhuurVergunningTitle(
-  caseType: VakantieverhuurVergunning['caseType'],
+  vergunning: VakantieverhuurVergunning,
   isActual: boolean
 ): string {
-  switch (caseType) {
+  switch (vergunning.caseType) {
     case 'Vakantieverhuur':
-      return `${!isActual ? 'Afgelopen' : 'Geplande'} vakantieverhuur`;
-    case 'Vakantieverhuur afmelding':
-      return `Geannuleerde vakantieverhuur`;
+      return `${
+        vergunning.cancelled
+          ? 'Geannuleerde'
+          : !isActual
+          ? 'Afgelopen'
+          : 'Geplande'
+      } vakantieverhuur`;
     case 'Vakantieverhuur vergunningsaanvraag':
       return `Vergunning vakantieverhuur`;
     case 'B&B - vergunning':
@@ -140,13 +138,12 @@ export function transformVergunningenToVerhuur(
       ? !isDateInPast(vergunning.dateEnd)
       : false;
     const title = transformToeristischeVerhuurVergunningTitle(
-      vergunning.caseType,
+      vergunning,
       isActual
     );
     return {
       ...vergunning,
       title,
-      dateRequest: vergunning.dateRequest,
       isActual,
       duration:
         vergunning.dateEnd && vergunning.dateStart
@@ -196,7 +193,8 @@ async function fetchAndTransformToeristischeVerhuur(
 
   const verhuurVergunningen = toeristischeVerhuurVergunningen.filter(
     (verhuur): verhuur is ToeristischeVerhuur =>
-      verhuur.title === 'Geplande vakantieverhuur'
+      verhuur.title === 'Geplande vakantieverhuur' ||
+      verhuur.title === 'Afgelopen vakantieverhuur'
   );
   const daysLeft = daysRentLeftInCalendarYear(verhuurVergunningen);
 
