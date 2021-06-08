@@ -119,7 +119,7 @@ describe('Toeristische verhuur service', () => {
     for (const vergunning of response.content.vergunningen) {
       expect(
         transformToeristischeVerhuurVergunningTitle(
-          vergunning.caseType,
+          vergunning,
           vergunning.isActual
         ) === vergunning.title
       );
