@@ -1,6 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 import memoryCache from 'memory-cache';
 import scrapeIt from 'scrape-it';
+import { IS_AP } from '../../../universal/config';
 import {
   apiSuccesResult,
   ApiSuccessResponse,
@@ -9,8 +10,6 @@ import {
 import { sortAlpha } from '../../../universal/helpers/utils';
 import { AFVALPUNTENData, GarbageCenter } from '../../../universal/types/afval';
 import FileCache from '../../helpers/file-cache';
-import { sanitizeCmsContent } from '../index';
-import { IS_AP } from '../../../universal/config';
 
 export const cache = new memoryCache.Cache<string, any>();
 
