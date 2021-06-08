@@ -109,9 +109,9 @@ export function transformToeristischeVerhuurVergunningTitle(
     case 'Vakantieverhuur afmelding':
       return `Geannuleerde vakantieverhuur`;
     case 'Vakantieverhuur vergunningsaanvraag':
-      return `Vergunning tijdelijke vakantie verhuur`;
+      return `Vergunning vakantieverhuur`;
     case 'B&B - vergunning':
-      return `Vergunning bed and breakfast`;
+      return `Vergunning bed & breakfast`;
   }
 }
 
@@ -266,11 +266,11 @@ export function createToeristischeVerhuurNotification(
   );
 
   if (
-    item.title === 'Vergunning bed and breakfast' ||
-    item.title === 'Vergunning tijdelijke vakantie verhuur'
+    item.title === 'Vergunning bed & breakfast' ||
+    item.title === 'Vergunning vakantieverhuur'
   ) {
     const ctaLinkToAanvragen =
-      item.title === 'Vergunning bed and breakfast'
+      item.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
         : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
 
@@ -316,8 +316,8 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateDecision || item.dateRequest;
         break;
       default:
-        title = `Aanvraag ${item.title} in behandeling`;
-        description = `Wij hebben uw aanvraag ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
+        title = `Aanvraag ${vergunningTitleLower} in behandeling`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
         cta = `Bekijk uw aanvraag`;
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
@@ -339,7 +339,7 @@ export function createToeristischeVerhuurNotification(
         break;
       case item.title === 'Geplande vakantieverhuur':
         title = `Vakantieverhuur gepland`;
-        description = `Wij hebben uw planning voor vakantieverhuur ${period}ontvangen.`;
+        description = `Wij hebben uw melding voor vakantieverhuur ${period}ontvangen.`;
         cta = 'Bekijk uw geplande verhuur';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;

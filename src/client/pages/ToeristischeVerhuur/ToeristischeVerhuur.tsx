@@ -65,10 +65,9 @@ export default function ToeristischeVerhuur() {
     }
     return content.vergunningen.filter(
       (vergunning) =>
-        [
-          'Vergunning bed and breakfast',
-          'Vergunning tijdelijke vakantie verhuur',
-        ].includes(vergunning.title) && vergunning.isActual
+        ['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
+          vergunning.title
+        ) && vergunning.isActual
     );
   }, [content?.vergunningen]);
 
