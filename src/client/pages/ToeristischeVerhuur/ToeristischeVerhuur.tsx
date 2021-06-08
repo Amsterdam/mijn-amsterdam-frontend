@@ -271,14 +271,12 @@ export default function ToeristischeVerhuur() {
                 key={registrationItem.registrationNumber}
                 className={styles.RegistrationNumber}
               >
-                {registrationItem.registrationNumber}
+                <span>{registrationItem.registrationNumber}</span>
                 <br />
-                <>
-                  {registrationItem.street} {registrationItem.houseNumber}
-                  {registrationItem.houseLetter}
-                  {registrationItem.houseNumberExtension}
-                  {registrationItem.postalCode} {registrationItem.city}
-                </>
+                {registrationItem.street} {registrationItem.houseNumber}
+                {registrationItem.houseLetter}
+                {registrationItem.houseNumberExtension}
+                {registrationItem.postalCode} {registrationItem.city}
               </article>
             )
           )}

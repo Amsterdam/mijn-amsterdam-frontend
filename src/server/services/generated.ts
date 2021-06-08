@@ -69,7 +69,6 @@ async function fetchServicesGenerated(
   passthroughRequestHeaders: Record<string, string>,
   profileType: ProfileType
 ) {
-  console.log('jppapapa', sessionID, passthroughRequestHeaders, profileType);
   if (profileType === 'commercial') {
     const [
       milieuzoneGeneratedResult,
