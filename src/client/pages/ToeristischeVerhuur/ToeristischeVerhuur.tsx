@@ -1,24 +1,22 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isDateInPast } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ChapterIcon,
+  Heading,
   InfoDetail,
   Linkd,
+  LinkdInline,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  Heading,
-  LinkdInline,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
-import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
-import React from 'react';
-import { isExpanded } from '../../components/MyArea/LegendPanel/CollapsiblePanel';
 
 const DISPLAY_PROPS_VERHUUR = {
   dateRequest: 'Ontvangen op',
