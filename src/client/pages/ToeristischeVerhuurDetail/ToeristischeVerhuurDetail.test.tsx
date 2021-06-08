@@ -60,12 +60,15 @@ describe('<ToeristischVerhuurDetail />', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
-  render(<Component />);
-  expect(screen.getAllByText('10 mei 2021').length).toBe(3);
-  expect(screen.getByText('10 juli 2021')).toBeInTheDocument();
-  expect(screen.getByText('14 juli 2021')).toBeInTheDocument();
-  expect(screen.getByText('Ontvangen')).toBeInTheDocument();
-  expect(screen.getByText('Gemeld')).toBeInTheDocument();
+
+  it('Show correct properties for detail page', () => {
+    render(<Component />);
+    expect(screen.getAllByText('10 mei 2021').length).toBe(3);
+    expect(screen.getByText('10 juli 2021')).toBeInTheDocument();
+    expect(screen.getByText('14 juli 2021')).toBeInTheDocument();
+    expect(screen.getByText('Ontvangen')).toBeInTheDocument();
+    expect(screen.getByText('Gemeld')).toBeInTheDocument();
+  });
 });
 
 describe('<ToeristischVerhuurDetail />, vergunning', () => {
@@ -86,13 +89,14 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
       initializeState={state(testState)}
     />
   );
-  render(<Component />);
-  expect(
-    screen.getAllByText('Vergunning tijdelijke vakantie verhuur').length
-  ).toBe(1);
-  expect(screen.getByText('Vanaf')).toBeInTheDocument();
-  expect(screen.getByText('Tot')).toBeInTheDocument();
-  expect(screen.getByText('01 juni 2019')).toBeInTheDocument();
-  expect(screen.getByText('31 mei 2020')).toBeInTheDocument();
-  expect(screen.getByText('Verleend')).toBeInTheDocument();
+
+  it('Show correct properties for detail page', () => {
+    render(<Component />);
+    expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
+    expect(screen.getByText('Vanaf')).toBeInTheDocument();
+    expect(screen.getByText('Tot')).toBeInTheDocument();
+    expect(screen.getByText('01 juni 2019')).toBeInTheDocument();
+    expect(screen.getByText('31 mei 2020')).toBeInTheDocument();
+    expect(screen.getByText('Verleend')).toBeInTheDocument();
+  });
 });
