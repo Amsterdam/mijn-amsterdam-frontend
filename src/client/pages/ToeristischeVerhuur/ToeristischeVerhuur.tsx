@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react';
 import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { defaultDateFormat, isDateInPast } from '../../../universal/helpers';
+import {
+  dateSort,
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ChapterIcon,
@@ -18,10 +22,14 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
 
+import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
+import React from 'react';
+
+
 const DISPLAY_PROPS_VERHUUR = {
-  dateRequest: 'Ontvangen op',
   dateStart: 'Start verhuur',
   dateEnd: 'Einde verhuur',
+  dateRequest: 'Ontvangen op',
   duration: 'Aantal nachten',
 };
 
@@ -39,6 +47,7 @@ export default function ToeristischeVerhuur() {
           vergunning.caseType === 'Vakantieverhuur' ||
           vergunning.caseType === 'Vakantieverhuur afmelding'
       )
+      .sort(dateSort('dateStart', 'asc'))
       .map((vergunning) => {
         return {
           ...vergunning,
@@ -51,7 +60,7 @@ export default function ToeristischeVerhuur() {
             : null,
         };
       });
-    return addTitleLinkComponent(items, 'dateRequest');
+    return addTitleLinkComponent(items, 'dateStart');
   }, [content?.vergunningen]);
 
   const vergunningenActual = useMemo(() => {
@@ -203,7 +212,7 @@ export default function ToeristischeVerhuur() {
       {!!plannedVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-planned-verhuur"
-          title={`Geplande verhuur (${plannedVerhuur?.length})`}
+          title="Geplande verhuur"
           className={styles.SectionBorderTop}
           startCollapsed={false}
           track={{
@@ -213,7 +222,7 @@ export default function ToeristischeVerhuur() {
         >
           <Table
             className={styles.Table}
-            titleKey="dateRequest"
+            titleKey="dateStart"
             displayProps={DISPLAY_PROPS_VERHUUR}
             items={plannedVerhuur}
           />
@@ -222,7 +231,7 @@ export default function ToeristischeVerhuur() {
       {!!cancelledVerhuur.length && (
         <SectionCollapsible
           id="SectionCollapsible-cancled-verhuur"
-          title={`Geannuleerde verhuur (${cancelledVerhuur.length})`}
+          title="Geannuleerde verhuur"
           startCollapsed={isCollapsed('geannuleerd')}
           track={{
             category: 'Toeristische verhuur / afgemeld Verhuur',
@@ -231,7 +240,7 @@ export default function ToeristischeVerhuur() {
         >
           <Table
             className={styles.Table}
-            titleKey="dateRequest"
+            titleKey="dateStart"
             displayProps={DISPLAY_PROPS_VERHUUR}
             items={cancelledVerhuur}
           />
@@ -241,7 +250,7 @@ export default function ToeristischeVerhuur() {
         <SectionCollapsible
           id="SectionCollapsible-previous-verhuur"
           className={styles.SectionNoBorderBottom}
-          title={`Afgelopen verhuur (${previousVerhuur?.length})`}
+          title="Afgelopen verhuur"
           startCollapsed={isCollapsed('previous')}
           track={{
             category: 'Toeristische verhuur / afgemeld Verhuur',
@@ -250,7 +259,7 @@ export default function ToeristischeVerhuur() {
         >
           <Table
             className={styles.Table}
-            titleKey="dateRequest"
+            titleKey="dateStart"
             displayProps={DISPLAY_PROPS_VERHUUR}
             items={previousVerhuur}
           />

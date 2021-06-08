@@ -112,6 +112,8 @@ export interface BBVergunning extends VergunningBase {
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
+  requester: string | null;
+  owner: string | null;
 }
 
 export type Vergunning =
