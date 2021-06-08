@@ -120,7 +120,15 @@ export function daysRentLeftInCalendarYear(
     .filter(
       (verhuur) => !!(verhuur.dateStart && isCurrentYear(verhuur.dateStart))
     )
-    .map((verhuur) => verhuur.duration)
+    .map((verhuur) => {
+      if (verhuur.dateEnd ? isCurrentYear(verhuur.dateEnd) : undefined) {
+        return verhuur.duration;
+      } else {
+        return verhuur.dateEnd && verhuur.dateStart
+          ? formatDurationBetweenDates(verhuur.dateEnd, verhuur.dateStart)
+          : 0;
+      }
+    })
     .reduce(
       (total: number, duration: number) => total - duration,
       MAXIMUM_DAYS_RENT_ALLOWED
