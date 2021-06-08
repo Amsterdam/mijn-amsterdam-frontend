@@ -40,26 +40,193 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         </a>
         <h2
           class="Heading Heading__large"
-        />
+        >
+          Geplande vakantieverhuur
+        </h2>
       </div>
     </header>
     <div
       class="PageContent DetailPageContent"
     >
       <div
-        class="Alert warning"
+        class="InfoDetail"
       >
-        <svg
-          aria-hidden="true"
-          class="Icon"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          Alert.svg
-        </svg>
-         
-        <p>
-          We kunnen op dit moment geen gegevens tonen.
+          Gemeentelijk zaaknummer
+        </h3>
+        <p
+          class="Value"
+        >
+          Z/000/000005
         </p>
       </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Ontvangen op
+        </h3>
+        <p
+          class="Value"
+        >
+          10 mei 2021
+        </p>
+      </div>
+      <div
+        class="InfoDetailGroup"
+      >
+        <div
+          class="InfoDetailGroupContent"
+        >
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Datum start verhuur
+            </h3>
+            <p
+              class="Value"
+            >
+              10 juli 2021
+            </p>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Datum einde verhuur
+            </h3>
+            <p
+              class="Value"
+            >
+              14 juli 2021
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Adres
+        </h3>
+        <p
+          class="Value"
+        >
+          Amstel 1 1017AB Amsterdam
+        </p>
+      </div>
+    </div>
+    <div
+      class="StatusLine VergunningStatus"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                10 mei 2021
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Gemeld
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                10 mei 2021
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
     </div>
   </main>
 </DocumentFragment>

@@ -8,7 +8,8 @@
       "postalCode":"1014AW",
       "registrationNumber":"0363 E7B8 B042 8A92 37E5",
       "shortName":"Schakelstraat",
-      "street":"Schakelstraat"
+      "street":"Schakelstraat",
+      "agreementDate": "2021-05-20"
       },
       {
         "city":"Amsterdam",
@@ -18,7 +19,8 @@
         "postalCode":"1017AB",
         "registrationNumber":"E7B8 B042 8A92 37E5 0363",
         "shortName":"Amstel",
-        "street":"Amstel"
+        "street":"Amstel",
+        "agreementDate": "2020-05-20"
         }
     ],
   "status":"OK"

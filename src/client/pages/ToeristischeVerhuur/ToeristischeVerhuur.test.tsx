@@ -1,33 +1,49 @@
-import ToeristischeVerhuur from './ToeristischeVerhuur';
-
 import { render, screen } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import toeristischeVerhuurRegistraties from '../../../server/mock-data/json/registraties-toeristische-verhuur.json';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
+import {
+  transformVergunningenToVerhuur,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur';
+import {
+  toeristischeVerhuurVergunningTypes,
+  transformVergunningenData,
+  Vergunning,
+  VergunningenData,
+} from '../../../server/services/vergunningen';
 import { AppRoutes } from '../../../universal/config';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import { toeristischeVerhuurVergunningTypes } from '../../../server/services/vergunningen';
-import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
+import ToeristischeVerhuur from './ToeristischeVerhuur';
 
-const testState: any = {
+const vergunningen = transformVergunningenData(
+  vergunningenData as ApiSuccessResponse<VergunningenData>
+)
+  .filter((vergunning: Vergunning): vergunning is VakantieverhuurVergunning =>
+    toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
+  )
+  .map((vergunning) => ({
+    ...vergunning,
+    link: { to: AppRoutes.TOERISTISCHE_VERHUUR, title: vergunning.title },
+  }));
+
+const testState: Pick<AppState, 'TOERISTISCHE_VERHUUR'> = {
   TOERISTISCHE_VERHUUR: {
+    status: 'OK',
     content: {
       daysLeft: 26,
       registraties: toeristischeVerhuurRegistraties.content,
-      vergunningen: transformVergunningenToVerhuur(
-        (vergunningenData as any)?.content?.filter((vergunning: any) =>
-          toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
-        )
-      ),
+      vergunningen: transformVergunningenToVerhuur(vergunningen),
     },
   },
 };
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom as any, testState);
 }
 
 describe('<ToeristischeVerhuur />', () => {
@@ -54,17 +70,20 @@ describe('<ToeristischeVerhuur />', () => {
       screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();
     expect(
-      screen.queryAllByText('Landelijk registratienummer toeristische verhuur')
-        .length
-    ).toBe(2);
-    expect(screen.queryAllByText('Adres verhuurde woning').length).toBe(2);
+      screen.queryAllByText('Registratienummer toeristische verhuur').length
+    ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
     expect(
       screen.getByText('U heeft nog 26 dagen dat u uw woning mag verhuren.')
     ).toBeInTheDocument();
-    expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
-    expect(screen.getByText('Geplande verhuur (1)')).toBeInTheDocument();
-    expect(screen.getByText('Afgemelde verhuur (1)')).toBeInTheDocument();
-    expect(screen.getByText('Afgelopen verhuur (1)')).toBeInTheDocument();
+    expect(
+      screen.getByText('Vergunning vakantieverhuur (Ontvangen)')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Vergunning bed & breakfast (Ontvangen)')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Geplande verhuur')).toBeInTheDocument();
+    expect(screen.getByText('Geannuleerde verhuur')).toBeInTheDocument();
+    expect(screen.getByText('Afgelopen verhuur')).toBeInTheDocument();
   });
 });

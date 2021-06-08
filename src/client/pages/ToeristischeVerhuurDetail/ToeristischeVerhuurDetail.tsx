@@ -10,29 +10,9 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { DocumentDetails } from './DocumentDetails';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
-import StatusLineItemVerhuur from './StatusLineItemsVerhuur';
-import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
-
-function getHeaderTitle(
-  caseType: string,
-  dateStart: string,
-  isPast?: boolean
-): string {
-  switch (caseType) {
-    case 'Vakantieverhuur':
-      return `${isPast ? 'Afgelopen' : 'Geplande'} verhuur ${dateStart}`;
-    case 'Vakantieverhuur afmelding':
-      return `Afgemeld verhuur ${dateStart}`;
-    case 'Vergunning tijdelijk vakantie verhuur':
-      return `Afgemeld verhuur ${dateStart}`;
-    default:
-      return caseType;
-  }
-}
 
 export default function ToeristischVerhuurDetail() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
@@ -50,49 +30,32 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {getHeaderTitle(
-          Vergunning?.caseType ?? '',
-          Vergunning?.dateStart ?? '',
-          Vergunning?.isPast
-        )}
+        {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
-
-      <PageContent className={styles.DetailPageContent}>
-        {(isError(TOERISTISCHE_VERHUUR) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
-        )}
-        {isLoading(TOERISTISCHE_VERHUUR) && (
-          <LoadingContent className={styles.LoadingContentInfo} />
-        )}
-        {!isLoading(TOERISTISCHE_VERHUUR) && Vergunning && (
-          <>
-            {(Vergunning.caseType === 'Vakantieverhuur' ||
-              Vergunning.caseType === 'Vakantieverhuur afmelding') && (
-              <VakantieVerhuur vergunning={Vergunning} />
-            )}
-            {(Vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-              Vergunning.caseType === 'B&B - vergunning') && (
-              <VergunningVerhuur vergunning={Vergunning} />
-            )}
-            <DocumentDetails vergunning={Vergunning} />
-          </>
-        )}
-      </PageContent>
-      {!isLoading(TOERISTISCHE_VERHUUR) &&
-        Vergunning &&
-        (Vergunning.caseType === 'Vakantieverhuur' ||
-          Vergunning.caseType === 'Vakantieverhuur afmelding') && (
-          <StatusLineItemVerhuur vergunning={Vergunning} />
-        )}
-
-      {!isLoading(TOERISTISCHE_VERHUUR) &&
-        Vergunning &&
-        (Vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-          Vergunning.caseType === 'B&B - vergunning') && (
-          <StatusLineItems vergunning={Vergunning} />
-        )}
+      {isError(TOERISTISCHE_VERHUUR) ||
+      noContent ||
+      isLoading(TOERISTISCHE_VERHUUR) ? (
+        <PageContent className={styles.DetailPageContent}>
+          {(isError(TOERISTISCHE_VERHUUR) || noContent) && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment geen gegevens tonen.</p>
+            </Alert>
+          )}
+          {isLoading(TOERISTISCHE_VERHUUR) && (
+            <LoadingContent className={styles.LoadingContentInfo} />
+          )}
+        </PageContent>
+      ) : (
+        <>
+          {Vergunning?.caseType === 'Vakantieverhuur' && (
+            <VakantieVerhuur vergunning={Vergunning} />
+          )}
+          {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+            Vergunning?.caseType === 'B&B - vergunning') && (
+            <VergunningVerhuur vergunning={Vergunning} />
+          )}
+        </>
+      )}
     </DetailPage>
   );
 }
