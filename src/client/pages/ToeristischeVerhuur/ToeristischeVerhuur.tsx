@@ -22,10 +22,6 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
 
-import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
-import React from 'react';
-
-
 const DISPLAY_PROPS_VERHUUR = {
   dateStart: 'Start verhuur',
   dateEnd: 'Einde verhuur',
