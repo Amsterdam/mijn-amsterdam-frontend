@@ -24,7 +24,6 @@ import {
 } from './profilePanelConfig';
 import classnames from 'classnames';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { OverigeFunctionaris } from '../../../server/services/kvk';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
