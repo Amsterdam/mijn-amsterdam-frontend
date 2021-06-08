@@ -1,8 +1,11 @@
 import {
   Aandeelhouder,
+  Aansprakelijke,
   Bestuurder,
+  Gemachtigde,
   KVKData,
   Onderneming,
+  OverigeFunctionaris,
   Rechtspersoon,
   Vestiging,
 } from '../../../server/services/kvk';
@@ -185,10 +188,41 @@ const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>> = {
 };
 
 const bestuurder: ProfileLabels<Partial<Bestuurder>> = {
-  opgemaakteNaam: 'Naam',
-  geboortedatum: 'Geboortedatum',
-  functietitel: 'Functietitel',
-  bevoegdheid: 'Bevoegdheid',
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  functie: 'Functie',
+  soortBevoegdheid: 'Soort bevoegdheid',
+};
+
+const gemachtigde: ProfileLabels<Partial<Gemachtigde>> = {
+  naam: 'Naam',
+  functie: 'Type gemachtigde',
+  datumIngangMachtiging: [
+    'Datum ingang machtiging',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+};
+
+const aansprakelijke: ProfileLabels<Partial<Aansprakelijke>> = {
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  functie: 'Functie',
+  soortBevoegdheid: 'Soort bevoegdheid',
+};
+
+const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  functie: 'Functie',
 };
 
 export const kvkInfoLabels = {
@@ -197,6 +231,9 @@ export const kvkInfoLabels = {
   rechtspersoon,
   aandeelhouder,
   bestuurder,
+  gemachtigde,
+  aansprakelijke,
+  overigeFunctionaris,
 };
 
 interface KvkProfileData {
@@ -206,6 +243,9 @@ interface KvkProfileData {
   vestigingen?: ProfileSection[];
   aandeelhouders?: ProfileSection[];
   bestuurders?: ProfileSection[];
+  gemachtigden?: ProfileSection[];
+  aansprakelijken?: ProfileSection[];
+  overigeFunctionarissen?: ProfileSection[];
 }
 
 export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
@@ -254,6 +294,24 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
   if (kvkData.bestuurders?.length) {
     profileData.bestuurders = kvkData.bestuurders.map((bestuurder) =>
       format(kvkInfoLabels.bestuurder, bestuurder, kvkData)
+    );
+  }
+
+  if (kvkData.gemachtigden?.length) {
+    profileData.gemachtigden = kvkData.gemachtigden.map((gemachtigde) =>
+      format(kvkInfoLabels.gemachtigde, gemachtigde, kvkData)
+    );
+  }
+  if (kvkData.aansprakelijken?.length) {
+    profileData.aansprakelijken = kvkData.aansprakelijken.map(
+      (aansprakelijke) =>
+        format(kvkInfoLabels.aansprakelijke, aansprakelijke, kvkData)
+    );
+  }
+  if (kvkData.overigeFunctionarissen?.length) {
+    profileData.overigeFunctionarissen = kvkData.overigeFunctionarissen.map(
+      (overigeFunctionaris) =>
+        format(kvkInfoLabels.overigeFunctionaris, overigeFunctionaris, kvkData)
     );
   }
   return profileData;

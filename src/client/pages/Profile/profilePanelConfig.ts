@@ -157,4 +157,27 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Bestuurder',
     actionLinks: [],
   }),
+  overigeFunctionarissen: (KVK) => ({
+    title:
+      KVK.content?.overigeFunctionarissen.length &&
+      KVK.content.overigeFunctionarissen.length > 1
+        ? 'Overige functionarissen'
+        : 'Overige functionaris',
+    actionLinks: [],
+  }),
+  gemachtigden: (KVK) => ({
+    title:
+      KVK.content?.gemachtigden.length && KVK.content.gemachtigden.length > 1
+        ? 'Gemachtigden'
+        : 'Gemachtigde',
+    actionLinks: [],
+  }),
+  aansprakelijken: (KVK) => ({
+    title:
+      KVK.content?.aansprakelijken.length &&
+      KVK.content.aansprakelijken.length > 1
+        ? 'Aansprakelijken'
+        : 'Aansprakelijke',
+    actionLinks: [],
+  }),
 };

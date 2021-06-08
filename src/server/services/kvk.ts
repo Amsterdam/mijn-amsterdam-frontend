@@ -31,10 +31,29 @@ export interface Aandeelhouder {
 }
 
 export interface Bestuurder {
-  opgemaakteNaam: string;
+  naam: string;
   geboortedatum: string;
-  functietitel: string;
-  bevoegdheid: string;
+  functie: string;
+  soortBevoegdheid: string;
+}
+
+export interface Aansprakelijke {
+  naam: string;
+  geboortedatum: string;
+  functie: string;
+  soortBevoegdheid: string;
+}
+
+export interface OverigeFunctionaris {
+  naam: string;
+  geboortedatum: string;
+  functie: string;
+}
+
+export interface Gemachtigde {
+  naam: string;
+  datumIngangMachtiging: string;
+  functie: string;
 }
 
 export interface Vestiging {
@@ -60,6 +79,9 @@ export interface KVKSourceDataContent {
   vestigingen: Vestiging[];
   aandeelhouders: Aandeelhouder[];
   bestuurders: Bestuurder[];
+  overigeFunctionarissen: OverigeFunctionaris[];
+  gemachtigden: Gemachtigde[];
+  aansprakelijken: Aansprakelijke[];
 }
 
 export interface KVKSourceData {
