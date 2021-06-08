@@ -1,11 +1,7 @@
 import React, { useMemo } from 'react';
 import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import {
-  dateSort,
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ChapterIcon,
