@@ -24,6 +24,7 @@ import {
 } from './profilePanelConfig';
 import classnames from 'classnames';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { OverigeFunctionaris } from '../../../server/services/kvk';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -168,6 +169,16 @@ export default function ProfileCommercial() {
         />
       )}
 
+      {!!KVK.content?.gemachtigden && kvkProfileData?.gemachtigden && (
+        <InfoPanelMulti
+          id="kvk-gemachtigden"
+          KVKData={KVK}
+          items={KVK.content.gemachtigden}
+          panelConfig={panelConfigCommercial.gemachtigden}
+          profileData={kvkProfileData.gemachtigden}
+        />
+      )}
+
       {!!KVK.content?.bestuurders && kvkProfileData?.bestuurders && (
         <InfoPanelMulti
           id="kvk-bestuurders"
@@ -177,6 +188,25 @@ export default function ProfileCommercial() {
           profileData={kvkProfileData.bestuurders}
         />
       )}
+      {!!KVK.content?.aansprakelijken && kvkProfileData?.aansprakelijken && (
+        <InfoPanelMulti
+          id="kvk-aansprakelijken"
+          KVKData={KVK}
+          items={KVK.content.aansprakelijken}
+          panelConfig={panelConfigCommercial.aansprakelijken}
+          profileData={kvkProfileData.aansprakelijken}
+        />
+      )}
+      {!!KVK.content?.overigeFunctionarissen &&
+        kvkProfileData?.overigeFunctionarissen && (
+          <InfoPanelMulti
+            id="kvk-overige-functionarissen"
+            KVKData={KVK}
+            items={KVK.content.overigeFunctionarissen}
+            panelConfig={panelConfigCommercial.overigeFunctionarissen}
+            profileData={kvkProfileData.overigeFunctionarissen}
+          />
+        )}
       <PageContent>
         <p className={styles.SuppressedParagraph}>
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het

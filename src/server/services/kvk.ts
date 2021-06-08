@@ -52,7 +52,7 @@ export interface OverigeFunctionaris {
 
 export interface Gemachtigde {
   naam: string;
-  geboortedatum: string;
+  datumIngangMachtiging: string;
   functie: string;
 }
 
