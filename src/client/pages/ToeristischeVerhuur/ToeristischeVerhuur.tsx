@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+
 import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers';
@@ -128,7 +129,7 @@ export default function ToeristischeVerhuur() {
           Hieronder vindt u een overzicht van uw aanvragen voor toeristische
           verhuur.
         </p>
-        {!!vergunningenVakantieVerhuur.length && (
+        {!vergunningenBB.length && (
           <p>
             <Linkd
               external={true}
@@ -199,83 +200,89 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
-      {!!plannedVerhuur.length && (
-        <SectionCollapsible
-          id="SectionCollapsible-planned-verhuur"
-          title="Geplande verhuur"
-          className={styles.SectionBorderTop}
-          startCollapsed={false}
-          track={{
-            category: 'Toeristische verhuur / Geplande Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={plannedVerhuur}
-          />
-        </SectionCollapsible>
-      )}
-      {!!cancelledVerhuur.length && (
-        <SectionCollapsible
-          id="SectionCollapsible-cancled-verhuur"
-          title="Geannuleerde verhuur"
-          startCollapsed={isCollapsed('geannuleerd')}
-          track={{
-            category: 'Toeristische verhuur / afgemeld Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={cancelledVerhuur}
-          />
-        </SectionCollapsible>
-      )}
-      {!!previousVerhuur.length && (
-        <SectionCollapsible
-          id="SectionCollapsible-previous-verhuur"
-          className={styles.SectionNoBorderBottom}
-          title="Afgelopen verhuur"
-          startCollapsed={isCollapsed('previous')}
-          track={{
-            category: 'Toeristische verhuur / afgemeld Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={previousVerhuur}
-          />
-        </SectionCollapsible>
-      )}
-      <PageContent>
-        <InfoDetail
-          label="Registratienummer toeristische verhuur"
-          valueWrapperElement="div"
-          value={content?.registraties?.map(
-            (registrationItem: ToeristischeVerhuurRegistratie) => (
-              <article
-                key={registrationItem.registrationNumber}
-                className={styles.RegistrationNumber}
-              >
-                <span>{registrationItem.registrationNumber}</span>
-                <br />
-                {registrationItem.street} {registrationItem.houseNumber}
-                {registrationItem.houseLetter}
-                {registrationItem.houseNumberExtension}
-                {registrationItem.postalCode} {registrationItem.city}
-              </article>
-            )
+      {!!content?.registraties.length && (
+        <>
+          <SectionCollapsible
+            id="SectionCollapsible-planned-verhuur"
+            title="Geplande verhuur"
+            className={styles.SectionBorderTop}
+            startCollapsed={false}
+            noItemsMessage="U heeft dit jaar nog geen geplande verhuur"
+            track={{
+              category: 'Toeristische verhuur / Geplande Verhuur',
+              name: 'Datatabel',
+            }}
+          >
+            <Table
+              className={styles.Table}
+              titleKey="dateStart"
+              displayProps={DISPLAY_PROPS_VERHUUR}
+              items={plannedVerhuur}
+            />
+          </SectionCollapsible>
+
+          {!!cancelledVerhuur.length && (
+            <SectionCollapsible
+              id="SectionCollapsible-cancled-verhuur"
+              title="Geannuleerde verhuur"
+              startCollapsed={isCollapsed('geannuleerd')}
+              track={{
+                category: 'Toeristische verhuur / afgemeld Verhuur',
+                name: 'Datatabel',
+              }}
+            >
+              <Table
+                className={styles.Table}
+                titleKey="dateStart"
+                displayProps={DISPLAY_PROPS_VERHUUR}
+                items={cancelledVerhuur}
+              />
+            </SectionCollapsible>
           )}
-        />
-      </PageContent>
+          {!!previousVerhuur.length && (
+            <SectionCollapsible
+              id="SectionCollapsible-previous-verhuur"
+              className={styles.SectionNoBorderBottom}
+              title="Afgelopen verhuur"
+              startCollapsed={isCollapsed('previous')}
+              track={{
+                category: 'Toeristische verhuur / afgemeld Verhuur',
+                name: 'Datatabel',
+              }}
+            >
+              <Table
+                className={styles.Table}
+                titleKey="dateStart"
+                displayProps={DISPLAY_PROPS_VERHUUR}
+                items={previousVerhuur}
+              />
+            </SectionCollapsible>
+          )}
+        </>
+      )}
+      {!!content?.registraties.length && (
+        <PageContent>
+          <InfoDetail
+            label="Registratienummer toeristische verhuur"
+            valueWrapperElement="div"
+            value={content?.registraties?.map(
+              (registrationItem: ToeristischeVerhuurRegistratie) => (
+                <article
+                  key={registrationItem.registrationNumber}
+                  className={styles.RegistrationNumber}
+                >
+                  <span>{registrationItem.registrationNumber}</span>
+                  <br />
+                  {registrationItem.street} {registrationItem.houseNumber}
+                  {registrationItem.houseLetter}
+                  {registrationItem.houseNumberExtension}
+                  {registrationItem.postalCode} {registrationItem.city}
+                </article>
+              )
+            )}
+          />
+        </PageContent>
+      )}
     </OverviewPage>
   );
 }
