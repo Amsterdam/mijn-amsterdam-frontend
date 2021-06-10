@@ -200,66 +200,66 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
-      {!!content?.registraties.length && (
-        <>
-          <SectionCollapsible
-            id="SectionCollapsible-planned-verhuur"
-            title="Geplande verhuur"
-            className={styles.SectionBorderTop}
-            startCollapsed={false}
-            noItemsMessage="U heeft dit jaar nog geen geplande verhuur"
-            track={{
-              category: 'Toeristische verhuur / Geplande Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={plannedVerhuur}
-            />
-          </SectionCollapsible>
 
-          {!!cancelledVerhuur.length && (
-            <SectionCollapsible
-              id="SectionCollapsible-cancled-verhuur"
-              title="Geannuleerde verhuur"
-              startCollapsed={isCollapsed('geannuleerd')}
-              track={{
-                category: 'Toeristische verhuur / afgemeld Verhuur',
-                name: 'Datatabel',
-              }}
-            >
-              <Table
-                className={styles.Table}
-                titleKey="dateStart"
-                displayProps={DISPLAY_PROPS_VERHUUR}
-                items={cancelledVerhuur}
-              />
-            </SectionCollapsible>
-          )}
-          {!!previousVerhuur.length && (
-            <SectionCollapsible
-              id="SectionCollapsible-previous-verhuur"
-              className={styles.SectionNoBorderBottom}
-              title="Afgelopen verhuur"
-              startCollapsed={isCollapsed('previous')}
-              track={{
-                category: 'Toeristische verhuur / afgemeld Verhuur',
-                name: 'Datatabel',
-              }}
-            >
-              <Table
-                className={styles.Table}
-                titleKey="dateStart"
-                displayProps={DISPLAY_PROPS_VERHUUR}
-                items={previousVerhuur}
-              />
-            </SectionCollapsible>
-          )}
-        </>
+      <SectionCollapsible
+        id="SectionCollapsible-planned-verhuur"
+        title="Geplande verhuur"
+        className={styles.SectionBorderTop}
+        startCollapsed={false}
+        hasItems={!!plannedVerhuur.length}
+        noItemsMessage="U heeft dit jaar nog geen geplande verhuur"
+        track={{
+          category: 'Toeristische verhuur / Geplande Verhuur',
+          name: 'Datatabel',
+        }}
+      >
+        <Table
+          className={styles.Table}
+          titleKey="dateStart"
+          displayProps={DISPLAY_PROPS_VERHUUR}
+          items={plannedVerhuur}
+        />
+      </SectionCollapsible>
+
+      {!!cancelledVerhuur.length && (
+        <SectionCollapsible
+          id="SectionCollapsible-cancled-verhuur"
+          title="Geannuleerde verhuur"
+          startCollapsed={isCollapsed('geannuleerd')}
+          track={{
+            category: 'Toeristische verhuur / afgemeld Verhuur',
+            name: 'Datatabel',
+          }}
+        >
+          <Table
+            className={styles.Table}
+            titleKey="dateStart"
+            displayProps={DISPLAY_PROPS_VERHUUR}
+            items={cancelledVerhuur}
+          />
+        </SectionCollapsible>
       )}
+
+      {!!previousVerhuur.length && (
+        <SectionCollapsible
+          id="SectionCollapsible-previous-verhuur"
+          className={styles.SectionNoBorderBottom}
+          title="Afgelopen verhuur"
+          startCollapsed={isCollapsed('previous')}
+          track={{
+            category: 'Toeristische verhuur / afgemeld Verhuur',
+            name: 'Datatabel',
+          }}
+        >
+          <Table
+            className={styles.Table}
+            titleKey="dateStart"
+            displayProps={DISPLAY_PROPS_VERHUUR}
+            items={previousVerhuur}
+          />
+        </SectionCollapsible>
+      )}
+
       {!!content?.registraties.length && (
         <PageContent>
           <InfoDetail
