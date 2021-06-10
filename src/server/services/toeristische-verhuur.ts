@@ -20,6 +20,7 @@ import {
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { dateSort } from '../../universal/helpers/date';
 import {
   BBVergunning,
   fetchVergunningen,
@@ -141,24 +142,29 @@ export function transformVergunningenToVerhuur(
   if (!Array.isArray(vergunningen)) {
     return [];
   }
-  return vergunningen.map((vergunning) => {
-    const isActual = vergunning.dateEnd
-      ? !isDateInPast(vergunning.dateEnd)
-      : false;
-    const title = transformToeristischeVerhuurVergunningTitle(
-      vergunning,
-      isActual
-    );
-    return {
-      ...vergunning,
-      title,
-      isActual,
-      duration:
-        vergunning.dateEnd && vergunning.dateStart
-          ? formatDurationBetweenDates(vergunning.dateEnd, vergunning.dateStart)
-          : 0,
-    };
-  });
+  return vergunningen
+    .map((vergunning) => {
+      const isActual = vergunning.dateEnd
+        ? !isDateInPast(vergunning.dateEnd)
+        : false;
+      const title = transformToeristischeVerhuurVergunningTitle(
+        vergunning,
+        isActual
+      );
+      return {
+        ...vergunning,
+        title,
+        isActual,
+        duration:
+          vergunning.dateEnd && vergunning.dateStart
+            ? formatDurationBetweenDates(
+                vergunning.dateEnd,
+                vergunning.dateStart
+              )
+            : 0,
+      };
+    })
+    .sort(dateSort('dateStart', 'asc'));
 }
 
 async function fetchAndTransformToeristischeVerhuur(

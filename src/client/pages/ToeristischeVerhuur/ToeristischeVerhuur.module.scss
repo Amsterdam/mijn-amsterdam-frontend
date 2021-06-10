@@ -61,3 +61,16 @@
     width: 25%;
   }
 }
+
+.TableVergunningen {
+  tr td {
+    width: 25%;
+    &:first-child {
+      width: 50%;
+    }
+  }
+
+  + .TableVergunningen {
+    margin-top: 2rem;
+  }
+}

@@ -39,14 +39,21 @@ function state(state: any) {
 }
 
 describe('<ToeristischVerhuurDetail />', () => {
+  jest.useFakeTimers('modern').setSystemTime(new Date('2021-06-10').getTime());
+
   (window as any).scrollTo = jest.fn();
+
   const vergunning = vergunningen?.find(
-    (vergunning) => vergunning.caseType === 'Vakantieverhuur'
+    (vergunning) =>
+      vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual
   );
+
   const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
     id: vergunning?.id,
   });
+
   const routePath = AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'];
+
   let Component = () => (
     <MockApp
       routeEntry={routeEntry}
