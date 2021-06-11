@@ -281,17 +281,18 @@ export function createToeristischeVerhuurNotification(
   let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 
   const vergunningTitleLower = item.title.toLowerCase();
-  const ctaLinkToDetail = generatePath(
-    AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
-    {
-      id: item.id,
-    }
-  );
 
   if (
     item.title === 'Vergunning bed & breakfast' ||
     item.title === 'Vergunning vakantieverhuur'
   ) {
+    const ctaLinkToDetail = generatePath(
+      AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+      {
+        id: item.id,
+      }
+    );
+
     const ctaLinkToAanvragen =
       item.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
@@ -332,8 +333,9 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateRequest;
         break;
       case item.status === 'Afgehandeld':
-        title = `Aanvraag ${vergunningTitleLower} afgehandeld`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} afgehandeld.`;
+        const decision = item.decision?.toLowerCase() || 'afgehandeld';
+        title = `Aanvraag ${vergunningTitleLower} ${decision}`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
@@ -347,11 +349,19 @@ export function createToeristischeVerhuurNotification(
         break;
     }
   } else {
+    const ctaLinkToDetail = generatePath(
+      AppRoutes['TOERISTISCHE_VERHUUR/VERHUUR'],
+      {
+        id: item.id,
+      }
+    );
+
     const period = !!(item.dateStart && item.dateEnd)
       ? `van ${defaultDateFormat(item.dateStart)} tot ${defaultDateFormat(
           item.dateEnd
         )} `
       : '';
+
     switch (true) {
       case item.title === 'Geannuleerde vakantieverhuur':
         title = `Vakantieverhuur geannuleerd`;

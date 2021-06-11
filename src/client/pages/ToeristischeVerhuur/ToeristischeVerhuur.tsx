@@ -137,6 +137,8 @@ export default function ToeristischeVerhuur() {
     }
   };
 
+  const hasBothPermits = !!(hasVergunningenVakantieVerhuur && hasVergunningBB);
+
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -155,16 +157,25 @@ export default function ToeristischeVerhuur() {
         </p>
 
         <p>
-          {(hasVergunningBB || hasVergunningenVakantieVerhuur) && (
+          {(hasBothPermits || !hasVergunningBB) && (
             <Linkd
               external={true}
               href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
             >
-              Meer informatie over regels voor Particuliere vakantieverhuur
+              Meer informatie over particuliere vakantieverhuur
             </Linkd>
           )}
 
-          {hasVergunningenVakantieVerhuur && !hasVergunningBB && (
+          {(hasBothPermits || !hasVergunningenVakantieVerhuur) && (
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
+            >
+              Meer informatie over bed &amp; breakfast
+            </Linkd>
+          )}
+
+          {!hasBothPermits && (
             <>
               <br />
               <Linkd
@@ -172,28 +183,6 @@ export default function ToeristischeVerhuur() {
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
               >
                 Meer over toeristenbelasting
-              </Linkd>
-            </>
-          )}
-
-          {(hasVergunningBB || hasVergunningenVakantieVerhuur) && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
-            >
-              Meer informatie over bed and breakfast
-            </Linkd>
-          )}
-
-          {!hasVergunningenVakantieVerhuur && hasVergunningBB && (
-            <>
-              <br />
-
-              <Linkd
-                external={true}
-                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/regels/"
-              >
-                Regels bed and breakfast
               </Linkd>
             </>
           )}

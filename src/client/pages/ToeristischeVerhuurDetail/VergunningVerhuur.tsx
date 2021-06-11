@@ -36,7 +36,18 @@ function useStatusLineItems(
     if (!vergunning) {
       return [];
     }
-    const statusTrain = [
+    /**
+     * Steps for B&B:
+     * - Ontvangen
+     * - In behandeling
+     * - Verleend/Geweigerd/Ingetrokken
+     *
+     * Steps for Vakantieverhuurvergunning:
+     * - Ontvangen
+     * - Verleend
+     * (- Ingetrokken) optional
+     */
+    const lineItems = [
       {
         id: 'item-1',
         status: 'Ontvangen',
@@ -55,14 +66,19 @@ function useStatusLineItems(
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: vergunning.status !== 'Afgehandeld',
+        isActive:
+          vergunning.caseType === 'B&B - vergunning'
+            ? vergunning.status !== 'Afgehandeld'
+            : true,
         isChecked:
-          vergunning.status === 'Afgehandeld' ||
-          vergunning.status === 'Behandelen aanvraag',
+          vergunning.caseType === 'B&B - vergunning'
+            ? vergunning.status !== 'Afgehandeld'
+            : vergunning.decision === 'Verleend',
       },
     ];
+
     if (vergunning.caseType === 'B&B - vergunning') {
-      statusTrain.push({
+      lineItems.push({
         id: 'item-3',
         status: getStatusBB(vergunning.decision ?? ''),
         datePublished: vergunning?.dateDecision ?? '',
@@ -75,19 +91,19 @@ function useStatusLineItems(
 
     if (
       vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag' &&
-      vergunning.decision?.toLowerCase().includes('ingetrokken')
+      vergunning.decision === 'Ingetrokken'
     ) {
-      statusTrain.push({
+      lineItems.push({
         id: 'item-3',
         status: 'Ingetrokken',
         datePublished: vergunning?.dateDecision ?? '',
         description: '',
         documents: [],
-        isActive: vergunning.status === 'Afgehandeld',
-        isChecked: vergunning.status === 'Afgehandeld',
+        isActive: true,
+        isChecked: true,
       });
     }
-    return statusTrain;
+    return lineItems;
   }, [vergunning]);
 
   return statusLineItems;
