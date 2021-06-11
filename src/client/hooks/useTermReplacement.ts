@@ -30,7 +30,8 @@ export function termReplace(profileType: ProfileType, term: string) {
 
 export function useTermReplacement() {
   const profileType = useProfileTypeValue();
-  return useCallback((term: string) => termReplace(profileType, term), [
-    profileType,
-  ]);
+  return useCallback(
+    (term: string) => termReplace(profileType, term),
+    [profileType]
+  );
 }

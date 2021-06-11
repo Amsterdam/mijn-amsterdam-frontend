@@ -11,24 +11,22 @@ export function useAddDocumentLinkComponents(
         ...FOCUS_SPECIFICATIES.content,
       };
       if (focusSpecificatiesContent.jaaropgaven) {
-        focusSpecificatiesContent.jaaropgaven = focusSpecificatiesContent.jaaropgaven.map(
-          (document) => {
+        focusSpecificatiesContent.jaaropgaven =
+          focusSpecificatiesContent.jaaropgaven.map((document) => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );
             return Object.assign({}, document, { documentUrl });
-          }
-        );
+          });
       }
       if (focusSpecificatiesContent.uitkeringsspecificaties) {
-        focusSpecificatiesContent.uitkeringsspecificaties = focusSpecificatiesContent.uitkeringsspecificaties.map(
-          (document) => {
+        focusSpecificatiesContent.uitkeringsspecificaties =
+          focusSpecificatiesContent.uitkeringsspecificaties.map((document) => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );
             return Object.assign({}, document, { documentUrl });
-          }
-        );
+          });
       }
       return {
         ...FOCUS_SPECIFICATIES,

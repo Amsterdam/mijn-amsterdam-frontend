@@ -123,9 +123,8 @@ function StadspasBudget({
   budget,
   dateEnd,
 }: StadspasBudgetProps) {
-  const [isTransactionOverviewActive, toggleTransactionOverview] = useState(
-    false
-  );
+  const [isTransactionOverviewActive, toggleTransactionOverview] =
+    useState(false);
 
   const [api] = useDataApi<ApiResponse<FocusStadspasTransaction[]>>(
     {

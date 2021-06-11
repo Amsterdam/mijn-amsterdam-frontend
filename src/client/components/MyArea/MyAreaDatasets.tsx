@@ -50,7 +50,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const setFeaturesLoadingDebounced = useDebouncedCallback(
     setFeaturesLoading,
     600
-  ).callback;
+  );
 
   const fetchFeatures = useFetchFeatures();
   const [activeDatasetIdsState] = useActiveDatasetIds();
@@ -94,7 +94,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const onUpdate = useCallback(
     (event: LeafletEvent) => {
       setFeaturesLoadingDebounced(true);
-      fetchDebounced.callback(activeDatasetIds, activeFilters);
+      fetchDebounced(activeDatasetIds, activeFilters);
     },
     [
       fetchDebounced,
@@ -108,7 +108,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   useEffect(() => {
     if (activeDatasetIds.length) {
       setFeaturesLoadingDebounced(true);
-      fetchDebounced.callback(activeDatasetIds, activeFilters);
+      fetchDebounced(activeDatasetIds, activeFilters);
     } else {
       // Setting the state to empty arrays results in the removal of markers from the map.
       setClusterFeatures([]);

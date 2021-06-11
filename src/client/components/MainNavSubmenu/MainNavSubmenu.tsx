@@ -87,12 +87,12 @@ export default function MainNavSubmenu({
 
   const onEnter = () => {
     debouncedLeave.cancel();
-    debouncedEnter.callback();
+    debouncedEnter();
   };
 
   const onLeave = () => {
     debouncedEnter.cancel();
-    debouncedLeave.callback();
+    debouncedLeave();
   };
 
   const location = useLocation();

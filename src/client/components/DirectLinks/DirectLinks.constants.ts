@@ -52,8 +52,7 @@ const GenericLinks: Record<string, DirectLink> = {
   },
   MIJN_OVERHEID_ONDERNEMERS: {
     title: 'MijnOverheid voor ondernemers',
-    url:
-      'https://www.digitaleoverheid.nl/dossiers/movo-mijn-overheid-voor-ondernemers/',
+    url: 'https://www.digitaleoverheid.nl/dossiers/movo-mijn-overheid-voor-ondernemers/',
     isExternalLink: true,
     isActive: true,
   },

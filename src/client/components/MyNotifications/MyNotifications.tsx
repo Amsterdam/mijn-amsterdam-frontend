@@ -142,7 +142,7 @@ export default function MyNotifications({
                               item.title,
                               profileType
                             );
-                            if (item.customLink) {
+                            if (item.customLink?.callback) {
                               item.customLink.callback();
                               return false;
                             }

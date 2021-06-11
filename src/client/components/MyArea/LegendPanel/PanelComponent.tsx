@@ -1,7 +1,6 @@
 import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import {
-  CSSProperties,
   MouseEvent,
   PropsWithChildren,
   useCallback,
@@ -9,7 +8,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -114,10 +113,10 @@ export function usePanelStateCycle(
     [state, setState, nextPanelState]
   );
 
-  const setInitialState = useCallback(() => setState(initialState), [
-    initialState,
-    setState,
-  ]);
+  const setInitialState = useCallback(
+    () => setState(initialState),
+    [initialState, setState]
+  );
 
   return useMemo(
     () => ({
@@ -296,7 +295,7 @@ type PanelWideAnimatedProps = PropsWithChildren<{
 }>;
 
 function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
-  const anim: CSSProperties & UseSpringBaseProps = useSpring({
+  const anim = useSpring({
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
     config: WIDE_PANEL_SPRING_CONFIG,
   });
@@ -317,7 +316,7 @@ function PanelNarrowAnimated({
   onSwipedDown,
   id,
 }: PanelNarrowAnimatedProps) {
-  const anim: CSSProperties & UseSpringBaseProps = useSpring({
+  const anim = useSpring({
     transform: `translate3d(0, calc(100% - ${height}), 0)`,
     height,
     config: NARROW_PANEL_SPRING_CONFIG,

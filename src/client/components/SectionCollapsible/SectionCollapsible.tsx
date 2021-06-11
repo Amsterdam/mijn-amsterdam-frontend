@@ -89,7 +89,7 @@ export default function SectionCollapsible({
     }
   }, 50);
 
-  setReadyForAnimatonDebounced.callback();
+  setReadyForAnimatonDebounced();
 
   const [{ height: contentHeight }, setDimensions] = useState({
     width: 0,

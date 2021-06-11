@@ -14,11 +14,8 @@ function TutorialItem({ el }: { el: any }) {
   const fontSize = styledElement.getPropertyValue('font-size');
   const lineHeight = styledElement.getPropertyValue('line-height');
   const padding = styledElement.getPropertyValue('padding');
-  const [
-    text,
-    fromDirection = 'right-top',
-    label,
-  ] = el.dataset.tutorialItem.split(';');
+  const [text, fromDirection = 'right-top', label] =
+    el.dataset.tutorialItem.split(';');
 
   const ref = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);

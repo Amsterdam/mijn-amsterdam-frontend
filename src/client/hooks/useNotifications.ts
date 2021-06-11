@@ -6,24 +6,26 @@ import { WelcomeNotification } from '../config/staticData';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',
-  get: (profileType: ProfileType) => ({ get }) => {
-    const appState = get(appStateAtom);
-    let notifications = appState.NOTIFICATIONS.content || [];
+  get:
+    (profileType: ProfileType) =>
+    ({ get }) => {
+      const appState = get(appStateAtom);
+      let notifications = appState.NOTIFICATIONS.content || [];
 
-    // Exlclude meldingen
-    if (
-      profileType === 'private-commercial' &&
-      appState.NOTIFICATIONS.content
-    ) {
-      notifications = appState.NOTIFICATIONS.content.filter(
-        (notification) =>
-          notification.chapter !== Chapters.BRP &&
-          notification.chapter !== Chapters.BURGERZAKEN
-      );
-    }
+      // Exlclude meldingen
+      if (
+        profileType === 'private-commercial' &&
+        appState.NOTIFICATIONS.content
+      ) {
+        notifications = appState.NOTIFICATIONS.content.filter(
+          (notification) =>
+            notification.chapter !== Chapters.BRP &&
+            notification.chapter !== Chapters.BURGERZAKEN
+        );
+      }
 
-    return [...notifications, WelcomeNotification];
-  },
+      return [...notifications, WelcomeNotification];
+    },
 });
 
 export function useAppStateNotifications() {
