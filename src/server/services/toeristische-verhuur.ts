@@ -17,7 +17,7 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../universal/helpers/date';
-import { MyNotification } from '../../universal/types';
+import { MyCase, MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { dateSort } from '../../universal/helpers/date';
@@ -28,7 +28,9 @@ import {
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
   VakantieverhuurVergunningaanvraag,
+  Vergunning,
 } from './vergunningen';
+import { isRecentCase } from '../../universal/helpers';
 
 export interface ToeristischeVerhuurRegistratie {
   city: string;
@@ -187,7 +189,16 @@ async function fetchAndTransformToeristischeVerhuur(
     sessionID,
     passthroughRequestHeaders,
     {
-      appRoute: AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
+      appRoute: (vergunning: Vergunning) => {
+        if (
+          ['Vakantieverhuur vergunningsaanvraag', 'B&B - vergunning'].includes(
+            vergunning.caseType
+          )
+        ) {
+          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+        }
+        return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
+      },
       filter: (vergunning): vergunning is VakantieverhuurVergunning =>
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
     }
@@ -270,17 +281,18 @@ export function createToeristischeVerhuurNotification(
   let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 
   const vergunningTitleLower = item.title.toLowerCase();
-  const ctaLinkToDetail = generatePath(
-    AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
-    {
-      id: item.id,
-    }
-  );
 
   if (
     item.title === 'Vergunning bed & breakfast' ||
     item.title === 'Vergunning vakantieverhuur'
   ) {
+    const ctaLinkToDetail = generatePath(
+      AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+      {
+        id: item.id,
+      }
+    );
+
     const ctaLinkToAanvragen =
       item.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
@@ -321,8 +333,9 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateRequest;
         break;
       case item.status === 'Afgehandeld':
-        title = `Aanvraag ${vergunningTitleLower} afgehandeld`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} afgehandeld.`;
+        const decision = item.decision?.toLowerCase() || 'afgehandeld';
+        title = `Aanvraag ${vergunningTitleLower} ${decision}`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
@@ -336,11 +349,19 @@ export function createToeristischeVerhuurNotification(
         break;
     }
   } else {
+    const ctaLinkToDetail = generatePath(
+      AppRoutes['TOERISTISCHE_VERHUUR/VERHUUR'],
+      {
+        id: item.id,
+      }
+    );
+
     const period = !!(item.dateStart && item.dateEnd)
       ? `van ${defaultDateFormat(item.dateStart)} tot ${defaultDateFormat(
           item.dateEnd
         )} `
       : '';
+
     switch (true) {
       case item.title === 'Geannuleerde vakantieverhuur':
         title = `Vakantieverhuur geannuleerd`;
@@ -394,6 +415,18 @@ function createRegistratieNotification(
   };
 }
 
+function createToeristischeVerhuurRecentCase(
+  vergunning: ToeristischeVerhuurVergunning
+): MyCase {
+  return {
+    id: `vergunning-${vergunning.id}-case`,
+    title: vergunning.title,
+    link: vergunning.link,
+    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    datePublished: vergunning.dateRequest,
+  };
+}
+
 export async function fetchToeristischeVerhuurGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
@@ -429,8 +462,24 @@ export async function fetchToeristischeVerhuurGenerated(
         isActualNotification(notification.datePublished, compareToDate)
     );
 
+    const cases: MyCase[] = Array.isArray(vergunningen)
+      ? vergunningen
+          .filter(
+            (vergunning) =>
+              ([
+                'Vergunning bed & breakfast',
+                'Vergunning vakantieverhuur',
+              ].includes(vergunning.title) &&
+                vergunning.status !== 'Afgehandeld') ||
+              (vergunning.dateDecision &&
+                isRecentCase(vergunning.dateDecision, compareToDate))
+          )
+          .map(createToeristischeVerhuurRecentCase)
+      : [];
+
     return apiSuccesResult({
       notifications: actualNotifications,
+      cases,
     });
   }
 

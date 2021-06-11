@@ -199,7 +199,13 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
-              path={AppRoutes['TOERISTISCHE_VERHUUR/DETAIL']}
+              path={AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR']}
+              component={ToeristischeVerhuurDetail}
+            />
+          )}
+          {FeatureToggle.toeristischeVerhuurActive && (
+            <Route
+              path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']}
               component={ToeristischeVerhuurDetail}
             />
           )}
