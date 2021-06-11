@@ -134,7 +134,7 @@ export type VergunningenData = Vergunning[];
 
 export interface VergunningOptions {
   filter?: (vergunning: Vergunning) => boolean;
-  appRoute?: string;
+  appRoute: string | ((vergunning: Vergunning) => string);
 }
 
 export function transformVergunningenData(
@@ -189,11 +189,15 @@ export async function fetchVergunningen(
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
     vergunningen = vergunningen.map((vergunning) => {
+      const appRoute =
+        typeof options.appRoute === 'function'
+          ? options.appRoute(vergunning)
+          : options.appRoute;
       return {
         ...vergunning,
         link: {
           to: options?.appRoute
-            ? generatePath(options.appRoute, {
+            ? generatePath(appRoute, {
                 id: vergunning.id,
               })
             : '/',

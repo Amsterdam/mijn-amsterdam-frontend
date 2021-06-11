@@ -17,7 +17,7 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../universal/helpers/date';
-import { MyNotification } from '../../universal/types';
+import { MyCase, MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { dateSort } from '../../universal/helpers/date';
@@ -28,7 +28,9 @@ import {
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
   VakantieverhuurVergunningaanvraag,
+  Vergunning,
 } from './vergunningen';
+import { isRecentCase } from '../../universal/helpers';
 
 export interface ToeristischeVerhuurRegistratie {
   city: string;
@@ -187,7 +189,16 @@ async function fetchAndTransformToeristischeVerhuur(
     sessionID,
     passthroughRequestHeaders,
     {
-      appRoute: AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'],
+      appRoute: (vergunning: Vergunning) => {
+        if (
+          ['Vakantieverhuur vergunningsaanvraag', 'B&B - vergunning'].includes(
+            vergunning.caseType
+          )
+        ) {
+          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+        }
+        return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
+      },
       filter: (vergunning): vergunning is VakantieverhuurVergunning =>
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
     }
@@ -394,6 +405,18 @@ function createRegistratieNotification(
   };
 }
 
+function createToeristischeVerhuurRecentCase(
+  vergunning: ToeristischeVerhuurVergunning
+): MyCase {
+  return {
+    id: `vergunning-${vergunning.id}-case`,
+    title: vergunning.title,
+    link: vergunning.link,
+    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    datePublished: vergunning.dateRequest,
+  };
+}
+
 export async function fetchToeristischeVerhuurGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
@@ -429,8 +452,24 @@ export async function fetchToeristischeVerhuurGenerated(
         isActualNotification(notification.datePublished, compareToDate)
     );
 
+    const cases: MyCase[] = Array.isArray(vergunningen)
+      ? vergunningen
+          .filter(
+            (vergunning) =>
+              ([
+                'Vergunning bed & breakfast',
+                'Vergunning vakantieverhuur',
+              ].includes(vergunning.title) &&
+                vergunning.status !== 'Afgehandeld') ||
+              (vergunning.dateDecision &&
+                isRecentCase(vergunning.dateDecision, compareToDate))
+          )
+          .map(createToeristischeVerhuurRecentCase)
+      : [];
+
     return apiSuccesResult({
       notifications: actualNotifications,
+      cases,
     });
   }
 

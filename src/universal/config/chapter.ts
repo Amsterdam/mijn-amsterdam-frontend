@@ -103,6 +103,9 @@ export const DocumentTitles = {
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
-    'TOERISTISCHE_VERHUUR/DETAIL'
-  ]]: `Toeristische verhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
+    'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'
+  ]]: `Vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
+  [AppRoutes[
+    'TOERISTISCHE_VERHUUR/VERGUNNING'
+  ]]: `Vergunning | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
 };

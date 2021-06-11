@@ -48,11 +48,14 @@ describe('<ToeristischVerhuurDetail />', () => {
       vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual
   );
 
-  const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
-    id: vergunning?.id,
-  });
+  const routeEntry = generatePath(
+    AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
+    {
+      id: vergunning?.id,
+    }
+  );
 
-  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'];
+  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
 
   let Component = () => (
     <MockApp
@@ -83,10 +86,13 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
   const vergunning = vergunningen?.find(
     (v) => v.caseType === 'Vakantieverhuur vergunningsaanvraag'
   );
-  const routeEntry = generatePath(AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'], {
-    id: vergunning?.id,
-  });
-  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/DETAIL'];
+  const routeEntry = generatePath(
+    AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+    {
+      id: vergunning?.id,
+    }
+  );
+  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
 
   let Component = () => (
     <MockApp

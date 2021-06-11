@@ -2,14 +2,16 @@ import React, { useMemo } from 'react';
 
 import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat, isError } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
+  Alert,
   ChapterIcon,
   Heading,
   InfoDetail,
   Linkd,
   LinkdInline,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -194,6 +196,14 @@ export default function ToeristischeVerhuur() {
                 Regels bed and breakfast
               </Linkd>
             </>
+          )}
+
+          <MaintenanceNotifications page="toeristische-verhuur" />
+
+          {isError(TOERISTISCHE_VERHUUR) && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment niet alle gegevens tonen.</p>
+            </Alert>
           )}
         </p>
         <div className={styles.Detail}>
