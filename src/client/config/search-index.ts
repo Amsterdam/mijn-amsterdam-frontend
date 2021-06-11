@@ -1,9 +1,8 @@
-import { AppRoutes } from '../../universal/config/routes';
-import { DocumentTitles } from '../../universal/config/chapter';
-import axios, { AxiosPromise, AxiosResponse, CancelTokenSource } from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { Vergunning } from '../../server/services';
+import { DocumentTitles } from '../../universal/config/chapter';
+import { AppRoutes } from '../../universal/config/routes';
 import { pick } from '../../universal/helpers';
-import Description from '../components/MyArea/LegendPanel/PanelContent/Description';
 
 interface PageEntry {
   url: string;
