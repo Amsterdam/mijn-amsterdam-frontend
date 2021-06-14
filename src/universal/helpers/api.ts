@@ -69,6 +69,17 @@ export function isError(apiResponseData: ApiResponse<any>) {
   );
 }
 
+export function hasFailedDependency(
+  apiResponseData: ApiResponse<any>,
+  dependencyKey: string
+) {
+  return (
+    apiResponseData?.status === 'OK' &&
+    !!apiResponseData?.failedDependencies &&
+    dependencyKey in apiResponseData.failedDependencies
+  );
+}
+
 export function apiErrorResult<T>(
   error: string,
   content: T,

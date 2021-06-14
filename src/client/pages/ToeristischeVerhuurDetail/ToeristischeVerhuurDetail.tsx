@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -20,6 +20,11 @@ export default function ToeristischVerhuurDetail() {
   const { id } = useParams<{ id: string }>();
   const Vergunning = content?.vergunningen?.find((item) => item.id === id);
   const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !Vergunning;
+
+  const hasWarning =
+    hasFailedDependency(TOERISTISCHE_VERHUUR, 'vergunningen') || noContent;
+  const isLoadingApi = isLoading(TOERISTISCHE_VERHUUR);
+
   return (
     <DetailPage>
       <PageHeading
@@ -32,29 +37,24 @@ export default function ToeristischVerhuurDetail() {
       >
         {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
-      {isError(TOERISTISCHE_VERHUUR) ||
-      noContent ||
-      isLoading(TOERISTISCHE_VERHUUR) ? (
+      {(isLoadingApi || hasWarning) && (
         <PageContent className={styles.DetailPageContent}>
-          {(isError(TOERISTISCHE_VERHUUR) || noContent) && (
+          {hasWarning && (
             <Alert type="warning">
-              <p>We kunnen op dit moment geen gegevens tonen.</p>
+              <p>We kunnen op dit moment niet alle gegevens tonen.</p>
             </Alert>
           )}
-          {isLoading(TOERISTISCHE_VERHUUR) && (
+          {isLoadingApi && (
             <LoadingContent className={styles.LoadingContentInfo} />
           )}
         </PageContent>
-      ) : (
-        <>
-          {Vergunning?.caseType === 'Vakantieverhuur' && (
-            <VakantieVerhuur vergunning={Vergunning} />
-          )}
-          {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-            Vergunning?.caseType === 'B&B - vergunning') && (
-            <VergunningVerhuur vergunning={Vergunning} />
-          )}
-        </>
+      )}
+      {Vergunning?.caseType === 'Vakantieverhuur' && (
+        <VakantieVerhuur vergunning={Vergunning} />
+      )}
+      {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
+        Vergunning?.caseType === 'B&B - vergunning') && (
+        <VergunningVerhuur vergunning={Vergunning} />
       )}
     </DetailPage>
   );
