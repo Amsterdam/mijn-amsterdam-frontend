@@ -188,13 +188,12 @@ export default function ToeristischeVerhuur() {
           )}
 
           <MaintenanceNotifications page="toeristische-verhuur" />
-
-          {isError(TOERISTISCHE_VERHUUR) && (
-            <Alert type="warning">
-              <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-            </Alert>
-          )}
         </p>
+        {isError(TOERISTISCHE_VERHUUR) && (
+          <Alert type="warning">
+            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
+          </Alert>
+        )}
         <div className={styles.Detail}>
           {hasVergunningenVakantieVerhuur && (
             <>

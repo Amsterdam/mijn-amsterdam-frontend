@@ -83,8 +83,8 @@ export type VakantieverhuurVergunning =
 export type ToeristischeVerhuur = ToeristischeVerhuurVergunningProps &
   Vakantieverhuur;
 
-export type ToeristischeVerhuurVergunningaanvraag = VakantieverhuurVergunningaanvraag &
-  ToeristischeVerhuurVergunningProps;
+export type ToeristischeVerhuurVergunningaanvraag =
+  VakantieverhuurVergunningaanvraag & ToeristischeVerhuurVergunningProps;
 
 export type ToeristischeVerhuurBBVergunning = BBVergunning &
   ToeristischeVerhuurVergunningProps;
@@ -204,10 +204,9 @@ async function fetchAndTransformToeristischeVerhuur(
     }
   );
 
-  const [
-    registratiesResponse,
-    vergunningenResponse,
-  ] = await Promise.allSettled([registratiesRequest, vergunningenRequest]);
+  const [registratiesResponse, vergunningenResponse] = await Promise.allSettled(
+    [registratiesRequest, vergunningenRequest]
+  );
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
@@ -447,9 +446,10 @@ export async function fetchToeristischeVerhuurGenerated(
       createToeristischeVerhuurNotification(vergunning, vergunningen)
     );
 
-    const registrationsNotifications = TOERISTISCHE_VERHUUR.content.registraties.map(
-      createRegistratieNotification
-    );
+    const registrationsNotifications =
+      TOERISTISCHE_VERHUUR.content.registraties.map(
+        createRegistratieNotification
+      );
 
     const notifications = [
       ...vergunningNotifications,
