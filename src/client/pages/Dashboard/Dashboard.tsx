@@ -37,10 +37,8 @@ export default function Dashboard() {
   const isPhoneScreen = usePhoneScreen();
   const NOTIFICATIONSTotal = notifications.length;
 
-  const {
-    items: myChapterItems,
-    isLoading: isMyChaptersLoading,
-  } = useChapters();
+  const { items: myChapterItems, isLoading: isMyChaptersLoading } =
+    useChapters();
 
   const profileType = useProfileTypeValue();
 

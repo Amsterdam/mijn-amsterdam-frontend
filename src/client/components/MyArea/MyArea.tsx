@@ -120,8 +120,9 @@ export default function MyArea({
   }, []);
 
   const mapContainerRef = useRef(null);
-  const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
-    .height;
+  const panelComponentAvailableHeight = getElementSize(
+    mapContainerRef.current
+  ).height;
 
   const centerMarkerLabel = centerMarker?.label;
   const centerMarkerLatLng = centerMarker?.latlng;
@@ -142,18 +143,17 @@ export default function MyArea({
     return center;
   }, [centerMarkerLatLng, HOME.content, customConfig.center]);
 
-  const mapOptions: Partial<
-    L.MapOptions & { center: LatLngLiteral }
-  > = useMemo(() => {
-    const options = {
-      ...DEFAULT_MAP_OPTIONS,
-      zoom,
-    };
-    if (center) {
-      options.center = center;
-    }
-    return options;
-  }, [center, zoom]);
+  const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
+    useMemo(() => {
+      const options = {
+        ...DEFAULT_MAP_OPTIONS,
+        zoom,
+      };
+      if (center) {
+        options.center = center;
+      }
+      return options;
+    }, [center, zoom]);
 
   const mapLayers = useMemo(() => {
     return {

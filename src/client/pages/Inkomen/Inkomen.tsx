@@ -52,16 +52,11 @@ const decisionsDisplayProps = {
 };
 
 export default function Inkomen() {
-  const {
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    FOCUS_TONK,
-  } = useAppStateGetter();
+  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO, FOCUS_TONK } =
+    useAppStateGetter();
 
-  const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
-    FOCUS_SPECIFICATIES
-  );
+  const focusSpecificatiesWithDocumentLinks =
+    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
   const aanvragen = FOCUS_AANVRAGEN.content;
   const tozoItems = FOCUS_TOZO.content;
   const tonkItems = FOCUS_TONK.content;

@@ -147,7 +147,7 @@ export function useSessionCallbackOnceDebounced(
       setSessionTracked(true);
     }
   }, timeoutMS);
-  trackEvent.callback();
+  trackEvent();
 
   return () => setSessionTracked(false);
 }

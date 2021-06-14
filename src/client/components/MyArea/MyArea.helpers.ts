@@ -46,7 +46,7 @@ export function pointsSpiral(count: number, centerPt: L.Point) {
 // Code
 
 export function round(num: number, decimalPlaces: number = 6) {
-  const num2 = Math.round(((num + 'e' + decimalPlaces) as unknown) as number);
+  const num2 = Math.round((num + 'e' + decimalPlaces) as unknown as number);
   return Number(num2 + 'e' + -decimalPlaces);
 }
 

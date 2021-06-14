@@ -51,9 +51,10 @@ export default function StatusDetail({
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
   const isStateLoading = isLoading(STATE);
-  const statusItems: StatusSourceItem[] = useMemo(() => STATE.content || [], [
-    STATE.content,
-  ]);
+  const statusItems: StatusSourceItem[] = useMemo(
+    () => STATE.content || [],
+    [STATE.content]
+  );
 
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id);

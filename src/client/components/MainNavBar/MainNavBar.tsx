@@ -199,11 +199,8 @@ export default function MainNavBar({
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
-  const {
-    linkContainerAnimationProps,
-    backdropAnimationProps,
-    leftProps,
-  } = useBurgerMenuAnimation(isBurgerMenuVisible);
+  const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
+    useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
     return mainMenuItems.map((item) => {

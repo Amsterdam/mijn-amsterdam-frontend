@@ -42,9 +42,8 @@ function Caret() {
 
 export default function InkomenSpecificaties() {
   const { FOCUS_SPECIFICATIES } = useAppStateGetter();
-  const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
-    FOCUS_SPECIFICATIES
-  );
+  const focusSpecificatiesWithDocumentLinks =
+    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
   const { type = 'uitkering', page = '1' } = useParams<{
     type: 'jaaropgave' | 'uitkering';
     page?: string;

@@ -38,8 +38,7 @@ const NO_DATA_ERROR_RESPONSE = {
   errors: [
     {
       message: 'Kaartgegevens konden niet worden geladen',
-      id:
-        'De extra informatie die wij normaal op de kaart tonen, bijvoorbeeld over afval en vergunningen',
+      id: 'De extra informatie die wij normaal op de kaart tonen, bijvoorbeeld over afval en vergunningen',
     },
   ],
 };
@@ -316,8 +315,10 @@ function toggleCategory(
 ): DatasetId[] {
   const total = datasetIds.length;
   const threshold = Math.round(total / 2);
-  const activeItemsTotal = filterActiveDatasets(datasetIds, activeDatasetIds)
-    .length;
+  const activeItemsTotal = filterActiveDatasets(
+    datasetIds,
+    activeDatasetIds
+  ).length;
 
   const isActive =
     (activeItemsTotal !== 0 &&

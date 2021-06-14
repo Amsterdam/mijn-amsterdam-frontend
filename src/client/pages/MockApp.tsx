@@ -1,4 +1,4 @@
-import { RecoilRoot, RecoilRootProps } from 'recoil';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { Component } from 'react';
 
 import { MemoryRouter, Route } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 interface MockAppProps {
   routePath: string;
   routeEntry: string;
-  initializeState?: RecoilRootProps['initializeState'];
+  initializeState?: (mutableSnapshot: MutableSnapshot) => void;
   component: Component | any;
 }
 
