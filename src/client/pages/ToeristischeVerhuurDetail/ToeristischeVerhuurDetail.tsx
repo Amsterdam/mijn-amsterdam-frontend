@@ -24,6 +24,11 @@ export default function ToeristischVerhuurDetail() {
   const { id } = useParams<{ id: string }>();
   const Vergunning = content?.vergunningen?.find((item) => item.id === id);
   const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !Vergunning;
+
+  const hasWarning =
+    hasFailedDependency(TOERISTISCHE_VERHUUR, 'vergunningen') || noContent;
+  const isLoadingApi = isLoading(TOERISTISCHE_VERHUUR);
+
   return (
     <DetailPage>
       <PageHeading
@@ -36,17 +41,19 @@ export default function ToeristischVerhuurDetail() {
       >
         {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
-      <PageContent className={styles.DetailPageContent}>
-        {(hasFailedDependency(TOERISTISCHE_VERHUUR, 'vergunningen') ||
-          noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
-        )}
-        {isLoading(TOERISTISCHE_VERHUUR) && (
-          <LoadingContent className={styles.LoadingContentInfo} />
-        )}
-      </PageContent>
+      {isLoadingApi ||
+        (hasWarning && (
+          <PageContent className={styles.DetailPageContent}>
+            {hasWarning && (
+              <Alert type="warning">
+                <p>We kunnen op dit moment niet alle gegevens tonen.</p>
+              </Alert>
+            )}
+            {isLoadingApi && (
+              <LoadingContent className={styles.LoadingContentInfo} />
+            )}
+          </PageContent>
+        ))}
       {Vergunning?.caseType === 'Vakantieverhuur' && (
         <VakantieVerhuur vergunning={Vergunning} />
       )}
