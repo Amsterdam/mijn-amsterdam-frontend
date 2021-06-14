@@ -1,10 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import {
-  hasFailedDependency,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
+import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
