@@ -41,19 +41,18 @@ export default function ToeristischVerhuurDetail() {
       >
         {Vergunning?.title || 'Onbekende toeristische verhuur'}
       </PageHeading>
-      {isLoadingApi ||
-        (hasWarning && (
-          <PageContent className={styles.DetailPageContent}>
-            {hasWarning && (
-              <Alert type="warning">
-                <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-              </Alert>
-            )}
-            {isLoadingApi && (
-              <LoadingContent className={styles.LoadingContentInfo} />
-            )}
-          </PageContent>
-        ))}
+      {(isLoadingApi || hasWarning) && (
+        <PageContent className={styles.DetailPageContent}>
+          {hasWarning && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment niet alle gegevens tonen.</p>
+            </Alert>
+          )}
+          {isLoadingApi && (
+            <LoadingContent className={styles.LoadingContentInfo} />
+          )}
+        </PageContent>
+      )}
       {Vergunning?.caseType === 'Vakantieverhuur' && (
         <VakantieVerhuur vergunning={Vergunning} />
       )}
