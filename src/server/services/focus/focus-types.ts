@@ -176,7 +176,7 @@ export type FocusTozoLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4';
+  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
 };

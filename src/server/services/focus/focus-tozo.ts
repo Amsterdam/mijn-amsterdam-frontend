@@ -71,95 +71,39 @@ export function createTozoResult(
     }
   }
 
-  const tozo1Steps = otherSteps.filter((step) => step.product === 'Tozo 1');
-  const tozo2Steps = otherSteps.filter((step) => step.product === 'Tozo 2');
-  const tozo3Steps = otherSteps.filter((step) => step.product === 'Tozo 3');
-  const tozo4Steps = otherSteps.filter((step) => step.product === 'Tozo 4');
-
-  if (aanvraagSteps['Tozo 1']) {
-    tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
-  }
-  const tozo1Item =
-    tozo1Steps.length &&
-    createToxxItem({
-      title: 'Tozo 1 (aangevraagd voor 1 juni 2020)',
-      productTitle: 'Tozo 1',
-      steps: tozo1Steps,
-      routeProps: {
-        path: AppRoutes['INKOMEN/TOZO'],
-        params: {
-          version: '1',
-        },
-      },
-    });
-
-  if (aanvraagSteps['Tozo 2']) {
-    tozo2Steps.unshift(aanvraagSteps['Tozo 2']);
-  }
-  const tozo2Item =
-    tozo2Steps.length &&
-    createToxxItem({
-      title: 'Tozo 2 (aangevraagd vanaf 1 juni 2020)',
-      productTitle: 'Tozo 2',
-      steps: tozo2Steps,
-      routeProps: {
-        path: AppRoutes['INKOMEN/TOZO'],
-        params: {
-          version: '2',
-        },
-      },
-    });
-
-  if (aanvraagSteps['Tozo 3']) {
-    tozo3Steps.unshift(aanvraagSteps['Tozo 3']);
-  }
-  const tozo3Item =
-    tozo3Steps.length &&
-    createToxxItem({
-      title: 'Tozo 3 (aangevraagd vanaf 1 oktober 2020)',
-      productTitle: 'Tozo 3',
-      steps: tozo3Steps,
-      routeProps: {
-        path: AppRoutes['INKOMEN/TOZO'],
-        params: {
-          version: '3',
-        },
-      },
-    });
-
-  if (aanvraagSteps['Tozo 4']) {
-    tozo4Steps.unshift(aanvraagSteps['Tozo 4']);
-  }
-  const tozo4Item =
-    tozo4Steps.length &&
-    createToxxItem({
-      title: 'Tozo 4 (aangevraagd vanaf 1 april 2021)',
-      productTitle: 'Tozo 4',
-      steps: tozo4Steps,
-      routeProps: {
-        path: AppRoutes['INKOMEN/TOZO'],
-        params: {
-          version: '4',
-        },
-      },
-    });
+  const tozoProductTitles = [
+    'Tozo 1 (aangevraagd voor 1 juni 2020)',
+    'Tozo 2 (aangevraagd vanaf 1 juni 2020)',
+    'Tozo 3 (aangevraagd vanaf 1 oktober 2020)',
+    'Tozo 4 (aangevraagd vanaf 1 april 2021)',
+    'Tozo 5 (aangevraagd vanaf 1 juli 2021)',
+  ];
 
   const tozoItems: FocusItem[] = [];
 
-  if (tozo1Item) {
-    tozoItems.push(tozo1Item);
-  }
+  for (const [i, title] of Object.entries(tozoProductTitles)) {
+    const version = String(Number(i) + 1);
+    const productTitle = `Tozo ${version}`;
+    const steps = otherSteps.filter((step) => step.product === productTitle);
 
-  if (tozo2Item) {
-    tozoItems.push(tozo2Item);
-  }
+    if (aanvraagSteps[productTitle]) {
+      steps.unshift(aanvraagSteps[productTitle]);
+    }
 
-  if (tozo3Item) {
-    tozoItems.push(tozo3Item);
-  }
-
-  if (tozo4Item) {
-    tozoItems.push(tozo4Item);
+    if (steps.length) {
+      const tozoItem = createToxxItem({
+        title,
+        productTitle,
+        steps,
+        routeProps: {
+          path: AppRoutes['INKOMEN/TOZO'],
+          params: {
+            version,
+          },
+        },
+      });
+      tozoItems.push(tozoItem);
+    }
   }
 
   return apiSuccesResult(tozoItems);
