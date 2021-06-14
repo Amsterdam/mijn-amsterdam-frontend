@@ -1494,6 +1494,46 @@ Object {
       "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",
       "type": "Tozo",
     },
+    Object {
+      "chapter": "INKOMEN",
+      "datePublished": "2021-06-14T00:00:00+01:00",
+      "dateStart": "2021-06-14T00:00:00+01:00",
+      "id": "3712245579",
+      "link": Object {
+        "title": "Bekijk hoe het met uw aanvraag staat",
+        "to": "/inkomen/tozo/5/3712245579",
+      },
+      "productTitle": "Tozo 5",
+      "status": "Aanvraag",
+      "steps": Array [
+        Object {
+          "datePublished": "2021-06-14T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Tozo 5 ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-06-14T00:00:00+01:00",
+              "id": "837",
+              "title": "Ontvangst- bevestiging Aanvraag
+14 juni om 01.00 uur",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3523247300",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 5 ontvangen op 14 juni om 01.00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag Tozo 5 ontvangen",
+          "product": "Tozo 5",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
+      ],
+      "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
+      "type": "Tozo",
+    },
   ],
   "status": "OK",
 }

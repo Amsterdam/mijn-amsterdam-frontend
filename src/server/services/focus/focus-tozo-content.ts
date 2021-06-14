@@ -677,4 +677,15 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 4',
     productSpecific: 'uitkering',
   },
+
+  // Tozo 5
+  '837': {
+    omschrijving:
+      'Tozo 5 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)',
+    documentTitle: 'Ontvangst- bevestiging Aanvraag',
+    stepType: 'aanvraag',
+    labels: aanvraagLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
 };
