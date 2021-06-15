@@ -29,13 +29,8 @@ const DISPLAY_PROPS_VERHUUR = {
 };
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
-  title: 'Huidige vergunningen',
-  dateStart: 'Vanaf',
-  dateEnd: 'Tot',
-};
-
-const DISPLAY_PROPS_VERGUNNINGEN_EXPIRED = {
-  title: 'Verlopen vergunningen',
+  title: '',
+  status: 'Status',
   dateStart: 'Vanaf',
   dateEnd: 'Tot',
 };
@@ -55,6 +50,7 @@ export default function ToeristischeVerhuur() {
     for (const vergunning of content.vergunningen) {
       const displayVergunning = {
         ...vergunning,
+        status: vergunning.decision ?? vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
@@ -289,20 +285,12 @@ export default function ToeristischeVerhuur() {
           name: 'Datatabel',
         }}
       >
-        {vergunningen.some((vergunning) => vergunning.isActual) && (
+        {vergunningen && (
           <Table
             className={styles.TableVergunningen}
             titleKey="title"
             displayProps={DISPLAY_PROPS_VERGUNNINGEN}
-            items={vergunningen.filter((vergunning) => vergunning.isActual)}
-          />
-        )}
-        {vergunningen.some((vergunning) => !vergunning.isActual) && (
-          <Table
-            className={styles.TableVergunningen}
-            titleKey="title"
-            displayProps={DISPLAY_PROPS_VERGUNNINGEN_EXPIRED}
-            items={vergunningen.filter((vergunning) => !vergunning.isActual)}
+            items={vergunningen}
           />
         )}
       </SectionCollapsible>
