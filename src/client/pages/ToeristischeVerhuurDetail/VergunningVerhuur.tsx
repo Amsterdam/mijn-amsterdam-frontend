@@ -56,19 +56,20 @@ function useStatusLineItems(
         documents: [],
         isActive:
           vergunning.caseType === 'B&B - vergunning'
-            ? vergunning.status === 'Behandelen aanvraag'
+            ? vergunning.status === 'In behandeling'
             : true,
         isChecked:
           vergunning.decision === 'Verleend' ||
-          vergunning.status === 'Behandelen aanvraag',
+          vergunning.status === 'Afgehandeld' ||
+          vergunning.status === 'In behandeling',
       },
     ];
 
     if (vergunning.caseType === 'B&B - vergunning') {
       lineItems.push({
         id: 'item-3',
-        status: vergunning.decision ?? '',
-        datePublished: vergunning?.dateDecision ?? '',
+        status: vergunning.decision || '',
+        datePublished: vergunning?.dateDecision || '',
         description: '',
         documents: [],
         isActive: vergunning.status === 'Afgehandeld',

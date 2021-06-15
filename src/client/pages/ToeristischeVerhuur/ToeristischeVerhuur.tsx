@@ -50,7 +50,7 @@ export default function ToeristischeVerhuur() {
     for (const vergunning of content.vergunningen) {
       const displayVergunning = {
         ...vergunning,
-        status: vergunning.decision ?? vergunning.status,
+        status: vergunning.decision || vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
