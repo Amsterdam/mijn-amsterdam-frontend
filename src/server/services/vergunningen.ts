@@ -1,19 +1,16 @@
+import { differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../universal/config/routes';
-import {
-  LinkProps,
-  MyCase,
-  MyNotification,
-} from '../../universal/types/App.types';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
-import { hash, isRecentCase } from '../../universal/helpers/utils';
-import { dateSort } from '../../universal/helpers/date';
+
 import { Chapters } from '../../universal/config/index';
+import { AppRoutes } from '../../universal/config/routes';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
+import { dateSort } from '../../universal/helpers/date';
+import { hash, isRecentCase } from '../../universal/helpers/utils';
+import { LinkProps, MyCase, MyNotification } from '../../universal/types/App.types';
 import { GenericDocument } from '../../universal/types/App.types';
-import { differenceInMonths } from 'date-fns';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
@@ -98,6 +95,7 @@ export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
   caseType: 'Vakantieverhuur vergunningsaanvraag';
   dateStart: string | null;
   dateEnd: string | null;
+  decision: string | null;
   location: string | null;
 }
 
@@ -106,6 +104,7 @@ export interface BBVergunning extends VergunningBase {
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
+  decision: string | null;
   requester: string | null;
   owner: string | null;
 }

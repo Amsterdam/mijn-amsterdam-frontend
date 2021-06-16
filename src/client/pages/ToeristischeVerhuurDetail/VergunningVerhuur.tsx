@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import {
   ToeristischeVerhuurBBVergunning,
   ToeristischeVerhuurVergunningaanvraag,
@@ -11,21 +12,8 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
-
-function getStatusBB(decision: string) {
-  if (decision.includes('Verleend')) {
-    return 'Verleend';
-  }
-  if (decision.includes('Geweigerd')) {
-    return 'Geweigerd';
-  }
-  if (decision.includes('Ingetrokken')) {
-    return 'Ingetrokken';
-  }
-  return '';
-}
+import styles from './ToeristischeVerhuurDetail.module.scss';
 
 function useStatusLineItems(
   vergunning?:
@@ -68,20 +56,20 @@ function useStatusLineItems(
         documents: [],
         isActive:
           vergunning.caseType === 'B&B - vergunning'
-            ? vergunning.status !== 'Afgehandeld'
+            ? vergunning.status === 'In behandeling'
             : true,
         isChecked:
-          vergunning.caseType === 'B&B - vergunning'
-            ? vergunning.status !== 'Afgehandeld'
-            : vergunning.decision === 'Verleend',
+          vergunning.decision === 'Verleend' ||
+          vergunning.status === 'Afgehandeld' ||
+          vergunning.status === 'In behandeling',
       },
     ];
 
     if (vergunning.caseType === 'B&B - vergunning') {
       lineItems.push({
         id: 'item-3',
-        status: getStatusBB(vergunning.decision ?? ''),
-        datePublished: vergunning?.dateDecision ?? '',
+        status: vergunning.decision || '',
+        datePublished: vergunning?.dateDecision || '',
         description: '',
         documents: [],
         isActive: vergunning.status === 'Afgehandeld',
