@@ -179,7 +179,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-05-03",
-        "description": "Uw vergunningsaanvraag E-RVV is geregistreerd",
+        "description": "Uw vergunningsaanvraag E-RVV is in behandeling",
         "id": "vergunning-4137452018-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -190,7 +190,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-05-01",
-        "description": "Uw vergunningsaanvraag Evenement melding is geregistreerd",
+        "description": "Uw vergunningsaanvraag Evenement melding is in behandeling",
         "id": "vergunning-3816162611-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -201,7 +201,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-04-07",
-        "description": "Uw vergunningsaanvraag GPP is geregistreerd",
+        "description": "Uw vergunningsaanvraag GPP is in behandeling",
         "id": "vergunning-2047873912-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -211,19 +211,19 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-04-03",
-        "description": "Uw vergunningsaanvraag GPK is geregistreerd",
+        "datePublished": "2021-06-16",
+        "description": "Uw vergunning GPK is verlopen. U kunt een nieuwe vergunning aanvragen.",
         "id": "vergunning-1726584505-notification",
         "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/detail/1726584505",
+          "title": "Vergunning aanvragen",
+          "to": "https://formulieren.amsterdam.nl/TripleForms/LoketAmsterdam/formulier/nl-NL/evAmsterdam/scPVGAanvraagGehandicapte.aspx/Inleiding",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "Uw vergunning is verlopen",
       },
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
-        "description": "Uw vergunningsaanvraag Omzettingsvergunning is geregistreerd",
+        "description": "Uw vergunningsaanvraag Omzettingsvergunning is in behandeling",
         "id": "vergunning-1467362160-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -233,8 +233,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-07-02",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
         "id": "vergunning-1515509663-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -244,8 +244,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is ingetrokken",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
         "id": "vergunning-3607311896-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -255,8 +255,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-07-01",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is niet verleend",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
         "id": "vergunning-926876057-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -266,8 +266,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-07-02",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
         "id": "vergunning-3240785464-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -278,7 +278,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-1862294070-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -289,7 +289,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-881727095-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -300,7 +300,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-1619362356-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -311,7 +311,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-638795381-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -322,7 +322,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-1608378930-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -332,8 +332,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-25",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
+        "datePublished": "2020-06-17T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
         "id": "vergunning-2952768564-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -344,7 +344,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-08T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-4043653692-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -355,7 +355,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-05-03T00:00:00",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is in behandeling",
         "id": "vergunning-2226696250-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -480,9 +480,9 @@ Array [
     "cardtype": "Bestuurder",
     "caseType": "GPK",
     "dateDecision": null,
-    "dateEnd": "2021-04-03",
+    "dateEnd": "2021-05-06",
     "dateRequest": "2021-04-03",
-    "decision": null,
+    "decision": "Verleend",
     "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
     "id": "1726584505",
     "identifier": "Z/000/000008",
