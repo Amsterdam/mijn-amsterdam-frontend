@@ -2,8 +2,22 @@ import React, { useMemo } from 'react';
 
 import { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { dateSort, defaultDateFormat, isError } from '../../../universal/helpers';
-import { addTitleLinkComponent, Alert, ChapterIcon, Heading, InfoDetail, Linkd, LinkdInline, MaintenanceNotifications, OverviewPage, PageContent, PageHeading, SectionCollapsible, Table } from '../../components';
+import { defaultDateFormat, isError } from '../../../universal/helpers';
+import {
+  addTitleLinkComponent,
+  Alert,
+  ChapterIcon,
+  Heading,
+  InfoDetail,
+  Linkd,
+  LinkdInline,
+  MaintenanceNotifications,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
 
