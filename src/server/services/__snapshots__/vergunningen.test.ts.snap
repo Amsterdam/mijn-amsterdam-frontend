@@ -216,7 +216,7 @@ Object {
         "id": "vergunning-1726584505-notification",
         "link": Object {
           "title": "Vergunning aanvragen",
-          "to": "https://formulieren.amsterdam.nl/TripleForms/LoketAmsterdam/formulier/nl-NL/evAmsterdam/scPVGAanvraagGehandicapte.aspx/Inleiding",
+          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding",
         },
         "title": "Uw vergunning is verlopen",
       },

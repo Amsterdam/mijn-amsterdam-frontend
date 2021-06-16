@@ -287,7 +287,7 @@ export function createVergunningNotification(
       (item) => item.caseType === 'GPK'
     ) as GPK[];
     const GPKForm =
-      'https://formulieren.amsterdam.nl/TripleForms/LoketAmsterdam/formulier/nl-NL/evAmsterdam/scPVGAanvraagGehandicapte.aspx/Inleiding';
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
