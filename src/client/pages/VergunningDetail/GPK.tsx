@@ -1,6 +1,6 @@
 import { GPK as GPKType } from '../../../server/services';
+import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function GPK({ vergunning }: { vergunning: GPKType }) {
   return (
@@ -11,14 +11,11 @@ export function GPK({ vergunning }: { vergunning: GPKType }) {
         value={vergunning?.caseType || '-'}
       />
       <InfoDetail label="Omschrijving" value={vergunning?.title || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
+      <InfoDetail label="Kaart nummer" value={vergunning?.cardNumber || '-'} />
+      <InfoDetail label="Soort kaart" value={vergunning?.cardtype || '-'} />
       <InfoDetail
-        label="Reden aanvraag"
-        value={vergunning?.requestReason || '-'}
-      />
-      <InfoDetail
-        label="Bestuurder/Passagier"
-        value={vergunning?.driverPassenger || '-'}
+        label="Verval datum"
+        value={vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : ''}
       />
       {!!vergunning?.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
