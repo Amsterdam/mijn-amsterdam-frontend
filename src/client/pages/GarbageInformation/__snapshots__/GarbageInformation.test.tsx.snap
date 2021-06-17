@@ -178,11 +178,13 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
             >
               Opmerking
             </h3>
-            <p
+            <div
               class="Value"
             >
-              Hou het netjes!
-            </p>
+              <p>
+                Hou het netjes!
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -236,11 +238,13 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
             >
               Opmerking
             </h3>
-            <p
+            <div
               class="Value"
             >
-              Hou het netjes!
-            </p>
+              <p>
+                Hou het netjes!
+              </p>
+            </div>
           </div>
         </div>
       </div>
