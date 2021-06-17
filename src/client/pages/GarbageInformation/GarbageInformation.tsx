@@ -114,7 +114,11 @@ export default function GarbageInformation() {
         <GarbageInfoDetail label="Ophaaldag" value={item.ophaaldag} />
       )}
       {!!item.opmerking && (
-        <GarbageInfoDetail label="Opmerking" value={item.opmerking} />
+        <GarbageInfoDetail
+          label="Opmerking"
+          valueWrapperElement="div"
+          value={<InnerHtml el="p">{item.opmerking}</InnerHtml>}
+        />
       )}
     </GarbageSectionCollapsible>
   );
