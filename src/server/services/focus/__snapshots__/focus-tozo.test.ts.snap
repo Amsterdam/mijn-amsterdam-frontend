@@ -1658,13 +1658,13 @@ Object {
           "documents": Array [
             Object {
               "datePublished": "2021-07-14T00:00:00+01:00",
-              "id": "36164b",
+              "id": "36163",
               "title": "Brief intrekking aanvraag",
               "type": "pdf",
               "url": "/test-api/",
             },
           ],
-          "id": "1931175309",
+          "id": "1757256168",
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U hebt uw Tozo 5 aanvraag ingetrokken.",
@@ -1719,6 +1719,104 @@ Object {
           "product": "Tozo 5",
           "status": "Besluit",
           "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-07-14T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-14T00:00:00+01:00",
+              "id": "36171",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "335676523",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 5: Wij hebben een voorschot betaald",
+          "product": "Tozo 5",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-07-14T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-14T00:00:00+01:00",
+              "id": "25657",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "265347242",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 5: Wij hebben een voorschot betaald",
+          "product": "Tozo 5",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-07-14T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 5 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-14T00:00:00+01:00",
+              "id": "45650",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3384730635",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 5 terugbetalen. (besluit: 14 juli 2021).",
+          "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 5",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
+        },
+        Object {
+          "datePublished": "2021-07-14T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 5 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-14T00:00:00+01:00",
+              "id": "45645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "614802415",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 5 terugbetalen. (besluit: 14 juli 2021).",
+          "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 5",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
         },
       ],
       "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
