@@ -641,6 +641,70 @@
         "url": "",
         "description": "Tozo5 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
         "datePublished": "2021-06-14T00:00:00+01:00"
+      },
+      {
+        "id": "36167",
+        "documentCodeId": "36167",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Toekennen",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36165",
+        "documentCodeId": "36165",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Afwijzen",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36169",
+        "documentCodeId": "36169",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Afwijzen via batch",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36168",
+        "documentCodeId": "36168",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Toekennen bedrijfskapitaal",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36164",
+        "documentCodeId": "36164",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Hersteltermijn",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36164b",
+        "documentCodeId": "36164b",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Intrekken",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36166",
+        "documentCodeId": "36166",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Buiten behandeling laten",
+        "datePublished":"2021-07-14T00:00:00+01:00"
+      },
+      {
+        "id": "36170",
+        "documentCodeId": "36170",
+        "type": "",
+        "url": "",
+        "description": "Tozo5 Toekennen via batch",
+        "datePublished":"2021-07-14T00:00:00+01:00"
       }
     ],
     "uitkeringsspecificaties": [

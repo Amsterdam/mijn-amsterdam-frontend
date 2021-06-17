@@ -115,7 +115,7 @@ const toekennenLabels: FocusStepContent = {
         U hebt recht op ${productName(document)}. Bekijk de brief
         voor meer details.
       </p>
-      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="inline" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a>.</p>
+      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="inline" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij 'Wijziging of inkomsten doorgeven'</a></p>
       `,
 };
 
@@ -612,7 +612,7 @@ export const tozoDocumentLabelSet: Record<
     productSpecific: '',
   },
   '175670': {
-    omschrijving: 'Tozo  4 Intrekken',
+    omschrijving: 'Tozo 4 Intrekken',
     documentTitle: 'Brief intrekking aanvraag',
     stepType: 'intrekken',
     labels: intrekkenLabels,
@@ -688,4 +688,74 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 5',
     productSpecific: '',
   },
+  '36167': {
+    omschrijving: 'Tozo5 Toekennen',
+    documentTitle: 'Besluit toekenning uitkering',
+    stepType: 'besluit',
+    labels: toekennenLabels,
+    product: 'Tozo 5',
+    productSpecific: 'uitkering',
+  },
+  '36165': {
+    omschrijving: 'Tozo5 Afwijzen',
+    documentTitle: 'Besluit afwijzing',
+    stepType: 'besluit',
+    labels: afwijzenLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
+  '36169': {
+    omschrijving: 'Tozo5 Afwijzen via batch',
+    documentTitle: 'Besluit afwijzing',
+    stepType: 'besluit',
+    labels: afwijzenLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
+  '36168': {
+    omschrijving: 'Tozo5 Toekennen bedrijfskapitaal',
+    documentTitle: 'Besluit toekenning lening',
+    stepType: 'besluit',
+    labels: toekennenLabels,
+    product: 'Tozo 5',
+    productSpecific: 'lening',
+  },
+  '36164': {
+    omschrijving: 'Tozo5 Hersteltermijn',
+    documentTitle: 'Brief meer informatie',
+    stepType: 'herstelTermijn',
+    labels: herstelTermijnLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
+  '36164b': {
+    omschrijving: 'Tozo5 Intrekken',
+    documentTitle: 'Brief intrekking aanvraag',
+    stepType: 'besluit',
+    labels: intrekkenLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
+  '36166': {
+    omschrijving: 'Tozo5 Buiten behandeling laten',
+    documentTitle: 'Besluit buiten behandeling',
+    stepType: 'besluit',
+    labels: buitenBehandelingLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
+  '36170': {
+    omschrijving: 'Tozo5 Toekennen via batch',
+    documentTitle: 'Besluit toekenning uitkering',
+    stepType: 'besluit',
+    labels: toekennenLabels,
+    product: 'Tozo 5',
+    productSpecific: 'uitkering',
+  },
+
+  // xxx	TOZO 5 inkomstenverklaring	Verklaring
+  // xxx	Tozo5 Terugvorderen na inkomstenopgave	Terugvorderingsbesluit
+  // xxx	Tozo5 Terugvorderen na inkomstenopgave (batch)	Terugvorderingsbesluit
+  // xxx	Tozo5 Toekennen voorschot via batch	Voorschot
+  // xxx	Tozo5 Toekennen voorschot	Voorschot
 };
