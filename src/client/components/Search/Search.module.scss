@@ -22,10 +22,13 @@
   width: 100%;
   max-width: 41rem;
   background-color: $color-neutral-grey1;
-  // padding: 2rem;
+  padding: 2rem;
+}
+
+.NoResults:first-child {
+  margin-top: 0;
 }
 
 .ResultList {
   @include reset-list-style;
-  margin: 2rem;
 }

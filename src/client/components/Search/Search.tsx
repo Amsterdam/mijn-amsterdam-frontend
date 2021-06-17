@@ -86,34 +86,48 @@ export function Search({ onClose }: SearchProps) {
               onSubmit={(e) => {}}
               value={term}
             />
-            {!!term && !!results.length && (
+            {!!term && !!(results.length || resultsAmsterdamNL.length) && (
               <div className={styles.Results}>
-                <ul className={styles.ResultList}>
-                  {results.map((result) => (
-                    <li key={result.title}>
-                      <Linkd onClick={clearSearch} href={result.url}>
-                        {result.title}
-                      </Linkd>
-                      {/* <p>{result.item.description}</p> */}
-                    </li>
-                  ))}
-                </ul>
+                {!results.length && (
+                  <p className={styles.NoResults}>
+                    Geen resultaten op Mijn Amsterdam
+                  </p>
+                )}
+                {!!results.length && (
+                  <ul className={styles.ResultList}>
+                    {results.map((result) => (
+                      <li key={result.title}>
+                        <Linkd onClick={clearSearch} href={result.url}>
+                          {result.title}
+                        </Linkd>
+                        {/* <p>{result.item.description}</p> */}
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <Heading size="tiny">Resultaten van amsterdam.nl</Heading>
                 {resultsAmsterdamNLLoading && <span>Zoeken...</span>}
-                <ul className={styles.ResultList}>
-                  {resultsAmsterdamNL.map((result) => (
-                    <li key={result.title}>
-                      <Linkd
-                        onClick={clearSearch}
-                        external={true}
-                        href={result.url}
-                      >
-                        {result.title}
-                      </Linkd>
-                      {/* <p>{result.item.description}</p> */}
-                    </li>
-                  ))}
-                </ul>
+                {!resultsAmsterdamNL.length && (
+                  <p className={styles.NoResults}>
+                    Geen resultaten van Amsterdam.nl
+                  </p>
+                )}
+                {!!resultsAmsterdamNL.length && (
+                  <ul className={styles.ResultList}>
+                    {resultsAmsterdamNL.map((result) => (
+                      <li key={result.title}>
+                        <Linkd
+                          onClick={clearSearch}
+                          external={true}
+                          href={result.url}
+                        >
+                          {result.title}
+                        </Linkd>
+                        {/* <p>{result.item.description}</p> */}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             )}
           </ThemeProvider>
