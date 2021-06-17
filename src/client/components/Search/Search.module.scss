@@ -13,22 +13,46 @@
 }
 
 .SearchBarInner {
-  max-width: 41rem;
+  max-width: 60rem;
   margin: 0 auto;
 }
 
 .Results {
   position: absolute;
   width: 100%;
-  max-width: 41rem;
-  background-color: $color-neutral-grey1;
-  padding: 2rem;
+  max-width: 56rem;
+  background-color: $color-white;
+  padding: 1rem;
+  border: 0.1rem solid $color-neutral-grey4;
+  margin-top: 0;
+  border-top: 0;
+  // transform: translateX(-1rem);
 }
 
 .NoResults:first-child {
   margin-top: 0;
 }
 
+.ResultSet {
+  margin-bottom: 2rem;
+}
+
 .ResultList {
   @include reset-list-style;
+}
+.ResultListItem {
+  margin: 0;
+}
+.ResultListItem a {
+  display: block;
+  padding: 0.6rem 0;
+}
+
+.ResultSetTitle {
+  color: $color-neutral-grey4;
+  border-bottom: 0.1rem solid $color-neutral-grey3;
+  font-weight: 400;
+  padding-bottom: 0.5rem;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
 }

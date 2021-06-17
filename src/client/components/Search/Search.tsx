@@ -11,6 +11,47 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import styles from './Search.module.scss';
 import Heading from '../Heading/Heading';
+import { PageEntry } from './staticIndex';
+
+interface ResultSetProps {
+  results: PageEntry[];
+  title: string;
+  noResultsMessage?: string;
+  onClickResult: () => void;
+  isLoading: boolean;
+}
+
+function ResultSet({
+  results,
+  title,
+  isLoading = false,
+  noResultsMessage = 'Geen resultaten',
+  onClickResult,
+}: ResultSetProps) {
+  return (
+    <div className={styles.ResultSet}>
+      <Heading className={styles.ResultSetTitle} size="tiny">
+        {title}
+      </Heading>
+      {!results.length && (
+        <p className={styles.NoResults}>{noResultsMessage}</p>
+      )}
+      {isLoading && <p>Zoeken..</p>}
+      {!!results.length && (
+        <ul className={styles.ResultList}>
+          {results.map((result) => (
+            <li key={result.title} className={styles.ResultListItem}>
+              <Linkd onClick={onClickResult} href={result.url}>
+                {result.title}
+              </Linkd>
+              {/* <p>{result.item.description}</p> */}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 interface SearchProps {
   onClose?: () => void;
@@ -37,19 +78,9 @@ export function Search({ onClose }: SearchProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [VERGUNNINGEN.content]);
 
-  const search = useDebouncedCallback((term: string) => {
-    setResultsAmsterdamNLLoading(true);
-
-    const fuseResults = fuse.current
-      .search(term)
-      .slice(0, 5)
-      .map((result) => result.item);
-
-    setResults(fuseResults);
-
+  const searchAmsterdamNLDebounced = useDebouncedCallback(() => {
     searchAmsterdamNL(term)
       .then(({ data }) => {
-        console.log('swiftResults', data);
         setResultsAmsterdamNL(data);
         setResultsAmsterdamNLLoading(false);
       })
@@ -57,6 +88,21 @@ export function Search({ onClose }: SearchProps) {
         console.error(err);
       });
   }, 400);
+
+  const search = useCallback(
+    (term: string) => {
+      setResultsAmsterdamNLLoading(true);
+
+      const fuseResults = fuse.current
+        .search(term)
+        .slice(0, 5)
+        .map((result) => result.item);
+
+      setResults(fuseResults);
+      searchAmsterdamNLDebounced();
+    },
+    [setResults, searchAmsterdamNLDebounced, fuse]
+  );
 
   const clearSearch = useCallback(() => {
     setTerm('');
@@ -88,46 +134,18 @@ export function Search({ onClose }: SearchProps) {
             />
             {!!term && !!(results.length || resultsAmsterdamNL.length) && (
               <div className={styles.Results}>
-                {!results.length && (
-                  <p className={styles.NoResults}>
-                    Geen resultaten op Mijn Amsterdam
-                  </p>
-                )}
-                {!!results.length && (
-                  <ul className={styles.ResultList}>
-                    {results.map((result) => (
-                      <li key={result.title}>
-                        <Linkd onClick={clearSearch} href={result.url}>
-                          {result.title}
-                        </Linkd>
-                        {/* <p>{result.item.description}</p> */}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <Heading size="tiny">Resultaten van amsterdam.nl</Heading>
-                {resultsAmsterdamNLLoading && <span>Zoeken...</span>}
-                {!resultsAmsterdamNL.length && (
-                  <p className={styles.NoResults}>
-                    Geen resultaten van Amsterdam.nl
-                  </p>
-                )}
-                {!!resultsAmsterdamNL.length && (
-                  <ul className={styles.ResultList}>
-                    {resultsAmsterdamNL.map((result) => (
-                      <li key={result.title}>
-                        <Linkd
-                          onClick={clearSearch}
-                          external={true}
-                          href={result.url}
-                        >
-                          {result.title}
-                        </Linkd>
-                        {/* <p>{result.item.description}</p> */}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ResultSet
+                  isLoading={false}
+                  title="Resultaten van Mijn Amsterdam"
+                  results={results}
+                  onClickResult={clearSearch}
+                />
+                <ResultSet
+                  isLoading={resultsAmsterdamNLLoading}
+                  title="Resultaten van Amsterdam.nl"
+                  results={resultsAmsterdamNL}
+                  onClickResult={clearSearch}
+                />
               </div>
             )}
           </ThemeProvider>

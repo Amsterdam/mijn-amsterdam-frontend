@@ -245,7 +245,7 @@ export async function fetchVergunningen(
                 id: vergunning.id,
               })
             : '/',
-          title: vergunning.identifier,
+          title: `Vergunning > ${vergunning.caseType} > ${vergunning.identifier}`,
         },
       };
     });
