@@ -116,7 +116,8 @@ export default function GarbageInformation() {
       {!!item.opmerking && (
         <GarbageInfoDetail
           label="Opmerking"
-          value={<InnerHtml>{item.opmerking}</InnerHtml>}
+          valueWrapperElement="div"
+          value={<InnerHtml el="p">{item.opmerking}</InnerHtml>}
         />
       )}
     </GarbageSectionCollapsible>
