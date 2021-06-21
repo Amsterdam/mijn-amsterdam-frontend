@@ -284,8 +284,8 @@ export function createVergunningNotification(
 
   if (item.caseType === 'GPK') {
     const allGPKItems = items.filter(
-      (item) => item.caseType === 'GPK'
-    ) as GPK[];
+      (item: Vergunning): item is GPK => item.caseType === 'GPK'
+    );
     const GPKForm =
       'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
     switch (true) {
