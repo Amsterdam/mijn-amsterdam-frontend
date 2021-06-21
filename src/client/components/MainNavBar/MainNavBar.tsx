@@ -15,6 +15,7 @@ import {
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
+import { useKeyUp } from '../../hooks/useKeyUp';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
@@ -225,6 +226,12 @@ export default function MainNavBar({
   }, [myChapterItems, profileType, termReplace]);
 
   const [isSearchActive, setSearchActive] = useState(false);
+
+  useKeyUp((event) => {
+    if (event.key === 'z' && !isSearchActive) {
+      setSearchActive(true);
+    }
+  });
 
   return (
     <nav
