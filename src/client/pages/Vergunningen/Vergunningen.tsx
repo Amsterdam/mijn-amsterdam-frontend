@@ -41,10 +41,6 @@ export default function Vergunningen() {
       .map((item) => {
         return {
           ...item,
-          title:
-            item.title.length > 45
-              ? item.title.slice(0, 40) + '...'
-              : item.title,
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
