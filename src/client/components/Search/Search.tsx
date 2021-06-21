@@ -147,8 +147,6 @@ export function Search({ onClose }: SearchProps) {
 
       const allResults = [...results, ...resultsAmsterdamNL];
 
-      console.log('rs', results, allResults);
-
       if (!isEscape && !allResults.length) {
         return;
       }
@@ -160,7 +158,6 @@ export function Search({ onClose }: SearchProps) {
           const lastIndex = allResults.length - 1;
 
           if (isArrowDown) {
-            console.log(allResults[nextIndex]);
             if (allResults[nextIndex]) {
               setSelectedIndex(nextIndex);
             } else {
