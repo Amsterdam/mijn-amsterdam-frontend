@@ -148,7 +148,7 @@ export function transformVergunningenToVerhuur(
     .map((vergunning) => {
       const isActual = vergunning.dateEnd
         ? !isDateInPast(vergunning.dateEnd)
-        : false;
+        : true;
       const title = transformToeristischeVerhuurVergunningTitle(
         vergunning,
         isActual
