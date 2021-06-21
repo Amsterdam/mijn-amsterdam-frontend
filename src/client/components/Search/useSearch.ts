@@ -1,10 +1,8 @@
 import axios, { CancelTokenSource } from 'axios';
-import { Vergunning } from '../../../server/services';
-import { DocumentTitles } from '../../../universal/config/chapter';
-import { AppRoutes } from '../../../universal/config/routes';
-import { pick } from '../../../universal/helpers';
 import Fuse from 'fuse.js';
 import { useRef } from 'react';
+import { Vergunning } from '../../../server/services';
+import { pick } from '../../../universal/helpers';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { PageEntry, staticIndex } from './staticIndex';
 

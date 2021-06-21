@@ -1,4 +1,6 @@
+import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import { ExternalUrls } from '../../config/app';
 
 export interface PageEntry {
   url: string;
@@ -120,7 +122,7 @@ export const staticIndex: PageEntry[] = [
     ],
   },
   {
-    url: AppRoutes.NOTIFICATIONS,
+    url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
     title: DocumentTitles[AppRoutes.NOTIFICATIONS],
     description: `Alle belangrijke meldingen`,
     keywords: ['Nieuws', 'Updates', 'Status', 'Betalen', 'Overzicht'],
@@ -255,7 +257,7 @@ export const staticIndex: PageEntry[] = [
     ],
   },
   {
-    url: AppRoutes.BELASTINGEN,
+    url: ExternalUrls.SSO_BELASTINGEN,
     title: 'Belastingen',
     description: `Een overzicht van de belastingen.`,
     keywords: [
@@ -268,13 +270,13 @@ export const staticIndex: PageEntry[] = [
     ],
   },
   {
-    url: AppRoutes.ERFPACHT,
+    url: ExternalUrls.SSO_ERFPACHT + '',
     title: 'Erfpacht',
     description: `Een overzicht van de erfpacht.`,
     keywords: ['Erfpacht', 'Canon', 'Afkopen', 'Betalen'],
   },
   {
-    url: AppRoutes.MILIEUZONE,
+    url: ExternalUrls.SSO_MILIEUZONE + '',
     title: 'Milieuzone',
     description: `Een overzicht van milieuzone.`,
     keywords: ['Milieuzone', 'Ontheffing'],

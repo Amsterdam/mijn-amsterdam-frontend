@@ -12,7 +12,7 @@ import Linkd from '../Button/Button';
 import styles from './Search.module.scss';
 import Heading from '../Heading/Heading';
 import { PageEntry } from './staticIndex';
-import { useKeyPress } from '../../hooks/useKeyPress';
+import { useKeyUp } from '../../hooks/useKeyUp';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -70,8 +70,8 @@ interface SearchProps {
 
 export function Search({ onClose }: SearchProps) {
   const fuse = useSearch();
-  const [results, setResults] = useState<any[]>([]);
-  const [resultsAmsterdamNL, setResultsAmsterdamNL] = useState<any[]>([]);
+  const [results, setResults] = useState<PageEntry[]>([]);
+  const [resultsAmsterdamNL, setResultsAmsterdamNL] = useState<PageEntry[]>([]);
   const [resultsAmsterdamNLLoading, setResultsAmsterdamNLLoading] =
     useState(false);
   const [term, setTerm] = useState('');
@@ -89,9 +89,6 @@ export function Search({ onClose }: SearchProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [VERGUNNINGEN.content]);
 
-  const isArrowUp = useKeyPress('ArrowUp');
-  const isArrowDown = useKeyPress('ArrowDown');
-  const isEnter = useKeyPress('Enter');
   const history = useHistory();
 
   const searchAmsterdamNLDebounced = useDebouncedCallback(() => {
@@ -124,61 +121,84 @@ export function Search({ onClose }: SearchProps) {
     setTerm('');
     setResults([]);
     setResultsAmsterdamNL([]);
-    onClose && onClose();
-  }, [setTerm, setResults, onClose]);
+  }, [setTerm, setResults]);
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     if (term) {
-      setSelectedIndex(-1);
+      setSelectedIndex(0);
       search(term);
     }
   }, [term, search]);
 
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const keyHandler = useCallback(
+    (event: KeyboardEvent) => {
+      const isArrowDown = event.key === 'ArrowDown';
+      const isArrowUp = event.key === 'ArrowUp';
+      const isEnter = event.key === 'Enter';
+      const isEscape = event.key === 'Escape';
 
-  useEffect(() => {
-    if (!resultsAmsterdamNLLoading && (isArrowDown || isArrowUp || isEnter)) {
+      if (!(isArrowDown || isArrowUp || isEnter || isEscape)) {
+        return;
+      }
+
+      event.preventDefault();
+
       const allResults = [...results, ...resultsAmsterdamNL];
-      if (!allResults.length) {
+
+      console.log('rs', results, allResults);
+
+      if (!isEscape && !allResults.length) {
         return;
       }
 
-      if (isEnter) {
-        if (selectedIndex < results.length) {
-          history.push(allResults[selectedIndex].url);
-        } else {
-          window.location.href = allResults[selectedIndex].url;
-        }
-        return;
-      }
+      switch (true) {
+        case isArrowDown || isArrowUp:
+          const prevIndex = selectedIndex - 1;
+          const nextIndex = selectedIndex + 1;
+          const lastIndex = allResults.length - 1;
 
-      const prevIndex = selectedIndex - 1;
-      const nextIndex = selectedIndex + 1;
-      const lastIndex = allResults.length - 1;
-
-      if (isArrowDown) {
-        if (allResults[nextIndex]) {
-          setSelectedIndex(nextIndex);
-        } else {
-          setSelectedIndex(0);
-        }
-      } else if (isArrowUp) {
-        if (allResults[prevIndex]) {
-          setSelectedIndex(prevIndex);
-        } else {
-          setSelectedIndex(lastIndex);
-        }
+          if (isArrowDown) {
+            console.log(allResults[nextIndex]);
+            if (allResults[nextIndex]) {
+              setSelectedIndex(nextIndex);
+            } else {
+              setSelectedIndex(0);
+            }
+          } else if (isArrowUp) {
+            if (allResults[prevIndex]) {
+              setSelectedIndex(prevIndex);
+            } else {
+              setSelectedIndex(lastIndex);
+            }
+          }
+          break;
+        case isEnter:
+          if (selectedIndex < results.length) {
+            history.push(allResults[selectedIndex].url);
+          } else {
+            window.location.href = allResults[selectedIndex].url;
+          }
+          onClose && onClose();
+          break;
+        case isEscape:
+          onClose && onClose();
+          break;
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isArrowDown,
-    isArrowUp,
-    results,
-    resultsAmsterdamNL,
-    resultsAmsterdamNLLoading,
-    isEnter,
-  ]);
+    },
+    [
+      setSelectedIndex,
+      onClose,
+      results,
+      resultsAmsterdamNL,
+      selectedIndex,
+      history,
+    ]
+  );
+
+  useKeyUp(keyHandler);
+
   return (
     <div className={styles.Search}>
       <div className={styles.SearchBar}>
