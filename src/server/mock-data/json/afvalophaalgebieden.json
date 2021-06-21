@@ -1,1 +1,39 @@
-{"result":{"features":[{"properties":{"aanbiedwijze":"Breng uw restafval naar een container voor restafval.","dataset":"huisvuil","mutatie":"2021-05-31","ophaaldag":null,"opmerking":null,"stadsdeel_code":"M","stadsdeel_id":"3630011872039","stadsdeel_naam":"Oost","tijd_tot":null,"tijd_vanaf":null,"type":"huisvuil"}},{"properties":{"dataset":"grofvuil","frequentie":null,"mutatie":"2020-28-05","ophaaldag":"Op afspraak","ophalen":"ja","opmerking":"Maak een afspraak online of bel 14 020","stadsdeel_code":"M","stadsdeel_id":"3630011872039","stadsdeel_naam":"Oost","tijd_tot":null,"tijd_vanaf":null,"type":"grofvuil","website":null}}],"type":"FeatureCollection"}}
+{
+  "result": {
+    "features": [
+      {
+        "properties": {
+          "aanbiedwijze": "Breng uw restafval  naar een container voor restafval.",
+          "dataset": "huisvuil",
+          "mutatie": "2020-02-10",
+          "ophaaldag": null,
+          "opmerking": null,
+          "stadsdeel_code": "E",
+          "stadsdeel_id": "3630011872036",
+          "stadsdeel_naam": "West",
+          "tijd_tot": null,
+          "tijd_vanaf": null,
+          "type": "huisvuil"
+        }
+      },
+      {
+        "properties": {
+          "dataset": "grofvuil",
+          "frequentie": null,
+          "mutatie": "2020-02-10",
+          "ophaaldag": "Dinsdag",
+          "ophalen": "ja",
+          "opmerking": "Maak een afspraak <a rel='external noreferrer noopener' href='https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx'>online</a> of bel 14 020",
+          "stadsdeel_code": "E",
+          "stadsdeel_id": "3630011872036",
+          "stadsdeel_naam": "West",
+          "tijd_tot": "Dinsdag 07.00",
+          "tijd_vanaf": "Maandag vanaf 21.00",
+          "type": "grofvuil",
+          "website": null
+        }
+      }
+    ],
+    "type": "FeatureCollection"
+  }
+}

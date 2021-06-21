@@ -1,16 +1,25 @@
-import { differenceInMonths } from 'date-fns';
+import { differenceInMonths, format } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 
 import { Chapters } from '../../universal/config/index';
 import { AppRoutes } from '../../universal/config/routes';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
+import {
+  dateSort,
+  isDateInPast,
+  monthsFromNow,
+} from '../../universal/helpers/date';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
-import { LinkProps, MyCase, MyNotification } from '../../universal/types/App.types';
+import {
+  LinkProps,
+  MyCase,
+  MyNotification,
+} from '../../universal/types/App.types';
 import { GenericDocument } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
@@ -47,7 +56,9 @@ export interface TVMRVVObject extends VergunningBase {
 
 export interface GPK extends VergunningBase {
   caseType: 'GPK';
-  driverPassenger: 'driver' | 'passenger';
+  cardtype: 'driver' | 'passenger';
+  cardNumber: string | null;
+  dateEnd: string | null;
   location: string | null;
   requestReason: string | null;
 }
@@ -136,6 +147,8 @@ export interface VergunningOptions {
   appRoute: string | ((vergunning: Vergunning) => string);
 }
 
+const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
+
 export function transformVergunningenData(
   responseData: VergunningenSourceData
 ): VergunningenData {
@@ -215,6 +228,28 @@ export async function fetchVergunningen(
   return response;
 }
 
+export function isNearEndDate(vergunning: ToeristischeVerhuurVergunning | GPK) {
+  if (!vergunning.dateEnd) {
+    return false;
+  }
+
+  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+
+  return (
+    !isExpired(vergunning) &&
+    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
+    monthsTillEnd >= 0
+  );
+}
+
+export function isExpired(vergunning: ToeristischeVerhuurVergunning | GPK) {
+  if (!vergunning.dateEnd) {
+    return false;
+  }
+
+  return isDateInPast(vergunning.dateEnd);
+}
+
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {
     id: `vergunning-${item.id}-case`,
@@ -225,44 +260,73 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
   };
 }
 
-export function createVergunningNotification(item: Vergunning): MyNotification {
+export function hasOtherValidVergunningOfSameType(
+  items: ToeristischeVerhuurVergunning[] | GPK[],
+  item: ToeristischeVerhuurVergunning | GPK
+): boolean {
+  return items.some(
+    (otherVergunning: ToeristischeVerhuurVergunning | GPK) =>
+      otherVergunning.caseType === item.caseType &&
+      otherVergunning.identifier !== item.identifier &&
+      !isExpired(otherVergunning)
+  );
+}
+
+export function createVergunningNotification(
+  item: Vergunning,
+  items: Vergunning[]
+): MyNotification {
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
+  let linkTo = item.link.to;
+  let cta = 'Bekijk details';
 
-  // let dateEnd = item.dateEnd ? new Date(item.dateEnd) : new Date();
-
-  // switch (item.caseType) {
-  //   case 'EvenementenMelding':
-  //   case 'TVM - RVV - Object':
-  //     dateEnd = new Date(
-  //       `${item.dateEnd}${item.timeEnd ? `T${item.timeEnd}` : ''}`
-  //     );
-  // }
-
-  switch (true) {
-    case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
-      description = `Uw vergunningsaanvraag ${item.caseType} is niet verleend`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status === 'Afgehandeld' && item.decision === 'Ingetrokken':
-      description = `Uw vergunningsaanvraag ${item.caseType} is ingetrokken`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status === 'Afgehandeld' && item.decision === 'Verleend':
-      description = `Uw vergunningsaanvraag ${item.caseType} is verleend`;
-      datePublished = item.dateDecision || item.dateRequest;
-      break;
-    case item.status !== 'Afgehandeld':
-      description = `Uw vergunningsaanvraag ${item.caseType} is geregistreerd`;
-      break;
-    case item.status === 'Afgehandeld':
-      description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
-      break;
-    // case new Date() >= dateEnd:
-    //   title = 'Uw vergunning is verlopen';
-    //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
-    //   break;
+  if (item.caseType === 'GPK') {
+    const allGPKItems = items.filter(
+      (item: Vergunning): item is GPK => item.caseType === 'GPK'
+    );
+    const GPKForm =
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
+    switch (true) {
+      case item.decision === 'Verleend' &&
+        isNearEndDate(item) &&
+        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        title = `Uw vergunning loopt af`;
+        description = `Uw vergunning ${item.caseType} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
+        cta = `Vergunning aanvragen`;
+        linkTo = GPKForm;
+        datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+      case item.decision === 'Verleend' &&
+        isExpired(item) &&
+        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        title = `Uw vergunning is verlopen`;
+        description = `Uw vergunning ${item.caseType} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
+        cta = 'Vergunning aanvragen';
+        linkTo = GPKForm;
+        datePublished = format(new Date(), 'yyyy-MM-dd');
+        break;
+      case item.status !== 'Afgehandeld':
+        description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
+        break;
+      case item.status === 'Afgehandeld':
+        description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+        break;
+    }
+  } else {
+    switch (true) {
+      case item.status !== 'Afgehandeld':
+        description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
+        break;
+      case item.status === 'Afgehandeld':
+        description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+        break;
+      // case new Date() >= dateEnd:
+      //   title = 'Uw vergunning is verlopen';
+      //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+      //   break;
+    }
   }
 
   return {
@@ -272,8 +336,8 @@ export function createVergunningNotification(item: Vergunning): MyNotification {
     title,
     description,
     link: {
-      to: item.link.to,
-      title: 'Bekijk details',
+      to: linkTo,
+      title: cta,
     },
   };
 }
@@ -320,7 +384,9 @@ export async function fetchVergunningenGenerated(
               (vergunning.dateDecision &&
                 isActualNotification(vergunning.dateDecision, compareToDate))
           )
-          .map(createVergunningNotification)
+          .map((vergunning) =>
+            createVergunningNotification(vergunning, VERGUNNINGEN.content)
+          )
       : [];
 
     return apiSuccesResult({

@@ -11,8 +11,9 @@ export function GPP({ vergunning }: { vergunning: GPPType }) {
         value={vergunning?.caseType || '-'}
       />
       <InfoDetail label="Omschrijving" value={vergunning?.title || '-'} />
-      <InfoDetail label="Kenteken" value={vergunning?.kenteken || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
+      <InfoDetail label="Kenteken" value={vergunning?.kenteken || '-'} />
+
       {!!vergunning?.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

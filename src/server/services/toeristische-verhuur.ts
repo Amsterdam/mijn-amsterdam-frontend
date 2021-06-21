@@ -15,7 +15,6 @@ import {
   formatDurationBetweenDates,
   isCurrentYear,
   isDateInPast,
-  monthsFromNow,
 } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
@@ -25,8 +24,11 @@ import {
   BBVergunning,
   fetchVergunningen,
   isActualNotification,
+  isExpired,
+  isNearEndDate,
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
+  hasOtherValidVergunningOfSameType,
   VakantieverhuurVergunningaanvraag,
   Vergunning,
 } from './vergunningen';
@@ -93,8 +95,6 @@ export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuur
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
-
-const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export function transformToeristischeVerhuurVergunningTitle(
   vergunning: VakantieverhuurVergunning,
@@ -247,28 +247,6 @@ export const fetchToeristischeVerhuur = memoize(
   }
 );
 
-function isNearEndDate(vergunning: ToeristischeVerhuurVergunning) {
-  if (!vergunning.dateEnd) {
-    return false;
-  }
-
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
-
-  return (
-    !isExpired(vergunning) &&
-    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0
-  );
-}
-
-function isExpired(vergunning: ToeristischeVerhuurVergunning) {
-  if (!vergunning.dateEnd) {
-    return false;
-  }
-
-  return isDateInPast(vergunning.dateEnd);
-}
-
 export function createToeristischeVerhuurNotification(
   item: ToeristischeVerhuurVergunning,
   items: ToeristischeVerhuurVergunning[]
@@ -291,24 +269,14 @@ export function createToeristischeVerhuurNotification(
         id: item.id,
       }
     );
-
     const ctaLinkToAanvragen =
       item.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
         : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
-
-    const hasOtherValidVergunningOfSameType = items.some((otherVergunning) => {
-      return (
-        otherVergunning.caseType === item.caseType &&
-        otherVergunning.identifier !== item.identifier &&
-        !isExpired(otherVergunning)
-      );
-    });
-
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
-        !hasOtherValidVergunningOfSameType:
+        !hasOtherValidVergunningOfSameType(items, item):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
@@ -317,7 +285,7 @@ export function createToeristischeVerhuurNotification(
         break;
       case item.decision === 'Verleend' &&
         isExpired(item) &&
-        !hasOtherValidVergunningOfSameType:
+        !hasOtherValidVergunningOfSameType(items, item):
         title = `Uw ${vergunningTitleLower} is verlopen`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
