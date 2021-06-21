@@ -133,7 +133,9 @@ export default function ToeristischeVerhuur() {
     }
   };
 
-  const hasBothPermits = !!(hasVergunningenVakantieVerhuur && hasVergunningBB);
+  const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
+  const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
+
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -170,7 +172,7 @@ export default function ToeristischeVerhuur() {
             </Linkd>
           )}
 
-          {!hasBothPermits && (
+          {hasPermits && !hasBothPermits && (
             <>
               <br />
               <Linkd
