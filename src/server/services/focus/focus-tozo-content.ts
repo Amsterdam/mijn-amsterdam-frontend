@@ -786,6 +786,14 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 5',
     productSpecific: '',
   },
+  '838': {
+    omschrijving: 'Tozo 5 inkomstenwijziging',
+    documentTitle: 'Wijziging inkomsten',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 5',
+    productSpecific: '',
+  },
 
   // xxx	TOZO 5 inkomstenverklaring	Verklaring
 };

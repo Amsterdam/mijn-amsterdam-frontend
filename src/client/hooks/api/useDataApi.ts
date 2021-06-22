@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import axios, { AxiosRequestConfig, AxiosTransformer } from 'axios';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';

@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { useCallback, useEffect, useState } from 'react';
 import { Unshaped } from '../../universal/types';
 
