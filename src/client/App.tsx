@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { ErrorBoundary } from 'react-error-boundary';
 import {

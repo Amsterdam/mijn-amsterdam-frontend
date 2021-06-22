@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
