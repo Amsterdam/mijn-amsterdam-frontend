@@ -61,7 +61,7 @@ function useStatusLineItems(
         isActive:
           vergunning.caseType === 'B&B - vergunning'
             ? vergunning.status === 'In behandeling'
-            : true,
+            : vergunning.decision !== 'Ingetrokken',
         isChecked:
           vergunning.decision === 'Verleend' ||
           vergunning.status === 'Afgehandeld' ||
