@@ -51,7 +51,11 @@ function useStatusLineItems(
           vergunning.caseType === 'B&B - vergunning'
             ? 'In behandeling'
             : 'Verleend',
-        datePublished: vergunning.dateRequest,
+        datePublished:
+          vergunning.status === 'Afgehandeld' ||
+          vergunning.status === 'In behandeling'
+            ? vergunning.dateRequest
+            : '',
         description: '',
         documents: [],
         isActive:
@@ -68,7 +72,10 @@ function useStatusLineItems(
     if (vergunning.caseType === 'B&B - vergunning') {
       lineItems.push({
         id: 'item-3',
-        status: vergunning.decision || '',
+        status:
+          vergunning.status === 'Afgehandeld'
+            ? vergunning.decision || ''
+            : 'Afgehandeld',
         datePublished: vergunning?.dateDecision || '',
         description: '',
         documents: [],
