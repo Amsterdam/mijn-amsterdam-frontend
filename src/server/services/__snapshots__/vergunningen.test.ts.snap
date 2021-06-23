@@ -185,7 +185,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/4137452018",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "E-RVV in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -196,7 +196,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/3816162611",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "Evenement melding in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -207,18 +207,18 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/2047873912",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "GPP in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-06-22",
-        "description": "Uw vergunning GPK is verlopen. U kunt een nieuwe vergunning aanvragen.",
+        "datePublished": "2021-06-23",
+        "description": "Uw Europese gehandicaptenparkeerkaart (GPK) is verlopen.",
         "id": "vergunning-1726584505-notification",
         "link": Object {
-          "title": "Vergunning aanvragen",
+          "title": "Vraag een nieuwe GPK aan",
           "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding",
         },
-        "title": "Uw vergunning is verlopen",
+        "title": "GPK is verlopen",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -229,7 +229,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/1467362160",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "Omzettingsvergunning in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -240,7 +240,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/1515509663",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object fgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -251,7 +251,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/3607311896",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object fgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -262,7 +262,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/926876057",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object fgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -273,7 +273,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/3240785464",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object fgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -284,7 +284,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/1862294070",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -295,7 +295,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/881727095",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -306,7 +306,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/1619362356",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -317,7 +317,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/638795381",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -328,7 +328,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/1608378930",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -339,7 +339,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/2952768564",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object fgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -350,7 +350,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/4043653692",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -361,7 +361,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/detail/2226696250",
         },
-        "title": "Vergunningsaanvraag",
+        "title": "TVM - RVV - Object in behandeling",
       },
     ],
   },
