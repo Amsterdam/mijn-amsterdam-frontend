@@ -50,7 +50,10 @@ export default function ToeristischeVerhuur() {
     for (const vergunning of content.vergunningen) {
       const displayVergunning = {
         ...vergunning,
-        status: vergunning.status,
+        status:
+          vergunning.status === 'Afgehandeld'
+            ? vergunning.decision ?? vergunning.status
+            : vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
@@ -216,63 +219,63 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
+      {(hasBothPermits || !hasVergunningBB) && (
+        <>
+          <SectionCollapsible
+            id="SectionCollapsible-planned-verhuur"
+            title="Geplande verhuur"
+            className={styles.SectionBorderTop}
+            startCollapsed={false}
+            hasItems={!!plannedVerhuur.length}
+            noItemsMessage="Er zijn nog geen geplande verhuur gevonden"
+            track={{
+              category: 'Toeristische verhuur / Geplande Verhuur',
+              name: 'Datatabel',
+            }}
+          >
+            <Table
+              className={styles.Table}
+              titleKey="dateStart"
+              displayProps={DISPLAY_PROPS_VERHUUR}
+              items={plannedVerhuur}
+            />
+          </SectionCollapsible>
+          <SectionCollapsible
+            id="SectionCollapsible-cancelled-verhuur"
+            title="Geannuleerde verhuur"
+            startCollapsed={isCollapsed('geannuleerd')}
+            noItemsMessage="Er zijn nog geen geanuleerde verhuur gevonden"
+            track={{
+              category: 'Toeristische verhuur / afgemeld Verhuur',
+              name: 'Datatabel',
+            }}
+          >
+            <Table
+              className={styles.Table}
+              titleKey="dateStart"
+              displayProps={DISPLAY_PROPS_VERHUUR}
+              items={cancelledVerhuur}
+            />
+          </SectionCollapsible>
 
-      <SectionCollapsible
-        id="SectionCollapsible-planned-verhuur"
-        title="Geplande verhuur"
-        className={styles.SectionBorderTop}
-        startCollapsed={false}
-        hasItems={!!plannedVerhuur.length}
-        noItemsMessage="U hebt dit jaar nog geen geplande verhuur"
-        track={{
-          category: 'Toeristische verhuur / Geplande Verhuur',
-          name: 'Datatabel',
-        }}
-      >
-        <Table
-          className={styles.Table}
-          titleKey="dateStart"
-          displayProps={DISPLAY_PROPS_VERHUUR}
-          items={plannedVerhuur}
-        />
-      </SectionCollapsible>
-
-      {!!cancelledVerhuur.length && (
-        <SectionCollapsible
-          id="SectionCollapsible-cancelled-verhuur"
-          title="Geannuleerde verhuur"
-          startCollapsed={isCollapsed('geannuleerd')}
-          track={{
-            category: 'Toeristische verhuur / afgemeld Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={cancelledVerhuur}
-          />
-        </SectionCollapsible>
-      )}
-
-      {!!previousVerhuur.length && (
-        <SectionCollapsible
-          id="SectionCollapsible-previous-verhuur"
-          title="Afgelopen verhuur"
-          startCollapsed={isCollapsed('previous')}
-          track={{
-            category: 'Toeristische verhuur / afgemeld Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={previousVerhuur}
-          />
-        </SectionCollapsible>
+          <SectionCollapsible
+            id="SectionCollapsible-previous-verhuur"
+            title="Afgelopen verhuur"
+            noItemsMessage="Er zijn nog geen afgelopen verhuur gevonden"
+            startCollapsed={isCollapsed('previous')}
+            track={{
+              category: 'Toeristische verhuur / afgemeld Verhuur',
+              name: 'Datatabel',
+            }}
+          >
+            <Table
+              className={styles.Table}
+              titleKey="dateStart"
+              displayProps={DISPLAY_PROPS_VERHUUR}
+              items={previousVerhuur}
+            />
+          </SectionCollapsible>
+        </>
       )}
       <SectionCollapsible
         id="SectionCollapsible-vergunningen"

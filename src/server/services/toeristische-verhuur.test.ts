@@ -32,7 +32,8 @@ describe('Toeristische verhuur service', () => {
   afterAll(() => {
     axMock.restore();
     ApiConfig.VERGUNNINGEN.url = TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = TOERISTISCHE_VERHUUR_REGISTRATIES_URL;
+    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url =
+      TOERISTISCHE_VERHUUR_REGISTRATIES_URL;
   });
 
   afterEach(() => {
@@ -134,7 +135,7 @@ describe('Toeristische verhuur service', () => {
         dateRequest: '2021-06-01',
         dateStart: '2029-07-10',
         dateEnd: '2029-07-14',
-        title: 'Geplande vakantieverhuur',
+        title: 'Geplande verhuur',
         status: 'Afgehandeld',
       },
       {
@@ -143,7 +144,7 @@ describe('Toeristische verhuur service', () => {
         dateRequest: '2021-06-01',
         dateStart: '2021-06-05',
         dateEnd: '2021-06-10',
-        title: 'Geannuleerde vakantieverhuur',
+        title: 'Geannuleerde verhuur',
         status: 'Ontvangen',
       },
       {

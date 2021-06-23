@@ -108,7 +108,7 @@ export function transformToeristischeVerhuurVergunningTitle(
           : !isActual
           ? 'Afgelopen'
           : 'Geplande'
-      } vakantieverhuur`;
+      } verhuur`;
     case 'Vakantieverhuur vergunningsaanvraag':
       return `Vergunning vakantieverhuur`;
     case 'B&B - vergunning':
@@ -217,8 +217,8 @@ async function fetchAndTransformToeristischeVerhuur(
 
   const verhuurVergunningen = toeristischeVerhuurVergunningen.filter(
     (verhuur): verhuur is ToeristischeVerhuur =>
-      verhuur.title === 'Geplande vakantieverhuur' ||
-      verhuur.title === 'Afgelopen vakantieverhuur'
+      verhuur.title === 'Geplande verhuur' ||
+      verhuur.title === 'Afgelopen verhuur'
   );
   const daysLeft = daysRentLeftInCalendarYear(verhuurVergunningen);
 
@@ -330,14 +330,14 @@ export function createToeristischeVerhuurNotification(
       : '';
 
     switch (true) {
-      case item.title === 'Geannuleerde vakantieverhuur':
+      case item.title === 'Geannuleerde verhuur':
         title = `Vakantieverhuur geannuleerd`;
         description = `Wij hebben uw annulering voor vakantieverhuur ${period}ontvangen.`;
         cta = 'Bekijk uw geannuleerde verhuur';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
-      case item.title === 'Geplande vakantieverhuur':
+      case item.title === 'Geplande verhuur':
         title = `Vakantieverhuur gepland`;
         description = `Wij hebben uw melding voor vakantieverhuur ${period}ontvangen.`;
         cta = 'Bekijk uw geplande verhuur';
@@ -408,7 +408,7 @@ export async function fetchToeristischeVerhuurGenerated(
     const compareToDate = compareDate || new Date();
 
     const vergunningen = TOERISTISCHE_VERHUUR.content.vergunningen.filter(
-      (vergunning) => vergunning.title !== 'Afgelopen vakantieverhuur'
+      (vergunning) => vergunning.title !== 'Afgelopen verhuur'
     );
     const vergunningNotifications = vergunningen.map((vergunning) =>
       createToeristischeVerhuurNotification(vergunning, vergunningen)

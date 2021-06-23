@@ -42,7 +42,7 @@ function useStatusLineItems(
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: false,
+        isActive: vergunning.status === 'Ontvangen',
         isChecked: true,
       },
       {
@@ -54,7 +54,7 @@ function useStatusLineItems(
         datePublished:
           vergunning.status === 'Afgehandeld' ||
           vergunning.status === 'In behandeling'
-            ? vergunning.dateRequest
+            ? ''
             : '',
         description: '',
         documents: [],
@@ -148,7 +148,7 @@ export default function VergunningVerhuur({
           </InfoDetailGroup>
         )}
         <InfoDetail label="Adres" value={vergunning?.location ?? '-'} />
-        <DocumentDetails vergunning={vergunning} />
+        {vergunning.documentsUrl && <DocumentDetails vergunning={vergunning} />}
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

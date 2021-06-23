@@ -1,14 +1,15 @@
+import { useMemo } from 'react';
+
 import { ToeristischeVerhuur } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { PageContent } from '../../components';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import { useMemo } from 'react';
+import styles from './ToeristischeVerhuurDetail.module.scss';
 
 function useStatusLineItems(vergunning?: ToeristischeVerhuur) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -91,6 +92,7 @@ export default function VakantieVerhuur({
             }
           />
         </InfoDetailGroup>
+        <InfoDetail label="Aantal nachten" value={vergunning.duration ?? '-'} />
         <InfoDetail label="Adres" value={vergunning.location ?? '-'} />
       </PageContent>
       {!!statusLineItems.length && (
