@@ -300,7 +300,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateRequest;
         break;
       case item.status === 'Afgehandeld':
-        const decision = item.decision?.toLowerCase() || 'afgehandeld';
+        const decision = 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${decision}`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;
         cta = 'Bekijk uw aanvraag';
