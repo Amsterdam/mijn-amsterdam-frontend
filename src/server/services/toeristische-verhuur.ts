@@ -280,6 +280,7 @@ export function createToeristischeVerhuurNotification(
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
         : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
     switch (true) {
+      // B&B + Vakantieverhuurvergunning
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
         !hasOtherValidVergunningOfSameType(items, item):
@@ -295,6 +296,7 @@ export function createToeristischeVerhuurNotification(
           'yyyy-MM-dd'
         );
         break;
+      // B&B + Vakantieverhuurvergunning
       case item.decision === 'Verleend' &&
         isExpired(item) &&
         !hasOtherValidVergunningOfSameType(items, item):
@@ -304,6 +306,7 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToAanvragen;
         datePublished = item.dateEnd!;
         break;
+      // B&B only
       case item.status === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ontvangen.`;
@@ -311,6 +314,7 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
+      // B&B + Vakantieverhuurvergunning
       case item.status === 'Afgehandeld':
         const decision = item.decision?.toLowerCase() || 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${decision}`;
@@ -319,6 +323,7 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
         break;
+      // Fallback for both B&B + Vakantieverhuurvergunning
       default:
         title = `Aanvraag ${vergunningTitleLower} in behandeling`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
