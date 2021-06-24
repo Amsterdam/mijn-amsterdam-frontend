@@ -376,9 +376,9 @@ function createRegistratieNotification(
   item: ToeristischeVerhuurRegistratie
 ): MyNotification {
   const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
-  const description = `Wij hebben uw landelijke registratienummer voor toeristische verhuur toegekend. Het nummer is ${item.registrationNumber}.`;
+  const description = `Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is ${item.registrationNumber}.`;
   const datePublished = !!item.agreementDate ? item.agreementDate : '';
-  const cta = 'Bekijk het overzicht toeristische verhuur';
+  const cta = 'Bekijk uw overzicht toeristische verhuur';
   const linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 
   return {
