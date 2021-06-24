@@ -1818,6 +1818,29 @@ Object {
           "status": "Terugvorderings- besluit",
           "title": "terugvordering",
         },
+        Object {
+          "datePublished": "2021-07-14T00:00:00+01:00",
+          "description": "
+    <p>Wij hebben een wijziging van uw inkomsten voor Tozo 5 ontvangen op 14 juli om 01.00 uur</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-14T00:00:00+01:00",
+              "id": "838",
+              "title": "Wijziging inkomsten",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "930374026",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een wijziging van uw inkomsten voor Tozo 5 ontvangen op 14 juli om 01.00 uur",
+          "notificationTitle": "Tozo 5: Wij hebben een wijziging van uw inkomsten ontvangen",
+          "product": "Tozo 5",
+          "status": "Wijziging inkomsten",
+          "title": "verklaring",
+        },
       ],
       "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
       "type": "Tozo",

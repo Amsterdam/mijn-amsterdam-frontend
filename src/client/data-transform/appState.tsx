@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 
 export function transformSourceData(data: Partial<AppState> | null) {
