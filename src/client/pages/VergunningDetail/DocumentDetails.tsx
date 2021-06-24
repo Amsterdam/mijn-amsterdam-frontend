@@ -15,7 +15,15 @@ import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
-export function DocumentDetails({ vergunning }: { vergunning: Vergunning }) {
+interface DocumentDetailsProps {
+  vergunning: Vergunning;
+  opaque?: boolean; // Does not show loading feedback and no InfoDetail to the user if 0 documents are retrieved.
+}
+
+export function DocumentDetails({
+  vergunning,
+  opaque = false,
+}: DocumentDetailsProps) {
   const profileType = useProfileTypeValue();
   const documentsUrl = vergunning?.documentsUrl
     ? directApiUrlByProfileType(vergunning?.documentsUrl, profileType)
@@ -54,6 +62,10 @@ export function DocumentDetails({ vergunning }: { vergunning: Vergunning }) {
       });
     }
   }, [documentsUrl, fetchDocuments]);
+
+  if (opaque && !documents?.length) {
+    return null;
+  }
 
   return (
     <InfoDetail

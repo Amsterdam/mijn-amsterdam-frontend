@@ -41,7 +41,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Geplande vakantieverhuur
+          Geplande verhuur
         </h2>
       </div>
     </header>
@@ -118,12 +118,31 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
+          Aantal nachten
+        </h3>
+        <p
+          class="Value"
+        >
+          4
+        </p>
+      </div>
+      <div
+        class="InfoDetail LocationInfo"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
           Adres
         </h3>
         <p
           class="Value"
         >
-          Amstel 1 1017AB Amsterdam
+          Amstel 1 1017AB Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
         </p>
       </div>
     </div>
