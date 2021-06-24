@@ -10,6 +10,7 @@ import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
 import styles from './ToeristischeVerhuurDetail.module.scss';
+import { Location } from '../VergunningDetail/Location';
 
 function useStatusLineItems(vergunning?: ToeristischeVerhuur) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -92,8 +93,8 @@ export default function VakantieVerhuur({
             }
           />
         </InfoDetailGroup>
-        <InfoDetail label="Aantal nachten" value={vergunning.duration ?? '-'} />
-        <InfoDetail label="Adres" value={vergunning.location ?? '-'} />
+        <InfoDetail label="Aantal nachten" value={vergunning.duration} />
+        <Location label="Adres" location={vergunning.location} />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

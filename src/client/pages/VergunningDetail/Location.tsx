@@ -8,10 +8,11 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
 
 interface LocationProps {
-  location: string;
+  location: string | null;
+  label?: string;
 }
 
-export function Location({ location }: LocationProps) {
+export function Location({ location, label = 'Locatie' }: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
 
   const [bagApi, fetchBag] = useDataApi<LatLngLiteral | null>(
@@ -23,7 +24,7 @@ export function Location({ location }: LocationProps) {
   );
 
   useEffect(() => {
-    if (bagApi.isDirty) {
+    if (bagApi.isDirty || location === null) {
       return;
     }
     if (isLocationModalOpen) {
@@ -50,7 +51,7 @@ export function Location({ location }: LocationProps) {
     <>
       <InfoDetail
         className={styles.LocationInfo}
-        label="Locatie"
+        label={label}
         value={
           <>
             {location || '-'}{' '}
@@ -76,23 +77,25 @@ export function Location({ location }: LocationProps) {
           title={`Vergunningslocatie`}
           contentWidth={'62rem'}
         >
-          {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
-          {!bagApi.isError && !!bagApi.data ? (
-            <MyAreaLoader
-              showHeader={false}
-              showPanels={false}
-              zoom={LOCATION_ZOOM}
-              datasetIds={[]}
-              activeBaseLayerType={BaseLayerType.Aerial}
-              centerMarker={{
-                latlng: bagApi.data,
-                label: location,
-              }}
-              height="40rem"
-            />
-          ) : (
-            <p>Adres kan niet getoond worden</p>
-          )}
+          <div className={styles.LocationModalInner}>
+            {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
+            {!bagApi.isError && !!bagApi.data ? (
+              <MyAreaLoader
+                showHeader={false}
+                showPanels={false}
+                zoom={LOCATION_ZOOM}
+                datasetIds={[]}
+                activeBaseLayerType={BaseLayerType.Aerial}
+                centerMarker={{
+                  latlng: bagApi.data,
+                  label: location,
+                }}
+                height="40rem"
+              />
+            ) : (
+              <p>Adres kan niet getoond worden</p>
+            )}
+          </div>
         </Modal>
       )}
     </>

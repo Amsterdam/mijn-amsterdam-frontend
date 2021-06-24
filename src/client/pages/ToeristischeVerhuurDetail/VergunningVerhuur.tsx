@@ -14,6 +14,7 @@ import StatusLine, {
 } from '../../components/StatusLine/StatusLine';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import styles from './ToeristischeVerhuurDetail.module.scss';
+import { Location } from '../VergunningDetail/Location';
 
 function useStatusLineItems(
   vergunning?:
@@ -154,7 +155,7 @@ export default function VergunningVerhuur({
             />
           </InfoDetailGroup>
         )}
-        <InfoDetail label="Adres" value={vergunning?.location ?? '-'} />
+        <Location label="Adres" location={vergunning.location} />
         <DocumentDetails opaque vergunning={vergunning} />
       </PageContent>
       {!!statusLineItems.length && (
