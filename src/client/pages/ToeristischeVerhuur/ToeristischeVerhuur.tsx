@@ -219,7 +219,7 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
-      {(hasBothPermits || !hasVergunningBB) && (
+      {hasVergunningenVakantieVerhuur && (
         <>
           <SectionCollapsible
             id="SectionCollapsible-planned-verhuur"
@@ -227,7 +227,7 @@ export default function ToeristischeVerhuur() {
             className={styles.SectionBorderTop}
             startCollapsed={false}
             hasItems={!!plannedVerhuur.length}
-            noItemsMessage="Er zijn nog geen geplande verhuur gevonden"
+            noItemsMessage="Er is geen geplande verhuur gevonden."
             track={{
               category: 'Toeristische verhuur / Geplande Verhuur',
               name: 'Datatabel',
@@ -244,7 +244,7 @@ export default function ToeristischeVerhuur() {
             id="SectionCollapsible-cancelled-verhuur"
             title="Geannuleerde verhuur"
             startCollapsed={isCollapsed('geannuleerd')}
-            noItemsMessage="Er zijn nog geen geanuleerde verhuur gevonden"
+            noItemsMessage="Er is geen geanuleerde verhuur gevonden."
             track={{
               category: 'Toeristische verhuur / afgemeld Verhuur',
               name: 'Datatabel',
@@ -257,11 +257,10 @@ export default function ToeristischeVerhuur() {
               items={cancelledVerhuur}
             />
           </SectionCollapsible>
-
           <SectionCollapsible
             id="SectionCollapsible-previous-verhuur"
             title="Afgelopen verhuur"
-            noItemsMessage="Er zijn nog geen afgelopen verhuur gevonden"
+            noItemsMessage="Er is geen afgelopen verhuur gevonden."
             startCollapsed={isCollapsed('previous')}
             track={{
               category: 'Toeristische verhuur / afgemeld Verhuur',
