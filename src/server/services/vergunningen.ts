@@ -317,10 +317,10 @@ export function createVergunningNotification(
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
-        description = `Uw aanvraag voor een ${fullName} is in behandeling`;
+        description = `Uw aanvraag voor een ${fullName} is in behandeling.`;
         break;
       case item.status === 'Afgehandeld':
-        description = `Uw aanvraag voor een ${fullName} is afgehandeld`;
+        description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
         break;
     }
   } else {
@@ -333,11 +333,11 @@ export function createVergunningNotification(
     switch (true) {
       case item.status !== 'Afgehandeld':
         title = `${item.caseType} in behandeling`;
-        description = `Uw vergunningsaanvraag ${fullName} is in behandeling`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${item.caseType} afgehandeld`;
-        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld`;
+        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
         break;
     }
   }
