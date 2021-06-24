@@ -6,6 +6,7 @@ import toeristischeVerhuurRegistratiesData from '../mock-data/json/registraties-
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,
+  daysRentLeftInCalendarYear,
   fetchToeristischeVerhuur,
   transformToeristischeVerhuurVergunningTitle,
 } from './toeristische-verhuur';
@@ -252,5 +253,26 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification8.title).toBe('Uw vergunning bed & breakfast loopt af');
+  });
+
+  it('Should caclulate days rent left in calendar year', () => {
+    const dates: any = [
+      {
+        dateStart: '2020-12-28',
+        dateEnd: '2021-01-02',
+        duration: 5,
+      },
+      {
+        dateStart: '2021-06-10',
+        dateEnd: '2021-06-15',
+        duration: 5,
+      },
+      {
+        dateStart: '2021-12-28',
+        dateEnd: '2022-01-02',
+        duration: 5,
+      },
+    ];
+    expect(daysRentLeftInCalendarYear(dates)).toBe(21);
   });
 });

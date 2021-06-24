@@ -1,9 +1,10 @@
-import { format } from 'date-fns';
+import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
+import { isRecentCase } from '../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -11,28 +12,29 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import {
+  calculateDaysBetweenDates,
+  dateFormat,
+  dateSort,
   defaultDateFormat,
-  formatDurationBetweenDates,
   isCurrentYear,
   isDateInPast,
 } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { dateSort } from '../../universal/helpers/date';
 import {
   BBVergunning,
   fetchVergunningen,
+  hasOtherValidVergunningOfSameType,
   isActualNotification,
   isExpired,
   isNearEndDate,
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
-  hasOtherValidVergunningOfSameType,
   VakantieverhuurVergunningaanvraag,
   Vergunning,
 } from './vergunningen';
-import { isRecentCase } from '../../universal/helpers';
 
 export interface ToeristischeVerhuurRegistratie {
   city: string;
@@ -70,10 +72,8 @@ function fetchRegistraties(
 }
 
 /** Code to transform and type Decos vergunningen to Toeristische verhuur */
-
 interface ToeristischeVerhuurVergunningProps {
   isActual: boolean;
-  duration: number;
 }
 
 // A union of the the source types that are retrieved from the Decos api
@@ -120,17 +120,30 @@ export function daysRentLeftInCalendarYear(
   verhuurItems: ToeristischeVerhuur[]
 ): number {
   return verhuurItems
-    .filter(
-      (verhuur) => !!(verhuur.dateStart && isCurrentYear(verhuur.dateStart))
-    )
     .map((verhuur) => {
-      if (verhuur.dateEnd ? isCurrentYear(verhuur.dateEnd) : undefined) {
-        return verhuur.duration;
-      } else {
-        return verhuur.dateEnd && verhuur.dateStart
-          ? formatDurationBetweenDates(verhuur.dateEnd, verhuur.dateStart)
-          : 0;
+      if (!verhuur.dateEnd || !verhuur.dateStart) {
+        return 0;
       }
+
+      const startsInCurrentYear = isCurrentYear(verhuur.dateStart);
+      const endsInCurrentYear = isCurrentYear(verhuur.dateEnd);
+
+      switch (true) {
+        case startsInCurrentYear && endsInCurrentYear:
+          return verhuur.duration;
+        case startsInCurrentYear && !endsInCurrentYear:
+          return calculateDaysBetweenDates(
+            `${new Date().getFullYear()}-12-31`,
+            verhuur.dateStart
+          );
+        case !startsInCurrentYear && endsInCurrentYear:
+          return calculateDaysBetweenDates(
+            verhuur.dateEnd,
+            `${new Date().getFullYear()}-01-01`
+          );
+      }
+
+      return 0;
     })
     .reduce(
       (total: number, duration: number) => total - duration,
@@ -157,13 +170,6 @@ export function transformVergunningenToVerhuur(
         ...vergunning,
         title,
         isActual,
-        duration:
-          vergunning.dateEnd && vergunning.dateStart
-            ? formatDurationBetweenDates(
-                vergunning.dateEnd,
-                vergunning.dateStart
-              )
-            : 0,
       };
     })
     .sort(dateSort('dateStart', 'asc'));
@@ -281,7 +287,13 @@ export function createToeristischeVerhuurNotification(
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
-        datePublished = format(new Date(), 'yyyy-MM-dd');
+        datePublished = datePublished = dateFormat(
+          subMonths(
+            new Date(item.dateEnd!),
+            NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
+          ),
+          'yyyy-MM-dd'
+        );
         break;
       case item.decision === 'Verleend' &&
         isExpired(item) &&
@@ -290,7 +302,7 @@ export function createToeristischeVerhuurNotification(
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
         linkTo = ctaLinkToAanvragen;
-        datePublished = format(new Date(), 'yyyy-MM-dd');
+        datePublished = item.dateEnd!;
         break;
       case item.status === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
@@ -300,7 +312,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.dateRequest;
         break;
       case item.status === 'Afgehandeld':
-        const decision = 'afgehandeld';
+        const decision = item.decision?.toLowerCase() || 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${decision}`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;
         cta = 'Bekijk uw aanvraag';

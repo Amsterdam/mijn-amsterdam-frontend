@@ -75,7 +75,7 @@ function useStatusLineItems(
       step2.datePublished = vergunning.dateDecision || vergunning.dateRequest;
       step2.status = 'Verleend';
       step2.isActive = !isIngetrokken;
-      step2.isChecked = !isIngetrokken;
+      step2.isChecked = true;
     }
 
     const lineItems = [step1, step2];

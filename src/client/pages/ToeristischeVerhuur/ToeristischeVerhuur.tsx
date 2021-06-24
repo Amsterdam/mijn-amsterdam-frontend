@@ -67,6 +67,7 @@ export default function ToeristischeVerhuur() {
           vergunning.title
         )
       ) {
+        // We consider expired B&B permits as not relevent for the user.
         if (
           vergunning.title === 'Vergunning bed & breakfast' &&
           !vergunning.isActual

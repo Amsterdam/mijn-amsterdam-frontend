@@ -1,22 +1,22 @@
-import { differenceInMonths, format } from 'date-fns';
+import { differenceInMonths, subMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-
 import { Chapters } from '../../universal/config/index';
 import { AppRoutes } from '../../universal/config/routes';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
 import {
+  dateFormat,
   dateSort,
   isDateInPast,
   monthsFromNow,
 } from '../../universal/helpers/date';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
 import {
+  GenericDocument,
   LinkProps,
   MyCase,
   MyNotification,
 } from '../../universal/types/App.types';
-import { GenericDocument } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
@@ -100,6 +100,7 @@ export interface Vakantieverhuur extends VergunningBase {
   location: string | null;
   cancelled?: boolean;
   dateCancelled?: string;
+  duration: number;
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
@@ -118,6 +119,7 @@ export interface BBVergunning extends VergunningBase {
   decision: string | null;
   requester: string | null;
   owner: string | null;
+  hasTransitionAgreement: boolean;
 }
 
 export type Vergunning =
@@ -147,7 +149,7 @@ export interface VergunningOptions {
   appRoute: string | ((vergunning: Vergunning) => string);
 }
 
-const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
+export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export function transformVergunningenData(
   responseData: VergunningenSourceData
@@ -296,7 +298,13 @@ export function createVergunningNotification(
         description = `Uw vergunning ${item.caseType} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = GPKForm;
-        datePublished = format(new Date(), 'yyyy-MM-dd');
+        datePublished = dateFormat(
+          subMonths(
+            new Date(item.dateEnd!),
+            NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
+          ),
+          'yyyy-MM-dd'
+        );
         break;
       case item.decision === 'Verleend' &&
         isExpired(item) &&
@@ -305,7 +313,7 @@ export function createVergunningNotification(
         description = `Uw vergunning ${item.caseType} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
         linkTo = GPKForm;
-        datePublished = format(new Date(), 'yyyy-MM-dd');
+        datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
         description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
