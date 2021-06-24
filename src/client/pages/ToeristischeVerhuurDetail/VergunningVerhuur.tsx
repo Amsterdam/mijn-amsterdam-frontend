@@ -46,14 +46,18 @@ function useStatusLineItems(
       datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive: vergunning.status === 'Ontvangen',
+      isActive: false,
       isChecked: true,
     };
+
+    if (isBB) {
+      step1.isActive = vergunning.status === 'Ontvangen';
+    }
 
     let step2 = {
       id: 'item-2',
       status: '',
-      datePublished: '', // NOTE: We can't show a date here yet, it might be possible in the future. For now we don't show a date.
+      datePublished: '',
       description: '',
       documents: [],
       isActive: false,
@@ -62,10 +66,13 @@ function useStatusLineItems(
 
     if (isBB) {
       // Only BB vergunning can have an "In behandeling" step.
+      // NOTE: We can't show a date here yet, it might be possible in the future. For now we don't show a date.
+      //step2.datePublished = '';
       step2.status = 'In behandeling';
       step2.isActive = isInBehandeling;
-      step2.isChecked = isInBehandeling;
+      step2.isChecked = !step1.isActive;
     } else {
+      step2.datePublished = vergunning.dateDecision || vergunning.dateRequest;
       step2.status = 'Verleend';
       step2.isActive = !isIngetrokken;
       step2.isChecked = !isIngetrokken;
@@ -148,7 +155,7 @@ export default function VergunningVerhuur({
           </InfoDetailGroup>
         )}
         <InfoDetail label="Adres" value={vergunning?.location ?? '-'} />
-        {vergunning.documentsUrl && <DocumentDetails vergunning={vergunning} />}
+        <DocumentDetails opaque vergunning={vergunning} />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine
