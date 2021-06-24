@@ -19,6 +19,8 @@ describe('Vergunningen service', () => {
   const DUMMY_URL_2 = '/y';
   const DUMMY_URL_3 = '/z';
 
+  jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
+
   afterAll(() => {
     axMock.restore();
     ApiConfig.VERGUNNINGEN.url = ORIGINAL_URL;

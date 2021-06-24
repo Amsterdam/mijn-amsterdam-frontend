@@ -30,7 +30,7 @@ export function formatDurationInWords(datestr: string) {
   return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
 }
 
-export function formatDurationBetweenDates(
+export function calculateDaysBetweenDates(
   date1: string,
   date2: string
 ): number {

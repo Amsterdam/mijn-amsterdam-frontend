@@ -24,7 +24,6 @@ export default function ToeristischVerhuurDetail() {
   const hasWarning =
     hasFailedDependency(TOERISTISCHE_VERHUUR, 'vergunningen') || noContent;
   const isLoadingApi = isLoading(TOERISTISCHE_VERHUUR);
-
   return (
     <DetailPage>
       <PageHeading
