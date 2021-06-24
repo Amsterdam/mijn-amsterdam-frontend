@@ -31,6 +31,7 @@ export function Location({ location }: LocationProps) {
         .replace(/\sAmsterdam/gi, '')
         .replace(/([1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2})/i, '')
         .trim();
+
       fetchBag({
         url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
         transformResponse: (response) => {
@@ -76,7 +77,7 @@ export function Location({ location }: LocationProps) {
           contentWidth={'62rem'}
         >
           {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
-          {!!bagApi.data ? (
+          {!bagApi.isError && !!bagApi.data ? (
             <MyAreaLoader
               showHeader={false}
               showPanels={false}
