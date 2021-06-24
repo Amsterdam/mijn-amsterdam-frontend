@@ -329,7 +329,7 @@ export function createToeristischeVerhuurNotification(
     }
   } else {
     const ctaLinkToDetail = generatePath(
-      AppRoutes['TOERISTISCHE_VERHUUR/VERHUUR'],
+      AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
       {
         id: item.id,
       }
