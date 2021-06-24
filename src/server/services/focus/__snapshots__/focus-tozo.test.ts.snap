@@ -1496,7 +1496,7 @@ Object {
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2021-07-14T00:00:00+01:00",
+      "datePublished": "2021-07-22T00:00:00+01:00",
       "dateStart": "2021-06-14T00:00:00+01:00",
       "id": "3712245579",
       "link": Object {
@@ -1795,31 +1795,6 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
-          "description": "<p>
-    U moet (een deel van) uw Tozo 5 terugbetalen.
-    Bekijk de brief voor meer details.
-    </p>
-    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2021-07-14T00:00:00+01:00",
-              "id": "45645",
-              "title": "Besluit terugvordering",
-              "type": "pdf",
-              "url": "/test-api/",
-            },
-          ],
-          "id": "614802415",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U moet (een deel van) uw Tozo 5 terugbetalen. (besluit: 14 juli 2021).",
-          "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
-          "product": "Tozo 5",
-          "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
-        },
-        Object {
-          "datePublished": "2021-07-14T00:00:00+01:00",
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 5 ontvangen op 14 juli om 01.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
@@ -1840,6 +1815,31 @@ Object {
           "product": "Tozo 5",
           "status": "Wijziging inkomsten",
           "title": "verklaring",
+        },
+        Object {
+          "datePublished": "2021-07-22T00:00:00+01:00",
+          "description": "<p>
+    U moet (een deel van) uw Tozo 5 terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-07-22T00:00:00+01:00",
+              "id": "45645",
+              "title": "Besluit terugvordering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2417706442",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U moet (een deel van) uw Tozo 5 terugbetalen. (besluit: 22 juli 2021).",
+          "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
+          "product": "Tozo 5",
+          "status": "Terugvorderings- besluit",
+          "title": "terugvordering",
         },
       ],
       "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
