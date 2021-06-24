@@ -245,7 +245,8 @@ export default function ToeristischeVerhuur() {
             id="SectionCollapsible-cancelled-verhuur"
             title="Geannuleerde verhuur"
             startCollapsed={isCollapsed('geannuleerd')}
-            noItemsMessage="Er is geen geanuleerde verhuur gevonden."
+            hasItems={!!cancelledVerhuur.length}
+            noItemsMessage="Er is geen geannuleerde verhuur gevonden."
             track={{
               category: 'Toeristische verhuur / afgemeld Verhuur',
               name: 'Datatabel',
@@ -263,8 +264,9 @@ export default function ToeristischeVerhuur() {
             title="Afgelopen verhuur"
             noItemsMessage="Er is geen afgelopen verhuur gevonden."
             startCollapsed={isCollapsed('previous')}
+            hasItems={!!previousVerhuur.length}
             track={{
-              category: 'Toeristische verhuur / afgemeld Verhuur',
+              category: 'Toeristische verhuur / afgelopen Verhuur',
               name: 'Datatabel',
             }}
           >
