@@ -324,14 +324,20 @@ export function createVergunningNotification(
         break;
     }
   } else {
+    let fullName: string = item.caseType;
+    switch (item.caseType) {
+      case 'GPP':
+        fullName = 'vaste parkeerplaats gehandicapten (GPP)';
+        break;
+    }
     switch (true) {
       case item.status !== 'Afgehandeld':
         title = `${item.caseType} in behandeling`;
-        description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling`;
         break;
       case item.status === 'Afgehandeld':
-        title = `${item.caseType} fgehandeld`;
-        description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+        title = `${item.caseType} afgehandeld`;
+        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld`;
         break;
     }
   }
