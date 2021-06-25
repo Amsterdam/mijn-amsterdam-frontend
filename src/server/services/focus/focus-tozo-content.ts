@@ -776,7 +776,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 5',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '1745645': {
     omschrijving: 'Tozo5 Terugvorderen na inkomstenopgave (batch)',
@@ -784,7 +784,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'terugvordering',
     labels: terugvorderingLabels,
     product: 'Tozo 5',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '838': {
     omschrijving: 'Tozo 5 inkomstenwijziging',
