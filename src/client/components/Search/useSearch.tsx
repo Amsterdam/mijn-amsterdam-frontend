@@ -1,7 +1,7 @@
 import axios, { CancelTokenSource } from 'axios';
 import Fuse from 'fuse.js';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import { pick } from '../../../universal/helpers';
+import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import {
@@ -22,7 +22,14 @@ export function generateSearchIndexPageEntry(
 ): PageEntry {
   const props: Array<
     Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName'>
-  > = ['keywordSourceProps', 'title', 'displayTitle', 'description', 'url'];
+  > = [
+    'keywordSourceProps',
+    'title',
+    'displayTitle',
+    'description',
+    'url',
+    'keywords',
+  ];
 
   const pageEntry = {} as PageEntry;
 
@@ -34,9 +41,17 @@ export function generateSearchIndexPageEntry(
         ? configValue(item, apiConfig)
         : configValue;
 
-    if (prop === 'keywordSourceProps') {
+    if (prop === 'keywords') {
+      pageEntry.keywords = uniqueArray([
+        ...(pageEntry.keywords || []),
+        ...value,
+      ]);
+    } else if (prop === 'keywordSourceProps') {
       value = Object.values(pick(item, value));
-      pageEntry.keywords = value;
+      pageEntry.keywords = uniqueArray([
+        ...(pageEntry.keywords || []),
+        ...value,
+      ]);
     } else {
       pageEntry[prop as keyof PageEntry] = value;
     }
@@ -47,7 +62,7 @@ export function generateSearchIndexPageEntry(
 
 export function generateSearchIndexPageEntries(
   apiName: string,
-  apiContent: ApiSuccessResponse<any>
+  apiContent: ApiSuccessResponse<any>['content']
 ): PageEntry[] {
   const config = apiSearchConfigs.find((config) => config.apiName === apiName);
 
@@ -91,7 +106,7 @@ function transformSearchAmsterdamNLresponse(responseData: any) {
 
 export function searchAmsterdamNL(
   keywords: string,
-  resultCountPerPage: number = 25
+  resultCountPerPage: number = 5
 ) {
   if (activeSource) {
     activeSource.cancel('Search renewed');
@@ -132,8 +147,8 @@ export function useSearch() {
 }
 
 export interface SearchResults {
-  ma: PageEntry[];
-  am: PageEntry[];
+  ma?: PageEntry[];
+  am?: PageEntry[];
 }
 
 export const searchResultsAtom = atom<SearchResults | null>({

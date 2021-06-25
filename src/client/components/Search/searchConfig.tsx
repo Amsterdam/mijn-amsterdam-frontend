@@ -3,8 +3,11 @@ import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types';
+import { AppState } from '../../AppState';
 import { IconChevronRight } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { uniqueArray } from '../../../universal/helpers';
 
 export interface PageEntry {
   url: string;
@@ -15,19 +18,37 @@ export interface PageEntry {
 }
 
 export interface ApiSearchConfig {
-  apiName: string;
-  keywordSourceProps:
-    | string[]
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+  apiName: keyof Partial<AppState> | '';
+
+  // Extract searchable items from the api response
+  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => ApiBaseItem[];
+
+  // PageEntry properties
+  // A description that will be used by Fuse to find  matching items
   description:
     | ReactNode
     | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+
+  // A title that will be used by Fuse to find  matching items
   title: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+
+  // A list of keys of which the values are used for keywords
+  keywordSourceProps:
+    | string[]
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+
+  // A list of keywords
+  keywords:
+    | string[]
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+
+  // Return a component that acts as title in the search result list
   displayTitle:
     | ReactNode
     | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+
+  // The url to link to
   url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
-  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => ApiBaseItem[];
 }
 
 export interface ApiBaseItem {
@@ -38,9 +59,24 @@ export interface ApiBaseItem {
 
 export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
   apiName: '',
-  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) =>
-    apiContent as unknown as ApiBaseItem[],
+  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => {
+    // Blindly assume apiContent returns an array with objects
+    if (Array.isArray(apiContent)) {
+      return apiContent;
+    }
+
+    // Blindly assume apiContent returns an object with arrays object filled arrays as key values.
+    if (apiContent !== null && typeof apiContent === 'object') {
+      console.log('Object.values(apiContent)', Object.values(apiContent));
+      return Object.values(apiContent)
+        .filter((value) => Array.isArray(value))
+        .flatMap((items) => items);
+    }
+
+    return [];
+  },
   keywordSourceProps: (item: ApiBaseItem): string[] => ['title'],
+  keywords: (item: ApiBaseItem): string[] => [],
   title: (item: ApiBaseItem) => item.link.title,
   displayTitle: (item: ApiBaseItem) => displayPath([item.link.title]),
   url: (item: ApiBaseItem) => item.link.to,
@@ -52,8 +88,8 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
 export function displayPath(segments: string[]) {
   return (
     <span>
-      {segments.map((segment) => (
-        <React.Fragment key={segment}>
+      {segments.map((segment, i) => (
+        <React.Fragment key={segment + i}>
           <IconChevronRight width="14" height="14" />
           {segment}
         </React.Fragment>
@@ -73,6 +109,9 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
         default:
           return props;
       }
+    },
+    title: (vergunning: ApiBaseItem) => {
+      return `Vergunning ${vergunning.caseType}`;
     },
     displayTitle: (vergunning: ApiBaseItem) => {
       return displayPath([
@@ -101,17 +140,49 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
   },
   {
     apiName: 'FOCUS_TOZO',
-    keywordSourceProps: (tozo: ApiBaseItem): string[] => [
-      'title',
-      'status',
-      'decision',
-      'productTitle',
-    ],
+    keywordSourceProps: (tozo: ApiBaseItem): string[] => {
+      return [
+        'title',
+        'status',
+        'decision',
+        'productTitle',
+        ...tozo.steps.map((step: any) => step.title),
+      ];
+    },
+    keywords: (tozo: ApiBaseItem): string[] =>
+      uniqueArray(tozo.steps.flatMap((step: any) => [step.title, step.status])),
     displayTitle: (tozo: ApiBaseItem) => {
       return displayPath(['Inkomen', tozo.productTitle]);
     },
   },
+  {
+    apiName: 'FOCUS_AANVRAGEN',
+    keywordSourceProps: (aanvraag: ApiBaseItem): string[] => {
+      return ['title', 'status', 'decision', 'productTitle'];
+    },
+    keywords: (aanvraag: ApiBaseItem) =>
+      uniqueArray(
+        aanvraag.steps.flatMap((step: any) => [step.title, step.status])
+      ),
+    title: (aanvraag: ApiBaseItem) => {
+      return `Aanvraag ${aanvraag.productTitle.toLowerCase()} (${defaultDateFormat(
+        aanvraag.dateStart
+      )})`;
+    },
+    displayTitle: (aanvraag: ApiBaseItem) => {
+      return displayPath([
+        'Inkomen',
+        `Aanvraag ${aanvraag.productTitle.toLowerCase()} (${defaultDateFormat(
+          aanvraag.dateStart
+        )})`,
+      ]);
+    },
+  },
 ];
+
+export const searchStateKeys = apiSearchConfigs.map((config) => {
+  return config.apiName;
+});
 
 export const staticIndex: PageEntry[] = [
   {

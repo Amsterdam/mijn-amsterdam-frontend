@@ -153,3 +153,7 @@ export function recLookup(obj: any, path: string): any {
   }
   return recLookup(obj[parts[0]], parts.slice(1).join('.'));
 }
+
+export function uniqueArray(arr: any[]) {
+  return Array.from(new Set(arr));
+}

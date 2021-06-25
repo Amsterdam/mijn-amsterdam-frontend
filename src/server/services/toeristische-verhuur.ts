@@ -23,6 +23,7 @@ import { MyCase, MyNotification } from '../../universal/types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { LinkProps } from '../../universal/types/App.types';
 import {
   BBVergunning,
   fetchVergunningen,
@@ -37,7 +38,7 @@ import {
   Vergunning,
 } from './vergunningen';
 
-export interface ToeristischeVerhuurRegistratie {
+export interface ToeristischeVerhuurRegistratieSource {
   city: string;
   houseLetter: string | null;
   houseNumber: string | null;
@@ -49,14 +50,25 @@ export interface ToeristischeVerhuurRegistratie {
   agreementDate: string | null;
 }
 
+export type ToeristischeVerhuurRegistratie =
+  ToeristischeVerhuurRegistratieSource & { link: LinkProps };
+
 export interface ToeristischeVerhuurRegistratiesSourceData {
-  content: ToeristischeVerhuurRegistratie[];
+  content: ToeristischeVerhuurRegistratieSource[];
 }
 
 export function transformToeristischeVerhuurRegistraties(
   responseData: ToeristischeVerhuurRegistratiesSourceData
-): ToeristischeVerhuurRegistratie[] | null {
-  return responseData.content || [];
+): ToeristischeVerhuurRegistratie[] {
+  return (responseData.content || []).map((registratie) => {
+    return {
+      ...registratie,
+      link: {
+        to: AppRoutes.TOERISTISCHE_VERHUUR,
+        title: registratie.registrationNumber || 'Bekijk registratienummer',
+      },
+    };
+  });
 }
 
 function fetchRegistraties(
