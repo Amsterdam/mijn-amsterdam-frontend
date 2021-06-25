@@ -2,6 +2,7 @@ import axios, { CancelTokenSource } from 'axios';
 import Fuse from 'fuse.js';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import { pick } from '../../../universal/helpers';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import {
   ApiBaseItem,
@@ -17,20 +18,11 @@ export const dynamicSearchIndex: PageEntry[] = [...staticIndex];
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
-  config: Partial<ApiSearchConfig>
+  apiConfig: ApiSearchConfig
 ): PageEntry {
-  const apiConfig: ApiSearchConfig = {
-    ...API_SEARCH_CONFIG_DEFAULT,
-    ...config,
-  };
-
-  const props: Array<keyof ApiSearchConfig> = [
-    'keywordSourceProps',
-    'title',
-    'displayTitle',
-    'description',
-    'url',
-  ];
+  const props: Array<
+    Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName'>
+  > = ['keywordSourceProps', 'title', 'displayTitle', 'description', 'url'];
 
   const pageEntry = {} as PageEntry;
 
@@ -55,7 +47,7 @@ export function generateSearchIndexPageEntry(
 
 export function generateSearchIndexPageEntries(
   apiName: string,
-  data: ApiBaseItem | ApiBaseItem[]
+  apiContent: ApiSuccessResponse<any>
 ): PageEntry[] {
   const config = apiSearchConfigs.find((config) => config.apiName === apiName);
 
@@ -63,23 +55,14 @@ export function generateSearchIndexPageEntries(
     throw new Error(`${apiName} does not have search index entry.`);
   }
 
-  if (Array.isArray(data)) {
-    return data.map((item) => generateSearchIndexPageEntry(item, config));
-  }
+  const apiConfig: ApiSearchConfig = {
+    ...API_SEARCH_CONFIG_DEFAULT,
+    ...config,
+  };
 
-  return [generateSearchIndexPageEntry(data, config)];
-}
-
-export function addItemsToSearchIndex(
-  apiName: string,
-  data: ApiBaseItem | ApiBaseItem[]
-): void {
-  const pageEntries = generateSearchIndexPageEntries(apiName, data);
-  // TODO: Check of data has already been added
-  console.info(
-    `Added ${pageEntries.length} ${apiName} items to the search index.`
-  );
-  dynamicSearchIndex.push(...pageEntries);
+  return apiConfig
+    .getApiBaseItems(apiContent)
+    .map((item) => generateSearchIndexPageEntry(item, apiConfig));
 }
 
 interface AmsterdamSearchResult {
@@ -153,9 +136,9 @@ export interface SearchResults {
   am: PageEntry[];
 }
 
-export const searchResultsAtom = atom<SearchResults>({
+export const searchResultsAtom = atom<SearchResults | null>({
   key: 'searchResults',
-  default: { ma: [], am: [] },
+  default: null,
 });
 
 export function useSearchResults() {

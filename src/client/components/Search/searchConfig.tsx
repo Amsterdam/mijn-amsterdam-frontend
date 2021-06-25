@@ -1,7 +1,7 @@
-import React from 'react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
@@ -27,6 +27,7 @@ export interface ApiSearchConfig {
     | ReactNode
     | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
   url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => ApiBaseItem[];
 }
 
 export interface ApiBaseItem {
@@ -37,6 +38,8 @@ export interface ApiBaseItem {
 
 export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
   apiName: '',
+  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) =>
+    apiContent as unknown as ApiBaseItem[],
   keywordSourceProps: (item: ApiBaseItem): string[] => ['title'],
   title: (item: ApiBaseItem) => item.link.title,
   displayTitle: (item: ApiBaseItem) => displayPath([item.link.title]),

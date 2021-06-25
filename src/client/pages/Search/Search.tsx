@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRecoilCallback } from 'recoil';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   ChapterIcon,
@@ -9,29 +10,31 @@ import {
 } from '../../components';
 import { ResultSet } from '../../components/Search/Search';
 import {
-  useSearchResults,
   SearchResults,
+  searchResultsAtom,
 } from '../../components/Search/useSearch';
 import styles from './Search.module.scss';
-
-// import { useAppStateGetter } from '../../hooks/useAppState';
+import { useSearchResults } from '../../components/Search/useSearch';
 
 export default function Search() {
-  const [liveResults] = useSearchResults();
   const term = new URLSearchParams(window.location.search).get('term') || '';
+  const [liveResults] = useSearchResults();
+  const [results, setResults] = useState<SearchResults | null>(null);
 
-  const [{ ma: results, am: resultsAmsterdamNL, resultsHydrated }, setResults] =
-    useState<SearchResults & { resultsHydrated: boolean }>({
-      am: [],
-      ma: [],
-      resultsHydrated: false,
-    });
+  const getSearchResults = useRecoilCallback(({ snapshot }) => () => {
+    return snapshot.getPromise(searchResultsAtom);
+  });
 
   useEffect(() => {
-    if (term && liveResults && !resultsHydrated) {
-      setResults({ ...liveResults, resultsHydrated: true });
+    console.log(liveResults);
+    // (async function () {
+    if (term && liveResults !== null && results === null) {
+      // const searchResults = await getSearchResults();
+      setResults(liveResults);
     }
-  }, [term, liveResults, resultsHydrated]);
+    // })();
+  }, [term, results, liveResults]);
+
   return (
     <Page className={styles.Search}>
       <PageHeading
@@ -46,15 +49,15 @@ export default function Search() {
       </PageHeading>
       <PageContent>
         <SearchBar term={term} onEscape={() => {}} />
-        {!!(results.length || resultsAmsterdamNL.length) && (
+        {!!(results?.am.length || results?.ma.length) && (
           <>
             <ResultSet
               title="Resultaten van Mijn Amsterdam"
-              results={results}
+              results={results.ma}
             />
             <ResultSet
               title="Resultaten van Amsterdam.nl"
-              results={resultsAmsterdamNL}
+              results={results.am}
             />
           </>
         )}
