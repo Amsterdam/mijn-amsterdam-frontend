@@ -5,13 +5,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
-import { pick } from '../../../universal/helpers';
+import { isError, pick } from '../../../universal/helpers';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
 import { PageEntry } from './searchConfig';
+import { AppState } from '../../AppState';
 import {
   generateSearchIndexPageEntries,
   searchAmsterdamNL,
@@ -86,40 +87,40 @@ export function Search({
   maxResultCountDisplay = 10,
 }: SearchProps) {
   const fuse = useSearch();
-  const [{ am: resultsAmsterdamNL, ma: results }, setResults] =
-    useSearchResults();
+  const [results, setResults] = useSearchResults();
   const [resultsAmsterdamNLLoading, setResultsAmsterdamNLLoading] =
     useState(false);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [term, setTerm] = useState(termInitial);
   const [indexReady, setIndexReady] = useState(false);
 
-  const searchStateKeys = [
+  const searchStateKeys: Array<keyof AppState> = [
     'VERGUNNINGEN',
     'FOCUS_TOZO',
     'TOERISTISCHE_VERHUUR',
   ];
 
-  const appState = pick(useAppStateGetter(), searchStateKeys);
+  const appState = useAppStateGetter();
 
   useEffect(() => {
     for (const stateKey of searchStateKeys) {
-      if (
-        !fuse.apiNames.includes(stateKey) &&
-        appState[stateKey].content?.length
-      ) {
-        for (const entry of generateSearchIndexPageEntries(
-          stateKey,
-          appState[stateKey].content
-        )) {
-          fuse.index.add(entry);
+      if (!fuse.apiNames.includes(stateKey)) {
+        if (!isError(appState[stateKey])) {
+          for (const entry of generateSearchIndexPageEntries(
+            stateKey,
+            appState[stateKey].content
+          )) {
+            fuse.index.add(entry);
+          }
         }
         fuse.apiNames.push(stateKey);
       }
     }
-    setIndexReady(true);
+    if (fuse.apiNames.length === searchStateKeys.length) {
+      setIndexReady(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(appState)]);
+  }, [appState]);
 
   const history = useHistory();
 
@@ -131,7 +132,7 @@ export function Search({
       .then(({ data: amResults }) => {
         setResults((results) => {
           return {
-            ma: results.ma,
+            ma: results?.ma || [],
             am: amResults,
           };
         });
@@ -152,7 +153,7 @@ export function Search({
       setResults((results) => {
         return {
           ma: displayResults,
-          am: results.am,
+          am: results?.am || [],
         };
       });
       searchAmsterdamNLDebounced();
@@ -162,16 +163,14 @@ export function Search({
 
   const clearSearch = useCallback(() => {
     setTerm('');
-    setResults({
-      am: [],
-      ma: [],
-    });
+    setResults(null);
   }, [setTerm, setResults]);
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useEffect(() => {
     if (indexReady && term) {
+      console.log('Search!!!');
       setSelectedIndex(-1);
       search(term);
     }
@@ -191,13 +190,19 @@ export function Search({
       const isEnter = event.key === 'Enter';
       const isEscape = event.key === 'Escape';
 
-      if (!(isArrowDown || isArrowUp || isEnter || isEscape)) {
+      if (
+        !(isArrowDown || isArrowUp || isEnter || isEscape) ||
+        results === null
+      ) {
         return;
       }
 
       event.preventDefault();
 
-      const allResults = [...results, ...resultsAmsterdamNL];
+      const allResults = [
+        ...(results?.ma || []).slice(0, 5),
+        ...(results?.am || []).slice(0, 5),
+      ];
 
       if (!isEscape && !allResults.length) {
         return;
@@ -227,7 +232,7 @@ export function Search({
           if (selectedIndex === -1) {
             history.push(AppRoutes.SEARCH + '?term=' + term);
           } else {
-            if (selectedIndex < results.length) {
+            if (selectedIndex < (results?.ma.length ?? 0)) {
               history.push(allResults[selectedIndex].url);
             } else {
               window.location.href = allResults[selectedIndex].url;
@@ -241,14 +246,7 @@ export function Search({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      setSelectedIndex,
-      results,
-      resultsAmsterdamNL,
-      selectedIndex,
-      history,
-      term,
-    ]
+    [setSelectedIndex, results, selectedIndex, history, term]
   );
 
   useKeyUp(keyHandler);
@@ -272,22 +270,29 @@ export function Search({
       </div>
       {isResultsVisible &&
         !!term &&
-        !!(results.length || resultsAmsterdamNL.length) && (
+        !!(results?.ma.length || results?.am.length) && (
           <div className={styles.Results}>
-            <ResultSet
-              isLoading={false}
-              title="Resultaten van Mijn Amsterdam"
-              results={results.slice(0, maxResultCountDisplay / 2)}
-              onClickResult={clearSearch}
-              selectedIndex={selectedIndex}
-            />
-            <ResultSet
-              isLoading={resultsAmsterdamNLLoading}
-              title="Resultaten van Amsterdam.nl"
-              results={resultsAmsterdamNL.slice(0, maxResultCountDisplay / 2)}
-              onClickResult={clearSearch}
-              selectedIndex={selectedIndex - results.length}
-            />
+            {!!results?.ma.length && (
+              <ResultSet
+                isLoading={false}
+                title="Resultaten van Mijn Amsterdam"
+                results={results.ma.slice(0, maxResultCountDisplay / 2)}
+                onClickResult={clearSearch}
+                selectedIndex={selectedIndex}
+              />
+            )}
+            {!!results?.am.length && (
+              <ResultSet
+                isLoading={resultsAmsterdamNLLoading}
+                title="Resultaten van Amsterdam.nl"
+                results={results.am.slice(0, maxResultCountDisplay / 2)}
+                onClickResult={clearSearch}
+                selectedIndex={
+                  selectedIndex -
+                  Math.min(results.am.length, maxResultCountDisplay / 2)
+                }
+              />
+            )}
           </div>
         )}
     </>
