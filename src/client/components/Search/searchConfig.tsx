@@ -139,6 +139,15 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
     },
   },
   {
+    apiName: 'NOTIFICATIONS',
+    keywordSourceProps: (notification: ApiBaseItem) => {
+      return ['title', 'description'];
+    },
+    displayTitle: (notification: ApiBaseItem) => {
+      return displayPath(['Actueel', notification.title]);
+    },
+  },
+  {
     apiName: 'FOCUS_TOZO',
     keywordSourceProps: (tozo: ApiBaseItem): string[] => {
       return [
