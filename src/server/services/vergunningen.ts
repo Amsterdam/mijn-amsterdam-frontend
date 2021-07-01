@@ -290,13 +290,14 @@ export function createVergunningNotification(
     );
     const GPKForm =
       'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
+    const fullName = 'Europese gehandicaptenparkeerkaart (GPK)'; // change this later to title property
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
         !hasOtherValidVergunningOfSameType(allGPKItems, item):
-        title = `Uw vergunning loopt af`;
-        description = `Uw vergunning ${item.caseType} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
-        cta = `Vergunning aanvragen`;
+        title = `${item.caseType} loopt af`;
+        description = `Uw ${fullName} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
+        cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
         linkTo = GPKForm;
         datePublished = dateFormat(
           subMonths(
@@ -309,31 +310,35 @@ export function createVergunningNotification(
       case item.decision === 'Verleend' &&
         isExpired(item) &&
         !hasOtherValidVergunningOfSameType(allGPKItems, item):
-        title = `Uw vergunning is verlopen`;
-        description = `Uw vergunning ${item.caseType} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
-        cta = 'Vergunning aanvragen';
+        title = `${item.caseType} is verlopen`;
+        description = `Uw ${fullName} is verlopen.`;
+        cta = `Vraag een nieuwe ${item.caseType} aan`;
         linkTo = GPKForm;
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
-        description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
+        description = `Uw aanvraag voor een ${fullName} is in behandeling.`;
         break;
       case item.status === 'Afgehandeld':
-        description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+        description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
         break;
     }
   } else {
+    let fullName: string = item.caseType;
+    switch (item.caseType) {
+      case 'GPP':
+        fullName = 'vaste parkeerplaats gehandicapten (GPP)';
+        break;
+    }
     switch (true) {
       case item.status !== 'Afgehandeld':
-        description = `Uw vergunningsaanvraag ${item.caseType} is in behandeling`;
+        title = `${item.caseType} in behandeling`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling.`;
         break;
       case item.status === 'Afgehandeld':
-        description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+        title = `${item.caseType} afgehandeld`;
+        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
         break;
-      // case new Date() >= dateEnd:
-      //   title = 'Uw vergunning is verlopen';
-      //   description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
-      //   break;
     }
   }
 
