@@ -139,6 +139,7 @@ export default function ToeristischeVerhuur() {
 
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
+  const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
 
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
@@ -199,8 +200,19 @@ export default function ToeristischeVerhuur() {
           {hasVergunningenVakantieVerhuur && (
             <>
               <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
-                U heeft nog {content?.daysLeft ?? 30} dagen dat u uw woning mag
-                verhuren.
+                {daysRemaining === 0 && (
+                  <>
+                    U mag uw woning dit kalenderjaar niet meer verhuren voor
+                    vakantieverhuur. <br />
+                    Uw woning is dit kalenderjaar al 30 nachten verhuurd.
+                  </>
+                )}
+                {daysRemaining > 0 && (
+                  <>
+                    U heeft nog {daysRemaining} dagen dat u uw woning mag
+                    verhuren.
+                  </>
+                )}
               </Heading>
               <p className={styles.DetailText}>
                 Het aantal resterende nachten is gebaseerd op uw meldingen voor
