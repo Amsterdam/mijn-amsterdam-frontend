@@ -643,72 +643,72 @@
         "datePublished": "2021-06-14T00:00:00+01:00"
       },
       {
-        "id": "36167",
-        "documentCodeId": "1736167",
+        "id": "6167",
+        "documentCodeId": "176167",
         "type": "",
         "url": "",
         "description": "Tozo5 Toekennen",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36165",
-        "documentCodeId": "1736165",
+        "id": "6165",
+        "documentCodeId": "176165",
         "type": "",
         "url": "",
         "description": "Tozo5 Afwijzen",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36169",
-        "documentCodeId": "1736169",
+        "id": "6169",
+        "documentCodeId": "176169",
         "type": "",
         "url": "",
         "description": "Tozo5 Afwijzen via batch",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36168",
-        "documentCodeId": "1736168",
+        "id": "6168",
+        "documentCodeId": "176168",
         "type": "",
         "url": "",
         "description": "Tozo5 Toekennen bedrijfskapitaal",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36164",
-        "documentCodeId": "1736164",
+        "id": "6164",
+        "documentCodeId": "176164",
         "type": "",
         "url": "",
         "description": "Tozo5 Hersteltermijn",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36163",
-        "documentCodeId": "1736163",
+        "id": "6163",
+        "documentCodeId": "176163",
         "type": "",
         "url": "",
         "description": "Tozo5 Intrekken",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36166",
-        "documentCodeId": "1736166",
+        "id": "6166",
+        "documentCodeId": "176166",
         "type": "",
         "url": "",
         "description": "Tozo5 Buiten behandeling laten",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36170",
-        "documentCodeId": "1736170",
+        "id": "6170",
+        "documentCodeId": "176170",
         "type": "",
         "url": "",
         "description": "Tozo5 Toekennen via batch",
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "36171",
-        "documentCodeId": "1736171",
+        "id": "6171",
+        "documentCodeId": "176171",
         "description": "Tozo5 Toekennen voorschot via batch",
         "type": "",
         "url": "",
@@ -731,20 +731,20 @@
         "datePublished": "2021-07-14T00:00:00+01:00"
       },
       {
-        "id": "45645",
-        "documentCodeId": "1745645",
-        "description": "Tozo5 Terugvorderen na inkomstenopgave (batch)",
-        "type": "",
-        "url": "",
-        "datePublished": "2021-07-14T00:00:00+01:00"
-      },
-      {
         "id": "838",
         "documentCodeId": "838",
         "type": "",
         "url": "",
         "description": "Tozo 5 inkomstenwijziging",
         "datePublished": "2021-07-14T00:00:00+01:00"
+      },
+       {
+        "id": "45645",
+        "documentCodeId": "1745645",
+        "description": "Tozo5 Terugvorderen na inkomstenopgave (batch)",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-07-22T00:00:00+01:00"
       }
     ],
     "uitkeringsspecificaties": [

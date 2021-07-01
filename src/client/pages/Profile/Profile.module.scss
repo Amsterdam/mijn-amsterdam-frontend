@@ -41,10 +41,15 @@
 .ProfileCommercial {
   @include select(SectionCollapsible_SectionCollapsible) {
     margin-top: 3rem;
-
     + [class*='InfoPanel_InfoPanel'] {
       border-top: 0;
-      padding-top: 1rem;
+      padding-top: 0;
+    }
+  }
+  @include select(SectionCollapsible_SectionCollapsible) {
+    + [class*='SectionCollapsible_SectionCollapsible'] {
+      margin-top: 0;
+      padding-top: 0;
     }
   }
 }

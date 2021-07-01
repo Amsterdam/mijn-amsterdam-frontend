@@ -76,6 +76,7 @@ export default function Inkomen() {
           return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
+            status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
           });
         })
         .sort(dateSort('datePublished', 'desc'))
