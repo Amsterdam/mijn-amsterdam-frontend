@@ -12,7 +12,9 @@ import { LinkProps } from '../../../universal/types';
 import { AppState } from '../../AppState';
 import { IconChevronRight } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
-import { BRPData } from '../../../universal/types/brp';
+import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
+import { Akte } from '../../../server/services/aktes';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 export interface PageEntry {
   url: string;
@@ -155,6 +157,9 @@ export const apiSearchConfigs: Array<
       return displayPath(['Actueel', notification.title]);
     },
   },
+  // {
+  //   apiName: 'FOCUS_TOZO',
+  // },
   {
     apiName: 'FOCUS_TOZO',
     keywordSourceProps: (tozo: ApiBaseItem): string[] => {
@@ -218,6 +223,18 @@ export const apiSearchConfigs: Array<
         },
       ];
       return [...identiteitsBewijzen, ...brpDataItems];
+    },
+    displayTitle: (item: Identiteitsbewijs | ApiBaseItem) => {
+      if ('documentType' in item) {
+        return displayPath(['Burgerzaken', capitalizeFirstLetter(item.title)]);
+      }
+      return displayPath(['Mijn gegevens', capitalizeFirstLetter(item.title)]);
+    },
+  },
+  {
+    apiName: 'AKTES',
+    displayTitle: (document: Akte) => {
+      return displayPath(['Burgerzaken', capitalizeFirstLetter(document.type)]);
     },
   },
 ];

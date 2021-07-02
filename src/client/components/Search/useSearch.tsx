@@ -130,7 +130,7 @@ export async function searchAmsterdamNL(
 }
 
 const options = {
-  threshold: 0.4,
+  threshold: 0.6,
   includeScore: true,
   keys: ['title', 'description', 'keywords'],
 };
