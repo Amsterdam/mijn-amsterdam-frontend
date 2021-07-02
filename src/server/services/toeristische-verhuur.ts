@@ -449,16 +449,22 @@ export async function fetchToeristischeVerhuurGenerated(
 
     const cases: MyCase[] = Array.isArray(vergunningen)
       ? vergunningen
-          .filter(
-            (vergunning) =>
-              ([
-                'Vergunning bed & breakfast',
-                'Vergunning vakantieverhuur',
-              ].includes(vergunning.title) &&
-                vergunning.status !== 'Afgehandeld') ||
-              (vergunning.dateDecision &&
-                isRecentCase(vergunning.dateDecision, compareToDate))
-          )
+          .filter((vergunning) => {
+            const isVergunning = [
+              'Vergunning bed & breakfast',
+              'Vergunning vakantieverhuur',
+            ].includes(vergunning.title);
+
+            const hasRecentDecision =
+              !!vergunning.dateDecision &&
+              isRecentCase(vergunning.dateDecision, compareToDate);
+
+            const isRecentRequest =
+              !!vergunning.dateRequest &&
+              isRecentCase(vergunning.dateRequest, compareToDate);
+
+            return isVergunning && (hasRecentDecision || isRecentRequest);
+          })
           .map(createToeristischeVerhuurRecentCase)
       : [];
 
