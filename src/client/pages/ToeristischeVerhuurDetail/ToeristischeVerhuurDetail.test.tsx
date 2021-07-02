@@ -108,8 +108,8 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
     expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();
-    expect(screen.getByText('01 juni 2019')).toBeInTheDocument();
-    expect(screen.getByText('31 mei 2020')).toBeInTheDocument();
+    expect(screen.getByText('01 november 2021')).toBeInTheDocument();
+    expect(screen.getByText('31 oktober 2022')).toBeInTheDocument();
     expect(screen.getByText('Verleend')).toBeInTheDocument();
   });
 });
