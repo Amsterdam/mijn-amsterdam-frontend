@@ -66,8 +66,14 @@ const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
 const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
-const TOERISTISCHE_VERHUUR = callService(fetchToeristischeVerhuur);
 const WMO = callService(fetchWMO);
+
+const TOERISTISCHE_VERHUUR = (sessionID: SessionID, req: Request) =>
+  fetchToeristischeVerhuur(
+    sessionID,
+    getPassthroughRequestHeaders(req),
+    getProfileType(req)
+  );
 
 const VERGUNNINGEN = (sessionID: SessionID, req: Request) =>
   fetchVergunningen(sessionID, getPassthroughRequestHeaders(req));
@@ -159,6 +165,7 @@ type CommercialServices = Pick<
   | 'MILIEUZONE'
   | 'SIA'
   | 'VERGUNNINGEN'
+  | 'TOERISTISCHE_VERHUUR'
 >;
 
 type ServicesByProfileType = {
@@ -227,6 +234,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     SIA,
+    TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
   },
 };

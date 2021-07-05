@@ -177,7 +177,8 @@ export function transformVergunningenToVerhuur(
 
 async function fetchAndTransformToeristischeVerhuur(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  profileType: ProfileType = 'private'
 ) {
   if (!FeatureToggle.toeristischeVerhuurActive) {
     return apiSuccesResult({
@@ -186,10 +187,10 @@ async function fetchAndTransformToeristischeVerhuur(
       daysLeft: MAXIMUM_DAYS_RENT_ALLOWED,
     });
   }
-  const registratiesRequest = fetchRegistraties(
-    sessionID,
-    passthroughRequestHeaders
-  );
+  const registratiesRequest =
+    profileType === 'commercial'
+      ? Promise.resolve(apiSuccesResult([]))
+      : fetchRegistraties(sessionID, passthroughRequestHeaders);
 
   const vergunningenRequest = fetchVergunningen(
     sessionID,
@@ -414,11 +415,13 @@ function createToeristischeVerhuurRecentCase(
 export async function fetchToeristischeVerhuurGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  compareDate?: Date
+  compareDate?: Date,
+  profileType?: ProfileType
 ) {
   const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
     sessionID,
-    passthroughRequestHeaders
+    passthroughRequestHeaders,
+    profileType
   );
 
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
