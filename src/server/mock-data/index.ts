@@ -17,6 +17,7 @@ import TIPS from './json/tips.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-verhuur.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
+import { apiSuccesResult } from '../../universal/helpers';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -157,7 +158,17 @@ export const mockDataConfig: MockDataConfig = {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(VERGUNNINGEN);
+        const vergunningenCommercial = VERGUNNINGEN.content.filter(
+          (vergunning) => {
+            return ![
+              'Vakantieverhuur',
+              'Vakantieverhuur vergunningsaanvraag',
+            ].includes(vergunning.caseType);
+          }
+        );
+        return await loadMockApiResponseJson(
+          apiSuccesResult(vergunningenCommercial)
+        );
       }
       return await loadMockApiResponseJson(VERGUNNINGEN);
     },
@@ -209,7 +220,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);

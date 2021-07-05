@@ -19,6 +19,7 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './ToeristischeVerhuur.module.scss';
 
 const DISPLAY_PROPS_VERHUUR = {
@@ -38,6 +39,7 @@ const DISPLAY_PROPS_VERGUNNINGEN = {
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
+  const profileType = useProfileTypeValue();
 
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
@@ -297,7 +299,7 @@ export default function ToeristischeVerhuur() {
         title="Vergunningen"
         hasItems={!!vergunningen.length}
         noItemsMessage="U hebt nog geen vergunningen."
-        startCollapsed={true}
+        startCollapsed={profileType !== 'commercial'}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',
