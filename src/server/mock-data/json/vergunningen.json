@@ -47,7 +47,7 @@
     },
     {
       "caseType": "Vakantieverhuur",
-      "title": "Afgelopen Vakantieverhuur",
+      "title": "Afgelopen vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": null,
@@ -61,7 +61,7 @@
     },
     {
       "caseType": "Vakantieverhuur",
-      "title": "Geplande Vakantieverhuur",
+      "title": "Geplande vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
@@ -75,7 +75,7 @@
     },
     {
       "caseType": "Vakantieverhuur",
-      "title": "Geplande Vakantieverhuur",
+      "title": "Geplande vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
@@ -89,7 +89,7 @@
     },
     {
       "caseType": "Vakantieverhuur",
-      "title": "Afgelopen Vakantieverhuur",
+      "title": "Afgelopen vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
