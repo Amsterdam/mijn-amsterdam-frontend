@@ -211,7 +211,7 @@ export default function ToeristischeVerhuur() {
                 )}
                 {daysRemaining > 0 && (
                   <>
-                    U heeft nog {daysRemaining} dagen dat u uw woning mag
+                    U heeft nog {daysRemaining} nachten dat u uw woning mag
                     verhuren.
                   </>
                 )}
@@ -329,8 +329,8 @@ export default function ToeristischeVerhuur() {
                   <span>{registrationItem.registrationNumber}</span>
                   <br />
                   {registrationItem.street} {registrationItem.houseNumber}
-                  {registrationItem.houseLetter}
-                  {registrationItem.houseNumberExtension}
+                  {registrationItem.houseLetter}{' '}
+                  {registrationItem.houseNumberExtension}{' '}
                   {registrationItem.postalCode} {registrationItem.city}
                 </article>
               )
