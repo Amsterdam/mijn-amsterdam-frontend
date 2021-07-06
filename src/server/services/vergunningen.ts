@@ -88,7 +88,7 @@ export interface Omzettingsvergunning extends VergunningBase {
 }
 
 export interface ERVV extends VergunningBase {
-  caseType: 'E-RVV';
+  caseType: 'E-RVV - TVM';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;

@@ -55,7 +55,7 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === 'GPK' && <GPK vergunning={Vergunning} />}
             {Vergunning.caseType === 'GPP' && <GPP vergunning={Vergunning} />}
-            {Vergunning.caseType === 'E-RVV' && (
+            {Vergunning.caseType === 'E-RVV - TVM' && (
               <ERVV vergunning={Vergunning} />
             )}
             {Vergunning.caseType === 'Omzettingsvergunning' && (
