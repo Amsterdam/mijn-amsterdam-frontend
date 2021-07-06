@@ -36,7 +36,7 @@ export default function VergunningDetail() {
         }}
         isLoading={isLoading(VERGUNNINGEN)}
       >
-        {Vergunning?.caseType || 'Vergunning'}
+        {Vergunning?.title || 'Vergunning'}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
