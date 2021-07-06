@@ -2,6 +2,7 @@
   "content": [
     {
       "caseType": "Omzettingsvergunning",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateRequest": "2021-03-28",
       "decision": null,
@@ -9,10 +10,11 @@
       "identifier": "Z/000/000001",
       "location": "BBlap 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 Omzettingsvergunning voor het een en ander"
+      "description": "Amstel 1 Omzettingsvergunning voor het een en ander"
     },
     {
       "caseType": "Evenement melding",
+      "title": "Evenement melding",
       "dateDecision": null,
       "dateRequest": "2021-05-01",
       "decision": null,
@@ -20,7 +22,7 @@
       "identifier": "Z/000/000002",
       "location": "Amstel 1 1011PN Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 Evenement melding",
+      "description": "Amstel 1 Evenement melding",
       "dateStart": "2020-08-02",
       "dateEnd": "2020-08-02",
       "timeEnd": "11:00",
@@ -30,7 +32,8 @@
       "visitorCount": "3.000"
     },
     {
-      "caseType": "E-RVV",
+      "caseType": "E-RVV - TVM",
+      "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)",
       "dateDecision": null,
       "dateRequest": "2021-05-03",
       "decision": null,
@@ -40,10 +43,11 @@
       "dateEnd": "2020-07-28",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 E-RVV aanvraag"
+      "description": "Amstel 1 E-RVV aanvraag"
     },
     {
       "caseType": "Vakantieverhuur",
+      "title": "Afgelopen vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": null,
@@ -53,11 +57,11 @@
       "dateEnd": "2020-06-07",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 Vakantieverhuur 1",
-      "duration": 5
+      "description": "Amstel 1 Vakantieverhuur 1"
     },
     {
       "caseType": "Vakantieverhuur",
+      "title": "Geplande vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
@@ -67,11 +71,11 @@
       "dateEnd": "2021-07-14",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
-      "title": "Amstel 1 Vakantieverhuur 2",
-      "duration": 4
+      "description": "Amstel 1 Vakantieverhuur 2"
     },
     {
       "caseType": "Vakantieverhuur",
+      "title": "Geplande vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
@@ -81,11 +85,11 @@
       "dateEnd": "2029-07-14",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
-      "title": "Amstel 1 Vakantieverhuur 3",
-      "duration": 4
+      "description": "Amstel 1 Vakantieverhuur 3"
     },
     {
       "caseType": "Vakantieverhuur",
+      "title": "Afgelopen vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": null,
@@ -97,11 +101,11 @@
       "status": "Ontvangen",
       "cancelled": true,
       "dateCancelled": "2021-05-15",
-      "title": "Amstel 1 Vakantieverhuur afmelding",
-      "duration": 5
+      "description": "Amstel 1 Vakantieverhuur afmelding"
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
+      "title": "Vergunning vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": "Verleend",
@@ -111,10 +115,11 @@
       "dateEnd": "2021-06-30",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
-      "title": "Amstel 1 Vakantieverhuur aanvraag vergunning"
+      "description": "Amstel 1 Vakantieverhuur aanvraag vergunning"
     },
     {
       "caseType": "B&B - vergunning",
+      "title": "Vergunning bed & breakfast",
       "dateDecision": null,
       "dateRequest": "2021-06-05",
       "decision": null,
@@ -126,10 +131,11 @@
       "status": "Ontvangen",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",
-      "title": "Amstel 1 B&B aanvraag vergunning"
+      "description": "Amstel 1 B&B aanvraag vergunning"
     },
     {
       "caseType": "B&B - vergunning",
+      "title": "Vergunning bed & breakfast",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
       "decision": null,
@@ -140,11 +146,11 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "In behandeling",
       "requester": "Jan Hendrik",
-      "owner": "Jan Hendrik",
-      "title": "Amstel 1 B&B aanvraag vergunning"
+      "owner": "Jan Hendrik"
     },
     {
       "caseType": "B&B - vergunning",
+      "title": "Vergunning bed & breakfast",
       "dateDecision": "2020-05-28",
       "dateRequest": "2020-05-10",
       "decision": "Verleend",
@@ -156,36 +162,25 @@
       "status": "Afgehandeld",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",
-      "title": "Amstel 1 B&B aanvraag vergunning"
+      "description": "Amstel 1 B&B aanvraag vergunning"
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
+      "title": "Vergunning vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
       "decision": "Verleend",
       "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
       "identifier": "Z/000/000040",
-      "dateStart": "2021-09-01",
-      "dateEnd": "2022-10-01",
+      "dateStart": "2019-06-01",
+      "dateEnd": "2020-05-31",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
-      "title": "Amstel 1 Vakantieverhuur aanvraag vergunning"
-    },
-    {
-      "caseType": "Vakantieverhuur vergunningsaanvraag",
-      "dateDecision": null,
-      "dateRequest": "2021-06-28",
-      "decision": "Ingetrokken",
-      "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
-      "identifier": "Z/030/000040",
-      "dateStart": "2021-11-01",
-      "dateEnd": "2022-10-31",
-      "location": "Amstel 1 1017AB Amsterdam",
-      "status": "Afgehandeld",
-      "title": "Amstel 1 Vakantieverhuur aanvraag vergunning"
+      "description": "Amstel 1 Vakantieverhuur aanvraag vergunning"
     },
     {
       "caseType": "GPK",
+      "title": "Europse gehandicaptenparkeerkaart (GPK)",
       "dateDecision": null,
       "dateRequest": "2021-04-03",
       "dateEnd": "2021-05-06",
@@ -197,10 +192,11 @@
       "requestReason": "Men heeft iets nodig",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 GPK aanvraag"
+      "description": "Amstel 1 GPK aanvraag"
     },
     {
       "caseType": "GPP",
+      "title": "Vaste parkeerplaats voor gehandicapten (GPP)",
       "dateDecision": null,
       "dateRequest": "2021-04-07",
       "decision": null,
@@ -209,10 +205,11 @@
       "kenteken": "12-ghz-2",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "title": "Amstel 1 GPP aanvraag"
+      "description": "Amstel 1 GPP aanvraag"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-02",
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -224,11 +221,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Slopen",
+      "description": "Slopen",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-06-24",
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -240,11 +238,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "TVM / 3 PV - Arent Janszoon Ernststraat 780",
+      "description": "TVM / 3 PV - Arent Janszoon Ernststraat 780",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-01",
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -256,11 +255,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Arent Janszoon Ernststraat 779 1012AA",
+      "description": "Arent Janszoon Ernststraat 779 1012AA",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-02",
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -272,11 +272,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "TVM / 3 PV - Arent Janszoon Ernststraat 777",
+      "description": "TVM / 3 PV - Arent Janszoon Ernststraat 777",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -288,11 +289,12 @@
       "status": "Advies beheer",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Wij gaan verbouwen aan de Bloemstraat 5",
+      "description": "Wij gaan verbouwen aan de Bloemstraat 5",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -304,11 +306,12 @@
       "status": "In behandeling",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Wij gaan verbouwen aan de Bloemstraat 4",
+      "description": "Wij gaan verbouwen aan de Bloemstraat 4",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": null,
       "dateRequest": "2020-06-24T00:00:00",
@@ -320,11 +323,12 @@
       "status": "Toewijzen",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Nellestein RVV ontheffing",
+      "description": "Nellestein RVV ontheffing",
       "dateEnd": null
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -336,11 +340,12 @@
       "status": "Ontvangen",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Wij gaan verbouwen aan de Bloemstraat 2",
+      "description": "Wij gaan verbouwen aan de Bloemstraat 2",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
       "dateRequest": "2020-06-24T00:00:00",
@@ -352,11 +357,12 @@
       "status": "Ontvangen",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Wij gaan verbouwen aan de Bloemstraat 26 h. Wij willen hiervoor graag 2 parkeervakken reserveren om materialen / container op te plaatsen.",
+      "description": "Wij gaan verbouwen aan de Bloemstraat 26 h. Wij willen hiervoor graag 2 parkeervakken reserveren om materialen / container op te plaatsen.",
       "dateEnd": "2020-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-06-25",
       "dateStart": "2020-06-25",
       "dateRequest": "2020-06-17T00:00:00",
@@ -368,11 +374,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "SB RVV ontheffing hele stad",
+      "description": "SB RVV ontheffing hele stad",
       "dateEnd": "2020-06-25"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-06-16",
       "dateRequest": "2020-06-08T00:00:00",
@@ -384,11 +391,12 @@
       "status": "Ontvangen",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "SB RVV ontheffing hele stad",
+      "description": "SB RVV ontheffing hele stad",
       "dateEnd": "2020-06-16"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": null,
       "dateRequest": "2020-05-03T00:00:00",
@@ -400,11 +408,12 @@
       "status": "Toewijzen",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "7,5 ton ontheffing",
+      "description": "7,5 ton ontheffing",
       "dateEnd": null
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2019-12-05",
       "dateStart": "2019-12-19",
       "dateRequest": "2019-12-31T00:00:00",
@@ -416,11 +425,12 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "Bulkaanvraag door Raoul Verheezen t.b.v. Wagenpark (M-AMS1909 004195)",
+      "description": "Bulkaanvraag door Raoul Verheezen t.b.v. Wagenpark (M-AMS1909 004195)",
       "dateEnd": "2020-12-31"
     },
     {
       "caseType": "TVM - RVV - Object",
+      "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2019-06-21",
       "dateStart": "2020-07-02",
       "dateRequest": "2019-06-13T00:00:00",
@@ -432,7 +442,7 @@
       "status": "Afgehandeld",
       "timeEnd": "16:00",
       "timeStart": "10:00",
-      "title": "TVM / 3 PV - Arent Janszoon Ernststraat 888",
+      "description": "TVM / 3 PV - Arent Janszoon Ernststraat 888",
       "dateEnd": "2020-07-02"
     }
   ],

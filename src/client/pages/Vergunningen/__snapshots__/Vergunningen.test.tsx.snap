@@ -139,7 +139,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    E-RVV
+                    e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)
                   </span>
                 </td>
                 <td
@@ -205,7 +205,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    GPP
+                    Vaste parkeerplaats voor gehandicapten (GPP)
                   </span>
                 </td>
                 <td
@@ -238,7 +238,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    GPK
+                    Europse gehandicaptenparkeerkaart (GPK)
                   </span>
                 </td>
                 <td
@@ -271,7 +271,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Omzettingsvergunning
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -304,7 +304,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -337,7 +337,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -370,7 +370,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -403,7 +403,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -436,7 +436,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -469,7 +469,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -502,7 +502,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -592,7 +592,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -625,7 +625,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -658,7 +658,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -691,7 +691,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -724,7 +724,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -757,7 +757,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -790,7 +790,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    TVM - RVV - Object
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td

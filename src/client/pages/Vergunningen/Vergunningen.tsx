@@ -20,13 +20,13 @@ import styles from './Vergunningen.module.scss';
 
 const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
-  caseType: 'Soort vergunning',
+  title: 'Soort vergunning',
   dateRequest: 'Aangevraagd',
 };
 
 const DISPLAY_PROPS_HISTORY = {
   identifier: 'Kenmerk',
-  caseType: 'Soort vergunning',
+  title: 'Soort vergunning',
   decision: 'Resultaat',
 };
 

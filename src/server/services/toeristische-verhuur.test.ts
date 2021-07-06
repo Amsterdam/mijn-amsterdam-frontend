@@ -8,7 +8,6 @@ import {
   createToeristischeVerhuurNotification,
   daysRentLeftInCalendarYear,
   fetchToeristischeVerhuur,
-  transformToeristischeVerhuurVergunningTitle,
 } from './toeristische-verhuur';
 import { toeristischeVerhuurVergunningTypes } from './vergunningen';
 
@@ -113,19 +112,6 @@ describe('Toeristische verhuur service', () => {
       content: null,
       message: 'Error: Request failed with status code 500',
     });
-  });
-
-  it('Should have transformed titles of vergunningen', async () => {
-    const response = await fetchToeristischeVerhuur('x4', { x: 'saml' });
-
-    for (const vergunning of response.content.vergunningen) {
-      expect(
-        transformToeristischeVerhuurVergunningTitle(
-          vergunning,
-          vergunning.isActual
-        ) === vergunning.title
-      );
-    }
   });
 
   it('Should return only B&B if commercial profiletype', async () => {
