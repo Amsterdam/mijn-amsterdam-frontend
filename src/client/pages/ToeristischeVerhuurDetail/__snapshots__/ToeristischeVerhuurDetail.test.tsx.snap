@@ -41,7 +41,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Geplande vakantieverhuur
+          Geplande verhuur
         </h2>
       </div>
     </header>
