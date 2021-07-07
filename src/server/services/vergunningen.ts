@@ -35,6 +35,7 @@ export interface VergunningBase {
   caseType: string;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
   title: string;
+  description: string;
   identifier: string;
   dateRequest: string;
   decision: string | null;
@@ -87,7 +88,7 @@ export interface Omzettingsvergunning extends VergunningBase {
 }
 
 export interface ERVV extends VergunningBase {
-  caseType: 'E-RVV';
+  caseType: 'E-RVV - TVM';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
@@ -100,7 +101,6 @@ export interface Vakantieverhuur extends VergunningBase {
   location: string | null;
   cancelled?: boolean;
   dateCancelled?: string;
-  duration: number;
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
@@ -290,13 +290,13 @@ export function createVergunningNotification(
     );
     const GPKForm =
       'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
-    const fullName = 'Europese gehandicaptenparkeerkaart (GPK)'; // change this later to title property
+    const fullName = item.title; // change this later to title property
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
         !hasOtherValidVergunningOfSameType(allGPKItems, item):
         title = `${item.caseType} loopt af`;
-        description = `Uw ${fullName} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
+        description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
         cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
         linkTo = GPKForm;
         datePublished = dateFormat(
@@ -324,19 +324,20 @@ export function createVergunningNotification(
         break;
     }
   } else {
-    let fullName: string = item.caseType;
+    let fullName: string = item.title;
+    let shortName: string = item.title;
     switch (item.caseType) {
       case 'GPP':
-        fullName = 'vaste parkeerplaats gehandicapten (GPP)';
+        shortName = item.caseType;
         break;
     }
     switch (true) {
       case item.status !== 'Afgehandeld':
-        title = `${item.caseType} in behandeling`;
+        title = `${shortName} in behandeling`;
         description = `Uw vergunningsaanvraag ${fullName} is in behandeling.`;
         break;
       case item.status === 'Afgehandeld':
-        title = `${item.caseType} afgehandeld`;
+        title = `${shortName} afgehandeld`;
         description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
         break;
     }

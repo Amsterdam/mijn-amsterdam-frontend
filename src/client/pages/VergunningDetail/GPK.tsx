@@ -6,10 +6,6 @@ export function GPK({ vergunning }: { vergunning: GPKType }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail
-        label="Soort vergunning"
-        value={vergunning?.caseType || '-'}
-      />
       <InfoDetail label="Kaart nummer" value={vergunning?.cardNumber || '-'} />
       <InfoDetail label="Soort kaart" value={vergunning?.cardtype || '-'} />
       <InfoDetail

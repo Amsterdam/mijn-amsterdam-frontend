@@ -74,6 +74,7 @@ function fetchRegistraties(
 /** Code to transform and type Decos vergunningen to Toeristische verhuur */
 interface ToeristischeVerhuurVergunningProps {
   isActual: boolean;
+  duration: number;
 }
 
 // A union of the the source types that are retrieved from the Decos api
@@ -95,26 +96,6 @@ export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuur
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
-
-export function transformToeristischeVerhuurVergunningTitle(
-  vergunning: VakantieverhuurVergunning,
-  isActual: boolean
-): string {
-  switch (vergunning.caseType) {
-    case 'Vakantieverhuur':
-      return `${
-        vergunning.cancelled
-          ? 'Geannuleerde'
-          : !isActual
-          ? 'Afgelopen'
-          : 'Geplande'
-      } verhuur`;
-    case 'Vakantieverhuur vergunningsaanvraag':
-      return `Vergunning vakantieverhuur`;
-    case 'B&B - vergunning':
-      return `Vergunning bed & breakfast`;
-  }
-}
 
 export function daysRentLeftInCalendarYear(
   verhuurItems: ToeristischeVerhuur[]
@@ -162,14 +143,17 @@ export function transformVergunningenToVerhuur(
       const isActual = vergunning.dateEnd
         ? !isDateInPast(vergunning.dateEnd)
         : true;
-      const title = transformToeristischeVerhuurVergunningTitle(
-        vergunning,
-        isActual
-      );
+
       return {
         ...vergunning,
-        title,
         isActual,
+        duration:
+          vergunning.dateEnd && vergunning.dateStart
+            ? calculateDaysBetweenDates(
+                vergunning.dateEnd,
+                vergunning.dateStart
+              )
+            : 0,
       };
     })
     .sort(dateSort('dateStart', 'asc'));
