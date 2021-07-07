@@ -18,6 +18,8 @@ import { GPP } from './GPP';
 import { Omzettingsvergunning } from './Omzettingsvergunning';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
+import { BlauweZoneParticulieren } from './BlauweZoneParticulieren';
+import { BlauweZoneBedrijven } from './BlauweZoneBedrijven';
 import styles from './VergunningDetail.module.scss';
 
 export default function VergunningDetail() {
@@ -63,6 +65,14 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === 'Evenement melding' && (
               <EvenementMelding vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType ===
+              'Parkeerontheffingen Blauwe zone particulieren' && (
+              <BlauweZoneParticulieren vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType ===
+              'Parkeerontheffingen Blauwe zone bedrijven' && (
+              <BlauweZoneBedrijven vergunning={Vergunning} />
             )}
             <DocumentDetails vergunning={Vergunning} />
           </>

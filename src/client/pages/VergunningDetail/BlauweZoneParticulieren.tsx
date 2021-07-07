@@ -1,34 +1,28 @@
-import { TVMRVVObject as TVMRVVObjectType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
+import { BZP } from '../../../server/services/vergunningen';
 
-export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
+export function BlauweZoneParticulieren({ vergunning }: { vergunning: BZP }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Zaaktype" value={vergunning.caseType || '-'} />
-      <InfoDetail label="Omschrijving" value={vergunning?.description || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
+      <InfoDetail label="Kenteken" value={vergunning.kenteken || '-'} />
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"
           value={
-            (vergunning?.dateStart
+            vergunning?.dateStart
               ? defaultDateFormat(vergunning.dateStart)
-              : '-') +
-            (vergunning?.timeStart ? ` - ${vergunning.timeStart} uur` : '')
+              : '-'
           }
         />
         <InfoDetail
           label="Tot en met"
           value={
-            (vergunning?.dateEnd
-              ? defaultDateFormat(vergunning.dateEnd)
-              : '-') +
-            (vergunning?.timeEnd ? ` - ${vergunning.timeEnd} uur` : '')
+            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
           }
         />
       </InfoDetailGroup>

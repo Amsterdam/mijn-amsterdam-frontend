@@ -122,6 +122,22 @@ export interface BBVergunning extends VergunningBase {
   hasTransitionAgreement: boolean;
 }
 
+export interface BZB extends VergunningBase {
+  caseType: 'Parkeerontheffingen Blauwe zone bedrijven';
+  companyName: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  decision: string | null;
+}
+
+export interface BZP extends VergunningBase {
+  caseType: 'Parkeerontheffingen Blauwe zone particulieren';
+  kenteken: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  decision: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -129,6 +145,8 @@ export type Vergunning =
   | EvenementMelding
   | Omzettingsvergunning
   | ERVV
+  | BZB
+  | BZP
   | Vakantieverhuur
   | BBVergunning
   | VakantieverhuurVergunningaanvraag;
@@ -230,7 +248,9 @@ export async function fetchVergunningen(
   return response;
 }
 
-export function isNearEndDate(vergunning: ToeristischeVerhuurVergunning | GPK) {
+export function isNearEndDate(
+  vergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB
+) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -244,7 +264,9 @@ export function isNearEndDate(vergunning: ToeristischeVerhuurVergunning | GPK) {
   );
 }
 
-export function isExpired(vergunning: ToeristischeVerhuurVergunning | GPK) {
+export function isExpired(
+  vergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB
+) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -263,11 +285,11 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function hasOtherValidVergunningOfSameType(
-  items: ToeristischeVerhuurVergunning[] | GPK[],
-  item: ToeristischeVerhuurVergunning | GPK
+  items: ToeristischeVerhuurVergunning[] | GPK[] | BZP[] | BZB[],
+  item: ToeristischeVerhuurVergunning | GPK | BZP | BZB
 ): boolean {
   return items.some(
-    (otherVergunning: ToeristischeVerhuurVergunning | GPK) =>
+    (otherVergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
@@ -284,21 +306,36 @@ export function createVergunningNotification(
   let linkTo = item.link.to;
   let cta = 'Bekijk details';
 
-  if (item.caseType === 'GPK') {
-    const allGPKItems = items.filter(
-      (item: Vergunning): item is GPK => item.caseType === 'GPK'
+  if (
+    item.caseType === 'GPK' ||
+    item.caseType === 'Parkeerontheffingen Blauwe zone bedrijven' ||
+    item.caseType === 'Parkeerontheffingen Blauwe zone particulieren'
+  ) {
+    const allItems = items.filter(
+      (caseItem: Vergunning): caseItem is GPK => caseItem.caseType === 'GPK'
     );
-    const GPKForm =
-      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
-    const fullName = item.title; // change this later to title property
+    let formLink = '';
+    switch (item.caseType) {
+      case 'GPK':
+        formLink =
+          'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
+        break;
+      case 'Parkeerontheffingen Blauwe zone bedrijven':
+        formLink = ''; //Missing information from RD;
+        break;
+      case 'Parkeerontheffingen Blauwe zone particulieren':
+        formLink = ''; //Missing information from RD;
+        break;
+    }
+    const fullName = item.title;
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
-        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} loopt af`;
         description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
         cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
-        linkTo = GPKForm;
+        linkTo = formLink;
         datePublished = dateFormat(
           subMonths(
             new Date(item.dateEnd!),
@@ -309,11 +346,11 @@ export function createVergunningNotification(
         break;
       case item.decision === 'Verleend' &&
         isExpired(item) &&
-        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} is verlopen`;
         description = `Uw ${fullName} is verlopen.`;
         cta = `Vraag een nieuwe ${item.caseType} aan`;
-        linkTo = GPKForm;
+        linkTo = formLink;
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
