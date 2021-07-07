@@ -108,7 +108,6 @@ export function daysRentLeftInCalendarYear(
 
       const startsInCurrentYear = isCurrentYear(verhuur.dateStart);
       const endsInCurrentYear = isCurrentYear(verhuur.dateEnd);
-
       switch (true) {
         case startsInCurrentYear && endsInCurrentYear:
           return verhuur.duration;
@@ -212,7 +211,6 @@ async function fetchAndTransformToeristischeVerhuur(
       verhuur.title === 'Afgelopen verhuur'
   );
   const daysLeft = daysRentLeftInCalendarYear(verhuurVergunningen);
-
   const failedDependencies = getFailedDependencies({
     registraties,
     vergunningen,
