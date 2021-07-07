@@ -29,6 +29,8 @@ function useStatusLineItems(
     const isInBehandeling = vergunning.status === 'In behandeling';
     const isAfgehandeld = vergunning.status === 'Afgehandeld';
     const isIngetrokken = !isBB && vergunning.decision === 'Ingetrokken';
+    const isVerlopen =
+      !isBB && !vergunning.isActual && vergunning.decision !== 'Ingetrokken';
     /**
      * Steps for B&B:
      * - Ontvangen
@@ -75,7 +77,7 @@ function useStatusLineItems(
     } else {
       step2.datePublished = vergunning.dateDecision || vergunning.dateRequest;
       step2.status = 'Verleend';
-      step2.isActive = !isIngetrokken;
+      step2.isActive = !isIngetrokken && !isVerlopen;
       step2.isChecked = true;
     }
 
@@ -105,7 +107,19 @@ function useStatusLineItems(
         isChecked: true,
       };
       lineItems.push(step3);
+    } else if (!isBB) {
+      const step3 = {
+        id: 'item-3',
+        status: 'Verlopen',
+        datePublished: vergunning.dateEnd || '',
+        description: '',
+        documents: [],
+        isActive: isVerlopen,
+        isChecked: isVerlopen,
+      };
+      lineItems.push(step3);
     }
+
     return lineItems;
   }, [vergunning]);
 

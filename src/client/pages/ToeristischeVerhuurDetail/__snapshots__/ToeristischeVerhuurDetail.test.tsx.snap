@@ -59,7 +59,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Z/000/000005
+          Z/100/000005
         </p>
       </div>
       <div
@@ -93,7 +93,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              10 juli 2021
+              10 juli 2029
             </p>
           </div>
           <div
@@ -107,7 +107,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              14 juli 2021
+              14 juli 2029
             </p>
           </div>
         </div>

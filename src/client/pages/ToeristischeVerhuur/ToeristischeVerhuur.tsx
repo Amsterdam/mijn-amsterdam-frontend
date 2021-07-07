@@ -40,7 +40,6 @@ export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
   const profileType = useProfileTypeValue();
-
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
@@ -50,11 +49,17 @@ export default function ToeristischeVerhuur() {
     const vergunningen = [];
 
     for (const vergunning of content.vergunningen) {
+      const showExpired =
+        !vergunning.isActual &&
+        vergunning.decision !== 'Ingetrokken' &&
+        vergunning.title === 'Vergunning vakantieverhuur';
       const displayVergunning = {
         ...vergunning,
         status:
           vergunning.status === 'Afgehandeld'
-            ? vergunning.decision ?? vergunning.status
+            ? showExpired
+              ? 'Verlopen'
+              : vergunning.decision ?? vergunning.status
             : vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd

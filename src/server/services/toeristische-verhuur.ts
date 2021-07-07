@@ -156,7 +156,7 @@ export function transformVergunningenToVerhuur(
             : 0,
       };
     })
-    .sort(dateSort('dateStart', 'asc'));
+    .sort(dateSort('dateStart', 'desc'));
 }
 
 async function fetchAndTransformToeristischeVerhuur(
