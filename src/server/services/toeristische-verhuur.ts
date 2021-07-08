@@ -142,8 +142,17 @@ export function transformVergunningenToVerhuur(
       ? !isDateInPast(vergunning.dateEnd)
       : true;
 
+    let status = vergunning.status;
+
+    // Add custom status for Vergunning vakantieverhuur only
+    if (vergunning.title === 'Vergunning vakantieverhuur') {
+      status = vergunning.decision;
+      status = !isActual && status !== 'Ingetrokken' ? 'Verlopen' : status;
+    }
+
     return {
       ...vergunning,
+      status,
       isActual,
       duration:
         vergunning.dateEnd && vergunning.dateStart
@@ -159,6 +168,13 @@ export function transformVergunningenToVerhuur(
     if (vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual) {
       geplandeVerhuur.push(vergunning);
     } else {
+      // We consider expired B&B permits as not relevent for the user.
+      if (
+        vergunning.title === 'Vergunning bed & breakfast' &&
+        !vergunning.isActual
+      ) {
+        continue;
+      }
       overige.push(vergunning);
     }
   }

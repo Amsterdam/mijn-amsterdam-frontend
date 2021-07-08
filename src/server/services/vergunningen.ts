@@ -97,6 +97,7 @@ export interface ERVV extends VergunningBase {
 export interface Vakantieverhuur extends VergunningBase {
   caseType: 'Vakantieverhuur';
   title: 'Geplande verhuur' | 'Geannuleerde verhuur' | 'Afgelopen verhuur';
+  decision: 'Verleend';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
@@ -104,19 +105,20 @@ export interface Vakantieverhuur extends VergunningBase {
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
   caseType: 'Vakantieverhuur vergunningsaanvraag';
-  title: '"Vergunning bed & breakfast' | 'Vergunning vakantieverhuur';
+  title: 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
-  decision: string | null;
+  decision: 'Verleend' | 'Ingetrokken';
   location: string | null;
 }
 
 export interface BBVergunning extends VergunningBase {
   caseType: 'B&B - vergunning';
+  title: 'Vergunning bed & breakfast';
+  decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
-  decision: string | null;
   requester: string | null;
   owner: string | null;
   hasTransitionAgreement: boolean;

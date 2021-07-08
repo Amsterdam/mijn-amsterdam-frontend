@@ -29,8 +29,7 @@ function useStatusLineItems(
     const isInBehandeling = vergunning.status === 'In behandeling';
     const isAfgehandeld = vergunning.status === 'Afgehandeld';
     const isIngetrokken = !isBB && vergunning.decision === 'Ingetrokken';
-    const isVerlopen =
-      !isBB && !vergunning.isActual && vergunning.decision !== 'Ingetrokken';
+    const isVerlopen = vergunning.status === 'Verlopen';
     /**
      * Steps for B&B:
      * - Ontvangen
@@ -39,8 +38,12 @@ function useStatusLineItems(
      *
      * Steps for Vakantieverhuurvergunning:
      * - Ontvangen
+     * -----------
      * - Verleend
-     * (- Ingetrokken) optional
+     * - Verlopen
+     * -- or --
+     * - Ingetrokken
+     * -----------
      */
 
     const step1 = {

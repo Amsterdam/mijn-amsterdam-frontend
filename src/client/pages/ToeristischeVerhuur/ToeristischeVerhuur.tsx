@@ -49,18 +49,8 @@ export default function ToeristischeVerhuur() {
     const vergunningen = [];
 
     for (const vergunning of content.vergunningen) {
-      const showExpired =
-        !vergunning.isActual &&
-        vergunning.decision !== 'Ingetrokken' &&
-        vergunning.title === 'Vergunning vakantieverhuur';
       const displayVergunning = {
         ...vergunning,
-        status:
-          vergunning.status === 'Afgehandeld'
-            ? showExpired
-              ? 'Verlopen'
-              : vergunning.decision ?? vergunning.status
-            : vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
@@ -74,13 +64,6 @@ export default function ToeristischeVerhuur() {
           vergunning.title
         )
       ) {
-        // We consider expired B&B permits as not relevent for the user.
-        if (
-          vergunning.title === 'Vergunning bed & breakfast' &&
-          !vergunning.isActual
-        ) {
-          continue;
-        }
         vergunningen.push(displayVergunning);
       } else {
         verhuur.push(displayVergunning);
