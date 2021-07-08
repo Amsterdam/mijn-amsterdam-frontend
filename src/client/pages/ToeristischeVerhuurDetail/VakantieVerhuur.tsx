@@ -34,15 +34,15 @@ function useStatusLineItems(vergunning?: ToeristischeVerhuur) {
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: !vergunning.cancelled,
+        isActive: vergunning.title !== 'Geannuleerde verhuur',
         isChecked: true,
       },
     ];
-    if (vergunning.cancelled) {
+    if (vergunning.title === 'Geannuleerde verhuur') {
       statusTrain.push({
         id: 'item-3',
         status: 'Geannuleerd',
-        datePublished: vergunning.dateCancelled ?? vergunning.dateRequest,
+        datePublished: vergunning.dateDecision || vergunning.dateRequest,
         description: '',
         documents: [],
         isActive: true,

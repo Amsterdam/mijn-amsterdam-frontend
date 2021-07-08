@@ -41,6 +41,18 @@ export default function ToeristischeVerhuur() {
   const { content } = TOERISTISCHE_VERHUUR;
   const profileType = useProfileTypeValue();
 
+  const hasVergunningenVakantieVerhuur = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+    );
+  }, [content?.vergunningen]);
+
+  const hasVergunningBB = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
+    );
+  }, [content?.vergunningen]);
+
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
@@ -52,10 +64,6 @@ export default function ToeristischeVerhuur() {
     for (const vergunning of content.vergunningen) {
       const displayVergunning = {
         ...vergunning,
-        status:
-          vergunning.status === 'Afgehandeld'
-            ? vergunning.decision ?? vergunning.status
-            : vergunning.status,
         dateRequest: defaultDateFormat(vergunning.dateRequest),
         dateEnd: vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
@@ -69,13 +77,6 @@ export default function ToeristischeVerhuur() {
           vergunning.title
         )
       ) {
-        // We consider expired B&B permits as not relevent for the user.
-        if (
-          vergunning.title === 'Vergunning bed & breakfast' &&
-          !vergunning.isActual
-        ) {
-          continue;
-        }
         vergunningen.push(displayVergunning);
       } else {
         verhuur.push(displayVergunning);
@@ -88,42 +89,18 @@ export default function ToeristischeVerhuur() {
     ];
   }, [content?.vergunningen]);
 
-  const hasVergunningenVakantieVerhuur = useMemo(() => {
-    return vergunningen.some(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag'
-    );
-  }, [vergunningen]);
-
-  const hasVergunningBB = useMemo(() => {
-    return vergunningen.some(
-      (vergunning) => vergunning.caseType === 'B&B - vergunning'
-    );
-  }, [vergunningen]);
-
   const cancelledVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && vergunning.cancelled
+      (verhuur) => verhuur.title === 'Geannuleerde verhuur'
     );
   }, [verhuur]);
 
   const plannedVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' &&
-        !vergunning.cancelled &&
-        vergunning.isActual
-    );
+    return verhuur.filter((verhuur) => verhuur.title === 'Geplande verhuur');
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' &&
-        !vergunning.cancelled &&
-        !vergunning.isActual
-    );
+    return verhuur.filter((verhuur) => verhuur.title === 'Afgelopen verhuur');
   }, [verhuur]);
 
   const isCollapsed = (listTitle: string): boolean => {
@@ -142,6 +119,15 @@ export default function ToeristischeVerhuur() {
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
+
+  console.log(
+    vergunningen,
+    'hasVergunningenVakantieVerhuur',
+    hasVergunningenVakantieVerhuur,
+    plannedVerhuur,
+    previousVerhuur,
+    cancelledVerhuur
+  );
 
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
@@ -211,7 +197,7 @@ export default function ToeristischeVerhuur() {
                 )}
                 {daysRemaining > 0 && (
                   <>
-                    U heeft nog {daysRemaining} dagen dat u uw woning mag
+                    U heeft nog {daysRemaining} nachten dat u uw woning mag
                     verhuren.
                   </>
                 )}
@@ -329,8 +315,8 @@ export default function ToeristischeVerhuur() {
                   <span>{registrationItem.registrationNumber}</span>
                   <br />
                   {registrationItem.street} {registrationItem.houseNumber}
-                  {registrationItem.houseLetter}
-                  {registrationItem.houseNumberExtension}
+                  {registrationItem.houseLetter}{' '}
+                  {registrationItem.houseNumberExtension}{' '}
                   {registrationItem.postalCode} {registrationItem.city}
                 </article>
               )

@@ -18,6 +18,7 @@ export default function ToeristischVerhuurDetail() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
   const { id } = useParams<{ id: string }>();
+
   const Vergunning = content?.vergunningen?.find((item) => item.id === id);
   const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !Vergunning;
 
@@ -51,8 +52,8 @@ export default function ToeristischVerhuurDetail() {
       {Vergunning?.caseType === 'Vakantieverhuur' && (
         <VakantieVerhuur vergunning={Vergunning} />
       )}
-      {(Vergunning?.caseType === 'Vakantieverhuur vergunningsaanvraag' ||
-        Vergunning?.caseType === 'B&B - vergunning') && (
+      {(Vergunning?.title === 'Vergunning vakantieverhuur' ||
+        Vergunning?.title === 'Vergunning bed & breakfast') && (
         <VergunningVerhuur vergunning={Vergunning} />
       )}
     </DetailPage>
