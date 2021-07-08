@@ -25,7 +25,7 @@ function useStatusLineItems(
     if (!vergunning) {
       return [];
     }
-    const isBB = vergunning.caseType === 'B&B - vergunning';
+    const isBB = vergunning.title === 'Vergunning bed & breakfast';
     const isInBehandeling = vergunning.status === 'In behandeling';
     const isAfgehandeld = vergunning.status === 'Afgehandeld';
     const isIngetrokken = !isBB && vergunning.decision === 'Ingetrokken';
@@ -160,7 +160,7 @@ export default function VergunningVerhuur({
             }
           />
         </InfoDetailGroup>
-        {vergunning.caseType === 'B&B - vergunning' && (
+        {vergunning.title === 'Vergunning bed & breakfast' && (
           <InfoDetailGroup>
             <InfoDetail
               label="Eigenaar woning"

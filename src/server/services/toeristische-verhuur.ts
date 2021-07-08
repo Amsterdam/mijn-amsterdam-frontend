@@ -165,7 +165,7 @@ export function transformVergunningenToVerhuur(
   const overige: ToeristischeVerhuurVergunning[] = [];
 
   for (const vergunning of vergunningenTransformed) {
-    if (vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual) {
+    if (vergunning.title === 'Geplande verhuur' && vergunning.isActual) {
       geplandeVerhuur.push(vergunning);
     } else {
       // We consider expired B&B permits as not relevent for the user.
@@ -207,14 +207,14 @@ async function fetchAndTransformToeristischeVerhuur(
     passthroughRequestHeaders,
     {
       appRoute: (vergunning: Vergunning) => {
-        if (
-          ['Vakantieverhuur vergunningsaanvraag', 'B&B - vergunning'].includes(
-            vergunning.caseType
-          )
-        ) {
-          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+        switch (vergunning.caseType) {
+          case 'B&B - vergunning':
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
+          case 'Vakantieverhuur vergunningsaanvraag':
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+          default:
+            return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
         }
-        return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunning =>
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),

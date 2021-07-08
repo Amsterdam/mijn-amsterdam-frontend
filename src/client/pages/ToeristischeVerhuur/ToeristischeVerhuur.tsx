@@ -40,6 +40,19 @@ export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
   const profileType = useProfileTypeValue();
+
+  const hasVergunningenVakantieVerhuur = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+    );
+  }, [content?.vergunningen]);
+
+  const hasVergunningBB = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
+    );
+  }, [content?.vergunningen]);
+
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
@@ -76,35 +89,18 @@ export default function ToeristischeVerhuur() {
     ];
   }, [content?.vergunningen]);
 
-  const hasVergunningenVakantieVerhuur = useMemo(() => {
-    return vergunningen.some(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur vergunningsaanvraag'
-    );
-  }, [vergunningen]);
-
-  const hasVergunningBB = useMemo(() => {
-    return vergunningen.some(
-      (vergunning) => vergunning.caseType === 'B&B - vergunning'
-    );
-  }, [vergunningen]);
-
   const cancelledVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) => vergunning.title === 'Geannuleerde verhuur'
+      (verhuur) => verhuur.title === 'Geannuleerde verhuur'
     );
   }, [verhuur]);
 
   const plannedVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) => vergunning.title === 'Geplande verhuur'
-    );
+    return verhuur.filter((verhuur) => verhuur.title === 'Geplande verhuur');
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (vergunning) => vergunning.title === 'Afgelopen verhuur'
-    );
+    return verhuur.filter((verhuur) => verhuur.title === 'Afgelopen verhuur');
   }, [verhuur]);
 
   const isCollapsed = (listTitle: string): boolean => {
@@ -123,6 +119,15 @@ export default function ToeristischeVerhuur() {
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
+
+  console.log(
+    vergunningen,
+    'hasVergunningenVakantieVerhuur',
+    hasVergunningenVakantieVerhuur,
+    plannedVerhuur,
+    previousVerhuur,
+    cancelledVerhuur
+  );
 
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
