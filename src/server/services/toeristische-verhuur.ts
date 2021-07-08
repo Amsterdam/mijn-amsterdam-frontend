@@ -137,25 +137,36 @@ export function transformVergunningenToVerhuur(
   if (!Array.isArray(vergunningen)) {
     return [];
   }
-  return vergunningen
-    .map((vergunning) => {
-      const isActual = vergunning.dateEnd
-        ? !isDateInPast(vergunning.dateEnd)
-        : true;
+  const vergunningenTransformed = vergunningen.map((vergunning) => {
+    const isActual = vergunning.dateEnd
+      ? !isDateInPast(vergunning.dateEnd)
+      : true;
 
-      return {
-        ...vergunning,
-        isActual,
-        duration:
-          vergunning.dateEnd && vergunning.dateStart
-            ? calculateDaysBetweenDates(
-                vergunning.dateEnd,
-                vergunning.dateStart
-              )
-            : 0,
-      };
-    })
-    .sort(dateSort('dateStart', 'desc'));
+    return {
+      ...vergunning,
+      isActual,
+      duration:
+        vergunning.dateEnd && vergunning.dateStart
+          ? calculateDaysBetweenDates(vergunning.dateEnd, vergunning.dateStart)
+          : 0,
+    };
+  });
+
+  const geplandeVerhuur: ToeristischeVerhuur[] = [];
+  const overige: ToeristischeVerhuurVergunning[] = [];
+
+  for (const vergunning of vergunningenTransformed) {
+    if (vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual) {
+      geplandeVerhuur.push(vergunning);
+    } else {
+      overige.push(vergunning);
+    }
+  }
+
+  return [
+    ...geplandeVerhuur.sort(dateSort('dateStart', 'asc')),
+    ...overige.sort(dateSort('dateStart', 'desc')),
+  ];
 }
 
 async function fetchAndTransformToeristischeVerhuur(

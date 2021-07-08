@@ -43,15 +43,16 @@ describe('<ToeristischVerhuurDetail />', () => {
 
   (window as any).scrollTo = jest.fn();
 
-  const vergunning = vergunningen?.find(
+  const verhuur = vergunningen?.find(
     (vergunning) =>
-      vergunning.caseType === 'Vakantieverhuur' && vergunning.isActual
+      vergunning.title === 'Geplande verhuur' &&
+      vergunning.dateStart === '2029-07-10'
   );
 
   const routeEntry = generatePath(
     AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
     {
-      id: vergunning?.id,
+      id: verhuur?.id,
     }
   );
 
@@ -109,6 +110,7 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
     expect(screen.getByText('Tot')).toBeInTheDocument();
     expect(screen.getByText('01 augustus 2020')).toBeInTheDocument();
     expect(screen.getAllByText('30 september 2021').length).toBe(2);
+    expect(screen.getByText('Verleend')).toBeInTheDocument();
     expect(screen.getByText('Verlopen')).toBeInTheDocument();
   });
 });

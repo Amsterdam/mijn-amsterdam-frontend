@@ -96,15 +96,15 @@ export interface ERVV extends VergunningBase {
 
 export interface Vakantieverhuur extends VergunningBase {
   caseType: 'Vakantieverhuur';
+  title: 'Geplande verhuur' | 'Geannuleerde verhuur' | 'Afgelopen verhuur';
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
-  cancelled?: boolean;
-  dateCancelled?: string;
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
   caseType: 'Vakantieverhuur vergunningsaanvraag';
+  title: '"Vergunning bed & breakfast' | 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;

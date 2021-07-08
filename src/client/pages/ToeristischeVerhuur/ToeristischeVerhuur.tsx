@@ -108,26 +108,19 @@ export default function ToeristischeVerhuur() {
 
   const cancelledVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' && vergunning.cancelled
+      (vergunning) => vergunning.title === 'Geannuleerde verhuur'
     );
   }, [verhuur]);
 
   const plannedVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' &&
-        !vergunning.cancelled &&
-        vergunning.isActual
+      (vergunning) => vergunning.title === 'Geplande verhuur'
     );
   }, [verhuur]);
 
   const previousVerhuur = useMemo(() => {
     return verhuur.filter(
-      (vergunning) =>
-        vergunning.caseType === 'Vakantieverhuur' &&
-        !vergunning.cancelled &&
-        !vergunning.isActual
+      (vergunning) => vergunning.title === 'Afgelopen verhuur'
     );
   }, [verhuur]);
 
