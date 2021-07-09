@@ -120,15 +120,6 @@ export default function ToeristischeVerhuur() {
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
 
-  console.log(
-    vergunningen,
-    'hasVergunningenVakantieVerhuur',
-    hasVergunningenVakantieVerhuur,
-    plannedVerhuur,
-    previousVerhuur,
-    cancelledVerhuur
-  );
-
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -291,7 +282,7 @@ export default function ToeristischeVerhuur() {
           name: 'Datatabel',
         }}
       >
-        {vergunningen && (
+        {!!vergunningen?.length && (
           <Table
             className={styles.TableVergunningen}
             titleKey="title"
