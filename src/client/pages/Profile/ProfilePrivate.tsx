@@ -273,6 +273,11 @@ export default function Profile() {
             </LinkdInline>
             .
           </p>
+          <p className={styles.SuppressedParagraph}>
+            Op deze pagina laten wij uw gegevens zien uit de landelijke en
+            Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
+            geregistreerd worden hier niet getoond.
+          </p>
         </PageContent>
       )}
     </DetailPage>
