@@ -148,6 +148,11 @@ export function transformVergunningenToVerhuur(
     if (vergunning.title === 'Vergunning vakantieverhuur') {
       status = vergunning.decision;
       status = !isActual && status !== 'Ingetrokken' ? 'Verlopen' : status;
+    } else if (
+      vergunning.title === 'Vergunning bed & breakfast' &&
+      vergunning.status === 'Afgehandeld'
+    ) {
+      status = vergunning.decision;
     }
 
     return {
