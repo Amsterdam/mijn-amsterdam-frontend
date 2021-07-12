@@ -2,9 +2,9 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { BZP as BZPType } from '../../../server/services/vergunningen';
+import { BZP as BZPVergunning } from '../../../server/services/vergunningen';
 
-export function BZP({ vergunning }: { vergunning: BZPType }) {
+export function BZP({ vergunning }: { vergunning: BZPVergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />

@@ -178,6 +178,8 @@ type NotificationLinks = {
   [key in Vergunning['caseType']]?: string;
 };
 
+type VergunningExpirable = GPK | ToeristischeVerhuurVergunning | BZP | BZB;
+
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
 }
@@ -270,9 +272,7 @@ export async function fetchVergunningen(
   return response;
 }
 
-export function isNearEndDate(
-  vergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB
-) {
+export function isNearEndDate(vergunning: VergunningExpirable) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -286,9 +286,7 @@ export function isNearEndDate(
   );
 }
 
-export function isExpired(
-  vergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB
-) {
+export function isExpired(vergunning: VergunningExpirable) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -307,11 +305,11 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function hasOtherValidVergunningOfSameType(
-  items: Array<ToeristischeVerhuurVergunning | GPK | BZP | BZB>,
-  item: ToeristischeVerhuurVergunning | GPK | BZP | BZB
+  items: Array<VergunningExpirable>,
+  item: VergunningExpirable
 ): boolean {
   return items.some(
-    (otherVergunning: ToeristischeVerhuurVergunning | GPK | BZP | BZB) =>
+    (otherVergunning: VergunningExpirable) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
