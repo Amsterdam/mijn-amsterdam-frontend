@@ -58,6 +58,11 @@ describe('<ToeristischeVerhuur />', () => {
     />
   );
 
+  it('Matches the Full Page snapshot', () => {
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('Renders without crashing', () => {
     render(<Component />);
     expect(screen.getByText('Toeristische verhuur')).toBeInTheDocument();
