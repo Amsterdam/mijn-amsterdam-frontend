@@ -1,0 +1,1110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage ToeristischeVerhuur"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Toeristische verhuur"
+          class="ChapterIcon"
+          fill="black"
+        >
+          toeristische-verhuur.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Toeristische verhuur
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hieronder vindt u een overzicht van uw aanvragen voor toeristische verhuur.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over particuliere vakantieverhuur
+        </a>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over bed & breakfast
+        </a>
+      </p>
+      <div
+        class="Detail"
+      >
+        <h3
+          class="Heading Heading__tiny InvertedLabel"
+        >
+          U heeft nog 26 nachten dat u uw woning mag verhuren.
+        </h3>
+        <p
+          class="DetailText"
+        >
+          Het aantal resterende nachten is gebaseerd op meldingen voor ingepland en afgelopen verhuur die u 
+          <b>
+             vanaf 14 juli
+          </b>
+           2021 hebt ingediend. Meldingen die u voor 14 juli hebt ingediend zijn niet meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
+          <br />
+          <br />
+          Aan de informatie op deze pagina kunnen geen rechten worden ontleend. Kijk voor meer informatie bij 
+          <a
+            class="Button Button__inline Button__lean Linkd LinkedInline"
+            href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
+            rel="external noopener noreferrer"
+          >
+            Vakantieverhuur melden
+          </a>
+        </p>
+      </div>
+    </div>
+    <section
+      class="SectionCollapsible SectionBorderTop"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Geplande verhuur
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Start verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Einde verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Aantal nachten
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    10 juli 2021
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    14 juli 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    4
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    10 juli 2029
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    14 juli 2029
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    4
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Geannuleerde verhuur
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Start verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Einde verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Aantal nachten
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    09 juni 2021
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    12 juni 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    22 mei 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    3
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    05 juni 2021
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    10 juni 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    10 mei 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    5
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Afgelopen verhuur
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Start verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Einde verhuur
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Aantal nachten
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    02 juni 2021
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    07 juni 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    10 mei 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    5
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    02 mei 2021
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einde verhuur:
+                  </span>
+                  <span>
+                    03 mei 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    23 april 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aantal nachten:
+                  </span>
+                  <span>
+                    1
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible SectionNoBorderBottom"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Vergunningen
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table TableVergunningen"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                   
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Status
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning bed & breakfast
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Ontvangen
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning bed & breakfast
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    In behandeling
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    22 oktober 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    21 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning bed & breakfast
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    22 oktober 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    21 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 augustus 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    30 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Ingetrokken
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 juni 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    31 mei 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verlopen
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 juni 2019
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    31 mei 2020
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Registratienummer toeristische verhuur
+        </h3>
+        <div
+          class="Value"
+        >
+          <article
+            class="RegistrationNumber"
+          >
+            <span>
+              0363 E7B8 B042 8A92 37E5
+            </span>
+            <br />
+            Schakelstraat 16  1014AW Amsterdam
+          </article>
+          <article
+            class="RegistrationNumber"
+          >
+            <span>
+              E7B8 B042 8A92 37E5 0363
+            </span>
+            <br />
+            Amstel 1  1017AB Amsterdam
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
