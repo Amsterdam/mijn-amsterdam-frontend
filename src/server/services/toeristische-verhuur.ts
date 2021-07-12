@@ -20,11 +20,11 @@ import {
   isDateInPast,
 } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
+import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
   BBVergunning,
-  CaseType,
   fetchVergunningen,
   hasOtherValidVergunningOfSameType,
   isActualNotification,

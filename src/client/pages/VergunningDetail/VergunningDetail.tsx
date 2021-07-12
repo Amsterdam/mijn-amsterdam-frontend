@@ -21,7 +21,7 @@ import { TVMRVVObject } from './TVMRVVObject';
 import { BZP } from './BZP';
 import { BZB } from './BZB';
 import styles from './VergunningDetail.module.scss';
-import { CaseType } from '../../../server/services/vergunningen';
+import { CaseType } from '../../../universal/types/vergunningen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
