@@ -200,8 +200,9 @@ export default function ToeristischeVerhuur() {
                 niet meegenomen bij deze berekening. Dit is ook zonder eventuele
                 meldingen die dit jaar door een mede-verhuurder of vorige
                 bewoner zijn gedaan.
-                <br />
-                <br />
+              </p>
+
+              <p>
                 Aan de informatie op deze pagina kunnen geen rechten worden
                 ontleend. Kijk voor meer informatie bij{' '}
                 <LinkdInline
