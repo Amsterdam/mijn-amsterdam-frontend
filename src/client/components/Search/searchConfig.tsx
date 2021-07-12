@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
+import { Akte } from '../../../server/services/aktes';
+import {
+  FocusStadspas,
+  FocusStadspasSaldo,
+} from '../../../server/services/focus/focus-combined';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
 import {
   getFullAddress,
@@ -8,19 +14,12 @@ import {
 } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { LinkProps } from '../../../universal/types';
+import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { AppState } from '../../AppState';
 import { IconChevronRight, IconExternalLink } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
-import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
-import { Akte } from '../../../server/services/aktes';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import {
-  FocusStadspasSaldo,
-  FocusStadspas,
-} from '../../../server/services/focus/focus-combined';
-import Stadspas from '../../pages/Stadspas/Stadspas';
-import { FocusItem } from '../../../server/services/focus/focus-types';
 
 export interface PageEntry {
   url: string;
@@ -161,15 +160,15 @@ export const apiSearchConfigs: Array<
       ]);
     },
   },
-  {
-    apiName: 'NOTIFICATIONS',
-    keywordSourceProps: (notification: ApiBaseItem) => {
-      return ['title', 'description'];
-    },
-    displayTitle: (notification: ApiBaseItem) => {
-      return displayPath(['Actueel', notification.title]);
-    },
-  },
+  // {
+  //   apiName: 'NOTIFICATIONS',
+  //   keywordSourceProps: (notification: ApiBaseItem) => {
+  //     return ['title', 'description'];
+  //   },
+  //   displayTitle: (notification: ApiBaseItem) => {
+  //     return displayPath(['Actueel', notification.title]);
+  //   },
+  // },
   {
     apiName: 'FOCUS_STADSPAS',
     getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
