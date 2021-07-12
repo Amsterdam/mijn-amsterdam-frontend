@@ -1395,6 +1395,11 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
         </a>
         .
       </p>
+      <p
+        class="SuppressedParagraph"
+      >
+        Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
+      </p>
     </div>
   </main>
 </DocumentFragment>
@@ -2707,6 +2712,11 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
           MijnOverheid
         </a>
         .
+      </p>
+      <p
+        class="SuppressedParagraph"
+      >
+        Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
     </div>
   </main>
@@ -4423,6 +4433,11 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
           MijnOverheid
         </a>
         .
+      </p>
+      <p
+        class="SuppressedParagraph"
+      >
+        Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
     </div>
   </main>

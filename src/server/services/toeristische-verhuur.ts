@@ -137,25 +137,57 @@ export function transformVergunningenToVerhuur(
   if (!Array.isArray(vergunningen)) {
     return [];
   }
-  return vergunningen
-    .map((vergunning) => {
-      const isActual = vergunning.dateEnd
-        ? !isDateInPast(vergunning.dateEnd)
-        : true;
+  const vergunningenTransformed = vergunningen.map((vergunning) => {
+    const isActual = vergunning.dateEnd
+      ? !isDateInPast(vergunning.dateEnd)
+      : true;
 
-      return {
-        ...vergunning,
-        isActual,
-        duration:
-          vergunning.dateEnd && vergunning.dateStart
-            ? calculateDaysBetweenDates(
-                vergunning.dateEnd,
-                vergunning.dateStart
-              )
-            : 0,
-      };
-    })
-    .sort(dateSort('dateStart', 'asc'));
+    let status = vergunning.status;
+
+    // Add custom status for Vergunning vakantieverhuur only
+    if (vergunning.title === 'Vergunning vakantieverhuur') {
+      status = vergunning.decision;
+      status = !isActual && status !== 'Ingetrokken' ? 'Verlopen' : status;
+    } else if (
+      vergunning.title === 'Vergunning bed & breakfast' &&
+      vergunning.status === 'Afgehandeld'
+    ) {
+      status = vergunning.decision;
+    }
+
+    return {
+      ...vergunning,
+      status,
+      isActual,
+      duration:
+        vergunning.dateEnd && vergunning.dateStart
+          ? calculateDaysBetweenDates(vergunning.dateEnd, vergunning.dateStart)
+          : 0,
+    };
+  });
+
+  const geplandeVerhuur: ToeristischeVerhuur[] = [];
+  const overige: ToeristischeVerhuurVergunning[] = [];
+
+  for (const vergunning of vergunningenTransformed) {
+    if (vergunning.title === 'Geplande verhuur' && vergunning.isActual) {
+      geplandeVerhuur.push(vergunning);
+    } else {
+      // We consider expired B&B permits as not relevent for the user.
+      if (
+        vergunning.title === 'Vergunning bed & breakfast' &&
+        !vergunning.isActual
+      ) {
+        continue;
+      }
+      overige.push(vergunning);
+    }
+  }
+
+  return [
+    ...geplandeVerhuur.sort(dateSort('dateStart', 'asc')),
+    ...overige.sort(dateSort('dateStart', 'desc')),
+  ];
 }
 
 async function fetchAndTransformToeristischeVerhuur(
@@ -180,14 +212,14 @@ async function fetchAndTransformToeristischeVerhuur(
     passthroughRequestHeaders,
     {
       appRoute: (vergunning: Vergunning) => {
-        if (
-          ['Vakantieverhuur vergunningsaanvraag', 'B&B - vergunning'].includes(
-            vergunning.caseType
-          )
-        ) {
-          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+        switch (vergunning.caseType) {
+          case 'B&B - vergunning':
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
+          case 'Vakantieverhuur vergunningsaanvraag':
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+          default:
+            return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
         }
-        return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunning =>
         toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),

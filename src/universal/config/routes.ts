@@ -37,6 +37,10 @@ export const AppRoutes: Record<string, string> = {
   'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR':
     '/toeristische-verhuur/vakantieverhuur/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
+  'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
+    '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
+  'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
+    '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
 };
 
 export const AppRoutesRedirect = [

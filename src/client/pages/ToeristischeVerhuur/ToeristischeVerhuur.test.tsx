@@ -73,9 +73,9 @@ describe('<ToeristischeVerhuur />', () => {
     ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
     expect(
-      screen.getByText('U heeft nog 26 dagen dat u uw woning mag verhuren.')
+      screen.getByText('U heeft nog 26 nachten dat u uw woning mag verhuren.')
     ).toBeInTheDocument();
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(2);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
     expect(screen.getByText('Geplande verhuur')).toBeInTheDocument();
     expect(screen.getByText('Geannuleerde verhuur')).toBeInTheDocument();
