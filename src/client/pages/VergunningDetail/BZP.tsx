@@ -2,14 +2,14 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { BZB } from '../../../server/services/vergunningen';
+import { BZP as BZPType } from '../../../server/services/vergunningen';
 
-export function BlauweZoneBedrijven({ vergunning }: { vergunning: BZB }) {
+export function BZP({ vergunning }: { vergunning: BZPType }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Zaaktype" value={vergunning.caseType || '-'} />
-      <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
+      <InfoDetail label="Kenteken" value={vergunning.kenteken || '-'} />
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"

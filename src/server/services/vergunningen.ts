@@ -23,16 +23,30 @@ import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
+enum CaseType {
+  TVMRVVObject = 'TVM - RVV - Object',
+  GPK = 'GPK',
+  GPP = 'GPP',
+  EvenementMelding = 'Evenement melding',
+  Omzettingsvergunning = 'Omzettingsvergunning',
+  ERVV = 'E-RVV - TVM',
+  VakantieVerhuur = 'Vakantieverhuur',
+  VakantieverhuurVergunningaanvraag = 'Vakantieverhuur vergunningsaanvraag',
+  BBVergunning = 'B&B - vergunning',
+  BZP = 'Parkeerontheffingen Blauwe zone particulieren',
+  BZB = 'Parkeerontheffingen Blauwe zone bedrijven',
+}
+
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
 > = [
-  'Vakantieverhuur',
-  'Vakantieverhuur vergunningsaanvraag',
-  'B&B - vergunning',
+  CaseType.VakantieVerhuur,
+  CaseType.VakantieverhuurVergunningaanvraag,
+  CaseType.BBVergunning,
 ];
 
 export interface VergunningBase {
-  caseType: string;
+  caseType: CaseType;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
   title: string;
   description: string;
@@ -47,7 +61,7 @@ export interface VergunningBase {
 }
 
 export interface TVMRVVObject extends VergunningBase {
-  caseType: 'TVM - RVV - Object';
+  caseType: CaseType.TVMRVVObject;
   dateStart: string | null;
   dateEnd: string | null;
   timeStart: string | null;
@@ -56,7 +70,7 @@ export interface TVMRVVObject extends VergunningBase {
 }
 
 export interface GPK extends VergunningBase {
-  caseType: 'GPK';
+  caseType: CaseType.GPK;
   cardtype: 'driver' | 'passenger';
   cardNumber: string | null;
   dateEnd: string | null;
@@ -65,13 +79,13 @@ export interface GPK extends VergunningBase {
 }
 
 export interface GPP extends VergunningBase {
-  caseType: 'GPP';
+  caseType: CaseType.GPP;
   location: string | null;
   kenteken: string | null;
 }
 
 export interface EvenementMelding extends VergunningBase {
-  caseType: 'Evenement melding';
+  caseType: CaseType.EvenementMelding;
   location: string | null;
   visitorCount: number | null;
   activities: string | null;
@@ -83,19 +97,19 @@ export interface EvenementMelding extends VergunningBase {
 }
 
 export interface Omzettingsvergunning extends VergunningBase {
-  caseType: 'Omzettingsvergunning';
+  caseType: CaseType.Omzettingsvergunning;
   location: string | null;
 }
 
 export interface ERVV extends VergunningBase {
-  caseType: 'E-RVV - TVM';
+  caseType: CaseType.ERVV;
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
 }
 
 export interface Vakantieverhuur extends VergunningBase {
-  caseType: 'Vakantieverhuur';
+  caseType: CaseType.VakantieVerhuur;
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
@@ -104,7 +118,7 @@ export interface Vakantieverhuur extends VergunningBase {
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
-  caseType: 'Vakantieverhuur vergunningsaanvraag';
+  caseType: CaseType.VakantieverhuurVergunningaanvraag;
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;
@@ -112,7 +126,7 @@ export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
 }
 
 export interface BBVergunning extends VergunningBase {
-  caseType: 'B&B - vergunning';
+  caseType: CaseType.BBVergunning;
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
@@ -122,16 +136,18 @@ export interface BBVergunning extends VergunningBase {
   hasTransitionAgreement: boolean;
 }
 
+// BZB is short for Parkeerontheffingen Blauwe zone bedrijven
 export interface BZB extends VergunningBase {
-  caseType: 'Parkeerontheffingen Blauwe zone bedrijven';
+  caseType: CaseType.BZB;
   companyName: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;
 }
 
+// BZP is short for Parkeerontheffingen Blauwe zone particulieren
 export interface BZP extends VergunningBase {
-  caseType: 'Parkeerontheffingen Blauwe zone particulieren';
+  caseType: CaseType.BZP;
   kenteken: string | null;
   dateStart: string | null;
   dateEnd: string | null;
@@ -154,6 +170,22 @@ export type Vergunning =
 export type VergunningenSourceData = {
   content?: Vergunning[];
   status: 'OK' | 'ERROR';
+};
+
+type NotificationItems = Exclude<
+  Vergunning,
+  | TVMRVVObject
+  | Vakantieverhuur
+  | BBVergunning
+  | ERVV
+  | VakantieverhuurVergunningaanvraag
+  | GPP
+  | EvenementMelding
+  | Omzettingsvergunning
+>;
+
+type NotificationLinks = {
+  [key in NotificationItems['caseType']]: string;
 };
 
 export interface VergunningDocument extends GenericDocument {
@@ -285,7 +317,7 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function hasOtherValidVergunningOfSameType(
-  items: ToeristischeVerhuurVergunning[] | GPK[] | BZP[] | BZB[],
+  items: Array<ToeristischeVerhuurVergunning | GPK | BZP | BZB>,
   item: ToeristischeVerhuurVergunning | GPK | BZP | BZB
 ): boolean {
   return items.some(
@@ -300,6 +332,13 @@ export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[]
 ): MyNotification {
+  const notificationLinks: NotificationLinks = {
+    'Parkeerontheffingen Blauwe zone bedrijven':
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
+    'Parkeerontheffingen Blauwe zone particulieren':
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
+    GPK: 'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
+  };
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
@@ -314,19 +353,8 @@ export function createVergunningNotification(
     const allItems = items.filter(
       (caseItem: Vergunning): caseItem is GPK => caseItem.caseType === 'GPK'
     );
-    let formLink = '';
-    switch (item.caseType) {
-      case 'GPK':
-        formLink =
-          'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
-        break;
-      case 'Parkeerontheffingen Blauwe zone bedrijven':
-        formLink = ''; //Missing information from RD;
-        break;
-      case 'Parkeerontheffingen Blauwe zone particulieren':
-        formLink = ''; //Missing information from RD;
-        break;
-    }
+
+    const notificationLink = notificationLinks[item.caseType];
     const fullName = item.title;
     switch (true) {
       case item.decision === 'Verleend' &&
@@ -335,7 +363,7 @@ export function createVergunningNotification(
         title = `${item.caseType} loopt af`;
         description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
         cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
-        linkTo = formLink;
+        linkTo = notificationLink;
         datePublished = dateFormat(
           subMonths(
             new Date(item.dateEnd!),
@@ -350,7 +378,7 @@ export function createVergunningNotification(
         title = `${item.caseType} is verlopen`;
         description = `Uw ${fullName} is verlopen.`;
         cta = `Vraag een nieuwe ${item.caseType} aan`;
-        linkTo = formLink;
+        linkTo = notificationLink;
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
