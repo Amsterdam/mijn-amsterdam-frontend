@@ -194,18 +194,23 @@ export default function ToeristischeVerhuur() {
                 )}
               </Heading>
               <p className={styles.DetailText}>
-                Het aantal resterende nachten is gebaseerd op uw meldingen voor
-                ingepland en afgelopen verhuur. Dit is zonder eventuele
+                Het aantal resterende nachten is gebaseerd op meldingen voor
+                ingepland en afgelopen verhuur die u <b> vanaf 14 juli</b> 2021
+                hebt ingediend. Meldingen die u voor 14 juli hebt ingediend zijn
+                niet meegenomen bij deze berekening. Dit is ook zonder eventuele
                 meldingen die dit jaar door een mede-verhuurder of vorige
-                bewoner zijn gedaan. Kijk voor meer informatie bij{' '}
+                bewoner zijn gedaan.
+              </p>
+
+              <p>
+                Aan de informatie op deze pagina kunnen geen rechten worden
+                ontleend. Kijk voor meer informatie bij{' '}
                 <LinkdInline
                   external={true}
                   href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
                 >
                   Vakantieverhuur melden
                 </LinkdInline>
-                . Aan de informatie op deze pagina kunnen geen rechten worden
-                ontleend.
               </p>
             </>
           )}
