@@ -327,7 +327,7 @@ export function createVergunningNotification(
     item.caseType === CaseType.BZP
   ) {
     const allItems = items.filter(
-      (caseItem: Vergunning): caseItem is GPK | BZP | BZB =>
+      (caseItem: Vergunning): caseItem is VergunningExpirable =>
         caseItem.caseType === item.caseType
     );
 
