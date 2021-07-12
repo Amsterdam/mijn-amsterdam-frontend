@@ -24,6 +24,7 @@ import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
   BBVergunning,
+  CaseType,
   fetchVergunningen,
   hasOtherValidVergunningOfSameType,
   isActualNotification,
@@ -213,9 +214,9 @@ async function fetchAndTransformToeristischeVerhuur(
     {
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
-          case 'B&B - vergunning':
+          case CaseType.BBVergunning:
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
-          case 'Vakantieverhuur vergunningsaanvraag':
+          case CaseType.VakantieverhuurVergunningaanvraag:
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
           default:
             return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];

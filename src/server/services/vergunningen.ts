@@ -23,7 +23,7 @@ import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
 
 const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
-enum CaseType {
+export enum CaseType {
   TVMRVVObject = 'TVM - RVV - Object',
   GPK = 'GPK',
   GPP = 'GPP',
@@ -174,20 +174,8 @@ export type VergunningenSourceData = {
   status: 'OK' | 'ERROR';
 };
 
-type NotificationItems = Exclude<
-  Vergunning,
-  | TVMRVVObject
-  | Vakantieverhuur
-  | BBVergunning
-  | ERVV
-  | VakantieverhuurVergunningaanvraag
-  | GPP
-  | EvenementMelding
-  | Omzettingsvergunning
->;
-
 type NotificationLinks = {
-  [key in NotificationItems['caseType']]: string;
+  [key in Vergunning['caseType']]?: string;
 };
 
 export interface VergunningDocument extends GenericDocument {
@@ -335,11 +323,12 @@ export function createVergunningNotification(
   items: Vergunning[]
 ): MyNotification {
   const notificationLinks: NotificationLinks = {
-    'Parkeerontheffingen Blauwe zone bedrijven':
+    [CaseType.BZB]:
       'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
-    'Parkeerontheffingen Blauwe zone particulieren':
+    [CaseType.BZP]:
       'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
-    GPK: 'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
+    [CaseType.GPK]:
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
   };
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
@@ -348,15 +337,16 @@ export function createVergunningNotification(
   let cta = 'Bekijk details';
 
   if (
-    item.caseType === 'GPK' ||
-    item.caseType === 'Parkeerontheffingen Blauwe zone bedrijven' ||
-    item.caseType === 'Parkeerontheffingen Blauwe zone particulieren'
+    item.caseType === CaseType.GPK ||
+    item.caseType === CaseType.BZB ||
+    item.caseType === CaseType.BZP
   ) {
     const allItems = items.filter(
-      (caseItem: Vergunning): caseItem is GPK => caseItem.caseType === 'GPK'
+      (caseItem: Vergunning): caseItem is GPK | BZP | BZB =>
+        caseItem.caseType === item.caseType
     );
 
-    const notificationLink = notificationLinks[item.caseType];
+    const notificationLink = notificationLinks[item.caseType] || item.link.to;
     const fullName = item.title;
     switch (true) {
       case item.decision === 'Verleend' &&
@@ -394,7 +384,7 @@ export function createVergunningNotification(
     let fullName: string = item.title;
     let shortName: string = item.title;
     switch (item.caseType) {
-      case 'GPP':
+      case CaseType.GPP:
         shortName = item.caseType;
         break;
     }

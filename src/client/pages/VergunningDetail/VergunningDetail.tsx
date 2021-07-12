@@ -21,6 +21,7 @@ import { TVMRVVObject } from './TVMRVVObject';
 import { BZP } from './BZP';
 import { BZB } from './BZB';
 import styles from './VergunningDetail.module.scss';
+import { CaseType } from '../../../server/services/vergunningen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -52,26 +53,28 @@ export default function VergunningDetail() {
         )}
         {!isLoading(VERGUNNINGEN) && Vergunning && (
           <>
-            {Vergunning.caseType === 'TVM - RVV - Object' && (
+            {Vergunning.caseType === CaseType.TVMRVVObject && (
               <TVMRVVObject vergunning={Vergunning} />
             )}
-            {Vergunning.caseType === 'GPK' && <GPK vergunning={Vergunning} />}
-            {Vergunning.caseType === 'GPP' && <GPP vergunning={Vergunning} />}
-            {Vergunning.caseType === 'E-RVV - TVM' && (
+            {Vergunning.caseType === CaseType.GPK && (
+              <GPK vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.GPP && (
+              <GPP vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.ERVV && (
               <ERVV vergunning={Vergunning} />
             )}
-            {Vergunning.caseType === 'Omzettingsvergunning' && (
+            {Vergunning.caseType === CaseType.Omzettingsvergunning && (
               <Omzettingsvergunning vergunning={Vergunning} />
             )}
-            {Vergunning.caseType === 'Evenement melding' && (
+            {Vergunning.caseType === CaseType.EvenementMelding && (
               <EvenementMelding vergunning={Vergunning} />
             )}
-            {Vergunning.caseType ===
-              'Parkeerontheffingen Blauwe zone particulieren' && (
+            {Vergunning.caseType === CaseType.BZP && (
               <BZP vergunning={Vergunning} />
             )}
-            {Vergunning.caseType ===
-              'Parkeerontheffingen Blauwe zone bedrijven' && (
+            {Vergunning.caseType === CaseType.BZB && (
               <BZB vergunning={Vergunning} />
             )}
             <DocumentDetails vergunning={Vergunning} />

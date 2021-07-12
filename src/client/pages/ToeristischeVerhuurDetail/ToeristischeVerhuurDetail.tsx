@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { CaseType } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
@@ -49,7 +50,7 @@ export default function ToeristischVerhuurDetail() {
           )}
         </PageContent>
       )}
-      {Vergunning?.caseType === 'Vakantieverhuur' && (
+      {Vergunning?.caseType === CaseType.VakantieVerhuur && (
         <VakantieVerhuur vergunning={Vergunning} />
       )}
       {(Vergunning?.title === 'Vergunning vakantieverhuur' ||
