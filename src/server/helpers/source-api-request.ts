@@ -25,6 +25,7 @@ import { Deferred } from './deferred';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
+  headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
 export const cache = new memoryCache.Cache<string, any>();

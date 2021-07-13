@@ -96,19 +96,21 @@ exports[`<BurgerzakenAkte /> Matches the Full Page snapshot 1`] = `
               <span
                 class="DocumentLinkWrap"
               >
+                <span
+                  class="DownloadIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    height="1.4rem"
+                    width="1.4rem"
+                  >
+                    Download.svg
+                  </svg>
+                </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
                   href="/bla/bla/bla.pdf"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon Icon__left"
-                    fill="#000"
-                    height="14px"
-                    width="14px"
-                  >
-                    Download.svg
-                  </svg>
                   Huwelijksakte
                 </a>
               </span>
