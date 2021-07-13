@@ -128,19 +128,22 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
                   <span
                     class="DocumentLinkWrap"
                   >
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://some.page/with/path/segments/http://example.org/blaat"
+                    <span
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="Icon Icon__left"
-                        fill="#000"
                         height="14px"
                         width="14px"
                       >
                         Download.svg
                       </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="http://example.org/kappie"
+                      rel="external noopener noreferrer"
+                    >
                       Documentje
                     </a>
                   </span>
@@ -346,19 +349,22 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
                   <span
                     class="DocumentLinkWrap"
                   >
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://some.page/with/path/segments/http://example.org/blaat"
+                    <span
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="Icon Icon__left"
-                        fill="#000"
                         height="14px"
                         width="14px"
                       >
                         Download.svg
                       </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="http://example.org/kappie"
+                      rel="external noopener noreferrer"
+                    >
                       Documentje
                     </a>
                   </span>
@@ -550,19 +556,22 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
                   <span
                     class="DocumentLinkWrap"
                   >
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://some.page/with/path/segments/http://example.org/blaat"
+                    <span
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="Icon Icon__left"
-                        fill="#000"
                         height="14px"
                         width="14px"
                       >
                         Download.svg
                       </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="http://example.org/kappie"
+                      rel="external noopener noreferrer"
+                    >
                       Documentje
                     </a>
                   </span>

@@ -499,19 +499,21 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DocumentLinkWrap"
                   >
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/http://example.org/document/id"
+                    <span
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="Icon Icon__left"
-                        fill="#000"
                         height="14px"
                         width="14px"
                       >
                         Download.svg
                       </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/http://example.org/document/id"
+                    >
                       PDF
                     </a>
                   </span>
@@ -605,19 +607,21 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DocumentLinkWrap"
                   >
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/http://example.org/document/id"
+                    <span
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="Icon Icon__left"
-                        fill="#000"
                         height="14px"
                         width="14px"
                       >
                         Download.svg
                       </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/http://example.org/document/id"
+                    >
                       PDF
                     </a>
                   </span>
