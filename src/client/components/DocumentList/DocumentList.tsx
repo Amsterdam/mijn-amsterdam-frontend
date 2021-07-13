@@ -113,6 +113,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           }
         })
         .catch((error) => {
+          setLoading(false);
           Sentry.captureException(error, {
             extra: {
               title: document.title,
