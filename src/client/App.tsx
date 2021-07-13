@@ -11,7 +11,12 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import {
+  ENV,
+  getOtapEnvItem,
+  IS_AP,
+  IS_PRODUCTION,
+} from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -24,6 +29,7 @@ import {
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
+  IS_COMMERCIAL_PATH_MATCH,
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
   TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
@@ -252,7 +258,15 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+  useScript('/js/usabilla.js', false, true, IS_AP, () => {
+    (window as any).usabilla_live('data', {
+      custom: {
+        MatomoVisitorId: (window as any).Matomo?.getTracker().getVisitorId(),
+        Env: ENV,
+        Eh: IS_COMMERCIAL_PATH_MATCH,
+      },
+    });
+  });
   useScript(
     '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
