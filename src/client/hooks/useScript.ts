@@ -7,8 +7,7 @@ export function useScript(
   src: string,
   defer: boolean = false,
   async: boolean = true,
-  isEnabled: boolean = false,
-  onLoadCallback?: () => void
+  isEnabled: boolean = false
 ) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({

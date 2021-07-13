@@ -253,21 +253,27 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useScript('/js/usabilla.js', false, true, IS_AP, () => {
-    (window as any).usabilla_live('data', {
-      custom: {
-        MatomoVisitorId: (window as any).Matomo?.getTracker().getVisitorId(),
-        Env: ENV,
-        Eh: IS_COMMERCIAL_PATH_MATCH,
-      },
-    });
-  });
+
+  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
+
   useScript(
     '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
     true,
     IS_AP
   );
+
+  useEffect(() => {
+    if (isUsabillaLoaded) {
+      (window as any).usabilla_live('data', {
+        custom: {
+          MatomoVisitorId: (window as any).Matomo?.getTracker().getVisitorId(),
+          Env: ENV,
+          Eh: IS_COMMERCIAL_PATH_MATCH,
+        },
+      });
+    }
+  }, [isUsabillaLoaded]);
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
@@ -289,4 +295,7 @@ export default function App() {
       </BrowserRouter>
     </RecoilRoot>
   );
+}
+function useEffect(arg0: () => void, arg1: boolean[]) {
+  throw new Error('Function not implemented.');
 }
