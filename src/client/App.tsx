@@ -11,12 +11,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import {
-  ENV,
-  getOtapEnvItem,
-  IS_AP,
-  IS_PRODUCTION,
-} from '../universal/config/env';
+import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -51,21 +46,21 @@ import {
   GarbageInformation,
   GeneralInfo,
   Inkomen,
-  InkomenDetailUitkering,
   InkomenDetailTonk,
   InkomenDetailTozo,
+  InkomenDetailUitkering,
   InkomenSpecificaties,
   LandingPage,
   MyNotifications,
   MyTips,
   NotFound,
   Profile,
-  VergunningDetail,
-  Vergunningen,
-  SiaDetail,
   Sia,
+  SiaDetail,
   ToeristischeVerhuur,
   ToeristischeVerhuurDetail,
+  VergunningDetail,
+  Vergunningen,
   Zorg,
   ZorgDetail,
 } from './pages';
