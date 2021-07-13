@@ -504,15 +504,16 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        height="14px"
-                        width="14px"
+                        height="1.4rem"
+                        width="1.4rem"
                       >
                         Download.svg
                       </svg>
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/http://example.org/document/id"
+                      href="http://example.org/document/id"
+                      rel="external noopener noreferrer"
                     >
                       PDF
                     </a>
@@ -612,15 +613,16 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        height="14px"
-                        width="14px"
+                        height="1.4rem"
+                        width="1.4rem"
                       >
                         Download.svg
                       </svg>
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/http://example.org/document/id"
+                      href="http://example.org/document/id"
+                      rel="external noopener noreferrer"
                     >
                       PDF
                     </a>
