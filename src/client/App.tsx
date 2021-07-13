@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -295,7 +296,4 @@ export default function App() {
       </BrowserRouter>
     </RecoilRoot>
   );
-}
-function useEffect(arg0: () => void, arg1: boolean[]) {
-  throw new Error('Function not implemented.');
 }
