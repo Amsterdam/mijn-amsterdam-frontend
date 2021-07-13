@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
+import { Colors } from '../../config/app';
 import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
@@ -133,7 +134,12 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
         {isLoading ? (
           <Spinner aria-hidden="true" size={14} />
         ) : isErrorVisible ? (
-          <IconAlert aria-hidden="true" width="18px" height="18px" fill="red" />
+          <IconAlert
+            aria-hidden="true"
+            width="18px"
+            height="18px"
+            fill={Colors.primaryRed}
+          />
         ) : (
           <IconDownload aria-hidden="true" width="14px" height="14px" />
         )}
