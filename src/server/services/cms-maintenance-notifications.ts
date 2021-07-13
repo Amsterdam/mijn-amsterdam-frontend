@@ -6,7 +6,6 @@ import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
-import { queryParams } from '../helpers/app';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',

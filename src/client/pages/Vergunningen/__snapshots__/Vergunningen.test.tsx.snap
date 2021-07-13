@@ -581,6 +581,72 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
+                  Z/21/1500000
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Parkeerontheffingen Blauwe zone particulieren
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/21/1600000
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Parkeerontheffingen Blauwe zone bedrijven
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
                   Z/20/1597204
                 </td>
                 <td

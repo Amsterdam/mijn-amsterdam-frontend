@@ -17,6 +17,7 @@ import {
   MyCase,
   MyNotification,
 } from '../../universal/types/App.types';
+import { CaseType } from '../../universal/types/vergunningen';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
@@ -26,13 +27,13 @@ const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
 > = [
-  'Vakantieverhuur',
-  'Vakantieverhuur vergunningsaanvraag',
-  'B&B - vergunning',
+  CaseType.VakantieVerhuur,
+  CaseType.VakantieverhuurVergunningaanvraag,
+  CaseType.BBVergunning,
 ];
 
 export interface VergunningBase {
-  caseType: string;
+  caseType: CaseType;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
   title: string;
   description: string;
@@ -47,7 +48,7 @@ export interface VergunningBase {
 }
 
 export interface TVMRVVObject extends VergunningBase {
-  caseType: 'TVM - RVV - Object';
+  caseType: CaseType.TVMRVVObject;
   dateStart: string | null;
   dateEnd: string | null;
   timeStart: string | null;
@@ -56,7 +57,7 @@ export interface TVMRVVObject extends VergunningBase {
 }
 
 export interface GPK extends VergunningBase {
-  caseType: 'GPK';
+  caseType: CaseType.GPK;
   cardtype: 'driver' | 'passenger';
   cardNumber: string | null;
   dateEnd: string | null;
@@ -65,13 +66,13 @@ export interface GPK extends VergunningBase {
 }
 
 export interface GPP extends VergunningBase {
-  caseType: 'GPP';
+  caseType: CaseType.GPP;
   location: string | null;
   kenteken: string | null;
 }
 
 export interface EvenementMelding extends VergunningBase {
-  caseType: 'Evenement melding';
+  caseType: CaseType.EvenementMelding;
   location: string | null;
   visitorCount: number | null;
   activities: string | null;
@@ -83,19 +84,19 @@ export interface EvenementMelding extends VergunningBase {
 }
 
 export interface Omzettingsvergunning extends VergunningBase {
-  caseType: 'Omzettingsvergunning';
+  caseType: CaseType.Omzettingsvergunning;
   location: string | null;
 }
 
 export interface ERVV extends VergunningBase {
-  caseType: 'E-RVV - TVM';
+  caseType: CaseType.ERVV;
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
 }
 
 export interface Vakantieverhuur extends VergunningBase {
-  caseType: 'Vakantieverhuur';
+  caseType: CaseType.VakantieVerhuur;
   title: 'Geplande verhuur' | 'Geannuleerde verhuur' | 'Afgelopen verhuur';
   decision: 'Verleend';
   dateStart: string | null;
@@ -104,7 +105,7 @@ export interface Vakantieverhuur extends VergunningBase {
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
-  caseType: 'Vakantieverhuur vergunningsaanvraag';
+  caseType: CaseType.VakantieverhuurVergunningaanvraag;
   title: 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
@@ -113,7 +114,7 @@ export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
 }
 
 export interface BBVergunning extends VergunningBase {
-  caseType: 'B&B - vergunning';
+  caseType: CaseType.BBVergunning;
   title: 'Vergunning bed & breakfast';
   decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
   location: string | null;
@@ -124,6 +125,24 @@ export interface BBVergunning extends VergunningBase {
   hasTransitionAgreement: boolean;
 }
 
+// BZB is short for Parkeerontheffingen Blauwe zone bedrijven
+export interface BZB extends VergunningBase {
+  caseType: CaseType.BZB;
+  companyName: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  decision: string | null;
+}
+
+// BZP is short for Parkeerontheffingen Blauwe zone particulieren
+export interface BZP extends VergunningBase {
+  caseType: CaseType.BZP;
+  kenteken: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  decision: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -131,6 +150,8 @@ export type Vergunning =
   | EvenementMelding
   | Omzettingsvergunning
   | ERVV
+  | BZB
+  | BZP
   | Vakantieverhuur
   | BBVergunning
   | VakantieverhuurVergunningaanvraag;
@@ -139,6 +160,12 @@ export type VergunningenSourceData = {
   content?: Vergunning[];
   status: 'OK' | 'ERROR';
 };
+
+type NotificationLinks = {
+  [key in Vergunning['caseType']]?: string;
+};
+
+type VergunningExpirable = GPK | ToeristischeVerhuurVergunning | BZP | BZB;
 
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
@@ -232,7 +259,7 @@ export async function fetchVergunningen(
   return response;
 }
 
-export function isNearEndDate(vergunning: ToeristischeVerhuurVergunning | GPK) {
+export function isNearEndDate(vergunning: VergunningExpirable) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -246,7 +273,7 @@ export function isNearEndDate(vergunning: ToeristischeVerhuurVergunning | GPK) {
   );
 }
 
-export function isExpired(vergunning: ToeristischeVerhuurVergunning | GPK) {
+export function isExpired(vergunning: VergunningExpirable) {
   if (!vergunning.dateEnd) {
     return false;
   }
@@ -265,11 +292,11 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function hasOtherValidVergunningOfSameType(
-  items: ToeristischeVerhuurVergunning[] | GPK[],
-  item: ToeristischeVerhuurVergunning | GPK
+  items: Array<VergunningExpirable>,
+  item: VergunningExpirable
 ): boolean {
   return items.some(
-    (otherVergunning: ToeristischeVerhuurVergunning | GPK) =>
+    (otherVergunning: VergunningExpirable) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
@@ -280,27 +307,40 @@ export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[]
 ): MyNotification {
+  const notificationLinks: NotificationLinks = {
+    [CaseType.BZB]:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
+    [CaseType.BZP]:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
+    [CaseType.GPK]:
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
+  };
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
   let datePublished = item.dateRequest;
   let linkTo = item.link.to;
   let cta = 'Bekijk details';
 
-  if (item.caseType === 'GPK') {
-    const allGPKItems = items.filter(
-      (item: Vergunning): item is GPK => item.caseType === 'GPK'
+  if (
+    item.caseType === CaseType.GPK ||
+    item.caseType === CaseType.BZB ||
+    item.caseType === CaseType.BZP
+  ) {
+    const allItems = items.filter(
+      (caseItem: Vergunning): caseItem is VergunningExpirable =>
+        caseItem.caseType === item.caseType
     );
-    const GPKForm =
-      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding';
-    const fullName = item.title; // change this later to title property
+
+    const notificationLink = notificationLinks[item.caseType] || item.link.to;
+    const fullName = item.title;
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
-        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} loopt af`;
         description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
         cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
-        linkTo = GPKForm;
+        linkTo = notificationLink;
         datePublished = dateFormat(
           subMonths(
             new Date(item.dateEnd!),
@@ -311,11 +351,11 @@ export function createVergunningNotification(
         break;
       case item.decision === 'Verleend' &&
         isExpired(item) &&
-        !hasOtherValidVergunningOfSameType(allGPKItems, item):
+        !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} is verlopen`;
         description = `Uw ${fullName} is verlopen.`;
         cta = `Vraag een nieuwe ${item.caseType} aan`;
-        linkTo = GPKForm;
+        linkTo = notificationLink;
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
@@ -329,7 +369,7 @@ export function createVergunningNotification(
     let fullName: string = item.title;
     let shortName: string = item.title;
     switch (item.caseType) {
-      case 'GPP':
+      case CaseType.GPP:
         shortName = item.caseType;
         break;
     }

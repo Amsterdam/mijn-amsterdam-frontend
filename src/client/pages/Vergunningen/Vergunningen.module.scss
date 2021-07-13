@@ -19,7 +19,10 @@
 
   @include mq-tablet() {
     tr td:nth-child(2) {
-      width: 100%;
+      width: 95%;
+      max-width: 100vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     @include select(Table_DisplayPropTitle) {
       width: 100%;

@@ -26,9 +26,8 @@ async function generateSuperCluster(features: MaPointFeature[]) {
 
 function addExpansionZoom(superClusterIndex: any, feature: any) {
   try {
-    feature.properties.expansion_zoom = superClusterIndex.getClusterExpansionZoom(
-      feature.properties.cluster_id
-    );
+    feature.properties.expansion_zoom =
+      superClusterIndex.getClusterExpansionZoom(feature.properties.cluster_id);
   } catch (error) {
     console.error(
       "Can't add expansion zoom to cluster",
@@ -51,10 +50,11 @@ export async function loadClusterDatasets(
 ) {
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
 
-  const { features, filters: filtersBase, errors } = await loadDatasetFeatures(
-    sessionID,
-    configs
-  );
+  const {
+    features,
+    filters: filtersBase,
+    errors,
+  } = await loadDatasetFeatures(sessionID, configs);
 
   const featuresWithinBoundingbox = filterPointFeaturesWithinBoundingBox(
     features,
@@ -63,15 +63,13 @@ export async function loadClusterDatasets(
 
   let clusters: PointFeature<AnyProps>[] = [];
 
-  const {
-    filters: filtersRefined,
-    features: filteredFeatures,
-  } = filterAndRefineFeatures(
-    featuresWithinBoundingbox,
-    datasetIds,
-    filters,
-    filtersBase
-  );
+  const { filters: filtersRefined, features: filteredFeatures } =
+    filterAndRefineFeatures(
+      featuresWithinBoundingbox,
+      datasetIds,
+      filters,
+      filtersBase
+    );
 
   const superClusterIndex = await generateSuperCluster(
     filteredFeatures as MaPointFeature[]

@@ -173,9 +173,8 @@ function addApproximateDistance(
 }
 
 export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
-  const cachedFileContents:
-    | AfvalpuntenResponseData
-    | undefined = fileCache.getKey('responseData');
+  const cachedFileContents: AfvalpuntenResponseData | undefined =
+    fileCache.getKey('responseData');
 
   if (cachedFileContents) {
     const responseData: AfvalpuntenResponseData = {
@@ -199,8 +198,8 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
     });
   });
 
-  const afvalResult: ApiSuccessResponse<AfvalpuntenResponseData> = await new Promise(
-    (resolve, reject) => {
+  const afvalResult: ApiSuccessResponse<AfvalpuntenResponseData> =
+    await new Promise((resolve, reject) => {
       const responseData: AfvalpuntenResponseData = {
         centers: addApproximateDistance(latlng, centers),
         datePublished: new Date().toISOString(),
@@ -210,8 +209,7 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
       fileCache.save();
 
       resolve(apiSuccesResult(responseData));
-    }
-  );
+    });
 
   return afvalResult;
 }
