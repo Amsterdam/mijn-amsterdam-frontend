@@ -96,10 +96,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         <p
           class="DetailText"
         >
-          Het aantal resterende nachten is gebaseerd op meldingen voor ingeplande en afgelopen verhuur die u 
-          <b>
+          Het aantal resterende nachten is gebaseerd op meldingen voor ingeplande en afgelopen verhuur die u
+          <strong>
              vanaf 19 juli
-          </b>
+          </strong>
            2021 hebt ingediend. Meldingen die u voor 19 juli hebt ingediend zijn mogelijk niet geheel meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
         </p>
         <p>
