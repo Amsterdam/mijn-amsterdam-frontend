@@ -66,6 +66,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   postpone: false,
   responseType: 'json',
   method: 'get',
+  headers: { 'User-Agent': 'mijn-amsterdam-frontend' },
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -120,6 +121,10 @@ export function useDataApi<T>(
       const requestOptionsFinal: AxiosRequestConfig = {
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
+        headers: {
+          ...(requestOptions.headers || {}),
+          ...DEFAULT_REQUEST_OPTIONS.headers,
+        },
         cancelToken: source.token,
       };
       if (requestOptions.transformResponse) {
