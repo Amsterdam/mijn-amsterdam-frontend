@@ -287,6 +287,7 @@ export function useFetchFeatures() {
           },
           method: 'POST',
           cancelToken: tokenSource.token,
+          headers: { 'User-Agent': 'mijn-amsterdam-mijn-buurt' },
         });
         return response.data.content;
       } catch (error) {
