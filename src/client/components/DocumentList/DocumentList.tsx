@@ -1,3 +1,4 @@
+import { Spinner } from '@amsterdam/asc-ui';
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
@@ -42,23 +43,33 @@ function addFileType(url: string, type: string = '') {
 
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
 
   const onClickDocumentLink = useCallback(
     (event) => {
       event.preventDefault();
+      if (isLoading) {
+        return false;
+      }
+      setLoading(true);
+
       if (!('fetch' in window)) {
         downloadFile(document);
         return;
       }
+
       // First check to see if the request will succeed or not.
       fetch(document.url)
         .then((res) => {
+          setLoading(false);
+
           if (res.status !== 200) {
             throw new Error(
               `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
             );
           }
+
           try {
             return res.blob();
           } catch (error) {
@@ -112,24 +123,35 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
         });
       return false;
     },
-    [document, profileType]
+    [document, profileType, isLoading]
   );
 
   return (
     <span className={styles.DocumentLinkWrap}>
+      <span className={styles.DownloadIcon}>
+        {isLoading ? (
+          <Spinner aria-hidden="true" size={14} />
+        ) : isErrorVisible ? (
+          <IconAlert aria-hidden="true" width="18px" height="18px" fill="red" />
+        ) : (
+          <IconDownload aria-hidden="true" width="14px" height="14px" />
+        )}
+      </span>
       <Linkd
         className={classnames(
           styles.DocumentLink,
           isErrorVisible && styles.DocumentLinkError
         )}
-        icon={isErrorVisible ? IconAlert : IconDownload}
+        icon={null}
+        external={document.url.startsWith('http')}
         href={document.url}
         onClick={onClickDocumentLink}
       >
         {label || document.title}
       </Linkd>
+      {isLoading && <span className={styles.DownloadInfo}>Ophalen...</span>}
       {isErrorVisible && (
-        <span className={styles.DownloadError}>Download niet beschikbaar</span>
+        <span className={styles.DownloadInfo}>Download mislukt</span>
       )}
     </span>
   );

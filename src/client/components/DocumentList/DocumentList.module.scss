@@ -40,7 +40,9 @@
 .DocumentLinkWrap {
   position: relative;
   display: block;
+  padding-left: 1.8rem;
 }
+
 .DocumentLinkError {
   padding-left: 3px;
   @include select('Button_Icon') {
@@ -51,8 +53,21 @@
   }
 }
 
-.DownloadError {
+.DownloadInfo {
   padding-left: 3px;
   font-size: 0.8em;
   white-space: nowrap;
+}
+
+.DownloadIcon {
+  display: block;
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  left: 0;
+  top: 0;
+  > div {
+    position: relative;
+    transform: translateY(3px);
+  }
 }
