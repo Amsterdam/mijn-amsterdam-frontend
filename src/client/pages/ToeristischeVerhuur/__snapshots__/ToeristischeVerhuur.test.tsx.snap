@@ -96,14 +96,14 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         <p
           class="DetailText"
         >
-          Het aantal resterende nachten is gebaseerd op meldingen voor ingeplande en afgelopen verhuur die u
+          Het aantal resterende nachten is gebaseerd op meldingen voor ingeplande en afgelopen verhuur die u 
           <b>
              vanaf 19 juli
           </b>
            2021 hebt ingediend. Meldingen die u voor 19 juli hebt ingediend zijn mogelijk niet geheel meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
         </p>
         <p>
-          Aan de informatie op deze pagina kunnen geen rechten worden ontleend. Kijk voor meer informatie bij
+          Aan de informatie op deze pagina kunnen geen rechten worden ontleend. Kijk voor meer informatie bij 
           <a
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
@@ -691,7 +691,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-
+                   
                 </th>
                 <th
                   class="DisplayProp"

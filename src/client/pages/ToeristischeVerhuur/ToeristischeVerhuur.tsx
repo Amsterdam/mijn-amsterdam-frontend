@@ -193,7 +193,7 @@ export default function ToeristischeVerhuur() {
                   </>
                 )}
               </Heading>
-              {getYear(new Date()) === 2021 && (
+              {getYear(new Date()) === 2021 ? (
                 <p className={styles.DetailText}>
                   Het aantal resterende nachten is gebaseerd op meldingen voor
                   ingeplande en afgelopen verhuur die u <b> vanaf 19 juli</b>{' '}
@@ -201,6 +201,13 @@ export default function ToeristischeVerhuur() {
                   ingediend zijn mogelijk niet geheel meegenomen bij deze
                   berekening. Dit is ook zonder eventuele meldingen die dit jaar
                   door een mede-verhuurder of vorige bewoner zijn gedaan.
+                </p>
+              ) : (
+                <p className={styles.DetailText}>
+                  Het aantal resterende nachten is gebaseerd op uw meldingen
+                  voor ingeplande en afgelopen verhuur. Dit is zonder eventuele
+                  meldingen die dit jaar door een mede-verhuurder of vorige
+                  bewoner zijn gedaan.
                 </p>
               )}
               <p>
