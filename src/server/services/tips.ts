@@ -53,7 +53,7 @@ function createTipsRequestDataFromServiceResults(
   const data = extractSuccessResponseContent(servicesResults);
   // Omit all description keys, these are not needed for the Tips service.
   Object.assign(userData, deepOmitKeys(data, ['description']));
-  const tipsFromSource = Object.values(data).flatMap(data =>
+  const tipsFromSource = Object.values(data).flatMap((data) =>
     data && 'tips' in data ? data['tips'] : []
   );
   if (tipsFromSource.length) {

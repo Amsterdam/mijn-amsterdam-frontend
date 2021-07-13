@@ -1,4 +1,3 @@
-import { FeatureToggle } from '../../../universal/config/app';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiDependencyError,

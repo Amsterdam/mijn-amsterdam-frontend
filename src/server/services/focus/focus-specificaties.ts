@@ -151,10 +151,8 @@ export async function fetchFOCUSSpecificationsGenerated(
   const notifications: MyNotification[] = [];
 
   if (FOCUS_SPECIFICATIES.status === 'OK') {
-    const {
-      jaaropgaven,
-      uitkeringsspecificaties,
-    } = FOCUS_SPECIFICATIES.content;
+    const { jaaropgaven, uitkeringsspecificaties } =
+      FOCUS_SPECIFICATIES.content;
 
     const isActualJaaropgave =
       !IS_PRODUCTION ||

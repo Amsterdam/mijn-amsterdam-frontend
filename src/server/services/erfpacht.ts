@@ -1,9 +1,8 @@
-import { Chapters, FeatureToggle } from '../../universal/config';
+import { Chapters } from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../universal/config/env';
 import {
   apiDependencyError,
   apiSuccesResult,
