@@ -21,6 +21,7 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './ToeristischeVerhuur.module.scss';
+import { getYear } from 'date-fns';
 
 const DISPLAY_PROPS_VERHUUR = {
   dateStart: 'Start verhuur',
@@ -119,7 +120,6 @@ export default function ToeristischeVerhuur() {
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
-
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -193,15 +193,16 @@ export default function ToeristischeVerhuur() {
                   </>
                 )}
               </Heading>
-              <p className={styles.DetailText}>
-                Het aantal resterende nachten is gebaseerd op meldingen voor
-                ingepland en afgelopen verhuur die u <b> vanaf 14 juli</b> 2021
-                hebt ingediend. Meldingen die u voor 14 juli hebt ingediend zijn
-                niet meegenomen bij deze berekening. Dit is ook zonder eventuele
-                meldingen die dit jaar door een mede-verhuurder of vorige
-                bewoner zijn gedaan.
-              </p>
-
+              {getYear(new Date()) === 2021 && (
+                <p className={styles.DetailText}>
+                  Het aantal resterende nachten is gebaseerd op meldingen voor
+                  ingeplande en afgelopen verhuur die u <b> vanaf 19 juli</b>{' '}
+                  2021 hebt ingediend. Meldingen die u voor 19 juli hebt
+                  ingediend zijn mogelijk niet geheel meegenomen bij deze
+                  berekening. Dit is ook zonder eventuele meldingen die dit jaar
+                  door een mede-verhuurder of vorige bewoner zijn gedaan.
+                </p>
+              )}
               <p>
                 Aan de informatie op deze pagina kunnen geen rechten worden
                 ontleend. Kijk voor meer informatie bij{' '}
