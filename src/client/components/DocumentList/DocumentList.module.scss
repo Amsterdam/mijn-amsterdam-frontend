@@ -44,7 +44,7 @@
 }
 
 .DocumentLinkError {
-  padding-left: 3px;
+  padding-left: 0.3rem;
   @include select('Button_Icon') {
     width: 2rem;
     height: 2rem;
@@ -54,7 +54,7 @@
 }
 
 .DownloadInfo {
-  padding-left: 3px;
+  padding-left: 0.3rem;
   font-size: 0.8em;
   white-space: nowrap;
 }
@@ -68,6 +68,6 @@
   top: 0;
   > div {
     position: relative;
-    transform: translateY(3px);
+    transform: translateY(0.3rem);
   }
 }
