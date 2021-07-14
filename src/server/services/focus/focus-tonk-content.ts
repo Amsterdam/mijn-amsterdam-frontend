@@ -94,6 +94,19 @@ const buitenBehandelingLabels: FocusStepContent = {
     )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
+const verlengenLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
+    description: (document) => `Bekijk de brief voor meer details.`,
+  },
+  status: stepLabels.besluit,
+  description: (document) =>
+    `<p>Wij behandelen uw aanvraag voor ${productName(
+      document
+    )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
 export const tonkDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusTonkLabelSet

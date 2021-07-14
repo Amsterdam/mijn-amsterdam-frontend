@@ -190,7 +190,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    10 juli 2021
+                    10 juli 2029
                   </a>
                 </td>
                 <td
@@ -202,7 +202,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                     Einde verhuur:
                   </span>
                   <span>
-                    14 juli 2021
+                    14 juli 2029
                   </span>
                 </td>
                 <td
@@ -249,7 +249,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    10 juli 2029
+                    10 juli 2021
                   </a>
                 </td>
                 <td
@@ -261,7 +261,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                     Einde verhuur:
                   </span>
                   <span>
-                    14 juli 2029
+                    14 juli 2021
                   </span>
                 </td>
                 <td
