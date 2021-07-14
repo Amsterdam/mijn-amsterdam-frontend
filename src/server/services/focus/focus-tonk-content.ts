@@ -94,7 +94,7 @@ const buitenBehandelingLabels: FocusStepContent = {
     )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
-const verlengenLabels: FocusStepContent = {
+const verlengingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
       `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
@@ -171,6 +171,14 @@ export const tonkDocumentLabelSet: Record<
     omschrijving: 'TONK Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
+    product: 'TONK',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '1761860': {
+    omschrijving: 'TONK Ambtshalve verlenging via batch',
+    labels: verlengingLabels,
+    documentTitle: 'Besluit verlenging',
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
