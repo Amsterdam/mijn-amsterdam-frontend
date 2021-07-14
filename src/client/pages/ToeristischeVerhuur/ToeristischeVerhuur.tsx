@@ -116,10 +116,11 @@ export default function ToeristischeVerhuur() {
         return false;
     }
   };
-
+  const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
+
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -138,7 +139,7 @@ export default function ToeristischeVerhuur() {
         </p>
 
         <p>
-          {(hasBothPermits || !hasVergunningBB) && (
+          {!hasVergunningBB && (
             <Linkd
               external={true}
               href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
@@ -147,7 +148,7 @@ export default function ToeristischeVerhuur() {
             </Linkd>
           )}
 
-          {(hasBothPermits || !hasVergunningenVakantieVerhuur) && (
+          {hasVergunningBB && !hasBothPermits && (
             <Linkd
               external={true}
               href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
@@ -156,17 +157,15 @@ export default function ToeristischeVerhuur() {
             </Linkd>
           )}
 
-          {hasPermits && !hasBothPermits && (
-            <>
-              <br />
-              <Linkd
-                external={true}
-                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
-              >
-                Meer over toeristenbelasting
-              </Linkd>
-            </>
-          )}
+          <>
+            <br />
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+            >
+              Meer over toeristenbelasting
+            </Linkd>
+          </>
 
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
@@ -222,6 +221,22 @@ export default function ToeristischeVerhuur() {
                 </LinkdInline>
               </p>
             </>
+          )}
+          {hasBothPermits && (
+            <Alert type="warning">
+              <p>
+                U hebt een vergunning voor vakantieverhuur én bed & breakfast.
+                Het is niet toegestaan om op hetzelfde adres zowel aan
+                vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van
+                deze vergunningen opzeggen.{' '}
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                >
+                  Meer informatie over voorwaarden vakantieverhuur.
+                </LinkdInline>
+              </p>
+            </Alert>
           )}
         </div>
       </PageContent>
@@ -306,7 +321,7 @@ export default function ToeristischeVerhuur() {
         )}
       </SectionCollapsible>
 
-      {!!content?.registraties.length && (
+      {hasRegistrations && (
         <PageContent>
           <InfoDetail
             label="Registratienummer toeristische verhuur"
@@ -327,6 +342,23 @@ export default function ToeristischeVerhuur() {
               )
             )}
           />
+          {!hasRegistrations && hasPermits && (
+            <Alert type="warning">
+              <p>
+                U hebt een vergunning voor vakantieverhuur of bed & breakfast. U
+                moet daarom ook een landelijk registratienummer voor
+                toeristische verhuur aanvragen.{' '}
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                >
+                  {' '}
+                  Meer informatie over het landelijk registratienummer
+                  toeristische verhuur.
+                </LinkdInline>
+              </p>
+            </Alert>
+          )}
         </PageContent>
       )}
     </OverviewPage>
