@@ -82,6 +82,19 @@ const testState4: VerhuurState = {
   },
 };
 
+const testState5: VerhuurState = {
+  TOERISTISCHE_VERHUUR: {
+    status: 'OK',
+    content: {
+      daysLeft: 0,
+      registraties: toeristischeVerhuurRegistraties.content,
+      vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
+        (vergunning) => vergunning.caseType !== CaseType.BBVergunning
+      ),
+    },
+  },
+};
+
 function initializeState(snapshot: MutableSnapshot, state: VerhuurState) {
   snapshot.set(appStateAtom as any, state);
 }
@@ -134,10 +147,10 @@ describe('<ToeristischeVerhuur />', () => {
     render(<Component state={testState2} />);
 
     expect(
-      screen.findAllByText(
-        'U moet daarom ook een landelijk registratienummer voor toeristische verhuur aanvragen.'
+      screen.getByText(
+        /U moet daarom ook een landelijk registratienummer voor toeristische verhuur aanvragen./
       )
-    ).not.toBe(null);
+    ).toBeInTheDocument();
   });
 
   it('Shows B&B page', () => {
@@ -172,5 +185,13 @@ describe('<ToeristischeVerhuur />', () => {
     expect(
       screen.queryByText('Vergunning bed & breakfast')
     ).not.toBeInTheDocument();
+  });
+
+  it('Shows Different text about nights rent left', () => {
+    render(<Component state={testState5} />);
+
+    expect(
+      screen.getByText(/Uw woning is dit kalenderjaar al 30 nachten verhuurd./)
+    ).toBeInTheDocument();
   });
 });

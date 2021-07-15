@@ -184,7 +184,8 @@ export default function ToeristischeVerhuur() {
                 {daysRemaining === 0 && (
                   <>
                     U mag uw woning dit kalenderjaar niet meer verhuren voor
-                    vakantieverhuur. <br />
+                    vakantieverhuur.
+                    <br />
                     Uw woning is dit kalenderjaar al 30 nachten verhuurd.
                   </>
                 )}
@@ -222,22 +223,41 @@ export default function ToeristischeVerhuur() {
                 >
                   Vakantieverhuur melden
                 </LinkdInline>
+                .
               </p>
             </>
           )}
           {hasBothPermits && (
             <Alert type="warning">
               <p>
-                U hebt een vergunning voor vakantieverhuur én bed & breakfast.
-                Het is niet toegestaan om op hetzelfde adres zowel aan
-                vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van
-                deze vergunningen opzeggen.{' '}
+                U hebt een vergunning voor vakantieverhuur én bed &amp;
+                breakfast. Het is niet toegestaan om op hetzelfde adres zowel
+                aan vakantieverhuur als bed &amp; breakfast te doen. U moet
+                daarom 1 van deze vergunningen opzeggen.
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+                >
+                  Meer informatie over voorwaarden vakantieverhuur
+                </LinkdInline>
+                .
+              </p>
+            </Alert>
+          )}
+          {!hasRegistrations && hasPermits && (
+            <Alert type="warning">
+              <p>
+                U hebt een vergunning voor vakantieverhuur of bed &amp;
+                breakfast. U moet daarom ook een landelijk registratienummer
+                voor toeristische verhuur aanvragen.
                 <LinkdInline
                   external={true}
                   href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
                 >
-                  Meer informatie over voorwaarden vakantieverhuur
+                  Meer informatie over het landelijk registratienummer
+                  toeristische verhuur
                 </LinkdInline>
+                .
               </p>
             </Alert>
           )}
@@ -324,8 +344,8 @@ export default function ToeristischeVerhuur() {
         )}
       </SectionCollapsible>
 
-      <PageContent>
-        {hasRegistrations && (
+      {hasRegistrations && (
+        <PageContent>
           <InfoDetail
             label="Registratienummer toeristische verhuur"
             valueWrapperElement="div"
@@ -345,24 +365,8 @@ export default function ToeristischeVerhuur() {
               )
             )}
           />
-        )}
-        {!hasRegistrations && hasPermits && (
-          <Alert type="warning">
-            <p>
-              U hebt een vergunning voor vakantieverhuur of bed & breakfast. U
-              moet daarom ook een landelijk registratienummer voor toeristische
-              verhuur aanvragen.{' '}
-              <LinkdInline
-                external={true}
-                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
-              >
-                Meer informatie over het landelijk registratienummer
-                toeristische verhuur
-              </LinkdInline>
-            </p>
-          </Alert>
-        )}
-      </PageContent>
+        </PageContent>
+      )}
     </OverviewPage>
   );
 }

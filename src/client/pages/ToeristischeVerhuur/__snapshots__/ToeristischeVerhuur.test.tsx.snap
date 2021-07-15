@@ -95,6 +95,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Vakantieverhuur melden
           </a>
+          .
         </p>
         <div
           class="Alert warning"
@@ -107,14 +108,15 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           </svg>
            
           <p>
-            U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen. 
+            U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen.
             <a
               class="Button Button__inline Button__lean Linkd LinkedInline"
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
               rel="external noopener noreferrer"
             >
               Meer informatie over voorwaarden vakantieverhuur
             </a>
+            .
           </p>
         </div>
       </div>
