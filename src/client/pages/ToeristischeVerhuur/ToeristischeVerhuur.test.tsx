@@ -67,11 +67,7 @@ describe('<ToeristischeVerhuur />', () => {
     render(<Component />);
     expect(screen.getByText('Toeristische verhuur')).toBeInTheDocument();
     expect(
-      screen.getByText('Meer informatie over particuliere vakantieverhuur')
-    ).toBeInTheDocument();
-    expect(
-      // screen.getByText('Meer over toeristenbelasting')
-      screen.getByText('Meer informatie over bed & breakfast')
+      screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText('Registratienummer toeristische verhuur').length
