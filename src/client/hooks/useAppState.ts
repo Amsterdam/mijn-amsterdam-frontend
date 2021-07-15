@@ -93,7 +93,7 @@ export function useAppStateFallbackService({
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
  * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
  */
-export function useAppState() {
+export function useAppStateRemote() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport

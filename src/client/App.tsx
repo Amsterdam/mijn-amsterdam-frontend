@@ -31,7 +31,7 @@ import {
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
-import { useAppState } from './hooks/useAppState';
+import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkEntry,
   useDeeplinkRedirect,
@@ -97,7 +97,7 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
-  useAppState();
+  useAppStateRemote();
   useTipsApi();
   usePageChange();
 

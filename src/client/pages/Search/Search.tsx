@@ -71,7 +71,11 @@ export default function Search() {
         {ChapterTitles.SEARCH}
       </PageHeading>
       <PageContent>
-        <SearchBar term={term || termParam} onFinish={displayResults} />
+        <SearchBar
+          autoFocus={false}
+          term={term || termParam}
+          onFinish={displayResults}
+        />
         {!!(results?.am?.contents.length || results?.ma?.length) && (
           <div className={styles.SearchResults}>
             <ResultSetPaginated
