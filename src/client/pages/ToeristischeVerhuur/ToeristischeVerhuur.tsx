@@ -140,32 +140,35 @@ export default function ToeristischeVerhuur() {
 
         <p>
           {!hasVergunningBB && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
-            >
-              Meer informatie over particuliere vakantieverhuur
-            </Linkd>
+            <>
+              <Linkd
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
+              >
+                Meer informatie over particuliere vakantieverhuur
+              </Linkd>
+              <br />
+            </>
           )}
 
           {hasVergunningBB && !hasBothPermits && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
-            >
-              Meer informatie over bed &amp; breakfast
-            </Linkd>
+            <>
+              <Linkd
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
+              >
+                Meer informatie over bed &amp; breakfast
+              </Linkd>
+              <br />
+            </>
           )}
 
-          <>
-            <br />
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
-            >
-              Meer over toeristenbelasting
-            </Linkd>
-          </>
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+          >
+            Meer over toeristenbelasting
+          </Linkd>
 
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
