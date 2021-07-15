@@ -17,6 +17,11 @@
   margin: 0 auto;
 }
 
+.SearchBarInput {
+  z-index: 2;
+  position: relative;
+}
+
 .Results {
   position: absolute;
   width: 100%;
@@ -26,6 +31,7 @@
   border: 0.1rem solid $color-neutral-grey4;
   margin-top: 0;
   border-top: 0;
+  z-index: 1;
   // transform: translateX(-1rem);
 }
 
@@ -55,4 +61,8 @@
   padding-bottom: 0.5rem;
   font-size: 1.4rem;
   margin-bottom: 1rem;
+}
+
+.ResultListItem--selected {
+  background-color: $color-neutral-grey1;
 }

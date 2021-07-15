@@ -17,7 +17,6 @@ import {
   MyCase,
   MyNotification,
 } from '../../universal/types/App.types';
-import { CaseType } from '../../universal/types/vergunningen';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
@@ -245,7 +244,9 @@ export async function fetchVergunningen(
                 id: vergunning.id,
               })
             : '/',
-          title: `Vergunning > ${vergunning.caseType} > ${vergunning.identifier}`,
+          title: `Vergunning > ${vergunning.caseType} > ${
+            vergunning.identifier
+          } [${vergunning.decision || vergunning.status}]`,
         },
       };
     });
