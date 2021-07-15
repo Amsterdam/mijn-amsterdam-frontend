@@ -1,13 +1,18 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import {
+  getFullAddress,
+  getFullName,
+  uniqueArray,
+} from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 import { AppState } from '../../AppState';
 import { IconChevronRight } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { uniqueArray } from '../../../universal/helpers';
+import { BRPData } from '../../../universal/types/brp';
 
 export interface PageEntry {
   url: string;
@@ -18,10 +23,12 @@ export interface PageEntry {
 }
 
 export interface ApiSearchConfig {
-  apiName: keyof Partial<AppState> | '';
+  apiName: keyof AppState | '';
 
   // Extract searchable items from the api response
-  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => ApiBaseItem[];
+  getApiBaseItems: (
+    apiContent: ApiSuccessResponse<any>['content']
+  ) => ApiBaseItem[];
 
   // PageEntry properties
   // A description that will be used by Fuse to find  matching items
@@ -59,7 +66,7 @@ export interface ApiBaseItem {
 
 export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
   apiName: '',
-  getApiBaseItems: (apiContent: ApiSuccessResponse<any>) => {
+  getApiBaseItems: (apiContent: ApiSuccessResponse<any>['content']) => {
     // Blindly assume apiContent returns an array with objects
     if (Array.isArray(apiContent)) {
       return apiContent;
@@ -67,7 +74,6 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
 
     // Blindly assume apiContent returns an object with arrays object filled arrays as key values.
     if (apiContent !== null && typeof apiContent === 'object') {
-      console.log('Object.values(apiContent)', Object.values(apiContent));
       return Object.values(apiContent)
         .filter((value) => Array.isArray(value))
         .flatMap((items) => items);
@@ -98,7 +104,9 @@ export function displayPath(segments: string[]) {
   );
 }
 
-export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
+export const apiSearchConfigs: Array<
+  Partial<ApiSearchConfig> & { apiName: keyof AppState }
+> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
@@ -187,11 +195,38 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
       ]);
     },
   },
+  {
+    apiName: 'BRP',
+    getApiBaseItems: (apiContent: BRPData) => {
+      const identiteitsBewijzen = apiContent.identiteitsbewijzen || [];
+      const address = getFullAddress(apiContent.adres, true);
+      const name = getFullName(apiContent.persoon);
+      const brpDataItems: ApiBaseItem[] = [
+        {
+          title: name || 'Mijn naam',
+          link: {
+            to: AppRoutes.BRP,
+            title: `Mijn naam | ${name}`,
+          },
+        },
+        {
+          title: address || 'Mijn adres',
+          link: {
+            to: AppRoutes.BRP,
+            title: `Mijn adres | ${address}`,
+          },
+        },
+      ];
+      return [...identiteitsBewijzen, ...brpDataItems];
+    },
+  },
 ];
 
-export const searchStateKeys = apiSearchConfigs.map((config) => {
-  return config.apiName;
-});
+export const searchStateKeys: Array<keyof AppState> = apiSearchConfigs.map(
+  (config) => {
+    return config.apiName;
+  }
+);
 
 export const staticIndex: PageEntry[] = [
   {

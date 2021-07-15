@@ -2,24 +2,15 @@ import SearchBar from '@amsterdam/asc-ui/lib/components/SearchBar/SearchBar';
 import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { generatePath, useHistory } from 'react-router-dom';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import { useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
-import { isError, pick } from '../../../universal/helpers';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
-import styles from './Search.module.scss';
-import { PageEntry, searchStateKeys } from './searchConfig';
-import { AppState, PRISTINE_APPSTATE } from '../../AppState';
-import {
-  generateSearchIndexPageEntries,
-  searchAmsterdamNL,
-  useSearch,
-  useSearchResults,
-} from './useSearch';
 import Pagination from '../Pagination/Pagination';
+import styles from './Search.module.scss';
+import { PageEntry } from './searchConfig';
+import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
   results: PageEntry[];
@@ -59,7 +50,12 @@ export function ResultSet({
                 index === selectedIndex && styles['ResultListItem--selected']
               )}
             >
-              <Linkd icon={null} onClick={onClickResult} href={result.url}>
+              <Linkd
+                icon={null}
+                onClick={onClickResult}
+                external={result.url.startsWith('http')}
+                href={result.url}
+              >
                 {result.displayTitle || result.title}
               </Linkd>
               {/* <p>{result.item.description}</p> */}
@@ -79,6 +75,7 @@ export function ResultSetPaginated({
   title,
   results,
   pageSize = 10,
+  onClickResult,
 }: ResultSetPaginatedProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPaginated = useMemo(() => {
@@ -92,7 +89,11 @@ export function ResultSetPaginated({
 
   return (
     <>
-      <ResultSet title={title} results={resultsPaginated} />
+      <ResultSet
+        title={title}
+        results={resultsPaginated}
+        onClickResult={onClickResult}
+      />
       {total > pageSize && (
         <Pagination
           className={styles.Pagination}
@@ -107,114 +108,33 @@ export function ResultSetPaginated({
 }
 
 interface SearchProps {
-  onEscape?: () => void;
+  onFinish?: (isSelection?: boolean) => void;
   term?: string;
   maxResultCountDisplay?: number;
 }
 
 export function Search({
-  onEscape,
+  onFinish,
   term: termInitial = '',
   maxResultCountDisplay = 10,
 }: SearchProps) {
-  const fuse = useSearch();
-  const [results, setResults] = useSearchResults();
-  const [resultsAmsterdamNLLoading, setResultsAmsterdamNLLoading] =
-    useState(false);
+  const results = useSearchResults();
   const [isResultsVisible, setResultsVisible] = useState(false);
-  const [term, setTerm] = useState(termInitial);
-  const [indexReady, setIndexReady] = useState(false);
-  const appState = useAppStateGetter();
-
-  useEffect(() => {
-    for (const stateKey of searchStateKeys) {
-      if (stateKey && !fuse.apiNames.includes(stateKey)) {
-        if (
-          isError(appState[stateKey]) ||
-          appState[stateKey] !== PRISTINE_APPSTATE[stateKey]
-        ) {
-          if (!isError(appState[stateKey])) {
-            const pageEntries = generateSearchIndexPageEntries(
-              stateKey,
-              appState[stateKey].content
-            );
-
-            console.log(stateKey, 'pageEntries', pageEntries);
-
-            for (const entry of pageEntries) {
-              fuse.index.add(entry);
-            }
-          }
-
-          fuse.apiNames.push(stateKey);
-        }
-      }
-    }
-    if (fuse.apiNames.length === searchStateKeys.length) {
-      setIndexReady(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appState]);
-
+  const [term, setTerm] = useSearchTerm();
   const history = useHistory();
-
-  const searchAmsterdamNLDebounced = useDebouncedCallback(() => {
-    if (!term) {
-      return;
-    }
-    searchAmsterdamNL(term)
-      .then(({ data: amResults }) => {
-        setResults((results) => {
-          return {
-            ma: results?.ma,
-            am: amResults,
-          };
-        });
-        setResultsAmsterdamNLLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, 400);
-
-  const search = useCallback(
-    (term: string) => {
-      setResultsAmsterdamNLLoading(true);
-
-      const rawResults = fuse.index.search(term);
-      const displayResults = rawResults.map((result) => result.item);
-
-      setResults((results) => {
-        return {
-          ma: displayResults,
-          am: results?.am,
-        };
-      });
-      searchAmsterdamNLDebounced();
-    },
-    [setResults, searchAmsterdamNLDebounced, fuse]
-  );
-
-  const clearSearch = useCallback(() => {
-    setTerm('');
-    setResults(null);
-  }, [setTerm, setResults]);
-
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  useEffect(() => {
-    if (indexReady && term) {
-      setSelectedIndex(-1);
-      search(term);
-    }
-  }, [indexReady, term, search]);
+  useSearchIndex();
 
-  function doEscape() {
-    if (onEscape) {
-      onEscape();
-    }
-    setResultsVisible(false);
-  }
+  const doFinish = useCallback(
+    (isSelection?: boolean) => {
+      if (onFinish) {
+        onFinish(isSelection);
+      }
+      setResultsVisible(false);
+    },
+    [onFinish, setResultsVisible]
+  );
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -233,8 +153,11 @@ export function Search({
       event.preventDefault();
 
       const allResults = [
-        ...(results?.ma || []).slice(0, 5),
-        ...(results?.am || []).slice(0, 5),
+        ...(results?.ma || []).slice(0, maxResultCountDisplay / 2),
+        ...(results?.am?.state === 'hasValue'
+          ? results?.am?.contents
+          : []
+        ).slice(0, maxResultCountDisplay / 2),
       ];
 
       if (!isEscape && !allResults.length) {
@@ -263,24 +186,36 @@ export function Search({
           break;
         case isEnter:
           if (selectedIndex !== -1) {
-            if (selectedIndex < (results?.ma?.length ?? 0)) {
-              history.push(allResults[selectedIndex].url);
+            const url = allResults[selectedIndex].url;
+            if (!url.startsWith('http')) {
+              history.push(url);
             } else {
-              window.location.href = allResults[selectedIndex].url;
+              window.location.href = url;
             }
           }
-          doEscape();
+          doFinish(true);
           break;
         case isEscape:
-          doEscape();
+          setResultsVisible(false);
           break;
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setSelectedIndex, results, selectedIndex, history, term]
+    [
+      setSelectedIndex,
+      results,
+      selectedIndex,
+      history,
+      doFinish,
+      maxResultCountDisplay,
+    ]
   );
 
   useKeyUp(keyHandler);
+
+  useEffect(() => {
+    return () => setTerm('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -289,45 +224,59 @@ export function Search({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              console.log('submit!');
-              if (selectedIndex === -1) {
+              if (selectedIndex === -1 && term) {
                 history.push(AppRoutes.SEARCH + '?term=' + term);
-                doEscape();
+                doFinish();
               }
             }}
           >
             <SearchBar
               autoFocus
-              placeholder="Enter the search text"
+              placeholder={
+                results.isIndexReady
+                  ? 'Zoeken naar...'
+                  : 'Zoeken voorbereiden...'
+              }
+              onFocus={() => {
+                if (term) {
+                  setResultsVisible(true);
+                }
+              }}
               onChange={(e) => {
                 setResultsVisible(true);
                 setTerm(e.target.value);
               }}
-              onClear={clearSearch}
-              value={term}
+              onClear={() => {
+                setTerm('');
+              }}
+              value={term || termInitial}
             />
           </form>
         </ThemeProvider>
       </div>
+
       {isResultsVisible &&
         !!term &&
-        !!(results?.ma?.length || results?.am?.length) && (
+        !!(results?.ma?.length || results?.am?.state === 'hasValue') && (
           <div className={styles.Results}>
             <ResultSet
               isLoading={false}
               title="Resultaten van Mijn Amsterdam"
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-              onClickResult={clearSearch}
               selectedIndex={selectedIndex}
             />
+
             <ResultSet
-              isLoading={resultsAmsterdamNLLoading}
+              isLoading={results?.am?.state === 'loading'}
               title="Resultaten van Amsterdam.nl"
-              results={results?.am?.slice(0, maxResultCountDisplay / 2) || []}
-              onClickResult={clearSearch}
+              results={
+                results?.am?.state === 'hasValue'
+                  ? results?.am?.contents.slice(0, maxResultCountDisplay / 2)
+                  : []
+              }
               selectedIndex={
                 selectedIndex -
-                Math.min(results?.am?.length || 0, maxResultCountDisplay / 2)
+                Math.min(results?.ma?.length || 0, maxResultCountDisplay / 2)
               }
             />
           </div>

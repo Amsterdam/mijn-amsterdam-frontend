@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useRecoilCallback } from 'recoil';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   Button,
   ChapterIcon,
-  Linkd,
   Page,
   PageContent,
   PageHeading,
@@ -14,39 +13,50 @@ import { ResultSet, ResultSetPaginated } from '../../components/Search/Search';
 import {
   SearchResults,
   useSearchResults,
-  searchResultsAtom,
+  useSearchTerm,
 } from '../../components/Search/useSearch';
 import styles from './Search.module.scss';
-import { useHistory } from 'react-router-dom';
 
-export default function Search() {
-  const term = new URLSearchParams(window.location.search).get('term') || '';
-  const [liveResults] = useSearchResults();
-  const [results, setResults] = useState<SearchResults | null>(null);
-  const history = useHistory();
-
-  const getSearchResults = useRecoilCallback(({ snapshot }) => () => {
-    return snapshot.getPromise(searchResultsAtom);
-  });
+function useOnceCall(cb: () => void, condition: boolean) {
+  const isCalledRef = useRef(false);
 
   useEffect(() => {
-    const hasPopulatedSearch =
-      term && liveResults?.am && liveResults?.ma && results === null;
-    if (hasPopulatedSearch) {
-      console.log('11.');
-      setResults(liveResults);
+    if (condition && !isCalledRef.current) {
+      isCalledRef.current = true;
+      cb();
     }
-  }, [term, results, liveResults]);
+  }, [cb, condition]);
+}
 
-  // useEffect(() => {
-  //   if (term && results !== null) {
-  //     console.log('22.');
-  //     (async function () {
-  //       const searchResults = await getSearchResults();
-  //       setResults(searchResults);
-  //     })();
-  //   }
-  // }, [term, results, liveResults]);
+export default function Search() {
+  const termParam =
+    new URLSearchParams(window.location.search).get('term') || '';
+  const liveResults = useSearchResults();
+  const amState = liveResults.am?.state;
+  const [results, setResults] = useState<SearchResults | null>(null);
+  const [term, setTerm] = useSearchTerm();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (termParam && termParam !== term) {
+      setTerm(termParam);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useOnceCall(() => {
+    setResults(liveResults);
+  }, amState === 'hasValue' && liveResults.isIndexReady);
+
+  const displayResults = useCallback(
+    (isSelection) => {
+      setResults(liveResults);
+      if (!isSelection) {
+        history.push(`${AppRoutes.SEARCH}?term=${term}`);
+      }
+    },
+    [term, setResults, history, liveResults]
+  );
 
   return (
     <Page className={styles.Search}>
@@ -61,13 +71,8 @@ export default function Search() {
         {ChapterTitles.SEARCH}
       </PageHeading>
       <PageContent>
-        <SearchBar
-          term={term}
-          onEscape={() => {
-            setResults(liveResults);
-          }}
-        />
-        {!!(results?.am?.length || results?.ma?.length) && (
+        <SearchBar term={term || termParam} onFinish={displayResults} />
+        {!!(results?.am?.contents.length || results?.ma?.length) && (
           <div className={styles.SearchResults}>
             <ResultSetPaginated
               title="Resultaten van Mijn Amsterdam"
@@ -75,8 +80,11 @@ export default function Search() {
             />
             <div className={styles.SearchResults}>
               <ResultSet
+                isLoading={results?.am?.state === 'loading'}
                 title="Resultaten van Amsterdam.nl"
-                results={results.am || []}
+                results={
+                  results?.am?.state === 'hasValue' ? results?.am?.contents : []
+                }
               />
               <p>
                 <Button
@@ -84,7 +92,7 @@ export default function Search() {
                     (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
                   }
                 >
-                  Alle resultaten van Amsterdam.nl
+                  Bekijk alle resultaten van Amsterdam.nl
                 </Button>
               </p>
             </div>
