@@ -16,7 +16,7 @@ interface ResultSetProps {
   results: PageEntry[];
   title: string;
   noResultsMessage?: string;
-  onClickResult?: () => void;
+  onSelectResult?: () => void;
   isLoading?: boolean;
   selectedIndex?: number;
   pageSize?: number;
@@ -27,7 +27,7 @@ export function ResultSet({
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
-  onClickResult,
+  onSelectResult,
   selectedIndex = -1,
   pageSize,
 }: ResultSetProps) {
@@ -52,7 +52,7 @@ export function ResultSet({
             >
               <Linkd
                 icon={null}
-                onClick={onClickResult}
+                onClick={onSelectResult}
                 external={result.url.startsWith('http')}
                 href={result.url}
               >
@@ -75,7 +75,7 @@ export function ResultSetPaginated({
   title,
   results,
   pageSize = 10,
-  onClickResult,
+  onSelectResult,
 }: ResultSetPaginatedProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPaginated = useMemo(() => {
@@ -92,7 +92,7 @@ export function ResultSetPaginated({
       <ResultSet
         title={title}
         results={resultsPaginated}
-        onClickResult={onClickResult}
+        onSelectResult={onSelectResult}
       />
       {total > pageSize && (
         <Pagination
@@ -224,45 +224,41 @@ export function Search({
   }, []);
 
   return (
-    <>
-      <div className={styles.SearchBarInput}>
-        <ThemeProvider>
-          <form
-            ref={searchBarRef}
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (selectedIndex === -1 && term) {
-                history.push(AppRoutes.SEARCH + '?term=' + term);
-                doFinish();
+    <div className={styles.SearchBar}>
+      <ThemeProvider>
+        <form
+          ref={searchBarRef}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (selectedIndex === -1 && term) {
+              history.push(AppRoutes.SEARCH + '?term=' + term);
+              doFinish();
+            }
+          }}
+        >
+          <SearchBar
+            inputProps={{
+              autoComplete: 'none',
+            }}
+            placeholder={
+              results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
+            }
+            onFocus={() => {
+              if (term) {
+                setResultsVisible(true);
               }
             }}
-          >
-            <SearchBar
-              inputProps={{
-                autoComplete: 'none',
-              }}
-              placeholder={
-                results.isIndexReady
-                  ? 'Zoeken naar...'
-                  : 'Zoeken voorbereiden...'
-              }
-              onFocus={() => {
-                if (term) {
-                  setResultsVisible(true);
-                }
-              }}
-              onChange={(e) => {
-                setResultsVisible(true);
-                setTerm(e.target.value);
-              }}
-              onClear={() => {
-                setTerm('');
-              }}
-              value={term || termInitial}
-            />
-          </form>
-        </ThemeProvider>
-      </div>
+            onChange={(e) => {
+              setResultsVisible(true);
+              setTerm(e.target.value);
+            }}
+            onClear={() => {
+              setTerm('');
+            }}
+            value={term || termInitial}
+          />
+        </form>
+      </ThemeProvider>
 
       {isResultsVisible &&
         !!term &&
@@ -276,6 +272,7 @@ export function Search({
             />
 
             <ResultSet
+              onSelectResult={() => doFinish(true)}
               isLoading={results?.am?.state === 'loading'}
               title="Resultaten van Amsterdam.nl"
               results={
@@ -290,6 +287,6 @@ export function Search({
             />
           </div>
         )}
-    </>
+    </div>
   );
 }

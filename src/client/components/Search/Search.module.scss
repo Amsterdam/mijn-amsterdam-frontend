@@ -1,6 +1,6 @@
 @import '../../styles/_global.scss';
 
-.SearchBarInput {
+.SearchBar {
   z-index: 2;
   position: relative;
   max-width: 60rem;
@@ -8,8 +8,7 @@
 
 .Results {
   position: absolute;
-  width: calc(100% - 9.2rem);
-  max-width: 56rem;
+  width: calc(100% - 4rem);
   background-color: $color-white;
   padding: 1rem;
   border: 0.1rem solid $color-neutral-grey4;
