@@ -1,9 +1,19 @@
-import axios, { CancelTokenSource } from 'axios';
+import axios from 'axios';
 import Fuse from 'fuse.js';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import {
+  atom,
+  Loadable,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+  useRecoilValueLoadable,
+} from 'recoil';
 import { pick, uniqueArray } from '../../../universal/helpers';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { ApiSuccessResponse, isError } from '../../../universal/helpers/api';
+import { AppState, PRISTINE_APPSTATE } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
+import { useAppState } from '../../hooks/useAppState';
 import {
   ApiBaseItem,
   ApiSearchConfig,
@@ -11,6 +21,7 @@ import {
   API_SEARCH_CONFIG_DEFAULT,
   displayPath,
   PageEntry,
+  searchStateKeys,
   staticIndex,
 } from './searchConfig';
 
@@ -87,9 +98,7 @@ interface AmsterdamSearchResult {
   url: string;
 }
 
-let activeSource: CancelTokenSource;
-
-function transformSearchAmsterdamNLresponse(responseData: any) {
+function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
@@ -104,25 +113,20 @@ function transformSearchAmsterdamNLresponse(responseData: any) {
   return [];
 }
 
-export function searchAmsterdamNL(
+export async function searchAmsterdamNL(
   keywords: string,
   resultCountPerPage: number = 5
 ) {
-  if (activeSource) {
-    activeSource.cancel('Search renewed');
-  }
-
-  activeSource = axios.CancelToken.source();
-
-  return axios.get(
+  const response = await axios.get<PageEntry[]>(
     `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`,
     {
-      cancelToken: activeSource.token,
       transformResponse: addAxiosResponseTransform(
         transformSearchAmsterdamNLresponse
       ),
     }
   );
+
+  return response.data;
 }
 
 const options = {
@@ -132,30 +136,130 @@ const options = {
 };
 
 export const searchConfigAtom = atom<{
-  index: Fuse<PageEntry>;
-  apiNames: string[];
+  index: Fuse<PageEntry> | null;
+  apiNames: Array<keyof Partial<AppState>>;
 }>({
   key: 'searchConfigState',
   default: {
-    index: new Fuse(staticIndex, options),
+    index: null,
     apiNames: [],
   },
 });
 
 export function useSearch() {
-  return useRecoilValue(searchConfigAtom);
+  return useRecoilState(searchConfigAtom);
 }
+
+export function isIndexReady(apiNames: Array<keyof AppState>) {
+  return searchStateKeys.every((apiName) => apiNames.includes(apiName));
+}
+
+export function useSearchIndex() {
+  const [{ index, apiNames }, setSearchConfig] = useSearch();
+  const appState = useAppState();
+
+  const isAppStateReady = searchStateKeys.every((stateKey) => {
+    return appState[stateKey] !== PRISTINE_APPSTATE[stateKey];
+  });
+
+  const isIndexed = isIndexReady(apiNames);
+
+  useEffect(() => {
+    if (isAppStateReady && !isIndexed) {
+      const sindex = index || new Fuse(staticIndex, options);
+      const sApiNames: Array<keyof AppState> = [];
+
+      for (const stateKey of searchStateKeys) {
+        if (!isError(appState[stateKey])) {
+          const pageEntries = generateSearchIndexPageEntries(
+            stateKey,
+            appState[stateKey].content
+          );
+          for (const entry of pageEntries) {
+            sindex.add(entry);
+          }
+        }
+        sApiNames.push(stateKey);
+      }
+
+      setSearchConfig(() => ({
+        index: sindex,
+        apiNames: sApiNames,
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAppStateReady, isIndexed]);
+
+  return isAppStateReady && isIndexReady(apiNames);
+}
+
+export const searchTermAtom = atom<string>({
+  key: 'searchTerm',
+  default: '',
+});
+
+export function useSearchTerm() {
+  return useRecoilState(searchTermAtom);
+}
+
+const amsterdamNLQuery = selector({
+  key: 'amsterdamNLQuery',
+  get: async ({ get }) => {
+    const term = get(searchTermAtom);
+    const response = term ? await searchAmsterdamNL(term) : [];
+    return response;
+  },
+});
+
+const isIndexReadyQuery = selector({
+  key: 'isIndexReady',
+  get: ({ get }) => {
+    const fuse = get(searchConfigAtom);
+    return isIndexReady(fuse.apiNames);
+  },
+});
+
+const mijnQuery = selector({
+  key: 'mijnQuery',
+  get: ({ get }) => {
+    const term = get(searchTermAtom);
+    const fuse = get(searchConfigAtom);
+    const indexReady = get(isIndexReadyQuery);
+
+    if (indexReady && fuse.index !== null && !!term) {
+      const rawResults = fuse.index.search(term);
+      return rawResults.map((result) => result.item);
+    }
+
+    return [];
+  },
+});
 
 export interface SearchResults {
   ma?: PageEntry[];
-  am?: PageEntry[];
+  am?: Loadable<PageEntry[]>;
+  isIndexReady: boolean;
 }
 
-export const searchResultsAtom = atom<SearchResults | null>({
-  key: 'searchResults',
-  default: null,
-});
+// export const searchResultsAtom = atom<SearchResults | null>({
+//   key: 'searchResultsMA',
+//   default: null,
+// });
 
-export function useSearchResults() {
-  return useRecoilState(searchResultsAtom);
+// export const searchResults = selector({
+//   key: 'ressss',
+//   get: async ({ get }) => {
+//     return {
+//       am: await get(amsterdamNLQuery),
+//       ma: get(mijnQuery),
+//     };
+//   },
+// });
+
+export function useSearchResults(): SearchResults {
+  return {
+    isIndexReady: useRecoilValue(isIndexReadyQuery),
+    ma: useRecoilValue(mijnQuery),
+    am: useRecoilValueLoadable(amsterdamNLQuery),
+  };
 }

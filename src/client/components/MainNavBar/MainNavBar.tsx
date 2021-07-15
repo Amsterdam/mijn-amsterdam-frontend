@@ -236,6 +236,10 @@ export default function MainNavBar({
     }
   });
 
+  useEffect(() => {
+    setSearchActive(false);
+  }, [location.pathname]);
+
   return (
     <nav
       className={classnames(
@@ -323,7 +327,7 @@ export default function MainNavBar({
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
-              <Search onEscape={() => setSearchActive(false)} />
+              <Search onFinish={() => setSearchActive(false)} />
             </div>
           </div>
         </div>

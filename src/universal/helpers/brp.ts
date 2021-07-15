@@ -2,14 +2,11 @@ import { Persoon } from '../types';
 
 export function getFullName(persoon: Persoon) {
   return persoon
-    ? (
-        persoon.opgemaakteNaam ||
-        `${persoon.voornamen} ${
-          persoon.voorvoegselGeslachtsnaam
-            ? persoon.voorvoegselGeslachtsnaam + ' '
-            : ''
-        }${persoon.geslachtsnaam}`
-      ).trim()
+    ? `${persoon.voornamen} ${
+        persoon.voorvoegselGeslachtsnaam
+          ? persoon.voorvoegselGeslachtsnaam + ' '
+          : ''
+      }${persoon.geslachtsnaam}`.trim()
     : '';
 }
 
@@ -33,7 +30,7 @@ export function getFullAddress(
               adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
             }`
           : '')
-    : 'unknown address';
+    : 'onbekend adres';
 }
 
 export function getBagSearchAddress(adres: {
@@ -42,7 +39,7 @@ export function getBagSearchAddress(adres: {
 }) {
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''}`.trim()
-    : 'unknown address';
+    : 'onbekend adres';
 }
 
 export function isMokum(

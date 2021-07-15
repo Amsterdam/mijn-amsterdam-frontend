@@ -57,7 +57,11 @@ function PrivateProfileName({
   isActive,
   tutorial,
 }: PrivateProfileNameProps) {
-  const label = person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens';
+  const label = person?.opgemaakteNaam
+    ? person.opgemaakteNaam
+    : person?.voornamen
+    ? getFullName(person)
+    : 'Mijn gegevens';
   return (
     <Button
       onClick={onClick}

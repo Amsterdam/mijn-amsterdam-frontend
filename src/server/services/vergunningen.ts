@@ -284,7 +284,7 @@ export function isExpired(vergunning: VergunningExpirable) {
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {
     id: `vergunning-${item.id}-case`,
-    title: `Vergunningsaanvraag ${item.identifier}`,
+    title: `Vergunningsaanvraag ${item.caseType} ${item.identifier}`,
     link: item.link,
     chapter: Chapters.VERGUNNINGEN,
     datePublished: item.dateRequest,
