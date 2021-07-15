@@ -12,6 +12,9 @@ import Linkd from '../Button/Button';
 import styles from './Search.module.scss';
 import Heading from '../Heading/Heading';
 import { PageEntry } from './staticIndex';
+import { useKeyPress } from '../../hooks/useKeyPress';
+import classnames from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 interface ResultSetProps {
   results: PageEntry[];
@@ -19,6 +22,7 @@ interface ResultSetProps {
   noResultsMessage?: string;
   onClickResult: () => void;
   isLoading: boolean;
+  selectedIndex: number;
 }
 
 function ResultSet({
@@ -27,6 +31,7 @@ function ResultSet({
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
   onClickResult,
+  selectedIndex = -1,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
@@ -39,8 +44,14 @@ function ResultSet({
       {isLoading && <p>Zoeken..</p>}
       {!!results.length && (
         <ul className={styles.ResultList}>
-          {results.map((result) => (
-            <li key={result.title} className={styles.ResultListItem}>
+          {results.map((result, index) => (
+            <li
+              key={result.title + index}
+              className={classnames(
+                styles.ResultListItem,
+                index === selectedIndex && styles['ResultListItem--selected']
+              )}
+            >
               <Linkd onClick={onClickResult} href={result.url}>
                 {result.title}
               </Linkd>
@@ -78,6 +89,11 @@ export function Search({ onClose }: SearchProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [VERGUNNINGEN.content]);
 
+  const isArrowUp = useKeyPress('ArrowUp');
+  const isArrowDown = useKeyPress('ArrowDown');
+  const isEnter = useKeyPress('Enter');
+  const history = useHistory();
+
   const searchAmsterdamNLDebounced = useDebouncedCallback(() => {
     searchAmsterdamNL(term)
       .then(({ data }) => {
@@ -113,42 +129,92 @@ export function Search({ onClose }: SearchProps) {
 
   useEffect(() => {
     if (term) {
+      setSelectedIndex(-1);
       search(term);
     }
   }, [term, search]);
 
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  useEffect(() => {
+    if (!resultsAmsterdamNLLoading && (isArrowDown || isArrowUp || isEnter)) {
+      const allResults = [...results, ...resultsAmsterdamNL];
+      if (!allResults.length) {
+        return;
+      }
+
+      if (isEnter) {
+        if (selectedIndex < results.length) {
+          history.push(allResults[selectedIndex].url);
+        } else {
+          window.location.href = allResults[selectedIndex].url;
+        }
+        return;
+      }
+
+      const prevIndex = selectedIndex - 1;
+      const nextIndex = selectedIndex + 1;
+      const lastIndex = allResults.length - 1;
+
+      if (isArrowDown) {
+        if (allResults[nextIndex]) {
+          setSelectedIndex(nextIndex);
+        } else {
+          setSelectedIndex(0);
+        }
+      } else if (isArrowUp) {
+        if (allResults[prevIndex]) {
+          setSelectedIndex(prevIndex);
+        } else {
+          setSelectedIndex(lastIndex);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isArrowDown,
+    isArrowUp,
+    results,
+    resultsAmsterdamNL,
+    resultsAmsterdamNLLoading,
+    isEnter,
+  ]);
   return (
     <div className={styles.Search}>
       <div className={styles.SearchBar}>
         <div className={styles.SearchBarInner}>
-          <ThemeProvider>
-            <SearchBar
-              autoFocus
-              placeholder="Enter the search text"
-              onChange={(e) => {
-                setTerm(e.target.value);
-              }}
-              onClear={clearSearch}
-              onSubmit={(e) => {}}
-              value={term}
-            />
-            {!!term && !!(results.length || resultsAmsterdamNL.length) && (
-              <div className={styles.Results}>
-                <ResultSet
-                  isLoading={false}
-                  title="Resultaten van Mijn Amsterdam"
-                  results={results}
-                  onClickResult={clearSearch}
-                />
-                <ResultSet
-                  isLoading={resultsAmsterdamNLLoading}
-                  title="Resultaten van Amsterdam.nl"
-                  results={resultsAmsterdamNL}
-                  onClickResult={clearSearch}
-                />
-              </div>
-            )}
-          </ThemeProvider>
+          <div className={styles.SearchBarInput}>
+            <ThemeProvider>
+              <SearchBar
+                autoFocus
+                placeholder="Enter the search text"
+                onChange={(e) => {
+                  setTerm(e.target.value);
+                }}
+                onClear={clearSearch}
+                onSubmit={(e) => {}}
+                value={term}
+              />
+            </ThemeProvider>
+          </div>
+          {!!term && !!(results.length || resultsAmsterdamNL.length) && (
+            <div className={styles.Results}>
+              <ResultSet
+                isLoading={false}
+                title="Resultaten van Mijn Amsterdam"
+                results={results}
+                onClickResult={clearSearch}
+                selectedIndex={selectedIndex}
+              />
+              <ResultSet
+                isLoading={resultsAmsterdamNLLoading}
+                title="Resultaten van Amsterdam.nl"
+                results={resultsAmsterdamNL}
+                onClickResult={clearSearch}
+                selectedIndex={selectedIndex - results.length}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
