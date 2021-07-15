@@ -52,7 +52,6 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         Hieronder vindt u een overzicht van uw aanvragen voor toeristische verhuur.
       </p>
       <p>
-        <br />
         <a
           class="Button Button__plain Button__lean Linkd"
           href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
