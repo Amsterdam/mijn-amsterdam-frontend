@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -11,7 +12,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -45,21 +46,21 @@ import {
   GarbageInformation,
   GeneralInfo,
   Inkomen,
-  InkomenDetailUitkering,
   InkomenDetailTonk,
   InkomenDetailTozo,
+  InkomenDetailUitkering,
   InkomenSpecificaties,
   LandingPage,
   MyNotifications,
   MyTips,
   NotFound,
   Profile,
-  VergunningDetail,
-  Vergunningen,
-  SiaDetail,
   Sia,
+  SiaDetail,
   ToeristischeVerhuur,
   ToeristischeVerhuurDetail,
+  VergunningDetail,
+  Vergunningen,
   Zorg,
   ZorgDetail,
 } from './pages';
@@ -252,13 +253,25 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+
+  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
+
   useScript(
     '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
     true,
     IS_AP
   );
+
+  useEffect(() => {
+    if (isUsabillaLoaded) {
+      (window as any).usabilla_live('data', {
+        custom: {
+          MatomoVisitorId: (window as any).Matomo?.getTracker().getVisitorId(),
+        },
+      });
+    }
+  }, [isUsabillaLoaded]);
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
