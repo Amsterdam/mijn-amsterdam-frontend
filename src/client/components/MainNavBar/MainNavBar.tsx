@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconClose, IconInfo, IconSearch } from '../../assets/icons';
+import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import {
   trackItemClick,
@@ -18,7 +18,7 @@ import { useChapters } from '../../hooks/useChapters';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Linkd, { Button, IconButton } from '../Button/Button';
+import { Button, IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
