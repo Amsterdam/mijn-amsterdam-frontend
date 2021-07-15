@@ -217,6 +217,7 @@ export function Search({
 
   useEffect(() => {
     if (autoFocus) {
+      // AutoFocus on the element doesn't seem to work properly with dynamic mounting
       searchBarRef.current?.querySelector<HTMLInputElement>('input')?.focus();
     }
     return () => setTerm('');
@@ -265,6 +266,7 @@ export function Search({
         !!(results?.ma?.length || results?.am?.state === 'hasValue') && (
           <div className={styles.Results}>
             <ResultSet
+              onSelectResult={() => doFinish(true)}
               isLoading={false}
               title="Resultaten van Mijn Amsterdam"
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
