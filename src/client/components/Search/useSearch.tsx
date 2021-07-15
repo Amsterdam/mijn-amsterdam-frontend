@@ -13,7 +13,7 @@ import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiSuccessResponse, isError } from '../../../universal/helpers/api';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
-import { useAppState } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   ApiBaseItem,
   ApiSearchConfig,
@@ -156,7 +156,7 @@ export function isIndexReady(apiNames: Array<keyof AppState>) {
 
 export function useSearchIndex() {
   const [{ index, apiNames }, setSearchConfig] = useSearch();
-  const appState = useAppState();
+  const appState = useAppStateGetter();
 
   const isAppStateReady = searchStateKeys.every((stateKey) => {
     return appState[stateKey] !== PRISTINE_APPSTATE[stateKey];
@@ -240,21 +240,6 @@ export interface SearchResults {
   am?: Loadable<PageEntry[]>;
   isIndexReady: boolean;
 }
-
-// export const searchResultsAtom = atom<SearchResults | null>({
-//   key: 'searchResultsMA',
-//   default: null,
-// });
-
-// export const searchResults = selector({
-//   key: 'ressss',
-//   get: async ({ get }) => {
-//     return {
-//       am: await get(amsterdamNLQuery),
-//       ma: get(mijnQuery),
-//     };
-//   },
-// });
 
 export function useSearchResults(): SearchResults {
   return {

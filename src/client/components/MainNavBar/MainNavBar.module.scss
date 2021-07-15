@@ -216,11 +216,26 @@
   }
 }
 
+.SearchButton {
+  @include mq-tablet() {
+    margin-right: 1rem;
+  }
+}
+
 .Search {
   z-index: z-index(main-nav-bar-inner--tablet);
   position: absolute;
   left: 0;
   right: 0;
+  top: $main-header-topbar-height + $main-header-navbar-height;
+
+  @include mq-tablet() {
+    top: $main-header-topbar-height;
+  }
+
+  @include mq-phone() {
+    // top: $main-header-topbar-height + $main-header-topbar-height--phone;
+  }
 }
 
 .SearchBar {

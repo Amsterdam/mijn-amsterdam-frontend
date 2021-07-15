@@ -1,7 +1,7 @@
 import SearchBar from '@amsterdam/asc-ui/lib/components/SearchBar/SearchBar';
 import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { useKeyUp } from '../../hooks/useKeyUp';
@@ -111,13 +111,16 @@ interface SearchProps {
   onFinish?: (isSelection?: boolean) => void;
   term?: string;
   maxResultCountDisplay?: number;
+  autoFocus?: boolean;
 }
 
 export function Search({
   onFinish,
   term: termInitial = '',
   maxResultCountDisplay = 10,
+  autoFocus = true,
 }: SearchProps) {
+  const searchBarRef = useRef<HTMLFormElement>(null);
   const results = useSearchResults();
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [term, setTerm] = useSearchTerm();
@@ -213,6 +216,9 @@ export function Search({
   useKeyUp(keyHandler);
 
   useEffect(() => {
+    if (autoFocus) {
+      searchBarRef.current?.querySelector<HTMLInputElement>('input')?.focus();
+    }
     return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -222,6 +228,7 @@ export function Search({
       <div className={styles.SearchBarInput}>
         <ThemeProvider>
           <form
+            ref={searchBarRef}
             onSubmit={(e) => {
               e.preventDefault();
               if (selectedIndex === -1 && term) {
@@ -234,7 +241,6 @@ export function Search({
               inputProps={{
                 autoComplete: 'none',
               }}
-              autoFocus
               placeholder={
                 results.isIndexReady
                   ? 'Zoeken naar...'

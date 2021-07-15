@@ -4,7 +4,7 @@ import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
 import { PRISTINE_APPSTATE } from '../AppState';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
-import { useAppState } from './useAppState';
+import { useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
@@ -35,8 +35,9 @@ describe('useAppState', () => {
   });
 
   it('Should start with the SSE endpoint', async () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const { result } = renderRecoilHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const { result } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
 
@@ -59,7 +60,9 @@ describe('useAppState', () => {
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
-    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
+    const { result, waitForNextUpdate } = renderRecoilHook(() =>
+      useAppStateRemote()
+    );
 
     expect(result.current).toEqual(initialAppState);
 
@@ -75,8 +78,11 @@ describe('useAppState', () => {
   });
 
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const { result, waitForNextUpdate } = renderRecoilHook(() =>
+      useAppStateRemote()
+    );
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
@@ -100,8 +106,11 @@ describe('useAppState', () => {
   });
 
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const { result, waitForNextUpdate } = renderRecoilHook(() =>
+      useAppStateRemote()
+    );
 
     axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
 

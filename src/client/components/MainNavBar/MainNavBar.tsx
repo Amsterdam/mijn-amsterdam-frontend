@@ -241,13 +241,7 @@ export default function MainNavBar({
   }, [location.pathname]);
 
   return (
-    <nav
-      className={classnames(
-        styles.MainNavBar,
-        hasBurgerMenu && styles.BurgerMenu,
-        isBurgerMenuVisible && styles.BurgerMenuVisible
-      )}
-    >
+    <nav className={styles.MainNavBar}>
       {hasBurgerMenu && (
         <BurgerButton
           isActive={!!isBurgerMenuVisible}
@@ -310,6 +304,7 @@ export default function MainNavBar({
         )}
         {isDisplaySearch && (
           <IconButton
+            className={styles.SearchButton}
             onClick={() => setSearchActive(!isSearchActive)}
             icon={isSearchActive ? IconClose : IconSearch}
           />
