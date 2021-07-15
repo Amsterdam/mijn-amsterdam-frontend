@@ -236,7 +236,7 @@ export default function ToeristischeVerhuur() {
                   external={true}
                   href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
                 >
-                  Meer informatie over voorwaarden vakantieverhuur.
+                  Meer informatie over voorwaarden vakantieverhuur
                 </LinkdInline>
               </p>
             </Alert>
@@ -356,9 +356,8 @@ export default function ToeristischeVerhuur() {
                 external={true}
                 href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
               >
-                {' '}
                 Meer informatie over het landelijk registratienummer
-                toeristische verhuur.
+                toeristische verhuur
               </LinkdInline>
             </p>
           </Alert>
