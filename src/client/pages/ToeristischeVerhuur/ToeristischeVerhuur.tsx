@@ -324,8 +324,8 @@ export default function ToeristischeVerhuur() {
         )}
       </SectionCollapsible>
 
-      {hasRegistrations && (
-        <PageContent>
+      <PageContent>
+        {hasRegistrations && (
           <InfoDetail
             label="Registratienummer toeristische verhuur"
             valueWrapperElement="div"
@@ -345,25 +345,25 @@ export default function ToeristischeVerhuur() {
               )
             )}
           />
-          {!hasRegistrations && hasPermits && (
-            <Alert type="warning">
-              <p>
-                U hebt een vergunning voor vakantieverhuur of bed & breakfast. U
-                moet daarom ook een landelijk registratienummer voor
-                toeristische verhuur aanvragen.{' '}
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
-                >
-                  {' '}
-                  Meer informatie over het landelijk registratienummer
-                  toeristische verhuur.
-                </LinkdInline>
-              </p>
-            </Alert>
-          )}
-        </PageContent>
-      )}
+        )}
+        {!hasRegistrations && hasPermits && (
+          <Alert type="warning">
+            <p>
+              U hebt een vergunning voor vakantieverhuur of bed & breakfast. U
+              moet daarom ook een landelijk registratienummer voor toeristische
+              verhuur aanvragen.{' '}
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+              >
+                {' '}
+                Meer informatie over het landelijk registratienummer
+                toeristische verhuur.
+              </LinkdInline>
+            </p>
+          </Alert>
+        )}
+      </PageContent>
     </OverviewPage>
   );
 }
