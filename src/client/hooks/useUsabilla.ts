@@ -20,14 +20,15 @@ export function waitForUsabillaLiveInWindow() {
     setTimeout(() => {
       window.clearTimeout(polling);
       timeoutReached = true;
-      reject();
+      reject(
+        new Error('VisitorID not added. Could not use usabilla_live in time...')
+      );
     }, MAX_WAIT_FOR_USABILA_LIVE_MS);
   });
 }
 
 export function useUsabilla() {
   const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
-
   useEffect(() => {
     if (isUsabillaLoaded) {
       waitForUsabillaLiveInWindow()
