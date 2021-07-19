@@ -154,6 +154,7 @@
       "dateStart": null,
       "dateEnd": null,
       "location": "Amstel 1 1017AB Amsterdam",
+      "dateWorkflowActive": null,
       "status": "Ontvangen",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",
@@ -170,6 +171,7 @@
       "dateStart": "2020-10-22",
       "dateEnd": "2021-10-21",
       "location": "Amstel 1 1017AB Amsterdam",
+      "dateWorkflowActive": "2021-05-11",
       "status": "In behandeling",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik"
@@ -185,6 +187,7 @@
       "dateStart": "2020-10-22",
       "dateEnd": "2021-10-21",
       "location": "Amstel 1 1017AB Amsterdam",
+      "dateWorkflowActive": "2021-05-13",
       "status": "Afgehandeld",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",

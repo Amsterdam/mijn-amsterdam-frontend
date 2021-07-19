@@ -15,6 +15,7 @@ import StatusLine, {
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { Location } from '../VergunningDetail/Location';
+import { CaseType } from '../../../universal/types/vergunningen';
 
 function useStatusLineItems(
   vergunning?:
@@ -78,6 +79,13 @@ function useStatusLineItems(
       step2.status = 'In behandeling';
       step2.isActive = isInBehandeling;
       step2.isChecked = !step1.isActive;
+
+      if (
+        vergunning.caseType === CaseType.BBVergunning &&
+        vergunning.dateWorkflowActive
+      ) {
+        step2.datePublished = vergunning.dateWorkflowActive;
+      }
     } else {
       // Vakantieverhuurvergunningn are granted (Verleend) immediately.
       step2.datePublished = vergunning.dateDecision || vergunning.dateRequest;
