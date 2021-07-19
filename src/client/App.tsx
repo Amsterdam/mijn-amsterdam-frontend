@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
-import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -69,6 +68,7 @@ import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+import { useUsabilla } from './hooks/useUsabilla';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -254,8 +254,6 @@ export default function App() {
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
 
-  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
-
   useScript(
     '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
@@ -263,15 +261,7 @@ export default function App() {
     IS_AP
   );
 
-  useEffect(() => {
-    if (isUsabillaLoaded) {
-      (window as any).usabilla_live('data', {
-        custom: {
-          MatomoVisitorId: (window as any).Matomo?.getTracker().getVisitorId(),
-        },
-      });
-    }
-  }, [isUsabillaLoaded]);
+  useUsabilla();
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
