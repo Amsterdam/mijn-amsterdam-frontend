@@ -105,7 +105,7 @@ const verlengingLabels: FocusStepContent = {
   description: (document) =>
     `<p>U hebt recht op verlenging van de ${productName(
       document
-    )} uitkering. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const besluitVerlengingLabels: FocusStepContent = {
@@ -115,22 +115,20 @@ const besluitVerlengingLabels: FocusStepContent = {
     description: (document) =>
       `Er is een besluit over het wel of niet verlengen van uw ${productName(
         document
-      )} uitkering.`,
+      )}.`,
   },
   status: stepLabels.besluit,
   description: (document) =>
     `<p>Wij hebben een besluit genomen over een mogelijke verlenging van uw ${productName(
       document
-    )}uitkering. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const weigeringVerlengingLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: verlenging geweigerd`,
     description: (document) =>
-      `U hebt de verlenging van uw ${productName(
-        document
-      )} uitkering geweigerd.`,
+      `U hebt de verlenging van uw ${productName(document)} geweigerd.`,
   },
   status: stepLabels.brief,
   description: (document) =>

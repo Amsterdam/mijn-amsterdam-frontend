@@ -87,10 +87,7 @@ function getDocumentStepNotificationLink(
   document: FocusDocument,
   stepLabels: FocusStepContent
 ): LinkProps | undefined {
-  if (stepLabels.notification?.link) {
-    return stepLabels.notification?.link(document);
-  }
-  return undefined;
+  return stepLabels.notification?.link?.(document);
 }
 
 export function createToxxItemStep(
@@ -198,11 +195,9 @@ export function createToxxItemStepNotifications(
       title:
         step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
       description: step.notificationDescription || '',
-      link: step.notificationLink
-        ? step.notificationLink
-        : {
-            to: item.link.to,
-            title: 'Bekijk hoe het met uw aanvraag staat',
-          },
+      link: step.notificationLink || {
+        to: item.link.to,
+        title: 'Bekijk hoe het met uw aanvraag staat',
+      },
     }));
 }
