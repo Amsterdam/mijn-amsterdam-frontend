@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import StatusDetail from '../StatusDetail/StatusDetail';

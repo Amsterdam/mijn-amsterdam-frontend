@@ -89,6 +89,7 @@ export interface FocusItemStep {
   decision?: DecisionFormatted | null;
   notificationTitle?: string;
   notificationDescription?: string;
+  notificationLink?: LinkProps;
 }
 
 export interface FocusItem extends FocusProduct {
@@ -112,7 +113,7 @@ export type DecisionFormatted =
   | 'buitenbehandeling';
 
 export type TextPartContents = (data: any, customData?: any) => string;
-export type LinkContents = (data: any, customData?: any) => Partial<LinkProps>;
+export type LinkContents = (data: any, customData?: any) => LinkProps;
 
 export interface FocusStepContent {
   description: TextPartContents;

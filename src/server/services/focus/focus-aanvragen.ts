@@ -87,7 +87,6 @@ export async function fetchFOCUSAanvragenGenerated(
 
   if (FOCUS_AANVRAGEN.status === 'OK') {
     const items = FOCUS_AANVRAGEN.content as FocusItem[];
-
     notifications = items
       .filter(
         (item) =>
