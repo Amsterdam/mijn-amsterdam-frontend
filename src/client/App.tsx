@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -45,21 +45,21 @@ import {
   GarbageInformation,
   GeneralInfo,
   Inkomen,
-  InkomenDetailUitkering,
   InkomenDetailTonk,
   InkomenDetailTozo,
+  InkomenDetailUitkering,
   InkomenSpecificaties,
   LandingPage,
   MyNotifications,
   MyTips,
   NotFound,
   Profile,
-  VergunningDetail,
-  Vergunningen,
-  SiaDetail,
   Sia,
+  SiaDetail,
   ToeristischeVerhuur,
   ToeristischeVerhuurDetail,
+  VergunningDetail,
+  Vergunningen,
   Zorg,
   ZorgDetail,
 } from './pages';
@@ -68,6 +68,7 @@ import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+import { useUsabilla } from './hooks/useUsabilla';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -252,13 +253,15 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+
   useScript(
     '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
     true,
     IS_AP
   );
+
+  useUsabilla();
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {

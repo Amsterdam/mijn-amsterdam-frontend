@@ -116,10 +116,11 @@ export default function ToeristischeVerhuur() {
         return false;
     }
   };
-
+  const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
+
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -138,35 +139,36 @@ export default function ToeristischeVerhuur() {
         </p>
 
         <p>
-          {(hasBothPermits || !hasVergunningBB) && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
-            >
-              Meer informatie over particuliere vakantieverhuur
-            </Linkd>
-          )}
-
-          {(hasBothPermits || !hasVergunningenVakantieVerhuur) && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
-            >
-              Meer informatie over bed &amp; breakfast
-            </Linkd>
-          )}
-
-          {hasPermits && !hasBothPermits && (
+          {!hasVergunningBB && (
             <>
-              <br />
               <Linkd
                 external={true}
-                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
               >
-                Meer over toeristenbelasting
+                Meer informatie over particuliere vakantieverhuur
               </Linkd>
+              <br />
             </>
           )}
+
+          {hasVergunningBB && !hasBothPermits && (
+            <>
+              <Linkd
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
+              >
+                Meer informatie over bed &amp; breakfast
+              </Linkd>
+              <br />
+            </>
+          )}
+
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+          >
+            Meer over toeristenbelasting
+          </Linkd>
 
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
@@ -182,7 +184,8 @@ export default function ToeristischeVerhuur() {
                 {daysRemaining === 0 && (
                   <>
                     U mag uw woning dit kalenderjaar niet meer verhuren voor
-                    vakantieverhuur. <br />
+                    vakantieverhuur.
+                    <br />
                     Uw woning is dit kalenderjaar al 30 nachten verhuurd.
                   </>
                 )}
@@ -220,8 +223,43 @@ export default function ToeristischeVerhuur() {
                 >
                   Vakantieverhuur melden
                 </LinkdInline>
+                .
               </p>
             </>
+          )}
+          {hasBothPermits && (
+            <Alert type="warning">
+              <p>
+                U hebt een vergunning voor vakantieverhuur én bed &amp;
+                breakfast. Het is niet toegestaan om op hetzelfde adres zowel
+                aan vakantieverhuur als bed &amp; breakfast te doen. U moet
+                daarom 1 van deze vergunningen opzeggen.
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+                >
+                  Meer informatie over voorwaarden vakantieverhuur
+                </LinkdInline>
+                .
+              </p>
+            </Alert>
+          )}
+          {!hasRegistrations && hasPermits && (
+            <Alert type="warning">
+              <p>
+                U hebt een vergunning voor vakantieverhuur of bed &amp;
+                breakfast. U moet daarom ook een landelijk registratienummer
+                voor toeristische verhuur aanvragen.
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                >
+                  Meer informatie over het landelijk registratienummer
+                  toeristische verhuur
+                </LinkdInline>
+                .
+              </p>
+            </Alert>
           )}
         </div>
       </PageContent>
@@ -306,7 +344,7 @@ export default function ToeristischeVerhuur() {
         )}
       </SectionCollapsible>
 
-      {!!content?.registraties.length && (
+      {hasRegistrations && (
         <PageContent>
           <InfoDetail
             label="Registratienummer toeristische verhuur"

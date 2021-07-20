@@ -123,6 +123,7 @@ export interface BBVergunning extends VergunningBase {
   requester: string | null;
   owner: string | null;
   hasTransitionAgreement: boolean;
+  dateWorkflowActive: string | null;
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven

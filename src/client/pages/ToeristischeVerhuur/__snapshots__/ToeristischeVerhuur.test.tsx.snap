@@ -54,7 +54,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
       <p>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/"
+          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -66,23 +66,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over particuliere vakantieverhuur
-        </a>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            Chevron-Right.svg
-          </svg>
-          Meer informatie over bed & breakfast
+          Meer over toeristenbelasting
         </a>
       </p>
       <div
@@ -111,7 +95,30 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Vakantieverhuur melden
           </a>
+          .
         </p>
+        <div
+          class="Alert warning"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon"
+          >
+            Alert.svg
+          </svg>
+           
+          <p>
+            U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen.
+            <a
+              class="Button Button__inline Button__lean Linkd LinkedInline"
+              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie over voorwaarden vakantieverhuur
+            </a>
+            .
+          </p>
+        </div>
       </div>
     </div>
     <section
