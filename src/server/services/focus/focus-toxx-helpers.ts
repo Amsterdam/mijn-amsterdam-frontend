@@ -5,7 +5,7 @@ import {
   IS_PRODUCTION,
 } from '../../../universal/config';
 import { defaultDateTimeFormat, hash } from '../../../universal/helpers';
-import { MyNotification } from '../../../universal/types/App.types';
+import { MyNotification, LinkProps } from '../../../universal/types/App.types';
 import { isNotificationActual } from './focus-aanvragen-helpers';
 import { FocusDocument } from './focus-combined';
 import { stepLabels } from './focus-aanvragen-content';
@@ -83,6 +83,16 @@ function getDocumentStepNotificationTitle(
   return stepLabels.notification?.title(document);
 }
 
+function getDocumentStepNotificationLink(
+  document: FocusDocument,
+  stepLabels: FocusStepContent
+): LinkProps | undefined {
+  if (stepLabels.notification?.link) {
+    return stepLabels.notification?.link(document);
+  }
+  return undefined;
+}
+
 export function createToxxItemStep(
   document: FocusDocument,
   labelSetCollection: ToxxLabelSetCollection
@@ -119,12 +129,15 @@ export function createToxxItemStep(
     status: labelSet.labels.status,
     isChecked: true,
     isActive: true,
-
     notificationTitle: getDocumentStepNotificationTitle(
       document,
       labelSet.labels
     ),
     notificationDescription: getDocumentStepNotificationDescription(
+      document,
+      labelSet.labels
+    ),
+    notificationLink: getDocumentStepNotificationLink(
       document,
       labelSet.labels
     ),
@@ -150,7 +163,6 @@ export function createToxxItem({
   routeProps,
 }: CreateToxxItemProps) {
   const id = hash(`${title}-${steps[0].datePublished}`);
-
   return {
     id,
     dateStart: steps[0].datePublished,
@@ -186,9 +198,11 @@ export function createToxxItemStepNotifications(
       title:
         step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
       description: step.notificationDescription || '',
-      link: {
-        to: item.link.to,
-        title: 'Bekijk hoe het met uw aanvraag staat',
-      },
+      link: step.notificationLink
+        ? step.notificationLink
+        : {
+            to: item.link.to,
+            title: 'Bekijk hoe het met uw aanvraag staat',
+          },
     }));
 }

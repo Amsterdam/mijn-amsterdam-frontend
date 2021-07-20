@@ -4,6 +4,7 @@ import {
 } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
+import { documentDownloadName } from './focus-specificaties';
 import { productName } from './focus-tozo-content';
 import { FocusStepContent, FocusTonkLabelSet } from './focus-types';
 
@@ -96,15 +97,62 @@ const buitenBehandelingLabels: FocusStepContent = {
 
 const verlengingLabels: FocusStepContent = {
   notification: {
-    title: (document) =>
-      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
-    description: (document) => `Bekijk de brief voor meer details.`,
+    title: (document) => `${document.productTitle}: Uw uitkering is verlengd`,
+    description: (document) =>
+      `Uw ${productName(document)} uitkering is verlengd.`,
   },
   status: stepLabels.besluit,
   description: (document) =>
-    `<p>Wij behandelen uw aanvraag voor ${productName(
+    `<p>U hebt recht op verlenging van de ${productName(
       document
-    )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    )} uitkering. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
+const besluitVerlengingLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: Er is een besluit over het wel of niet verlengen`,
+    description: (document) =>
+      `Er is een besluit over het wel of niet verlengen van uw ${productName(
+        document
+      )} uitkering.`,
+  },
+  status: stepLabels.besluit,
+  description: (document) =>
+    `<p>Wij hebben een besluit genomen over een mogelijke verlenging van uw ${productName(
+      document
+    )}uitkering. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
+const weigeringVerlengingLabels: FocusStepContent = {
+  notification: {
+    title: (document) => `${document.productTitle}: verlenging geweigerd`,
+    description: (document) =>
+      `U hebt de verlenging van uw ${productName(
+        document
+      )} uitkering geweigerd.`,
+  },
+  status: stepLabels.brief,
+  description: (document) =>
+    `<p> U hebt uw ${productName(
+      document
+    )} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
+const correctieMailLabels: FocusStepContent = {
+  notification: {
+    title: () => `Mail over verkeerde TONK-brief ontvangen`,
+    description: (document) =>
+      `U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen.`,
+    link: (document) => ({
+      to: document.url,
+      title: 'Bekijk de mail',
+      download: documentDownloadName(document),
+    }),
+  },
+  status: stepLabels.brief,
+  description: () =>
+    `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 export const tonkDocumentLabelSet: Record<
@@ -175,12 +223,36 @@ export const tonkDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'besluit',
   },
-  '1761860': {
+  '176180': {
     omschrijving: 'TONK Ambtshalve verlenging via batch',
     labels: verlengingLabels,
     documentTitle: 'Besluit verlenging',
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+  },
+  '176182': {
+    omschrijving: 'TONK Besluit over verlenging',
+    labels: besluitVerlengingLabels,
+    documentTitle: 'Besluit over verlenging',
+    product: 'TONK',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '1726182': {
+    omschrijving: 'TONK Bevestigen weigering verlenging',
+    labels: weigeringVerlengingLabels,
+    documentTitle: 'Brief bevestiging weigering',
+    product: 'TONK',
+    productSpecific: 'uitkering',
+    stepType: 'intrekken',
+  },
+  '17843': {
+    omschrijving: 'Correctiemail Tonk',
+    labels: correctieMailLabels,
+    documentTitle: 'Mail verkeerde TONK-brief',
+    product: 'TONK',
+    productSpecific: 'uitkering',
+    stepType: 'intrekken',
   },
 };
