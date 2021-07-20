@@ -330,6 +330,13 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;
+      case item.status === 'In behandeling':
+        title = `Aanvraag ${vergunningTitleLower} in behandeling`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling genomen.`;
+        cta = 'Bekijk uw aanvraag';
+        linkTo = ctaLinkToDetail;
+        datePublished = item.dateRequest;
+        break;
       // B&B + Vakantieverhuurvergunning
       case item.status === 'Afgehandeld':
         const decision = item.decision?.toLowerCase() || 'afgehandeld';
