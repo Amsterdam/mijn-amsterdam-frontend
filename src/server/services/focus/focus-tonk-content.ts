@@ -245,7 +245,7 @@ export const tonkDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'intrekken',
   },
-  '17843': {
+  '843': {
     omschrijving: 'Correctiemail Tonk',
     labels: correctieMailLabels,
     documentTitle: 'Mail verkeerde TONK-brief',
