@@ -276,7 +276,7 @@ Object {
           "isChecked": true,
           "notificationDescription": "U hebt de verlenging van uw de TONK uitkering geweigerd.",
           "notificationLink": undefined,
-          "notificationTitle": "TONK: verlenging geweigerd",
+          "notificationTitle": "TONK: Verlenging geweigerd",
           "product": "TONK",
           "status": "Brief",
           "title": "intrekken",
