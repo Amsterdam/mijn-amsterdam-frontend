@@ -126,7 +126,7 @@ const besluitVerlengingLabels: FocusStepContent = {
 
 const weigeringVerlengingLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: verlenging geweigerd`,
+    title: (document) => `${document.productTitle}: Verlenging geweigerd`,
     description: (document) =>
       `U hebt de verlenging van uw ${productName(document)} geweigerd.`,
   },
