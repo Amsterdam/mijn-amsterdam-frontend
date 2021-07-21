@@ -60,7 +60,6 @@ export type SourceApiKey =
   | 'FOCUS_AANVRAGEN'
   | 'BELASTINGEN'
   | 'MILIEUZONE'
-  | 'SIA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
@@ -97,10 +96,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   MILIEUZONE: {
     url: `${BFF_MS_API_BASE_URL}/milieu/get`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
-  },
-  SIA: {
-    url: `${BFF_MS_API_BASE_URL}/sia/get`,
-    postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
