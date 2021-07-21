@@ -28,7 +28,9 @@ export default function VergunningDetail() {
   const { id } = useParams<{ id: string }>();
   const Vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
-
+  const showDocuments =
+    Vergunning?.caseType !== CaseType.GPP &&
+    Vergunning?.caseType !== CaseType.GPK;
   return (
     <DetailPage>
       <PageHeading
@@ -77,7 +79,7 @@ export default function VergunningDetail() {
             {Vergunning.caseType === CaseType.BZB && (
               <BZB vergunning={Vergunning} />
             )}
-            <DocumentDetails vergunning={Vergunning} />
+            {showDocuments && <DocumentDetails vergunning={Vergunning} />}
           </>
         )}
       </PageContent>
