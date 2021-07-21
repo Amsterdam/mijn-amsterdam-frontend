@@ -59,7 +59,7 @@ export interface TVMRVVObject extends VergunningBase {
 export interface GPK extends VergunningBase {
   caseType: CaseType.GPK;
   cardtype: 'driver' | 'passenger';
-  cardNumber: string | null;
+  cardNumber: number | null;
   dateEnd: string | null;
   location: string | null;
   requestReason: string | null;
