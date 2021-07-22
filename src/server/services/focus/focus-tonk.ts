@@ -28,24 +28,23 @@ export function createTonkResult(
   tonkdocumenten: FocusCombinedSourceResponse['tozodocumenten']
 ) {
   const documents: FocusDocument[] = Array.isArray(tonkdocumenten)
-    ? tonkdocumenten
-        .map((document) => {
-          return {
-            ...document,
-            productTitle: getProductTitleForDocument(
-              document,
-              tonkDocumentLabelSet
-            ),
-          };
-        })
-        .sort(dateSort('datePublished'))
+    ? tonkdocumenten.map((document) => {
+        return {
+          ...document,
+          productTitle: getProductTitleForDocument(
+            document,
+            tonkDocumentLabelSet
+          ),
+        };
+      })
     : [];
 
   const tonkSteps: FocusItemStep[] = documents
     .map((document) => createToxxItemStep(document, tonkDocumentLabelSet))
     .filter(
       (step: FocusItemStep | null): step is FocusItemStep => step !== null
-    );
+    )
+    .sort(dateSort('datePublished'));
 
   if (!tonkSteps.length) {
     return apiSuccesResult([]);
