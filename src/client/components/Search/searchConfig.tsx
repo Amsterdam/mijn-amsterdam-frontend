@@ -20,6 +20,8 @@ import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { AppState } from '../../AppState';
 import { IconChevronRight, IconExternalLink } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur';
+import { CaseType } from '../../../universal/types/vergunningen';
 
 export interface PageEntry {
   url: string;
@@ -133,12 +135,12 @@ export const apiSearchConfigs: Array<
       }
     },
     title: (vergunning: ApiBaseItem) => {
-      return `Vergunning ${vergunning.caseType}`;
+      return `Aanvraag vergunning ${vergunning.caseType}`;
     },
     displayTitle: (vergunning: ApiBaseItem) => {
       return displayPath([
         'Vergunning',
-        vergunning.caseType,
+        `Aanvraag ${vergunning.caseType}`,
         vergunning.identifier,
       ]);
     },
@@ -152,12 +154,25 @@ export const apiSearchConfigs: Array<
           return props;
       }
     },
-    displayTitle: (vergunning: ApiBaseItem) => {
-      return displayPath([
-        'Toeristische verhuur',
-        vergunning.title,
-        vergunning.identifier,
-      ]);
+    keywords: () => [
+      'bed',
+      'breakfast',
+      'bed and breakfast',
+      'airbnb',
+      'verhuur',
+    ],
+    displayTitle: (vergunning: ToeristischeVerhuurVergunning) => {
+      const theme = 'Toeristische verhuur';
+      let title: string = vergunning.title;
+      if (
+        [
+          CaseType.VakantieverhuurVergunningaanvraag,
+          CaseType.BBVergunning,
+        ].includes(vergunning.caseType)
+      ) {
+        title = `Aanvraag ${title.toLowerCase()}`;
+      }
+      return displayPath([theme, title, vergunning.identifier]);
     },
   },
   {
