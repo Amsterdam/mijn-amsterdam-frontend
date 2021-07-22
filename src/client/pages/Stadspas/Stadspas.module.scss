@@ -20,6 +20,9 @@
     @include select(Table_DisplayPropTitle) {
       &:nth-child(1) {
         width: 50%;
+        @include mq-tablet() {
+          width: 100%;
+        }
       }
     }
   }
