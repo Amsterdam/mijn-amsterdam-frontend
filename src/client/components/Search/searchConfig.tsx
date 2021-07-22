@@ -1,18 +1,119 @@
+import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import { LinkProps } from '../../../universal/types';
+import { IconChevronRight } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
 
 export interface PageEntry {
   url: string;
   title: string;
+  displayTitle?: ReactNode;
   description: string;
   keywords?: string[];
 }
+
+export interface ApiSearchConfig {
+  apiName: string;
+  keywordSourceProps:
+    | string[]
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+  description:
+    | ReactNode
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+  title: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+  displayTitle:
+    | ReactNode
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+  url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+}
+
+export interface ApiBaseItem {
+  title: string;
+  link: LinkProps;
+  [key: string]: any;
+}
+
+export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
+  apiName: '',
+  keywordSourceProps: (item: ApiBaseItem): string[] => ['title'],
+  title: (item: ApiBaseItem) => item.link.title,
+  displayTitle: (item: ApiBaseItem) => displayPath([item.link.title]),
+  url: (item: ApiBaseItem) => item.link.to,
+  description: (item: ApiBaseItem) => {
+    return `Bekijk ${item.title}`;
+  },
+};
+
+export function displayPath(segments: string[]) {
+  return (
+    <span>
+      {segments.map((segment) => (
+        <>
+          <IconChevronRight width="14" height="14" />
+          {segment}
+        </>
+      ))}
+    </span>
+  );
+}
+
+export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
+  {
+    apiName: 'VERGUNNINGEN',
+    keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
+      const props = ['caseType', 'title', 'status', 'decision'];
+      switch (vergunning.caseType) {
+        case 'Evenement melding':
+          return props.concat(['eventType', 'activities', 'location']);
+        default:
+          return props;
+      }
+    },
+    displayTitle: (vergunning: ApiBaseItem) => {
+      return displayPath([
+        'Vergunning',
+        vergunning.caseType,
+        vergunning.identifier,
+      ]);
+    },
+  },
+  {
+    apiName: 'TOERISTISCHE_VERHUUR',
+    keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
+      const props = ['caseType', 'title', 'status', 'decision'];
+      switch (vergunning.caseType) {
+        default:
+          return props;
+      }
+    },
+    displayTitle: (vergunning: ApiBaseItem) => {
+      return displayPath([
+        'Toeristische verhuur',
+        vergunning.title,
+        vergunning.identifier,
+      ]);
+    },
+  },
+  {
+    apiName: 'FOCUS_TOZO',
+    keywordSourceProps: (tozo: ApiBaseItem): string[] => [
+      'title',
+      'status',
+      'decision',
+      'productTitle',
+    ],
+    displayTitle: (tozo: ApiBaseItem) => {
+      return displayPath(['Inkomen', tozo.productTitle]);
+    },
+  },
+];
 
 export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.ROOT,
     title: DocumentTitles[AppRoutes.ROOT],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.ROOT]]),
     description:
       'Dashboard pagina met overzicht van wat u hebt op Mijn Amsterdam.',
     keywords: [
@@ -31,8 +132,16 @@ export const staticIndex: PageEntry[] = [
     ],
   },
   {
+    url: AppRoutes.GENERAL_INFO,
+    title: DocumentTitles[AppRoutes.GENERAL_INFO],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.GENERAL_INFO]]),
+    description: 'Op dit moment staat deze informatie in Mijn Amsterdam',
+    keywords: ['Uitleg', 'About', 'Over', 'Inhoud'],
+  },
+  {
     url: AppRoutes.BURGERZAKEN,
     title: DocumentTitles[AppRoutes.BURGERZAKEN],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.BURGERZAKEN]]),
     description: `Informatie over uw officiële documenten, zoals uw
           paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan
           ziet u hier de aankondiging.`,
@@ -59,6 +168,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.ZORG,
     title: DocumentTitles[AppRoutes.ZORG],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.ZORG]]),
     description: `Uw regelingen en hulpmiddelen vanuit de Wmo.`,
     keywords: [
       'Zorg',
@@ -82,6 +192,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.STADSPAS,
     title: DocumentTitles[AppRoutes.STADSPAS],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.STADSPAS]]),
     description: `Informatie over uw eigen Stadspas.`,
     keywords: [
       'Stadspas',
@@ -105,6 +216,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.INKOMEN,
     title: DocumentTitles[AppRoutes.INKOMEN],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.INKOMEN]]),
     description: `Informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.`,
     keywords: [
@@ -124,12 +236,14 @@ export const staticIndex: PageEntry[] = [
   {
     url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
     title: DocumentTitles[AppRoutes.NOTIFICATIONS],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.NOTIFICATIONS]]),
     description: `Alle belangrijke meldingen`,
     keywords: ['Nieuws', 'Updates', 'Status', 'Betalen', 'Overzicht'],
   },
   {
     url: AppRoutes.BRP,
     title: DocumentTitles[AppRoutes.BRP],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.BRP]]),
     description: `In de Basisregistratie Personen legt de gemeente persoonsgegevens over
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat.`,
@@ -157,6 +271,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.KVK,
     title: DocumentTitles[AppRoutes.KVK],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.KVK]]),
     description: `Hier ziet u hoe uw onderneming ingeschreven staat in het
           Handelsregister van de Kamer van Koophandel. In dat register staan
           onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.`,
@@ -180,12 +295,14 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.BUURT,
     title: DocumentTitles[AppRoutes.BUURT],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.BUURT]]),
     description: `Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.`,
     keywords: ['buurt', 'straat', 'adres', 'kaart', 'map', 'Omgeving'],
   },
   {
     url: AppRoutes.TIPS,
     title: DocumentTitles[AppRoutes.TIPS],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.TIPS]]),
     description: `Tips over voorzieningen en activiteiten in Amsterdam.`,
     keywords: [
       'Tips',
@@ -197,6 +314,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.AFVAL,
     title: DocumentTitles[AppRoutes.AFVAL],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.AFVAL]]),
     description: ` Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.`,
     keywords: [
       'Containers',
@@ -217,6 +335,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.ACCESSIBILITY,
     title: DocumentTitles[AppRoutes.ACCESSIBILITY],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.ACCESSIBILITY]]),
     description: `Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.`,
     keywords: [
       'A11Y',
@@ -232,12 +351,14 @@ export const staticIndex: PageEntry[] = [
   {
     url: AppRoutes.VERGUNNINGEN,
     title: DocumentTitles[AppRoutes.VERGUNNINGEN],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.VERGUNNINGEN]]),
     description: `Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.`,
     keywords: ['Vergunningen', 'Aanvragen', 'Vergunning'],
   },
   {
     url: AppRoutes.TOERISTISCHE_VERHUUR,
     title: DocumentTitles[AppRoutes.TOERISTISCHE_VERHUUR],
+    displayTitle: displayPath([DocumentTitles[AppRoutes.TOERISTISCHE_VERHUUR]]),
     description: `Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.`,
     keywords: [
       'Airbnb',
@@ -259,6 +380,7 @@ export const staticIndex: PageEntry[] = [
   {
     url: ExternalUrls.SSO_BELASTINGEN,
     title: 'Belastingen',
+    displayTitle: displayPath(['Belastingen']),
     description: `Een overzicht van de belastingen.`,
     keywords: [
       'Incasso',
@@ -272,12 +394,14 @@ export const staticIndex: PageEntry[] = [
   {
     url: ExternalUrls.SSO_ERFPACHT + '',
     title: 'Erfpacht',
+    displayTitle: displayPath(['Erfpacht']),
     description: `Een overzicht van de erfpacht.`,
     keywords: ['Erfpacht', 'Canon', 'Afkopen', 'Betalen'],
   },
   {
     url: ExternalUrls.SSO_MILIEUZONE + '',
     title: 'Milieuzone',
+    displayTitle: displayPath(['Milieuzone']),
     description: `Een overzicht van milieuzone.`,
     keywords: ['Milieuzone', 'Ontheffing'],
   },

@@ -11,7 +11,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import styles from './Search.module.scss';
 import Heading from '../Heading/Heading';
-import { PageEntry } from './staticIndex';
+import { PageEntry } from './searchConfig';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -52,8 +52,8 @@ function ResultSet({
                 index === selectedIndex && styles['ResultListItem--selected']
               )}
             >
-              <Linkd onClick={onClickResult} href={result.url}>
-                {result.title}
+              <Linkd icon={null} onClick={onClickResult} href={result.url}>
+                {result.displayTitle || result.title}
               </Linkd>
               {/* <p>{result.item.description}</p> */}
             </li>
@@ -75,19 +75,45 @@ export function Search({ onClose }: SearchProps) {
   const [resultsAmsterdamNLLoading, setResultsAmsterdamNLLoading] =
     useState(false);
   const [term, setTerm] = useState('');
-  const { VERGUNNINGEN } = useAppStateGetter();
+  const { VERGUNNINGEN, FOCUS_TOZO, TOERISTISCHE_VERHUUR } =
+    useAppStateGetter();
 
   useEffect(() => {
-    if (VERGUNNINGEN.content?.length) {
+    if (
+      !fuse.apiNames.includes('VERGUNNINGEN') &&
+      VERGUNNINGEN.content?.length
+    ) {
       for (const entry of generateSearchIndexPageEntries(
         'VERGUNNINGEN',
         VERGUNNINGEN.content
       )) {
-        fuse.current.add(entry);
+        fuse.index.add(entry);
       }
+      fuse.apiNames.push('VERGUNNINGEN');
+    }
+    if (!fuse.apiNames.includes('FOCUS_TOZO') && FOCUS_TOZO.content?.length) {
+      for (const entry of generateSearchIndexPageEntries(
+        'FOCUS_TOZO',
+        FOCUS_TOZO.content
+      )) {
+        fuse.index.add(entry);
+      }
+      fuse.apiNames.push('FOCUS_TOZO');
+    }
+    if (
+      !fuse.apiNames.includes('TOERISTISCHE_VERHUUR') &&
+      TOERISTISCHE_VERHUUR.content?.vergunningen?.length
+    ) {
+      for (const entry of generateSearchIndexPageEntries(
+        'TOERISTISCHE_VERHUUR',
+        TOERISTISCHE_VERHUUR.content.vergunningen
+      )) {
+        fuse.index.add(entry);
+      }
+      fuse.apiNames.push('TOERISTISCHE_VERHUUR');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [VERGUNNINGEN.content]);
+  }, [VERGUNNINGEN.content, FOCUS_TOZO.content]);
 
   const history = useHistory();
 
@@ -106,7 +132,7 @@ export function Search({ onClose }: SearchProps) {
     (term: string) => {
       setResultsAmsterdamNLLoading(true);
 
-      const fuseResults = fuse.current
+      const fuseResults = fuse.index
         .search(term)
         .slice(0, 5)
         .map((result) => result.item);

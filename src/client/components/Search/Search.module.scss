@@ -48,6 +48,19 @@
 }
 .ResultListItem {
   margin: 0;
+  svg {
+    position: relative;
+    transform: translateY(1px);
+    margin: 0 2px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+  a:hover {
+    svg {
+      fill: $color-primary-red;
+    }
+  }
 }
 .ResultListItem a {
   display: block;
