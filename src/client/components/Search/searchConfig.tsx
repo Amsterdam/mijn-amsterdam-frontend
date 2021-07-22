@@ -160,6 +160,15 @@ export const apiSearchConfigs: Array<
       ]);
     },
   },
+  {
+    apiName: 'WMO',
+    keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
+      return ['supplier', 'title', 'voorzieningsoortcode'];
+    },
+    displayTitle: (vergunning: ApiBaseItem) => {
+      return displayPath(['Zorg & ondersteuning', vergunning.title]);
+    },
+  },
   // {
   //   apiName: 'NOTIFICATIONS',
   //   keywordSourceProps: (notification: ApiBaseItem) => {
