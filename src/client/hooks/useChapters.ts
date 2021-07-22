@@ -52,7 +52,7 @@ function isChapterActive(
       const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
       const hasStadspasAanvragen = !!FOCUS_AANVRAGEN?.content?.filter(
         (aanvraag) => aanvraag.productTitle === 'Stadspas'
-      );
+      )?.length;
       const isLoadingStadspas =
         isLoading(FOCUS_STADSPAS) || isLoading(FOCUS_AANVRAGEN);
       return !isLoadingStadspas && (hasStadspasSaldo || hasStadspasAanvragen);
