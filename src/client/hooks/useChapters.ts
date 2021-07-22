@@ -49,8 +49,12 @@ function isChapterActive(
 
     case Chapters.STADSPAS:
       const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
-      const isLoadingStadspasSaldo = isLoading(FOCUS_STADSPAS);
-      return !isLoadingStadspasSaldo && hasStadspasSaldo;
+      const hasStadspasAanvragen = !!FOCUS_AANVRAGEN?.content?.filter(
+        (aanvraag) => aanvraag.productTitle === 'Stadspas'
+      );
+      const isLoadingStadspas =
+        isLoading(FOCUS_STADSPAS) || isLoading(FOCUS_AANVRAGEN);
+      return !isLoadingStadspas && (hasStadspasSaldo || hasStadspasAanvragen);
 
     case Chapters.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;

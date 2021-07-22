@@ -63,7 +63,6 @@ export default function Inkomen() {
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
-
   const items: FocusItem[] = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
@@ -85,7 +84,6 @@ export default function Inkomen() {
 
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');
   const itemsDecided = items.filter((item) => item.status === 'Besluit');
-
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
 

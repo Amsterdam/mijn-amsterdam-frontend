@@ -152,6 +152,7 @@ export type FocusTonkStepType =
   | 'herstelTermijn'
   | 'besluit'
   | 'intrekken'
+  | 'correctiemail'
   | 'verklaring';
 
 export type FocusTonkLabelSet = {

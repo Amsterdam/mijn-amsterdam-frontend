@@ -1,3 +1,4 @@
+import { API_BASE_PATH } from '../../../universal/config/api';
 import {
   defaultDateTimeFormat,
   defaultDateFormat,
@@ -99,11 +100,11 @@ const verlengingLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Uw uitkering is verlengd`,
     description: (document) =>
-      `Uw ${productName(document)} uitkering is verlengd.`,
+      `Uw ${productName(document, false)} is verlengd.`,
   },
   status: stepLabels.besluit,
   description: (document) =>
-    `<p>U hebt recht op verlenging van de ${productName(
+    `<p>U hebt recht op verlenging van ${productName(
       document
     )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -114,13 +115,15 @@ const besluitVerlengingLabels: FocusStepContent = {
       `${document.productTitle}: Er is een besluit over het wel of niet verlengen`,
     description: (document) =>
       `Er is een besluit over het wel of niet verlengen van uw ${productName(
-        document
+        document,
+        false
       )}.`,
   },
   status: stepLabels.besluit,
   description: (document) =>
     `<p>Wij hebben een besluit genomen over een mogelijke verlenging van uw ${productName(
-      document
+      document,
+      false
     )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
@@ -128,12 +131,13 @@ const weigeringVerlengingLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Verlenging geweigerd`,
     description: (document) =>
-      `U hebt de verlenging van uw ${productName(document)} geweigerd.`,
+      `U hebt de verlenging van uw ${productName(document, false)} geweigerd.`,
   },
   status: stepLabels.brief,
   description: (document) =>
     `<p> U hebt uw ${productName(
-      document
+      document,
+      false
     )} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
@@ -143,14 +147,20 @@ const correctieMailLabels: FocusStepContent = {
     description: (document) =>
       `U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen.`,
     link: (document) => ({
-      to: document.url,
+      to: `${API_BASE_PATH}/${document.url}`,
       title: 'Bekijk de mail',
-      download: documentDownloadName(document),
+      download: documentDownloadName({
+        ...document,
+        url: `${API_BASE_PATH}/${document.url}`,
+        type: 'pdf',
+        title: 'TONK-brief',
+        displayDatePublished: '2021-07-15T00:00:00+01:00',
+      }),
     }),
   },
   status: stepLabels.brief,
   description: () =>
-    `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 export const tonkDocumentLabelSet: Record<
@@ -243,7 +253,7 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Brief bevestiging weigering',
     product: 'TONK',
     productSpecific: 'uitkering',
-    stepType: 'intrekken',
+    stepType: 'besluit',
   },
   '843': {
     omschrijving: 'Correctiemail Tonk',
@@ -251,6 +261,6 @@ export const tonkDocumentLabelSet: Record<
     documentTitle: 'Mail verkeerde TONK-brief',
     product: 'TONK',
     productSpecific: 'uitkering',
-    stepType: 'intrekken',
+    stepType: 'correctiemail',
   },
 };

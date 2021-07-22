@@ -115,14 +115,17 @@ export function createToxxItemStep(
   );
 
   document.productSpecific = labelSet.productSpecific;
-
+  const datePublished =
+    labelSet.stepType === 'correctiemail'
+      ? '2021-07-15T00:00:00+01:00'
+      : document.datePublished;
   const step: FocusItemStep = {
     id,
     documents: [attachedDocument],
     product: document.productTitle,
     title: labelSet.stepType,
     description: getDocumentStepDescription(document, labelSet.labels),
-    datePublished: document.datePublished,
+    datePublished,
     status: labelSet.labels.status,
     isChecked: true,
     isActive: true,
@@ -160,14 +163,16 @@ export function createToxxItem({
   routeProps,
 }: CreateToxxItemProps) {
   const id = hash(`${title}-${steps[0].datePublished}`);
+  const step = steps[steps.length - 1];
+  const datePublished = step.datePublished;
   return {
     id,
     dateStart: steps[0].datePublished,
-    datePublished: steps[steps.length - 1].datePublished, // Use the date from latest step
+    datePublished, // Use the date from latest step
     title,
     status: steps.some((step) => step.status === stepLabels.besluit)
       ? stepLabels.besluit
-      : steps[steps.length - 1].status,
+      : step.status,
     productTitle,
     type: 'Tozo',
     chapter: Chapters.INKOMEN,
