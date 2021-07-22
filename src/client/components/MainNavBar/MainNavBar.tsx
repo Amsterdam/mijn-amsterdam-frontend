@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { matchPath, NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
@@ -226,6 +226,9 @@ export default function MainNavBar({
   }, [myChapterItems, profileType, termReplace]);
 
   const [isSearchActive, setSearchActive] = useState(false);
+  const isDisplaySearch = !matchPath(location.pathname, {
+    path: AppRoutes.SEARCH,
+  });
 
   useKeyUp((event) => {
     if (event.key === 'z' && !isSearchActive) {
@@ -277,10 +280,12 @@ export default function MainNavBar({
           isTutorialVisible && styles.InfoButtonsOpen
         )}
       >
-        <IconButton
-          onClick={() => setSearchActive(!isSearchActive)}
-          icon={isSearchActive ? IconClose : IconSearch}
-        />
+        {isDisplaySearch && (
+          <IconButton
+            onClick={() => setSearchActive(!isSearchActive)}
+            icon={isSearchActive ? IconClose : IconSearch}
+          />
+        )}
         {location.pathname === AppRoutes.ROOT && (
           <>
             <Button
@@ -314,7 +319,15 @@ export default function MainNavBar({
           aria-label="Dit ziet u in Mijn Amsterdam"
         />
       </div>
-      {isSearchActive && <Search onClose={() => setSearchActive(false)} />}
+      {isDisplaySearch && isSearchActive && (
+        <div className={styles.Search}>
+          <div className={styles.SearchBar}>
+            <div className={styles.SearchBarInner}>
+              <Search onEscape={() => setSearchActive(false)} />
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

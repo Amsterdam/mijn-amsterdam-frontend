@@ -67,6 +67,7 @@ import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { useUsabilla } from './hooks/useUsabilla';
+import Search from './pages/Search/Search';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -207,6 +208,7 @@ function AppAuthenticated() {
               component={ToeristischeVerhuur}
             />
           )}
+          <Route path={AppRoutes.SEARCH} component={Search} />
           <Route component={NotFound} />
         </Switch>
       </div>
