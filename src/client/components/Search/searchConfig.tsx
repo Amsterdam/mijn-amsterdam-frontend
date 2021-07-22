@@ -166,8 +166,10 @@ export const apiSearchConfigs: Array<
       return ['supplier', 'title', 'voorzieningsoortcode'];
     },
     displayTitle: (vergunning: ApiBaseItem) => {
-      return displayPath(['Zorg & ondersteuning', vergunning.title]);
+      return displayPath(['Zorg en ondersteuning', vergunning.title]);
     },
+    keywords: (tozo: ApiBaseItem): string[] =>
+      uniqueArray(tozo.steps.flatMap((step: any) => [step.title, step.status])),
   },
   // {
   //   apiName: 'NOTIFICATIONS',
