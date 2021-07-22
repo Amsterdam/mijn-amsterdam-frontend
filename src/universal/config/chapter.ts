@@ -70,7 +70,7 @@ export const DocumentTitles = {
     'BURGERZAKEN/ID-KAART'
   ]]: `ID-Kaart | ${ChapterTitles.BURGERZAKEN}`,
   [AppRoutes['BURGERZAKEN/AKTE']]: `Akte | ${ChapterTitles.BURGERZAKEN}`,
-  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
+  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
   [AppRoutes[
@@ -87,7 +87,7 @@ export const DocumentTitles = {
   [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.BRP]: `Mijn gegevens`,
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
-  [AppRoutes.GENERAL_INFO]: `Uitleg`,
+  [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'

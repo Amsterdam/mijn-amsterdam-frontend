@@ -244,9 +244,7 @@ export async function fetchVergunningen(
                 id: vergunning.id,
               })
             : '/',
-          title: `Vergunning > ${vergunning.caseType} > ${
-            vergunning.identifier
-          } [${vergunning.decision || vergunning.status}]`,
+          title: `Bekijk hoe het met uw aanvraag staat`,
         },
       };
     });
