@@ -223,7 +223,7 @@ function AppLanding() {
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
+    return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
   }
 
   const dialogTimeoutSettings = {
