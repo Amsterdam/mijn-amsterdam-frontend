@@ -68,7 +68,6 @@ import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetai
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { useUsabilla } from './hooks/useUsabilla';
 import Search from './pages/Search/Search';
-import { useUsabilla } from './hooks/useUsabilla';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
