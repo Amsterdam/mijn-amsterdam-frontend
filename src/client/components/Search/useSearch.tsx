@@ -1,15 +1,14 @@
 import axios, { CancelTokenSource } from 'axios';
 import Fuse from 'fuse.js';
-import { useRef } from 'react';
-import { atom, useRecoilValue } from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import { pick } from '../../../universal/helpers';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
-import { displayPath } from './searchConfig';
 import {
   ApiBaseItem,
   ApiSearchConfig,
   apiSearchConfigs,
   API_SEARCH_CONFIG_DEFAULT,
+  displayPath,
   PageEntry,
   staticIndex,
 } from './searchConfig';
@@ -109,7 +108,7 @@ function transformSearchAmsterdamNLresponse(responseData: any) {
 
 export function searchAmsterdamNL(
   keywords: string,
-  resultCountPerPage: number = 5
+  resultCountPerPage: number = 25
 ) {
   if (activeSource) {
     activeSource.cancel('Search renewed');
@@ -147,4 +146,18 @@ export const searchConfigAtom = atom<{
 
 export function useSearch() {
   return useRecoilValue(searchConfigAtom);
+}
+
+export interface SearchResults {
+  ma: PageEntry[];
+  am: PageEntry[];
+}
+
+export const searchResultsAtom = atom<SearchResults>({
+  key: 'searchResults',
+  default: { ma: [], am: [] },
+});
+
+export function useSearchResults() {
+  return useRecoilState(searchResultsAtom);
 }

@@ -1,25 +1,9 @@
 @import '../../styles/_global.scss';
 
-.Search {
-  z-index: z-index(main-nav-bar-inner--tablet);
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.SearchBar {
-  padding: 2.6rem;
-  background-color: $color-neutral-grey1;
-}
-
-.SearchBarInner {
-  max-width: 60rem;
-  margin: 0 auto;
-}
-
 .SearchBarInput {
   z-index: 2;
   position: relative;
+  max-width: 60rem;
 }
 
 .Results {

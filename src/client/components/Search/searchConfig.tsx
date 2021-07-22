@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
@@ -49,10 +50,10 @@ export function displayPath(segments: string[]) {
   return (
     <span>
       {segments.map((segment) => (
-        <>
+        <React.Fragment key={segment}>
           <IconChevronRight width="14" height="14" />
           {segment}
-        </>
+        </React.Fragment>
       ))}
     </span>
   );
@@ -62,7 +63,7 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
-      const props = ['caseType', 'title', 'status', 'decision'];
+      const props = ['caseType', 'title', 'status', 'decision', 'identifier'];
       switch (vergunning.caseType) {
         case 'Evenement melding':
           return props.concat(['eventType', 'activities', 'location']);
@@ -81,7 +82,7 @@ export const apiSearchConfigs: Array<Partial<ApiSearchConfig>> = [
   {
     apiName: 'TOERISTISCHE_VERHUUR',
     keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
-      const props = ['caseType', 'title', 'status', 'decision'];
+      const props = ['caseType', 'title', 'status', 'decision', 'identifier'];
       switch (vergunning.caseType) {
         default:
           return props;
