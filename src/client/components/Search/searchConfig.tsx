@@ -140,7 +140,7 @@ export const apiSearchConfigs: Array<
     displayTitle: (vergunning: ApiBaseItem) => {
       return displayPath([
         'Vergunning',
-        `Aanvraag ${vergunning.caseType}`,
+        `Aanvraag ${vergunning.title.toLowerCase()}`,
         vergunning.identifier,
       ]);
     },
