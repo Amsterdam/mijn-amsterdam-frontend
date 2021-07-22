@@ -238,7 +238,7 @@ export const apiSearchConfigs: Array<
       return displayPath([
         isStadspas ? 'Stadspas' : 'Inkomen',
         `Aanvraag${
-          isStadspas ? '' : aanvraag.productTitle?.toLowerCase() + ' '
+          isStadspas ? '' : ' ' + aanvraag.productTitle?.toLowerCase()
         } (${defaultDateFormat(aanvraag.dateStart)})`,
       ]);
     },
