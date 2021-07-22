@@ -38,11 +38,11 @@ export default function Search() {
   const history = useHistory();
 
   useEffect(() => {
-    if (termParam && termParam !== term) {
+    if (termParam) {
       setTerm(termParam);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [termParam]);
 
   useOnceCall(() => {
     setResults(liveResults);
@@ -96,7 +96,9 @@ export default function Search() {
                     (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
                   }
                 >
-                  Bekijk alle resultaten van Amsterdam.nl
+                  {!results?.am?.contents.length
+                    ? 'Zoek verder op Amsterdam.nl'
+                    : 'Bekijk alle resultaten van Amsterdam.nl'}
                 </Button>
               </p>
             </div>
