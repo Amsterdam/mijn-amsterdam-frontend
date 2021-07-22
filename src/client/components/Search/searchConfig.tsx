@@ -172,7 +172,7 @@ export const apiSearchConfigs: Array<
   {
     apiName: 'FOCUS_STADSPAS',
     getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
-      const stadspassen = apiContent.stadspassen.map((stadspas) => {
+      const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
         return {
           ...stadspas,
           title: `Stadspas ${stadspas.pasnummer}`,
@@ -182,7 +182,7 @@ export const apiSearchConfigs: Array<
           },
         };
       });
-      return stadspassen;
+      return stadspassen || [];
     },
     displayTitle: (stadspas: FocusStadspas) => {
       return displayPath([
@@ -235,7 +235,7 @@ export const apiSearchConfigs: Array<
   {
     apiName: 'BRP',
     getApiBaseItems: (apiContent: BRPData) => {
-      const identiteitsBewijzen = apiContent.identiteitsbewijzen || [];
+      const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
       const address = getFullAddress(apiContent.adres, true);
       const name = getFullName(apiContent.persoon);
       const brpDataItems: ApiBaseItem[] = [
