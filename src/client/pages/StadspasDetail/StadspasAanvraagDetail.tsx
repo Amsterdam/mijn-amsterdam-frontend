@@ -9,7 +9,7 @@ export default function StadspasAanvraagDetail() {
       chapter="STADSPAS"
       stateKey="FOCUS_AANVRAGEN"
       maxStepCount={(hasDecision) =>
-        !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : -1
+        !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : undefined
       }
     />
   );

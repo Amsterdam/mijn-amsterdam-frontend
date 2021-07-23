@@ -1,4 +1,5 @@
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
+import { Chapter } from '../../../universal/config/chapter';
 // The process steps are in order of:
 export type StepTitle =
   | 'aanvraag'
@@ -20,6 +21,8 @@ export type Decision =
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 export type ProductType =
+  | 'Tozo'
+  | 'Tonk'
   | 'Participatiewet'
   | 'Bijzondere Bijstand'
   | 'Minimafonds'
@@ -96,6 +99,7 @@ export interface FocusItem extends FocusProduct {
   status: RequestStatus;
   steps: FocusItemStep[];
   link: LinkProps;
+  dateEnd: string | null;
 }
 
 export type RequestStatus =

@@ -146,7 +146,7 @@ export async function fetchFOCUSTozoGenerated(
     const cases: MyCase[] = TOZO.content
       .filter(
         (item) =>
-          isRecentCase(item.datePublished, compareDate) ||
+          isRecentCase(item.dateEnd || item.datePublished, compareDate) ||
           item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)

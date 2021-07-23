@@ -10,7 +10,7 @@ import {
 } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './focus-aanvragen';
-import { processSteps } from './focus-aanvragen-content';
+import { processSteps, stepLabels } from './focus-aanvragen-content';
 import {
   Decision,
   DecisionFormatted,
@@ -30,19 +30,6 @@ import {
   StepTitle,
   TextPartContents,
 } from './focus-types';
-
-export function isRecentItem(
-  steps: Array<{ title: string; datePublished: string }>,
-  compareDate: Date
-) {
-  return (
-    steps.some(
-      (step) =>
-        step.title === 'besluit' &&
-        isRecentCase(step.datePublished, compareDate)
-    ) || steps.every((step) => step.title !== 'besluit')
-  );
-}
 
 export function parseLabelContent(
   text: TextPartContents,
@@ -191,7 +178,9 @@ function normalizeFocusSourceProductStep(
   return stepNormalized;
 }
 
-export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
+export function normalizeFocusSourceProduct(
+  product: FocusProductFromSource
+): FocusProduct {
   const steps = Object.entries(product.processtappen)
     .filter(
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
@@ -308,10 +297,22 @@ export function transformFocusProduct(
     productContent.link ? productContent.link(product) : null
   );
 
+  const decisionStep = steps
+    .filter(
+      (step) =>
+        step.status === stepLabels.besluit ||
+        step.status === stepLabels.terugvorderingsbesluit
+    )
+    .pop();
+  const dateEnd = decisionStep ? decisionStep.datePublished : null;
+
   return Object.assign({}, productSanitized, {
     steps,
     link,
-    status: steps[steps.length - 1].status,
+    dateEnd,
+    status: decisionStep?.status
+      ? stepLabels.besluit
+      : steps[steps.length - 1].status,
   });
 }
 

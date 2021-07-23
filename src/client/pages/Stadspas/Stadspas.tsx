@@ -35,7 +35,7 @@ const requestsDisplayProps = {
 
 const decisionsDisplayProps = {
   displayDateStart: 'Datum aanvraag',
-  displayDatePublished: 'Datum besluit',
+  displayDateEnd: 'Datum besluit',
 };
 
 export default function Stadspas() {
@@ -51,7 +51,9 @@ export default function Stadspas() {
         .filter((aanvraag) => aanvraag.productTitle === 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
-            displayDatePublished: defaultDateFormat(item.datePublished),
+            displayDateEnd: defaultDateFormat(
+              item.dateEnd || item.datePublished
+            ),
             displayDateStart: defaultDateFormat(item.dateStart),
           });
         })
