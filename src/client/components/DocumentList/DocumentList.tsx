@@ -136,12 +136,12 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
         ) : isErrorVisible ? (
           <IconAlert
             aria-hidden="true"
-            width="1.8rem"
-            height="1.8rem"
+            width="18"
+            height="18"
             fill={Colors.primaryRed}
           />
         ) : (
-          <IconDownload aria-hidden="true" width="1.4rem" height="1.4rem" />
+          <IconDownload aria-hidden="true" width="14" height="14" />
         )}
       </span>
       <Linkd

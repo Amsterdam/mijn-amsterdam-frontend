@@ -5,7 +5,6 @@ import {
   dateSort,
   defaultDateFormat,
   hash,
-  isRecentCase,
   omit,
 } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
@@ -297,13 +296,7 @@ export function transformFocusProduct(
     productContent.link ? productContent.link(product) : null
   );
 
-  const decisionStep = steps
-    .filter(
-      (step) =>
-        step.status === stepLabels.besluit ||
-        step.status === stepLabels.terugvorderingsbesluit
-    )
-    .pop();
+  const decisionStep = steps.filter((step) => step.title === 'besluit').pop();
   const dateEnd = decisionStep ? decisionStep.datePublished : null;
 
   return Object.assign({}, productSanitized, {

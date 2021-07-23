@@ -1,5 +1,4 @@
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
-import { Chapter } from '../../../universal/config/chapter';
 // The process steps are in order of:
 export type StepTitle =
   | 'aanvraag'
@@ -166,6 +165,7 @@ export type FocusTonkLabelSet = {
   product: 'TONK';
   stepType: FocusTonkStepType;
   productSpecific?: string;
+  datePublished?: string;
 };
 
 export type FocusTozoStepType =
@@ -185,6 +185,7 @@ export type FocusTozoLabelSet = {
   product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
+  datePublished?: string;
 };
 
 export type ToxxLabelSet = FocusTozoLabelSet | FocusTonkLabelSet;
