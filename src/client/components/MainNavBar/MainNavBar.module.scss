@@ -10,6 +10,12 @@
   }
 }
 
+@media print {
+  .MainNavBar {
+    display: none;
+  }
+}
+
 .LinkContainer {
   @include centered-max;
   display: flex;

@@ -1,7 +1,6 @@
 @import '../../styles/_global.scss';
 
 .header {
-
 }
 
 .topBar {
@@ -24,6 +23,18 @@
   }
 }
 
+@media print {
+  .topBar {
+    height: auto;
+    border-bottom: 4px solid $color-neutral-grey2;
+    a {
+      font-size: 20pt;
+      color: $color-black !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
 .logoLink {
   display: flex;
   color: inherit;
@@ -36,6 +47,17 @@
 
   @include mq-tablet() {
     transform: translateX(0);
+  }
+}
+
+@media print {
+  .logoLink {
+    transform: none;
+    svg {
+      width: 80px;
+      height: 100px;
+      display: block;
+    }
   }
 }
 

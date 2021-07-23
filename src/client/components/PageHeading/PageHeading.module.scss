@@ -19,6 +19,15 @@
   }
 }
 
+@media print {
+  .PageHeading {
+    margin-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    height: auto;
+  }
+}
+
 .Icon {
   flex-basis: 16rem;
   flex-shrink: 0;
@@ -56,6 +65,12 @@
   @include heading-small;
   font-weight: bold;
   transform: translateX(-1.9rem);
+}
+
+@media print {
+  .BackLink {
+    display: none;
+  }
 }
 
 .HeadingInner {
