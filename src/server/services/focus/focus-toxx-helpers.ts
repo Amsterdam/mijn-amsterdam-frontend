@@ -115,10 +115,9 @@ export function createToxxItemStep(
   );
 
   document.productSpecific = labelSet.productSpecific;
-  const datePublished =
-    labelSet.stepType === 'correctiemail'
-      ? '2021-07-15T00:00:00+01:00'
-      : document.datePublished;
+
+  const datePublished = labelSet.datePublished || document.datePublished;
+
   const step: FocusItemStep = {
     id,
     documents: [attachedDocument],
@@ -165,13 +164,7 @@ export function createToxxItem({
   const id = hash(`${title}-${steps[0].datePublished}`);
   const lastStep = steps[steps.length - 1];
   const datePublished = lastStep.datePublished;
-  const decisionStep = steps
-    .filter(
-      (step) =>
-        step.status === stepLabels.besluit ||
-        step.status === stepLabels.terugvorderingsbesluit
-    )
-    .pop();
+  const decisionStep = steps.filter((step) => step.title === 'besluit').pop();
   const dateEnd = decisionStep ? decisionStep.datePublished : null;
   return {
     id,

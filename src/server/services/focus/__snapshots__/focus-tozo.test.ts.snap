@@ -291,7 +291,7 @@ Object {
           "notificationTitle": "Tozo 1: Aanvraag ingetrokken",
           "product": "Tozo 1",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
@@ -313,7 +313,7 @@ Object {
           "notificationTitle": "Tozo 1: Aanvraag ingetrokken",
           "product": "Tozo 1",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
@@ -335,7 +335,7 @@ Object {
           "notificationTitle": "Tozo 1: Besluit aanvraag",
           "product": "Tozo 1",
           "status": "Besluit",
-          "title": "vrijeBeschikking",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
@@ -523,7 +523,7 @@ Object {
           "notificationTitle": "Tozo 2: Aanvraag ingetrokken",
           "product": "Tozo 2",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
@@ -591,7 +591,7 @@ Object {
           "notificationTitle": "Tozo 2: Aanvraag ingetrokken",
           "product": "Tozo 2",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
@@ -717,7 +717,7 @@ Object {
           "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 2",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
@@ -743,7 +743,7 @@ Object {
           "notificationTitle": "Tozo 2: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 2",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
       ],
       "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)",
@@ -1026,7 +1026,7 @@ Object {
           "notificationTitle": "Tozo 3: Aanvraag ingetrokken",
           "product": "Tozo 3",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2020-10-01",
@@ -1125,7 +1125,7 @@ Object {
           "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 3",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1151,7 +1151,7 @@ Object {
           "notificationTitle": "Tozo 3: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 3",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1338,7 +1338,7 @@ Object {
           "notificationTitle": "Tozo 4: Aanvraag ingetrokken",
           "product": "Tozo 4",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
@@ -1486,7 +1486,7 @@ Object {
           "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 4",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-04-02T00:00:00+01:00",
@@ -1536,7 +1536,7 @@ Object {
           "notificationTitle": "Tozo 4: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 4",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
       ],
       "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",
@@ -1848,7 +1848,7 @@ Object {
           "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 5",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
@@ -1898,7 +1898,7 @@ Object {
           "notificationTitle": "Tozo 5: U moet (een deel van) uw uitkering terugbetalen.",
           "product": "Tozo 5",
           "status": "Terugvorderings- besluit",
-          "title": "terugvordering",
+          "title": "besluit",
         },
       ],
       "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
