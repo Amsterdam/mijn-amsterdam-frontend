@@ -48,7 +48,7 @@ const requestsDisplayProps = {
 
 const decisionsDisplayProps = {
   displayDateStart: 'Datum aanvraag',
-  displayDatePublished: 'Datum besluit',
+  displayDateEnd: 'Datum besluit',
 };
 
 export default function Inkomen() {
@@ -73,7 +73,9 @@ export default function Inkomen() {
         .filter((item) => item.productTitle !== 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
-            displayDatePublished: defaultDateFormat(item.datePublished),
+            displayDateEnd: defaultDateFormat(
+              item.dateEnd || item.datePublished
+            ),
             displayDateStart: defaultDateFormat(item.dateStart),
             status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
           });

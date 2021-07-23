@@ -130,7 +130,7 @@ export async function fetchFOCUSTonkGenerated(
     const cases: MyCase[] = TONK.content
       .filter(
         (item) =>
-          isRecentCase(item.datePublished, compareDate) ||
+          isRecentCase(item.dateEnd || item.datePublished, compareDate) ||
           item.status !== stepStatusLabels.besluit
       )
       .map(createFocusRecentCase)
