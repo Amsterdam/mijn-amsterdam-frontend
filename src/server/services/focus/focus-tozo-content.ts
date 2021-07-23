@@ -267,7 +267,7 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 1',
     productSpecific: '',
-    stepType: 'intrekken',
+    stepType: 'besluit',
   },
   '175331': {
     omschrijving: 'Tozo Intrekken',
@@ -275,7 +275,7 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Brief intrekking aanvraag',
     product: 'Tozo 1',
     productSpecific: '',
-    stepType: 'intrekken',
+    stepType: 'besluit',
   },
   '175334': {
     omschrijving: 'Tozo Vrije beschikking',
@@ -283,7 +283,7 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Besluit Tozo 1 aanvraag',
     product: 'Tozo 1',
     productSpecific: '',
-    stepType: 'vrijeBeschikking',
+    stepType: 'besluit',
   },
   '175335': {
     omschrijving: 'Tozo Afwijzen via batch',
@@ -342,7 +342,7 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Brief intrekking aanvraag',
     product: 'Tozo 2',
     productSpecific: '',
-    stepType: 'intrekken',
+    stepType: 'besluit',
   },
   '175342': {
     omschrijving: 'Tozo2 Buiten behandeling laten',
@@ -366,7 +366,7 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 2',
     productSpecific: '',
-    stepType: 'intrekken',
+    stepType: 'besluit',
   },
   '175345': {
     omschrijving: 'Tozo2 Toekennen voorschot via batch',
@@ -413,7 +413,7 @@ export const tozoDocumentLabelSet: Record<
   '175650': {
     omschrijving: 'Tozo 2 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 2',
     productSpecific: 'uitkering',
@@ -421,7 +421,7 @@ export const tozoDocumentLabelSet: Record<
   '175645': {
     omschrijving: 'Tozo 2 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 2',
     productSpecific: 'uitkering',
@@ -511,7 +511,7 @@ export const tozoDocumentLabelSet: Record<
   },
   '175370': {
     omschrijving: 'Tozo3 Intrekken',
-    stepType: 'intrekken',
+    stepType: 'besluit',
     labels: intrekkenLabels,
     product: 'Tozo 3',
     productSpecific: '',
@@ -546,7 +546,7 @@ export const tozoDocumentLabelSet: Record<
   '1725650': {
     omschrijving: 'Tozo 3 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 3',
     productSpecific: 'uitkering',
@@ -554,7 +554,7 @@ export const tozoDocumentLabelSet: Record<
   '1725645': {
     omschrijving: 'Tozo 3 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 3',
     productSpecific: 'uitkering',
@@ -613,7 +613,7 @@ export const tozoDocumentLabelSet: Record<
   '175670': {
     omschrijving: 'Tozo 4 Intrekken',
     documentTitle: 'Brief intrekking aanvraag',
-    stepType: 'intrekken',
+    stepType: 'besluit',
     labels: intrekkenLabels,
     product: 'Tozo 4',
     productSpecific: '',
@@ -663,7 +663,7 @@ export const tozoDocumentLabelSet: Record<
   '1735650': {
     omschrijving: 'Tozo 4 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
@@ -671,7 +671,7 @@ export const tozoDocumentLabelSet: Record<
   '1735645': {
     omschrijving: 'Tozo 4 Terugvorderingsbesluit',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
@@ -772,7 +772,7 @@ export const tozoDocumentLabelSet: Record<
   '1745650': {
     omschrijving: 'Tozo5 Terugvorderen na inkomstenopgave',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
@@ -780,7 +780,7 @@ export const tozoDocumentLabelSet: Record<
   '1745645': {
     omschrijving: 'Tozo5 Terugvorderen na inkomstenopgave (batch)',
     documentTitle: 'Besluit terugvordering',
-    stepType: 'terugvordering',
+    stepType: 'besluit',
     labels: terugvorderingLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
@@ -793,6 +793,4 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 5',
     productSpecific: '',
   },
-
-  // xxx	TOZO 5 inkomstenverklaring	Verklaring
 };

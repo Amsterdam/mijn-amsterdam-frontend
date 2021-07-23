@@ -262,5 +262,6 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'correctiemail',
+    datePublished: '2021-07-15T00:00:00+01:00',
   },
 };
