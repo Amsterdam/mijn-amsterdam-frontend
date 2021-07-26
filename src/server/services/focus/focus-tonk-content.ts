@@ -135,10 +135,7 @@ const weigeringVerlengingLabels: FocusStepContent = {
   },
   status: stepLabels.brief,
   description: (document) =>
-    `<p> U hebt uw ${productName(
-      document,
-      false
-    )} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p> U hebt uw ${document.productTitle} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const correctieMailLabels: FocusStepContent = {
@@ -158,7 +155,7 @@ const correctieMailLabels: FocusStepContent = {
       }),
     }),
   },
-  status: stepLabels.brief,
+  status: stepLabels.mail,
   description: () =>
     `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };

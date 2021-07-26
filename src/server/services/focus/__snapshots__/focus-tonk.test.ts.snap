@@ -238,7 +238,7 @@ Object {
           },
           "notificationTitle": "Mail over verkeerde TONK-brief ontvangen",
           "product": "TONK",
-          "status": "Brief",
+          "status": "Mail",
           "title": "correctiemail",
         },
         Object {
@@ -287,7 +287,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-20T00:00:00+01:00",
-          "description": "<p> U hebt uw TONK uitkering verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "description": "<p> U hebt uw TONK verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-07-20T00:00:00+01:00",
