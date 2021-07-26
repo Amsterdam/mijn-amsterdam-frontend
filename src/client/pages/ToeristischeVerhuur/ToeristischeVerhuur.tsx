@@ -277,6 +277,11 @@ export default function ToeristischeVerhuur() {
               name: 'Datatabel',
             }}
           >
+            <p className={styles.DisclaimerCollapseText}>
+              U ziet hieronder alleen meldingen die vanaf 4 juli zijn ingepland.
+              Meldingen die u vóór 4 juli hebt ingepland kunnen niet worden
+              getoond.
+            </p>
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -289,12 +294,19 @@ export default function ToeristischeVerhuur() {
             title="Geannuleerde verhuur"
             startCollapsed={isCollapsed('geannuleerd')}
             hasItems={!!cancelledVerhuur.length}
-            noItemsMessage="Er is geen geannuleerde verhuur gevonden."
+            noItemsMessage="U ziet hieronder alleen meldingen die vanaf 14 juli zijn
+            geannuleerd. Meldingen die u vóór 14 juli hebt geannuleerd kunnen
+            niet worden getoond."
             track={{
               category: 'Toeristische verhuur / afgemeld Verhuur',
               name: 'Datatabel',
             }}
           >
+            <p className={styles.DisclaimerCollapseText}>
+              U ziet hieronder alleen meldingen die vanaf 14 juli zijn
+              geannuleerd. Meldingen die u vóór 14 juli hebt geannuleerd kunnen
+              niet worden getoond.
+            </p>
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -305,7 +317,9 @@ export default function ToeristischeVerhuur() {
           <SectionCollapsible
             id="SectionCollapsible-previous-verhuur"
             title="Afgelopen verhuur"
-            noItemsMessage="Er is geen afgelopen verhuur gevonden."
+            noItemsMessage="U ziet hieronder alleen meldingen die na 4 juli zijn afgerond.
+            Meldingen die vóór 4 juli zijn afgerond kunnen niet worden
+            getoond."
             startCollapsed={isCollapsed('previous')}
             hasItems={!!previousVerhuur.length}
             track={{
@@ -313,6 +327,11 @@ export default function ToeristischeVerhuur() {
               name: 'Datatabel',
             }}
           >
+            <p className={styles.DisclaimerCollapseText}>
+              U ziet hieronder alleen meldingen die na 4 juli zijn afgerond.
+              Meldingen die vóór 4 juli zijn afgerond kunnen niet worden
+              getoond.
+            </p>
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -327,13 +346,18 @@ export default function ToeristischeVerhuur() {
         className={styles.SectionNoBorderBottom}
         title="Vergunningen"
         hasItems={!!vergunningen.length}
-        noItemsMessage="U hebt nog geen vergunningen."
+        noItemsMessage="U ziet hieronder alleen vergunningen die vanaf 1 april zijn toegekend. Vergunningen die u vóór 1 april hebt aangevraagd kunnen niet worden getoond."
         startCollapsed={profileType !== 'commercial'}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',
         }}
       >
+        <p className={styles.DisclaimerCollapseText}>
+          U ziet hieronder alleen vergunningen die vanaf 1 april zijn toegekend.
+          Vergunningen die u vóór 1 april hebt aangevraagd kunnen niet worden
+          getoond.
+        </p>
         {!!vergunningen?.length && (
           <Table
             className={styles.TableVergunningen}
