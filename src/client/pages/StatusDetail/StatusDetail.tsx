@@ -126,7 +126,6 @@ export default function StatusDetail({
 
         {isStateLoading && <LoadingContent />}
       </PageContent>
-
       {!!(statusItem?.steps && statusItem.steps.length) && (
         <StatusLine
           trackCategory={`${chapter} / ${statusItem?.productTitle} status`}

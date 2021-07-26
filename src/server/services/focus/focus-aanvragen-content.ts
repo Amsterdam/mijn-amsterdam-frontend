@@ -13,6 +13,7 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   inkomstenwijziging: 'Wijziging inkomsten',
   bezwaar: 'Bezwaar',
   brief: 'Brief',
+  mail: 'Mail',
 };
 
 // NOTE: MUST Keep in this order
