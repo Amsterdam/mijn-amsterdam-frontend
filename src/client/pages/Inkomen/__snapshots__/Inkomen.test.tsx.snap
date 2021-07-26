@@ -504,8 +504,8 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        height="1.4rem"
-                        width="1.4rem"
+                        height="14"
+                        width="14"
                       >
                         Download.svg
                       </svg>
@@ -613,8 +613,8 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        height="1.4rem"
-                        width="1.4rem"
+                        height="14"
+                        width="14"
                       >
                         Download.svg
                       </svg>

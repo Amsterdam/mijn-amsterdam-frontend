@@ -1,23 +1,27 @@
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   apiDependencyError,
   apiSuccesResult,
   dateSort,
+  isRecentCase,
 } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { contentLabels, titleTranslations } from './focus-aanvragen-content';
+import {
+  contentLabels,
+  stepStatusLabels,
+  titleTranslations,
+} from './focus-aanvragen-content';
 import {
   createFocusNotification,
   createFocusRecentCase,
   isNotificationActual,
-  isRecentItem,
   normalizeFocusSourceProduct,
   transformFocusProduct,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
 import { FocusItem, FocusProduct, FocusProductFromSource } from './focus-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 
 export const MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS = 2;
 export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
@@ -96,8 +100,13 @@ export async function fetchFOCUSAanvragenGenerated(
       .map((focusItem) => createFocusNotification(focusItem, contentLabels));
 
     cases = items
-      .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
-      .map((focusItem) => createFocusRecentCase(focusItem));
+      .filter(
+        (item) =>
+          isRecentCase(item.dateEnd || item.datePublished, compareDate) ||
+          item.status !== stepStatusLabels.besluit
+      )
+      .map(createFocusRecentCase)
+      .filter((recentCase) => recentCase !== null);
 
     return apiSuccesResult({
       cases,

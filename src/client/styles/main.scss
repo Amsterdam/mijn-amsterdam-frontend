@@ -80,3 +80,5 @@ h5 {
   @include heading-tiny;
   margin: 0;
 }
+
+@import 'print.scss';

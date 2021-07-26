@@ -4,6 +4,12 @@
   padding-top: 1rem;
 }
 
+@media print {
+  .InfoPanel {
+    break-inside: avoid;
+  }
+}
+
 .Title {
   margin-left: 16rem;
   margin-bottom: 1.8rem;
@@ -139,5 +145,11 @@
 
   @include mq-phone() {
     margin: 2rem 0 0 0;
+  }
+}
+
+@media print {
+  .InfoPanelActionLinks {
+    visibility: hidden;
   }
 }

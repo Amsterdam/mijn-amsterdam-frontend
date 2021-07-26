@@ -5,6 +5,12 @@
   border-bottom: 0.1rem solid $color-neutral-grey2;
 }
 
+@media print {
+  .SectionCollapsible {
+    break-before: always;
+  }
+}
+
 .CaretIcon {
   height: 0.8em;
   width: 0.8em;
@@ -54,6 +60,13 @@
   overflow: hidden;
   height: 0;
   position: relative;
+}
+
+@media print {
+  .Panel {
+    overflow: visible;
+    height: auto !important;
+  }
 }
 
 .NoItemsMessage {

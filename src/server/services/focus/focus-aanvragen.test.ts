@@ -5,14 +5,12 @@ import {
   calculateUserActionDeadline,
   getDecision,
   getLatestStep,
-  isRecentItem,
   normalizeFocusSourceProduct,
   transformFocusProduct,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
 import {
   Decision,
-  FocusItemStep,
   FocusProductFromSource,
   FocusProductStep,
 } from './focus-types';
@@ -362,21 +360,6 @@ describe('FOCUS_AANVRAGEN service', () => {
         .map((product) => translateFocusProduct(product, titleTranslations))
         .map((product) => transformFocusProduct(product, contentLabels))
     ).toMatchSnapshot();
-  });
-
-  it('isRecentItem should be different', () => {
-    const steps = [
-      {
-        datePublished: '2020-05-07',
-        title: 'besluit',
-      },
-    ] as FocusItemStep[];
-
-    const compareToDate = new Date('2020-05-12');
-    expect(isRecentItem(steps, compareToDate)).toBe(true);
-
-    steps[0].datePublished = '2019-04-01';
-    expect(isRecentItem(steps, compareToDate)).toBe(false);
   });
 
   it('calculates deadline correctly', () => {

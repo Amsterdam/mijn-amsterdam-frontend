@@ -115,10 +115,9 @@ export function createToxxItemStep(
   );
 
   document.productSpecific = labelSet.productSpecific;
-  const datePublished =
-    labelSet.stepType === 'correctiemail'
-      ? '2021-07-15T00:00:00+01:00'
-      : document.datePublished;
+
+  const datePublished = labelSet.datePublished || document.datePublished;
+
   const step: FocusItemStep = {
     id,
     documents: [attachedDocument],
@@ -161,21 +160,21 @@ export function createToxxItem({
   productTitle,
   steps,
   routeProps,
-}: CreateToxxItemProps) {
+}: CreateToxxItemProps): FocusItem {
   const id = hash(`${title}-${steps[0].datePublished}`);
-  const step = steps[steps.length - 1];
-  const datePublished = step.datePublished;
+  const lastStep = steps[steps.length - 1];
+  const datePublished = lastStep.datePublished;
+  const decisionStep = steps.filter((step) => step.title === 'besluit').pop();
+  const dateEnd = decisionStep ? decisionStep.datePublished : null;
   return {
     id,
     dateStart: steps[0].datePublished,
     datePublished, // Use the date from latest step
     title,
-    status: steps.some((step) => step.status === stepLabels.besluit)
-      ? stepLabels.besluit
-      : step.status,
+    status: !!decisionStep ? stepLabels.besluit : lastStep.status,
     productTitle,
+    dateEnd,
     type: 'Tozo',
-    chapter: Chapters.INKOMEN,
     link: {
       to: generatePath(routeProps.path, { ...routeProps.params, id }),
       title: `Bekijk hoe het met uw aanvraag staat`,

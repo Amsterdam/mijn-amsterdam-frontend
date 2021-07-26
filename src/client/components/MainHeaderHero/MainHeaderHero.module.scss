@@ -12,6 +12,12 @@
   }
 }
 
+@media print {
+  .MainHeaderHero {
+    display: none;
+  }
+}
+
 .Image {
   display: block;
   width: auto;

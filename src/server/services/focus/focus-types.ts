@@ -20,6 +20,8 @@ export type Decision =
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 export type ProductType =
+  | 'Tozo'
+  | 'Tonk'
   | 'Participatiewet'
   | 'Bijzondere Bijstand'
   | 'Minimafonds'
@@ -96,6 +98,7 @@ export interface FocusItem extends FocusProduct {
   status: RequestStatus;
   steps: FocusItemStep[];
   link: LinkProps;
+  dateEnd: string | null;
 }
 
 export type RequestStatus =
@@ -162,6 +165,7 @@ export type FocusTonkLabelSet = {
   product: 'TONK';
   stepType: FocusTonkStepType;
   productSpecific?: string;
+  datePublished?: string;
 };
 
 export type FocusTozoStepType =
@@ -181,6 +185,7 @@ export type FocusTozoLabelSet = {
   product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
+  datePublished?: string;
 };
 
 export type ToxxLabelSet = FocusTozoLabelSet | FocusTonkLabelSet;

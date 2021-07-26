@@ -4,7 +4,7 @@ exports[`Focus TONK service Transforms data correctly and matches snapshot 1`] =
 Object {
   "content": Array [
     Object {
-      "chapter": "INKOMEN",
+      "dateEnd": "2021-07-20T00:00:00+01:00",
       "datePublished": "2021-07-20T00:00:00+01:00",
       "dateStart": "2021-04-05T00:00:00+01:00",
       "id": "1913900562",
