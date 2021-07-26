@@ -34,7 +34,6 @@ export const PRISTINE_APPSTATE: AppState = {
   BELASTINGEN: apiPristineResult({ isKnown: true }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
   AKTES: apiPristineResult([]),
-  SIA: apiPristineResult([]),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],

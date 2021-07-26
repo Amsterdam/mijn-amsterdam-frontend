@@ -54,8 +54,6 @@ import {
   MyTips,
   NotFound,
   Profile,
-  Sia,
-  SiaDetail,
   ToeristischeVerhuur,
   ToeristischeVerhuurDetail,
   VergunningDetail,
@@ -192,12 +190,6 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
-          {FeatureToggle.siaActive && (
-            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
-          )}
-          {FeatureToggle.siaActive && (
-            <Route path={AppRoutes.SIA} component={Sia} />
-          )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={[

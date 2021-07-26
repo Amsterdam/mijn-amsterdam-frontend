@@ -86,7 +86,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
   KVK: 'Mijn onderneming',
-  SIA: 'Mijn meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
   TOERISTISCHE_VERHUUR_vergunningen:
     'Toeristische verhuur: Vergunningen + meldingen',
