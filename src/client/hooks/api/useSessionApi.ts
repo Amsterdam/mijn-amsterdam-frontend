@@ -78,6 +78,7 @@ function saveUserTypeForReloadingAndNewTabs(maxAge: number) {
         : AuthType.DIGID,
       {
         'Max-age': '' + maxAge,
+        sameSite: 'Strict',
       }
     );
   }
