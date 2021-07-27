@@ -80,11 +80,11 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         <p
           class="DetailText"
         >
-          Het aantal resterende nachten is gebaseerd op meldingen voor ingeplande en afgelopen verhuur die u
+          Het aantal resterende nachten is gebaseerd op meldingen voor ingepland en afgelopen verhuur die u vanaf 8 april 2021 hebt ingediend en annuleringen die u vanaf 
           <strong>
              vanaf 19 juli
           </strong>
-           2021 hebt ingediend. Meldingen die u voor 19 juli hebt ingediend zijn mogelijk niet geheel meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
+           hebt ingediend. Meldingen die u voor 8 april 2021 hebt ingediend zijn niet meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
         </p>
         <p>
           Aan de informatie op deze pagina kunnen geen rechten worden ontleend. Kijk voor meer informatie bij 
@@ -151,7 +151,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           <p
             class="DisclaimerCollapseText"
           >
-            U ziet hieronder alleen meldingen die vanaf 4 juli zijn ingepland. Meldingen die u vóór 4 juli hebt ingepland kunnen niet worden getoond.
+            U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland. Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.
           </p>
           <table
             class="Table Table"
@@ -336,7 +336,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           <p
             class="DisclaimerCollapseText"
           >
-            U ziet hieronder alleen meldingen die vanaf 14 juli zijn geannuleerd. Meldingen die u vóór 14 juli hebt geannuleerd kunnen niet worden getoond.
+            U ziet hieronder alleen meldingen die vanaf 19 juli zijn geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd kunnen niet worden getoond.
           </p>
           <table
             class="Table Table"
@@ -521,7 +521,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           <p
             class="DisclaimerCollapseText"
           >
-            U ziet hieronder alleen meldingen die na 4 juli zijn afgerond. Meldingen die vóór 4 juli zijn afgerond kunnen niet worden getoond.
+            U ziet hieronder alleen meldingen die na 8 april zijn afgerond. Meldingen die vóór 8 april zijn afgerond kunnen niet worden getoond.
           </p>
           <table
             class="Table Table"
