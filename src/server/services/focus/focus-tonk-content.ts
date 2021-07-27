@@ -121,7 +121,7 @@ const besluitVerlengingLabels: FocusStepContent = {
   },
   status: stepLabels.besluit,
   description: (document) =>
-    `<p>Wij hebben een besluit genomen over een mogelijke verlenging van uw ${productName(
+    `<p>Wij hebben een besluit genomen over het wel of niet verlenging van uw ${productName(
       document,
       false
     )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
