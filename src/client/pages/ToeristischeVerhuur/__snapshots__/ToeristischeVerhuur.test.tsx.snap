@@ -703,11 +703,6 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         <div
           class="PanelInner"
         >
-          <p
-            class="DisclaimerCollapseText"
-          >
-            U ziet hieronder alleen vergunningen die vanaf 1 april zijn toegekend. Vergunningen die u vóór 1 april hebt aangevraagd kunnen niet worden getoond.
-          </p>
           <table
             class="Table TableVergunningen"
           >

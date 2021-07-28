@@ -367,9 +367,7 @@ export default function ToeristischeVerhuur() {
         title="Vergunningen"
         hasItems={!!vergunningen.length}
         noItemsMessage={
-          is2021
-            ? `U ziet hieronder alleen vergunningen die vanaf 1 april zijn toegekend. Vergunningen die u vóór 1 april hebt aangevraagd kunnen niet worden getoond.`
-            : 'U hebt nog geen vergunningen.'
+          'U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei 2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt aangevraagd kunnen niet worden getoond.'
         }
         startCollapsed={profileType !== 'commercial'}
         track={{
@@ -377,11 +375,11 @@ export default function ToeristischeVerhuur() {
           name: 'Datatabel',
         }}
       >
-        {is2021 && (
+        {!hasVergunningBB && (
           <p className={styles.DisclaimerCollapseText}>
-            U ziet hieronder alleen vergunningen die vanaf 1 april zijn
-            toegekend. Vergunningen die u vóór 1 april hebt aangevraagd kunnen
-            niet worden getoond.
+            U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei
+            2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt
+            aangevraagd kunnen niet worden getoond.
           </p>
         )}
         {!!vergunningen?.length && (
