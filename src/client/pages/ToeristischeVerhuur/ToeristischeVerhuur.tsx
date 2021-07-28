@@ -37,6 +37,18 @@ const DISPLAY_PROPS_VERGUNNINGEN = {
   dateEnd: 'Tot',
 };
 
+const GEPLAND_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.';
+
+const GEANNULEERD_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die vanaf 19 juli zijn geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd kunnen niet worden getoond.';
+
+const AFGEROND_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die na 8 april zijn afgerond. Meldingen die vóór 8 april zijn afgerond kunnen niet worden getoond.';
+
+const BB_VERGUNNING_DISCLAIMER =
+  'U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei 2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt aangevraagd kunnen niet worden getoond.';
+
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
@@ -273,9 +285,7 @@ export default function ToeristischeVerhuur() {
             hasItems={!!plannedVerhuur.length}
             noItemsMessage={
               is2021
-                ? `U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.
-            Meldingen die u vóór 8 april hebt ingepland kunnen niet worden
-            getoond.`
+                ? GEPLAND_DISCLAIMER
                 : 'Er is geen geplande verhuur gevonden'
             }
             track={{
@@ -285,9 +295,7 @@ export default function ToeristischeVerhuur() {
           >
             {is2021 && (
               <p className={styles.DisclaimerCollapseText}>
-                U ziet hieronder alleen meldingen die vanaf 8 april zijn
-                ingepland. Meldingen die u vóór 8 april hebt ingepland kunnen
-                niet worden getoond.
+                {GEPLAND_DISCLAIMER}
               </p>
             )}
             <Table
@@ -304,9 +312,7 @@ export default function ToeristischeVerhuur() {
             hasItems={!!cancelledVerhuur.length}
             noItemsMessage={
               is2021
-                ? `U ziet hieronder alleen meldingen die vanaf 19 juli zijn
-            geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd kunnen
-            niet worden getoond.`
+                ? GEANNULEERD_DISCLAIMER
                 : 'Er is geen geannuleerde verhuur gevonden'
             }
             track={{
@@ -316,9 +322,7 @@ export default function ToeristischeVerhuur() {
           >
             {is2021 && (
               <p className={styles.DisclaimerCollapseText}>
-                U ziet hieronder alleen meldingen die vanaf 19 juli zijn
-                geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd
-                kunnen niet worden getoond.
+                {GEANNULEERD_DISCLAIMER}
               </p>
             )}
             <Table
@@ -333,9 +337,7 @@ export default function ToeristischeVerhuur() {
             title="Afgelopen verhuur"
             noItemsMessage={
               is2021
-                ? `U ziet hieronder alleen meldingen die na 8 april zijn afgerond.
-            Meldingen die vóór 8 april zijn afgerond kunnen niet worden
-            getoond.`
+                ? AFGEROND_DISCLAIMER
                 : 'Er is geen afgelopen verhuur gevonden.'
             }
             startCollapsed={isCollapsed('previous')}
@@ -347,9 +349,7 @@ export default function ToeristischeVerhuur() {
           >
             {is2021 && (
               <p className={styles.DisclaimerCollapseText}>
-                U ziet hieronder alleen meldingen die na 8 april zijn afgerond.
-                Meldingen die vóór 8 april zijn afgerond kunnen niet worden
-                getoond.
+                {AFGEROND_DISCLAIMER}
               </p>
             )}
             <Table
@@ -366,9 +366,7 @@ export default function ToeristischeVerhuur() {
         className={styles.SectionNoBorderBottom}
         title="Vergunningen"
         hasItems={!!vergunningen.length}
-        noItemsMessage={
-          'U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei 2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt aangevraagd kunnen niet worden getoond.'
-        }
+        noItemsMessage={BB_VERGUNNING_DISCLAIMER}
         startCollapsed={profileType !== 'commercial'}
         track={{
           category: 'Toeristische verhuur / vergunningen',
@@ -377,9 +375,7 @@ export default function ToeristischeVerhuur() {
       >
         {!hasVergunningBB && (
           <p className={styles.DisclaimerCollapseText}>
-            U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei
-            2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt
-            aangevraagd kunnen niet worden getoond.
+            {BB_VERGUNNING_DISCLAIMER}
           </p>
         )}
         {!!vergunningen?.length && (

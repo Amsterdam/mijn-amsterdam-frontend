@@ -151,7 +151,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           <p
             class="DisclaimerCollapseText"
           >
-            U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland. Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.
+            U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.
           </p>
           <table
             class="Table Table"
