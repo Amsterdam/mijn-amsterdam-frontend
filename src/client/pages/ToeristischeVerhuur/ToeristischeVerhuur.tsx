@@ -274,7 +274,7 @@ export default function ToeristischeVerhuur() {
             noItemsMessage={
               is2021
                 ? `U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.
-            Meldingen die u vóór 8 juli hebt ingepland kunnen niet worden
+            Meldingen die u vóór 8 april hebt ingepland kunnen niet worden
             getoond.`
                 : 'Er is geen geplande verhuur gevonden'
             }
