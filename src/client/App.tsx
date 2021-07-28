@@ -67,6 +67,7 @@ import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { useUsabilla } from './hooks/useUsabilla';
+import FinancieleHulp from './pages/FinancieleHulp/FinancieleHulp';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -205,6 +206,12 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
               component={ToeristischeVerhuur}
+            />
+          )}
+          {FeatureToggle.financieleHulpActive && (
+            <Route
+              path={AppRoutes.FINANCIELE_HULP}
+              component={FinancieleHulp}
             />
           )}
           <Route component={NotFound} />

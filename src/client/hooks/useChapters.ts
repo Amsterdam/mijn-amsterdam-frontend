@@ -29,6 +29,7 @@ function isChapterActive(
     TOERISTISCHE_VERHUUR,
     HOME,
     KVK,
+    FINANCIELE_HULP,
   }: AppState
 ) {
   switch (item.id) {
@@ -108,6 +109,13 @@ function isChapterActive(
         !isLoading(TOERISTISCHE_VERHUUR) &&
         (!!TOERISTISCHE_VERHUUR.content?.registraties?.length ||
           !!TOERISTISCHE_VERHUUR.content?.vergunningen?.length)
+      );
+    case Chapters.FINANCIELE_HULP:
+      return (
+        !isLoading(FINANCIELE_HULP) &&
+        (!!FINANCIELE_HULP.content?.leningen?.length ||
+          !!FINANCIELE_HULP.content?.schuldRegelingen?.length ||
+          !FINANCIELE_HULP.content?.budgetbeheer?.length)
       );
   }
 
