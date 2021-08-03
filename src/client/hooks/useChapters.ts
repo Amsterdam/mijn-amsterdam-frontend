@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
@@ -114,7 +115,7 @@ function isChapterActive(
       return (
         !isLoading(FINANCIELE_HULP) &&
         (!!FINANCIELE_HULP.content?.leningen?.length ||
-          !!FINANCIELE_HULP.content?.schuldRegelingen?.length ||
+          !!FINANCIELE_HULP.content?.schuldregelingen?.length ||
           !FINANCIELE_HULP.content?.budgetbeheer?.length)
       );
   }

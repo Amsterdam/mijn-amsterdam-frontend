@@ -1,32 +1,32 @@
 {
   "content": {
-    "kredeietMessages": [
+    "kredietMessages": [
       {
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2021-06-24",
         "url": "https://linktofibu/123"
       }
     ],
     "fibuMessages": [
       {
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2021-06-24",
         "url": "https://linktofibu/123"
       }
     ],
-    "schuldRegelingen": [
+    "schuldregelingen": [
       {
-        "status": "Opvragen schulden bij schuldeisers",
+        "title": "Opvragen schulden bij schuldeisers",
         "url": "https://linktofibu/123"
       }
     ],
     "leningen": [
       {
-        "status": "Kredietsom € 2.000,00 met openstaand termijnbedrag € 1.432,21",
+        "title": "Kredietsom € 2.000,00 met openstaand termijnbedrag € 1.432,21",
         "url": "https://linktofibu/123"
       }
     ],
     "budgetbeheer": [
       {
-        "status": "Beheer uw budget op FiBu",
+        "title": "Beheer uw budget op FiBu",
         "url": "https://linktofibu/123"
       }
     ]

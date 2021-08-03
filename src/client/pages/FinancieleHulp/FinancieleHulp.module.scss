@@ -1,5 +1,12 @@
 @import '../../styles/_global.scss';
 
-.FinancieleHulp {
+.SectionBorderTop {
+  border-top: 0.1rem $color-neutral-grey2 solid;
+  padding-top: 2rem;
+}
 
+.HulpTable {
+  tr td:first-child {
+    width: 70%;
+  }
 }
