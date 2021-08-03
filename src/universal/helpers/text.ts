@@ -10,3 +10,7 @@ const formatter = new Intl.NumberFormat('nl-NL', {
 export default function displayAmount(amount: number) {
   return formatter.format(amount);
 }
+
+export function splitCapitals(text: string) {
+  return text.replace(/([A-Z])/g, ' $1').trim();
+}
