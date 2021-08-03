@@ -114,7 +114,6 @@ export async function fetchFinancieleHulpGenerated(
         );
       fibuNotification && notifications.push(fibuNotification);
       kredietNotification && notifications.push(kredietNotification);
-      console.log(notifications);
       return apiSuccesResult({
         notifications,
       });
