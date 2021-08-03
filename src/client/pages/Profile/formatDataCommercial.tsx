@@ -9,10 +9,15 @@ import {
   Rechtspersoon,
   Vestiging,
 } from '../../../server/services/kvk';
-import { defaultDateFormat, getFullAddress } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  getFullAddress,
+  splitCapitals,
+} from '../../../universal/helpers';
 import { LinkdInline } from '../../components/index';
 import { format, ProfileSection } from './formatDataPrivate';
 import { Adres } from '../../../universal/types';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -194,7 +199,13 @@ const bestuurder: ProfileLabels<Partial<Bestuurder>> = {
     (value) => (value ? defaultDateFormat(value) : null),
   ],
   functie: 'Functie',
-  soortBevoegdheid: 'Soort bevoegdheid',
+  soortBevoegdheid: [
+    'Soort bevoegdheid',
+    (value) =>
+      value
+        ? capitalizeFirstLetter(splitCapitals(value).toLocaleLowerCase())
+        : '',
+  ],
 };
 
 const gemachtigde: ProfileLabels<Partial<Gemachtigde>> = {
@@ -213,7 +224,13 @@ const aansprakelijke: ProfileLabels<Partial<Aansprakelijke>> = {
     (value) => (value ? defaultDateFormat(value) : null),
   ],
   functie: 'Functie',
-  soortBevoegdheid: 'Soort bevoegdheid',
+  soortBevoegdheid: [
+    'Soort bevoegdheid',
+    (value) =>
+      value
+        ? capitalizeFirstLetter(splitCapitals(value).toLocaleLowerCase())
+        : '',
+  ],
 };
 
 const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
