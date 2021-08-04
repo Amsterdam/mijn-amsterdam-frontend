@@ -168,7 +168,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
   gemachtigden: (KVK) => ({
     title:
       KVK.content?.gemachtigden.length && KVK.content.gemachtigden.length > 1
-        ? 'Gemachtigden'
+        ? 'Gemachtigde'
         : 'Gemachtigde',
     actionLinks: [],
   }),
@@ -176,7 +176,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
     title:
       KVK.content?.aansprakelijken.length &&
       KVK.content.aansprakelijken.length > 1
-        ? 'Aansprakelijken'
+        ? 'Aansprakelijke'
         : 'Aansprakelijke',
     actionLinks: [],
   }),
