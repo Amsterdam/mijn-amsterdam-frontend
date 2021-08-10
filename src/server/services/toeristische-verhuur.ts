@@ -98,6 +98,22 @@ export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
 
+export function getToeristischeVerhuurTitle(
+  vergunningen: ToeristischeVerhuurVergunning[]
+): string {
+  const hasVergunningenVakantieVerhuur = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+  );
+  const hasVergunningBB = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
+  );
+  return hasVergunningBB
+    ? hasVergunningenVakantieVerhuur
+      ? 'Vakantieverhuur'
+      : 'Bed & Breakfast'
+    : 'Vakantieverhuur';
+}
+
 export function daysRentLeftInCalendarYear(
   verhuurItems: ToeristischeVerhuur[]
 ): number {
@@ -201,6 +217,7 @@ async function fetchAndTransformToeristischeVerhuur(
       vergunningen: [],
       registraties: [],
       daysLeft: MAXIMUM_DAYS_RENT_ALLOWED,
+      title: 'Vakantieverhuur',
     });
   }
   const registratiesRequest =
@@ -253,6 +270,7 @@ async function fetchAndTransformToeristischeVerhuur(
     {
       registraties: registraties.content || [],
       vergunningen: toeristischeVerhuurVergunningen,
+      title: getToeristischeVerhuurTitle(toeristischeVerhuurVergunningen),
       daysLeft,
     },
     failedDependencies

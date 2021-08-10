@@ -127,11 +127,21 @@ export function useChapterMenuItems() {
 export function useChapters(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
-
-  const items = chapterItems.filter((item) => {
-    // Check to see if Chapter has been loaded or if it is directly available
-    return item.isAlwaysVisible || isChapterActive(item, appState);
-  });
+  const items = chapterItems
+    .filter((item) => {
+      // Check to see if Chapter has been loaded or if it is directly available
+      return item.isAlwaysVisible || isChapterActive(item, appState);
+    })
+    .map((item) => {
+      if (item.id === Chapters.TOERISTISCHE_VERHUUR) {
+        return {
+          ...item,
+          title:
+            appState.TOERISTISCHE_VERHUUR.content?.title ?? 'Vakantieverhuur',
+        };
+      }
+      return item;
+    });
 
   return useMemo(
     () => ({

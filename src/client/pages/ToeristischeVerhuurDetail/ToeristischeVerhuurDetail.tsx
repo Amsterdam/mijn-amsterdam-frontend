@@ -32,7 +32,7 @@ export default function ToeristischVerhuurDetail() {
         icon={<ChapterIcon />}
         backLink={{
           to: AppRoutes.TOERISTISCHE_VERHUUR,
-          title: ChapterTitles.TOERISTISCHE_VERHUUR,
+          title: content?.title ?? 'Vakantie verhuur',
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >

@@ -142,7 +142,7 @@ export default function ToeristischeVerhuur() {
         }}
         icon={<ChapterIcon />}
       >
-        {ChapterTitles.TOERISTISCHE_VERHUUR}
+        {content?.title ?? 'Vakantieverhuur'}
       </PageHeading>
       <PageContent>
         <p>

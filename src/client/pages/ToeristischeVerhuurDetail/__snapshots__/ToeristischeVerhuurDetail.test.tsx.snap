@@ -13,7 +13,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Toeristische verhuur"
+          aria-label="Vakantieverhuur"
           class="ChapterIcon"
           fill="black"
         >
@@ -36,7 +36,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Left.svg
           </svg>
-          Toeristische verhuur
+          Vakantie verhuur
         </a>
         <h2
           class="Heading Heading__large"

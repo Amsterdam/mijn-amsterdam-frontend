@@ -38,6 +38,7 @@ export const PRISTINE_APPSTATE: AppState = {
     vergunningen: [],
     registraties: [],
     daysLeft: 0,
+    title: 'Vakantieverhuur',
   }),
 
   // Related

@@ -40,6 +40,7 @@ const testState: VerhuurState = {
     content: {
       daysLeft: 26,
       registraties: toeristischeVerhuurRegistraties.content,
+      title: 'Vakantieverhuur',
       vergunningen: transformVergunningenToVerhuur(vergunningen),
     },
   },
@@ -51,6 +52,7 @@ const testState2: VerhuurState = {
     content: {
       daysLeft: 2,
       registraties: [],
+      title: 'Bed & Breakfast',
       vergunningen: transformVergunningenToVerhuur(vergunningen),
     },
   },
@@ -62,6 +64,7 @@ const testState3: VerhuurState = {
     content: {
       daysLeft: 2,
       registraties: toeristischeVerhuurRegistraties.content,
+      title: 'Vakantieverhuur',
       vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
         (vergunning) => vergunning.caseType === CaseType.BBVergunning
       ),
@@ -74,6 +77,7 @@ const testState4: VerhuurState = {
     status: 'OK',
     content: {
       daysLeft: 2,
+      title: 'Vakantieverhuur',
       registraties: toeristischeVerhuurRegistraties.content,
       vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
         (vergunning) => vergunning.caseType !== CaseType.BBVergunning
@@ -87,6 +91,7 @@ const testState5: VerhuurState = {
     status: 'OK',
     content: {
       daysLeft: 0,
+      title: 'Vakantieverhuur',
       registraties: toeristischeVerhuurRegistraties.content,
       vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
         (vergunning) => vergunning.caseType !== CaseType.BBVergunning
@@ -119,7 +124,7 @@ describe('<ToeristischeVerhuur />', () => {
 
   it('Shows page for B&B and Vakantieverhuur permits', () => {
     render(<Component state={testState} />);
-    expect(screen.getByText('Toeristische verhuur')).toBeInTheDocument();
+    expect(screen.getByText('Vakantieverhuur')).toBeInTheDocument();
     expect(
       screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();
