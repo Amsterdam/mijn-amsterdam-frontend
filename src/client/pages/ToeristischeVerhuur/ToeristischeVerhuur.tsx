@@ -37,6 +37,18 @@ const DISPLAY_PROPS_VERGUNNINGEN = {
   dateEnd: 'Tot',
 };
 
+const GEPLAND_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.';
+
+const GEANNULEERD_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die vanaf 19 juli zijn geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd kunnen niet worden getoond.';
+
+const AFGEROND_DISCLAIMER =
+  'U ziet hieronder alleen meldingen die na 8 april zijn afgerond. Meldingen die vóór 8 april zijn afgerond kunnen niet worden getoond.';
+
+const BB_VERGUNNING_DISCLAIMER =
+  'U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei 2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt aangevraagd kunnen niet worden getoond.';
+
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
@@ -120,7 +132,7 @@ export default function ToeristischeVerhuur() {
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
-
+  const is2021 = getYear(new Date()) === 2021;
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -196,15 +208,15 @@ export default function ToeristischeVerhuur() {
                   </>
                 )}
               </Heading>
-              {getYear(new Date()) === 2021 ? (
+              {is2021 ? (
                 <p className={styles.DetailText}>
                   Het aantal resterende nachten is gebaseerd op meldingen voor
-                  ingeplande en afgelopen verhuur die u
-                  <strong> vanaf 19 juli</strong> 2021 hebt ingediend. Meldingen
-                  die u voor 19 juli hebt ingediend zijn mogelijk niet geheel
-                  meegenomen bij deze berekening. Dit is ook zonder eventuele
-                  meldingen die dit jaar door een mede-verhuurder of vorige
-                  bewoner zijn gedaan.
+                  ingepland en afgelopen verhuur die u vanaf 8 april 2021 hebt
+                  ingediend en annuleringen die u vanaf{' '}
+                  <strong> vanaf 19 juli</strong> hebt ingediend. Meldingen die
+                  u voor 8 april 2021 hebt ingediend zijn niet meegenomen bij
+                  deze berekening. Dit is ook zonder eventuele meldingen die dit
+                  jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
                 </p>
               ) : (
                 <p className={styles.DetailText}>
@@ -271,12 +283,21 @@ export default function ToeristischeVerhuur() {
             className={styles.SectionBorderTop}
             startCollapsed={false}
             hasItems={!!plannedVerhuur.length}
-            noItemsMessage="Er is geen geplande verhuur gevonden."
+            noItemsMessage={
+              is2021
+                ? GEPLAND_DISCLAIMER
+                : 'Er is geen geplande verhuur gevonden'
+            }
             track={{
               category: 'Toeristische verhuur / Geplande Verhuur',
               name: 'Datatabel',
             }}
           >
+            {is2021 && (
+              <p className={styles.DisclaimerCollapseText}>
+                {GEPLAND_DISCLAIMER}
+              </p>
+            )}
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -289,12 +310,21 @@ export default function ToeristischeVerhuur() {
             title="Geannuleerde verhuur"
             startCollapsed={isCollapsed('geannuleerd')}
             hasItems={!!cancelledVerhuur.length}
-            noItemsMessage="Er is geen geannuleerde verhuur gevonden."
+            noItemsMessage={
+              is2021
+                ? GEANNULEERD_DISCLAIMER
+                : 'Er is geen geannuleerde verhuur gevonden'
+            }
             track={{
               category: 'Toeristische verhuur / afgemeld Verhuur',
               name: 'Datatabel',
             }}
           >
+            {is2021 && (
+              <p className={styles.DisclaimerCollapseText}>
+                {GEANNULEERD_DISCLAIMER}
+              </p>
+            )}
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -305,7 +335,11 @@ export default function ToeristischeVerhuur() {
           <SectionCollapsible
             id="SectionCollapsible-previous-verhuur"
             title="Afgelopen verhuur"
-            noItemsMessage="Er is geen afgelopen verhuur gevonden."
+            noItemsMessage={
+              is2021
+                ? AFGEROND_DISCLAIMER
+                : 'Er is geen afgelopen verhuur gevonden.'
+            }
             startCollapsed={isCollapsed('previous')}
             hasItems={!!previousVerhuur.length}
             track={{
@@ -313,6 +347,11 @@ export default function ToeristischeVerhuur() {
               name: 'Datatabel',
             }}
           >
+            {is2021 && (
+              <p className={styles.DisclaimerCollapseText}>
+                {AFGEROND_DISCLAIMER}
+              </p>
+            )}
             <Table
               className={styles.Table}
               titleKey="dateStart"
@@ -327,13 +366,18 @@ export default function ToeristischeVerhuur() {
         className={styles.SectionNoBorderBottom}
         title="Vergunningen"
         hasItems={!!vergunningen.length}
-        noItemsMessage="U hebt nog geen vergunningen."
+        noItemsMessage={BB_VERGUNNING_DISCLAIMER}
         startCollapsed={profileType !== 'commercial'}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',
         }}
       >
+        {!hasVergunningBB && (
+          <p className={styles.DisclaimerCollapseText}>
+            {BB_VERGUNNING_DISCLAIMER}
+          </p>
+        )}
         {!!vergunningen?.length && (
           <Table
             className={styles.TableVergunningen}
