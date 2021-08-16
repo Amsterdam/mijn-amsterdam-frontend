@@ -75,7 +75,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny InvertedLabel"
         >
-          U heeft nog 26 nachten dat u uw woning mag verhuren.
+          U hebt nog 26 nachten dat u uw woning mag verhuren.
         </h3>
         <p
           class="DetailText"
@@ -84,7 +84,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           <strong>
              vanaf 19 juli
           </strong>
-           hebt ingediend. Meldingen die u voor 8 april 2021 hebt ingediend zijn niet meegenomen bij deze berekening. Dit is ook zonder eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
+           hebt ingediend. Meldingen die u voor 8 april 2021 hebt ingediend zijn niet meegenomen bij deze berekening. Dit geldt ook voor eventuele meldingen die dit jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
         </p>
         <p>
           Aan de informatie op deze pagina kunnen geen rechten worden ontleend. Kijk voor meer informatie bij 
