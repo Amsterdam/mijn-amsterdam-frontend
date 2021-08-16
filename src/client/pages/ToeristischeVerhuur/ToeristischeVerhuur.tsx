@@ -203,7 +203,7 @@ export default function ToeristischeVerhuur() {
                 )}
                 {daysRemaining > 0 && (
                   <>
-                    U heeft nog {daysRemaining} nachten dat u uw woning mag
+                    U hebt nog {daysRemaining} nachten dat u uw woning mag
                     verhuren.
                   </>
                 )}
@@ -215,8 +215,9 @@ export default function ToeristischeVerhuur() {
                   ingediend en annuleringen die u vanaf{' '}
                   <strong> vanaf 19 juli</strong> hebt ingediend. Meldingen die
                   u voor 8 april 2021 hebt ingediend zijn niet meegenomen bij
-                  deze berekening. Dit is ook zonder eventuele meldingen die dit
-                  jaar door een mede-verhuurder of vorige bewoner zijn gedaan.
+                  deze berekening. Dit geldt ook voor eventuele meldingen die
+                  dit jaar door een mede-verhuurder of vorige bewoner zijn
+                  gedaan.
                 </p>
               ) : (
                 <p className={styles.DetailText}>
