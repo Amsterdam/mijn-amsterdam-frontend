@@ -2,6 +2,7 @@ import {
   Aandeelhouder,
   Aansprakelijke,
   Bestuurder,
+  Eigenaar,
   Gemachtigde,
   KVKData,
   Onderneming,
@@ -242,6 +243,16 @@ const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
   functie: 'Functie',
 };
 
+const eigenaar: ProfileLabels<Partial<Eigenaar>> = {
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  adres: 'Adres',
+  woonplaats: 'Woonplaats',
+};
+
 export const kvkInfoLabels = {
   onderneming,
   vestiging,
@@ -251,10 +262,12 @@ export const kvkInfoLabels = {
   gemachtigde,
   aansprakelijke,
   overigeFunctionaris,
+  eigenaar,
 };
 
 interface KvkProfileData {
   onderneming: ProfileSection | null;
+  eigenaar?: ProfileSection | null;
   rechtspersonen?: ProfileSection[];
   hoofdVestiging?: ProfileSection;
   vestigingen?: ProfileSection[];
@@ -272,6 +285,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
       kvkData.onderneming,
       kvkData
     ),
+    eigenaar: format(kvkInfoLabels.eigenaar, kvkData.eigenaar, kvkData),
   };
 
   if (kvkData.rechtspersonen?.length) {

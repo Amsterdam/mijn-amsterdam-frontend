@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { ReactNode, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { KVKSourceDataContent } from '../../../server/services/kvk';
+import { KVKData } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
@@ -12,7 +12,7 @@ import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './ProfileName.module.scss';
 
 interface CommercialProfileNameProps {
-  company?: KVKSourceDataContent;
+  company?: KVKData;
   onClick?: (event: any) => void;
   isActive: boolean;
   tutorial: string;
@@ -79,7 +79,7 @@ function PrivateProfileName({
 
 interface PrivateCommercialProfileToggleProps {
   person?: BRPData['persoon'];
-  company?: KVKSourceDataContent;
+  company?: KVKData;
 }
 
 function PrivateCommercialProfileToggle({
@@ -116,7 +116,7 @@ function PrivateCommercialProfileToggle({
 
 interface ProfileNameProps {
   person?: BRPData['persoon'] | null;
-  company?: KVKSourceDataContent | null;
+  company?: KVKData | null;
   profileType: ProfileType;
 }
 

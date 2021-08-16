@@ -190,7 +190,19 @@
           "www.kruijff_sport.nl"
         ]
       }
-    ]
+    ],
+    "eigenaar": {
+      "naam": "Hendrika Johanna Theodora Grupstal",
+      "geboortedatum": "1976-10-01",
+      "adres": {
+        "huisletter": null,
+        "huisnummer": "199",
+        "huisnummertoevoeging": "K",
+        "postcode": "1234 AB",
+        "straatnaam": "Straat",
+        "woonplaatsNaam": "Amsterdam"
+      }
+    }
   },
   "status": "OK"
 }
