@@ -284,12 +284,6 @@ export default function MainNavBar({
           isTutorialVisible && styles.InfoButtonsOpen
         )}
       >
-        {isDisplaySearch && (
-          <IconButton
-            onClick={() => setSearchActive(!isSearchActive)}
-            icon={isSearchActive ? IconClose : IconSearch}
-          />
-        )}
         {location.pathname === AppRoutes.ROOT && (
           <>
             <Button
@@ -314,14 +308,12 @@ export default function MainNavBar({
             )}
           </>
         )}
-        <Linkd
-          className={styles.GeneralInfoLink}
-          href={AppRoutes.GENERAL_INFO}
-          variant="plain"
-          icon={IconInfo}
-          lean={true}
-          aria-label="Dit ziet u in Mijn Amsterdam"
-        />
+        {isDisplaySearch && (
+          <IconButton
+            onClick={() => setSearchActive(!isSearchActive)}
+            icon={isSearchActive ? IconClose : IconSearch}
+          />
+        )}
       </div>
       {isDisplaySearch && isSearchActive && (
         <div className={styles.Search}>
