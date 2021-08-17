@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { Chapters, FeatureToggle } from '../../universal/config';
+import { ToeristischeVerhuurVergunning } from '../../server/services/toeristische-verhuur';
+import { Chapters, ChapterTitles, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
   isError,
@@ -10,6 +11,37 @@ import { AppState } from '../AppState';
 import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
+
+export function getToeristischeVerhuurTitle(
+  vergunningen?: ToeristischeVerhuurVergunning[]
+): string {
+  const hasVergunningenVakantieVerhuur = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+  );
+  const hasVergunningBB = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
+  );
+  switch (true) {
+    case hasVergunningenVakantieVerhuur:
+      return 'Vakantieverhuur';
+    case hasVergunningBB && !hasVergunningenVakantieVerhuur:
+      return 'Bed & Breakfast';
+    default:
+      return 'Vakantieverhuur';
+  }
+}
+
+function chapterTitle(
+  item: ChapterMenuItem,
+  { TOERISTISCHE_VERHUUR }: AppState
+) {
+  if (item.id === Chapters.TOERISTISCHE_VERHUUR) {
+    return getToeristischeVerhuurTitle(
+      TOERISTISCHE_VERHUUR.content?.vergunningen
+    );
+  }
+  return item.title;
+}
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -132,17 +164,11 @@ export function useChapters(): ChaptersState {
       // Check to see if Chapter has been loaded or if it is directly available
       return item.isAlwaysVisible || isChapterActive(item, appState);
     })
-    .map((item) => {
-      if (item.id === Chapters.TOERISTISCHE_VERHUUR) {
-        return {
-          ...item,
-          title:
-            appState.TOERISTISCHE_VERHUUR.content?.title ?? 'Vakantieverhuur',
-        };
-      }
-      return item;
+    .map((chapterItem) => {
+      return Object.assign(chapterItem, {
+        title: chapterTitle(chapterItem, appState),
+      });
     });
-
   return useMemo(
     () => ({
       items,

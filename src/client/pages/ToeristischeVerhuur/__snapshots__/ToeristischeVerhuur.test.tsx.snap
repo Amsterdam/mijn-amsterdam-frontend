@@ -13,7 +13,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Vakantieverhuur"
+          aria-label="Toeristische verhuur"
           class="ChapterIcon"
           fill="black"
         >

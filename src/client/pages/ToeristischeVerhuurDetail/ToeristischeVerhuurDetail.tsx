@@ -11,6 +11,7 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useChapterTitle } from '../../hooks/useChapterTitle';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
@@ -19,6 +20,7 @@ export default function ToeristischVerhuurDetail() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
   const { id } = useParams<{ id: string }>();
+  const chapterTitle = useChapterTitle('TOERISTISCHE_VERHUUR');
 
   const Vergunning = content?.vergunningen?.find((item) => item.id === id);
   const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !Vergunning;
@@ -32,7 +34,7 @@ export default function ToeristischVerhuurDetail() {
         icon={<ChapterIcon />}
         backLink={{
           to: AppRoutes.TOERISTISCHE_VERHUUR,
-          title: content?.title ?? 'Vakantie verhuur',
+          title: chapterTitle,
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >

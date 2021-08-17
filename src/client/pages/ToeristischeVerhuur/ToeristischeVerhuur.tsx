@@ -22,6 +22,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './ToeristischeVerhuur.module.scss';
 import { getYear } from 'date-fns';
+import { useChapterTitle } from '../../hooks/useChapterTitle';
 
 const DISPLAY_PROPS_VERHUUR = {
   dateStart: 'Start verhuur',
@@ -53,7 +54,7 @@ export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
   const profileType = useProfileTypeValue();
-
+  const chapterTitle = useChapterTitle('TOERISTISCHE_VERHUUR');
   const hasVergunningenVakantieVerhuur = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
@@ -142,7 +143,7 @@ export default function ToeristischeVerhuur() {
         }}
         icon={<ChapterIcon />}
       >
-        {content?.title ?? 'Vakantieverhuur'}
+        {chapterTitle}
       </PageHeading>
       <PageContent>
         <p>
