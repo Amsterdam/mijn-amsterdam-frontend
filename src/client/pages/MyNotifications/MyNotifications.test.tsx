@@ -9,6 +9,8 @@ import MyNotifications from './MyNotifications';
 import { Chapters } from '../../../universal/config/chapter';
 
 const testState: any = {
+  BRP: { status: 'OK', content: { persoon: {} } },
+  FOCUS_AANVRAGEN: { status: 'OK', content: [{ productTitle: 'test' }] },
   NOTIFICATIONS: {
     status: 'OK',
     content: [
