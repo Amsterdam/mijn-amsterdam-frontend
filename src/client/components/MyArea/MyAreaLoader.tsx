@@ -7,12 +7,10 @@ export const MyAreaDashboardLazy = lazy(() => import('./MyAreaDashboardMap'));
 
 interface MyAreaLoaderProps extends MyAreaProps {
   isDashboard?: boolean;
-  tutorial?: string;
 }
 
 export default function MyAreaLoader({
   isDashboard = false,
-  tutorial = '',
   datasetIds,
   showPanels = true,
   showHeader = true,
@@ -30,7 +28,7 @@ export default function MyAreaLoader({
       }
     >
       {isDashboard ? (
-        <MyAreaDashboardLazy tutorial={tutorial} />
+        <MyAreaDashboardLazy />
       ) : (
         <MyAreaLazy
           datasetIds={datasetIds}

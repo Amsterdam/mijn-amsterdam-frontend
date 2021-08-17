@@ -4,7 +4,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
     class="Page Dashboard"
-    data-tutorial-item="Hier ziet u nieuwe berichten van onze afdelingen;right-top"
   >
     <header
       class="PageHeading"
@@ -246,7 +245,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       </div>
       <div
         class="Panel MyChaptersPanel"
-        data-tutorial-item="Over deze onderwerpen hebben wij informatie voor u;right-top"
       >
         <h3
           class="Heading Heading__large Title"
@@ -326,7 +324,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
     </div>
     <div
       class="MyCases"
-      data-tutorial-item="Hier staan de aanvragen waar de gemeente nog een besluit over moet nemen;right-top"
     >
       <h3
         class="Heading Heading__large"
@@ -373,7 +370,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
         >
           <h3
             class="Heading Heading__large"
-            data-tutorial-item="Op deze kaart ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en vergunningen;left-top"
           >
             Mijn buurt
           </h3>
@@ -385,7 +381,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
     </div>
     <div
       class="MyTips"
-      data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over regelingen van de gemeente;right-bottom"
     >
       <div
         class="HeaderBar"
@@ -502,7 +497,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
     </div>
     <div
       class="DirectLinks"
-      data-tutorial-item="Hier staan links naar andere websites;right-bottom"
       id="DirectLinks"
     >
       <h3
@@ -514,6 +508,33 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       <ul
         class="LinkList"
       >
+        <li>
+          <a
+            class="Button Button__plain Button__lean Linkd"
+            href="/buurt"
+            id="MyAreaHeader"
+          >
+            Mijn buurt
+          </a>
+        </li>
+        <li>
+          <a
+            class="Button Button__plain Button__lean Linkd"
+            href="/overzicht-tips"
+            id="MyTipsHeader"
+          >
+            Mijn tips
+          </a>
+        </li>
+        <li>
+          <a
+            class="Button Button__plain Button__lean Linkd"
+            href="/uitleg"
+            id="Uitleg"
+          >
+            Dit ziet u in Mijn Amsterdam
+          </a>
+        </li>
         <li>
           <a
             class="Button Button__plain Button__lean Linkd"

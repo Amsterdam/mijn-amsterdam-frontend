@@ -46,6 +46,5 @@ export {
 } from './SectionCollapsible/SectionCollapsible';
 export { default as StatusLine } from './StatusLine/StatusLine';
 export { default as Table, addTitleLinkComponent } from './Table/Table';
-export { default as Tutorial } from './Tutorial/Tutorial';
 export { default as InnerHtml } from './InnerHtml/InnerHtml';
 export { default as MaintenanceNotifications } from '../components/MaintenanceNotifications/MaintenanceNotifications';
