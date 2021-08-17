@@ -231,6 +231,9 @@ export function Search({
             }}
           >
             <SearchBar
+              inputProps={{
+                autoComplete: 'none',
+              }}
               autoFocus
               placeholder={
                 results.isIndexReady

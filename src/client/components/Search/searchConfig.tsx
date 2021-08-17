@@ -10,11 +10,17 @@ import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 import { AppState } from '../../AppState';
-import { IconChevronRight } from '../../assets/icons';
+import { IconChevronRight, IconExternalLink } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
 import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { Akte } from '../../../server/services/aktes';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import {
+  FocusStadspasSaldo,
+  FocusStadspas,
+} from '../../../server/services/focus/focus-combined';
+import Stadspas from '../../pages/Stadspas/Stadspas';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 
 export interface PageEntry {
   url: string;
@@ -93,12 +99,19 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
   },
 };
 
-export function displayPath(segments: string[]) {
+export function displayPath(segments: string[], isExternal: boolean = false) {
   return (
     <span>
       {segments.map((segment, i) => (
         <React.Fragment key={segment + i}>
-          <IconChevronRight width="14" height="14" />
+          {i === 0 && isExternal ? (
+            <span style={{ marginRight: '4px' }}>
+              <IconExternalLink width="14" height="14" />
+            </span>
+          ) : (
+            <IconChevronRight width="14" height="14" />
+          )}
+
           {segment}
         </React.Fragment>
       ))}
@@ -157,9 +170,28 @@ export const apiSearchConfigs: Array<
       return displayPath(['Actueel', notification.title]);
     },
   },
-  // {
-  //   apiName: 'FOCUS_TOZO',
-  // },
+  {
+    apiName: 'FOCUS_STADSPAS',
+    getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
+      const stadspassen = apiContent.stadspassen.map((stadspas) => {
+        return {
+          ...stadspas,
+          title: `Stadspas ${stadspas.pasnummer}`,
+          link: {
+            to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
+            title: `Stadspas ${stadspas.pasnummer}`,
+          },
+        };
+      });
+      return stadspassen;
+    },
+    displayTitle: (stadspas: FocusStadspas) => {
+      return displayPath([
+        'Stadspas',
+        `${stadspas.naam} ${stadspas.pasnummer}`,
+      ]);
+    },
+  },
   {
     apiName: 'FOCUS_TOZO',
     keywordSourceProps: (tozo: ApiBaseItem): string[] => {
@@ -191,12 +223,13 @@ export const apiSearchConfigs: Array<
         aanvraag.dateStart
       )})`;
     },
-    displayTitle: (aanvraag: ApiBaseItem) => {
+    displayTitle: (aanvraag: FocusItem) => {
+      const isStadspas = aanvraag.productTitle === 'Stadspas';
       return displayPath([
-        'Inkomen',
-        `Aanvraag ${aanvraag.productTitle.toLowerCase()} (${defaultDateFormat(
-          aanvraag.dateStart
-        )})`,
+        isStadspas ? 'Stadspas' : 'Inkomen',
+        `Aanvraag${
+          isStadspas ? '' : aanvraag.productTitle?.toLowerCase() + ' '
+        } (${defaultDateFormat(aanvraag.dateStart)})`,
       ]);
     },
   },

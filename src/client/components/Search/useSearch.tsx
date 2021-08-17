@@ -103,7 +103,7 @@ function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         title: page.title,
-        displayTitle: displayPath([page.title]),
+        displayTitle: displayPath([page.title], true),
         keywords: page.sections,
         description: page.description,
         url: page.url,
