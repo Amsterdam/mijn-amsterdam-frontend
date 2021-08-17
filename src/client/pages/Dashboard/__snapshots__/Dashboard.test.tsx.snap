@@ -54,7 +54,9 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               >
                 <em
                   class="ChapterIndication"
-                />
+                >
+                  ROOT
+                </em>
                 <time
                   class="Datum"
                   datetime="2020-07-24"
@@ -116,7 +118,9 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               >
                 <em
                   class="ChapterIndication"
-                />
+                >
+                  ROOT
+                </em>
                 <time
                   class="Datum"
                   datetime="2020-07-24"
@@ -178,7 +182,9 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               >
                 <em
                   class="ChapterIndication"
-                />
+                >
+                  ROOT
+                </em>
                 <time
                   class="Datum"
                   datetime="2020-07-24"

@@ -1,4 +1,24 @@
+import { ToeristischeVerhuurVergunning } from '../../server/services/toeristische-verhuur';
 import { AppRoutes } from './routes';
+
+export function getToeristischeVerhuurTitle(
+  vergunningen?: ToeristischeVerhuurVergunning[]
+): string {
+  const hasVergunningenVakantieVerhuur = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+  );
+  const hasVergunningBB = vergunningen?.some(
+    (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
+  );
+  switch (true) {
+    case hasVergunningenVakantieVerhuur:
+      return 'Vakantieverhuur';
+    case hasVergunningBB && !hasVergunningenVakantieVerhuur:
+      return 'Bed & Breakfast';
+    default:
+      return 'Vakantieverhuur';
+  }
+}
 
 // Within the team we call these Themes
 export type Chapter =

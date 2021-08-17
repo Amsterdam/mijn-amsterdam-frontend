@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
-import { ToeristischeVerhuurVergunning } from '../../server/services/toeristische-verhuur';
-import { Chapters, ChapterTitles, FeatureToggle } from '../../universal/config';
+
+import {
+  Chapters,
+  FeatureToggle,
+  getToeristischeVerhuurTitle,
+} from '../../universal/config';
 import {
   ApiResponse,
   isError,
@@ -11,25 +15,6 @@ import { AppState } from '../AppState';
 import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-
-export function getToeristischeVerhuurTitle(
-  vergunningen?: ToeristischeVerhuurVergunning[]
-): string {
-  const hasVergunningenVakantieVerhuur = vergunningen?.some(
-    (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
-  );
-  const hasVergunningBB = vergunningen?.some(
-    (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
-  );
-  switch (true) {
-    case hasVergunningenVakantieVerhuur:
-      return 'Vakantieverhuur';
-    case hasVergunningBB && !hasVergunningenVakantieVerhuur:
-      return 'Bed & Breakfast';
-    default:
-      return 'Vakantieverhuur';
-  }
-}
 
 function chapterTitle(
   item: ChapterMenuItem,
