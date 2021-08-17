@@ -1,10 +1,13 @@
 import axios, { CancelTokenSource } from 'axios';
-import { Vergunning } from '../../server/services';
-import { DocumentTitles } from '../../universal/config/chapter';
-import { AppRoutes } from '../../universal/config/routes';
-import { pick } from '../../universal/helpers';
+import { Vergunning } from '../../../server/services';
+import { DocumentTitles } from '../../../universal/config/chapter';
+import { AppRoutes } from '../../../universal/config/routes';
+import { pick } from '../../../universal/helpers';
+import Fuse from 'fuse.js';
+import { useRef } from 'react';
+import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 
-interface PageEntry {
+export interface PageEntry {
   url: string;
   title: string;
   description: string;
@@ -29,6 +32,7 @@ export const staticIndex: PageEntry[] = [
       'Melding',
       'Lopende aanvragen',
       'Aanvragen',
+      'Themas',
     ],
   },
   {
@@ -64,6 +68,7 @@ export const staticIndex: PageEntry[] = [
     keywords: [
       'Zorg',
       'Scootmobiel',
+      'Rollator',
       'Thuishulp',
       'Hulp in huis',
       'Thuiszorg',
@@ -147,6 +152,11 @@ export const staticIndex: PageEntry[] = [
       'aangifte',
       'verhuizen',
       'kinderen',
+      'bewoners',
+      'aantal bewoners',
+      'ingeschreven',
+      'adres',
+      'naam',
     ],
   },
   {
@@ -176,23 +186,7 @@ export const staticIndex: PageEntry[] = [
     url: AppRoutes.BUURT,
     title: DocumentTitles[AppRoutes.BUURT],
     description: `Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.`,
-    keywords: [
-      'kaart',
-      'map',
-      'Afvalcontainers',
-      'vergunningen',
-      'Bekendmakingen',
-      'Bouwvergunning',
-      'Evenementen',
-      'Evenement',
-      'Investeringszone',
-      'Investering',
-      'Omgeving',
-      'Parken',
-      'Fitness',
-      'Zwemmen',
-      'Zwembaden',
-    ],
+    keywords: ['buurt', 'straat', 'adres', 'kaart', 'map', 'Omgeving'],
   },
   {
     url: AppRoutes.TIPS,
@@ -294,7 +288,7 @@ export const staticIndex: PageEntry[] = [
   },
 ];
 
-export const dynamicSearchIndex: PageEntry[] = [];
+export const dynamicSearchIndex: PageEntry[] = [...staticIndex];
 
 interface ApiSearchConfig {
   keywordSourceProps:
@@ -308,7 +302,7 @@ interface ApiSearchConfig {
 export const apiSearchConfigs: Record<string, ApiSearchConfig> = {
   VERGUNNINGEN: {
     keywordSourceProps: (vergunning: Vergunning): string[] => {
-      const props = ['caseType', 'title', 'status'];
+      const props = ['caseType', 'title', 'status', 'decision'];
       switch (vergunning.caseType) {
         case 'Evenement melding':
           return props.concat(['eventType', 'activities', 'location']);
@@ -388,34 +382,47 @@ interface AmsterdamSearchResult {
 
 let activeSource: CancelTokenSource;
 
-export async function addAmsterdamResults(
+function transformSearchAmsterdamNLresponse(responseData: any) {
+  if (Array.isArray(responseData?.records?.page)) {
+    return responseData.records.page.map((page: AmsterdamSearchResult) => {
+      return {
+        title: page.title,
+        keywords: page.sections,
+        description: page.description,
+        url: page.url,
+      };
+    });
+  }
+  return [];
+}
+
+export function searchAmsterdamNL(
   keywords: string,
   resultCountPerPage: number = 5
 ) {
   if (activeSource) {
     activeSource.cancel('Search renewed');
   }
+
   activeSource = axios.CancelToken.source();
-  const response = await axios.get(
+
+  return axios.get(
     `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`,
     {
       cancelToken: activeSource.token,
-      transformResponse: (responseData) => {
-        if (Array.isArray(responseData?.records?.page)) {
-          return responseData.records.page.map(
-            (page: AmsterdamSearchResult) => {
-              return {
-                title: page.title,
-                keywords: page.sections,
-                description: page.description,
-                url: page.url,
-              };
-            }
-          );
-        }
-        return [];
-      },
+      transformResponse: addAxiosResponseTransform(
+        transformSearchAmsterdamNLresponse
+      ),
     }
   );
-  return response.data;
+}
+
+const options = {
+  threshold: 0.4,
+  includeScore: true,
+  keys: ['title', 'description', 'keywords'],
+};
+
+export function useSearch() {
+  return useRef(new Fuse(staticIndex, options));
 }

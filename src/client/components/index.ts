@@ -39,6 +39,7 @@ export { default as PageHeading } from './PageHeading/PageHeading';
 export { default as Pagination } from './Pagination/Pagination';
 export { default as Panel } from './Panel/Panel';
 export { default as Section } from './Section/Section';
+export { Search } from './Search/Search';
 export {
   default as SectionCollapsible,
   SectionCollapsibleHeading,
