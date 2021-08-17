@@ -159,16 +159,20 @@ export function useChapterMenuItems() {
 export function useChapters(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
-  const items = chapterItems
-    .filter((item) => {
-      // Check to see if Chapter has been loaded or if it is directly available
-      return item.isAlwaysVisible || isChapterActive(item, appState);
-    })
-    .map((chapterItem) => {
-      return Object.assign(chapterItem, {
-        title: chapterTitle(chapterItem, appState),
+
+  const items = useMemo(() => {
+    return chapterItems
+      .filter((item) => {
+        // Check to see if Chapter has been loaded or if it is directly available
+        return item.isAlwaysVisible || isChapterActive(item, appState);
+      })
+      .map((chapterItem) => {
+        return Object.assign(chapterItem, {
+          title: chapterTitle(chapterItem, appState),
+        });
       });
-    });
+  }, [chapterItems, appState]);
+
   return useMemo(
     () => ({
       items,

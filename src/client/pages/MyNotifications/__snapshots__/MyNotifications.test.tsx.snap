@@ -75,9 +75,7 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             >
               <em
                 class="ChapterIndication"
-              >
-                Home
-              </em>
+              />
               <time
                 class="Datum"
                 datetime="2020-07-24"
@@ -267,9 +265,7 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             >
               <em
                 class="ChapterIndication"
-              >
-                Actueel
-              </em>
+              />
             </div>
           </aside>
           <div
