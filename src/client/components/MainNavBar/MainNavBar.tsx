@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconInfo } from '../../assets/icons';
+import { IconClose, IconInfo, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import {
   trackItemClick,
@@ -17,12 +17,13 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Linkd, { Button } from '../Button/Button';
+import Linkd, { Button, IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
+import { Search } from '../Search/Search';
 import Tutorial from '../Tutorial/Tutorial';
 import {
   mainMenuItemId,
@@ -223,6 +224,8 @@ export default function MainNavBar({
     });
   }, [myChapterItems, profileType, termReplace]);
 
+  const [isSearchActive, setSearchActive] = useState(false);
+
   return (
     <nav
       className={classnames(
@@ -261,13 +264,16 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-
       <div
         className={classnames(
           styles.InfoButtons,
           isTutorialVisible && styles.InfoButtonsOpen
         )}
       >
+        <IconButton
+          onClick={() => setSearchActive(!isSearchActive)}
+          icon={isSearchActive ? IconClose : IconSearch}
+        />
         {location.pathname === AppRoutes.ROOT && (
           <>
             <Button
@@ -301,6 +307,7 @@ export default function MainNavBar({
           aria-label="Dit ziet u in Mijn Amsterdam"
         />
       </div>
+      {isSearchActive && <Search onClose={() => setSearchActive(false)} />}
     </nav>
   );
 }

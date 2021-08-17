@@ -1,0 +1,31 @@
+@import '../../styles/_global.scss';
+
+.Search {
+  z-index: z-index(main-nav-bar-inner--tablet);
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.SearchBar {
+  padding: 2.6rem;
+  background-color: $color-neutral-grey1;
+}
+
+.SearchBarInner {
+  max-width: 41rem;
+  margin: 0 auto;
+}
+
+.Results {
+  position: absolute;
+  width: 100%;
+  max-width: 41rem;
+  background-color: $color-neutral-grey1;
+  // padding: 2rem;
+}
+
+.ResultList {
+  @include reset-list-style;
+  margin: 2rem;
+}
