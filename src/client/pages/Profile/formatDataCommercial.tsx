@@ -251,7 +251,7 @@ const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
   functie: 'Functie',
 };
 
-const eigenaar: ProfileLabels<Partial<FormattedEigenaar>> = {
+const eigenaar: ProfileLabels<FormattedEigenaar> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',

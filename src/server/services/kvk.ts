@@ -19,7 +19,7 @@ export interface Onderneming {
 
 export interface Rechtspersoon {
   rsin?: string;
-  kvkNummer?: string;
+  kvkNummer: string;
   statutaireNaam: string;
   statutaireZetel: string;
 }
@@ -96,16 +96,14 @@ export interface KVKSourceDataContent {
   overigeFunctionarissen: OverigeFunctionaris[];
   gemachtigden: Gemachtigde[];
   aansprakelijken: Aansprakelijke[];
-  eigenaar: Eigenaar;
+  eigenaar: Eigenaar | null;
 }
 
 export interface KVKSourceData {
   content: KVKSourceDataContent;
 }
 
-export interface KVKData extends Omit<KVKSourceDataContent, 'eigenaar'> {
-  eigenaar?: Eigenaar;
-}
+export interface KVKData extends KVKSourceDataContent {}
 
 export function getKvkAddress(kvkData: KVKData) {
   let address: Adres | null = null;
@@ -174,7 +172,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   return responseData.content;
 }
 
-const SERVICE_NAME = 'KVK'; // Change to your service name
+const SERVICE_NAME = 'KVK';
 
 export async function fetchKVK(
   sessionID: SessionID,
