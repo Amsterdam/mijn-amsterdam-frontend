@@ -40,9 +40,6 @@ describe('<MainNavBar />', () => {
     );
 
     expect(screen.getByText(/Test Menu Item/)).toBeInTheDocument();
-    expect(
-      screen.queryByLabelText('Dit ziet u in Mijn Amsterdam')
-    ).toBeInTheDocument();
   });
 
   describe('Small screen version of <MainNavBar />', () => {
@@ -62,17 +59,6 @@ describe('<MainNavBar />', () => {
       userEvent.click(screen.getByText('Toon navigatie'));
       expect(screen.getByText('Verberg navigatie')).toBeInTheDocument();
       expect(screen.getByText('Uitloggen')).toBeInTheDocument();
-      expect(
-        screen.queryByLabelText('Dit ziet u in Mijn Amsterdam')
-      ).toBeInTheDocument();
     });
-
-    // it('Opens and closes the burger menu', () => {
-    //   const component = mount(<Component />);
-
-    //   expect(component.find('BurgerButton')).toHaveLength(1);
-    //   component.find('BurgerButton').simulate('click');
-    //   expect(component.find('.MainNavBar.BurgerMenuVisible')).toHaveLength(1);
-    // });
   });
 });

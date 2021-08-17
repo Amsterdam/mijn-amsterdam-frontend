@@ -8,24 +8,21 @@ import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import {
-  trackItemClick,
-  trackItemPresentation,
-} from '../../hooks/analytics.hook';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { Button, IconButton } from '../Button/Button';
+import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import { Search } from '../Search/Search';
-import Tutorial from '../Tutorial/Tutorial';
+
 import {
   mainMenuItemId,
   mainMenuItems,
@@ -150,21 +147,7 @@ export default function MainNavBar({
   );
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const [isTutorialVisible, setIsTutorialVisible] = useState<
-    boolean | undefined
-  >(undefined);
   const profileType = useProfileTypeValue();
-  const tutorialRef = useRef<HTMLButtonElement | null>(null);
-
-  // Re-focus the tutorial button on closing of modal. WCAG requirement.
-  useEffect(() => {
-    if (isTutorialVisible === undefined) {
-      return;
-    }
-    if (isTutorialVisible === false) {
-      tutorialRef?.current?.focus();
-    }
-  }, [isTutorialVisible]);
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -272,36 +255,7 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      <div
-        className={classnames(
-          styles.InfoButtons,
-          isTutorialVisible && styles.InfoButtonsOpen
-        )}
-      >
-        {location.pathname === AppRoutes.ROOT && (
-          <>
-            <Button
-              ref={tutorialRef}
-              className={styles.TutorialBtn}
-              onClick={() => {
-                setIsTutorialVisible(!isTutorialVisible);
-                if (!isTutorialVisible) {
-                  trackItemClick('Klikken', 'rondleiding', profileType);
-                }
-              }}
-              variant="plain"
-              aria-expanded={isTutorialVisible}
-              lean={true}
-            >
-              Rondleiding
-            </Button>
-            {isTutorialVisible && (
-              <Tutorial
-                onClose={() => setIsTutorialVisible(!isTutorialVisible)}
-              />
-            )}
-          </>
-        )}
+      <div className={styles.InfoButtons}>
         {isDisplaySearch && (
           <IconButton
             className={styles.SearchButton}

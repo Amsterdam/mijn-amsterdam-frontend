@@ -13,8 +13,6 @@ $z-index: (
   main-nav-bar-inner--tablet: 411,
   modal: 500,
   dialog: 501,
-  tutorial-overlay: 1000,
-  tutorial-items: 1001,
 );
 
 @function z-index($key) {

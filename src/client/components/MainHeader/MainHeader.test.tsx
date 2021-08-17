@@ -31,10 +31,6 @@ describe('<MainHeader />', () => {
       </RecoilRoot>
     );
 
-    expect(
-      screen.getByLabelText('Dit ziet u in Mijn Amsterdam')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Rondleiding')).toBeInTheDocument();
     expect(container.querySelector('picture')).toBeInTheDocument();
     expect(container.querySelector('img')?.getAttribute('src')).toBe(
       '/header/1366x342-algemeen.jpg'

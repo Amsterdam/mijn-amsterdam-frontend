@@ -172,15 +172,6 @@
   }
 }
 
-.TutorialBtn {
-  background-size: 2.4rem;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 0;
-  background-color: transparent;
-  padding: 0;
-}
-
 .GeneralInfoLink {
   @include select(Button_Icon) {
     width: 2.2rem;
