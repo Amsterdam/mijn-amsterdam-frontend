@@ -2,7 +2,6 @@ import {
   Aandeelhouder,
   Aansprakelijke,
   Bestuurder,
-  Eigenaar,
   Gemachtigde,
   KVKData,
   Onderneming,
@@ -34,6 +33,14 @@ type ProfileLabelValueFormatter =
     ];
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
+
+type FormattedEigenaar = {
+  naam: string | null;
+  geboortedatum: string | null;
+  bsn?: string;
+  adres: string | null;
+  woonplaats: string | null;
+};
 
 const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnaam: 'Handelsnaam',
@@ -77,6 +84,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
       return value ? defaultDateFormat(value) : null;
     },
   ],
+  kvkNummer: 'KVK nummer',
 };
 
 const vestiging: ProfileLabels<Partial<Vestiging>> = {
@@ -243,14 +251,18 @@ const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
   functie: 'Functie',
 };
 
-const eigenaar: ProfileLabels<Partial<Eigenaar>> = {
+const eigenaar: ProfileLabels<Partial<FormattedEigenaar>> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',
     (value) => (value ? defaultDateFormat(value) : null),
   ],
-  adres: 'Adres',
-  woonplaats: 'Woonplaats',
+  bsn: 'BSN',
+  adres: ['Adres', (address) => getFullAddress(address)],
+  woonplaats: [
+    'Woonplaats',
+    (_, all) => `${all.adres.postcode} ${all.adres.woonplaatsNaam}`,
+  ],
 };
 
 export const kvkInfoLabels = {

@@ -122,14 +122,6 @@ export default function ProfileCommercial() {
         />
       )}
 
-      {!!kvkProfileData?.eigenaar && (
-        <InfoPanel
-          className={styles.DefaultPanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.eigenaar, KVK)}
-          panelData={kvkProfileData.eigenaar}
-        />
-      )}
-
       {!!KVK.content?.rechtspersonen && kvkProfileData?.rechtspersonen && (
         <InfoPanelMulti
           id="kvk-rechtspersonen"
@@ -138,6 +130,14 @@ export default function ProfileCommercial() {
           items={KVK.content.rechtspersonen}
           panelConfig={panelConfigCommercial.rechtspersonen}
           profileData={kvkProfileData.rechtspersonen}
+        />
+      )}
+
+      {!!kvkProfileData?.eigenaar && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...formatInfoPanelConfig(panelConfigCommercial.eigenaar, KVK)}
+          panelData={kvkProfileData.eigenaar}
         />
       )}
 

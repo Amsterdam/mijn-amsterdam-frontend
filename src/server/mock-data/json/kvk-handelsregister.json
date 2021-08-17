@@ -75,17 +75,10 @@
       "overigeActiviteiten": [
         "Jachthavens"
       ],
-      "rechtsvorm": null
+      "rechtsvorm": null,
+      "kvkNummer": "90006178"
     },
-    "rechtspersonen": [
-      {
-        "bsn": "123460013",
-        "kvkNummer": "90006178",
-        "rsin": null,
-        "statutaireNaam": null,
-        "statutaireZetel": null
-      }
-    ],
+    "rechtspersonen": [],
     "vestigingen": [
       {
         "activiteiten": [
@@ -194,6 +187,7 @@
     "eigenaar": {
       "naam": "Hendrika Johanna Theodora Grupstal",
       "geboortedatum": "1976-10-01",
+      "bsn": "123460013",
       "adres": {
         "huisletter": null,
         "huisnummer": "199",

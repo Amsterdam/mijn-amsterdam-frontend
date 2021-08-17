@@ -14,12 +14,12 @@ export interface Onderneming {
   overigeActiviteiten: string[] | null;
   datumAanvang: string;
   datumEinde: string | null;
+  kvkNummer?: string;
 }
 
 export interface Rechtspersoon {
   rsin?: string;
-  bsn?: string;
-  kvkNummer: string;
+  kvkNummer?: string;
   statutaireNaam: string;
   statutaireZetel: string;
 }
@@ -72,9 +72,10 @@ export interface Vestiging {
   isHoofdvestiging?: boolean;
 }
 
-export interface EigenaarSource {
+export interface Eigenaar {
   naam: string | null;
   geboortedatum: string | null;
+  bsn?: string;
   adres: {
     huisletter: string | null;
     huisnummer: string | null;
@@ -83,13 +84,6 @@ export interface EigenaarSource {
     straatnaam: string | null;
     woonplaatsNaam: string | null;
   };
-}
-
-export interface Eigenaar {
-  naam: string | null;
-  geboortedatum: string | null;
-  adres: string | null;
-  woonplaats: string | null;
 }
 
 export interface KVKSourceDataContent {
@@ -102,7 +96,7 @@ export interface KVKSourceDataContent {
   overigeFunctionarissen: OverigeFunctionaris[];
   gemachtigden: Gemachtigde[];
   aansprakelijken: Aansprakelijke[];
-  eigenaar?: EigenaarSource;
+  eigenaar: Eigenaar;
 }
 
 export interface KVKSourceData {
@@ -145,7 +139,6 @@ export function getKvkAddress(kvkData: KVKData) {
 }
 
 export function transformKVKData(responseData: KVKSourceData): KVKData | null {
-  let eigenaar = undefined;
   if (
     responseData === null ||
     responseData.content === null ||
@@ -178,24 +171,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
     );
   }
 
-  if (responseData.content.eigenaar) {
-    const adressObject = responseData.content.eigenaar.adres;
-
-    eigenaar = {
-      ...responseData.content.eigenaar,
-      adres: `${adressObject.straatnaam} ${
-        !!adressObject.huisnummer ? adressObject.huisnummer : ''
-      }${
-        !!adressObject.huisnummertoevoeging
-          ? adressObject.huisnummertoevoeging
-          : ''
-      }
-      `,
-      woonplaats: `${adressObject.postcode} ${adressObject.woonplaatsNaam}`,
-    };
-  }
-
-  return { ...responseData.content, eigenaar };
+  return responseData.content;
 }
 
 const SERVICE_NAME = 'KVK'; // Change to your service name
