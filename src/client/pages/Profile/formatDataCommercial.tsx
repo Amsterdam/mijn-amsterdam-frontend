@@ -34,6 +34,14 @@ type ProfileLabelValueFormatter =
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
+type FormattedEigenaar = {
+  naam: string | null;
+  geboortedatum: string | null;
+  bsn?: string;
+  adres: string | null;
+  woonplaats: string | null;
+};
+
 const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnaam: 'Handelsnaam',
   handelsnamen: [
@@ -76,6 +84,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
       return value ? defaultDateFormat(value) : null;
     },
   ],
+  kvkNummer: 'KVK nummer',
 };
 
 const vestiging: ProfileLabels<Partial<Vestiging>> = {
@@ -242,6 +251,20 @@ const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
   functie: 'Functie',
 };
 
+const eigenaar: ProfileLabels<FormattedEigenaar> = {
+  naam: 'Naam',
+  geboortedatum: [
+    'Geboortedatum',
+    (value) => (value ? defaultDateFormat(value) : null),
+  ],
+  bsn: 'BSN',
+  adres: ['Adres', (address) => getFullAddress(address)],
+  woonplaats: [
+    'Woonplaats',
+    (_, all) => `${all.adres.postcode} ${all.adres.woonplaatsNaam}`,
+  ],
+};
+
 export const kvkInfoLabels = {
   onderneming,
   vestiging,
@@ -251,10 +274,12 @@ export const kvkInfoLabels = {
   gemachtigde,
   aansprakelijke,
   overigeFunctionaris,
+  eigenaar,
 };
 
 interface KvkProfileData {
   onderneming: ProfileSection | null;
+  eigenaar?: ProfileSection | null;
   rechtspersonen?: ProfileSection[];
   hoofdVestiging?: ProfileSection;
   vestigingen?: ProfileSection[];
@@ -272,6 +297,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
       kvkData.onderneming,
       kvkData
     ),
+    eigenaar: format(kvkInfoLabels.eigenaar, kvkData.eigenaar, kvkData),
   };
 
   if (kvkData.rechtspersonen?.length) {

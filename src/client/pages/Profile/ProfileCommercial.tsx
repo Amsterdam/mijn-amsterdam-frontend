@@ -23,7 +23,6 @@ import {
   PanelConfigFormatter,
 } from './profilePanelConfig';
 import classnames from 'classnames';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -78,8 +77,6 @@ export default function ProfileCommercial() {
       ? formatKvkProfileData(KVK.content)
       : KVK.content;
   }, [KVK]);
-  const profileType = useProfileTypeValue();
-
   return (
     <DetailPage className={styles.ProfileCommercial}>
       <PageHeading icon={<ChapterIcon />} isLoading={false}>
@@ -128,14 +125,19 @@ export default function ProfileCommercial() {
       {!!KVK.content?.rechtspersonen && kvkProfileData?.rechtspersonen && (
         <InfoPanelMulti
           id="kvk-rechtspersonen"
-          className={classnames(
-            styles.InfoPanelRechtspersonen,
-            styles[`is-${profileType}`]
-          )}
           KVKData={KVK}
+          className={styles.DefaultPanel}
           items={KVK.content.rechtspersonen}
           panelConfig={panelConfigCommercial.rechtspersonen}
           profileData={kvkProfileData.rechtspersonen}
+        />
+      )}
+
+      {!!kvkProfileData?.eigenaar && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...formatInfoPanelConfig(panelConfigCommercial.eigenaar, KVK)}
+          panelData={kvkProfileData.eigenaar}
         />
       )}
 

@@ -173,4 +173,8 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
     title: 'Aansprakelijke',
     actionLinks: [],
   }),
+  eigenaar: () => ({
+    title: 'Eigenaar',
+    actionLinks: [],
+  }),
 };
