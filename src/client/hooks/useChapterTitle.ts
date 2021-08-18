@@ -1,8 +1,8 @@
-import { Chapter } from '../../universal/config';
+import { Chapter, ChapterTitles } from '../../universal/config';
 import { useChapters } from './useChapters';
 
 export function useChapterTitle(chapter: Chapter) {
   const chapters = useChapters();
   const chapterItem = chapters.items.find((item) => item.id === chapter)!;
-  return chapterItem?.title ?? chapter;
+  return chapterItem?.title ?? ChapterTitles[chapter] ?? chapter;
 }

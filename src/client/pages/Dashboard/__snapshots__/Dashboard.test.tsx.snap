@@ -55,7 +55,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 <em
                   class="ChapterIndication"
                 >
-                  ROOT
+                  Home
                 </em>
                 <time
                   class="Datum"
@@ -119,7 +119,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 <em
                   class="ChapterIndication"
                 >
-                  ROOT
+                  Home
                 </em>
                 <time
                   class="Datum"
@@ -183,7 +183,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 <em
                   class="ChapterIndication"
                 >
-                  ROOT
+                  Home
                 </em>
                 <time
                   class="Datum"
