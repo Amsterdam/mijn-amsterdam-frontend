@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
@@ -18,14 +18,24 @@ import { useChapters } from '../../hooks/useChapters';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
+import { ChapterMenuItem } from '../../config/menuItems';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
+
+function sortAndFormatChapters(items: ChapterMenuItem[]) {
+  const shortNameItems = items
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .map((item) => item.title.substring(0, 3));
+  return shortNameItems.join();
+}
 
 export default function Dashboard() {
   const appState = useAppStateGetter();
   const { TIPS, NOTIFICATIONS, CASES } = appState;
   const notifications = useAppStateNotifications();
+  const prevChapters = useRef<string>();
   const tipItems = useMemo(() => {
     return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
   }, [TIPS.content]);
@@ -42,6 +52,21 @@ export default function Dashboard() {
 
   const profileType = useProfileTypeValue();
 
+  useEffect(() => {
+    const chapterEventName = sortAndFormatChapters(myChapterItems);
+    if (
+      myChapterItems.length &&
+      !isMyChaptersLoading &&
+      chapterEventName !== prevChapters.current
+    ) {
+      prevChapters.current = chapterEventName;
+      trackItemPresentation(
+        'Tonen themas overzicht',
+        chapterEventName,
+        profileType
+      );
+    }
+  }, [myChapterItems, profileType, isMyChaptersLoading]);
   return (
     <>
       <Page
