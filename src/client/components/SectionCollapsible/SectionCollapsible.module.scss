@@ -16,7 +16,7 @@
   width: 0.8em;
   position: absolute;
   top: 1.3rem;
-  transform: translateY(-50%) rotate(0);
+  transform: translateY(calc(-50% + 3px)) rotate(0);
   left: 0;
   transition: transform 200ms ease-out;
 }
@@ -52,7 +52,7 @@
   text-align: left;
 
   &[aria-expanded='true'] .CaretIcon {
-    transform: translateY(-50%) rotate(90deg);
+    transform: translateY(calc(-50% + 3px)) rotate(90deg);
   }
 }
 

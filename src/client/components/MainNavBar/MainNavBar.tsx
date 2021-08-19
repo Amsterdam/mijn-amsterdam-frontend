@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { matchPath, NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
@@ -22,7 +22,6 @@ import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import { Search } from '../Search/Search';
-
 import {
   mainMenuItemId,
   mainMenuItems,
@@ -222,6 +221,14 @@ export default function MainNavBar({
   useEffect(() => {
     setSearchActive(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (isSearchActive) {
+      document.body.classList.add('is-typeAheadActive');
+    } else {
+      document.body.classList.remove('is-typeAheadActive');
+    }
+  }, [isSearchActive]);
 
   return (
     <nav className={styles.MainNavBar}>
