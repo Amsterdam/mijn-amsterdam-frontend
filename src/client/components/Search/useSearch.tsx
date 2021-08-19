@@ -103,7 +103,7 @@ function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         title: page.title,
-        displayTitle: displayPath([page.title], true),
+        displayTitle: (term: string) => displayPath(term, [page.title], true),
         keywords: page.sections,
         description: page.description,
         url: page.url,
@@ -131,9 +131,9 @@ export async function searchAmsterdamNL(
 
 const options = {
   threshold: 0.2,
-  includeScore: true,
-  minMatchCharLength: 3,
-  keys: ['title', 'description', 'keywords'],
+  includeScore: false,
+  minMatchCharLength: 2,
+  keys: ['title', { name: 'keywords', weight: 0.2 }],
 };
 
 export const searchConfigAtom = atom<{
@@ -229,7 +229,9 @@ const mijnQuery = selector({
 
     if (indexReady && fuse.index !== null && !!term) {
       const rawResults = fuse.index.search(term);
-      return rawResults.map((result) => result.item);
+      return rawResults.map((result) => {
+        return result.item;
+      });
     }
 
     return [];

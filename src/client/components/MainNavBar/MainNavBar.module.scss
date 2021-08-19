@@ -232,6 +232,15 @@
 .SearchBar {
   padding: 2.6rem;
   background-color: $color-neutral-grey1;
+  @include mq-tablet() {
+    padding: 0;
+    background-color: $color-white;
+    @include select('Search_SearchBar') {
+      form {
+        padding: 1rem;
+      }
+    }
+  }
 }
 
 .SearchBarInner {

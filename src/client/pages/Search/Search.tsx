@@ -67,6 +67,7 @@ export default function Search() {
         }}
         isLoading={false}
         icon={<ChapterIcon />}
+        className={styles.SearchPageHeading}
       >
         {ChapterTitles.SEARCH}
       </PageHeading>
@@ -75,17 +76,21 @@ export default function Search() {
           autoFocus={false}
           term={term || termParam}
           onFinish={displayResults}
+          typeAhead={false}
         />
         {!!(results?.am?.contents.length || results?.ma?.length) && (
           <div className={styles.SearchResults}>
             <ResultSetPaginated
-              title="Resultaten van Mijn Amsterdam"
+              term={term}
               results={results.ma || []}
+              noResultsMessage="Niets gevonden op Mijn Amsterdam"
             />
             <div className={styles.SearchResults}>
               <ResultSet
+                term={term}
                 isLoading={results?.am?.state === 'loading'}
-                title="Resultaten van Amsterdam.nl"
+                title="Overige informatie op Amsterdam.nl"
+                noResultsMessage="Niets gevonden op Amsterdam.nl"
                 results={
                   results?.am?.state === 'hasValue' ? results?.am?.contents : []
                 }
@@ -96,9 +101,7 @@ export default function Search() {
                     (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
                   }
                 >
-                  {!results?.am?.contents.length
-                    ? 'Zoek verder op Amsterdam.nl'
-                    : 'Bekijk alle resultaten van Amsterdam.nl'}
+                  Zoek verder op Amsterdam.nl
                 </Button>
               </p>
             </div>

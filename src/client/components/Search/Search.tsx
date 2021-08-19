@@ -3,7 +3,9 @@ import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
+import { trackSearch } from '../../hooks/analytics.hook';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
@@ -14,12 +16,13 @@ import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
   results: PageEntry[];
-  title: string;
+  title?: string;
   noResultsMessage?: string;
   onSelectResult?: () => void;
   isLoading?: boolean;
   selectedIndex?: number;
   pageSize?: number;
+  term: string;
 }
 
 export function ResultSet({
@@ -30,12 +33,15 @@ export function ResultSet({
   onSelectResult,
   selectedIndex = -1,
   pageSize,
+  term,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
-      <Heading className={styles.ResultSetTitle} size="tiny">
-        {title}
-      </Heading>
+      {!!title && (
+        <Heading className={styles.ResultSetTitle} size="tiny">
+          {title}
+        </Heading>
+      )}
       {!results.length && !isLoading && (
         <p className={styles.NoResults}>{noResultsMessage}</p>
       )}
@@ -55,10 +61,11 @@ export function ResultSet({
                 onClick={onSelectResult}
                 external={result.url.startsWith('http')}
                 href={result.url}
+                className={styles.ResultSetLink}
               >
-                {result.displayTitle || result.title}
+                {result.displayTitle ? result.displayTitle(term) : result.title}
               </Linkd>
-              {/* <p>{result.item.description}</p> */}
+              {/* {!!result.description && <p>{result.description}</p>} */}
             </li>
           ))}
         </ul>
@@ -90,7 +97,7 @@ export function ResultSetPaginated({
   return (
     <>
       <ResultSet
-        title={title}
+        term=""
         results={resultsPaginated}
         onSelectResult={onSelectResult}
       />
@@ -112,6 +119,7 @@ interface SearchProps {
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
+  typeAhead?: boolean;
 }
 
 export function Search({
@@ -119,6 +127,7 @@ export function Search({
   term: termInitial = '',
   maxResultCountDisplay = 10,
   autoFocus = true,
+  typeAhead = true,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLFormElement>(null);
   const results = useSearchResults();
@@ -138,6 +147,10 @@ export function Search({
     },
     [onFinish, setResultsVisible]
   );
+
+  const trackSiteSearch = useDebouncedCallback((term: string) => {
+    trackSearch(term);
+  }, 150);
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -240,6 +253,9 @@ export function Search({
           <SearchBar
             inputProps={{
               autoComplete: 'none',
+              autoCorrect: 'none',
+              autoCapitalize: 'none',
+              spellCheck: 'false',
             }}
             placeholder={
               results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
@@ -251,6 +267,7 @@ export function Search({
             }}
             onChange={(e) => {
               setResultsVisible(true);
+              trackSiteSearch(e.target.value);
               setTerm(e.target.value);
             }}
             onClear={() => {
@@ -261,22 +278,26 @@ export function Search({
         </form>
       </ThemeProvider>
 
-      {isResultsVisible &&
+      {typeAhead &&
+        isResultsVisible &&
         !!term &&
         !!(results?.ma?.length || results?.am?.state === 'hasValue') && (
           <div className={styles.Results}>
             <ResultSet
+              term={term}
               onSelectResult={() => doFinish(true)}
               isLoading={false}
-              title="Resultaten van Mijn Amsterdam"
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+              noResultsMessage="Niets gevonden op Mijn Amsterdam"
               selectedIndex={selectedIndex}
             />
 
             <ResultSet
+              term={term}
               onSelectResult={() => doFinish(true)}
               isLoading={results?.am?.state === 'loading'}
-              title="Resultaten van Amsterdam.nl"
+              title="Overige informatie op Amsterdam.nl"
+              noResultsMessage="Niets gevonden op Amsterdam.nl"
               results={
                 results?.am?.state === 'hasValue'
                   ? results?.am?.contents.slice(0, maxResultCountDisplay / 2)
