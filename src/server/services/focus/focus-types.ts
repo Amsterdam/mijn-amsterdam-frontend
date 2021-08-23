@@ -166,6 +166,7 @@ export type FocusTonkLabelSet = {
   stepType: FocusTonkStepType;
   productSpecific?: string;
   datePublished?: string;
+  decision?: DecisionFormatted;
 };
 
 export type FocusTozoStepType =
@@ -186,6 +187,7 @@ export type FocusTozoLabelSet = {
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
   datePublished?: string;
+  decision?: DecisionFormatted;
 };
 
 export type ToxxLabelSet = FocusTozoLabelSet | FocusTonkLabelSet;

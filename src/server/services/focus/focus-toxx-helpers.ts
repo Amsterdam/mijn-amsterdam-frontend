@@ -125,6 +125,7 @@ export function createToxxItemStep(
     title: labelSet.stepType,
     description: getDocumentStepDescription(document, labelSet.labels),
     datePublished,
+    decision: labelSet.decision,
     status: labelSet.labels.status,
     isChecked: true,
     isActive: true,

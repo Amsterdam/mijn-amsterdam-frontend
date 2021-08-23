@@ -17,6 +17,7 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag TONK ontvangen.
       </p>",
@@ -50,6 +51,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": undefined,
           "description": "<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
@@ -75,6 +77,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw TONK aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -97,6 +100,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
           U hebt recht op de TONK uitkering. Bekijk de brief
           voor meer details.
@@ -122,6 +126,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
           U hebt recht op de TONK uitkering. Bekijk de brief
           voor meer details.
@@ -147,6 +152,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op de TONK uitkering. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -171,6 +177,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op de TONK uitkering. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -195,6 +202,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor de TONK uitkering niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -217,6 +225,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-15T00:00:00+01:00",
+          "decision": undefined,
           "description": "<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -243,6 +252,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-20T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>U hebt recht op verlenging van de TONK uitkering. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -265,6 +275,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-20T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>Wij hebben een besluit genomen over het wel of niet verlengen van uw TONK uitkering. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -287,6 +298,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-20T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p> U hebt uw TONK verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
