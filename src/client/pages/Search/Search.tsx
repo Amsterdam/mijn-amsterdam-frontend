@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   ChapterIcon,

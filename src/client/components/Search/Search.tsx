@@ -1,7 +1,7 @@
 import SearchBar from '@amsterdam/asc-ui/lib/components/SearchBar/SearchBar';
 import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
@@ -10,7 +10,6 @@ import { trackSearch } from '../../hooks/analytics.hook';
 import { useKeyUp } from '../../hooks/useKeyUp';
 import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
-import Pagination from '../Pagination/Pagination';
 import styles from './Search.module.scss';
 import { PageEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
