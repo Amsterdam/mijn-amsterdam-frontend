@@ -209,7 +209,6 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       'bed',
       'breakfast',
       'bed and breakfast',
-      'airbnb',
       'verhuur',
       'vergunningsaanvraag',
     ],
@@ -597,6 +596,10 @@ export const staticIndex: PageEntry[] = [
     displayTitle: (term: string) => displayPath(term, ['Toeristische verhuur']),
     description: `Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.`,
     keywords: [
+      'vergunning airbnb',
+      'vergunning B&B',
+      'vergunning Bed and Breakfast',
+      'vergunning bnb',
       'Airbnb',
       'Verhuur',
       'Vakantie verhuur',

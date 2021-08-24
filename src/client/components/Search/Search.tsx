@@ -5,9 +5,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
+import { IconChevronRight } from '../../assets/icons';
 import { trackSearch } from '../../hooks/analytics.hook';
 import { useKeyUp } from '../../hooks/useKeyUp';
-import Linkd from '../Button/Button';
+import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import Pagination from '../Pagination/Pagination';
 import styles from './Search.module.scss';
@@ -20,7 +21,8 @@ interface ResultSetProps {
   noResultsMessage?: string;
   isLoading?: boolean;
   term: string;
-  extendedAMResults?: boolean;
+  extendedResults?: boolean;
+  showIcon?: boolean;
 }
 
 export function ResultSet({
@@ -29,7 +31,8 @@ export function ResultSet({
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
   term,
-  extendedAMResults = false,
+  extendedResults = false,
+  showIcon = false,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
@@ -47,17 +50,17 @@ export function ResultSet({
             key={result.title + index}
             className={classnames(
               styles.ResultListItem,
-              extendedAMResults && styles['is-extended']
+              extendedResults && styles['is-extended']
             )}
           >
             <Linkd
-              icon={null}
+              icon={showIcon ? IconChevronRight : null}
               external={result.url.startsWith('http')}
               href={result.url}
               className={styles.ResultSetLink}
             >
               {result.displayTitle ? result.displayTitle(term) : result.title}
-              {extendedAMResults && (
+              {extendedResults && (
                 <p className={styles.ResultDescription}>
                   <span className={styles.ResultUrl}>{result.url}</span>
                   {result.description}
@@ -68,46 +71,6 @@ export function ResultSet({
         ))}
       </ul>
     </div>
-  );
-}
-
-interface ResultSetPaginatedProps extends ResultSetProps {
-  pageSize?: number;
-}
-
-export function ResultSetPaginated({
-  title,
-  results,
-  pageSize = 10,
-  term,
-}: ResultSetPaginatedProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const resultsPaginated = useMemo(() => {
-    const startIndex = currentPage - 1;
-    const start = startIndex * pageSize;
-    const end = start + pageSize;
-    return results.slice(start, end);
-  }, [currentPage, results, pageSize]);
-
-  const total = results.length;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [results]);
-
-  return (
-    <>
-      <ResultSet term={term} results={resultsPaginated} />
-      {total > pageSize && (
-        <Pagination
-          className={styles.Pagination}
-          totalCount={total}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageClick={setCurrentPage}
-        />
-      )}
-    </>
   );
 }
 
@@ -243,22 +206,36 @@ export function Search({
               isLoading={isTyping}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
+              showIcon={extendedAMResults}
             />
           )}
           {isDirty && (
-            <ResultSet
-              term={term}
-              isLoading={results?.am?.state === 'loading' || isTyping}
-              title="Overige informatie op Amsterdam.nl"
-              noResultsMessage="Niets gevonden op Amsterdam.nl"
-              extendedAMResults={extendedAMResults}
-              results={
-                results?.am?.state === 'hasValue' &&
-                results?.am?.contents !== null
-                  ? results.am.contents.slice(0, maxResultCountDisplay / 2)
-                  : []
-              }
-            />
+            <>
+              <ResultSet
+                term={term}
+                isLoading={results?.am?.state === 'loading' || isTyping}
+                title="Overige informatie op Amsterdam.nl"
+                noResultsMessage="Niets gevonden op Amsterdam.nl"
+                extendedResults={extendedAMResults}
+                results={
+                  results?.am?.state === 'hasValue' &&
+                  results?.am?.contents !== null
+                    ? results.am.contents.slice(0, maxResultCountDisplay / 2)
+                    : []
+                }
+              />
+              {extendedAMResults && (
+                <p>
+                  <Button
+                    onClick={() =>
+                      (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
+                    }
+                  >
+                    Zoek verder op Amsterdam.nl
+                  </Button>
+                </p>
+              )}
+            </>
           )}
         </div>
       )}

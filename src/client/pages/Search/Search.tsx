@@ -42,6 +42,7 @@ export default function Search() {
           onFinish={() => console.log('finish searchsz!')}
           extendedAMResults={true}
           typeAhead={false}
+          maxResultCountDisplay={20}
         />
       </PageContent>
     </Page>
