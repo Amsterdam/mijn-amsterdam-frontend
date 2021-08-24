@@ -1,14 +1,15 @@
 import { generatePath } from 'react-router-dom';
+
 import {
   API_BASE_PATH,
   Chapters,
   IS_PRODUCTION,
 } from '../../../universal/config';
 import { defaultDateTimeFormat, hash } from '../../../universal/helpers';
-import { MyNotification, LinkProps } from '../../../universal/types/App.types';
+import { LinkProps, MyNotification } from '../../../universal/types/App.types';
+import { stepLabels } from './focus-aanvragen-content';
 import { isNotificationActual } from './focus-aanvragen-helpers';
 import { FocusDocument } from './focus-combined';
-import { stepLabels } from './focus-aanvragen-content';
 import {
   FocusItem,
   FocusItemStep,
@@ -125,7 +126,6 @@ export function createToxxItemStep(
     title: labelSet.stepType,
     description: getDocumentStepDescription(document, labelSet.labels),
     datePublished,
-    decision: labelSet.decision,
     status: labelSet.labels.status,
     isChecked: true,
     isActive: true,
@@ -142,6 +142,9 @@ export function createToxxItemStep(
       labelSet.labels
     ),
   };
+  if (labelSet.stepType === 'besluit' && labelSet.decision) {
+    step.decision = labelSet.decision;
+  }
 
   return step;
 }
@@ -172,6 +175,7 @@ export function createToxxItem({
     dateStart: steps[0].datePublished,
     datePublished, // Use the date from latest step
     title,
+    decision: decisionStep?.decision,
     status: !!decisionStep ? stepLabels.besluit : lastStep.status,
     productTitle,
     dateEnd,

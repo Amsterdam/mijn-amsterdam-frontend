@@ -7,6 +7,7 @@ Object {
       "dateEnd": "2020-03-17T00:00:00+01:00",
       "datePublished": "2020-03-17T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
+      "decision": "afwijzing",
       "id": "1569898129",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -17,7 +18,6 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag Tozo 1 ontvangen.
       </p>",
@@ -51,7 +51,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -77,7 +76,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -178,7 +176,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
@@ -383,6 +380,7 @@ Object {
       "dateEnd": "2021-03-27T00:00:00+01:00",
       "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
+      "decision": "toekenning",
       "id": "3578630920",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -393,7 +391,6 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag Tozo 2 ontvangen.
       </p>",
@@ -498,7 +495,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
@@ -618,7 +614,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -644,7 +639,6 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -782,6 +776,7 @@ Object {
       "dateEnd": "2021-03-27T00:00:00+01:00",
       "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-02-05T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "685054265",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -792,7 +787,6 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2020-02-05T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag Tozo 3 ontvangen.
       </p>",
@@ -818,7 +812,6 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
-          "decision": undefined,
           "description": "<p>
         U hebt recht op de Tozo 3 uitkering. Bekijk de brief
         voor meer details.
@@ -845,7 +838,6 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -871,7 +863,6 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
-          "decision": undefined,
           "description": "<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
@@ -1095,7 +1086,6 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -1121,7 +1111,6 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": undefined,
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
@@ -1200,7 +1189,6 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": undefined,
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 3 ontvangen op 27 maart om 00.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
@@ -1231,6 +1219,7 @@ Object {
       "dateEnd": "2021-04-10T00:00:00+01:00",
       "datePublished": "2021-04-10T00:00:00+01:00",
       "dateStart": "2021-03-27T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "1579672147",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -1241,7 +1230,6 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag Tozo 4 ontvangen.
       </p>",
@@ -1417,7 +1405,6 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": "toekenning",
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -1443,7 +1430,6 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": "toekenning",
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -1496,7 +1482,6 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
-          "decision": undefined,
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 27 maart om 00.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
@@ -1548,7 +1533,6 @@ Object {
         },
         Object {
           "datePublished": "2021-04-02T00:00:00+01:00",
-          "decision": undefined,
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 4 ontvangen op 02 april om 01.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
@@ -1606,6 +1590,7 @@ Object {
       "dateEnd": "2021-07-22T00:00:00+01:00",
       "datePublished": "2021-07-22T00:00:00+01:00",
       "dateStart": "2021-06-14T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "3712245579",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -1616,7 +1601,6 @@ Object {
       "steps": Array [
         Object {
           "datePublished": "2021-06-14T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben uw aanvraag Tozo 5 ontvangen.
       </p>",
@@ -1746,7 +1730,6 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
@@ -1845,7 +1828,6 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -1871,7 +1853,6 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
-          "decision": undefined,
           "description": "<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -1924,7 +1905,6 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
-          "decision": undefined,
           "description": "
     <p>Wij hebben een wijziging van uw inkomsten voor Tozo 5 ontvangen op 14 juli om 01.00 uur</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>",
