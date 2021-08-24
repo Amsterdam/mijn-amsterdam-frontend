@@ -467,6 +467,8 @@ export const staticIndex: PageEntry[] = [
       'Werkloos',
       'Aanvragen',
       'Jaaropgave',
+      'Jaaropgaves',
+      'Jaaropgaven',
       'Vakantiegeld',
       'Tozo',
       'Tonk',
