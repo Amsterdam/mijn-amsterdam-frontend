@@ -106,20 +106,34 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
 export function displayPath(
   term: string,
   segments: string[],
-  isExternal: boolean = false
+  isExternal: boolean = false,
+  replaceTerm: boolean = true
 ) {
+  const termSplitted = term.split(/\s/gi);
+
   return (
     <>
       <span className={styles.DisplayPath}>
-        {segments.map((segment, i) => (
-          <InnerHtml
-            key={segment}
-            el="span"
-            className={styles.DisplayPathSegment}
-          >
-            {segment.replaceAll(new RegExp(term, 'ig'), `<b>$&</b>`)}
-          </InnerHtml>
-        ))}
+        {segments.map((segment, i) => {
+          let segmentReplaced = segment;
+          if (replaceTerm) {
+            termSplitted.forEach((term) => {
+              segmentReplaced = segmentReplaced.replace(
+                new RegExp(term, 'ig'),
+                `<em>$&</em>`
+              );
+            });
+          }
+          return (
+            <InnerHtml
+              key={segment}
+              el="span"
+              className={styles.DisplayPathSegment}
+            >
+              {segmentReplaced}
+            </InnerHtml>
+          );
+        })}
       </span>
       {isExternal && (
         <span className={styles.ExternalUrl}>
@@ -180,6 +194,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
         vergunning.identifier || 'jup',
       ]);
     },
+    keywords: () => ['vergunningsaanvraag'],
   },
   {
     apiName: 'TOERISTISCHE_VERHUUR',
@@ -196,6 +211,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       'bed and breakfast',
       'airbnb',
       'verhuur',
+      'vergunningsaanvraag',
     ],
     title: (vergunning: ApiBaseItem) => {
       return `${vergunning.title} ${defaultDateFormat(

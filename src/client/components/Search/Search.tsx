@@ -18,11 +18,9 @@ interface ResultSetProps {
   results: PageEntry[];
   title?: string;
   noResultsMessage?: string;
-  onSelectResult?: () => void;
   isLoading?: boolean;
-  selectedIndex?: number;
-  pageSize?: number;
   term: string;
+  extendedAMResults?: boolean;
 }
 
 export function ResultSet({
@@ -30,10 +28,8 @@ export function ResultSet({
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
-  onSelectResult,
-  selectedIndex = -1,
-  pageSize,
   term,
+  extendedAMResults = false,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
@@ -42,34 +38,35 @@ export function ResultSet({
           {title}
         </Heading>
       )}
-      {!results.length && !isLoading && (
+      {!!term && !results.length && !isLoading && (
         <p className={styles.NoResults}>{noResultsMessage}</p>
       )}
-      {isLoading && <p>Zoeken..</p>}
-      {!!results.length && (
-        <ul className={styles.ResultList}>
-          {results.map((result, index) => (
-            <li
-              key={result.title + index}
-              className={classnames(
-                styles.ResultListItem,
-                index === selectedIndex && styles['ResultListItem--selected']
-              )}
+      <ul className={styles.ResultList}>
+        {results.map((result, index) => (
+          <li
+            key={result.title + index}
+            className={classnames(
+              styles.ResultListItem,
+              extendedAMResults && styles['is-extended']
+            )}
+          >
+            <Linkd
+              icon={null}
+              external={result.url.startsWith('http')}
+              href={result.url}
+              className={styles.ResultSetLink}
             >
-              <Linkd
-                icon={null}
-                onClick={onSelectResult}
-                external={result.url.startsWith('http')}
-                href={result.url}
-                className={styles.ResultSetLink}
-              >
-                {result.displayTitle ? result.displayTitle(term) : result.title}
-              </Linkd>
-              {/* {!!result.description && <p>{result.description}</p>} */}
-            </li>
-          ))}
-        </ul>
-      )}
+              {result.displayTitle ? result.displayTitle(term) : result.title}
+              {extendedAMResults && (
+                <p className={styles.ResultDescription}>
+                  <span className={styles.ResultUrl}>{result.url}</span>
+                  {result.description}
+                </p>
+              )}
+            </Linkd>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -82,7 +79,7 @@ export function ResultSetPaginated({
   title,
   results,
   pageSize = 10,
-  onSelectResult,
+  term,
 }: ResultSetPaginatedProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPaginated = useMemo(() => {
@@ -94,13 +91,13 @@ export function ResultSetPaginated({
 
   const total = results.length;
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [results]);
+
   return (
     <>
-      <ResultSet
-        term=""
-        results={resultsPaginated}
-        onSelectResult={onSelectResult}
-      />
+      <ResultSet term={term} results={resultsPaginated} />
       {total > pageSize && (
         <Pagination
           className={styles.Pagination}
@@ -120,6 +117,7 @@ interface SearchProps {
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
   typeAhead?: boolean;
+  extendedAMResults?: boolean;
 }
 
 export function Search({
@@ -128,13 +126,15 @@ export function Search({
   maxResultCountDisplay = 10,
   autoFocus = true,
   typeAhead = true,
+  extendedAMResults = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLFormElement>(null);
-  const results = useSearchResults();
+  const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
-  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useSearchIndex();
 
@@ -148,82 +148,23 @@ export function Search({
     [onFinish, setResultsVisible]
   );
 
-  const trackSiteSearch = useDebouncedCallback((term: string) => {
+  const setTermDebounced = useDebouncedCallback((term: string) => {
     trackSearch(term);
-  }, 150);
+    setTerm(term);
+    setIsTyping(false);
+    if (!term) {
+      setResultsVisible(false);
+    }
+  }, 300);
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
-      const isArrowDown = event.key === 'ArrowDown';
-      const isArrowUp = event.key === 'ArrowUp';
-      const isEnter = event.key === 'Enter';
       const isEscape = event.key === 'Escape';
-
-      if (
-        !(isArrowDown || isArrowUp || isEnter || isEscape) ||
-        results === null
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const allResults = [
-        ...(results?.ma || []).slice(0, maxResultCountDisplay / 2),
-        ...(results?.am?.state === 'hasValue'
-          ? results?.am?.contents
-          : []
-        ).slice(0, maxResultCountDisplay / 2),
-      ];
-
-      if (!isEscape && !allResults.length) {
-        return;
-      }
-
-      switch (true) {
-        case isArrowDown || isArrowUp:
-          const prevIndex = selectedIndex - 1;
-          const nextIndex = selectedIndex + 1;
-          const lastIndex = allResults.length - 1;
-
-          if (isArrowDown) {
-            if (allResults[nextIndex]) {
-              setSelectedIndex(nextIndex);
-            } else {
-              setSelectedIndex(-1);
-            }
-          } else if (isArrowUp) {
-            if (allResults[prevIndex] || prevIndex === -1) {
-              setSelectedIndex(prevIndex);
-            } else {
-              setSelectedIndex(lastIndex);
-            }
-          }
-          break;
-        case isEnter:
-          if (selectedIndex !== -1) {
-            const url = allResults[selectedIndex].url;
-            if (!url.startsWith('http')) {
-              history.push(url);
-            } else {
-              window.location.href = url;
-            }
-          }
-          doFinish(true);
-          break;
-        case isEscape:
-          setResultsVisible(false);
-          break;
+      if (isEscape && typeAhead) {
+        setResultsVisible(false);
       }
     },
-    [
-      setSelectedIndex,
-      results,
-      selectedIndex,
-      history,
-      doFinish,
-      maxResultCountDisplay,
-    ]
+    [results, history, doFinish, maxResultCountDisplay]
   );
 
   useKeyUp(keyHandler);
@@ -237,16 +178,30 @@ export function Search({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (results?.am?.state === 'hasValue' && results?.am?.contents !== null) {
+      setIsDirty(true);
+    }
+  }, [results?.am?.state]);
+
+  useEffect(() => {
+    if (term) {
+      setResultsVisible(true);
+    }
+  }, [term]);
+
   return (
-    <div className={styles.SearchBar}>
+    <div
+      className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
+    >
       <ThemeProvider>
         <form
           ref={searchBarRef}
           onSubmit={(e) => {
             e.preventDefault();
-            if (selectedIndex === -1 && term) {
+            if (term) {
               history.push(AppRoutes.SEARCH + '?term=' + term);
-              doFinish();
+              setResultsVisible(true);
             }
           }}
         >
@@ -266,50 +221,47 @@ export function Search({
               }
             }}
             onChange={(e) => {
+              setIsTyping(true);
               setResultsVisible(true);
-              trackSiteSearch(e.target.value);
-              setTerm(e.target.value);
+              setTermDebounced(e.target.value);
             }}
             onClear={() => {
               setTerm('');
+              setIsDirty(false);
+              setResultsVisible(false);
             }}
             value={term || termInitial}
           />
         </form>
       </ThemeProvider>
 
-      {typeAhead &&
-        isResultsVisible &&
-        !!term &&
-        !!(results?.ma?.length || results?.am?.state === 'hasValue') && (
-          <div className={styles.Results}>
+      {isResultsVisible && (
+        <div className={styles.Results}>
+          {!!results?.ma?.length && (
             <ResultSet
               term={term}
-              onSelectResult={() => doFinish(true)}
-              isLoading={false}
+              isLoading={isTyping}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              selectedIndex={selectedIndex}
             />
-
+          )}
+          {isDirty && (
             <ResultSet
               term={term}
-              onSelectResult={() => doFinish(true)}
-              isLoading={results?.am?.state === 'loading'}
+              isLoading={results?.am?.state === 'loading' || isTyping}
               title="Overige informatie op Amsterdam.nl"
               noResultsMessage="Niets gevonden op Amsterdam.nl"
+              extendedAMResults={extendedAMResults}
               results={
-                results?.am?.state === 'hasValue'
-                  ? results?.am?.contents.slice(0, maxResultCountDisplay / 2)
+                results?.am?.state === 'hasValue' &&
+                results?.am?.contents !== null
+                  ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
               }
-              selectedIndex={
-                selectedIndex -
-                Math.min(results?.ma?.length || 0, maxResultCountDisplay / 2)
-              }
             />
-          </div>
-        )}
+          )}
+        </div>
+      )}
     </div>
   );
 }
