@@ -5,6 +5,7 @@ import {
   atom,
   Loadable,
   selector,
+  selectorFamily,
   useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
@@ -96,6 +97,7 @@ interface AmsterdamSearchResult {
   sections: string[];
   description: string;
   url: string;
+  highlight: { title: string };
 }
 
 function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
@@ -103,7 +105,8 @@ function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         title: page.title,
-        displayTitle: (term: string) => displayPath(term, [page.title], true),
+        displayTitle: (term: string) =>
+          displayPath(term, [page.highlight.title || page.title], true, false),
         keywords: page.sections,
         description: page.description,
         url: page.url,
@@ -115,22 +118,23 @@ function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
 
 export async function searchAmsterdamNL(
   keywords: string,
-  resultCountPerPage: number = 5
+  resultCountPerPage: number = 5,
+  useExtendedAmsterdamSearch: boolean = false
 ) {
-  const response = await axios.get<PageEntry[]>(
-    `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`,
-    {
-      transformResponse: addAxiosResponseTransform(
-        transformSearchAmsterdamNLresponse
-      ),
-    }
-  );
+  const url = useExtendedAmsterdamSearch
+    ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
+    : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
+  const response = await axios.get<PageEntry[]>(url, {
+    transformResponse: addAxiosResponseTransform(
+      transformSearchAmsterdamNLresponse
+    ),
+  });
 
   return response.data;
 }
 
 const options = {
-  threshold: 0.2,
+  threshold: 0.6,
   includeScore: false,
   minMatchCharLength: 2,
   keys: ['title', { name: 'keywords', weight: 0.2 }],
@@ -203,13 +207,17 @@ export function useSearchTerm() {
   return useRecoilState(searchTermAtom);
 }
 
-const amsterdamNLQuery = selector({
+const amsterdamNLQuery = selectorFamily({
   key: 'amsterdamNLQuery',
-  get: async ({ get }) => {
-    const term = get(searchTermAtom);
-    const response = term ? await searchAmsterdamNL(term) : [];
-    return response;
-  },
+  get:
+    (useExtendedAmsterdamSearch: boolean) =>
+    async ({ get }) => {
+      const term = get(searchTermAtom);
+      const response = term
+        ? await searchAmsterdamNL(term, 10, useExtendedAmsterdamSearch)
+        : null;
+      return response;
+    },
 });
 
 const isIndexReadyQuery = selector({
@@ -240,14 +248,16 @@ const mijnQuery = selector({
 
 export interface SearchResults {
   ma?: PageEntry[];
-  am?: Loadable<PageEntry[]>;
+  am?: Loadable<PageEntry[] | null>;
   isIndexReady: boolean;
 }
 
-export function useSearchResults(): SearchResults {
+export function useSearchResults(
+  useExtendedAmsterdamSearch: boolean = false
+): SearchResults {
   return {
     isIndexReady: useRecoilValue(isIndexReadyQuery),
     ma: useRecoilValue(mijnQuery),
-    am: useRecoilValueLoadable(amsterdamNLQuery),
+    am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
   };
 }
