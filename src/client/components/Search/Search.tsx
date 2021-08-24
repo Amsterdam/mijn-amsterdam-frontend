@@ -100,16 +100,6 @@ export function Search({
 
   useSearchIndex();
 
-  const doFinish = useCallback(
-    (isSelection?: boolean) => {
-      if (onFinish) {
-        onFinish(isSelection);
-      }
-      setResultsVisible(false);
-    },
-    [onFinish, setResultsVisible]
-  );
-
   const setTermDebounced = useDebouncedCallback((term: string) => {
     trackSearch(term);
     setTerm(term);
@@ -126,7 +116,7 @@ export function Search({
         setResultsVisible(false);
       }
     },
-    [results, history, doFinish, maxResultCountDisplay]
+    [typeAhead]
   );
 
   useKeyUp(keyHandler);
@@ -144,7 +134,7 @@ export function Search({
     if (results?.am?.state === 'hasValue' && results?.am?.contents !== null) {
       setIsDirty(true);
     }
-  }, [results?.am?.state]);
+  }, [results?.am?.state, results?.am?.contents]);
 
   useEffect(() => {
     if (term) {
