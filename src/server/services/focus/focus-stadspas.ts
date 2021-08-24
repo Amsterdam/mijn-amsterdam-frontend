@@ -33,10 +33,8 @@ export async function fetchStadspasSaldoGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const now = new Date();
   const BUDGET_NOTIFICATION_DATE_START = IS_AP ? '2021-04-14' : '2021-06-01';
-  const BUDGET_NOTIFICATION_DATE_END =
-    now > new Date('2021-08-31') ? '2022-07-31' : '2021-08-31';
+  const BUDGET_NOTIFICATION_DATE_END = '2021-08-31';
   const BUDGET_NOTIFICATION_BALANCE_THRESHOLD = 10;
   const BUDGET_NOTIFICATION_PARENT = `
   Uw kind heeft nog een saldo van €${BUDGET_NOTIFICATION_BALANCE_THRESHOLD} of meer voor het kindtegoed.
