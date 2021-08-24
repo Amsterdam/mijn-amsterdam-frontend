@@ -212,6 +212,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175304': {
     omschrijving: 'Tozo Afwijzen',
@@ -220,6 +221,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
   '175305': {
     omschrijving: 'Tozo Buiten behandeling laten',
@@ -228,6 +230,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'buitenbehandeling',
   },
   '175306': {
     omschrijving: 'Tozo Hersteltermijn',
@@ -244,6 +247,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
   '175311': {
     omschrijving: 'Tozo Toekennen bedrijfskapitaal',
@@ -252,6 +256,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: 'lening',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175314': {
     omschrijving: 'Tozo Toekennen via batch',
@@ -260,6 +265,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175317': {
     omschrijving: 'Tozo Intrekken met terugvordering voorschot',
@@ -268,6 +274,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'intrekking',
   },
   '175331': {
     omschrijving: 'Tozo Intrekken',
@@ -276,6 +283,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'intrekking',
   },
   '175334': {
     omschrijving: 'Tozo Vrije beschikking',
@@ -284,6 +292,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175335': {
     omschrijving: 'Tozo Afwijzen via batch',
@@ -292,6 +301,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
 
   // TOZO 2
@@ -311,6 +321,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175337': {
     omschrijving: 'Tozo2 Afwijzen',
@@ -319,6 +330,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
   '175338': {
     omschrijving: 'Tozo2 Toekennen bedrijfskapitaal',
@@ -327,6 +339,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: 'lening',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175340': {
     omschrijving: 'Tozo2 Hersteltermijn',
@@ -343,6 +356,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'intrekking',
   },
   '175342': {
     omschrijving: 'Tozo2 Buiten behandeling laten',
@@ -351,6 +365,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'buitenbehandeling',
   },
   '175343': {
     omschrijving: 'Tozo2 Terugvordering voorschot',
@@ -359,6 +374,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'intrekking',
   },
   '175344': {
     omschrijving: 'Tozo2 Intrekken met terugvordering voorschot',
@@ -367,6 +383,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'intrekking',
   },
   '175345': {
     omschrijving: 'Tozo2 Toekennen voorschot via batch',
@@ -391,6 +408,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '175359': {
     omschrijving: 'Tozo2 Afwijzen via batch',
@@ -399,6 +417,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 2',
     productSpecific: '',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
 
   // Na besluit
@@ -417,6 +436,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 2',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '175645': {
     omschrijving: 'Tozo 2 Terugvorderingsbesluit',
@@ -425,6 +445,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 2',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
 
   // TOZO 3
@@ -468,6 +489,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: 'uitkering',
     documentTitle: 'Besluit toekenning uitkering',
+    decision: 'toekenning',
   },
   '175358': {
     omschrijving: 'Tozo3 Buiten behandeling laten',
@@ -476,6 +498,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Besluit buiten behandeling',
+    decision: 'buitenbehandeling',
   },
   '175364': {
     omschrijving: 'Tozo3 Afwijzen',
@@ -484,6 +507,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Besluit afwijzing',
+    decision: 'afwijzing',
   },
   '175367': {
     omschrijving: 'Tozo3 Intrekken met terugvordering voorschot',
@@ -492,6 +516,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Besluit intrekking met terugbetaling',
+    decision: 'intrekking',
   },
   '175368': {
     omschrijving: 'Tozo3 Terugvordering voorschot',
@@ -500,6 +525,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Besluit terugvordering',
+    decision: 'intrekking',
   },
   '175369': {
     omschrijving: 'Tozo3 Toekennen bedrijfskapitaal',
@@ -508,6 +534,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: 'lening',
     documentTitle: 'Besluit toekenning lening',
+    decision: 'toekenning',
   },
   '175370': {
     omschrijving: 'Tozo3 Intrekken',
@@ -516,6 +543,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Brief intrekking aanvraag',
+    decision: 'intrekking',
   },
   '175371': {
     omschrijving: 'Tozo3 Afwijzen via batch',
@@ -524,6 +552,7 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Besluit afwijzing',
+    decision: 'afwijzing',
   },
   '175372': {
     omschrijving: 'Tozo3 Toekennen voorschot via batch',
@@ -550,6 +579,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 3',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
   '1725645': {
     omschrijving: 'Tozo 3 Terugvorderingsbesluit',
@@ -558,6 +588,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 3',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
 
   // TOZO 4
@@ -577,6 +608,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '175651': {
     omschrijving: 'Tozo 4 Afwijzen',
@@ -585,6 +617,7 @@ export const tozoDocumentLabelSet: Record<
     labels: afwijzenLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'afwijzing',
   },
   '175673': {
     omschrijving: 'Tozo 4 Afwijzen via batch',
@@ -593,6 +626,7 @@ export const tozoDocumentLabelSet: Record<
     labels: afwijzenLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'afwijzing',
   },
   '175656': {
     omschrijving: 'Tozo 4 Toekennen bedrijfskapitaal',
@@ -601,6 +635,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 4',
     productSpecific: 'lening',
+    decision: 'toekenning',
   },
   '175689': {
     omschrijving: 'Tozo 4 Hersteltermijn',
@@ -617,6 +652,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'intrekking',
   },
   '175652': {
     omschrijving: 'Tozo 4 Buiten behandeling laten',
@@ -625,6 +661,7 @@ export const tozoDocumentLabelSet: Record<
     labels: buitenBehandelingLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'buitenbehandeling',
   },
   '175677': {
     omschrijving: 'Tozo 4 Toekennen voorschot via batch',
@@ -633,6 +670,7 @@ export const tozoDocumentLabelSet: Record<
     labels: voorschotToekennenLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'toekenning',
   },
   '175657': {
     omschrijving: 'Tozo 4 Toekennen voorschot',
@@ -641,6 +679,7 @@ export const tozoDocumentLabelSet: Record<
     labels: voorschotToekennenLabels,
     product: 'Tozo 4',
     productSpecific: '',
+    decision: 'toekenning',
   },
   '175674': {
     omschrijving: 'Tozo 4 Toekennen via batch',
@@ -649,6 +688,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
 
   // Na besluit
@@ -667,6 +707,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
   '1735645': {
     omschrijving: 'Tozo 4 Terugvorderingsbesluit',
@@ -675,6 +716,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 4',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
 
   // Tozo 5
@@ -694,6 +736,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '176165': {
     omschrijving: 'Tozo5 Afwijzen',
@@ -702,6 +745,7 @@ export const tozoDocumentLabelSet: Record<
     labels: afwijzenLabels,
     product: 'Tozo 5',
     productSpecific: '',
+    decision: 'afwijzing',
   },
   '176169': {
     omschrijving: 'Tozo5 Afwijzen via batch',
@@ -710,6 +754,7 @@ export const tozoDocumentLabelSet: Record<
     labels: afwijzenLabels,
     product: 'Tozo 5',
     productSpecific: '',
+    decision: 'afwijzing',
   },
   '176168': {
     omschrijving: 'Tozo5 Toekennen bedrijfskapitaal',
@@ -718,6 +763,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 5',
     productSpecific: 'lening',
+    decision: 'toekenning',
   },
   '176164': {
     omschrijving: 'Tozo5 Hersteltermijn',
@@ -734,6 +780,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     product: 'Tozo 5',
     productSpecific: '',
+    decision: 'intrekking',
   },
   '176166': {
     omschrijving: 'Tozo5 Buiten behandeling laten',
@@ -742,6 +789,7 @@ export const tozoDocumentLabelSet: Record<
     labels: buitenBehandelingLabels,
     product: 'Tozo 5',
     productSpecific: '',
+    decision: 'buitenbehandeling',
   },
   '176170': {
     omschrijving: 'Tozo5 Toekennen via batch',
@@ -750,6 +798,7 @@ export const tozoDocumentLabelSet: Record<
     labels: toekennenLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '176171': {
     omschrijving: 'Tozo5 Toekennen voorschot via batch',
@@ -776,6 +825,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
   '1745645': {
     omschrijving: 'Tozo5 Terugvorderen na inkomstenopgave (batch)',
@@ -784,6 +834,7 @@ export const tozoDocumentLabelSet: Record<
     labels: terugvorderingLabels,
     product: 'Tozo 5',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
   '838': {
     omschrijving: 'Tozo 5 inkomstenwijziging',
