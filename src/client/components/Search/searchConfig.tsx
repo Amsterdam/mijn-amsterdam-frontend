@@ -34,6 +34,7 @@ export interface PageEntry {
   displayTitle?: (term: string) => ReactNode;
   description: string;
   keywords?: string[];
+  profileTypes?: ProfileType[];
 }
 
 export interface ApiSearchConfig {
@@ -68,6 +69,9 @@ export interface ApiSearchConfig {
 
   // The url to link to
   url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+
+  // For which profile types this api's need to be indexed
+  profileTypes: ProfileType[];
 }
 
 export interface ApiBaseItem {
@@ -101,6 +105,7 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
   description: (item: ApiBaseItem) => {
     return `Bekijk ${item.title}`;
   },
+  profileTypes: ['private'],
 };
 
 export function displayPath(
@@ -167,6 +172,10 @@ const getFocusConfig = (apiName: keyof AppState): ApiSearchConfigEntry => ({
       return displayPath(term, segments);
     };
   },
+  profileTypes:
+    apiName === 'FOCUS_AANVRAGEN'
+      ? ['private']
+      : ['private', 'private-commercial', 'commercial'],
 });
 
 type ApiSearchConfigEntry = Partial<ApiSearchConfig> & {
@@ -195,6 +204,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       ]);
     },
     keywords: () => ['vergunningsaanvraag'],
+    profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
     apiName: 'TOERISTISCHE_VERHUUR',
@@ -255,6 +265,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       });
       return [...zaken, ...registratienummers];
     },
+    profileTypes: ['private', 'private-commercial'],
   },
   {
     apiName: 'WMO',
@@ -332,6 +343,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
         return displayPath(term, [capitalizeFirstLetter(item.title)]);
       };
     },
+    profileTypes: ['private'],
   },
   {
     apiName: 'AKTES',
@@ -339,14 +351,9 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(document.type)]);
     },
+    profileTypes: ['private'],
   },
 ];
-
-export const searchStateKeys: Array<keyof AppState> = apiSearchConfigs.map(
-  (config) => {
-    return config.apiName;
-  }
-);
 
 export const staticIndex: PageEntry[] = [
   {
@@ -404,6 +411,7 @@ export const staticIndex: PageEntry[] = [
       'Reis document',
       'Document',
     ],
+    profileTypes: ['private'],
   },
   {
     url: AppRoutes.ZORG,
@@ -428,6 +436,7 @@ export const staticIndex: PageEntry[] = [
       'Taxi',
       'BBZ',
     ],
+    profileTypes: ['private'],
   },
   {
     url: AppRoutes.STADSPAS,
@@ -452,6 +461,7 @@ export const staticIndex: PageEntry[] = [
       'Transacties',
       'Hoeveel heb ik uitgegeven?',
     ],
+    profileTypes: ['private'],
   },
   {
     url: AppRoutes.INKOMEN,
@@ -475,6 +485,7 @@ export const staticIndex: PageEntry[] = [
       'Specificaties',
       'Werk en inkomen',
     ],
+    profileTypes: ['private'],
   },
   {
     url: AppRoutes.INKOMEN,
@@ -483,6 +494,7 @@ export const staticIndex: PageEntry[] = [
       displayPath(term, ['Jaaropgaven & Uikeringsspecificaties']),
     description: `Informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.`,
+    profileTypes: ['private'],
   },
   {
     url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
@@ -519,6 +531,7 @@ export const staticIndex: PageEntry[] = [
       'adres',
       'naam',
     ],
+    profileTypes: ['private'],
   },
   {
     url: AppRoutes.KVK,
@@ -543,6 +556,7 @@ export const staticIndex: PageEntry[] = [
       'Hoofdvestiging',
       'Functionarissen',
     ],
+    profileTypes: ['private-commercial', 'commercial'],
   },
   {
     url: AppRoutes.BUURT,
@@ -618,6 +632,7 @@ export const staticIndex: PageEntry[] = [
       'Afmelden',
       'Landelijk registratienummer',
     ],
+    profileTypes: ['private'],
   },
   {
     url: ExternalUrls.SSO_BELASTINGEN,

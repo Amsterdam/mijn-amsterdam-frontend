@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   atom,
   Loadable,
@@ -16,17 +16,18 @@ import { AppState, PRISTINE_APPSTATE } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
+  profileTypeState,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
+import {
   ApiBaseItem,
   ApiSearchConfig,
   apiSearchConfigs,
   API_SEARCH_CONFIG_DEFAULT,
   displayPath,
   PageEntry,
-  searchStateKeys,
   staticIndex,
 } from './searchConfig';
-
-export const dynamicSearchIndex: PageEntry[] = [...staticIndex];
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -155,26 +156,35 @@ export function useSearch() {
   return useRecoilState(searchConfigAtom);
 }
 
-export function isIndexReady(apiNames: Array<keyof AppState>) {
-  return searchStateKeys.every((apiName) => apiNames.includes(apiName));
-}
-
 export function useSearchIndex() {
   const [{ index, apiNames }, setSearchConfig] = useSearch();
   const appState = useAppStateGetter();
-
-  const isAppStateReady = searchStateKeys.every((stateKey) => {
+  const profileType = useProfileTypeValue();
+  const apiNamesToIndex = apiSearchConfigs
+    .filter((config) => config.profileTypes?.includes(profileType))
+    .map((config) => {
+      return config.apiName;
+    });
+  const isAppStateReady = apiNamesToIndex.every((stateKey) => {
     return appState[stateKey] !== PRISTINE_APPSTATE[stateKey];
   });
+  console.dir(
+    apiNamesToIndex.map((k) => [k, appState[k] === PRISTINE_APPSTATE[k]])
+  );
+  const isIndexed = useRecoilValue(isIndexReadyQuery);
 
-  const isIndexed = isIndexReady(apiNames);
+  const chapterPageEntries = useMemo(() => {
+    return staticIndex.filter(
+      (index) => !index.profileTypes || index.profileTypes.includes(profileType)
+    );
+  }, [profileType]);
 
   useEffect(() => {
     if (isAppStateReady && !isIndexed) {
-      const sindex = index || new Fuse(staticIndex, options);
+      const sindex = index || new Fuse(chapterPageEntries, options);
       const sApiNames: Array<keyof AppState> = [];
 
-      for (const stateKey of searchStateKeys) {
+      for (const stateKey of apiNamesToIndex) {
         if (!isError(appState[stateKey])) {
           const pageEntries = generateSearchIndexPageEntries(
             stateKey,
@@ -193,9 +203,9 @@ export function useSearchIndex() {
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAppStateReady, isIndexed]);
+  }, [isAppStateReady, isIndexed, chapterPageEntries]);
 
-  return isAppStateReady && isIndexReady(apiNames);
+  return isAppStateReady && isIndexed;
 }
 
 export const searchTermAtom = atom<string>({
@@ -224,7 +234,16 @@ const isIndexReadyQuery = selector({
   key: 'isIndexReady',
   get: ({ get }) => {
     const fuse = get(searchConfigAtom);
-    return isIndexReady(fuse.apiNames);
+    const profileType = get(profileTypeState);
+    const apiNamesToIndex = apiSearchConfigs
+      .filter((config) => config.profileTypes?.includes(profileType))
+      .map((config) => {
+        return config.apiName;
+      });
+    const isIndexed = apiNamesToIndex.every((apiName) =>
+      fuse.apiNames.includes(apiName)
+    );
+    return isIndexed;
   },
 });
 
