@@ -1,7 +1,6 @@
 /// <reference types="react-scripts" />
 
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import 'react-app-polyfill/stable';
 import ReactDOM from 'react-dom';
 import App from './client/App';
@@ -16,7 +15,6 @@ console.info('App version: ' + release);
 
 Sentry.init({
   dsn: getOtapEnvItem('sentryDsn'),
-  integrations: [new Integrations.BrowserTracing()],
   environment: ENV,
   debug: ENV === 'development',
   ignoreErrors: [
