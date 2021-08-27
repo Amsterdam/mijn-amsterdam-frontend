@@ -203,7 +203,7 @@ export function useSearchIndex() {
 
   useProfileTypeSwitch(() => {
     // Reset the search index
-    isIndexing.current = false;
+    isIndexed.current = false;
     setSearchConfig(() => ({
       index: null,
       apiNames: [],
