@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import {
   atom,
   Loadable,
@@ -12,7 +12,7 @@ import {
 } from 'recoil';
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiSuccessResponse, isError } from '../../../universal/helpers/api';
-import { AppState, PRISTINE_APPSTATE } from '../../AppState';
+import { AppState } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -158,7 +158,7 @@ export function useSearchIndex() {
   const [{ index }, setSearchConfig] = useSearch();
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-
+  const isIndexed = useRef(false);
   const chapterPageEntries = useMemo(() => {
     return staticIndex.filter(
       (index) => !index.profileTypes || index.profileTypes.includes(profileType)
@@ -174,7 +174,9 @@ export function useSearchIndex() {
       return appState[stateKey].status !== 'PRISTINE';
     });
 
-    if (isAppStateReady && !index) {
+    if (isAppStateReady && !isIndexed.current) {
+      isIndexed.current = true;
+
       const sindex = new Fuse(chapterPageEntries, options);
       const sApiNames: Array<keyof AppState> = [];
 
@@ -201,6 +203,7 @@ export function useSearchIndex() {
 
   useProfileTypeSwitch(() => {
     // Reset the search index
+    isIndexing.current = false;
     setSearchConfig(() => ({
       index: null,
       apiNames: [],
