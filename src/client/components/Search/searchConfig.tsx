@@ -27,7 +27,7 @@ import { ExternalUrls } from '../../config/app';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
 
-export interface PageEntry {
+export interface SearchEntry {
   url: string;
   title: string;
   displayTitle?: (term: string) => ReactNode;
@@ -42,7 +42,7 @@ export interface ApiSearchConfig {
     apiContent: ApiSuccessResponse<any>['content']
   ) => ApiBaseItem[];
 
-  // PageEntry properties
+  // SearchEntry properties
   // A description that will be used by Fuse to find  matching items
   description:
     | ReactNode
@@ -376,7 +376,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   // },
 ];
 
-export const staticIndex: PageEntry[] = [
+export const staticIndex: SearchEntry[] = [
   {
     url: AppRoutes.ROOT,
     title: DocumentTitles[AppRoutes.ROOT],
