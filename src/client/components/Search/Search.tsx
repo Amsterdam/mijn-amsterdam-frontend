@@ -12,11 +12,11 @@ import { useProfileTypeSwitch } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
-import { PageEntry } from './searchConfig';
+import { SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
-  results: PageEntry[];
+  results: SearchEntry[];
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;

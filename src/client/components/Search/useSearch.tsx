@@ -25,14 +25,14 @@ import {
   ApiSearchConfig,
   displayPath,
   getApiSearchConfigs,
-  PageEntry,
+  SearchEntry,
   staticIndex,
 } from './searchConfig';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
   apiConfig: ApiSearchConfig
-): PageEntry {
+): SearchEntry {
   const props: Array<
     Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName'>
   > = [
@@ -44,7 +44,7 @@ export function generateSearchIndexPageEntry(
     'keywords',
   ];
 
-  const pageEntry = {} as PageEntry;
+  const pageEntry = {} as SearchEntry;
 
   for (const prop of props) {
     const configValue = apiConfig[prop];
@@ -66,7 +66,7 @@ export function generateSearchIndexPageEntry(
         ...value,
       ]);
     } else {
-      pageEntry[prop as keyof PageEntry] = value;
+      pageEntry[prop as keyof SearchEntry] = value;
     }
   }
 
@@ -77,7 +77,7 @@ export function generateSearchIndexPageEntries(
   profileType: ProfileType,
   apiName: string,
   apiContent: ApiSuccessResponse<any>['content']
-): PageEntry[] {
+): SearchEntry[] {
   const apiConfig = getApiSearchConfigs(profileType).find(
     (config) => config.apiName === apiName
   );
@@ -99,7 +99,7 @@ interface AmsterdamSearchResult {
   highlight: { title: string };
 }
 
-function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
+function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
@@ -123,7 +123,7 @@ export async function searchAmsterdamNL(
   const url = useExtendedAmsterdamSearch
     ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
     : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
-  const response = await axios.get<PageEntry[]>(url, {
+  const response = await axios.get<SearchEntry[]>(url, {
     transformResponse: addAxiosResponseTransform(
       transformSearchAmsterdamNLresponse
     ),
@@ -140,7 +140,7 @@ const options = {
 };
 
 export const searchConfigAtom = atom<{
-  index: Fuse<PageEntry> | null;
+  index: Fuse<SearchEntry> | null;
   apiNames: Array<keyof Partial<AppState>>;
 }>({
   key: 'searchConfigState',
@@ -269,8 +269,8 @@ const mijnQuery = selector({
 });
 
 export interface SearchResults {
-  ma?: PageEntry[];
-  am?: Loadable<PageEntry[] | null>;
+  ma?: SearchEntry[];
+  am?: Loadable<SearchEntry[] | null>;
   isIndexReady: boolean;
 }
 
