@@ -39,7 +39,6 @@ export default function Search() {
         <SearchBar
           autoFocus={true}
           term={term || termParam}
-          onFinish={() => console.log('finish searchsz!')}
           extendedAMResults={true}
           typeAhead={false}
           maxResultCountDisplay={20}
