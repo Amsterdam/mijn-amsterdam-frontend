@@ -14,7 +14,7 @@ import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiSuccessResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { appStateAtom, useAppStateGetter } from '../../hooks/useAppState';
 import {
   profileTypeState,
   useProfileTypeSwitch,
@@ -53,6 +53,10 @@ export function generateSearchIndexPageEntry(
       typeof configValue === 'function'
         ? configValue(item, apiConfig)
         : configValue;
+
+    if (!value) {
+      continue;
+    }
 
     if (prop === 'keywords') {
       pageEntry.keywords = uniqueArray([
@@ -166,9 +170,9 @@ export function useSearchIndex() {
   }, [profileType]);
 
   useEffect(() => {
-    const apiNamesToIndex = getApiSearchConfigs(profileType).map(
-      (config) => config.apiName
-    );
+    const apiNamesToIndex = getApiSearchConfigs(profileType)
+      .map((config) => config.apiName)
+      .filter((stateKey) => !!appState[stateKey]?.status);
 
     const isAppStateReady = apiNamesToIndex.every((stateKey) => {
       return appState[stateKey].status !== 'PRISTINE';
@@ -181,7 +185,7 @@ export function useSearchIndex() {
       const sApiNames: Array<keyof AppState> = [];
 
       for (const stateKey of apiNamesToIndex) {
-        if (!isError(appState[stateKey])) {
+        if (!isError(appState[stateKey]) && appState[stateKey]?.content) {
           const pageEntries = generateSearchIndexPageEntries(
             profileType,
             stateKey,
@@ -233,14 +237,17 @@ const amsterdamNLQuery = selectorFamily({
     },
 });
 
-const isIndexReadyQuery = selector({
+export const isIndexReadyQuery = selector({
   key: 'isIndexReady',
   get: ({ get }) => {
     const fuse = get(searchConfigAtom);
     const profileType = get(profileTypeState);
-    const apiNamesToIndex = getApiSearchConfigs(profileType).map((config) => {
-      return config.apiName;
-    });
+    const appState = get(appStateAtom);
+    const apiNamesToIndex = getApiSearchConfigs(profileType)
+      .map((config) => {
+        return config.apiName;
+      })
+      .filter((stateKey) => !!appState[stateKey]?.status);
 
     const isIndexed = apiNamesToIndex.every((apiName) =>
       fuse.apiNames.includes(apiName)
