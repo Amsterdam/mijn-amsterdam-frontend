@@ -182,7 +182,21 @@ type ApiSearchConfigEntry = Partial<ApiSearchConfig> & {
   apiName: keyof AppState;
 };
 
-export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
+export function getApiSearchConfigs(profileType: ProfileType) {
+  return apiSearchConfigs
+    .map((config) => {
+      const apiConfig: ApiSearchConfig & {
+        apiName: keyof AppState;
+      } = {
+        ...API_SEARCH_CONFIG_DEFAULT,
+        ...config,
+      };
+      return apiConfig;
+    })
+    .filter((config) => config.profileTypes?.includes(profileType));
+}
+
+const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
@@ -343,16 +357,14 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
         return displayPath(term, [capitalizeFirstLetter(item.title)]);
       };
     },
-    profileTypes: ['private'],
   },
-  {
-    apiName: 'AKTES',
-    displayTitle: (document: Akte) => {
-      return (term: string) =>
-        displayPath(term, [capitalizeFirstLetter(document.type)]);
-    },
-    profileTypes: ['private'],
-  },
+  // {
+  //   apiName: 'AKTES',
+  //   displayTitle: (document: Akte) => {
+  //     return (term: string) =>
+  //       displayPath(term, [capitalizeFirstLetter(document.type)]);
+  //   },
+  // },
 ];
 
 export const staticIndex: PageEntry[] = [
