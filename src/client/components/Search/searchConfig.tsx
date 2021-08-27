@@ -1,15 +1,15 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
-import { Akte } from '../../../server/services/aktes';
 import {
   FocusStadspas,
   FocusStadspasSaldo,
 } from '../../../server/services/focus/focus-combined';
 import { FocusItem } from '../../../server/services/focus/focus-types';
 import {
-  ToeristischeVerhuurVergunning,
   ToeristischeVerhuurRegistratie,
+  ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
+import { WmoItem } from '../../../server/services/wmo';
 import { AppRoutes, DocumentTitles } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -26,7 +26,6 @@ import { IconExternalLink } from '../../assets/icons';
 import { ExternalUrls } from '../../config/app';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
-import { WmoItem } from '../../../server/services/wmo';
 
 export interface PageEntry {
   url: string;
@@ -200,10 +199,20 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
-      const props = ['caseType', 'title', 'status', 'decision', 'identifier'];
+      const props = [
+        'caseType',
+        'title',
+        'status',
+        'decision',
+        'identifier',
+        'description',
+      ];
       switch (vergunning.caseType) {
         case 'Evenement melding':
           return props.concat(['eventType', 'activities', 'location']);
+        case 'GPP':
+        case 'GPK':
+          return [...props, 'kenteken'];
         default:
           return props;
       }
