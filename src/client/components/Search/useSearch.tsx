@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import {
   atom,
   Loadable,
@@ -17,14 +17,14 @@ import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   profileTypeState,
+  useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
 import {
   ApiBaseItem,
   ApiSearchConfig,
-  apiSearchConfigs,
-  API_SEARCH_CONFIG_DEFAULT,
   displayPath,
+  getApiSearchConfigs,
   PageEntry,
   staticIndex,
 } from './searchConfig';
@@ -74,19 +74,17 @@ export function generateSearchIndexPageEntry(
 }
 
 export function generateSearchIndexPageEntries(
+  profileType: ProfileType,
   apiName: string,
   apiContent: ApiSuccessResponse<any>['content']
 ): PageEntry[] {
-  const config = apiSearchConfigs.find((config) => config.apiName === apiName);
+  const apiConfig = getApiSearchConfigs(profileType).find(
+    (config) => config.apiName === apiName
+  );
 
-  if (!config) {
+  if (!apiConfig) {
     throw new Error(`${apiName} does not have search index entry.`);
   }
-
-  const apiConfig: ApiSearchConfig = {
-    ...API_SEARCH_CONFIG_DEFAULT,
-    ...config,
-  };
 
   return apiConfig
     .getApiBaseItems(apiContent)
@@ -157,21 +155,9 @@ export function useSearch() {
 }
 
 export function useSearchIndex() {
-  const [{ index, apiNames }, setSearchConfig] = useSearch();
+  const [{ index }, setSearchConfig] = useSearch();
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  const apiNamesToIndex = apiSearchConfigs
-    .filter((config) => config.profileTypes?.includes(profileType))
-    .map((config) => {
-      return config.apiName;
-    });
-  const isAppStateReady = apiNamesToIndex.every((stateKey) => {
-    return appState[stateKey] !== PRISTINE_APPSTATE[stateKey];
-  });
-  console.dir(
-    apiNamesToIndex.map((k) => [k, appState[k] === PRISTINE_APPSTATE[k]])
-  );
-  const isIndexed = useRecoilValue(isIndexReadyQuery);
 
   const chapterPageEntries = useMemo(() => {
     return staticIndex.filter(
@@ -180,13 +166,22 @@ export function useSearchIndex() {
   }, [profileType]);
 
   useEffect(() => {
-    if (isAppStateReady && !isIndexed) {
-      const sindex = index || new Fuse(chapterPageEntries, options);
+    const apiNamesToIndex = getApiSearchConfigs(profileType).map(
+      (config) => config.apiName
+    );
+
+    const isAppStateReady = apiNamesToIndex.every((stateKey) => {
+      return appState[stateKey].status !== 'PRISTINE';
+    });
+
+    if (isAppStateReady && !index) {
+      const sindex = new Fuse(chapterPageEntries, options);
       const sApiNames: Array<keyof AppState> = [];
 
       for (const stateKey of apiNamesToIndex) {
         if (!isError(appState[stateKey])) {
           const pageEntries = generateSearchIndexPageEntries(
+            profileType,
             stateKey,
             appState[stateKey].content
           );
@@ -202,10 +197,15 @@ export function useSearchIndex() {
         apiNames: sApiNames,
       }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAppStateReady, isIndexed, chapterPageEntries]);
+  }, [chapterPageEntries, appState, index, profileType, setSearchConfig]);
 
-  return isAppStateReady && isIndexed;
+  useProfileTypeSwitch(() => {
+    // Reset the search index
+    setSearchConfig(() => ({
+      index: null,
+      apiNames: [],
+    }));
+  });
 }
 
 export const searchTermAtom = atom<string>({
@@ -235,14 +235,14 @@ const isIndexReadyQuery = selector({
   get: ({ get }) => {
     const fuse = get(searchConfigAtom);
     const profileType = get(profileTypeState);
-    const apiNamesToIndex = apiSearchConfigs
-      .filter((config) => config.profileTypes?.includes(profileType))
-      .map((config) => {
-        return config.apiName;
-      });
+    const apiNamesToIndex = getApiSearchConfigs(profileType).map((config) => {
+      return config.apiName;
+    });
+
     const isIndexed = apiNamesToIndex.every((apiName) =>
       fuse.apiNames.includes(apiName)
     );
+
     return isIndexed;
   },
 });
