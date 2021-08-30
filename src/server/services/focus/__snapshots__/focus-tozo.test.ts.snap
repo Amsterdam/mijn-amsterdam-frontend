@@ -7,6 +7,7 @@ Object {
       "dateEnd": "2020-03-17T00:00:00+01:00",
       "datePublished": "2020-03-17T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
+      "decision": "afwijzing",
       "id": "1569898129",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -100,6 +101,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 1 uitkering. Bekijk de brief
         voor meer details.
@@ -126,6 +128,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 1. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -150,6 +153,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 1 niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -197,6 +201,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 1. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -221,6 +226,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 1 lening. Bekijk de brief
         voor meer details.
@@ -247,6 +253,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 1 uitkering. Bekijk de brief
         voor meer details.
@@ -273,6 +280,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 1 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -295,6 +303,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 1 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -317,6 +326,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>Wij hebben een besluit genomen over uw Tozo 1 aanvraag. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
@@ -339,6 +349,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 1. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -369,6 +380,7 @@ Object {
       "dateEnd": "2021-03-27T00:00:00+01:00",
       "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
+      "decision": "toekenning",
       "id": "3578630920",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -404,6 +416,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 2 uitkering. Bekijk de brief
         voor meer details.
@@ -430,6 +443,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -454,6 +468,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 2 lening. Bekijk de brief
         voor meer details.
@@ -505,6 +520,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 2 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -527,6 +543,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 2 niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -549,6 +566,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
         U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -573,6 +591,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 2 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -645,6 +664,7 @@ Object {
         },
         Object {
           "datePublished": "2020-03-17T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 2 uitkering. Bekijk de brief
         voor meer details.
@@ -671,6 +691,7 @@ Object {
         },
         Object {
           "datePublished": "2020-09-28T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -695,6 +716,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
     U moet (een deel van) uw Tozo 2 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -721,6 +743,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
     U moet (een deel van) uw Tozo 2 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -753,6 +776,7 @@ Object {
       "dateEnd": "2021-03-27T00:00:00+01:00",
       "datePublished": "2021-03-27T00:00:00+01:00",
       "dateStart": "2020-02-05T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "685054265",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -864,6 +888,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 3 uitkering. Bekijk de brief
         voor meer details.
@@ -890,6 +915,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 3 niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -912,6 +938,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -936,6 +963,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 3 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -958,6 +986,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "intrekking",
           "description": "<p>
         U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -982,6 +1011,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 3 lening. Bekijk de brief
         voor meer details.
@@ -1008,6 +1038,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 3 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -1030,6 +1061,7 @@ Object {
         },
         Object {
           "datePublished": "2020-10-01",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -1103,6 +1135,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 3 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -1129,6 +1162,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 3 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -1185,6 +1219,7 @@ Object {
       "dateEnd": "2021-04-10T00:00:00+01:00",
       "datePublished": "2021-04-10T00:00:00+01:00",
       "dateStart": "2021-03-27T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "1579672147",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -1220,6 +1255,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 4 uitkering. Bekijk de brief
         voor meer details.
@@ -1246,6 +1282,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 4. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -1270,6 +1307,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 4. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -1294,6 +1332,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 4 lening. Bekijk de brief
         voor meer details.
@@ -1320,6 +1359,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 4 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -1342,6 +1382,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 4 niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -1414,6 +1455,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 4 uitkering. Bekijk de brief
         voor meer details.
@@ -1464,6 +1506,7 @@ Object {
         },
         Object {
           "datePublished": "2021-03-27T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 4 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -1514,6 +1557,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-10T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 4 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -1546,6 +1590,7 @@ Object {
       "dateEnd": "2021-07-22T00:00:00+01:00",
       "datePublished": "2021-07-22T00:00:00+01:00",
       "dateStart": "2021-06-14T00:00:00+01:00",
+      "decision": "intrekking",
       "id": "3712245579",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
@@ -1581,6 +1626,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 5 uitkering. Bekijk de brief
         voor meer details.
@@ -1607,6 +1653,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 5. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -1631,6 +1678,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "afwijzing",
           "description": "<p>
         U hebt geen recht op Tozo 5. Bekijk de brief voor meer details.
       </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
@@ -1655,6 +1703,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 5 lening. Bekijk de brief
         voor meer details.
@@ -1706,6 +1755,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw Tozo 5 aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -1728,6 +1778,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "buitenbehandeling",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 5 niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -1750,6 +1801,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "toekenning",
           "description": "<p>
         U hebt recht op de Tozo 5 uitkering. Bekijk de brief
         voor meer details.
@@ -1826,6 +1878,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-14T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 5 uitkering terugbetalen.
     Bekijk de brief voor meer details.
@@ -1876,6 +1929,7 @@ Object {
         },
         Object {
           "datePublished": "2021-07-22T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>
     U moet (een deel van) uw Tozo 5 uitkering terugbetalen.
     Bekijk de brief voor meer details.

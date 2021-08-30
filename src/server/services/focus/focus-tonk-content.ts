@@ -187,6 +187,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'intrekken',
     productSpecific: 'uitkering',
+    decision: 'intrekking',
   },
   '176149': {
     omschrijving: 'TONK toekennen',
@@ -195,6 +196,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '176156': {
     omschrijving: 'TONK toekennen via batch',
@@ -203,6 +205,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
   '176145': {
     omschrijving: 'TONK afwijzen',
@@ -211,6 +214,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
+    decision: 'afwijzing',
   },
   '176155': {
     omschrijving: 'TONK afwijzen via batch',
@@ -219,6 +223,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'besluit',
     productSpecific: 'uitkering',
+    decision: 'afwijzing',
   },
   '176146': {
     omschrijving: 'TONK Buiten behandeling laten',
@@ -227,6 +232,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'buitenbehandeling',
   },
   '176180': {
     omschrijving: 'TONK Ambtshalve verlenging via batch',
@@ -235,6 +241,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '176182': {
     omschrijving: 'TONK Besluit over verlenging',
@@ -243,6 +250,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'toekenning',
   },
   '1726182': {
     omschrijving: 'TONK Bevestigen weigering verlenging',
@@ -251,6 +259,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     productSpecific: 'uitkering',
     stepType: 'besluit',
+    decision: 'afwijzing',
   },
   '843': {
     omschrijving: 'Correctiemail Tonk',

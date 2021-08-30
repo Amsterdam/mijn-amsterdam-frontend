@@ -14,11 +14,11 @@ export interface Onderneming {
   overigeActiviteiten: string[] | null;
   datumAanvang: string;
   datumEinde: string | null;
+  kvkNummer?: string;
 }
 
 export interface Rechtspersoon {
   rsin?: string;
-  bsn?: string;
   kvkNummer: string;
   statutaireNaam: string;
   statutaireZetel: string;
@@ -72,6 +72,20 @@ export interface Vestiging {
   isHoofdvestiging?: boolean;
 }
 
+export interface Eigenaar {
+  naam: string | null;
+  geboortedatum: string | null;
+  bsn?: string;
+  adres: {
+    huisletter: string | null;
+    huisnummer: string | null;
+    huisnummertoevoeging: string | null;
+    postcode: string | null;
+    straatnaam: string | null;
+    woonplaatsNaam: string | null;
+  };
+}
+
 export interface KVKSourceDataContent {
   mokum: boolean;
   onderneming: Onderneming;
@@ -82,6 +96,7 @@ export interface KVKSourceDataContent {
   overigeFunctionarissen: OverigeFunctionaris[];
   gemachtigden: Gemachtigde[];
   aansprakelijken: Aansprakelijke[];
+  eigenaar: Eigenaar | null;
 }
 
 export interface KVKSourceData {
@@ -153,10 +168,11 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
       }
     );
   }
+
   return responseData.content;
 }
 
-const SERVICE_NAME = 'KVK'; // Change to your service name
+const SERVICE_NAME = 'KVK';
 
 export async function fetchKVK(
   sessionID: SessionID,
