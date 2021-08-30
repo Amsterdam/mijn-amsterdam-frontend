@@ -21,6 +21,7 @@ export interface FocusStadspasBudget {
   description: string;
   code: string;
   urlTransactions: string;
+  datumAfloop: string;
 }
 
 export interface FocusStadspas {
