@@ -127,6 +127,7 @@ export async function searchAmsterdamNL(
   const url = useExtendedAmsterdamSearch
     ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
     : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
+
   const response = await axios.get<SearchEntry[]>(url, {
     transformResponse: addAxiosResponseTransform(
       transformSearchAmsterdamNLresponse
