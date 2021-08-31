@@ -19,8 +19,7 @@ export default function Search() {
     if (termParam) {
       setTerm(termParam);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [termParam]);
+  }, [termParam, setTerm]);
 
   return (
     <Page className={styles.Search}>
