@@ -302,9 +302,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       return ['supplier', 'title', 'voorzieningsoortcode'];
     },
     keywords: (wmoItem: WmoItem): string[] =>
-      uniqueArray(
-        wmoItem.steps.flatMap((step: any) => [step.title, step.status])
-      ),
+      uniqueArray(wmoItem.steps.flatMap((step) => [step.title, step.status])),
     displayTitle: (wmoItem: WmoItem) => {
       return (term: string) => {
         const segments = [wmoItem.title];
