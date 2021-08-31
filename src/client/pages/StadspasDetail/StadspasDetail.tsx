@@ -79,10 +79,9 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
 
 interface BudgetBalanceProps {
   budget: FocusStadspasBudget;
-  dateEnd: string;
 }
 
-function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
+function BudgetBalance({ budget }: BudgetBalanceProps) {
   const isPhoneScreen = usePhoneScreen();
   return (
     <ul className={styles.Balance}>
@@ -104,7 +103,9 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
       >
         <span className={styles.Label}>
           {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
-          <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
+          <time dateTime={budget.datumAfloop}>
+            {defaultDateFormat(budget.datumAfloop)}
+          </time>
           &nbsp;&euro; {displayAmount(budget.balance)}
         </span>
       </li>
@@ -145,7 +146,7 @@ function StadspasBudget({
         <Heading className={styles.PageContentBalanceHeading}>
           {budget.description}
         </Heading>
-        <BudgetBalance budget={budget} dateEnd={dateEnd} />
+        <BudgetBalance budget={budget} />
       </PageContent>
       <PageContent
         className={classnames(
