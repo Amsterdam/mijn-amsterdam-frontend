@@ -44,7 +44,9 @@ export interface ApiSearchConfig {
   ) => ApiBaseItem[];
 
   // SearchEntry properties
-  // A description that will be used by Fuse to find  matching items
+
+  // A description that will be used by Fuse to find matching items and is also displayed as description
+  // of the SearchEntry on the Search page for Amsterdam.nl Results.
   description: ReactNode | ((item: any, config: ApiSearchConfig) => ReactNode);
 
   // A title that will be used by Fuse to find  matching items
