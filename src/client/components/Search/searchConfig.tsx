@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
+import { Vergunning } from '../../../server/services';
 import {
   FocusStadspas,
   FocusStadspasSaldo,
@@ -44,30 +45,24 @@ export interface ApiSearchConfig {
 
   // SearchEntry properties
   // A description that will be used by Fuse to find  matching items
-  description:
-    | ReactNode
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+  description: ReactNode | ((item: any, config: ApiSearchConfig) => ReactNode);
 
   // A title that will be used by Fuse to find  matching items
-  title: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+  title: string | ((item: any, config: ApiSearchConfig) => string);
 
   // A list of keys of which the values are used for keywords
   keywordSourceProps:
     | string[]
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+    | ((item: any, config: ApiSearchConfig) => string[]);
 
   // A list of keywords
-  keywords:
-    | string[]
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => string[]);
+  keywords: string[] | ((item: any, config: ApiSearchConfig) => string[]);
 
   // Return a component that acts as title in the search result list
-  displayTitle:
-    | ReactNode
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
+  displayTitle: ReactNode | ((item: any, config: ApiSearchConfig) => ReactNode);
 
   // The url to link to
-  url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+  url: string | ((item: any, config: ApiSearchConfig) => string);
 
   // For which profile types this api's need to be indexed
   profileTypes: ProfileType[];
@@ -95,13 +90,13 @@ export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
 
     return [];
   },
-  keywordSourceProps: (item: ApiBaseItem): string[] => ['title'],
-  keywords: (item: ApiBaseItem): string[] => [],
-  title: (item: ApiBaseItem) => item.link.title,
-  displayTitle: (item: ApiBaseItem) => (term: string) =>
+  keywordSourceProps: (item: any): string[] => ['title'],
+  keywords: (item: any): string[] => [],
+  title: (item: any) => item.link.title,
+  displayTitle: (item: any) => (term: string) =>
     displayPath(term, [item.title]),
-  url: (item: ApiBaseItem) => item.link.to,
-  description: (item: ApiBaseItem) => {
+  url: (item: any) => item.link.to,
+  description: (item: any) => {
     return `Bekijk ${item.title}`;
   },
   profileTypes: ['private'],
@@ -150,15 +145,15 @@ export function displayPath(
 
 const getFocusConfig = (apiName: keyof AppState): ApiSearchConfigEntry => ({
   apiName,
-  keywordSourceProps: (aanvraag: ApiBaseItem): string[] => {
+  keywordSourceProps: (): string[] => {
     return ['title', 'status', 'decision', 'productTitle'];
   },
-  keywords: (aanvraag: ApiBaseItem) =>
+  keywords: (aanvraag: FocusItem) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
-  title: (aanvraag: ApiBaseItem) => {
-    return `Aanvraag ${aanvraag.productTitle.toLowerCase()} (${defaultDateFormat(
+  title: (aanvraag: FocusItem) => {
+    return `Aanvraag ${aanvraag.productTitle?.toLowerCase()} (${defaultDateFormat(
       aanvraag.dateStart
     )})`;
   },
@@ -181,6 +176,13 @@ type ApiSearchConfigEntry = Partial<ApiSearchConfig> & {
   apiName: keyof AppState;
 };
 
+interface ToeristischRegistratieItem {
+  title: string;
+  identifier: string;
+  link: LinkProps;
+  [key: string]: any;
+}
+
 export function getApiSearchConfigs(profileType: ProfileType) {
   return apiSearchConfigs
     .map((config) => {
@@ -198,7 +200,7 @@ export function getApiSearchConfigs(profileType: ProfileType) {
 const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   {
     apiName: 'VERGUNNINGEN',
-    keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
+    keywordSourceProps: (vergunning: Vergunning): string[] => {
       const props = [
         'caseType',
         'title',
@@ -217,65 +219,21 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
           return props;
       }
     },
-    title: (vergunning: ApiBaseItem) => {
+    title: (vergunning: Vergunning) => {
       return `${vergunning.title} ${vergunning.identifier}`;
     },
-    displayTitle: (vergunning: ApiBaseItem) => (term: string) => {
-      return displayPath(term, [
-        vergunning.title || 'test',
-        vergunning.identifier || 'jup',
-      ]);
+    displayTitle: (vergunning: Vergunning) => (term: string) => {
+      return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
     keywords: () => ['vergunningsaanvraag'],
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
     apiName: 'TOERISTISCHE_VERHUUR',
-    keywordSourceProps: (vergunning: ApiBaseItem): string[] => {
-      const props = ['caseType', 'title', 'status', 'decision', 'identifier'];
-      switch (vergunning.caseType) {
-        default:
-          return props;
-      }
-    },
-    keywords: () => [
-      'bed',
-      'breakfast',
-      'bed and breakfast',
-      'verhuur',
-      'vergunningsaanvraag',
-    ],
-    title: (vergunning: ApiBaseItem) => {
-      return `${vergunning.title} ${defaultDateFormat(
-        vergunning.dateStart
-      )} ${defaultDateFormat(vergunning.dateEnd)}`;
-    },
-    displayTitle: (vergunning: ToeristischeVerhuurVergunning) => {
-      if (
-        [
-          'Geplande verhuur',
-          'Geannuleerde verhuur',
-          'Afgelopen verhuur',
-        ].includes(vergunning.title)
-      ) {
-        return (term: string) =>
-          displayPath(term, [
-            vergunning.title,
-            displayDateRange(
-              vergunning.dateStart + '',
-              vergunning.dateEnd + ''
-            ),
-          ]);
-      }
-      return (term: string) => {
-        return displayPath(term, [vergunning.title, vergunning.identifier]);
-      };
-    },
     getApiBaseItems: (apiContent: {
       registraties: ToeristischeVerhuurRegistratie[];
       vergunningen: ToeristischeVerhuurVergunning[];
-    }) => {
-      const zaken = apiContent.vergunningen;
+    }): ToeristischRegistratieItem[] => {
       const registratienummers = apiContent.registraties.map((registratie) => {
         return {
           title: 'Landelijk registratienummer',
@@ -286,17 +244,67 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
           },
         };
       });
+      const zaken = apiContent.vergunningen.map(
+        (vergunning: ToeristischeVerhuurVergunning) => {
+          const title = `${vergunning.title} ${
+            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : ''
+          } ${vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : ''}`;
+          return {
+            ...vergunning,
+            title,
+            identifier: vergunning.identifier,
+            link: vergunning.link,
+          };
+        }
+      );
       return [...zaken, ...registratienummers];
     },
+    keywordSourceProps: (): string[] => {
+      return ['caseType', 'title', 'status', 'decision', 'identifier'];
+    },
+    keywords: () => [
+      'bed',
+      'breakfast',
+      'bed and breakfast',
+      'verhuur',
+      'vergunningsaanvraag',
+    ],
+    displayTitle: (toeristischVerhuurItem: ToeristischRegistratieItem) => {
+      if (
+        [
+          'Geplande verhuur',
+          'Geannuleerde verhuur',
+          'Afgelopen verhuur',
+        ].includes(toeristischVerhuurItem.title)
+      ) {
+        return (term: string) =>
+          displayPath(term, [
+            toeristischVerhuurItem.title,
+            displayDateRange(
+              toeristischVerhuurItem.dateStart + '',
+              toeristischVerhuurItem.dateEnd + ''
+            ),
+          ]);
+      }
+      return (term: string) => {
+        return displayPath(term, [
+          toeristischVerhuurItem.title,
+          toeristischVerhuurItem.identifier,
+        ]);
+      };
+    },
+
     profileTypes: ['private', 'private-commercial'],
   },
   {
     apiName: 'WMO',
-    keywordSourceProps: (wmoItem: ApiBaseItem): string[] => {
+    keywordSourceProps: (): string[] => {
       return ['supplier', 'title', 'voorzieningsoortcode'];
     },
-    keywords: (tozo: ApiBaseItem): string[] =>
-      uniqueArray(tozo.steps.flatMap((step: any) => [step.title, step.status])),
+    keywords: (wmoItem: WmoItem): string[] =>
+      uniqueArray(
+        wmoItem.steps.flatMap((step: any) => [step.title, step.status])
+      ),
     displayTitle: (wmoItem: WmoItem) => {
       return (term: string) => {
         const segments = [wmoItem.title];
@@ -323,7 +331,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       return stadspassen || [];
     },
     keywords: () => ['kindtegoed', 'saldo'],
-    title: (stadspas: ApiBaseItem) => `Stadspas van ${stadspas.naam}`,
+    title: (stadspas: FocusStadspas) => `Stadspas van ${stadspas.naam}`,
     displayTitle: (stadspas: FocusStadspas) => {
       return (term: string) => {
         const segments = [`Stadspas van ${stadspas.naam}`];

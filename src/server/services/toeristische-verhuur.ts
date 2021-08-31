@@ -44,7 +44,7 @@ export interface ToeristischeVerhuurRegistratieSource {
   houseNumber: string | null;
   houseNumberExtension: string | null;
   postalCode: string | null;
-  registrationNumber: string | null;
+  registrationNumber: string;
   shortName: string | null;
   street: string | null;
   agreementDate: string | null;
