@@ -24,49 +24,47 @@ const DISPLAY_PROPS = {
 export default function FinancieleHulp() {
   const { FINANCIELE_HULP } = useAppStateGetter();
   const leningen = useMemo(() => {
-    if (!FINANCIELE_HULP.content?.leningen) {
-      return [];
+    const lening = FINANCIELE_HULP.content?.deepLinks?.lening;
+    if (!FINANCIELE_HULP.content?.deepLinks?.lening) {
+      return undefined;
     }
-    return FINANCIELE_HULP.content?.leningen.map((lening) => {
-      return {
-        ...lening,
-        url: (
-          <LinkdInline external={true} href={lening.url}>
-            Bekijk uw lening
-          </LinkdInline>
-        ),
-      };
-    });
+    return {
+      ...lening,
+      url: (
+        <LinkdInline external={true} href={lening?.url}>
+          Bekijk uw lening
+        </LinkdInline>
+      ),
+    };
   }, [FINANCIELE_HULP.content]);
   const schuldregelingen = useMemo(() => {
-    if (!FINANCIELE_HULP.content?.schuldregelingen) {
-      return [];
+    const schuldregeling = FINANCIELE_HULP.content?.deepLinks?.schuldhulp;
+    if (!schuldregeling) {
+      return undefined;
     }
-    return FINANCIELE_HULP.content?.schuldregelingen.map((lening) => {
-      return {
-        ...lening,
-        url: (
-          <LinkdInline external={true} href={lening.url}>
-            Bekijk uw schuldregeling
-          </LinkdInline>
-        ),
-      };
-    });
+    return {
+      ...schuldregeling,
+      url: (
+        <LinkdInline external={true} href={schuldregeling.url}>
+          Bekijk uw schuldregeling
+        </LinkdInline>
+      ),
+    };
   }, [FINANCIELE_HULP.content]);
   const budgetbeheer = useMemo(() => {
-    if (!FINANCIELE_HULP.content?.budgetbeheer) {
+    const budgetbeheer = FINANCIELE_HULP.content?.deepLinks?.budgetbeheer;
+    if (!budgetbeheer) {
       return [];
     }
-    return FINANCIELE_HULP.content?.budgetbeheer.map((lening) => {
-      return {
-        ...lening,
-        url: (
-          <LinkdInline external={true} href={lening.url}>
-            Bekijk uw lening
-          </LinkdInline>
-        ),
-      };
-    });
+
+    return {
+      ...budgetbeheer,
+      url: (
+        <LinkdInline external={true} href={budgetbeheer.url}>
+          Bekijk uw lening
+        </LinkdInline>
+      ),
+    };
   }, [FINANCIELE_HULP.content]);
   return (
     <OverviewPage className={styles.FinancieleHulp}>
@@ -103,11 +101,11 @@ export default function FinancieleHulp() {
           </Linkd>
         </p>
       </PageContent>
-      {!!schuldregelingen.length && (
+      {schuldregelingen && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-schuldregeling"
           title="Schuldregeling"
-          hasItems={!!schuldregelingen?.length}
+          hasItems={!!schuldregelingen}
           startCollapsed={false}
           className={styles.SectionBorderTop}
           isLoading={isLoading(FINANCIELE_HULP)}
@@ -120,15 +118,15 @@ export default function FinancieleHulp() {
             className={styles.HulpTable}
             titleKey="title"
             displayProps={DISPLAY_PROPS}
-            items={schuldregelingen}
+            items={[schuldregelingen]}
           />
         </SectionCollapsible>
       )}
-      {!!leningen.length && (
+      {!!leningen && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-leningen"
           title="Leningen"
-          hasItems={!!leningen?.length}
+          hasItems={!!leningen}
           startCollapsed={false}
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
@@ -141,15 +139,15 @@ export default function FinancieleHulp() {
             className={styles.HulpTable}
             titleKey="title"
             displayProps={DISPLAY_PROPS}
-            items={leningen}
+            items={[leningen]}
           />
         </SectionCollapsible>
       )}
-      {!!budgetbeheer.length && (
+      {!!budgetbeheer && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-budgetbeheer"
           title="Financieel budgetbeheer"
-          hasItems={!!budgetbeheer?.length}
+          hasItems={!!budgetbeheer}
           startCollapsed={false}
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
@@ -162,7 +160,7 @@ export default function FinancieleHulp() {
             className={styles.HulpTable}
             titleKey="title"
             displayProps={DISPLAY_PROPS}
-            items={budgetbeheer}
+            items={[budgetbeheer]}
           />
         </SectionCollapsible>
       )}

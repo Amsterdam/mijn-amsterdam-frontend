@@ -37,45 +37,33 @@ describe('Toeristische verhuur service', () => {
     ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
 
     const response = await fetchFinancieleHulp('x1', { x: 'saml' });
-
-    expect(response.content?.kredietMessages?.length).toBeGreaterThan(0);
-    if (!!response.content?.kredietMessages?.length) {
-      for (const message of response.content?.kredietMessages) {
-        expect(typeof message.datePublished).toBe('string');
-        expect(typeof message.url).toBe('string');
-      }
+    const kredietMessage = response.content?.notifications?.kredietMessage;
+    if (!!kredietMessage) {
+      expect(typeof kredietMessage.datePublished).toBe('string');
+      expect(typeof kredietMessage.url).toBe('string');
+    }
+    const fibuMessage = response.content?.notifications?.fibuMessage;
+    if (!!fibuMessage) {
+      expect(typeof fibuMessage.datePublished).toBe('string');
+      expect(typeof fibuMessage.url).toBe('string');
     }
 
-    expect(response.content?.fibuMessages?.length).toBeGreaterThan(0);
-    if (!!response.content?.fibuMessages?.length) {
-      for (const message of response.content?.fibuMessages) {
-        expect(typeof message.datePublished).toBe('string');
-        expect(typeof message.url).toBe('string');
-      }
+    const schuldhulp = response.content?.deepLinks?.schuldhulp;
+    if (!!schuldhulp) {
+      expect(typeof schuldhulp.title).toBe('string');
+      expect(typeof schuldhulp.url).toBe('string');
     }
 
-    expect(response.content?.schuldregelingen?.length).toBeGreaterThan(0);
-    if (!!response.content?.schuldregelingen?.length) {
-      for (const schuldregeling of response.content?.schuldregelingen) {
-        expect(typeof schuldregeling.title).toBe('string');
-        expect(typeof schuldregeling.url).toBe('string');
-      }
+    const lening = response.content?.deepLinks?.lening;
+    if (!!lening) {
+      expect(typeof lening.title).toBe('string');
+      expect(typeof lening.url).toBe('string');
     }
 
-    expect(response.content?.leningen?.length).toBeGreaterThan(0);
-    if (!!response.content?.leningen?.length) {
-      for (const lening of response.content?.leningen) {
-        expect(typeof lening.title).toBe('string');
-        expect(typeof lening.url).toBe('string');
-      }
-    }
-
-    expect(response.content?.budgetbeheer?.length).toBeGreaterThan(0);
-    if (!!response.content?.budgetbeheer?.length) {
-      for (const budgetbeheer of response.content?.budgetbeheer) {
-        expect(typeof budgetbeheer.title).toBe('string');
-        expect(typeof budgetbeheer.url).toBe('string');
-      }
+    const budgetbeheer = response.content?.deepLinks?.budgetbeheer;
+    if (!!budgetbeheer) {
+      expect(typeof budgetbeheer.title).toBe('string');
+      expect(typeof budgetbeheer.url).toBe('string');
     }
   });
 });

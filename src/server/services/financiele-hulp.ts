@@ -3,48 +3,39 @@ import {
   apiDependencyError,
   apiSuccesResult,
 } from '../../universal/helpers/api';
-import { MyNotification, MyTip } from '../../universal/types';
+import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { isExternalUrl } from '../../universal/helpers/utils';
 
 interface Message {
   datePublished: string;
   url: string;
 }
 
-interface Schuldregeling {
+interface KrefiaDeepLink {
   title: string;
   url: string;
 }
 
-interface Lening {
-  title: string;
-  url: string;
+interface KrefiaDeepLinks {
+  budgetbeheer: KrefiaDeepLink;
+  lening: KrefiaDeepLink;
+  schuldhulp: KrefiaDeepLink;
 }
 
-interface Budgetbeheer {
-  title: string;
-  url: string;
+interface Notifications {
+  fibuMessage?: Message;
+  kredietMessage?: Message;
 }
 
-export interface FINANCIELE_HULPData {
-  kredietMessages?: Message[];
-  fibuMessages?: Message[];
-  schuldregelingen?: Schuldregeling[];
-  leningen?: Lening[];
-  budgetbeheer?: Budgetbeheer[];
+export interface FinancieleHulp {
+  notifications?: Notifications | null;
+  deepLinks?: KrefiaDeepLinks | null;
 }
 
-interface FINANCIELE_HULPSourceDataContent {
-  kredietMessages?: Message[];
-  fibuMessages?: Message[];
-  tips: MyTip[];
-}
-
-interface FIENANCIELE_HULPSourceData {
+interface FinancieleHulpSourceData {
   status: 'OK' | 'ERROR';
-  content?: FINANCIELE_HULPSourceDataContent;
+  content?: FinancieleHulp;
   message?: string;
 }
 
@@ -63,8 +54,8 @@ function createNotification(message: Message, type: string): MyNotification {
 }
 
 function transformFINANCIELEHULPData(
-  responseData: FIENANCIELE_HULPSourceData
-): FINANCIELE_HULPData {
+  responseData: FinancieleHulpSourceData
+): FinancieleHulp {
   return {
     ...responseData?.content,
   };
@@ -74,7 +65,7 @@ async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = await requestData<FINANCIELE_HULPData>(
+  const response = await requestData<FinancieleHulp>(
     getApiConfig('FINANCIELE_HULP', {
       transformResponse: transformFINANCIELEHULPData,
     }),
@@ -102,18 +93,25 @@ export async function fetchFinancieleHulpGenerated(
   );
   if (FINANCIELE_HULP.status === 'OK') {
     if (FINANCIELE_HULP.content) {
-      let notifications = [];
-      const fibuNotification = !!FINANCIELE_HULP.content?.fibuMessages?.length
-        ? createNotification(FINANCIELE_HULP.content?.fibuMessages[0], 'fibu')
-        : [];
-      const kredietNotification =
-        !!FINANCIELE_HULP.content?.kredietMessages?.length &&
+      let notifications: MyNotification[] = [];
+
+      const fibuNotification =
+        !!FINANCIELE_HULP.content?.notifications?.fibuMessage &&
         createNotification(
-          FINANCIELE_HULP.content?.kredietMessages[0],
+          FINANCIELE_HULP.content.notifications.fibuMessage,
+          'fibu'
+        );
+
+      const kredietNotification =
+        !!FINANCIELE_HULP.content?.notifications?.kredietMessage &&
+        createNotification(
+          FINANCIELE_HULP.content.notifications.kredietMessage,
           'krediet'
         );
+
       fibuNotification && notifications.push(fibuNotification);
       kredietNotification && notifications.push(kredietNotification);
+
       return apiSuccesResult({
         notifications,
       });

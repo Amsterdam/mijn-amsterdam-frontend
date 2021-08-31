@@ -25,7 +25,7 @@ export const PRISTINE_APPSTATE: AppState = {
     jaaropgaven: [],
     uitkeringsspecificaties: [],
   }),
-  FINANCIELE_HULP: apiPristineResult({}),
+  FINANCIELE_HULP: apiPristineResult({ notifications: null, deepLinks: null }),
   FOCUS_AANVRAGEN: apiPristineResult([]),
   FOCUS_TOZO: apiPristineResult([]),
   FOCUS_TONK: apiPristineResult([]),

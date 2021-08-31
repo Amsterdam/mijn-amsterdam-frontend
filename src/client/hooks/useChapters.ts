@@ -35,6 +35,13 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
+      const { jaaropgaven, uitkeringsspecificaties } =
+        FOCUS_SPECIFICATIES?.content ?? {};
+      const hasAanvragen = FOCUS_AANVRAGEN?.content?.length;
+      const hasTozo = !!FOCUS_TOZO?.content?.length;
+      const hasTonk = !!FOCUS_TONK?.content?.length;
+      const hasJaaropgaven = !!jaaropgaven?.length;
+      const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
       return (
         !(
           isLoading(FOCUS_AANVRAGEN) &&
@@ -42,11 +49,11 @@ function isChapterActive(
           isLoading(FOCUS_TOZO) &&
           isLoading(FOCUS_TONK)
         ) &&
-        (!!FOCUS_AANVRAGEN?.content?.length ||
-          !!FOCUS_TOZO?.content?.length ||
-          !!FOCUS_TONK?.content?.length ||
-          !!FOCUS_SPECIFICATIES?.content?.jaaropgaven?.length ||
-          !!FOCUS_SPECIFICATIES?.content?.uitkeringsspecificaties?.length)
+        (hasAanvragen ||
+          hasTozo ||
+          hasTonk ||
+          hasJaaropgaven ||
+          hasUitkeringsspecificaties)
       );
 
     case Chapters.STADSPAS:
@@ -63,12 +70,11 @@ function isChapterActive(
 
     case Chapters.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api
-      return (
-        !isLoading(BELASTINGEN) &&
-        (FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
+      const belastingenActive =
+        FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
           ? BELASTINGEN.content?.isKnown
-          : true)
-      );
+          : true;
+      return !isLoading(BELASTINGEN) && belastingenActive;
 
     case Chapters.MILIEUZONE:
       return (
@@ -79,21 +85,24 @@ function isChapterActive(
       );
 
     case Chapters.AFVAL:
+      const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
         !isLoading(HOME) &&
-        (isMokum(BRP.content) || isMokum(KVK.content))
+        isAmsterdam
       );
 
     case Chapters.ERFPACHT:
       return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
 
     case Chapters.BURGERZAKEN:
+      const hasIdentiteitsbewijs =
+        !!BRP?.content?.identiteitsbewijzen?.length ?? {};
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !isLoading(BRP) &&
-        !!BRP.content?.identiteitsbewijzen?.length
+        hasIdentiteitsbewijs
       );
 
     case Chapters.BRP:
@@ -106,18 +115,17 @@ function isChapterActive(
       return !isLoading(KVK) && !!KVK.content;
 
     case Chapters.TOERISTISCHE_VERHUUR:
+      const { registraties, vergunningen } =
+        TOERISTISCHE_VERHUUR?.content ?? {};
+      const hasRegistraties = !!registraties?.length;
+      const hasVergunningen = !!vergunningen?.length;
       return (
-        !isLoading(TOERISTISCHE_VERHUUR) &&
-        (!!TOERISTISCHE_VERHUUR.content?.registraties?.length ||
-          !!TOERISTISCHE_VERHUUR.content?.vergunningen?.length)
+        !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
     case Chapters.FINANCIELE_HULP:
-      return (
-        !isLoading(FINANCIELE_HULP) &&
-        (!!FINANCIELE_HULP.content?.leningen?.length ||
-          !!FINANCIELE_HULP.content?.schuldregelingen?.length ||
-          !FINANCIELE_HULP.content?.budgetbeheer?.length)
-      );
+      const { deepLinks } = FINANCIELE_HULP?.content ?? {};
+
+      return !isLoading(FINANCIELE_HULP) && !!deepLinks;
   }
 
   return false;
