@@ -122,9 +122,9 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
 export async function searchAmsterdamNL(
   keywords: string,
   resultCountPerPage: number = 5,
-  useExtendedAmsterdamSearch: boolean = false
+  isExtendedAmsterdamSearch: boolean = false
 ) {
-  const url = useExtendedAmsterdamSearch
+  const url = isExtendedAmsterdamSearch
     ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
     : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
 
