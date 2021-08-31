@@ -73,6 +73,12 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 ENV TZ=Europe/Amsterdam
 
+WORKDIR /src/ngx_devel_kit
+RUN --mount=type=ssh git clone git@github.com:simpl/ngx_devel_kit .
+
+WORKDIR /src/set-misc-nginx-module
+RUN --mount=type=ssh git clone git@github.com:openresty/set-misc-nginx-module.git .
+
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
