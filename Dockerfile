@@ -73,6 +73,9 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 ENV TZ=Europe/Amsterdam
 
+RUN apk add --no-cache nginx-mod-http-set-misc
+RUN apk add --no-cache nginx-mod-devel-kit
+
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
