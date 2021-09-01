@@ -270,7 +270,7 @@ export default function App() {
       <script>
         {
           //@ts-ignore
-          (window.__webpack_nonce__ = '4AEemGb0xJptoIGFP3Nd')
+          (window.__webpack_nonce__ = '**CSP_NONCE**')
         }
       </script>
       <BrowserRouter>

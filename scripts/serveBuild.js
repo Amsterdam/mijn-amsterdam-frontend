@@ -12,6 +12,7 @@ const port = process.env.PORT || 3000;
 
 // Use the same proxy as webpack-dev-server during development (npm start)
 setupProxy(app);
+
 app.use(compression());
 const cfg = `
   default-src 'self';
