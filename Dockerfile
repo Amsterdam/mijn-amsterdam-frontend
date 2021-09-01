@@ -73,10 +73,10 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 ENV TZ=Europe/Amsterdam
 
-RUN sed -i 's/https/http/' /etc/apk/repositories
+# RUN sed -i 's/https/http/' /etc/apk/repositories
 
-RUN apk add --no-cache nginx-mod-http-set-misc
-RUN apk add --no-cache nginx-mod-devel-kit
+# RUN apk add --no-cache nginx-mod-http-set-misc
+# RUN apk add --no-cache nginx-mod-devel-kit
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
@@ -89,7 +89,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 COPY --from=build-app /app/build /usr/share/nginx/html
 
 # Use LOGOUT_URL for nginx rewrite directive
-CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g --with-http_sub_module 'daemon off;'
+CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
 
 
 ########################################################################################################################

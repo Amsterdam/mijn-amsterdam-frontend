@@ -5,7 +5,7 @@ const compression = require('compression');
 
 const app = express();
 
-const nonce = '**CSP_NONCE**';
+// const nonce = '**CSP_NONCE**';
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
