@@ -267,6 +267,12 @@ export default function App() {
 
   return (
     <RecoilRoot>
+      <script>
+        {
+          //@ts-ignore
+          (window.__webpack_nonce__ = '4AEemGb0xJptoIGFP3Nd')
+        }
+      </script>
       <BrowserRouter>
         <ErrorBoundary
           onError={sendToSentry}
