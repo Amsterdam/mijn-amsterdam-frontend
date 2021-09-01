@@ -73,6 +73,8 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 ENV TZ=Europe/Amsterdam
 
+RUN sed -i 's/https/http/' /etc/apk/repositories
+
 RUN apk add --no-cache nginx-mod-http-set-misc
 RUN apk add --no-cache nginx-mod-devel-kit
 
