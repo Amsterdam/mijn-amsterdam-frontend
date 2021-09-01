@@ -13,7 +13,7 @@ export function EvenementMelding({
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Zaaktype" value={vergunning.caseType || '-'} />
+      <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       <InfoDetail label="Omschrijving" value={vergunning?.description || '-'} />
 
       <InfoDetail

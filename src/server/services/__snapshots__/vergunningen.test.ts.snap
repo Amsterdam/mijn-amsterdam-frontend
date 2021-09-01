@@ -236,7 +236,7 @@ Object {
         "id": "vergunning-1726584505-notification",
         "link": Object {
           "title": "Vraag een nieuwe GPK aan",
-          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding",
+          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
         },
         "title": "GPK is verlopen",
       },

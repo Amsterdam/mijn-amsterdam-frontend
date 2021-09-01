@@ -314,7 +314,7 @@ export function createVergunningNotification(
     [CaseType.BZP]:
       'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
     [CaseType.GPK]:
-      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
   };
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
