@@ -15,7 +15,6 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './FinancieleHulp.module.scss';
 
-// import { useAppStateGetter } from '../../hooks/useAppState';
 const DISPLAY_PROPS = {
   title: 'Status',
   url: 'Bekijk op FiBu',

@@ -97,8 +97,7 @@ function isChapterActive(
       return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
 
     case Chapters.BURGERZAKEN:
-      const hasIdentiteitsbewijs =
-        !!BRP?.content?.identiteitsbewijzen?.length ?? {};
+      const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !isLoading(BRP) &&

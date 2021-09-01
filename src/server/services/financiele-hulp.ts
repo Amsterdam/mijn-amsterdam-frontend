@@ -29,8 +29,8 @@ interface Notifications {
 }
 
 export interface FinancieleHulp {
-  notifications?: Notifications | null;
-  deepLinks?: KrefiaDeepLinks | null;
+  notifications: Notifications | null;
+  deepLinks: KrefiaDeepLinks | null;
 }
 
 interface FinancieleHulpSourceData {
