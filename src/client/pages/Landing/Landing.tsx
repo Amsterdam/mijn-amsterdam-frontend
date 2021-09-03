@@ -181,10 +181,8 @@ export default function Landing() {
               </a>
             </p>
             <Heading size="tiny" el="h4">
-              U hebt eHerkenning niveau {IS_PRODUCTION ? '2+' : '3'} nodig om in
-              te loggen.
+              U hebt eHerkenning niveau 3 nodig om in te loggen.
             </Heading>
-
             <p>
               Ga naar{' '}
               <a rel="noopener noreferrer" href="https://eherkenning.nl">
