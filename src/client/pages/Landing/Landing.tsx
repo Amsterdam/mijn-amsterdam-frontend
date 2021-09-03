@@ -1,18 +1,17 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import DigiDLogo from '../../assets/images/digid-logo.svg';
 import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
+  Alert,
   Heading,
   LinkdInline,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
   TextPage,
-  MaintenanceNotifications,
-  Alert,
 } from '../../components';
 import {
   LOGIN_URL_DIGID,
