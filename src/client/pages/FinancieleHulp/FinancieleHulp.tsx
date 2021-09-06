@@ -89,8 +89,7 @@ export default function FinancieleHulp() {
           >
             Meer informatie over de Kredietbank
           </Linkd>
-        </p>
-        <p>
+        <br />
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
@@ -98,7 +97,6 @@ export default function FinancieleHulp() {
             Meer informatie over FiBu
           </Linkd>
         </p>
-        <br />
       </PageContent>
       {schuldregelingen && (
         <SectionCollapsible
