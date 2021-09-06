@@ -1,13 +1,10 @@
 import { Chapters } from '../../universal/config';
-import {
-  apiDependencyError,
-  apiSuccesResult,
-} from '../../universal/helpers/api';
+import { apiDependencyError, apiSuccesResult } from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
-interface Message {
+interface NotificationTrigger {
   datePublished: string;
   url: string;
 }
@@ -23,26 +20,23 @@ interface KrefiaDeepLinks {
   schuldhulp: KrefiaDeepLink;
 }
 
-interface Notifications {
-  fibuMessage?: Message;
-  kredietMessage?: Message;
+interface NotificationsTriggers {
+  fibuMessage?: NotificationTrigger;
+  kredietMessage?: NotificationTrigger;
 }
 
 export interface FinancieleHulp {
-  notifications: Notifications | null;
+  notificationTriggers: NotificationsTriggers | null;
   deepLinks: KrefiaDeepLinks | null;
 }
 
-interface FinancieleHulpSourceData {
-  status: 'OK' | 'ERROR';
-  content?: FinancieleHulp;
-  message?: string;
-}
-
-function createNotification(message: Message, type: string): MyNotification {
+function createNotification(
+  message: NotificationTrigger,
+  type: string
+): MyNotification {
   const isFibu = type === 'fibu';
   return {
-    id: `financiele-hulp-${isFibu ? 'fibu' : 'krediet'}-notification`,
+    id: `financiele-hulp-${type}-notification`,
     datePublished: message.datePublished,
     title: isFibu ? 'Bericht FiBu' : `Bericht Kredietbank`,
     chapter: Chapters.FINANCIELE_HULP,
@@ -53,21 +47,13 @@ function createNotification(message: Message, type: string): MyNotification {
   };
 }
 
-function transformFINANCIELEHULPData(
-  responseData: FinancieleHulpSourceData
-): FinancieleHulp {
-  return {
-    ...responseData?.content,
-  };
-}
-
 async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
   const response = await requestData<FinancieleHulp>(
     getApiConfig('FINANCIELE_HULP', {
-      transformResponse: transformFINANCIELEHULPData,
+      transformResponse: (responseData) => responseData.content,
     }),
     sessionID,
     passthroughRequestHeaders
@@ -92,30 +78,28 @@ export async function fetchFinancieleHulpGenerated(
     passthroughRequestHeaders
   );
   if (FINANCIELE_HULP.status === 'OK') {
-    if (FINANCIELE_HULP.content) {
-      let notifications: MyNotification[] = [];
+    let notifications: MyNotification[] = [];
 
-      const fibuNotification =
-        !!FINANCIELE_HULP.content?.notifications?.fibuMessage &&
-        createNotification(
-          FINANCIELE_HULP.content.notifications.fibuMessage,
-          'fibu'
-        );
+    const fibuNotification =
+      !!FINANCIELE_HULP.content?.notificationTriggers?.fibuMessage &&
+      createNotification(
+        FINANCIELE_HULP.content?.notificationTriggers?.fibuMessage,
+        'fibu'
+      );
 
-      const kredietNotification =
-        !!FINANCIELE_HULP.content?.notifications?.kredietMessage &&
-        createNotification(
-          FINANCIELE_HULP.content.notifications.kredietMessage,
-          'krediet'
-        );
+    const kredietNotification =
+      !!FINANCIELE_HULP.content?.notificationTriggers?.kredietMessage &&
+      createNotification(
+        FINANCIELE_HULP.content?.notificationTriggers.kredietMessage,
+        'krediet'
+      );
 
-      fibuNotification && notifications.push(fibuNotification);
-      kredietNotification && notifications.push(kredietNotification);
+    fibuNotification && notifications.push(fibuNotification);
+    kredietNotification && notifications.push(kredietNotification);
 
-      return apiSuccesResult({
-        notifications,
-      });
-    }
+    return apiSuccesResult({
+      notifications,
+    });
   }
   return apiDependencyError({ FINANCIELE_HULP });
 }

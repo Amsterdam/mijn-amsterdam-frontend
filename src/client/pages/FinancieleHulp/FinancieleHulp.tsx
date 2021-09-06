@@ -75,7 +75,6 @@ export default function FinancieleHulp() {
         isLoading={isLoading(FINANCIELE_HULP)}
         icon={<ChapterIcon />}
       >
-        {' '}
         {ChapterTitles.FINANCIELE_HULP}
       </PageHeading>
       <PageContent>
@@ -99,13 +98,14 @@ export default function FinancieleHulp() {
             Meer informatie over FiBu
           </Linkd>
         </p>
+        <br />
       </PageContent>
       {schuldregelingen && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-schuldregeling"
           title="Schuldregeling"
           hasItems={!!schuldregelingen}
-          startCollapsed={false}
+          startCollapsed={!!schuldregelingen}
           className={styles.SectionBorderTop}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
@@ -115,7 +115,6 @@ export default function FinancieleHulp() {
         >
           <Table
             className={styles.HulpTable}
-            titleKey="title"
             displayProps={DISPLAY_PROPS}
             items={[schuldregelingen]}
           />
@@ -126,7 +125,7 @@ export default function FinancieleHulp() {
           id="SectionCollapsible-financiele-hulp-leningen"
           title="Leningen"
           hasItems={!!leningen}
-          startCollapsed={false}
+          startCollapsed={!schuldregelingen && !!leningen}
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
@@ -136,7 +135,6 @@ export default function FinancieleHulp() {
         >
           <Table
             className={styles.HulpTable}
-            titleKey="title"
             displayProps={DISPLAY_PROPS}
             items={[leningen]}
           />
@@ -147,7 +145,7 @@ export default function FinancieleHulp() {
           id="SectionCollapsible-financiele-hulp-budgetbeheer"
           title="Financieel budgetbeheer"
           hasItems={!!budgetbeheer}
-          startCollapsed={false}
+          startCollapsed={!schuldregelingen && !leningen && !!budgetbeheer}
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
@@ -157,7 +155,6 @@ export default function FinancieleHulp() {
         >
           <Table
             className={styles.HulpTable}
-            titleKey="title"
             displayProps={DISPLAY_PROPS}
             items={[budgetbeheer]}
           />

@@ -1,11 +1,11 @@
-import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import financieleHulpData from '../mock-data/json/financiele-hulp.json';
 import { fetchFinancieleHulp } from './financiele-hulp';
+import MockAdapter from 'axios-mock-adapter';
 
-describe('Toeristische verhuur service', () => {
+describe('Financiële hulp service', () => {
   const axMock = new MockAdapter(axiosRequest);
   const FINANCIELE_HULP_DUMMY_RESPONSE = jsonCopy(financieleHulpData);
 
@@ -37,12 +37,13 @@ describe('Toeristische verhuur service', () => {
     ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
 
     const response = await fetchFinancieleHulp('x1', { x: 'saml' });
-    const kredietMessage = response.content?.notifications?.kredietMessage;
+    const kredietMessage =
+      response.content?.notificationTriggers?.kredietMessage;
     if (!!kredietMessage) {
       expect(typeof kredietMessage.datePublished).toBe('string');
       expect(typeof kredietMessage.url).toBe('string');
     }
-    const fibuMessage = response.content?.notifications?.fibuMessage;
+    const fibuMessage = response.content?.notificationTriggers?.fibuMessage;
     if (!!fibuMessage) {
       expect(typeof fibuMessage.datePublished).toBe('string');
       expect(typeof fibuMessage.url).toBe('string');
