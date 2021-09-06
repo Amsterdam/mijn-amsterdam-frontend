@@ -15,19 +15,19 @@ interface KrefiaDeepLink {
 }
 
 interface KrefiaDeepLinks {
-  budgetbeheer: KrefiaDeepLink;
-  lening: KrefiaDeepLink;
-  schuldhulp: KrefiaDeepLink;
+  budgetbeheer: KrefiaDeepLink | null;
+  lening: KrefiaDeepLink | null;
+  schuldhulp: KrefiaDeepLink | null;
 }
 
-interface NotificationsTriggers {
-  fibuMessage?: NotificationTrigger;
-  kredietMessage?: NotificationTrigger;
+interface NotificationTriggers {
+  fibu: NotificationTrigger | null;
+  krediet: NotificationTrigger | null;
 }
 
 export interface FinancieleHulp {
-  notificationTriggers: NotificationsTriggers | null;
-  deepLinks: KrefiaDeepLinks | null;
+  notificationTriggers: NotificationsTriggers;
+  deepLinks: KrefiaDeepLinks;
 }
 
 function createNotification(
