@@ -50,13 +50,16 @@ function createNotification(
   };
 }
 
-async function fetchSource(
+async function fetchAndTransformKrefia(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
   const response = await requestData<FinancieleHulp>(
     getApiConfig('FINANCIELE_HULP', {
-      transformResponse: (responseData) => responseData.content,
+      transformResponse: (responseData: {
+        content: FinancieleHulp;
+        status: 'OK';
+      }) => responseData.content,
     }),
     sessionID,
     passthroughRequestHeaders
@@ -65,40 +68,42 @@ async function fetchSource(
   return response;
 }
 
+export const fetchSource = memoize(fetchAndTransformKrefia, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args) {
+    return args[0] + JSON.stringify(args[1]);
+  },
+});
+
 export async function fetchFinancieleHulp(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return fetchSource(sessionID, passthroughRequestHeaders);
+  const response = fetchSource(sessionID, passthroughRequestHeaders);
+  if (response.status === 'OK') {
+    return apiSuccessResponse(omit(response.content, 'notificationTriggers'));
+  }
+  return response;
 }
 
 export async function fetchFinancieleHulpGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const FINANCIELE_HULP = await fetchSource(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  if (FINANCIELE_HULP.status === 'OK') {
-    let notifications: MyNotification[] = [];
+  const response = await fetchSource(sessionID, passthroughRequestHeaders);
 
-    const fibuNotification =
-      !!FINANCIELE_HULP.content?.notificationTriggers?.fibuMessage &&
-      createNotification(
-        FINANCIELE_HULP.content?.notificationTriggers?.fibuMessage,
-        'fibu'
-      );
+  if (response.status === 'OK') {
+    const notifications: MyNotification[] = [];
 
-    const kredietNotification =
-      !!FINANCIELE_HULP.content?.notificationTriggers?.kredietMessage &&
-      createNotification(
-        FINANCIELE_HULP.content?.notificationTriggers.kredietMessage,
-        'krediet'
-      );
+    const fibuTrigger = response.content.notificationTriggers.fibu;
+    if (fibuTrigger) {
+      notifications.push(createNotification(fibuTrigger, 'fibu'));
+    }
 
-    fibuNotification && notifications.push(fibuNotification);
-    kredietNotification && notifications.push(kredietNotification);
+    const kredietTrigger = response.content.notificationTriggers.krediet;
+    if (kredietTrigger) {
+      notifications.push(createNotification(kredietTrigger, 'krediet'));
+    }
 
     return apiSuccesResult({
       notifications,
@@ -106,3 +111,4 @@ export async function fetchFinancieleHulpGenerated(
   }
   return apiDependencyError({ FINANCIELE_HULP });
 }
+
