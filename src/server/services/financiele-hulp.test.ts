@@ -1,9 +1,10 @@
+import MockAdapter from 'axios-mock-adapter';
+
 import { jsonCopy } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import financieleHulpData from '../mock-data/json/financiele-hulp.json';
-import { fetchFinancieleHulp } from './financiele-hulp';
-import MockAdapter from 'axios-mock-adapter';
+import { fetchFinancieleHulp, fetchSource } from './financiele-hulp';
 
 describe('Financiële hulp service', () => {
   const axMock = new MockAdapter(axiosRequest);
@@ -36,14 +37,13 @@ describe('Financiële hulp service', () => {
   it('Should respond with data', async () => {
     ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
 
-    const response = await fetchFinancieleHulp('x1', { x: 'saml' });
-    const kredietMessage =
-      response.content?.notificationTriggers?.kredietMessage;
+    const response = await fetchSource('x1', { x: 'saml' });
+    const kredietMessage = response.content?.notificationTriggers?.krediet;
     if (!!kredietMessage) {
       expect(typeof kredietMessage.datePublished).toBe('string');
       expect(typeof kredietMessage.url).toBe('string');
     }
-    const fibuMessage = response.content?.notificationTriggers?.fibuMessage;
+    const fibuMessage = response.content?.notificationTriggers?.fibu;
     if (!!fibuMessage) {
       expect(typeof fibuMessage.datePublished).toBe('string');
       expect(typeof fibuMessage.url).toBe('string');

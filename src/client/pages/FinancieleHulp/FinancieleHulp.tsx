@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
 import {
@@ -14,6 +12,7 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './FinancieleHulp.module.scss';
+import { useMemo } from 'react';
 
 const DISPLAY_PROPS = {
   title: 'Status',
@@ -89,7 +88,7 @@ export default function FinancieleHulp() {
           >
             Meer informatie over de Kredietbank
           </Linkd>
-        <br />
+          <br />
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"

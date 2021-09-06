@@ -5,19 +5,9 @@ import { Chapters } from '../../universal/config/index';
 import { AppRoutes } from '../../universal/config/routes';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
-import {
-  dateFormat,
-  dateSort,
-  isDateInPast,
-  monthsFromNow,
-} from '../../universal/helpers/date';
+import { dateFormat, dateSort, isDateInPast, monthsFromNow } from '../../universal/helpers/date';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
-import {
-  GenericDocument,
-  LinkProps,
-  MyCase,
-  MyNotification,
-} from '../../universal/types/App.types';
+import { GenericDocument, LinkProps, MyCase, MyNotification } from '../../universal/types/App.types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';

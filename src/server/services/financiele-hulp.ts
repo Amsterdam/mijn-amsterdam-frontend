@@ -1,10 +1,10 @@
+import memoize from 'memoizee';
+
 import { Chapters } from '../../universal/config';
-import {
-  apiDependencyError,
-  apiSuccesResult,
-} from '../../universal/helpers/api';
+import { apiDependencyError, apiSuccesResult } from '../../universal/helpers/api';
+import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 interface NotificationTrigger {
@@ -29,7 +29,11 @@ interface NotificationTriggers {
 }
 
 export interface FinancieleHulp {
-  notificationTriggers: NotificationsTriggers;
+  notificationTriggers: NotificationTriggers;
+  deepLinks: KrefiaDeepLinks;
+}
+
+export interface FinancieleHulpDetail {
   deepLinks: KrefiaDeepLinks;
 }
 
@@ -70,7 +74,7 @@ async function fetchAndTransformKrefia(
 
 export const fetchSource = memoize(fetchAndTransformKrefia, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
+  normalizer: function (args: any[]) {
     return args[0] + JSON.stringify(args[1]);
   },
 });
@@ -79,9 +83,9 @@ export async function fetchFinancieleHulp(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = fetchSource(sessionID, passthroughRequestHeaders);
+  const response = await fetchSource(sessionID, passthroughRequestHeaders);
   if (response.status === 'OK') {
-    return apiSuccessResponse(omit(response.content, 'notificationTriggers'));
+    return apiSuccesResult({ deepLinks: response.content.deepLinks });
   }
   return response;
 }
@@ -109,6 +113,5 @@ export async function fetchFinancieleHulpGenerated(
       notifications,
     });
   }
-  return apiDependencyError({ FINANCIELE_HULP });
+  return apiDependencyError({ response });
 }
-

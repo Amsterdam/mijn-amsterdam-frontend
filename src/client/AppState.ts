@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+
 import {
   ServiceID,
   ServicesTips,
@@ -26,8 +27,7 @@ export const PRISTINE_APPSTATE: AppState = {
     uitkeringsspecificaties: [],
   }),
   FINANCIELE_HULP: apiPristineResult({
-    deepLinks: null,
-    notificationTriggers: null,
+    deepLinks: { budgetbeheer: null, lening: null, schuldhulp: null },
   }),
   FOCUS_AANVRAGEN: apiPristineResult([]),
   FOCUS_TOZO: apiPristineResult([]),
