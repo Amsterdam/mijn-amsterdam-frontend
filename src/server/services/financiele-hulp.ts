@@ -39,7 +39,7 @@ export interface FinancieleHulpDetail {
 
 function createNotification(
   message: NotificationTrigger,
-  type: string
+  type: 'fibu' | 'krediet'
 ): MyNotification {
   const isFibu = type === 'fibu';
   return {
