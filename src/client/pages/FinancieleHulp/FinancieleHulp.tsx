@@ -106,7 +106,7 @@ export default function FinancieleHulp() {
           className={styles.SectionBorderTop}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiele hulp overzicht / Schuldregeling',
+            category: 'Financiële hulp overzicht / Schuldregeling',
             name: 'Datatabel',
           }}
         >
