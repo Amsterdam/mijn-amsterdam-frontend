@@ -147,7 +147,7 @@ export default function FinancieleHulp() {
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiele hulp overzicht / Financieel budgetbeheer',
+            category: 'Financiële hulp overzicht / Financieel budgetbeheer',
             name: 'Datatabel',
           }}
         >
