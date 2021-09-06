@@ -54,6 +54,7 @@ function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
         ...notification,
+        title: `Milieuzone: ${notification.title}`,
         chapter: Chapters.MILIEUZONE,
       }))
     : [];

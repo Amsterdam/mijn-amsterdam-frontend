@@ -29,7 +29,7 @@ export default function DirectLinks({
         {entries(LINKS[profileType])
           .filter(([, { url, isActive }]) => !!url && isActive)
           .filter(([, { isPhoneScreenLink }]) =>
-            !isPhoneScreen ? isPhoneScreenLink !== true : true
+            isPhoneScreen ? isPhoneScreenLink : true
           )
           .map((link) => {
             const [linkName, { url, title, isExternalLink, id }] = link;

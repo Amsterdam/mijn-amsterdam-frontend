@@ -172,15 +172,6 @@
   }
 }
 
-.TutorialBtn {
-  background-size: 2.4rem;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 0;
-  background-color: transparent;
-  padding: 0;
-}
-
 .GeneralInfoLink {
   @include select(Button_Icon) {
     width: 2.2rem;
@@ -214,4 +205,45 @@
   @include mq-tablet() {
     margin-bottom: 0;
   }
+}
+
+.SearchButton {
+  @include mq-tablet() {
+    margin-right: 1rem;
+  }
+}
+
+.Search {
+  z-index: z-index(main-nav-bar-inner--tablet);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: $main-header-topbar-height + $main-header-navbar-height;
+
+  @include mq-tablet() {
+    top: $main-header-topbar-height;
+  }
+
+  @include mq-phone() {
+    // top: $main-header-topbar-height + $main-header-topbar-height--phone;
+  }
+}
+
+.SearchBar {
+  padding: 2.6rem;
+  background-color: $color-neutral-grey1;
+  @include mq-tablet() {
+    padding: 0;
+    background-color: $color-white;
+    @include select('Search_SearchBar') {
+      form {
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+.SearchBarInner {
+  max-width: 60rem;
+  margin: 0 auto;
 }

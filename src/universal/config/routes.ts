@@ -38,6 +38,7 @@ export const AppRoutes: Record<string, string> = {
     '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
     '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
+  SEARCH: '/zoeken',
 };
 
 export const AppRoutesRedirect = [

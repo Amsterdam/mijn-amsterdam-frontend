@@ -245,7 +245,7 @@ export async function fetchVergunningen(
                 id: vergunning.id,
               })
             : '/',
-          title: vergunning.identifier,
+          title: `Bekijk hoe het met uw aanvraag staat`,
         },
       };
     });
@@ -285,7 +285,7 @@ export function isExpired(vergunning: VergunningExpirable) {
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {
     id: `vergunning-${item.id}-case`,
-    title: `Vergunningsaanvraag ${item.identifier}`,
+    title: `Vergunningsaanvraag ${item.caseType} ${item.identifier}`,
     link: item.link,
     chapter: Chapters.VERGUNNINGEN,
     datePublished: item.dateRequest,

@@ -118,12 +118,23 @@ export default function ToeristischeVerhuur() {
 
   const isCollapsed = (listTitle: string): boolean => {
     switch (listTitle) {
+      case 'gepland':
+        return !plannedVerhuur.length && !!verhuur.length;
       case 'geannuleerd':
-        return !!plannedVerhuur.length;
+        return (
+          !!plannedVerhuur.length ||
+          (!plannedVerhuur.length && !!verhuur.length)
+        );
       case 'previous':
-        return !!(plannedVerhuur.length || cancelledVerhuur.length);
+        return (
+          !!plannedVerhuur.length ||
+          !!cancelledVerhuur.length ||
+          !verhuur.length
+        );
       case 'vergunningen':
-        return !(plannedVerhuur.length && cancelledVerhuur.length);
+        return (
+          !(plannedVerhuur.length && cancelledVerhuur.length) || !verhuur.length
+        );
       default:
         return false;
     }
@@ -282,7 +293,7 @@ export default function ToeristischeVerhuur() {
             id="SectionCollapsible-planned-verhuur"
             title="Geplande verhuur"
             className={styles.SectionBorderTop}
-            startCollapsed={false}
+            startCollapsed={isCollapsed('gepland')}
             hasItems={!!plannedVerhuur.length}
             noItemsMessage={
               is2021

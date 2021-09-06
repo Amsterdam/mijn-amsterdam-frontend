@@ -88,3 +88,20 @@ export function getMonth(index: number) {
     'december',
   ][index];
 }
+
+export function displayDateRange(dateStart: string, dateEnd: string) {
+  const start = new Date(dateStart);
+  const end = new Date(dateEnd);
+
+  if (start.getFullYear() === end.getFullYear()) {
+    if (start.getMonth() === end.getMonth()) {
+      return `${start.getDate()} - ${end.getDate()} ${getMonth(
+        end.getMonth()
+      )} ${start.getFullYear()}`;
+    }
+    return `${start.getDate()} ${getMonth(
+      end.getMonth()
+    )} - ${end.getDate()} ${getMonth(end.getMonth())} ${start.getFullYear()}`;
+  }
+  return `${defaultDateFormat(dateStart)} - ${defaultDateFormat(dateEnd)}`;
+}

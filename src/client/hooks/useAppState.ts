@@ -1,5 +1,12 @@
 import * as Sentry from '@sentry/react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
@@ -93,7 +100,7 @@ export function useAppStateFallbackService({
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
  * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
  */
-export function useAppState() {
+export function useAppStateRemote() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
@@ -141,7 +148,7 @@ export function useAppState() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (requestParams.serviceIds.length) {
       setAppState((appState) => {
         const pristineStateSlices: any = {};

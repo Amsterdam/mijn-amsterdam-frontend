@@ -31,7 +31,7 @@ import {
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
-import { useAppState } from './hooks/useAppState';
+import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkEntry,
   useDeeplinkRedirect,
@@ -67,6 +67,7 @@ import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { useUsabilla } from './hooks/useUsabilla';
+import Search from './pages/Search/Search';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -96,7 +97,7 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
-  useAppState();
+  useAppStateRemote();
   useTipsApi();
   usePageChange();
 
@@ -207,6 +208,7 @@ function AppAuthenticated() {
               component={ToeristischeVerhuur}
             />
           )}
+          <Route path={AppRoutes.SEARCH} component={Search} />
           <Route component={NotFound} />
         </Switch>
       </div>
@@ -221,7 +223,7 @@ function AppLanding() {
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
+    return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
   }
 
   const dialogTimeoutSettings = {
