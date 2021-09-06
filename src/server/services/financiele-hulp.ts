@@ -46,7 +46,7 @@ function createNotification(
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van FiBu'
       : 'Er staan ongelezen berichten voor u klaar van de kredietbank',
-    link: { to: message.url, title: 'Bekijk uw bericht', target: '_blank' },
+    link: { to: message.url, title: 'Bekijk uw bericht' },
   };
 }
 
