@@ -126,7 +126,7 @@ export default function FinancieleHulp() {
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiele hulp overzicht / Leningen',
+            category: 'Financiële hulp overzicht / Leningen',
             name: 'Datatabel',
           }}
         >
