@@ -39,12 +39,4 @@ describe('Header', () => {
       '-400px'
     );
   });
-
-  it('Should toggle the tutorial', () => {
-    selectComponent('Tutorial_Tutorial').should('not.exist');
-    selectComponent('MainNavBar_TutorialBtn').click();
-    selectComponent('Tutorial_Tutorial').should('exist');
-    selectComponent('Tutorial_CloseTutorial').click();
-    selectComponent('Tutorial_Tutorial').should('not.exist');
-  });
 });
