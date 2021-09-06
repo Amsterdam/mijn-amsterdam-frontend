@@ -97,7 +97,6 @@ export default function FinancieleHulp() {
             Meer informatie over FiBu
           </Linkd>
         </p>
-        <br />
       </PageContent>
       {schuldregelingen && (
         <SectionCollapsible
