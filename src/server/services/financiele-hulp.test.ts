@@ -4,7 +4,7 @@ import { jsonCopy } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import financieleHulpData from '../mock-data/json/financiele-hulp.json';
-import { fetchFinancieleHulp, fetchSource } from './financiele-hulp';
+import { fetchSource } from './financiele-hulp';
 
 describe('Financiële hulp service', () => {
   const axMock = new MockAdapter(axiosRequest);
