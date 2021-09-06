@@ -248,9 +248,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       });
       const zaken = apiContent.vergunningen.map(
         (vergunning: ToeristischeVerhuurVergunning) => {
-          const title = `${vergunning.title} ${
-            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : ''
-          } ${vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : ''}`;
+          const title = vergunning.title;
           return {
             ...vergunning,
             title,
