@@ -23,8 +23,8 @@ const DISPLAY_PROPS = {
 export default function FinancieleHulp() {
   const { FINANCIELE_HULP } = useAppStateGetter();
   const leningen = useMemo(() => {
-    const lening = FINANCIELE_HULP.content?.deepLinks?.lening;
-    if (!FINANCIELE_HULP.content?.deepLinks?.lening) {
+    const lening = FINANCIELE_HULP?.content?.deepLinks?.lening;
+    if (!FINANCIELE_HULP?.content?.deepLinks?.lening) {
       return undefined;
     }
     return {
@@ -37,7 +37,7 @@ export default function FinancieleHulp() {
     };
   }, [FINANCIELE_HULP.content]);
   const schuldregelingen = useMemo(() => {
-    const schuldregeling = FINANCIELE_HULP.content?.deepLinks?.schuldhulp;
+    const schuldregeling = FINANCIELE_HULP?.content?.deepLinks?.schuldhulp;
     if (!schuldregeling) {
       return undefined;
     }

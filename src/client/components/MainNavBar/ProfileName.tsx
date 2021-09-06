@@ -15,14 +15,12 @@ interface CommercialProfileNameProps {
   company?: KVKData;
   onClick?: (event: any) => void;
   isActive: boolean;
-  tutorial: string;
 }
 
 function CommercialProfileName({
   company,
   onClick,
   isActive,
-  tutorial,
 }: CommercialProfileNameProps) {
   const label = company?.onderneming.handelsnaam || 'Mijn onderneming';
   return (
@@ -37,9 +35,7 @@ function CommercialProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span data-tutorial-item={tutorial ? tutorial + ';' + label : ''}>
-        {label}
-      </span>
+      {label}
     </Button>
   );
 }
@@ -48,16 +44,18 @@ interface PrivateProfileNameProps {
   person?: BRPData['persoon'];
   onClick?: (event: any) => void;
   isActive: boolean;
-  tutorial: string;
 }
 
 function PrivateProfileName({
   person,
   onClick,
   isActive,
-  tutorial,
 }: PrivateProfileNameProps) {
-  const label = person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens';
+  const label = person?.opgemaakteNaam
+    ? person.opgemaakteNaam
+    : person?.voornamen
+    ? getFullName(person)
+    : 'Mijn gegevens';
   return (
     <Button
       onClick={onClick}
@@ -70,9 +68,7 @@ function PrivateProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span data-tutorial-item={tutorial ? tutorial + ';' + label : ''}>
-        {label}
-      </span>
+      {label}
     </Button>
   );
 }
@@ -93,21 +89,11 @@ function PrivateCommercialProfileToggle({
       <PrivateProfileName
         person={person}
         isActive={profileType === 'private'}
-        tutorial={
-          profileType === 'private-commercial'
-            ? 'Hier schakelt u naar uw persoonlijke profiel;left-bottom'
-            : ''
-        }
         onClick={() => setProfileType('private')}
       />
       <CommercialProfileName
         company={company}
         isActive={profileType === 'private-commercial'}
-        tutorial={
-          profileType === 'private'
-            ? 'Hier schakelt u naar uw zakelijke profiel;left-bottom'
-            : ''
-        }
         onClick={() => setProfileType('private-commercial')}
       />
     </>
@@ -136,9 +122,6 @@ export function ProfileName({
           <PrivateProfileName
             person={person!}
             isActive={false}
-            tutorial={
-              'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom'
-            }
             onClick={() => history.push(AppRoutes.BRP)}
           />
         );
@@ -154,9 +137,6 @@ export function ProfileName({
           <CommercialProfileName
             company={company!}
             isActive={false}
-            tutorial={
-              'Hier ziet u uw bedrijfsgegevens uit het handelsregister van de KvK;left-bottom'
-            }
             onClick={() => history.push(AppRoutes.KVK)}
           />
         );

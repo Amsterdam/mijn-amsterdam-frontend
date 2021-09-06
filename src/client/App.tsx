@@ -10,6 +10,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
@@ -31,12 +32,13 @@ import {
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
-import { useAppState } from './hooks/useAppState';
+import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkEntry,
   useDeeplinkRedirect,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
+import { useUsabilla } from './hooks/useUsabilla';
 import {
   Accessibility,
   Burgerzaken,
@@ -62,12 +64,12 @@ import {
   ZorgDetail,
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
+import FinancieleHulp from './pages/FinancieleHulp/FinancieleHulp';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
-import { useUsabilla } from './hooks/useUsabilla';
-import FinancieleHulp from './pages/FinancieleHulp/FinancieleHulp';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -97,7 +99,7 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
-  useAppState();
+  useAppStateRemote();
   useTipsApi();
   usePageChange();
 
@@ -214,6 +216,7 @@ function AppAuthenticated() {
               component={FinancieleHulp}
             />
           )}
+          <Route path={AppRoutes.SEARCH} component={Search} />
           <Route component={NotFound} />
         </Switch>
       </div>
@@ -228,7 +231,7 @@ function AppLanding() {
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
+    return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
   }
 
   const dialogTimeoutSettings = {

@@ -18,6 +18,7 @@ export type Chapter =
   | 'VERGUNNINGEN'
   | 'KVK'
   | 'TOERISTISCHE_VERHUUR'
+  | 'SEARCH'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -38,6 +39,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   KVK: 'KVK',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   FINANCIELE_HULP: 'FINANCIELE_HULP',
+  SEARCH: 'SEARCH',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -59,6 +61,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   KVK: 'Mijn onderneming',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   FINANCIELE_HULP: 'Financiële Hulp',
+  SEARCH: 'Zoeken',
 };
 
 export const DocumentTitleMain = 'Mijn Amsterdam';
@@ -72,7 +75,7 @@ export const DocumentTitles = {
     'BURGERZAKEN/ID-KAART'
   ]]: `ID-Kaart | ${ChapterTitles.BURGERZAKEN}`,
   [AppRoutes['BURGERZAKEN/AKTE']]: `Akte | ${ChapterTitles.BURGERZAKEN}`,
-  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
+  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
   [AppRoutes[
@@ -89,7 +92,7 @@ export const DocumentTitles = {
   [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.BRP]: `Mijn gegevens`,
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
-  [AppRoutes.GENERAL_INFO]: `Uitleg`,
+  [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
@@ -113,4 +116,5 @@ export const DocumentTitles = {
     'TOERISTISCHE_VERHUUR/VERGUNNING/VV'
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes.FIENANCIELE_HULP]: `${ChapterTitles.FIENANCIELE_HULP}`,
+  [AppRoutes.SEARCH]: `Zoeken`,
 };

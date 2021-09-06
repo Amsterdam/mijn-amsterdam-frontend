@@ -15,11 +15,7 @@ const DasboardMap = styled(Map)`
   position: absolute;
 `;
 
-interface MyAreaDashboardProps {
-  tutorial: string;
-}
-
-export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
+export default function MyAreaDashboard() {
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const center =

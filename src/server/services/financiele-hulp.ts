@@ -1,5 +1,8 @@
 import { Chapters } from '../../universal/config';
-import { apiDependencyError, apiSuccesResult } from '../../universal/helpers/api';
+import {
+  apiDependencyError,
+  apiSuccesResult,
+} from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';

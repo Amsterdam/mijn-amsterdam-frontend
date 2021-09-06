@@ -10,8 +10,6 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
 
-// TODO: Enable if we have appropriate responsive images
-// For now, 3 versions of the landscape image can be delivered: 1024, 1366 and 1600
 function imgUrl(
   imageName: string,
   width: number,
@@ -72,6 +70,11 @@ function useHeroSrc() {
     case isChapterPath(AppRoutes.FINANCIELE_HULP):
       imageName = 'financiele-hulp';
       break;
+
+    case isChapterPath(AppRoutes.SEARCH):
+      imageName = '';
+      break;
+
     default:
       imageName = 'algemeen';
       break;
@@ -87,22 +90,28 @@ function useHeroSrc() {
   // LANDSCAPE_MEDIUM: '/header/720x288-$imageName.jpg';
   // LANDSCAPE_LARGE: '/header/1080x432-$imageName.jpg';
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    if (!imageName) {
+      return null;
+    }
+    return {
       PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait', 1, dir),
       PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2, dir),
       PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3, dir),
       LANDSCAPE_SMALL: imgUrl(imageName, 1024, 'landscape', 1, dir),
       LANDSCAPE_MEDIUM: imgUrl(imageName, 1366, 'landscape', 1, dir),
       LANDSCAPE_LARGE: imgUrl(imageName, 1600, 'landscape', 1, dir),
-    }),
-    [imageName, dir]
-  );
+    };
+  }, [imageName, dir]);
 }
 
 export default function MainHeaderHero() {
   const srcSet = useHeroSrc();
   const profileType = useProfileTypeValue();
+
+  if (srcSet === null) {
+    return <div className={styles.MainHeaderHeroPlaceHolder} />;
+  }
 
   return (
     <div
