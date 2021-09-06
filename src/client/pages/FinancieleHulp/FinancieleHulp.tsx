@@ -123,7 +123,7 @@ export default function FinancieleHulp() {
           id="SectionCollapsible-financiele-hulp-leningen"
           title="Leningen"
           hasItems={!!leningen}
-          startCollapsed={!schuldregelingen && !!leningen}
+          startCollapsed={!!schuldregelingen}
           className={styles.SectionCollapsibleCurrent}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
