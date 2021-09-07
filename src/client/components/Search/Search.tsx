@@ -7,15 +7,16 @@ import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight } from '../../assets/icons';
 import { trackSearch } from '../../hooks/analytics.hook';
-import { useKeyUp } from '../../hooks/useKeyUp';
+import { useKeyDown } from '../../hooks/useKey';
+import { useProfileTypeSwitch } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
-import { PageEntry } from './searchConfig';
+import { SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
-  results: PageEntry[];
+  results: SearchEntry[];
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;
@@ -99,6 +100,7 @@ export function Search({
   const history = useHistory();
 
   useSearchIndex();
+  useProfileTypeSwitch(() => onFinish && onFinish());
 
   const setTermDebounced = useDebouncedCallback((term: string) => {
     trackSearch(term);
@@ -109,22 +111,31 @@ export function Search({
     }
   }, 300);
 
+  const inputEl = () =>
+    searchBarRef.current?.querySelector<HTMLInputElement>('input');
+
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
       const isEscape = event.key === 'Escape';
       if (isEscape && typeAhead) {
-        setResultsVisible(false);
+        event.preventDefault();
+        if (isResultsVisible && term) {
+          inputEl()?.focus();
+          setResultsVisible(false);
+        } else if (!isResultsVisible && inputEl() !== document.activeElement) {
+          onFinish && onFinish();
+        }
       }
     },
-    [typeAhead]
+    [typeAhead, isResultsVisible, onFinish, term]
   );
 
-  useKeyUp(keyHandler);
+  useKeyDown(keyHandler);
 
   useEffect(() => {
     if (autoFocus) {
       // AutoFocus on the element doesn't seem to work properly with dynamic mounting
-      searchBarRef.current?.querySelector<HTMLInputElement>('input')?.focus();
+      inputEl()?.focus();
     }
     return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps

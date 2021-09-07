@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import { IS_COMMERCIAL_PATH_MATCH } from '../config/api';
 import { useSessionStorage } from './storage.hook';
@@ -47,4 +47,16 @@ export function useProfileType() {
 
 export function useProfileTypeValue() {
   return useRecoilValue(profileTypeState);
+}
+
+export function useProfileTypeSwitch(callback: (...args: any) => void) {
+  const profileType = useProfileTypeValue();
+  const currentProfile = useRef<ProfileType>(profileType);
+
+  useEffect(() => {
+    if (callback && profileType !== currentProfile.current) {
+      callback();
+      currentProfile.current = profileType;
+    }
+  }, [profileType, callback, currentProfile]);
 }

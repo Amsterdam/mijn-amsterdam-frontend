@@ -19,8 +19,7 @@ export default function Search() {
     if (termParam) {
       setTerm(termParam);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [termParam]);
+  }, [termParam, setTerm]);
 
   return (
     <Page className={styles.Search}>
@@ -39,7 +38,6 @@ export default function Search() {
         <SearchBar
           autoFocus={true}
           term={term || termParam}
-          onFinish={() => console.log('finish searchsz!')}
           extendedAMResults={true}
           typeAhead={false}
           maxResultCountDisplay={20}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import {
   atom,
   Loadable,
@@ -12,26 +12,27 @@ import {
 } from 'recoil';
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiSuccessResponse, isError } from '../../../universal/helpers/api';
-import { AppState, PRISTINE_APPSTATE } from '../../AppState';
+import { AppState } from '../../AppState';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { appStateAtom, useAppStateGetter } from '../../hooks/useAppState';
+import {
+  profileTypeState,
+  useProfileTypeSwitch,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 import {
   ApiBaseItem,
   ApiSearchConfig,
-  apiSearchConfigs,
-  API_SEARCH_CONFIG_DEFAULT,
   displayPath,
-  PageEntry,
-  searchStateKeys,
+  getApiSearchConfigs,
+  SearchEntry,
   staticIndex,
 } from './searchConfig';
-
-export const dynamicSearchIndex: PageEntry[] = [...staticIndex];
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
   apiConfig: ApiSearchConfig
-): PageEntry {
+): SearchEntry {
   const props: Array<
     Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName'>
   > = [
@@ -43,7 +44,7 @@ export function generateSearchIndexPageEntry(
     'keywords',
   ];
 
-  const pageEntry = {} as PageEntry;
+  const pageEntry = {} as SearchEntry;
 
   for (const prop of props) {
     const configValue = apiConfig[prop];
@@ -52,6 +53,10 @@ export function generateSearchIndexPageEntry(
       typeof configValue === 'function'
         ? configValue(item, apiConfig)
         : configValue;
+
+    if (!value) {
+      continue;
+    }
 
     if (prop === 'keywords') {
       pageEntry.keywords = uniqueArray([
@@ -65,7 +70,7 @@ export function generateSearchIndexPageEntry(
         ...value,
       ]);
     } else {
-      pageEntry[prop as keyof PageEntry] = value;
+      pageEntry[prop as keyof SearchEntry] = value;
     }
   }
 
@@ -73,19 +78,17 @@ export function generateSearchIndexPageEntry(
 }
 
 export function generateSearchIndexPageEntries(
+  profileType: ProfileType,
   apiName: string,
   apiContent: ApiSuccessResponse<any>['content']
-): PageEntry[] {
-  const config = apiSearchConfigs.find((config) => config.apiName === apiName);
+): SearchEntry[] {
+  const apiConfig = getApiSearchConfigs(profileType).find(
+    (config) => config.apiName === apiName
+  );
 
-  if (!config) {
+  if (!apiConfig) {
     throw new Error(`${apiName} does not have search index entry.`);
   }
-
-  const apiConfig: ApiSearchConfig = {
-    ...API_SEARCH_CONFIG_DEFAULT,
-    ...config,
-  };
 
   return apiConfig
     .getApiBaseItems(apiContent)
@@ -100,7 +103,7 @@ interface AmsterdamSearchResult {
   highlight: { title: string };
 }
 
-function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
+function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
@@ -119,12 +122,13 @@ function transformSearchAmsterdamNLresponse(responseData: any): PageEntry[] {
 export async function searchAmsterdamNL(
   keywords: string,
   resultCountPerPage: number = 5,
-  useExtendedAmsterdamSearch: boolean = false
+  isExtendedAmsterdamSearch: boolean = false
 ) {
-  const url = useExtendedAmsterdamSearch
+  const url = isExtendedAmsterdamSearch
     ? `https://api.swiftype.com/api/v1/public/engines/search.json?engine_key=zw32MDuzZjzNC8VutizD&page=1&per_page=${resultCountPerPage}&q=${keywords}&spelling=retry`
     : `https://api.swiftype.com/api/v1/public/engines/suggest.json?q=${keywords}&engine_key=zw32MDuzZjzNC8VutizD&per_page=${resultCountPerPage}`;
-  const response = await axios.get<PageEntry[]>(url, {
+
+  const response = await axios.get<SearchEntry[]>(url, {
     transformResponse: addAxiosResponseTransform(
       transformSearchAmsterdamNLresponse
     ),
@@ -141,7 +145,7 @@ const options = {
 };
 
 export const searchConfigAtom = atom<{
-  index: Fuse<PageEntry> | null;
+  index: Fuse<SearchEntry> | null;
   apiNames: Array<keyof Partial<AppState>>;
 }>({
   key: 'searchConfigState',
@@ -155,28 +159,36 @@ export function useSearch() {
   return useRecoilState(searchConfigAtom);
 }
 
-export function isIndexReady(apiNames: Array<keyof AppState>) {
-  return searchStateKeys.every((apiName) => apiNames.includes(apiName));
-}
-
 export function useSearchIndex() {
-  const [{ index, apiNames }, setSearchConfig] = useSearch();
+  const [{ index }, setSearchConfig] = useSearch();
   const appState = useAppStateGetter();
-
-  const isAppStateReady = searchStateKeys.every((stateKey) => {
-    return appState[stateKey] !== PRISTINE_APPSTATE[stateKey];
-  });
-
-  const isIndexed = isIndexReady(apiNames);
+  const profileType = useProfileTypeValue();
+  const isIndexed = useRef(false);
+  const chapterPageEntries = useMemo(() => {
+    return staticIndex.filter(
+      (index) => !index.profileTypes || index.profileTypes.includes(profileType)
+    );
+  }, [profileType]);
 
   useEffect(() => {
-    if (isAppStateReady && !isIndexed) {
-      const sindex = index || new Fuse(staticIndex, options);
+    const apiNamesToIndex = getApiSearchConfigs(profileType)
+      .map((config) => config.apiName)
+      .filter((stateKey) => !!appState[stateKey]?.status);
+
+    const isAppStateReady = apiNamesToIndex.every((stateKey) => {
+      return appState[stateKey].status !== 'PRISTINE';
+    });
+
+    if (isAppStateReady && !isIndexed.current) {
+      isIndexed.current = true;
+
+      const sindex = new Fuse(chapterPageEntries, options);
       const sApiNames: Array<keyof AppState> = [];
 
-      for (const stateKey of searchStateKeys) {
-        if (!isError(appState[stateKey])) {
+      for (const stateKey of apiNamesToIndex) {
+        if (!isError(appState[stateKey]) && appState[stateKey]?.content) {
           const pageEntries = generateSearchIndexPageEntries(
+            profileType,
             stateKey,
             appState[stateKey].content
           );
@@ -192,10 +204,16 @@ export function useSearchIndex() {
         apiNames: sApiNames,
       }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAppStateReady, isIndexed]);
+  }, [chapterPageEntries, appState, index, profileType, setSearchConfig]);
 
-  return isAppStateReady && isIndexReady(apiNames);
+  useProfileTypeSwitch(() => {
+    // Reset the search index
+    isIndexed.current = false;
+    setSearchConfig(() => ({
+      index: null,
+      apiNames: [],
+    }));
+  });
 }
 
 export const searchTermAtom = atom<string>({
@@ -220,11 +238,23 @@ const amsterdamNLQuery = selectorFamily({
     },
 });
 
-const isIndexReadyQuery = selector({
+export const isIndexReadyQuery = selector({
   key: 'isIndexReady',
   get: ({ get }) => {
     const fuse = get(searchConfigAtom);
-    return isIndexReady(fuse.apiNames);
+    const profileType = get(profileTypeState);
+    const appState = get(appStateAtom);
+    const apiNamesToIndex = getApiSearchConfigs(profileType)
+      .map((config) => {
+        return config.apiName;
+      })
+      .filter((stateKey) => !!appState[stateKey]?.status);
+
+    const isIndexed = apiNamesToIndex.every((apiName) =>
+      fuse.apiNames.includes(apiName)
+    );
+
+    return isIndexed;
   },
 });
 
@@ -247,8 +277,8 @@ const mijnQuery = selector({
 });
 
 export interface SearchResults {
-  ma?: PageEntry[];
-  am?: Loadable<PageEntry[] | null>;
+  ma?: SearchEntry[];
+  am?: Loadable<SearchEntry[] | null>;
   isIndexReady: boolean;
 }
 
