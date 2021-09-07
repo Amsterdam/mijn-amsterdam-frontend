@@ -16,6 +16,7 @@ export default function MyAreaDashboard() {
 
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
+      <script>{((window as any).__webpack_nonce__ = '**CSP_NONCE**')}</script>
       {isOnScreen && <MyAreaLoader isDashboard={true} />}
       <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
         <span className={styles.NavLinkContentWrap}>

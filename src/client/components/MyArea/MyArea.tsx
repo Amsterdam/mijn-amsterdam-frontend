@@ -179,6 +179,7 @@ export default function MyArea({
 
   return (
     <ThemeProvider>
+      <script>{((window as any).__webpack_nonce__ = '**CSP_NONCE**')}</script>
       <MyAreaContainer height={height}>
         <MaintenanceNotifications page="buurt" />
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
