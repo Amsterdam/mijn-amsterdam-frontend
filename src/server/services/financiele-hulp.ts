@@ -1,10 +1,7 @@
 import memoize from 'memoizee';
 
 import { Chapters } from '../../universal/config';
-import {
-  apiDependencyError,
-  apiSuccesResult,
-} from '../../universal/helpers/api';
+import { apiDependencyError, apiSuccesResult } from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';

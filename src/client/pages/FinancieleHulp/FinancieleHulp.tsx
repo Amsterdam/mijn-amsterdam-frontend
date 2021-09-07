@@ -1,15 +1,6 @@
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
-import {
-  ChapterIcon,
-  Linkd,
-  LinkdInline,
-  OverviewPage,
-  PageContent,
-  PageHeading,
-  SectionCollapsible,
-  Table,
-} from '../../components';
+import { ChapterIcon, Linkd, LinkdInline, OverviewPage, PageContent, PageHeading, SectionCollapsible, Table } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './FinancieleHulp.module.scss';
 import { useMemo } from 'react';
