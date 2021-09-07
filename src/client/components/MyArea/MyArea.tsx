@@ -37,6 +37,8 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 
+(window as any).__webpack_nonce__ = '**CSP_NONCE**';
+
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
 }>`
