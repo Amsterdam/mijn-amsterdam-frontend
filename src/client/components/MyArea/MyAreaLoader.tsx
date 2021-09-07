@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { MyAreaProps } from './MyArea';
 import styles from './MyAreaLoadingIndicator.module.scss';
 
+(window as any).__webpack_nonce__ = '**CSP_NONCE**';
 export const MyAreaLazy = lazy(() => import('./MyArea'));
 export const MyAreaDashboardLazy = lazy(() => import('./MyAreaDashboardMap'));
 
