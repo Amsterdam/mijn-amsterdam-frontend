@@ -1,8 +1,5 @@
 import { ERVV as ERVVType } from '../../../server/services';
-import {
-  defaultDateFormat,
-  defaultDateTimeFormat,
-} from '../../../universal/helpers';
+import { defaultDateTimeFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -19,16 +16,16 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
         <InfoDetail
           label="Vanaf"
           value={
-            vergunning?.dateStart
-              ? defaultDateTimeFormat(vergunning.dateStart)
+            vergunning?.timeStart
+              ? defaultDateTimeFormat(vergunning.timeStart)
               : '-'
           }
         />
         <InfoDetail
           label="Tot en met"
           value={
-            vergunning?.dateEnd
-              ? defaultDateTimeFormat(vergunning.dateEnd)
+            vergunning?.timeEnd
+              ? defaultDateTimeFormat(vergunning.timeEnd)
               : '-'
           }
         />

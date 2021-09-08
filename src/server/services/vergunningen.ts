@@ -93,6 +93,8 @@ export interface ERVV extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
 }
 
 export interface Vakantieverhuur extends VergunningBase {
@@ -387,7 +389,6 @@ export function createVergunningNotification(
         break;
     }
   }
-
   return {
     id: `vergunning-${item.id}-notification`,
     datePublished,

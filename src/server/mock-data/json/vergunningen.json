@@ -43,6 +43,8 @@
       "dateEnd": "2022-09-28",
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
+      "timeEnd": "2021-09-24T18:00:00",
+      "timeStart": "2021-09-24T08:00:00",
       "description": "Amstel 1 E-RVV aanvraag"
     },
     {
@@ -305,10 +307,10 @@
       "kenteken": null,
       "location": "Arent Janszoon Ernststraat 780 1012AA",
       "status": "Afgehandeld",
-      "timeEnd": "16:00",
-      "timeStart": "10:00",
+      "timeEnd": "2021-06-24T18:00:00",
+      "timeStart": "2021-06-24T08:00:00",
       "description": "TVM / 3 PV - Arent Janszoon Ernststraat 780",
-      "dateEnd": "2020-07-02"
+      "dateEnd": "2021-07-02"
     },
     {
       "caseType": "TVM - RVV - Object",
