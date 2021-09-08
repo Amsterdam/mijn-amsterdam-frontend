@@ -38,6 +38,10 @@
   }
 }
 
+.NotificationHeader {
+  max-width: 80%;
+}
+
 .MetaInfoSecondary {
   @include mq-tablet() {
     display: inline-block;

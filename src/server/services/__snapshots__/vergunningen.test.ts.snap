@@ -6,13 +6,23 @@ Object {
     "cases": Array [
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-05-03",
+        "datePublished": "2021-09-03",
         "id": "vergunning-4137452018-case",
         "link": Object {
           "title": "Z/000/000003",
           "to": "/vergunningen/detail/4137452018",
         },
         "title": "Vergunningsaanvraag Z/000/000003",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-09-03",
+        "id": "vergunning-1726584505-case",
+        "link": Object {
+          "title": "Z/000/000008",
+          "to": "/vergunningen/detail/1726584505",
+        },
+        "title": "Vergunningsaanvraag Z/000/000008",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -33,16 +43,6 @@ Object {
           "to": "/vergunningen/detail/2047873912",
         },
         "title": "Vergunningsaanvraag Z/000/000009",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-04-03",
-        "id": "vergunning-1726584505-case",
-        "link": Object {
-          "title": "Z/000/000008",
-          "to": "/vergunningen/detail/1726584505",
-        },
-        "title": "Vergunningsaanvraag Z/000/000008",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -198,7 +198,7 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-05-03",
+        "datePublished": "2021-09-03",
         "description": "Uw vergunningsaanvraag e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling.",
         "id": "vergunning-4137452018-notification",
         "link": Object {
@@ -206,6 +206,17 @@ Object {
           "to": "/vergunningen/detail/4137452018",
         },
         "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer) in behandeling",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-07-06",
+        "description": "Uw Europse gehandicaptenparkeerkaart (GPK) loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.",
+        "id": "vergunning-1726584505-notification",
+        "link": Object {
+          "title": "Vraag op tijd een nieuwe GPK aan",
+          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
+        },
+        "title": "GPK loopt af",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -231,17 +242,6 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-05-06",
-        "description": "Uw Europse gehandicaptenparkeerkaart (GPK) is verlopen.",
-        "id": "vergunning-1726584505-notification",
-        "link": Object {
-          "title": "Vraag een nieuwe GPK aan",
-          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
-        },
-        "title": "GPK is verlopen",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is in behandeling.",
         "id": "vergunning-1467362160-notification",
@@ -264,7 +264,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2021-06-02",
         "description": "Uw aanvraag voor een Parkeerontheffingen Blauwe zone bedrijven is afgehandeld.",
         "id": "vergunning-1679118357-notification",
         "link": Object {
@@ -275,7 +275,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-1515509663-notification",
         "link": Object {
@@ -286,7 +286,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2020-06-24",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3607311896-notification",
         "link": Object {
@@ -297,7 +297,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2020-07-01",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-926876057-notification",
         "link": Object {
@@ -308,7 +308,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-24T00:00:00",
+        "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3240785464-notification",
         "link": Object {
@@ -374,7 +374,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2020-06-17T00:00:00",
+        "datePublished": "2020-06-25",
         "description": "Uw vergunningsaanvraag Tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-2952768564-notification",
         "link": Object {
@@ -413,6 +413,38 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "E-RVV - TVM",
+    "dateDecision": null,
+    "dateEnd": "2022-09-28",
+    "dateRequest": "2021-09-03",
+    "dateStart": "2021-09-26",
+    "decision": null,
+    "description": "Amstel 1 E-RVV aanvraag",
+    "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
+    "id": "4137452018",
+    "identifier": "Z/000/000003",
+    "location": "Amstel 1 1017AB Amsterdam",
+    "status": "Ontvangen",
+    "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)",
+  },
+  Object {
+    "cardNumber": "1234567",
+    "cardtype": "Bestuurder",
+    "caseType": "GPK",
+    "dateDecision": null,
+    "dateEnd": "2021-10-06",
+    "dateRequest": "2021-09-03",
+    "decision": "Verleend",
+    "description": "Amstel 1 GPK aanvraag",
+    "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
+    "id": "1726584505",
+    "identifier": "Z/000/000008",
+    "location": "Amstel 1 1017AB Amsterdam",
+    "requestReason": "Men heeft iets nodig",
+    "status": "Ontvangen",
+    "title": "Europse gehandicaptenparkeerkaart (GPK)",
+  },
   Object {
     "caseType": "B&B - vergunning",
     "dateDecision": null,
@@ -522,21 +554,6 @@ Array [
     "title": "Vergunning vakantieverhuur",
   },
   Object {
-    "caseType": "E-RVV - TVM",
-    "dateDecision": null,
-    "dateEnd": "2020-07-28",
-    "dateRequest": "2021-05-03",
-    "dateStart": "2020-07-26",
-    "decision": null,
-    "description": "Amstel 1 E-RVV aanvraag",
-    "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
-    "id": "4137452018",
-    "identifier": "Z/000/000003",
-    "location": "Amstel 1 1017AB Amsterdam",
-    "status": "Ontvangen",
-    "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)",
-  },
-  Object {
     "activities": "Dansen en plezier maken",
     "caseType": "Evenement melding",
     "dateDecision": null,
@@ -569,23 +586,6 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Ontvangen",
     "title": "Vaste parkeerplaats voor gehandicapten (GPP)",
-  },
-  Object {
-    "cardNumber": "1234567",
-    "cardtype": "Bestuurder",
-    "caseType": "GPK",
-    "dateDecision": null,
-    "dateEnd": "2021-05-06",
-    "dateRequest": "2021-04-03",
-    "decision": "Verleend",
-    "description": "Amstel 1 GPK aanvraag",
-    "documentsUrl": "/api/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n",
-    "id": "1726584505",
-    "identifier": "Z/000/000008",
-    "location": "Amstel 1 1017AB Amsterdam",
-    "requestReason": "Men heeft iets nodig",
-    "status": "Ontvangen",
-    "title": "Europse gehandicaptenparkeerkaart (GPK)",
   },
   Object {
     "caseType": "Omzettingsvergunning",

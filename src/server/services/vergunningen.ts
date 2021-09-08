@@ -364,6 +364,7 @@ export function createVergunningNotification(
         break;
       case item.status === 'Afgehandeld':
         description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
+        datePublished = item.dateDecision ?? '';
         break;
     }
   } else {
@@ -382,6 +383,7 @@ export function createVergunningNotification(
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
         description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
+        datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
   }

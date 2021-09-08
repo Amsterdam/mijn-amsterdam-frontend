@@ -22,6 +22,7 @@ import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { InnerHtml } from '..';
+import classnames from 'classnames';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -79,7 +80,14 @@ export default function MyNotifications({
                 key={`${item.chapter}-${item.id}-${index}`}
                 className={styles.MyNotificationItem}
               >
-                <Heading className={styles.Title} el="h4" size="small">
+                <Heading
+                  className={classnames(
+                    styles.Title,
+                    styles.NotificationHeader
+                  )}
+                  el="h4"
+                  size="small"
+                >
                   {item.title}
                 </Heading>
                 <aside className={styles.MetaInfo}>
