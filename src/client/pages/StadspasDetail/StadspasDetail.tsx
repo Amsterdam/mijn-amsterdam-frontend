@@ -26,7 +26,7 @@ import {
   PageHeading,
 } from '../../components';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useMediaQueryContext } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
 import displayAmount from '../../../universal/helpers/text';
@@ -82,7 +82,7 @@ interface BudgetBalanceProps {
 }
 
 function BudgetBalance({ budget }: BudgetBalanceProps) {
-  const isPhoneScreen = usePhoneScreen();
+  const { isPhoneScreen } = useMediaQueryContext();
   return (
     <ul className={styles.Balance}>
       <li

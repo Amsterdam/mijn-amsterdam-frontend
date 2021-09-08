@@ -7,7 +7,7 @@ import Linkd from '../Button/Button';
 import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
 import styles from './DirectLinks.module.scss';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useMediaQueryContext } from '../../hooks/media.hook';
 
 export default function DirectLinks({
   id = 'DirectLinks',
@@ -15,7 +15,7 @@ export default function DirectLinks({
   profileType,
   ...otherProps
 }: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
-  const isPhoneScreen = usePhoneScreen();
+  const { isPhoneScreen } = useMediaQueryContext();
   return (
     <div
       {...otherProps}

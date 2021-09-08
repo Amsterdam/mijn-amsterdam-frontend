@@ -2,7 +2,6 @@ import { IS_AP } from '../../universal/config';
 import { useScript } from './useScript';
 import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
-import { usePhoneScreen } from './media.hook';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 
@@ -26,15 +25,16 @@ export function waitForUsabillaLiveInWindow() {
   });
 }
 
-export function useUsabilla() {
-  const isPhoneScreen = usePhoneScreen();
+export function useUsabilla(mediaQueryValues: any) {
+  const isPhoneScreen = mediaQueryValues.isPhoneScreen;
+  // Seems like there is a bug in the use-media package that defaults to fasle. Now the desktop version get loaden by default. For this reason we check weather there is a screen
+  const hasScreen = mediaQueryValues.hasScreen;
   const [isUsabillaLoaded] = useScript(
     isPhoneScreen ? '/js/usabillaMobile.js' : '/js/usabilla.js',
     false,
     true,
-    IS_AP
+    IS_AP && hasScreen
   );
-
   useEffect(() => {
     if (isUsabillaLoaded) {
       waitForUsabillaLiveInWindow()

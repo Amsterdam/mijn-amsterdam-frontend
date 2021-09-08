@@ -28,7 +28,12 @@ import {
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
   TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
 } from './config/api';
-import { useAnalytics, usePageChange, useScript } from './hooks';
+import {
+  useAnalytics,
+  useDesktopScreen,
+  usePageChange,
+  useScript,
+} from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -68,6 +73,13 @@ import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetai
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { useUsabilla } from './hooks/useUsabilla';
 import Search from './pages/Search/Search';
+import {
+  MediaQueryContext,
+  usePhoneScreen,
+  useTabletScreen,
+  useWidescreen,
+} from './hooks/media.hook';
+import { useMemo } from 'react';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -255,7 +267,23 @@ export default function App() {
     IS_AP
   );
 
-  useUsabilla();
+  const isPhoneScreen = usePhoneScreen();
+  const isDesktopScreen = useDesktopScreen();
+  const isTabletScreen = useTabletScreen();
+  const isWideScreen = useWidescreen();
+  const hasScreen =
+    isPhoneScreen || isDesktopScreen || isTabletScreen || isWideScreen;
+  const mediaQueryValues = useMemo(
+    () => ({
+      isPhoneScreen,
+      isDesktopScreen,
+      isTabletScreen,
+      isWideScreen,
+      hasScreen,
+    }),
+    [isPhoneScreen, isDesktopScreen, isTabletScreen, isWideScreen, hasScreen]
+  );
+  useUsabilla(mediaQueryValues);
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
@@ -267,14 +295,16 @@ export default function App() {
 
   return (
     <RecoilRoot>
-      <BrowserRouter>
-        <ErrorBoundary
-          onError={sendToSentry}
-          FallbackComponent={ApplicationError}
-        >
-          <AppLanding />
-        </ErrorBoundary>
-      </BrowserRouter>
+      <MediaQueryContext.Provider value={mediaQueryValues}>
+        <BrowserRouter>
+          <ErrorBoundary
+            onError={sendToSentry}
+            FallbackComponent={ApplicationError}
+          >
+            <AppLanding />
+          </ErrorBoundary>
+        </BrowserRouter>
+      </MediaQueryContext.Provider>
     </RecoilRoot>
   );
 }

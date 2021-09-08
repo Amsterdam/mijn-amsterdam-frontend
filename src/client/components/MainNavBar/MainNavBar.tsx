@@ -9,7 +9,7 @@ import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
-import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
+import { useMediaQueryContext } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useKeyUp } from '../../hooks/useKey';
@@ -44,7 +44,7 @@ function SecondaryLinks() {
   const { BRP, KVK } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
-  const isDesktopScreen = useDesktopScreen();
+  const { isDesktopScreen } = useMediaQueryContext();
   const profileType = useProfileTypeValue();
 
   useEffect(() => {
@@ -139,7 +139,8 @@ export default function MainNavBar({
 }: {
   isAuthenticated: boolean;
 }) {
-  const hasBurgerMenu = useTabletScreen();
+  const { isTabletScreen } = useMediaQueryContext();
+  const hasBurgerMenu = isTabletScreen;
   const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined

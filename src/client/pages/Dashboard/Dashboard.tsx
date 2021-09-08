@@ -12,7 +12,7 @@ import {
   PageHeading,
 } from '../../components';
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useMediaQueryContext } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -44,7 +44,7 @@ export default function Dashboard() {
     return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
   }, [notifications]);
 
-  const isPhoneScreen = usePhoneScreen();
+  const { isPhoneScreen } = useMediaQueryContext();
   const NOTIFICATIONSTotal = notifications.length;
 
   const { items: myChapterItems, isLoading: isMyChaptersLoading } =
