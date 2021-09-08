@@ -2,6 +2,7 @@ import { IS_AP } from '../../universal/config';
 import { useScript } from './useScript';
 import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
+import { usePhoneScreen } from './media.hook';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 
@@ -26,7 +27,14 @@ export function waitForUsabillaLiveInWindow() {
 }
 
 export function useUsabilla() {
-  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
+  const isPhoneScreen = usePhoneScreen();
+  console.log(isPhoneScreen);
+  const [isUsabillaLoaded] = useScript(
+    isPhoneScreen ? '/js/usabillaMobile.js' : '/js/usabilla.js',
+    false,
+    true,
+    IS_AP && isPhoneScreen
+  );
 
   useEffect(() => {
     if (isUsabillaLoaded) {
