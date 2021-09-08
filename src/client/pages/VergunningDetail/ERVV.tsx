@@ -4,6 +4,7 @@ import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 export function ERVV({ vergunning }: { vergunning: ERVVType }) {
   return (
@@ -17,7 +18,9 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
           label="Vanaf"
           value={
             vergunning?.timeStart
-              ? defaultDateTimeFormat(vergunning.timeStart)
+              ? vergunning.timeStart.includes('T')
+                ? defaultDateTimeFormat(vergunning.timeStart)
+                : defaultDateFormat(vergunning.timeStart)
               : '-'
           }
         />
@@ -25,7 +28,9 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
           label="Tot en met"
           value={
             vergunning?.timeEnd
-              ? defaultDateTimeFormat(vergunning.timeEnd)
+              ? vergunning.timeEnd.includes('T')
+                ? defaultDateTimeFormat(vergunning.timeEnd)
+                : defaultDateFormat(vergunning.timeEnd)
               : '-'
           }
         />
