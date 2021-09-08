@@ -28,12 +28,11 @@ export function waitForUsabillaLiveInWindow() {
 
 export function useUsabilla() {
   const isPhoneScreen = usePhoneScreen();
-  console.log(isPhoneScreen);
   const [isUsabillaLoaded] = useScript(
     isPhoneScreen ? '/js/usabillaMobile.js' : '/js/usabilla.js',
     false,
     true,
-    IS_AP && isPhoneScreen
+    IS_AP
   );
 
   useEffect(() => {
