@@ -39,7 +39,7 @@ export const AppRoutes: Record<string, string> = {
   'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
     '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
   SEARCH: '/zoeken',
-  FINANCIELE_HULP: '/financiële-hulp',
+  FINANCIELE_HULP: '/financiele-hulp',
 };
 
 export const AppRoutesRedirect = [
