@@ -1,70 +1,82 @@
 import MockAdapter from 'axios-mock-adapter';
+import { fetchFinancieleHulpGenerated } from '.';
 
-import { jsonCopy } from '../../universal/helpers';
+import { jsonCopy, omit } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import financieleHulpData from '../mock-data/json/financiele-hulp.json';
-import { fetchSource } from './financiele-hulp';
+import { fetchFinancieleHulp, fetchSource } from './financiele-hulp';
 
 describe('Financiële hulp service', () => {
-  const axMock = new MockAdapter(axiosRequest);
   const FINANCIELE_HULP_DUMMY_RESPONSE = jsonCopy(financieleHulpData);
 
-  const API_URL = ApiConfig.FINANCIELE_HULP.url;
-
   const DUMMY_URL_FINANCIELE_HULP = '/financiele-hulp';
-  const DUMMY_URL_NULL_CONTENT = '/null-content';
-  const DUMMY_URL_ERROR = '/error-response';
 
-  jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
+  ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
 
-  afterAll(() => {
-    axMock.restore();
-    ApiConfig.FINANCIELE_HULP.url = API_URL;
+  let axMock: any;
+  let axiosRequestSpy: any;
+
+  beforeEach(() => {
+    axMock = new MockAdapter(axiosRequest);
+    axMock
+      .onGet(DUMMY_URL_FINANCIELE_HULP)
+      .reply(200, FINANCIELE_HULP_DUMMY_RESPONSE);
+
+    axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
   });
 
   afterEach(() => {
-    ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
+    axMock.restore();
+    axiosRequestSpy.mockRestore();
   });
 
-  axMock
-    .onGet(DUMMY_URL_FINANCIELE_HULP)
-    .reply(200, FINANCIELE_HULP_DUMMY_RESPONSE);
-
-  axMock.onGet(DUMMY_URL_NULL_CONTENT).reply(200, null);
-  axMock.onGet(DUMMY_URL_ERROR).reply(500, { message: 'fat chance!' });
-
-  it('Should respond with data', async () => {
-    ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
-
+  it('Should respond correctly', async () => {
     const response = await fetchSource('x1', { x: 'saml' });
-    const kredietMessage = response.content?.notificationTriggers?.krediet;
-    if (!!kredietMessage) {
-      expect(typeof kredietMessage.datePublished).toBe('string');
-      expect(typeof kredietMessage.url).toBe('string');
-    }
-    const fibuMessage = response.content?.notificationTriggers?.fibu;
-    if (!!fibuMessage) {
-      expect(typeof fibuMessage.datePublished).toBe('string');
-      expect(typeof fibuMessage.url).toBe('string');
-    }
+    expect(response).toEqual(FINANCIELE_HULP_DUMMY_RESPONSE);
 
-    const schuldhulp = response.content?.deepLinks?.schuldhulp;
-    if (!!schuldhulp) {
-      expect(typeof schuldhulp.title).toBe('string');
-      expect(typeof schuldhulp.url).toBe('string');
-    }
+    const responseDerived = await fetchFinancieleHulp('x1', { x: 'saml' });
+    expect(axiosRequestSpy.mock.calls.length).toEqual(1); // Use cached version
 
-    const lening = response.content?.deepLinks?.lening;
-    if (!!lening) {
-      expect(typeof lening.title).toBe('string');
-      expect(typeof lening.url).toBe('string');
-    }
+    const contentExpected = {
+      content: omit(FINANCIELE_HULP_DUMMY_RESPONSE.content, [
+        'notificationTriggers',
+      ]),
+      status: 'OK',
+    };
 
-    const budgetbeheer = response.content?.deepLinks?.budgetbeheer;
-    if (!!budgetbeheer) {
-      expect(typeof budgetbeheer.title).toBe('string');
-      expect(typeof budgetbeheer.url).toBe('string');
-    }
+    expect(responseDerived).toEqual(contentExpected);
+
+    await fetchFinancieleHulp('x2', { x: 'saml' });
+    expect(axiosRequestSpy.mock.calls.length).toEqual(2);
+
+    const generatedResponse = await fetchFinancieleHulpGenerated('x1', {
+      x: 'saml',
+    });
+
+    expect(generatedResponse).toEqual({
+      content: {
+        notifications: [
+          {
+            id: 'financiele-hulp-fibu-notification',
+            datePublished: '2021-08-24',
+            title: 'Bericht FiBu',
+            chapter: 'FINANCIELE_HULP',
+            description: 'Er staan ongelezen berichten voor u klaar van FiBu',
+            link: { to: 'https://linktofibu/123', title: 'Bekijk uw bericht' },
+          },
+          {
+            id: 'financiele-hulp-krediet-notification',
+            datePublished: '2021-08-24',
+            title: 'Bericht Kredietbank',
+            chapter: 'FINANCIELE_HULP',
+            description:
+              'Er staan ongelezen berichten voor u klaar van de kredietbank',
+            link: { to: 'https://linktofibu/123', title: 'Bekijk uw bericht' },
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 });

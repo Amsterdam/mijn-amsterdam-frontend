@@ -13,11 +13,11 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Home"
+          aria-label="Financiële Hulp"
           class="ChapterIcon"
           fill="black"
         >
-          burgerzaken.svg
+          financiele-hulp.svg
         </svg>
       </span>
       <div
@@ -94,7 +94,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         class="Heading Heading__mediumLarge Title TitleWithItems"
       >
         <button
-          aria-expanded="false"
+          aria-expanded="true"
           class="TitleToggle"
         >
           <svg
@@ -107,7 +107,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         </button>
       </h3>
       <div
-        aria-hidden="true"
+        aria-hidden="false"
         class="Panel"
         style="height: 0px;"
       >
@@ -165,7 +165,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionCollapsibleCurrent"
+      class="SectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -242,13 +242,13 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionCollapsibleCurrent"
+      class="SectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
       >
         <button
-          aria-expanded="true"
+          aria-expanded="false"
           class="TitleToggle"
         >
           <svg
@@ -261,7 +261,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         </button>
       </h3>
       <div
-        aria-hidden="false"
+        aria-hidden="true"
         class="Panel"
         style="height: 0px;"
       >

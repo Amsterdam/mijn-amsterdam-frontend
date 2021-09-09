@@ -115,6 +115,6 @@ export const DocumentTitles = {
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING/VV'
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes.FIENANCIELE_HULP]: `${ChapterTitles.FIENANCIELE_HULP}`,
+  [AppRoutes.FINANCIELE_HULP]: `${ChapterTitles.FINANCIELE_HULP}`,
   [AppRoutes.SEARCH]: `Zoeken`,
 };

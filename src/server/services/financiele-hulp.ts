@@ -1,7 +1,10 @@
 import memoize from 'memoizee';
-
 import { Chapters } from '../../universal/config';
-import { apiDependencyError, apiSuccesResult } from '../../universal/helpers/api';
+import { omit } from '../../universal/helpers';
+import {
+  apiDependencyError,
+  apiSuccesResult,
+} from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -11,12 +14,12 @@ interface NotificationTrigger {
   url: string;
 }
 
-interface KrefiaDeepLink {
+export interface KrefiaDeepLink {
   title: string;
   url: string;
 }
 
-interface KrefiaDeepLinks {
+export interface KrefiaDeepLinks {
   budgetbeheer: KrefiaDeepLink | null;
   lening: KrefiaDeepLink | null;
   schuldhulp: KrefiaDeepLink | null;
@@ -84,7 +87,7 @@ export async function fetchFinancieleHulp(
 ) {
   const response = await fetchSource(sessionID, passthroughRequestHeaders);
   if (response.status === 'OK') {
-    return apiSuccesResult({ deepLinks: response.content.deepLinks });
+    return apiSuccesResult(omit(response.content, ['notificationTriggers']));
   }
   return response;
 }

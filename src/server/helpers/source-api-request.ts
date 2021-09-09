@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -178,15 +178,18 @@ export async function requestData<T>(
     }
 
     return responseData;
-  } catch (error) {
+  } catch (error: any) {
     // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
     // to the client to pass through.
     const shouldCaptureMessage =
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
+
     const api = Object.entries(ApiUrls).find(
       ([, url]) => requestConfig.url === url
     );
+
     const apiName = api ? api[0] : 'unknown';
+
     const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
           `${apiName}: ${error?.message ? error.message : error}`,

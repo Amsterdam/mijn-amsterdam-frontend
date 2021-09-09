@@ -2,11 +2,11 @@
   "content": {
     "notificationTriggers": {
       "krediet": {
-        "datePublished": "2021-06-24",
+        "datePublished": "2021-08-24",
         "url": "https://linktofibu/123"
       },
       "fibu": {
-        "datePublished": "2021-06-24",
+        "datePublished": "2021-08-24",
         "url": "https://linktofibu/123"
       }
     },
@@ -24,5 +24,6 @@
         "url": "https://linktofibu/123"
       }
     }
-  }
+  },
+  "status": "OK"
 }

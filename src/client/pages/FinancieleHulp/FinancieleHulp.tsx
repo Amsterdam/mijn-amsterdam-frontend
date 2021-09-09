@@ -1,3 +1,5 @@
+import { ReactNode, useMemo } from 'react';
+import { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
 import {
@@ -12,58 +14,50 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './FinancieleHulp.module.scss';
-import { useMemo } from 'react';
 
 const DISPLAY_PROPS = {
   title: 'Status',
-  url: 'Bekijk op FiBu',
+  to: 'Bekijk op FiBu',
 };
+
+function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
+  return useMemo(() => {
+    if (!deepLinksContent) {
+      return;
+    }
+    const deepLinks: Record<string, [KrefiaDeepLink & { to: ReactNode }]> = {};
+    for (const [key, link] of Object.entries(deepLinksContent).filter(
+      ([, link]) => link !== null
+    )) {
+      let linkText = 'Bekijk';
+      switch (key) {
+        case 'budgetbeheer':
+        case 'lening':
+          linkText = 'Bekijk uw lening';
+          break;
+        case 'schuldhulp':
+          linkText = 'Bekijk uw schuldregeling';
+          break;
+      }
+      deepLinks[key] = [
+        {
+          ...link,
+          to: (
+            <LinkdInline external={true} href={link.url}>
+              {linkText}
+            </LinkdInline>
+          ),
+        },
+      ];
+    }
+    return deepLinks;
+  }, [deepLinksContent]);
+}
 
 export default function FinancieleHulp() {
   const { FINANCIELE_HULP } = useAppStateGetter();
-  const leningen = useMemo(() => {
-    const lening = FINANCIELE_HULP?.content?.deepLinks?.lening;
-    if (!FINANCIELE_HULP?.content?.deepLinks?.lening) {
-      return undefined;
-    }
-    return {
-      ...lening,
-      url: (
-        <LinkdInline external={true} href={lening?.url}>
-          Bekijk uw lening
-        </LinkdInline>
-      ),
-    };
-  }, [FINANCIELE_HULP.content]);
-  const schuldregelingen = useMemo(() => {
-    const schuldregeling = FINANCIELE_HULP?.content?.deepLinks?.schuldhulp;
-    if (!schuldregeling) {
-      return undefined;
-    }
-    return {
-      ...schuldregeling,
-      url: (
-        <LinkdInline external={true} href={schuldregeling.url}>
-          Bekijk uw schuldregeling
-        </LinkdInline>
-      ),
-    };
-  }, [FINANCIELE_HULP.content]);
-  const budgetbeheer = useMemo(() => {
-    const budgetbeheer = FINANCIELE_HULP.content?.deepLinks?.budgetbeheer;
-    if (!budgetbeheer) {
-      return [];
-    }
+  const deepLinks = useDeepLinks(FINANCIELE_HULP.content?.deepLinks);
 
-    return {
-      ...budgetbeheer,
-      url: (
-        <LinkdInline external={true} href={budgetbeheer.url}>
-          Bekijk uw lening
-        </LinkdInline>
-      ),
-    };
-  }, [FINANCIELE_HULP.content]);
   return (
     <OverviewPage className={styles.FinancieleHulp}>
       <PageHeading
@@ -97,12 +91,11 @@ export default function FinancieleHulp() {
           </Linkd>
         </p>
       </PageContent>
-      {schuldregelingen && (
+      {deepLinks?.schuldhulp && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-schuldregeling"
           title="Schuldregeling"
-          hasItems={!!schuldregelingen}
-          startCollapsed={!!schuldregelingen}
+          startCollapsed={false}
           className={styles.SectionBorderTop}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
@@ -113,17 +106,15 @@ export default function FinancieleHulp() {
           <Table
             className={styles.HulpTable}
             displayProps={DISPLAY_PROPS}
-            items={[schuldregelingen]}
+            items={deepLinks.schuldhulp}
           />
         </SectionCollapsible>
       )}
-      {!!leningen && (
+      {deepLinks?.lening && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-leningen"
           title="Leningen"
-          hasItems={!!leningen}
-          startCollapsed={!!schuldregelingen}
-          className={styles.SectionCollapsibleCurrent}
+          startCollapsed={!!deepLinks.schuldhulp.length}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
             category: 'Financiële hulp overzicht / Leningen',
@@ -133,17 +124,17 @@ export default function FinancieleHulp() {
           <Table
             className={styles.HulpTable}
             displayProps={DISPLAY_PROPS}
-            items={[leningen]}
+            items={deepLinks.lening}
           />
         </SectionCollapsible>
       )}
-      {!!budgetbeheer && (
+      {deepLinks?.budgetbeheer && (
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-budgetbeheer"
           title="Financieel budgetbeheer"
-          hasItems={!!budgetbeheer}
-          startCollapsed={!!schuldregelingen && !!leningen}
-          className={styles.SectionCollapsibleCurrent}
+          startCollapsed={
+            !!deepLinks.schuldhulp.length || !!deepLinks.lening.length
+          }
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
             category: 'Financiële hulp overzicht / Financieel budgetbeheer',
@@ -153,7 +144,7 @@ export default function FinancieleHulp() {
           <Table
             className={styles.HulpTable}
             displayProps={DISPLAY_PROPS}
-            items={[budgetbeheer]}
+            items={deepLinks.budgetbeheer}
           />
         </SectionCollapsible>
       )}
