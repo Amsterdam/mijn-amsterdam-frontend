@@ -7,6 +7,7 @@ import { fetchBELASTINGGenerated } from './belasting';
 import { fetchBRPGenerated } from './brp';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
+import { fetchFinancieleHulpGenerated } from './financiele-hulp';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
@@ -120,6 +121,7 @@ async function fetchServicesGenerated(
     maintenanceNotifications,
     stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
+    fetchFinancieleHulpGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -133,6 +135,7 @@ async function fetchServicesGenerated(
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
+    fetchFinancieleHulpGenerated(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -155,6 +158,9 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGeneratedResult
   );
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
+  const financieleHulpGenerated = getSettledResult(
+    fetchFinancieleHulpGeneratedResult
+  );
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -169,6 +175,7 @@ async function fetchServicesGenerated(
     maintenanceNotificationsResult,
     toeristischeVerhuurGenerated,
     stadspasGenerated,
+    financieleHulpGenerated,
   ]);
 }
 

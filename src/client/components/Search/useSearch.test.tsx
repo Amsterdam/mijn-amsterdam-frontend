@@ -273,7 +273,7 @@ describe('Search hooks and helpers', () => {
             "title": "Europse gehandicaptenparkeerkaart (GPK) Z/000/000008",
             "url": "/vergunningen/detail/1726584505",
           },
-          "refIndex": 18,
+          "refIndex": 19,
         },
       ]
     `);

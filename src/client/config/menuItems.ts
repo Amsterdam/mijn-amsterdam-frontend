@@ -106,6 +106,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
+  {
+    title: ChapterTitles.FINANCIELE_HULP,
+    id: Chapters.FINANCIELE_HULP,
+    to: AppRoutes.FINANCIELE_HULP,
+    profileTypes: ['private', 'private-commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {

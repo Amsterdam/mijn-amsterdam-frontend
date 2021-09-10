@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
-import { Vergunning } from '../../../server/services';
+import { FinancieleHulp, Vergunning } from '../../../server/services';
 import {
   FocusStadspas,
   FocusStadspasSaldo,
@@ -373,13 +373,34 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       };
     },
   },
-  // {
-  //   apiName: 'AKTES',
-  //   displayTitle: (document: Akte) => {
-  //     return (term: string) =>
-  //       displayPath(term, [capitalizeFirstLetter(document.type)]);
-  //   },
-  // },
+  {
+    apiName: 'FINANCIELE_HULP',
+    getApiBaseItems: (
+      apiContent: Omit<FinancieleHulp, 'notificationTriggers'>
+    ) => {
+      const deepLinks =
+        !!apiContent?.deepLinks &&
+        Object.values(apiContent.deepLinks).map((deepLink) => {
+          return {
+            ...deepLink,
+            title: deepLink.title,
+            link: {
+              to: deepLink.url,
+              title: deepLink.title,
+            },
+          };
+        });
+      return deepLinks || [];
+    },
+    keywords: () => [
+      'lening',
+      'fibu',
+      'schuldhulpregeling',
+      'regeling',
+      'krediet',
+      'budgetbeheer',
+    ],
+  },
 ];
 
 export const staticIndex: SearchEntry[] = [
@@ -689,5 +710,23 @@ export const staticIndex: SearchEntry[] = [
     displayTitle: (term: string) => displayPath(term, ['Milieuzone']),
     description: `Een overzicht van milieuzone.`,
     keywords: ['Milieuzone', 'Ontheffing'],
+  },
+  {
+    url: AppRoutes.FINANCIELE_HULP,
+    title: DocumentTitles[AppRoutes.FINANCIELE_HULP],
+    displayTitle: (term: string) => displayPath(term, ['Financiële hulp']),
+    description: `Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).`,
+    keywords: [
+      'lening',
+      'schulden',
+      'schuldhulp',
+      'schuldhulpregeling',
+      'krediet',
+      'krefia',
+      'fibu',
+      'kredietbank',
+      'budgetbeheer',
+    ],
+    profileTypes: ['private', 'private-commercial'],
   },
 ];

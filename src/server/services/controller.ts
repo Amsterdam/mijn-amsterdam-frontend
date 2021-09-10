@@ -21,6 +21,7 @@ import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
 import { fetchFOCUSTonk } from './focus/focus-tonk';
 import { fetchFOCUSTozo } from './focus/focus-tozo';
+import { fetchFinancieleHulp } from './financiele-hulp';
 import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
@@ -60,11 +61,13 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callService(
   fetchMaintenanceNotificationsActual
 );
 const KVK = callService(fetchKVK);
+const FINANCIELE_HULP = callService(fetchFinancieleHulp);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
 const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
+
 const WMO = callService(fetchWMO);
 
 const TOERISTISCHE_VERHUUR = (sessionID: SessionID, req: Request) =>
@@ -123,6 +126,7 @@ const SERVICES_INDEX = {
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
+  FINANCIELE_HULP,
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
@@ -180,6 +184,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
+    FINANCIELE_HULP,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
@@ -202,6 +207,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
+    FINANCIELE_HULP,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
