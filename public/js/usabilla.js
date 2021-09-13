@@ -1,22 +1,22 @@
 /*{literal}<![CDATA[*/ window.lightningjs ||
-  (function(c) {
+  (function (c) {
     function g(b, d) {
       d && (d += (/\?/.test(d) ? '&' : '?') + 'lv=1');
       c[b] ||
-        (function() {
+        (function () {
           var i = window,
             h = document,
             j = b,
             g = h.location.protocol,
             l = 'load',
             k = 0;
-          (function() {
+          (function () {
             function b() {
               a.P(l);
               a.w = 1;
               c[j]('_load');
             }
-            c[j] = function() {
+            c[j] = function () {
               function m() {
                 m.id = e;
                 return c[j].apply(m, arguments);
@@ -25,7 +25,7 @@
                 e = ++k;
               b = this && this != i ? this.id || 0 : 0;
               (a.s = a.s || []).push([e, b, arguments]);
-              m.then = function(b, c, h) {
+              m.then = function (b, c, h) {
                 var d = (a.fh[e] = a.fh[e] || []),
                   j = (a.eh[e] = a.eh[e] || []),
                   f = (a.ph[e] = a.ph[e] || []);
@@ -44,14 +44,14 @@
               ? d.replace(/^\/\//, (g == 'https:' ? g : 'http:') + '//')
               : d;
             a.p = { 0: +new Date() };
-            a.P = function(b) {
+            a.P = function (b) {
               a.p[b] = new Date() - a.p[0];
             };
             a.w && b();
             i.addEventListener
               ? i.addEventListener(l, b, !1)
               : i.attachEvent('on' + l, b);
-            var q = function() {
+            var q = function () {
               function b() {
                 return [
                   '<head></head><',
@@ -126,8 +126,4 @@
       k = (window[o] = g(o));
     k.require = g;
     k.modules = c;
-  })({});
-window.usabilla_live = lightningjs.require(
-  'usabilla_live',
-  'https://w.usabilla.com/e8b4abda34ab.js'
-); /*]]>{/literal}*/
+  })({}); /*]]>{/literal}*/
