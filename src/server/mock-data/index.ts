@@ -7,6 +7,7 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
+import FINANCIELE_HULP from './json/financiele-hulp.json';
 import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
 import FOCUS_COMBINED from './json/focus-combined.json';
 import KVK1 from './json/kvk-handelsregister.json';
@@ -216,6 +217,15 @@ export const mockDataConfig: MockDataConfig = {
         return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
       }
       return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+    },
+  },
+  [ApiUrls.FINANCIELE_HULP]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return await loadMockApiResponseJson(FINANCIELE_HULP);
+      }
+      return await loadMockApiResponseJson(FINANCIELE_HULP);
     },
   },
 };

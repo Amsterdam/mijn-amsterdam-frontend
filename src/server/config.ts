@@ -71,7 +71,8 @@ export type SourceApiKey =
   | 'AKTES'
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'KVK';
+  | 'KVK'
+  | 'FINANCIELE_HULP';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -140,6 +141,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+  },
+  FINANCIELE_HULP: {
+    url: `${BFF_MS_API_BASE_URL}/financiele-hulp/get`,
+    postponeFetch: !FeatureToggle.financieleHulpActive,
   },
 };
 

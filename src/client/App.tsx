@@ -10,6 +10,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
@@ -37,6 +38,7 @@ import {
   useDeeplinkRedirect,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
+import { useUsabilla } from './hooks/useUsabilla';
 import {
   Accessibility,
   Burgerzaken,
@@ -62,12 +64,12 @@ import {
   ZorgDetail,
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
+import FinancieleHulp from './pages/FinancieleHulp/FinancieleHulp';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
-import { useUsabilla } from './hooks/useUsabilla';
-import Search from './pages/Search/Search';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -206,6 +208,12 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
               component={ToeristischeVerhuur}
+            />
+          )}
+          {FeatureToggle.financieleHulpActive && (
+            <Route
+              path={AppRoutes.FINANCIELE_HULP}
+              component={FinancieleHulp}
             />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
