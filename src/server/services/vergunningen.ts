@@ -84,6 +84,8 @@ export interface ERVV extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
 }
 
 export interface Vakantieverhuur extends VergunningBase {
@@ -257,7 +259,6 @@ export function isNearEndDate(vergunning: VergunningExpirable) {
   }
 
   const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
-
   return (
     !isExpired(vergunning) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
@@ -305,7 +306,7 @@ export function createVergunningNotification(
     [CaseType.BZP]:
       'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
     [CaseType.GPK]:
-      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx/Inleiding',
+      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
   };
   let title = 'Vergunningsaanvraag';
   let description = 'Er is een update in uw vergunningsaanvraag.';
@@ -351,10 +352,13 @@ export function createVergunningNotification(
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
-        description = `Uw aanvraag voor een ${fullName} is in behandeling.`;
+        title = `${item.caseType} in behandeling`;
+        description = `Uw aanvraag voor een ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
+        title = `${item.caseType} afgehandeld`;
         description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
+        datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
   } else {
@@ -368,15 +372,15 @@ export function createVergunningNotification(
     switch (true) {
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
-        description = `Uw vergunningsaanvraag ${fullName} is in behandeling.`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
         description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
+        datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
   }
-
   return {
     id: `vergunning-${item.id}-notification`,
     datePublished,

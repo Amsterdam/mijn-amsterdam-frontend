@@ -34,7 +34,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             class="MyNotificationItem"
           >
             <h4
-              class="Heading Heading__small Title"
+              class="Heading Heading__small Title NotificationHeader"
             >
               Notification
             </h4>
@@ -98,7 +98,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             class="MyNotificationItem"
           >
             <h4
-              class="Heading Heading__small Title"
+              class="Heading Heading__small Title NotificationHeader"
             >
               Notification
             </h4>
@@ -162,7 +162,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             class="MyNotificationItem"
           >
             <h4
-              class="Heading Heading__small Title"
+              class="Heading Heading__small Title NotificationHeader"
             >
               Notification
             </h4>

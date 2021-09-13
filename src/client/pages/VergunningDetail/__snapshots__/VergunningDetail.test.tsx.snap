@@ -68,7 +68,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Zaaktype
+          Soort vergunning
         </h3>
         <p
           class="Value"

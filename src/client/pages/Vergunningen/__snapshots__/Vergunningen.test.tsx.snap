@@ -151,7 +151,40 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Aangevraagd:
                   </span>
                   <span>
-                    03 mei 2021
+                    03 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000008
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Europse gehandicaptenparkeerkaart (GPK)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    03 september 2021
                   </span>
                 </td>
               </tr>
@@ -218,39 +251,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     07 april 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  Z/000/000008
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Europse gehandicaptenparkeerkaart (GPK)
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    03 april 2021
                   </span>
                 </td>
               </tr>
