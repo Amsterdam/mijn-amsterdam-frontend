@@ -44,7 +44,7 @@ export default function Dashboard() {
     return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
   }, [notifications]);
 
-  const { isPhoneScreen } = useMediaQueryContext();
+  const { isPhoneScreen } = { ...useMediaQueryContext() };
   const NOTIFICATIONSTotal = notifications.length;
 
   const { items: myChapterItems, isLoading: isMyChaptersLoading } =

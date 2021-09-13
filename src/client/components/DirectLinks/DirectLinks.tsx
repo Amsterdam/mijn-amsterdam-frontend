@@ -15,7 +15,7 @@ export default function DirectLinks({
   profileType,
   ...otherProps
 }: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
-  const { isPhoneScreen } = useMediaQueryContext();
+  const { isPhoneScreen } = { ...useMediaQueryContext() };
   return (
     <div
       {...otherProps}

@@ -44,7 +44,7 @@ function SecondaryLinks() {
   const { BRP, KVK } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
-  const { isDesktopScreen } = useMediaQueryContext();
+  const { isDesktopScreen } = { ...useMediaQueryContext() };
   const profileType = useProfileTypeValue();
 
   useEffect(() => {
@@ -139,8 +139,9 @@ export default function MainNavBar({
 }: {
   isAuthenticated: boolean;
 }) {
-  const { isTabletScreen } = useMediaQueryContext();
+  const { isTabletScreen } = { ...useMediaQueryContext() };
   const hasBurgerMenu = isTabletScreen;
+  console.log(hasBurgerMenu);
   const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined

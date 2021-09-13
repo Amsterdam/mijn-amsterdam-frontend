@@ -82,7 +82,7 @@ interface BudgetBalanceProps {
 }
 
 function BudgetBalance({ budget }: BudgetBalanceProps) {
-  const { isPhoneScreen } = useMediaQueryContext();
+  const { isPhoneScreen } = { ...useMediaQueryContext() };
   return (
     <ul className={styles.Balance}>
       <li

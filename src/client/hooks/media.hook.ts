@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 import { useMediaLayout } from 'use-media';
 import { Breakpoints } from '../config/app';
 
-interface MediaQueryContextType {
+export interface MediaQueryContextType {
   isPhoneScreen: boolean;
   isDesktopScreen: boolean;
   isTabletScreen: boolean;

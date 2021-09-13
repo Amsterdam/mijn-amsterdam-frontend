@@ -2,7 +2,10 @@ import { render, screen } from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { useTabletScreen } from '../../hooks/media.hook';
+import {
+  useMediaQueryContext,
+  MediaQueryContextType,
+} from '../../hooks/media.hook';
 import MainNavBar from './MainNavBar';
 import userEvent from '@testing-library/user-event';
 
@@ -44,7 +47,13 @@ describe('<MainNavBar />', () => {
 
   describe('Small screen version of <MainNavBar />', () => {
     it('Renders burger menu on small screens', () => {
-      (useTabletScreen as jest.Mock).mockReturnValue(true);
+      (useMediaQueryContext as MediaQueryContextType).mockReturnValue({
+        isPhoneScreen: false,
+        isDesktopScreen: false,
+        isTabletScreen: true,
+        isWideScreen: false,
+        hasScreen: false,
+      });
 
       render(
         <MemoryRouter>
