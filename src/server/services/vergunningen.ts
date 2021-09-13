@@ -268,7 +268,6 @@ export function isNearEndDate(vergunning: VergunningExpirable) {
   }
 
   const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
-
   return (
     !isExpired(vergunning) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
@@ -362,11 +361,13 @@ export function createVergunningNotification(
         datePublished = item.dateEnd!;
         break;
       case item.status !== 'Afgehandeld':
-        description = `Uw aanvraag voor een ${fullName} is in behandeling.`;
+        title = `${item.caseType} in behandeling`;
+        description = `Uw aanvraag voor een ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
+        title = `${item.caseType} afgehandeld`;
         description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
-        datePublished = item.dateDecision ?? '';
+        datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
   } else {
@@ -380,7 +381,7 @@ export function createVergunningNotification(
     switch (true) {
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
-        description = `Uw vergunningsaanvraag ${fullName} is in behandeling.`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;

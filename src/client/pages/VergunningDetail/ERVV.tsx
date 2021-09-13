@@ -1,10 +1,12 @@
 import { ERVV as ERVVType } from '../../../server/services';
-import { defaultDateTimeFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  defaultDateTimeFormat,
+} from '../../../universal/helpers/date';
 
 export function ERVV({ vergunning }: { vergunning: ERVVType }) {
   return (
@@ -17,20 +19,24 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
         <InfoDetail
           label="Vanaf"
           value={
-            vergunning?.timeStart
-              ? vergunning.timeStart.includes('T')
-                ? defaultDateTimeFormat(vergunning.timeStart)
-                : defaultDateFormat(vergunning.timeStart)
+            vergunning?.timeStart && vergunning?.dateStart
+              ? defaultDateTimeFormat(
+                  `${vergunning.dateStart}T${vergunning.timeStart}`
+                )
+              : vergunning.dateStart
+              ? defaultDateFormat(vergunning.dateStart)
               : '-'
           }
         />
         <InfoDetail
           label="Tot en met"
           value={
-            vergunning?.timeEnd
-              ? vergunning.timeEnd.includes('T')
-                ? defaultDateTimeFormat(vergunning.timeEnd)
-                : defaultDateFormat(vergunning.timeEnd)
+            vergunning?.timeEnd && vergunning?.dateEnd
+              ? defaultDateTimeFormat(
+                  `${vergunning.dateEnd}T${vergunning.timeEnd}`
+                )
+              : vergunning.dateEnd
+              ? defaultDateFormat(vergunning.dateEnd)
               : '-'
           }
         />
