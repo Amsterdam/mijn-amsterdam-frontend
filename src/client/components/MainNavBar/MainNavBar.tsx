@@ -1,29 +1,27 @@
 import classnames from 'classnames';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { matchPath, NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconInfo } from '../../assets/icons';
+import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import {
-  trackItemClick,
-  trackItemPresentation,
-} from '../../hooks/analytics.hook';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
+import { useKeyUp } from '../../hooks/useKey';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Linkd, { Button } from '../Button/Button';
+import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
-import Tutorial from '../Tutorial/Tutorial';
+import { Search } from '../Search/Search';
 import {
   mainMenuItemId,
   mainMenuItems,
@@ -148,21 +146,7 @@ export default function MainNavBar({
   );
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const [isTutorialVisible, setIsTutorialVisible] = useState<
-    boolean | undefined
-  >(undefined);
   const profileType = useProfileTypeValue();
-  const tutorialRef = useRef<HTMLButtonElement | null>(null);
-
-  // Re-focus the tutorial button on closing of modal. WCAG requirement.
-  useEffect(() => {
-    if (isTutorialVisible === undefined) {
-      return;
-    }
-    if (isTutorialVisible === false) {
-      tutorialRef?.current?.focus();
-    }
-  }, [isTutorialVisible]);
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -223,14 +207,31 @@ export default function MainNavBar({
     });
   }, [myChapterItems, profileType, termReplace]);
 
+  const [isSearchActive, setSearchActive] = useState(false);
+  const isDisplaySearch = !matchPath(location.pathname, {
+    path: AppRoutes.SEARCH,
+  });
+
+  useKeyUp((event) => {
+    if (event.key === 'z' && !isSearchActive) {
+      setSearchActive(true);
+    }
+  });
+
+  useEffect(() => {
+    setSearchActive(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (isSearchActive) {
+      document.body.classList.add('is-typeAheadActive');
+    } else {
+      document.body.classList.remove('is-typeAheadActive');
+    }
+  }, [isSearchActive]);
+
   return (
-    <nav
-      className={classnames(
-        styles.MainNavBar,
-        hasBurgerMenu && styles.BurgerMenu,
-        isBurgerMenuVisible && styles.BurgerMenuVisible
-      )}
-    >
+    <nav className={styles.MainNavBar}>
       {hasBurgerMenu && (
         <BurgerButton
           isActive={!!isBurgerMenuVisible}
@@ -261,46 +262,24 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-
-      <div
-        className={classnames(
-          styles.InfoButtons,
-          isTutorialVisible && styles.InfoButtonsOpen
+      <div className={styles.InfoButtons}>
+        {isDisplaySearch && (
+          <IconButton
+            className={styles.SearchButton}
+            onClick={() => setSearchActive(!isSearchActive)}
+            icon={isSearchActive ? IconClose : IconSearch}
+          />
         )}
-      >
-        {location.pathname === AppRoutes.ROOT && (
-          <>
-            <Button
-              ref={tutorialRef}
-              className={styles.TutorialBtn}
-              onClick={() => {
-                setIsTutorialVisible(!isTutorialVisible);
-                if (!isTutorialVisible) {
-                  trackItemClick('Klikken', 'rondleiding', profileType);
-                }
-              }}
-              variant="plain"
-              aria-expanded={isTutorialVisible}
-              lean={true}
-            >
-              Rondleiding
-            </Button>
-            {isTutorialVisible && (
-              <Tutorial
-                onClose={() => setIsTutorialVisible(!isTutorialVisible)}
-              />
-            )}
-          </>
-        )}
-        <Linkd
-          className={styles.GeneralInfoLink}
-          href={AppRoutes.GENERAL_INFO}
-          variant="plain"
-          icon={IconInfo}
-          lean={true}
-          aria-label="Dit ziet u in Mijn Amsterdam"
-        />
       </div>
+      {isDisplaySearch && isSearchActive && (
+        <div className={styles.Search}>
+          <div className={styles.SearchBar}>
+            <div className={styles.SearchBarInner}>
+              <Search onFinish={() => setSearchActive(false)} />
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

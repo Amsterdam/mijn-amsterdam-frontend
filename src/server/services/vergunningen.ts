@@ -1,22 +1,13 @@
 import { differenceInMonths, subMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+
 import { Chapters } from '../../universal/config/index';
 import { AppRoutes } from '../../universal/config/routes';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
-import {
-  dateFormat,
-  dateSort,
-  isDateInPast,
-  monthsFromNow,
-} from '../../universal/helpers/date';
+import { dateFormat, dateSort, isDateInPast, monthsFromNow } from '../../universal/helpers/date';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
-import {
-  GenericDocument,
-  LinkProps,
-  MyCase,
-  MyNotification,
-} from '../../universal/types/App.types';
+import { GenericDocument, LinkProps, MyCase, MyNotification } from '../../universal/types/App.types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -247,7 +238,7 @@ export async function fetchVergunningen(
                 id: vergunning.id,
               })
             : '/',
-          title: vergunning.identifier,
+          title: `Bekijk hoe het met uw aanvraag staat`,
         },
       };
     });
@@ -286,7 +277,7 @@ export function isExpired(vergunning: VergunningExpirable) {
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {
     id: `vergunning-${item.id}-case`,
-    title: `Vergunningsaanvraag ${item.identifier}`,
+    title: `Vergunningsaanvraag ${item.caseType} ${item.identifier}`,
     link: item.link,
     chapter: Chapters.VERGUNNINGEN,
     datePublished: item.dateRequest,

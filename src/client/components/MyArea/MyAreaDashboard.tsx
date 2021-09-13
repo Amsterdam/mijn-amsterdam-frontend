@@ -8,11 +8,7 @@ import styles from './MyAreaDashboard.module.scss';
 import Heading from '../Heading/Heading';
 import { useOnScreen } from '../../hooks/useOnScreen';
 
-interface MyAreaDashboardProps {
-  tutorial: string;
-}
-
-export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
+export default function MyAreaDashboard() {
   const termReplace = useTermReplacement();
   const ref = useRef<HTMLDivElement | null>(null);
   // Check if the Map is nearly scrolled into view
@@ -23,9 +19,7 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
       {isOnScreen && <MyAreaLoader isDashboard={true} />}
       <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
         <span className={styles.NavLinkContentWrap}>
-          <Heading size="large" data-tutorial-item={tutorial}>
-            {termReplace(ChapterTitles.BUURT)}
-          </Heading>
+          <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
             {termReplace('eigen woning')}.

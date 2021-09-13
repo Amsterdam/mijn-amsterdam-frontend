@@ -19,6 +19,12 @@ const GenericLinks: Record<string, DirectLink> = {
     id: 'MyTipsHeader',
     isActive: true,
   },
+  UITLEG: {
+    title: 'Dit ziet u in Mijn Amsterdam',
+    url: AppRoutes.GENERAL_INFO,
+    id: 'Uitleg',
+    isActive: true,
+  },
   MIJN_SUBSIDIE: {
     title: 'Mijn Subsidies',
     url: ExternalUrls.MIJN_SUBSIDIES,
@@ -74,6 +80,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
       isActive: true,
     },
     TIPS: GenericLinks.TIPS,
+    UITLEG: GenericLinks.UITLEG,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     KREFIA: {
@@ -89,6 +96,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
   'private-commercial': {
     BUURT: GenericLinks.MIJN_OMGEVING,
     TIPS: GenericLinks.TIPS,
+    UITLEG: GenericLinks.UITLEG,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
@@ -98,6 +106,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
   commercial: {
     BUURT: GenericLinks.MIJN_OMGEVING,
     TIPS: GenericLinks.TIPS,
+    UITLEG: GenericLinks.UITLEG,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,

@@ -82,3 +82,17 @@ h5 {
 }
 
 @import 'print.scss';
+
+.is-typeAheadActive {
+  @include mq-phone {
+    @include select('App') {
+      display: none;
+    }
+    @include select('MainFooter') {
+      display: none;
+    }
+    @include select('MainHeaderHero') {
+      display: none;
+    }
+  }
+}

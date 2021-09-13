@@ -36,6 +36,7 @@ export { ReactComponent as IconVergunningen } from './vergunningen.svg';
 export { ReactComponent as IconPlus } from './plus.svg';
 export { ReactComponent as IconMin } from './min.svg';
 export { ReactComponent as IconToeristischeVerhuur } from './toeristische-verhuur.svg';
+export { ReactComponent as IconFinancieleHulp } from './financiele-hulp.svg';
 
 // Map icons
 export { ReactComponent as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg';

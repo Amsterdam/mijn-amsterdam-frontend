@@ -33,114 +33,6 @@ exports[`<DirectLinks /> It renders additional links on phone 1`] = `
           Mijn tips
         </a>
       </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://mijnsubsidies.amsterdam.nl/loket/"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          Mijn Subsidies
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/sbl/"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          Stadsbank van Lening
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://krefia.amsterdam.nl"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          Kredietbank
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          Veelgestelde vragen
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://mijn.overheid.nl/berichtenbox/inbox/"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          MijnOverheid Berichtenbox
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            External-Link.svg
-          </svg>
-          Amsterdam.nl
-        </a>
-      </li>
     </ul>
   </div>
 </DocumentFragment>
@@ -161,6 +53,33 @@ exports[`<DirectLinks /> It renders commercial links 1`] = `
     <ul
       class="LinkList"
     >
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/buurt"
+          id="MyAreaHeader"
+        >
+          Mijn omgeving
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/overzicht-tips"
+          id="MyTipsHeader"
+        >
+          Mijn tips
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/uitleg"
+          id="Uitleg"
+        >
+          Dit ziet u in Mijn Amsterdam
+        </a>
+      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -271,6 +190,33 @@ exports[`<DirectLinks /> It renders private links 1`] = `
     <ul
       class="LinkList"
     >
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/buurt"
+          id="MyAreaHeader"
+        >
+          Mijn buurt
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/overzicht-tips"
+          id="MyTipsHeader"
+        >
+          Mijn tips
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/uitleg"
+          id="Uitleg"
+        >
+          Dit ziet u in Mijn Amsterdam
+        </a>
+      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -399,6 +345,33 @@ exports[`<DirectLinks /> It renders private-commercial links 1`] = `
     <ul
       class="LinkList"
     >
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/buurt"
+          id="MyAreaHeader"
+        >
+          Mijn omgeving
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/overzicht-tips"
+          id="MyTipsHeader"
+        >
+          Mijn tips
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="/uitleg"
+          id="Uitleg"
+        >
+          Dit ziet u in Mijn Amsterdam
+        </a>
+      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"

@@ -69,10 +69,7 @@ export default function Dashboard() {
   }, [myChapterItems, profileType, isMyChaptersLoading]);
   return (
     <>
-      <Page
-        className={styles.Dashboard}
-        data-tutorial-item="Hier ziet u nieuwe berichten van onze afdelingen;right-top"
-      >
+      <Page className={styles.Dashboard}>
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
@@ -92,33 +89,19 @@ export default function Dashboard() {
             isLoading={isMyChaptersLoading}
             items={myChapterItems}
             title="Mijn thema's"
-            data-tutorial-item="Over deze onderwerpen hebben wij informatie voor u;right-top"
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
         <MyCases
           isLoading={isLoading(CASES)}
           title="Mijn lopende aanvragen"
-          data-tutorial-item="Hier staan de aanvragen waar de gemeente nog een besluit over moet nemen;right-top"
           items={CASES.content!}
         />
+        {!isPhoneScreen && <MyAreaDashboard />}
         {!isPhoneScreen && (
-          <MyAreaDashboard
-            tutorial="Op deze kaart ziet u informatie van de gemeente,
-        bijvoorbeeld over afval, parkeren en vergunningen;left-top"
-          />
+          <MyTips isLoading={isLoading(TIPS)} items={tipItems} />
         )}
-        {!isPhoneScreen && (
-          <MyTips
-            data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over regelingen van de gemeente;right-bottom"
-            isLoading={isLoading(TIPS)}
-            items={tipItems}
-          />
-        )}
-        <DirectLinks
-          data-tutorial-item="Hier staan links naar andere websites;right-bottom"
-          profileType={profileType}
-        />
+        <DirectLinks profileType={profileType} />
       </Page>
     </>
   );

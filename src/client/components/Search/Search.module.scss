@@ -1,0 +1,124 @@
+@import '../../styles/_global.scss';
+
+.SearchBar {
+  z-index: 2;
+  position: relative;
+  max-width: 60rem;
+  &.in-page {
+    max-width: none;
+  }
+}
+
+.Results {
+  position: absolute;
+  width: calc(100% - 4rem);
+  background-color: $color-white;
+  border: 0.1rem solid $color-neutral-grey4;
+  margin-top: 0;
+  border-top: 0;
+  z-index: -1;
+  // transform: translateX(-1rem);
+
+  @include mq-tablet() {
+    width: 100%;
+    border: 0;
+  }
+}
+
+.SearchBar.in-page .Results {
+  position: relative;
+  border: 0;
+  width: auto;
+}
+
+.NoResults:first-child {
+  margin-top: 0;
+}
+
+.ResultList {
+  @include reset-list-style;
+}
+.ResultListItem {
+  margin: 0;
+  padding: 0.6rem 0;
+
+  &.is-extended {
+    margin-bottom: 2rem;
+  }
+
+  svg {
+    position: relative;
+    transform: translateY(1px);
+    margin: 0 2px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+.ResultSetTitle {
+  border-bottom: 0.2rem solid $color-black;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+.ResultSet {
+  margin: 1rem;
+  margin-bottom: 2rem;
+}
+.ResultSetLink {
+  font-weight: normal;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}
+.ResultUrl {
+  font-size: 0.8em;
+  color: $color-neutral-grey4;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  :hover & {
+    color: inherit;
+  }
+}
+.ResultDescription {
+  margin: 0;
+}
+
+.DisplayPath {
+  display: inline-flex;
+  width: calc(100% - 3rem);
+
+  em {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
+.DisplayPathSegment {
+  white-space: nowrap;
+
+  &:not(:first-child) {
+    color: $color-neutral-grey4;
+    font-weight: normal;
+    margin-left: 0.4rem;
+    font-size: 0.9em;
+  }
+  &:last-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.ExternalUrl {
+  float: right;
+}

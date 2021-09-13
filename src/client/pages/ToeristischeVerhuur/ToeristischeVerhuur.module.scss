@@ -59,6 +59,9 @@
 .Table {
   tr td {
     width: 25%;
+    @include mq-tablet() {
+      width: 100%;
+    }
   }
 }
 
@@ -67,6 +70,9 @@
     width: 25%;
     &:first-child {
       width: 50%;
+      @include mq-tablet() {
+        width: 100%;
+      }
     }
   }
 

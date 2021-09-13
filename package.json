@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "3.31.0",
+  "version": "3.33.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
@@ -83,6 +83,7 @@
     "express": "^4.17.1",
     "flat-cache": "^3.0.4",
     "focus-trap-react": "^8.7.0",
+    "fuse.js": "^6.4.6",
     "include-media": "^1.4.10",
     "js-cookie": "^2.2.1",
     "jw-paginate": "^1.0.4",

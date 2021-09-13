@@ -38,7 +38,7 @@ const DISPLAY_PROPS_VERGUNNINGEN = {
 };
 
 const GEPLAND_DISCLAIMER =
-  'U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland.Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.';
+  'U ziet hieronder alleen meldingen die vanaf 8 april zijn ingepland. Meldingen die u vóór 8 april hebt ingepland kunnen niet worden getoond.';
 
 const GEANNULEERD_DISCLAIMER =
   'U ziet hieronder alleen meldingen die vanaf 19 juli zijn geannuleerd. Meldingen die u vóór 19 juli hebt geannuleerd kunnen niet worden getoond.';
@@ -47,7 +47,7 @@ const AFGEROND_DISCLAIMER =
   'U ziet hieronder alleen meldingen die na 8 april zijn afgerond. Meldingen die vóór 8 april zijn afgerond kunnen niet worden getoond.';
 
 const BB_VERGUNNING_DISCLAIMER =
-  'U ziet hieronder alleen bed & breakfast vergunningen die vanaf 1 mei 2021 zijn toegekend. Vergunningen die u vóór 1 mei 2021 hebt aangevraagd kunnen niet worden getoond.';
+  'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';
 
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
@@ -60,12 +60,26 @@ export default function ToeristischeVerhuur() {
     );
   }, [content?.vergunningen]);
 
+  const hasVergunningenVakantieVerhuurVerleend = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) =>
+        vergunning.title === 'Vergunning vakantieverhuur' &&
+        vergunning.decision === 'Verleend'
+    );
+  }, [content?.vergunningen]);
+
   const hasVergunningBB = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
     );
   }, [content?.vergunningen]);
-
+  const hasVergunningBBVerleend = useMemo(() => {
+    return content?.vergunningen.some(
+      (vergunning) =>
+        vergunning.title === 'Vergunning bed & breakfast' &&
+        vergunning.decision === 'Verleend'
+    );
+  }, [content?.vergunningen]);
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
@@ -118,12 +132,23 @@ export default function ToeristischeVerhuur() {
 
   const isCollapsed = (listTitle: string): boolean => {
     switch (listTitle) {
+      case 'gepland':
+        return !plannedVerhuur.length && !!verhuur.length;
       case 'geannuleerd':
-        return !!plannedVerhuur.length;
+        return (
+          !!plannedVerhuur.length ||
+          (!plannedVerhuur.length && !!verhuur.length)
+        );
       case 'previous':
-        return !!(plannedVerhuur.length || cancelledVerhuur.length);
+        return (
+          !!plannedVerhuur.length ||
+          !!cancelledVerhuur.length ||
+          !verhuur.length
+        );
       case 'vergunningen':
-        return !(plannedVerhuur.length && cancelledVerhuur.length);
+        return (
+          !(plannedVerhuur.length && cancelledVerhuur.length) || !verhuur.length
+        );
       default:
         return false;
     }
@@ -131,6 +156,8 @@ export default function ToeristischeVerhuur() {
   const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
+  const hasBothVerleend =
+    hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
   const is2021 = getYear(new Date()) === 2021;
   return (
@@ -240,7 +267,7 @@ export default function ToeristischeVerhuur() {
               </p>
             </>
           )}
-          {hasBothPermits && (
+          {hasBothVerleend && (
             <Alert type="warning">
               <p>
                 U hebt een vergunning voor vakantieverhuur én bed &amp;
@@ -282,7 +309,7 @@ export default function ToeristischeVerhuur() {
             id="SectionCollapsible-planned-verhuur"
             title="Geplande verhuur"
             className={styles.SectionBorderTop}
-            startCollapsed={false}
+            startCollapsed={isCollapsed('gepland')}
             hasItems={!!plannedVerhuur.length}
             noItemsMessage={
               is2021

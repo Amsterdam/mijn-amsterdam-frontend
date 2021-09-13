@@ -1,18 +1,17 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import DigiDLogo from '../../assets/images/digid-logo.svg';
 import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
+  Alert,
   Heading,
   LinkdInline,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
   TextPage,
-  MaintenanceNotifications,
-  Alert,
 } from '../../components';
 import {
   LOGIN_URL_DIGID,
@@ -181,10 +180,8 @@ export default function Landing() {
               </a>
             </p>
             <Heading size="tiny" el="h4">
-              U hebt eHerkenning niveau {IS_PRODUCTION ? '2+' : '3'} nodig om in
-              te loggen.
+              U hebt eHerkenning niveau 3 nodig om in te loggen.
             </Heading>
-
             <p>
               Ga naar{' '}
               <a rel="noopener noreferrer" href="https://eherkenning.nl">
