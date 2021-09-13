@@ -141,7 +141,6 @@ export default function MainNavBar({
 }) {
   const { isTabletScreen } = { ...useMediaQueryContext() };
   const hasBurgerMenu = isTabletScreen;
-  console.log(hasBurgerMenu);
   const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined

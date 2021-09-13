@@ -26,16 +26,22 @@ export function waitForUsabillaLiveInWindow() {
 }
 
 export function useUsabilla(mediaQueryValues: any) {
+  const USABILLA_ID_MOBILE = '9fd5da44aa5b';
+  const USABILLA_ID_DESKTOP = 'e8b4abda34ab';
   const isPhoneScreen = mediaQueryValues.isPhoneScreen;
   // Seems like there is a bug in the use-media package that defaults to fasle. Now the desktop version get loaden by default. For this reason we check weather there is a screen
-  const hasScreen = mediaQueryValues.hasScreen;
-  const [isUsabillaLoaded] = useScript(
-    isPhoneScreen ? '/js/usabillaMobile.js' : '/js/usabilla.js',
-    false,
-    true,
-    IS_AP && hasScreen
-  );
+  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
   useEffect(() => {
+    const lightningjs = (window as any).lightningjs;
+    if (lightningjs) {
+      const usabillaID = isPhoneScreen
+        ? USABILLA_ID_MOBILE
+        : USABILLA_ID_DESKTOP;
+      (window as any).usabilla_live = lightningjs.require(
+        'usabilla_live',
+        `https://w.usabilla.com/${usabillaID}.js`
+      );
+    }
     if (isUsabillaLoaded) {
       waitForUsabillaLiveInWindow()
         .then(() => {
@@ -55,5 +61,5 @@ export function useUsabilla(mediaQueryValues: any) {
           });
         });
     }
-  }, [isUsabillaLoaded]);
+  }, [isUsabillaLoaded, isPhoneScreen]);
 }
