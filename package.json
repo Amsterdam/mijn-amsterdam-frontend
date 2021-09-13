@@ -111,8 +111,7 @@
     "throttle-debounce": "^3.0.1",
     "typescript": "^4.3.5",
     "uid-safe": "^2.1.5",
-    "use-debounce": "^7.0.0",
-    "use-media": "^1.4.0"
+    "use-debounce": "^7.0.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.1.0",
