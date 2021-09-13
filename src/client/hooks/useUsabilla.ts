@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { usePhoneScreen } from './media.hook';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
+const USABILLA_ID_MOBILE = '9fd5da44aa5b';
+const USABILLA_ID_DESKTOP = 'e8b4abda34ab';
 
 export function waitForUsabillaLiveInWindow() {
   let polling: any = null;
@@ -27,8 +29,6 @@ export function waitForUsabillaLiveInWindow() {
 }
 
 export function useUsabilla() {
-  const USABILLA_ID_MOBILE = '9fd5da44aa5b';
-  const USABILLA_ID_DESKTOP = 'e8b4abda34ab';
   const isPhoneScreen = usePhoneScreen();
   const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
   useEffect(() => {
