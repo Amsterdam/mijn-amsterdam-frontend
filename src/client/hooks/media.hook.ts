@@ -73,3 +73,7 @@ export function usePhoneScreen(): boolean {
 export function useWidescreen(): boolean {
   return useMediaLayout({ minWidth: Breakpoints.wideScreen });
 }
+
+export function useLandScape(): boolean {
+  return useMediaLayout({ orientation: 'landscape' });
+}
