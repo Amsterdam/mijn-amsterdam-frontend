@@ -9,8 +9,6 @@ import Dashboard from './Dashboard';
 import { Chapters } from '../../../universal/config/chapter';
 import { AppState } from '../../AppState';
 
-jest.mock('use-media');
-
 // TIPS, NOTIFICATIONS, CASES, BUURT, HOME
 
 const testState: any = {
