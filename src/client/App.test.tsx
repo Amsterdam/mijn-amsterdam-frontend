@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
 
 jest.mock('./hooks/api/useSessionApi');
-jest.mock('use-media');
 
 describe('App', () => {
   it('Renders pristine App', () => {

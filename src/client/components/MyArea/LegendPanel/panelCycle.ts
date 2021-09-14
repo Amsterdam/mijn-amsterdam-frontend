@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
-import useMedia from 'use-media';
-import { useWidescreen } from '../../../hooks';
+import { useWidescreen, useLandScape } from '../../../hooks';
 import { PanelState, usePanelStateCycle } from './PanelComponent';
 
 export function useLegendPanelCycle() {
   const isWideScreen = useWidescreen();
-  const isLandscape = useMedia('(orientation: landscape)');
-
+  const isLandscape = useLandScape();
   const panelCycle = useMemo(() => {
     if (isWideScreen) {
       return {

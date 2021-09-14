@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
-import useMedia from 'use-media';
-import { useWidescreen } from '../../../hooks';
+import { useLandScape, useWidescreen } from '../../../hooks';
 import {
   useFetchPanelFeature,
   useLoadingFeature,
@@ -18,7 +17,7 @@ interface LegendPanelProps {
 export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
-  const isLandscape = useMedia('(orientation: landscape)');
+  const isLandscape = useLandScape();
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
   const resetMyAreaState = useResetMyAreaState();

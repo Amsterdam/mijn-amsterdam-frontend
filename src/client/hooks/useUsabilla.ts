@@ -2,8 +2,11 @@ import { IS_AP } from '../../universal/config';
 import { useScript } from './useScript';
 import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
+import { usePhoneScreen } from './media.hook';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
+const USABILLA_ID_MOBILE = '9fd5da44aa5b';
+const USABILLA_ID_DESKTOP = 'e8b4abda34ab';
 
 export function waitForUsabillaLiveInWindow() {
   let polling: any = null;
@@ -26,10 +29,20 @@ export function waitForUsabillaLiveInWindow() {
 }
 
 export function useUsabilla() {
+  const isPhoneScreen = usePhoneScreen();
   const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
-
   useEffect(() => {
     if (isUsabillaLoaded) {
+      const lightningjs = (window as any).lightningjs;
+      if (lightningjs) {
+        const usabillaID = isPhoneScreen
+          ? USABILLA_ID_MOBILE
+          : USABILLA_ID_DESKTOP;
+        (window as any).usabilla_live = lightningjs.require(
+          'usabilla_live',
+          `https://w.usabilla.com/${usabillaID}.js`
+        );
+      }
       waitForUsabillaLiveInWindow()
         .then(() => {
           (window as any).usabilla_live('data', {
@@ -48,5 +61,5 @@ export function useUsabilla() {
           });
         });
     }
-  }, [isUsabillaLoaded]);
+  }, [isUsabillaLoaded, isPhoneScreen]);
 }
