@@ -72,7 +72,7 @@ function useStatusLineItems(
       isChecked: false,
     };
 
-    if (isBB) {
+    if (vergunning.caseType === CaseType.BBVergunning) {
       // Only BB vergunning can have an "In behandeling" step.
       // NOTE: We can't show a date here yet, it might be possible in the future. For now we don't show a date.
       //step2.datePublished = '';
