@@ -26,7 +26,7 @@ function useStatusLineItems(
     if (!vergunning) {
       return [];
     }
-    const isBB = vergunning.title === 'Vergunning bed & breakfast';
+    const isBB = vergunning.caseType === CaseType.BBVergunning;
     const isInBehandeling = vergunning.status === 'In behandeling';
     const isAfgehandeld =
       vergunning.status === 'Afgehandeld' || !!vergunning.decision;
@@ -79,13 +79,7 @@ function useStatusLineItems(
       step2.status = 'In behandeling';
       step2.isActive = isInBehandeling;
       step2.isChecked = !step1.isActive;
-
-      if (
-        vergunning.caseType === CaseType.BBVergunning &&
-        vergunning.dateWorkflowActive
-      ) {
-        step2.datePublished = vergunning.dateWorkflowActive;
-      }
+      step2.datePublished = vergunning.dateWorkflowActive || '';
     } else {
       // Vakantieverhuurvergunningn are granted (Verleend) immediately.
       step2.datePublished = vergunning.dateDecision || vergunning.dateRequest;

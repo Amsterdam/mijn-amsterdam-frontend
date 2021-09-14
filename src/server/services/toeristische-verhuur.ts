@@ -348,6 +348,9 @@ export function createToeristischeVerhuurNotification(
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
+        if (item.caseType === CaseType.BBVergunning) {
+          datePublished = item.dateWorkflowActive || item.dateRequest;
+        }
         break;
       // B&B + Vakantieverhuurvergunning
       case item.status === 'Afgehandeld':
