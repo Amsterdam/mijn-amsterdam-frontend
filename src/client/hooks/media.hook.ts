@@ -35,7 +35,7 @@ function queryObjectToString(query: string | MediaQueryObject) {
     .join(' and ');
 }
 
-export function useMediaLayout(query: MediaQueryObject) {
+export function useMediaLayout(query: MediaQueryObject): boolean {
   const queryString = queryObjectToString(query);
   const [matches, setMatches] = useState(() => {
     return !!window.matchMedia(queryString).matches;
@@ -44,10 +44,10 @@ export function useMediaLayout(query: MediaQueryObject) {
   useLayoutEffect(() => {
     const media = window.matchMedia(queryString);
     if (media.matches !== matches) {
-      setMatches(media.matches);
+      setMatches(!!media.matches);
     }
     const listener = () => {
-      setMatches(media.matches);
+      setMatches(!!media.matches);
     };
     media.addListener(listener);
     return () => media.removeListener(listener);
