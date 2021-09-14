@@ -19,7 +19,6 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './ToeristischeVerhuur.module.scss';
 import { getYear } from 'date-fns';
 
