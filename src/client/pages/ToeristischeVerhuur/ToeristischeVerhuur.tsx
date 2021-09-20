@@ -19,7 +19,6 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './ToeristischeVerhuur.module.scss';
 import { getYear } from 'date-fns';
 
@@ -52,7 +51,6 @@ const BB_VERGUNNING_DISCLAIMER =
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
-  const profileType = useProfileTypeValue();
 
   const hasVergunningenVakantieVerhuur = useMemo(() => {
     return content?.vergunningen.some(
@@ -147,7 +145,9 @@ export default function ToeristischeVerhuur() {
         );
       case 'vergunningen':
         return (
-          !(plannedVerhuur.length && cancelledVerhuur.length) || !verhuur.length
+          !!plannedVerhuur.length ||
+          !!cancelledVerhuur.length ||
+          !!previousVerhuur.length
         );
       default:
         return false;
@@ -160,6 +160,7 @@ export default function ToeristischeVerhuur() {
     hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
   const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
   const is2021 = getYear(new Date()) === 2021;
+
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
       <PageHeading
@@ -395,7 +396,7 @@ export default function ToeristischeVerhuur() {
         title="Vergunningen"
         hasItems={!!vergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
-        startCollapsed={profileType !== 'commercial'}
+        startCollapsed={isCollapsed('vergunningen')}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',

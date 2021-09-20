@@ -348,9 +348,12 @@ export function createToeristischeVerhuurNotification(
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
+        if (item.caseType === CaseType.BBVergunning) {
+          datePublished = item.dateWorkflowActive || item.dateRequest;
+        }
         break;
       // B&B + Vakantieverhuurvergunning
-      case item.status === 'Afgehandeld':
+      case !!item.decision:
         const decision = item.decision?.toLowerCase() || 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${decision}`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;
