@@ -114,7 +114,7 @@ export default function FinancieleHulp() {
         <SectionCollapsible
           id="SectionCollapsible-financiele-hulp-leningen"
           title="Leningen"
-          startCollapsed={!!deepLinks.schuldhulp.length}
+          startCollapsed={!!deepLinks?.schuldhulp?.length}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
             category: 'Financiële hulp overzicht / Leningen',
@@ -133,7 +133,7 @@ export default function FinancieleHulp() {
           id="SectionCollapsible-financiele-hulp-budgetbeheer"
           title="Financieel budgetbeheer"
           startCollapsed={
-            !!deepLinks.schuldhulp.length || !!deepLinks.lening.length
+            !!deepLinks?.schuldhulp?.length || !!deepLinks?.lening?.length
           }
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
