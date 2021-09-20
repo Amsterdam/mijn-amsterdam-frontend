@@ -353,7 +353,7 @@ export function createToeristischeVerhuurNotification(
         }
         break;
       // B&B + Vakantieverhuurvergunning
-      case item.status === 'Afgehandeld':
+      case !!item.decision:
         const decision = item.decision?.toLowerCase() || 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${decision}`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} ${decision}.`;

@@ -145,8 +145,9 @@ export default function ToeristischeVerhuur() {
         );
       case 'vergunningen':
         return (
-          !(!!plannedVerhuur.length && !!cancelledVerhuur.length) ||
-          !verhuur.length
+          !!plannedVerhuur.length ||
+          !!cancelledVerhuur.length ||
+          !!previousVerhuur.length
         );
       default:
         return false;
