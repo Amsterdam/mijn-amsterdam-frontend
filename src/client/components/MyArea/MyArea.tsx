@@ -36,6 +36,7 @@ import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
+import styles from './MyArea.module.scss';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -179,12 +180,13 @@ export default function MyArea({
 
   return (
     <ThemeProvider>
-      <MyAreaContainer height={height}>
+      <div className={styles.Container}>
         <MaintenanceNotifications page="buurt" />
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
-        <MyAreaMapContainer ref={mapContainerRef}>
-          <MyAreaMapOffset id="skip-to-id-Map">
-            <MyAreaMap
+        <div className={styles.MapContainer} ref={mapContainerRef}>
+          <div className={styles.MapOffset} id="skip-to-id-Map">
+            <Map
+
               fullScreen={true}
               aria-label={`Kaart van ${termReplace(
                 ChapterTitles.BUURT
@@ -280,13 +282,13 @@ export default function MyArea({
             {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
             )}
-          </MyAreaMapOffset>
+          </div>
 
           {!!showPanels && (
             <LegendPanel availableHeight={panelComponentAvailableHeight} />
           )}
-        </MyAreaMapContainer>
-      </MyAreaContainer>
+        </div>
+      </div>
     </ThemeProvider>
   );
 }
