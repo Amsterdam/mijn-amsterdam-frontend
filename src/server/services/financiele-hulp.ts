@@ -87,6 +87,7 @@ export async function fetchFinancieleHulp(
 ) {
   const response = await fetchSource(sessionID, passthroughRequestHeaders);
   if (response.status === 'OK') {
+    console.log('response.omit', response?.content);
     return apiSuccesResult(omit(response.content, ['notificationTriggers']));
   }
   return response;
@@ -101,12 +102,12 @@ export async function fetchFinancieleHulpGenerated(
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];
 
-    const fibuTrigger = response.content.notificationTriggers.fibu;
+    const fibuTrigger = response.content.notificationTriggers?.fibu;
     if (fibuTrigger) {
       notifications.push(createNotification(fibuTrigger, 'fibu'));
     }
 
-    const kredietTrigger = response.content.notificationTriggers.krediet;
+    const kredietTrigger = response.content.notificationTriggers?.krediet;
     if (kredietTrigger) {
       notifications.push(createNotification(kredietTrigger, 'krediet'));
     }
