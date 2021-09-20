@@ -143,7 +143,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
   },
   FINANCIELE_HULP: {
-    url: `${BFF_MS_API_BASE_URL}/financiele-hulp/get`,
+    url: `${BFF_MS_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.financieleHulpActive,
   },
 };

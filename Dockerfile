@@ -10,9 +10,6 @@ ENV CI=true
 
 WORKDIR /app
 
-# RUN apt-get update && apt-get install -y
-# RUN apt-get install nano
-
 COPY tsconfig.json /app/
 COPY tsconfig.bff.json /app/
 COPY package.json /app/
@@ -129,8 +126,6 @@ COPY --from=build-app /app/build-bff /app/build-bff
 # Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
-
-# USER datapunt
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build

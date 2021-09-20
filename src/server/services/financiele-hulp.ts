@@ -87,7 +87,6 @@ export async function fetchFinancieleHulp(
 ) {
   const response = await fetchSource(sessionID, passthroughRequestHeaders);
   if (response.status === 'OK') {
-    console.log('response.omit', response?.content);
     return apiSuccesResult(omit(response.content, ['notificationTriggers']));
   }
   return response;
