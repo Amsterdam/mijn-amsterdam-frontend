@@ -31,7 +31,7 @@ interface NotificationTriggers {
 }
 
 export interface FinancieleHulp {
-  notificationTriggers: NotificationTriggers;
+  notificationTriggers: NotificationTriggers | null;
   deepLinks: KrefiaDeepLinks;
 }
 
