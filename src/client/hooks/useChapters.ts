@@ -121,10 +121,11 @@ export function isChapterActive(
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
-    case Chapters.FINANCIELE_HULP:
-      const { deepLinks } = FINANCIELE_HULP?.content ?? {};
 
-      return !isLoading(FINANCIELE_HULP) && !!deepLinks;
+    case Chapters.FINANCIELE_HULP:
+      return (
+        !isLoading(FINANCIELE_HULP) && !!FINANCIELE_HULP.content?.deepLinks
+      );
   }
 
   return false;
