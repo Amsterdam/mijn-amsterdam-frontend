@@ -1,6 +1,6 @@
-import { ControlButton } from '@amsterdam/arm-core';
+import { IconButton } from '../../components/Button/Button';
 import { useMapInstance } from '@amsterdam/react-maps';
-
+import styles from './Map/Zoom.module.scss';
 import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { HOOD_ZOOM } from '../../../universal/config/buurt';
@@ -18,14 +18,11 @@ export default function MyAreaHomeControlButton({
   const profileType = useProfileTypeValue();
   const mapInstance = useMapInstance();
   return (
-    <ControlButton
-      variant="blank"
+    <IconButton
       type="button"
-      icon={
-        profileType === 'private' ? <IconHomeSimple /> : <IconHomeCommercial />
-      }
-      size={44}
-      iconSize={profileType === 'private' ? 40 : 20}
+      className={styles.Button}
+      icon={profileType === 'private' ? IconHomeSimple : IconHomeCommercial}
+      iconSize={profileType === 'private' ? '40px' : '20px'}
       onClick={() => {
         mapInstance.setView(latlng, zoom);
       }}

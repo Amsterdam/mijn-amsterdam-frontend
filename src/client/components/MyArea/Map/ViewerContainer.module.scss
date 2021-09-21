@@ -1,0 +1,45 @@
+@import '../../../styles/_global.scss';
+
+.Wrapper {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 400;
+  transition: left 200ms ease-out, bottom 200ms ease-out;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.Item {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  pointer-events: all;
+  position: absolute;
+  margin-top: 16px;
+}
+
+.TopLeft {
+  left: 16px;
+  top: 16px;
+}
+
+.TopRight {
+  right: 16px;
+  top: 16px;
+}
+
+.BottomRight {
+  right: 0px;
+  bottom: 16px;
+  padding-right: 16px;
+}
+
+.BottomLeft {
+  bottom: 16px;
+  left: 16px;
+}

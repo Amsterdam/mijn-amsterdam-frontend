@@ -2,9 +2,7 @@ import {
   Map as ReactMap,
   MapProps as ReactMapProps,
 } from '@amsterdam/react-maps';
-import { MapOptions } from 'leaflet';
 import styles from '../MyArea.module.scss';
-import {getCrsRd } from
 
 export interface MapProps extends ReactMapProps {
   fullScreen?: boolean;

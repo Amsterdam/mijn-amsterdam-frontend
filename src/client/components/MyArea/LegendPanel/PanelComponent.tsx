@@ -1,4 +1,3 @@
-import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import {
   MouseEvent,
@@ -11,10 +10,12 @@ import {
 import { animated, useSpring } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
-import styled from 'styled-components';
+
 import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
+import styles from './PanelComponent.module.scss';
 import { CloseButton } from '../../Button/Button';
+import classnames from 'classnames';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -170,126 +171,6 @@ function getPanelSize(
   return size;
 }
 
-const Panel = styled(animated.div)`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background-color: ${themeColor('tint', 'level1')};
-  max-height: 100%;
-  height: auto;
-  z-index: 401; // See also: _z-index.scss > my-area-map-panel
-`;
-
-const PanelWide = styled(Panel)`
-  width: ${WIDE_PANEL_WIDTH};
-  top: 0;
-  transform: translate3d(
-    calc(-100% + 0px),
-    0,
-    0
-  ); // at first render, panel is outside viewport
-`;
-
-const PanelNarrow = styled(Panel)`
-  right: 0;
-  transform: translate3d(
-    0,
-    calc(100% - 0px),
-    0
-  ); // at first render, panel is outside viewport
-`;
-
-const PanelInner = styled.div<{ panelState: PanelState }>`
-  position: relative;
-  z-index: 1;
-  max-height: 100%; // set max height to enable overflow scrolling.
-  overflow-y: auto;
-`;
-
-const PanelInnerPhone = styled(PanelInner)`
-  padding-right: ${themeSpacing(4)};
-  padding-left: ${themeSpacing(4)};
-  max-height: 100%;
-`;
-
-const PanelInnerDesktop = styled(PanelInner)`
-  padding-right: ${WIDE_PANEL_TIP_WIDTH};
-  padding-left: ${themeSpacing(4)};
-`;
-
-const PanelTogglePhone = styled.button`
-  border: 0;
-  padding: 0;
-  appearance: none;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: transparent;
-  flex-shrink: 0;
-  height: ${NARROW_PANEL_TIP_HEIGHT};
-  z-index: 2;
-
-  &:after {
-    content: '';
-    display: block;
-    height: ${themeSpacing(2)};
-    width: ${themeSpacing(30)};
-    border-radius: ${themeSpacing(3)};
-    background: ${themeColor('tint', 'level3')};
-  }
-`;
-
-const PanelToggleDesktop = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  display: block;
-  background-color: ${themeColor('tint', 'level1')};
-  border: 0;
-  padding: 0;
-  box-shadow: none;
-  z-index: 2; // Place above innerpanels so we hide the scrollbar of that panel
-  width: ${WIDE_PANEL_TIP_WIDTH};
-
-  ${Icon} {
-    height: ${themeSpacing(11)};
-    width: ${themeSpacing(6)};
-    background-color: ${themeColor('tint', 'level1')};
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    left: 100%;
-    position: absolute;
-    top: ${themeSpacing(5)};
-
-    svg {
-      transform: ${(props) =>
-        props['aria-expanded'] ? 'rotate(180deg)' : 'none'};
-      transition: transform 200ms ease-in;
-    }
-  }
-`;
-
-const StyledCloseButton = styled(CloseButton)`
-  position: absolute;
-  right: ${themeSpacing(6)};
-  top: ${themeSpacing(4)};
-  z-index: 3;
-  width: ${themeSpacing(6)};
-  height: ${themeSpacing(6)};
-  svg {
-    width: ${themeSpacing(6)};
-    height: ${themeSpacing(6)};
-  }
-`;
-
 type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
@@ -299,7 +180,14 @@ function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
     config: WIDE_PANEL_SPRING_CONFIG,
   });
-  return <PanelWide style={anim}>{children}</PanelWide>;
+  return (
+    <animated.div
+      className={classnames(styles.Panel, styles.PanelWide)}
+      style={anim}
+    >
+      {children}
+    </animated.div>
+  );
 }
 
 type PanelNarrowAnimatedProps = PropsWithChildren<{
@@ -329,9 +217,14 @@ function PanelNarrowAnimated({
   });
 
   return (
-    <PanelNarrow {...handlers} id={id} style={anim}>
+    <animated.div
+      {...handlers}
+      id={id}
+      style={anim}
+      className={classnames(styles.Panel, styles.PanelNarrow)}
+    >
       {children}
-    </PanelNarrow>
+    </animated.div>
   );
 }
 
@@ -405,8 +298,9 @@ export function PanelComponent({
       height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (
-        <StyledCloseButton
+        <CloseButton
           iconSize="24"
+          className={styles.CloseButton}
           onClick={(event) => {
             cycleState();
             onClose && onClose(event);
@@ -415,7 +309,8 @@ export function PanelComponent({
         />
       )}
       {showToggleButton && (
-        <PanelTogglePhone
+        <button
+          className={styles.PanelTogglePhone}
           aria-expanded={isPanelExpanded}
           aria-label={
             !isPanelExpanded ? `Maak ${id} paneel groter` : `Sluit ${id} paneel`
@@ -423,14 +318,18 @@ export function PanelComponent({
           onClick={cycleState}
         />
       )}
-      <PanelInnerPhone className="panel-inner" panelState={state} ref={ref}>
+      <div
+        className={classnames(styles.PanelInnerPhone, styles.PanelInner)}
+        ref={ref}
+      >
         {children}
-      </PanelInnerPhone>
+      </div>
     </PanelNarrowAnimated>
   ) : (
     <PanelWideAnimated width={getPanelSize(state, false)}>
       {showCloseButton && (
-        <StyledCloseButton
+        <CloseButton
+          className={styles.CloseButton}
           onClick={(event) => {
             cycleState();
             onClose && onClose(event);
@@ -438,21 +337,25 @@ export function PanelComponent({
         />
       )}
       {showToggleButton && (
-        <PanelToggleDesktop
+        <button
+          className={styles.PanelToggleDesktop}
           aria-expanded={isPanelExpanded}
           aria-label={
             isPanelExpanded ? `Verberg ${id} paneel` : `Toon ${id} paneel`
           }
           onClick={cycleState}
         >
-          <Icon size={16}>
+          <span className={styles.Icon}>
             <IconChevronRight />
-          </Icon>
-        </PanelToggleDesktop>
+          </span>
+        </button>
       )}
-      <PanelInnerDesktop className="panel-inner" panelState={state} ref={ref}>
+      <div
+        className={classnames(styles.PanelInnerDesktop, styles.PanelInner)}
+        ref={ref}
+      >
         {children}
-      </PanelInnerDesktop>
+      </div>
     </PanelWideAnimated>
   );
 }

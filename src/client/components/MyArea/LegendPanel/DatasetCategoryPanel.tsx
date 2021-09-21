@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import styled from 'styled-components';
 import { DATASETS } from '../../../../universal/config';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import {
@@ -8,15 +7,8 @@ import {
   useFilterControlItemChange,
 } from '../MyArea.hooks';
 import { DatasetControlPanel } from './DatasetControlPanel';
-import { PanelList, PanelListItem } from './PanelList';
-
-export const CategoryPanel = styled(PanelList)`
-  margin-top: 2rem;
-
-  > li:first-child {
-    border-top: 0;
-  }
-`;
+import styles from './LegendPanel.module.scss';
+import classnames from 'classnames';
 
 export function DatasetCategoryPanel() {
   const profileType = useProfileTypeValue();
@@ -34,11 +26,14 @@ export function DatasetCategoryPanel() {
   }, [profileType]);
 
   return (
-    <CategoryPanel id="skip-to-id-LegendPanel">
+    <ol
+      className={classnames(styles.CategoryPanel, styles.PanelList)}
+      id="skip-to-id-LegendPanel"
+    >
       {datasets
         .filter(([categoryId, category]) => !category.isDisabled)
         .map(([categoryId, category]) => (
-          <PanelListItem key={`category-${categoryId}`}>
+          <li className={styles.PanelListItem} key={`category-${categoryId}`}>
             <DatasetControlPanel
               categoryId={categoryId}
               category={category}
@@ -46,8 +41,8 @@ export function DatasetCategoryPanel() {
               onFilterControlItemChange={onFilterControlItemChange}
               activeDatasetIds={activeDatasetIds}
             />
-          </PanelListItem>
+          </li>
         ))}
-    </CategoryPanel>
+    </ol>
   );
 }
