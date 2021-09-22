@@ -187,29 +187,6 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Documenten
-        </h3>
-        <div
-          class="Value"
-        >
-          <span
-            class="LoadingContent"
-          >
-            <span
-              style="width: 100%; height: 2rem; margin-bottom: 1rem;"
-            />
-            <span
-              style="width: 100%; height: 2rem; margin-bottom: 1rem;"
-            />
-          </span>
-        </div>
-      </div>
     </div>
     <div
       class="StatusLine VergunningStatus"
