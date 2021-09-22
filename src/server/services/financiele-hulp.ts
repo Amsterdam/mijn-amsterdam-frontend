@@ -31,7 +31,7 @@ interface NotificationTriggers {
 }
 
 export interface FinancieleHulp {
-  notificationTriggers: NotificationTriggers;
+  notificationTriggers: NotificationTriggers | null;
   deepLinks: KrefiaDeepLinks;
 }
 
@@ -101,12 +101,12 @@ export async function fetchFinancieleHulpGenerated(
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];
 
-    const fibuTrigger = response.content.notificationTriggers.fibu;
+    const fibuTrigger = response.content.notificationTriggers?.fibu;
     if (fibuTrigger) {
       notifications.push(createNotification(fibuTrigger, 'fibu'));
     }
 
-    const kredietTrigger = response.content.notificationTriggers.krediet;
+    const kredietTrigger = response.content.notificationTriggers?.krediet;
     if (kredietTrigger) {
       notifications.push(createNotification(kredietTrigger, 'krediet'));
     }
