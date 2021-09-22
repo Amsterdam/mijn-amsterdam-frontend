@@ -341,7 +341,8 @@ export function createVergunningNotification(
         isNearEndDate(item) &&
         !hasOtherValidVergunningOfSameType(allItems, item):
         title = `Uw ${item.caseType} loopt af`;
-        description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
+        description = `Uw ${item.title} loopt binnenkort af.`;
+
         cta = `Vraag tijdig een nieuwe vergunning aan`;
         linkTo = notificationLink;
         datePublished = dateFormat(
