@@ -1,6 +1,7 @@
 import { Label } from '@amsterdam/asc-ui';
 import { FormEvent, ReactNode } from 'react';
 import styled from 'styled-components';
+
 import {
   DatasetCategory,
   DatasetFilterSelection,
@@ -53,13 +54,6 @@ export function filterItemCheckboxState(
   };
 }
 
-const StyledCheckbox = styled(Checkbox)`
-  padding-left: 0;
-  > input {
-    left: 0;
-  }
-`;
-
 const StyledLabel = styled(Label)<{ isDimmed?: boolean }>`
   display: flex;
   align-items: center;
@@ -95,7 +89,7 @@ export function DatasetControlCheckbox({
 }: DatasetControlCheckboxProps) {
   return (
     <StyledLabel htmlFor={id} label={label} isDimmed={isDimmed}>
-      <StyledCheckbox
+      <Checkbox
         id={id}
         checked={isChecked}
         indeterminate={isIndeterminate}
