@@ -10,6 +10,7 @@ export {
   InkomenDetailUitkering,
   InkomenDetailTozo,
   InkomenDetailTonk,
+  InkomenDetailBbz,
 } from './InkomenDetail/InkomenDetail';
 export { default as InkomenSpecificaties } from './InkomenSpecificaties/InkomenSpecificaties';
 export { default as LandingPage } from './Landing/Landing';

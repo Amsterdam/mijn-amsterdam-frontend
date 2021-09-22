@@ -12,6 +12,7 @@ import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
+import { fetchFOCUSBbzGenerated } from './focus/focus-bbz';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen';
@@ -114,6 +115,7 @@ async function fetchServicesGenerated(
     focusSpecificatiesGeneratedResult,
     focusTozoGeneratedResult,
     focusTonkGeneratedResult,
+    focusBbzGeneratedResult,
     belastingGeneratedResult,
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
@@ -128,7 +130,9 @@ async function fetchServicesGenerated(
     fetchFOCUSSpecificationsGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSTozoGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSTonkGenerated(sessionID, passthroughRequestHeaders),
+    fetchFOCUSBbzGenerated(sessionID, passthroughRequestHeaders),
     fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
+
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
@@ -147,6 +151,7 @@ async function fetchServicesGenerated(
   );
   const focusTozoGenerated = getSettledResult(focusTozoGeneratedResult);
   const focusTonkGenerated = getSettledResult(focusTonkGeneratedResult);
+  const focusBbzGenerated = getSettledResult(focusBbzGeneratedResult);
   const belastingGenerated = getSettledResult(belastingGeneratedResult);
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
@@ -168,6 +173,7 @@ async function fetchServicesGenerated(
     focusSpecificatiesGenerated,
     focusTozoGenerated,
     focusTonkGenerated,
+    focusBbzGenerated,
     belastingGenerated,
     milieuzoneGenerated,
     vergunningenGenerated,

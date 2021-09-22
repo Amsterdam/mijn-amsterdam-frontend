@@ -339,6 +339,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   },
   getFocusConfig('FOCUS_TOZO'),
   getFocusConfig('FOCUS_TONK'),
+  getFocusConfig('FOCUS_BBZ'),
   getFocusConfig('FOCUS_AANVRAGEN'),
   {
     apiName: 'BRP',

@@ -10,7 +10,6 @@ export type StepTitle =
 
 // The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
 export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
-
 // A decision can be made and currently have 3 values.
 export type Decision =
   | 'Toekenning'
@@ -22,6 +21,7 @@ export type Decision =
 export type ProductType =
   | 'Tozo'
   | 'Tonk'
+  | 'Bbz'
   | 'Participatiewet'
   | 'Bijzondere Bijstand'
   | 'Minimafonds'
@@ -158,12 +158,30 @@ export type FocusTonkStepType =
   | 'correctiemail'
   | 'verklaring';
 
+export type FocusBbzStepType =
+  | 'aanvraag'
+  | 'hersteltermijn'
+  | 'besluit'
+  | 'brief'
+  | 'voorschot';
+
 export type FocusTonkLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
   product: 'TONK';
   stepType: FocusTonkStepType;
+  productSpecific?: string;
+  datePublished?: string;
+  decision?: DecisionFormatted;
+};
+
+export type FocusBbzLabelSet = {
+  labels: FocusStepContent;
+  omschrijving: string;
+  documentTitle: string;
+  product: 'Bbz' | 'IOAZ';
+  stepType: FocusBbzStepType;
   productSpecific?: string;
   datePublished?: string;
   decision?: DecisionFormatted;
@@ -190,9 +208,12 @@ export type FocusTozoLabelSet = {
   decision?: DecisionFormatted;
 };
 
-export type ToxxLabelSet = FocusTozoLabelSet | FocusTonkLabelSet;
+export type ToxxLabelSet =
+  | FocusTozoLabelSet
+  | FocusTonkLabelSet
+  | FocusBbzLabelSet;
 
 export type ToxxLabelSetCollection = Record<
   string,
-  FocusTozoLabelSet | FocusTonkLabelSet
+  FocusTozoLabelSet | FocusTonkLabelSet | FocusBbzLabelSet
 >;

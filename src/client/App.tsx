@@ -47,6 +47,7 @@ import {
   GarbageInformation,
   GeneralInfo,
   Inkomen,
+  InkomenDetailBbz,
   InkomenDetailTonk,
   InkomenDetailTozo,
   InkomenDetailUitkering,
@@ -167,6 +168,7 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/TONK']}
             component={InkomenDetailTonk}
           />
+          <Route path={AppRoutes['INKOMEN/BBZ']} component={InkomenDetailBbz} />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route
