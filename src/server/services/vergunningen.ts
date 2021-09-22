@@ -342,6 +342,7 @@ export function createVergunningNotification(
         !hasOtherValidVergunningOfSameType(allItems, item):
         title = `Uw ${item.caseType} loopt af`;
         description = `Uw ${item.title} loopt binnenkort af.`;
+
         cta = `Vraag tijdig een nieuwe vergunning aan`;
         linkTo = notificationLink;
         datePublished = dateFormat(
