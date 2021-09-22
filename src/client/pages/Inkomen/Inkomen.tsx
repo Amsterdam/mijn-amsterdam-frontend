@@ -109,7 +109,6 @@ export default function Inkomen() {
     isLoading(FOCUS_TONK) ||
     isLoading(FOCUS_BBZ);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-  console.log(itemsDecided);
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading

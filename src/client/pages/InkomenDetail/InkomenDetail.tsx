@@ -109,7 +109,7 @@ export function InkomenDetailBbz() {
       pageContent={pageContent}
       maxStepCount={() => -1}
       highlightKey={false}
-      statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+      statusLabel={() => `Bbz-aanvraag`}
     />
   );
 }

@@ -69,14 +69,14 @@ export function createBBZResult(
     }
   }
 
-  if (aanvraagSteps['BBZ']) {
-    otherSteps.unshift(aanvraagSteps['BBZ']);
+  if (aanvraagSteps['Bbz']) {
+    otherSteps.unshift(aanvraagSteps['Bbz']);
   }
 
   const bbzItems: FocusItem[] = [
     createToxxItem({
-      title: 'BBZ',
-      productTitle: 'BBZ',
+      title: 'Bijstand voor zelfstandigen (Bbz)',
+      productTitle: 'Bijstand voor zelfstandigen (Bbz)',
       steps: otherSteps,
       routeProps: {
         path: AppRoutes['INKOMEN/BBZ'],

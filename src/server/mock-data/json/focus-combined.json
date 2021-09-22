@@ -797,9 +797,33 @@
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
+        "id": "5843",
+        "documentCodeId": "5843",
+        "description": "Bbz Toekenning bedrijfskapitaal",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
         "id": "5855",
         "documentCodeId": "5855",
         "description": "Bbz Verlenging beslistermijn met 13 weken",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "5858",
+        "documentCodeId": "5858",
+        "description": "Bbz Hersteltermijn aanvraag",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "5860",
+        "documentCodeId": "5860",
+        "description": "Bbz Aanvraag adviesrapport",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
@@ -813,9 +837,105 @@
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
+        "id": "5866",
+        "documentCodeId": "5866",
+        "description": "Bbz Aanvraag buiten behandeling stellen",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "5884",
+        "documentCodeId": "5884",
+        "description": "Bbz Akte bedrijfskapitaal",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "5885",
+        "documentCodeId": "5885",
+        "description": "Bbz Toekennen voorschot",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "999",
+        "documentCodeId": "999",
+        "description": "Bbz Toekennen voorschot via batch",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "35802",
+        "documentCodeId": "35802",
+        "description": "Bbz afwijzing",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "35840",
+        "documentCodeId": "35840",
+        "description": "Bbz Toekenning Bbz",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "35866",
+        "documentCodeId": "35866",
+        "description": "Bbz Aanvraag buiten behandeling stellen",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "6301",
+        "documentCodeId": "6301",
+        "description": " Ioaz Toekenning voorlopige uitkering",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "6322",
+        "documentCodeId": "6322",
+        "description": " Ioaz Aanvraag hersteltermijn",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "6332",
+        "documentCodeId": "6332",
+        "description": " Ioaz Aanvraag buiten behandeling stellen",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
         "id": "36301",
         "documentCodeId": "36301",
         "description": "Ioaz Toekenning voorlopige uitkering",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "36302",
+        "documentCodeId": "36302",
+        "description": "Ioaz Toekenning definitieve uitkering",
+        "type": "",
+        "url": "focus/document?id=218062038",
+        "datePublished": "2021-09-20T00:00:00+01:00"
+      },
+      {
+        "id": "36303",
+        "documentCodeId": "36303",
+        "description": "Ioaz Afwijzing uitkering",
         "type": "",
         "url": "focus/document?id=218062038",
         "datePublished": "2021-09-20T00:00:00+01:00"

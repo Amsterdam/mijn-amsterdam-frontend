@@ -49,21 +49,19 @@ const toekennenLabels: FocusStepContent = {
   status: stepLabels.besluit,
   description: (document) =>
     `<p>
-          U hebt recht op ${productName(document)}. document.${
+          U hebt recht op ${productName(document)}. ${
       document.productTitle === 'IOAZ'
-        ? 'Bekijk de brief voor meer details.'
-        : 'Kijk voor de voorwaarden in de brief.'
+        ? 'Kijk voor de voorwaarden in de brief.'
+        : 'Bekijk de brief voor meer details.'
     }
         </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const voorschotLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
+    title: (document) => `${document.productTitle}: Wij hebben een voorschot betaald`,
     description: (document) =>
-      `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
-        document.datePublished
-      )}).`,
+      `Wij hebben een voorschot naar uw rekening overgemaakt`,
   },
   status: stepLabels.voorschot,
   description: (document) =>
@@ -77,7 +75,8 @@ const afwijzenLabels: FocusStepContent = {
     title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
     description: (document) =>
       `U hebt geen recht op ${productName(
-        document
+        document,
+        false
       )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.besluit,
@@ -108,7 +107,7 @@ const meerTijdLabels: FocusStepContent = {
   },
   status: stepLabels.tijdNodig,
   description: (document) =>
-    `<p>Wij hebben meer tijd nodig om uw aanvraag te behandelen. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>Wij hebben meer tijd nodig om uw aanvraag te behandelen. Bekijk de brief voor meer details.</p>`,
 };
 
 const akteLabels: FocusStepContent = {
@@ -118,7 +117,7 @@ const akteLabels: FocusStepContent = {
     description: (document) =>
       `Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.`,
   },
-  status: stepLabels.brief,
+  status: stepLabels.akte,
   description: (document) =>
     `<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -136,17 +135,6 @@ const buitenBehandelingLabels: FocusStepContent = {
     )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
-const weigeringVerlengingLabels: FocusStepContent = {
-  notification: {
-    title: (document) => `${document.productTitle}: Verlenging geweigerd`,
-    description: (document) =>
-      `U hebt de verlenging van uw ${productName(document, false)} geweigerd.`,
-  },
-  status: stepLabels.brief,
-  description: (document) =>
-    `<p> U hebt uw ${document.productTitle} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
-};
-
 export const bbzDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusBbzLabelSet
@@ -154,10 +142,10 @@ export const bbzDocumentLabelSet: Record<
   '844': {
     omschrijving: 'Bbz aanvraag',
     labels: aanvraagLabels,
-    documentTitle: 'Besluit toekenning uitkering',
+    documentTitle: 'aanvraag',
     product: 'Bbz',
     stepType: 'aanvraag',
-    productSpecific: 'uitkering',
+    productSpecific: 'aanvraag',
   },
   '6195': {
     omschrijving: 'Bbz toekennen via batch',
@@ -180,7 +168,7 @@ export const bbzDocumentLabelSet: Record<
   '5855': {
     omschrijving: 'Bbz verlenging beslistermijn met 13 weken',
     labels: meerTijdLabels,
-    documentTitle: 'Brief verzoek o meer informatie',
+    documentTitle: 'Brief verzoek om meer informatie',
     product: 'Bbz',
     stepType: 'hersteltermijn',
     productSpecific: 'uitkering',
@@ -204,7 +192,7 @@ export const bbzDocumentLabelSet: Record<
   '5861': {
     omschrijving: 'Bbz intrekking',
     labels: intrekkenLabels,
-    documentTitle: 'Brief intrekken bbz aanvraag',
+    documentTitle: 'Brief intrekken Bbz aanvraag',
     product: 'Bbz',
     stepType: 'besluit',
     productSpecific: 'uitkering',
@@ -238,7 +226,7 @@ export const bbzDocumentLabelSet: Record<
   },
   '999': {
     omschrijving: 'Bbz Toekennen voorschot via batch',
-    labels: weigeringVerlengingLabels,
+    labels: voorschotLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Bbz',
     productSpecific: 'voorschot',
@@ -250,7 +238,6 @@ export const bbzDocumentLabelSet: Record<
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'Bbz',
-    productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'afwijzing',
   },
@@ -259,7 +246,6 @@ export const bbzDocumentLabelSet: Record<
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'Bbz',
-    productSpecific: 'toekenning',
     stepType: 'besluit',
     decision: 'afwijzing',
   },
