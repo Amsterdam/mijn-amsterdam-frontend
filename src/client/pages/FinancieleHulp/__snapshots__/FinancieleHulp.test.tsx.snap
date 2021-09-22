@@ -140,7 +140,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  Opvragen schulden bij schuldeisers
+                  Afkoopvoorstellen zijn verstuurd
                 </td>
                 <td
                   class="DisplayProp"
@@ -152,7 +152,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
-                    href="https://linktofibu/123"
+                    href="http://host/srv/2442531/2"
                     rel="external noopener noreferrer"
                   >
                     Bekijk uw schuldregeling
@@ -217,7 +217,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  Kredietsom € 2.000,00 met openstaand termijnbedrag € 1.432,21
+                  Kredietsom €1.689,12 met openstaand termijnbedrag €79,66
                 </td>
                 <td
                   class="DisplayProp"
@@ -229,7 +229,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
-                    href="https://linktofibu/123"
+                    href="http://host/pl/2442531/1"
                     rel="external noopener noreferrer"
                   >
                     Bekijk uw lening
@@ -306,7 +306,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
-                    href="https://linktofibu/123"
+                    href="http://host/bbr/2064866/3"
                     rel="external noopener noreferrer"
                   >
                     Bekijk uw lening

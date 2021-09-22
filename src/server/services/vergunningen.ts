@@ -342,7 +342,7 @@ export function createVergunningNotification(
         !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} loopt af`;
         description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
-        cta = `Vraag op tijd een nieuwe ${item.caseType} aan`;
+        cta = `Vraag tijdig een nieuwe vergunning aan`;
         linkTo = notificationLink;
         datePublished = dateFormat(
           subMonths(
@@ -357,7 +357,7 @@ export function createVergunningNotification(
         !hasOtherValidVergunningOfSameType(allItems, item):
         title = `${item.caseType} is verlopen`;
         description = `Uw ${fullName} is verlopen.`;
-        cta = `Vraag een nieuwe ${item.caseType} aan`;
+        cta = `Vraag zonodig een nieuwe vergunning aan`;
         linkTo = notificationLink;
         datePublished = item.dateEnd!;
         break;
@@ -382,11 +382,11 @@ export function createVergunningNotification(
     switch (true) {
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
-        description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
+        description = `Uw aanvraag ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
-        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
+        description = `Uw aanvraag ${fullName} is afgehandeld.`;
         datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }

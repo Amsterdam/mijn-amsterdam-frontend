@@ -30,7 +30,8 @@ export default function VergunningDetail() {
   const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
   const showDocuments =
     Vergunning?.caseType !== CaseType.GPP &&
-    Vergunning?.caseType !== CaseType.GPK;
+    Vergunning?.caseType !== CaseType.GPK &&
+    !!Vergunning?.documentsUrl;
   return (
     <DetailPage>
       <PageHeading

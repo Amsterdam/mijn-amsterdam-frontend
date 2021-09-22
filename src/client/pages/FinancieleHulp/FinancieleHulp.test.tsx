@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import FinancieleHulpData from '../../../server/mock-data/json/financiele-hulp.json';
-import { FINANCIELE_HULPData } from '../../../server/services/financiele-hulp';
+import { FinancieleHulp as FinancieleHulpContent } from '../../../server/services/financiele-hulp';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import FinancieleHulp from './FinancieleHulp';
@@ -11,14 +11,14 @@ import MockApp from '../MockApp';
 interface TestState {
   FINANCIELE_HULP: {
     status: string;
-    content: FINANCIELE_HULPData;
+    content: FinancieleHulpContent;
   };
 }
 
 const testState: TestState = {
   FINANCIELE_HULP: {
     status: 'OK',
-    content: FinancieleHulpData.content as FINANCIELE_HULPData,
+    content: FinancieleHulpData.content as FinancieleHulpContent,
   },
 };
 
@@ -50,11 +50,11 @@ describe('<FinancieleHulp />', () => {
       screen.getByText('Meer informatie over de Kredietbank')
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Opvragen schulden bij schuldeisers')
+      screen.getByText('Afkoopvoorstellen zijn verstuurd')
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Kredietsom € 2.000,00 met openstaand termijnbedrag € 1.432,21'
+        'Kredietsom €1.689,12 met openstaand termijnbedrag €79,66'
       )
     ).toBeInTheDocument();
     expect(screen.getByText('Beheer uw budget op FiBu')).toBeInTheDocument();

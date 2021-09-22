@@ -63,7 +63,7 @@ function MyAreaMarker({
         .bindTooltip(
           `<div aria-label="Locatiegegevens" class="${
             styles.MarkerLabelText
-          }">${label.replace(/\n/, '<br/>')}</div>`,
+          }">${label.replace(/\n/g, '<br/>')}</div>`,
           {
             className: styles.MarkerLabel,
             permanent: true,

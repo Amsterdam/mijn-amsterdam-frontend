@@ -59,20 +59,14 @@ describe('Financiële hulp service', () => {
         notifications: [
           {
             id: 'financiele-hulp-fibu-notification',
-            datePublished: '2021-08-24',
+            datePublished: '2021-07-14T12:34:17',
             title: 'Bericht FiBu',
             chapter: 'FINANCIELE_HULP',
             description: 'Er staan ongelezen berichten voor u klaar van FiBu',
-            link: { to: 'https://linktofibu/123', title: 'Bekijk uw bericht' },
-          },
-          {
-            id: 'financiele-hulp-krediet-notification',
-            datePublished: '2021-08-24',
-            title: 'Bericht Kredietbank',
-            chapter: 'FINANCIELE_HULP',
-            description:
-              'Er staan ongelezen berichten voor u klaar van de kredietbank',
-            link: { to: 'https://linktofibu/123', title: 'Bekijk uw bericht' },
+            link: {
+              to: 'http://host/berichten/fibu',
+              title: 'Bekijk uw bericht',
+            },
           },
         ],
       },
