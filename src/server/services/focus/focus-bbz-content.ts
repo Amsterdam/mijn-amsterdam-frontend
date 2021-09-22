@@ -142,7 +142,7 @@ export const bbzDocumentLabelSet: Record<
   '844': {
     omschrijving: 'Bbz aanvraag',
     labels: aanvraagLabels,
-    documentTitle: 'aanvraag',
+    documentTitle: 'Aanvraag Bbz',
     product: 'Bbz',
     stepType: 'aanvraag',
     productSpecific: 'aanvraag',

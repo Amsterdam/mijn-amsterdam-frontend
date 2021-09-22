@@ -1,0 +1,511 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Focus BBZ service Transforms data correctly and matches snapshot 1`] = `
+Object {
+  "content": Array [
+    Object {
+      "dateEnd": "2021-09-20T00:00:00+01:00",
+      "datePublished": "2021-09-20T00:00:00+01:00",
+      "dateStart": "2021-09-17T00:00:00+01:00",
+      "decision": "afwijzing",
+      "id": "1238294284",
+      "link": Object {
+        "title": "Bekijk hoe het met uw aanvraag staat",
+        "to": "/inkomen/bbz/1/1238294284",
+      },
+      "productTitle": "Bijstand voor zelfstandigen (Bbz)",
+      "status": "Besluit",
+      "steps": Array [
+        Object {
+          "datePublished": "2021-09-17T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Bbz ontvangen.
+        Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-17T00:00:00+01:00",
+              "id": "844",
+              "title": "Aanvraag Bbz
+17 september om 01.00 uur",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3707968877",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Bbz ontvangen op 17 september om 01.00 uur",
+          "notificationLink": undefined,
+          "notificationTitle": "Wij hebben uw aanvraag Bbz ontvangen",
+          "product": "Bbz",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "toekenning",
+          "description": "<p>
+          U hebt recht op de Bbz uitkering. Bekijk de brief voor meer details.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "6195",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "778784506",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Bbz uitkering (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Uw aanvraag is toegekend",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "toekenning",
+          "description": "<p>
+          U hebt recht op de Bbz lening. Bekijk de brief voor meer details.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5843",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "784761435",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Bbz lening (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Uw aanvraag is toegekend",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>Wij hebben meer tijd nodig om uw aanvraag te behandelen. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5855",
+              "title": "Brief verzoek om meer informatie",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "98054236",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer tijd nodig om uw aanvraag te behandelen.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Meer tijd nodig",
+          "product": "Bbz",
+          "status": "Tijd nodig",
+          "title": "hersteltermijn",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5858",
+              "title": "Brief verzoek om meer informatie",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2097310321",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Meer informatie nodig",
+          "product": "Bbz",
+          "status": "Informatie nodig",
+          "title": "hersteltermijn",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5860",
+              "title": "Brief aanvraag adviesrapport",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3293402682",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Meer informatie nodig",
+          "product": "Bbz",
+          "status": "Informatie nodig",
+          "title": "brief",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "intrekking",
+          "description": "<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5861",
+              "title": "Brief intrekken Bbz aanvraag",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "1834467867",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt uw Bbz aanvraag ingetrokken.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Aanvraag ingetrokken",
+          "product": "Bbz",
+          "status": "Brief",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "buitenbehandeling",
+          "description": "<p>Wij behandelen uw aanvraag voor de Bbz uitkering niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5866",
+              "title": "Besluit buiten behandeling",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3589185660",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Wij behandelen uw aanvraag niet meer",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5884",
+              "title": "Brief akte bedrijfskapitaal",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "598420528",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Onderteken de akte voor bedrijfskapitaal",
+          "product": "Bbz",
+          "status": "Akte",
+          "title": "brief",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "5885",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3434461457",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Wij hebben een voorschot betaald",
+          "product": "Bbz",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "999",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "1498937704",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Wij hebben een voorschot betaald",
+          "product": "Bbz",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "afwijzing",
+          "description": "<p>
+        U hebt geen recht op Bbz. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "35802",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3720973677",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Bbz (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Uw aanvraag is afgewezen",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "afwijzing",
+          "description": "<p>
+        U hebt geen recht op Bbz. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "35840",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "672635883",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Bbz (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Uw aanvraag is afgewezen",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "buitenbehandeling",
+          "description": "<p>Wij behandelen uw aanvraag voor de Bbz uitkering niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "35866",
+              "title": "Besluit buiten behandeling",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "2501678383",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationLink": undefined,
+          "notificationTitle": "Bbz: Wij behandelen uw aanvraag niet meer",
+          "product": "Bbz",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "toekenning",
+          "description": "<p>
+          U hebt recht op de IOAZ uitkering. Kijk voor de voorwaarden in de brief.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "6301",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "3654027442",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de IOAZ uitkering (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Uw aanvraag is toegekend",
+          "product": "IOAZ",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "6322",
+              "title": "Brief verzoek meer informatie",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "1771016115",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Meer informatie nodig",
+          "product": "IOAZ",
+          "status": "Informatie nodig",
+          "title": "hersteltermijn",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "buitenbehandeling",
+          "description": "<p>Wij behandelen uw aanvraag voor IOAZ niet meer. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "6332",
+              "title": "Besluit buiten behandeling",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "4279657682",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Wij behandelen uw aanvraag niet meer",
+          "product": "IOAZ",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "toekenning",
+          "description": "<p>
+          U hebt recht op IOAZ. Kijk voor de voorwaarden in de brief.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "36301",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "288812513",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op IOAZ (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Uw aanvraag is toegekend",
+          "product": "IOAZ",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "toekenning",
+          "description": "<p>
+          U hebt recht op de IOAZ uitkering. Kijk voor de voorwaarden in de brief.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "36302",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "1155464834",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de IOAZ uitkering (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Uw aanvraag is toegekend",
+          "product": "IOAZ",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-09-20T00:00:00+01:00",
+          "decision": "afwijzing",
+          "description": "<p>
+        U hebt geen recht op IOAZ. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-09-20T00:00:00+01:00",
+              "id": "36303",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "2408889763",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op IOAZ (besluit: 20 september 2021).",
+          "notificationLink": undefined,
+          "notificationTitle": "IOAZ: Uw aanvraag is afgewezen",
+          "product": "IOAZ",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+      ],
+      "title": "Bijstand voor zelfstandigen (Bbz)",
+      "type": "Tozo",
+    },
+  ],
+  "status": "OK",
+}
+`;
