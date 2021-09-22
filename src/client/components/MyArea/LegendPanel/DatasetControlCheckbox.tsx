@@ -1,4 +1,4 @@
-import { Checkbox, Label } from '@amsterdam/asc-ui';
+import { Label } from '@amsterdam/asc-ui';
 import { FormEvent, ReactNode } from 'react';
 import styled from 'styled-components';
 import {
@@ -8,6 +8,7 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
 } from '../../../../universal/config';
+import Checkbox from '../../Checkbox/Checkbox';
 import { filterActiveDatasets } from '../MyArea.hooks';
 
 export function datasetCheckboxState(

@@ -1,6 +1,5 @@
 @import '../../styles/_global.scss';
 
-
 .CheckboxInput {
   cursor: inherit;
   margin: 0;
@@ -8,8 +7,7 @@
   position: absolute;
   width: 24px;
   height: 24px;
-  left: 6px;
-  top: 6px;
+  left: 0;
 }
 
 .CheckboxIcon {
@@ -28,52 +26,33 @@
 }
 
 .Checked {
-    color: #000000;
-    background-color: #000000;
-    & svg {
-      circle,
-      rect,
-      polygon,
-      path {
-        fill: #ffffff;
-      }
+  color: #000000;
+  background-color: #000000;
+  & svg {
+    circle,
+    rect,
+    polygon,
+    path {
+      fill: #ffffff;
     }
+  }
 }
 
-const CheckboxWrapperStyle = styled.span<Props>`
+.CheckboxWrapper {
   position: relative;
   display: inline-flex;
   user-select: none;
   vertical-align: middle;
   margin-bottom: 1px;
-  padding: 6px;
+  padding: 0px;
+  padding-left: 0;
   flex-shrink: 0; /* IE11 fix */
-  color: ${themeColor('tint', 'level5')};
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      pointer-events: none;
-    `}
-  ${({ checked, disabled }) =>
-    !checked &&
-    !disabled && // IE11 fix. If an element is disabled, you can still hover on it on IE11.
-    css`
-      &:hover {
-        color: ${themeColor('tint', 'level7')};
-        ${CheckboxIconStyle} {
-          outline-style: solid;
-          outline-width: 1px;
-        }
-      }
-    `}
-    ${({ error, checked, disabled }) =>
-    error &&
-    !checked &&
-    !disabled &&
-    css`
-      ${CheckboxIconStyle} {
-        border-color: red;
-        outline: 1px solid red;
-      }
-    `}
-`
+  color: #767676;
+  &:hover {
+    color: #000000;
+  }
+}
+
+.Disabled {
+  pointer-events: none;
+}
