@@ -9,6 +9,7 @@ import {
 } from '../../../universal/helpers/date';
 
 export function ERVV({ vergunning }: { vergunning: ERVVType }) {
+  const isVerleend = vergunning?.decision === 'Verleend';
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
@@ -19,11 +20,11 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
         <InfoDetail
           label="Vanaf"
           value={
-            vergunning?.timeStart && vergunning?.dateStart
+            vergunning?.timeStart && vergunning?.dateStart && isVerleend
               ? defaultDateTimeFormat(
                   `${vergunning.dateStart}T${vergunning.timeStart}`
                 )
-              : vergunning.dateStart
+              : vergunning.dateStart && isVerleend
               ? defaultDateFormat(vergunning.dateStart)
               : '-'
           }
@@ -31,11 +32,11 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
         <InfoDetail
           label="Tot en met"
           value={
-            vergunning?.timeEnd && vergunning?.dateEnd
+            vergunning?.timeEnd && vergunning?.dateEnd && isVerleend
               ? defaultDateTimeFormat(
                   `${vergunning.dateEnd}T${vergunning.timeEnd}`
                 )
-              : vergunning.dateEnd
+              : vergunning.dateEnd && isVerleend
               ? defaultDateFormat(vergunning.dateEnd)
               : '-'
           }
