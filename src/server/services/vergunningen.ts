@@ -340,8 +340,8 @@ export function createVergunningNotification(
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
         !hasOtherValidVergunningOfSameType(allItems, item):
-        title = `${item.caseType} loopt af`;
-        description = `Uw ${item.title} loopt binnenkort af. Vraag tijdig een nieuwe vergunning aan.`;
+        title = `Uw ${item.caseType} loopt af`;
+        description = `Uw ${item.title} loopt binnenkort af.`;
         cta = `Vraag tijdig een nieuwe vergunning aan`;
         linkTo = notificationLink;
         datePublished = dateFormat(
@@ -355,7 +355,7 @@ export function createVergunningNotification(
       case item.decision === 'Verleend' &&
         isExpired(item) &&
         !hasOtherValidVergunningOfSameType(allItems, item):
-        title = `${item.caseType} is verlopen`;
+        title = `Uw ${item.caseType} is verlopen`;
         description = `Uw ${fullName} is verlopen.`;
         cta = `Vraag zonodig een nieuwe vergunning aan`;
         linkTo = notificationLink;

@@ -63,7 +63,7 @@ export function DocumentDetails({
     }
   }, [documentsUrl, fetchDocuments]);
 
-  if (opaque && !documents?.length) {
+  if (opaque || !documents?.length) {
     return null;
   }
 
