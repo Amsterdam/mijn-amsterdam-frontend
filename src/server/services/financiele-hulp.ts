@@ -63,7 +63,7 @@ async function fetchAndTransformKrefia(
   const response = await requestData<FinancieleHulp>(
     getApiConfig('FINANCIELE_HULP', {
       transformResponse: (responseData: {
-        content: FinancieleHulp;
+        content: FinancieleHulp | null;
         status: 'OK';
       }) => responseData.content,
     }),
@@ -86,7 +86,7 @@ export async function fetchFinancieleHulp(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const response = await fetchSource(sessionID, passthroughRequestHeaders);
-  if (response.status === 'OK') {
+  if (response.status === 'OK' && response.content) {
     return apiSuccesResult(omit(response.content, ['notificationTriggers']));
   }
   return response;
@@ -101,14 +101,16 @@ export async function fetchFinancieleHulpGenerated(
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];
 
-    const fibuTrigger = response.content.notificationTriggers?.fibu;
-    if (fibuTrigger) {
-      notifications.push(createNotification(fibuTrigger, 'fibu'));
-    }
+    if (response.content) {
+      const fibuTrigger = response.content.notificationTriggers?.fibu;
+      if (fibuTrigger) {
+        notifications.push(createNotification(fibuTrigger, 'fibu'));
+      }
 
-    const kredietTrigger = response.content.notificationTriggers?.krediet;
-    if (kredietTrigger) {
-      notifications.push(createNotification(kredietTrigger, 'krediet'));
+      const kredietTrigger = response.content.notificationTriggers?.krediet;
+      if (kredietTrigger) {
+        notifications.push(createNotification(kredietTrigger, 'krediet'));
+      }
     }
 
     return apiSuccesResult({
