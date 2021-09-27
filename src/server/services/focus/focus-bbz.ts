@@ -45,7 +45,7 @@ export function createBBZResult(
     )
     .sort(dateSort('datePublished'));
 
-  if (!bbzSteps.length || !bbzSteps) {
+  if (!bbzSteps.length) {
     return apiSuccesResult([]);
   }
 
