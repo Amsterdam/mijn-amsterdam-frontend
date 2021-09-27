@@ -7,7 +7,7 @@ import {
   useFilterControlItemChange,
 } from '../MyArea.hooks';
 import { DatasetControlPanel } from './DatasetControlPanel';
-import styles from './LegendPanel.module.scss';
+import styles from './PanelComponent.module.scss';
 import classnames from 'classnames';
 
 export function DatasetCategoryPanel() {

@@ -1,6 +1,5 @@
 import { constants } from '@amsterdam/arm-core';
 import Map from './Map/Map';
-import { ThemeProvider } from '@amsterdam/asc-ui';
 import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
@@ -144,115 +143,113 @@ export default function MyArea({
   }, [isWideScreen, showPanels, detailState, filterState]);
 
   return (
-    <ThemeProvider>
-      <div className={styles.Container}>
-        <MaintenanceNotifications page="buurt" />
-        {!!showHeader && <MyAreaHeader showCloseButton={true} />}
-        <div className={styles.MapContainer} ref={mapContainerRef}>
-          <div className={styles.MapOffset} id="skip-to-id-Map">
-            <Map
-              fullScreen={true}
-              aria-label={`Kaart van ${termReplace(
-                ChapterTitles.BUURT
-              ).toLowerCase()}`}
-              options={mapOptions}
-            >
-              <AttributionToggle />
-              {!centerMarkerLatLng &&
-                HOME.content?.address &&
-                HOME.content?.latlng && (
-                  <HomeIconMarker
-                    label={getFullAddress(HOME.content.address, true)}
-                    center={HOME.content?.latlng}
-                    zoom={zoom}
-                  />
-                )}
-              {centerMarkerLatLng && mapOptions.center && (
-                <CustomLatLonMarker
-                  label={centerMarkerLabel || 'Gekozen locatie'}
-                  center={mapOptions.center}
+    <div className={styles.Container}>
+      <MaintenanceNotifications page="buurt" />
+      {!!showHeader && <MyAreaHeader showCloseButton={true} />}
+      <div className={styles.MapContainer} ref={mapContainerRef}>
+        <div className={styles.MapOffset} id="skip-to-id-Map">
+          <Map
+            fullScreen={true}
+            aria-label={`Kaart van ${termReplace(
+              ChapterTitles.BUURT
+            ).toLowerCase()}`}
+            options={mapOptions}
+          >
+            <AttributionToggle />
+            {!centerMarkerLatLng &&
+              HOME.content?.address &&
+              HOME.content?.latlng && (
+                <HomeIconMarker
+                  label={getFullAddress(HOME.content.address, true)}
+                  center={HOME.content?.latlng}
                   zoom={zoom}
                 />
               )}
-              <ViewerContainer
-                mapOffset={mapOffset}
-                topLeft={
-                  isNarrowScreen && (
-                    <BaseLayerToggle
-                      activeLayer={activeBaseLayerType}
-                      aerialLayers={mapLayers.aerial}
-                      topoLayers={mapLayers.topo}
-                      options={baseLayerOptions}
-                    />
-                  )
-                }
-                topRight={
-                  isNarrowScreen && (
-                    <>
-                      {centerMarkerLatLng && mapOptions.center && (
-                        <MyAreaCustomLocationControlButton
-                          zoom={zoom}
-                          latlng={mapOptions.center}
-                        />
-                      )}
-                      {!centerMarkerLatLng &&
-                        HOME.content?.address &&
-                        HOME.content?.latlng && (
-                          <HomeControlButton
-                            zoom={zoom}
-                            latlng={HOME.content.latlng}
-                          />
-                        )}
-                      <Zoom />
-                    </>
-                  )
-                }
-                bottomRight={
-                  isWideScreen && (
-                    <>
-                      {centerMarkerLatLng && mapOptions.center && (
-                        <MyAreaCustomLocationControlButton
-                          zoom={zoom}
-                          latlng={mapOptions.center}
-                        />
-                      )}
-                      {!centerMarkerLatLng &&
-                        HOME.content?.address &&
-                        HOME.content?.latlng && (
-                          <HomeControlButton
-                            zoom={zoom}
-                            latlng={HOME.content.latlng}
-                          />
-                        )}
-                      <Zoom />
-                    </>
-                  )
-                }
-                bottomLeft={
-                  isWideScreen && (
-                    <BaseLayerToggle
-                      activeLayer={activeBaseLayerType}
-                      aerialLayers={mapLayers.aerial}
-                      topoLayers={mapLayers.topo}
-                      options={baseLayerOptions}
-                    />
-                  )
-                }
+            {centerMarkerLatLng && mapOptions.center && (
+              <CustomLatLonMarker
+                label={centerMarkerLabel || 'Gekozen locatie'}
+                center={mapOptions.center}
+                zoom={zoom}
               />
-              {(!!datasetIds?.length || showPanels) && (
-                <MyAreaDatasets datasetIds={datasetIds} />
-              )}
-            </Map>
-            {!HOME.content?.address && isLoading(HOME) && (
-              <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
             )}
-          </div>
-
-          {!!showPanels && (
-            <LegendPanel availableHeight={panelComponentAvailableHeight} />
+            <ViewerContainer
+              mapOffset={mapOffset}
+              topLeft={
+                isNarrowScreen && (
+                  <BaseLayerToggle
+                    activeLayer={activeBaseLayerType}
+                    aerialLayers={mapLayers.aerial}
+                    topoLayers={mapLayers.topo}
+                    options={baseLayerOptions}
+                  />
+                )
+              }
+              topRight={
+                isNarrowScreen && (
+                  <>
+                    {centerMarkerLatLng && mapOptions.center && (
+                      <MyAreaCustomLocationControlButton
+                        zoom={zoom}
+                        latlng={mapOptions.center}
+                      />
+                    )}
+                    {!centerMarkerLatLng &&
+                      HOME.content?.address &&
+                      HOME.content?.latlng && (
+                        <HomeControlButton
+                          zoom={zoom}
+                          latlng={HOME.content.latlng}
+                        />
+                      )}
+                    <Zoom />
+                  </>
+                )
+              }
+              bottomRight={
+                isWideScreen && (
+                  <>
+                    {centerMarkerLatLng && mapOptions.center && (
+                      <MyAreaCustomLocationControlButton
+                        zoom={zoom}
+                        latlng={mapOptions.center}
+                      />
+                    )}
+                    {!centerMarkerLatLng &&
+                      HOME.content?.address &&
+                      HOME.content?.latlng && (
+                        <HomeControlButton
+                          zoom={zoom}
+                          latlng={HOME.content.latlng}
+                        />
+                      )}
+                    <Zoom />
+                  </>
+                )
+              }
+              bottomLeft={
+                isWideScreen && (
+                  <BaseLayerToggle
+                    activeLayer={activeBaseLayerType}
+                    aerialLayers={mapLayers.aerial}
+                    topoLayers={mapLayers.topo}
+                    options={baseLayerOptions}
+                  />
+                )
+              }
+            />
+            {(!!datasetIds?.length || showPanels) && (
+              <MyAreaDatasets datasetIds={datasetIds} />
+            )}
+          </Map>
+          {!HOME.content?.address && isLoading(HOME) && (
+            <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
           )}
         </div>
+
+        {!!showPanels && (
+          <LegendPanel availableHeight={panelComponentAvailableHeight} />
+        )}
       </div>
-    </ThemeProvider>
+    </div>
   );
 }

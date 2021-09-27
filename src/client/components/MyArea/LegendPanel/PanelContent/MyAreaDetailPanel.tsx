@@ -1,4 +1,4 @@
-import styles from '../LegendPanel.module.scss';
+import styles from '../PanelComponent.module.scss';
 import {
   DatasetCategoryId,
   getDatasetCategoryId,

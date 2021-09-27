@@ -7,6 +7,7 @@
   background-color: #ffffff;
   max-height: 100%;
   height: auto;
+  padding-top: 2rem;
   z-index: 401;
 }
 
@@ -21,6 +22,36 @@
   width: 480px;
   top: 0;
   transform: translate3d(calc(-100% + 0px), 0, 0);
+}
+
+.CategoryPanel {
+  margin-top: 2rem;
+
+  > li:first-child {
+    border-top: 0;
+  }
+}
+
+.PanelListItem {
+  position: relative;
+  border-top: 1px solid #e6e6e6;
+  > ol > li > ol > li {
+    border-top: 0;
+  }
+  > ol > li {
+    margin-left: 37px;
+  }
+}
+
+.PanelList {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.PanelContent {
+  padding: 16px 0 16px 0;
 }
 
 .PanelNarrow {
@@ -111,4 +142,43 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.LabelStyle {
+  display: inline-flex;
+  vertical-align: middle;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  font-weight: 500;
+  > span {
+    display: flex;
+    align-items: center;
+    > small {
+      display: inline-block;
+      margin-top: 2px;
+      margin-left: 4px;
+    }
+  }
+}
+
+.IsDimmed {
+  opacity: 0.5;
+  font-weight: 'normal';
+}
+
+.LabelText {
+  margin: 9.2px;
+  order: 1;
+}
+
+.PropertyFilterPanel {
+  margin-left: 36px;
+}
+
+.FilterPropertyName {
+  display: block;
+  line-height: 3rem;
 }

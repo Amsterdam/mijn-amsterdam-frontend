@@ -23,6 +23,7 @@
   background-color: #ffffff;
   transition: background-color 0.2s ease-in-out;
   pointer-events: none;
+  padding: 4px;
 }
 
 .Checked {
@@ -45,6 +46,7 @@
   vertical-align: middle;
   margin-bottom: 1px;
   padding: 0px;
+  margin-right: 10px;
   padding-left: 0;
   flex-shrink: 0; /* IE11 fix */
   color: #767676;
