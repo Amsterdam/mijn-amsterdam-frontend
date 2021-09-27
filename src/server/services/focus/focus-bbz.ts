@@ -54,7 +54,7 @@ export function createBBZResult(
    * For every aanvraag document received we only show 1 status step.
    * All these documents are applicable to 1 decision that will be made about the aanvraag.
    **/
-  let aanvraagSteps: Record<string, FocusItemStep> = {};
+  const aanvraagSteps: Record<string, FocusItemStep> = {};
   const otherSteps: FocusItemStep[] = [];
 
   for (const step of bbzSteps) {
