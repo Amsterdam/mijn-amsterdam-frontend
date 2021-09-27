@@ -15,7 +15,6 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   brief: 'Brief',
   mail: 'Mail',
   voorschot: 'Voorschot',
-  informatieNodig: 'Informatie nodig',
   tijdNodig: 'Tijd nodig',
   akte: 'Akte',
 };
