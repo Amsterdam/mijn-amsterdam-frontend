@@ -74,7 +74,6 @@ function PositionedIcon({
   position,
 }: PositionedIconProps) {
   const Icon = icon;
-  console.log(icon);
   return (
     <Icon
       aria-hidden="true"

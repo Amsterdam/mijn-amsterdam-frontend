@@ -1,4 +1,3 @@
-import { Icon, themeSpacing } from '@amsterdam/asc-ui';
 import {
   Children,
   MouseEvent as ReactMouseEvent,
@@ -6,33 +5,8 @@ import {
   ReactNode,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styles from './PanelComponent.module.scss';
 import { IconChevronRight } from '../../../assets/icons';
-
-export const ToggleButton = styled('button')`
-  appearance: none;
-  border: 0;
-  padding: 0;
-  font-size: 100%;
-  font-family: inherit;
-  background: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  position: absolute;
-  right: 0;
-  top: 3px;
-  z-index: 3;
-  width: ${themeSpacing(9)};
-  height: ${themeSpacing(9)};
-  transform: ${(props) => (props['aria-expanded'] ? 'rotate(90deg)' : 'none')};
-  transition: transform 80ms linear;
-  &:hover,
-  &:focus {
-    visibility: visible;
-  }
-`;
 
 export enum CollapsedState {
   Expanded = 'Expanded',
@@ -62,11 +36,13 @@ function MyAreaCollapsiblePanelHeading({
     <>
       {title}
       {onClick && (
-        <ToggleButton onClick={onClick} aria-expanded={isExpanded(state)}>
-          <Icon size={16}>
-            <IconChevronRight />
-          </Icon>
-        </ToggleButton>
+        <button
+          className={styles.CollapsibleButton}
+          onClick={onClick}
+          aria-expanded={isExpanded(state)}
+        >
+          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
+        </button>
       )}
     </>
   );

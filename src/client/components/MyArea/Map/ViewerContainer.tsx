@@ -20,7 +20,12 @@ const ViewerContainer: React.FC<Props> = ({
   ...otherProps
 }) => {
   return (
-    <div {...otherProps} className={styles.Wrapper} data-testid="container">
+    <div
+      {...otherProps}
+      className={styles.Wrapper}
+      data-testid="container"
+      style={{ left: mapOffset?.left ?? '0' }}
+    >
       <div
         className={classnames(styles.Item, styles.TopLeft)}
         data-testid="topLeft"
