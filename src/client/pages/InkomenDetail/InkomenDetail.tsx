@@ -90,13 +90,11 @@ export function InkomenDetailBbz() {
           Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
           opgenomen
         </p>
-        {!isLoading && (
-          <p>
-            <Linkd external={true} href={ExternalUrls.WPI_BBZ}>
-              Meer informatie over de Bbz
-            </Linkd>
-          </p>
-        )}
+        <p>
+          <Linkd external={true} href={ExternalUrls.WPI_BBZ}>
+            Meer informatie over de Bbz
+          </Linkd>
+        </p>
       </>
     );
   }, []);

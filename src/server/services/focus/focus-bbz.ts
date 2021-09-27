@@ -59,9 +59,9 @@ export function createBBZResult(
 
   for (const step of bbzSteps) {
     if (step && step.title === 'aanvraag') {
-      if (step?.product && !aanvraagSteps[step.product]) {
+      if (step.product && !aanvraagSteps[step.product]) {
         aanvraagSteps[step.product] = step;
-      } else if (step?.product) {
+      } else if (step.product) {
         aanvraagSteps[step.product].documents.push(...step.documents);
       }
     } else if (step) {
@@ -117,7 +117,7 @@ export async function fetchFOCUSBbzGenerated(
 ) {
   const BBZ = await fetchFOCUSBbz(sessionID, passthroughRequestHeaders);
 
-  if (BBZ?.status === 'OK') {
+  if (BBZ.status === 'OK') {
     const compareDate = new Date();
 
     const notifications: MyNotification[] = BBZ.content.flatMap((item) =>
