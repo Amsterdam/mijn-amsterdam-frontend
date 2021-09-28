@@ -27,6 +27,7 @@ export const FeatureToggle = {
   milieuzoneRecentCasesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   financieleHulpActive: !IS_PRODUCTION,
+  isSearchEnabled: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

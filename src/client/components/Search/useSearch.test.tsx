@@ -1,19 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import Fuse from 'fuse.js';
+import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
+import { useRecoilValue } from 'recoil';
+import { appStateAtom } from '../../hooks';
+import { ApiBaseItem, ApiSearchConfig } from './searchConfig';
 import {
-  generateSearchIndexPageEntry,
   generateSearchIndexPageEntries,
+  generateSearchIndexPageEntry,
+  isIndexReadyQuery,
+  searchConfigAtom,
   useSearch,
   useSearchIndex,
-  useSearchTerm,
-  useSearchResults,
-  searchConfigAtom,
-  isIndexReadyQuery,
 } from './useSearch';
-import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
-import { ApiBaseItem, ApiSearchConfig } from './searchConfig';
-import { appStateAtom } from '../../hooks';
-import { useRecoilValue } from 'recoil';
-import Fuse from 'fuse.js';
 
 const vergunningenData = [
   {

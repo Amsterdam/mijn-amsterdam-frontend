@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { matchPath, NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
@@ -263,7 +263,7 @@ export default function MainNavBar({
         </>
       )}
       <div className={styles.InfoButtons}>
-        {isDisplaySearch && (
+        {FeatureToggle.isSearchEnabled && isDisplaySearch && (
           <IconButton
             className={styles.SearchButton}
             onClick={() => setSearchActive(!isSearchActive)}
