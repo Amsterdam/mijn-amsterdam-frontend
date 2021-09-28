@@ -53,7 +53,10 @@ export const datasetIcons: Record<
     ),
     papier: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon_lightBlue)}
+        className={classnames(
+          styles.DatasetIcon,
+          styles.DatasetIcon__lightBlue
+        )}
       >
         <IconAfvalPapier fill={Colors.white} />
       </div>
@@ -72,7 +75,7 @@ export const datasetIcons: Record<
     ),
     gft: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconAfvalGft fill={Colors.white} />
       </div>
@@ -106,7 +109,7 @@ export const datasetIcons: Record<
   bekendmakingen: {
     bekendmakingen: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconBekendmaking fill={Colors.white} />
       </div>
@@ -115,70 +118,70 @@ export const datasetIcons: Record<
   sport: {
     sport: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSport fill={Colors.white} />
       </div>
     ),
     gymzaal: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconGymzaal fill={Colors.white} />
       </div>
     ),
     sporthal: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSporthal fill={Colors.white} />
       </div>
     ),
     sportpark: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSportpark fill={Colors.white} />
       </div>
     ),
     sportzaal: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSportzaal fill={Colors.white} />
       </div>
     ),
     zwembad: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconZwembad fill={Colors.white} />
       </div>
     ),
     hardlooproute: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconHardlopen fill={Colors.white} />
       </div>
     ),
     sportveld: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSportveld fill={Colors.white} />
       </div>
     ),
     sportaanbieder: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconGeneral fill={Colors.white} />
       </div>
     ),
     openbaresportplek: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconFitness fill={Colors.white} />
       </div>
@@ -187,63 +190,63 @@ export const datasetIcons: Record<
   openbaresportplek: {
     voetbal: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconVoetbal fill={Colors.white} />
       </div>
     ),
     beachvolley: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconVolleybal fill={Colors.white} />
       </div>
     ),
     basketbal: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconBasketbal fill={Colors.white} />
       </div>
     ),
     'fitness / bootcamp': (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconFitness fill={Colors.white} />
       </div>
     ),
     tennis: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconTennis fill={Colors.white} />
       </div>
     ),
     'jeu de boules': (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconJeuDeBoules fill={Colors.white} />
       </div>
     ),
     overig: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconOverig fill={Colors.white} />
       </div>
     ),
     skate: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconSkate fill={Colors.white} />
       </div>
     ),
     tafeltennis: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconTafeltennis fill={Colors.white} />
       </div>
@@ -252,7 +255,10 @@ export const datasetIcons: Record<
   parkeren: {
     parkeren: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon_lightBlue)}
+        className={classnames(
+          styles.DatasetIcon,
+          styles.DatasetIcon__lightBlue
+        )}
       >
         <IconAuto fill={Colors.white} />
       </div>
@@ -261,7 +267,10 @@ export const datasetIcons: Record<
   parkeerzones: {
     oost: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon_lightBlue)}
+        className={classnames(
+          styles.DatasetIcon,
+          styles.DatasetIcon__lightBlue
+        )}
       >
         <IconAuto fill={Colors.white} />
       </div>
@@ -275,7 +284,7 @@ export const datasetIcons: Record<
     ),
     noord: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconAuto fill={Colors.white} />
       </div>
@@ -311,7 +320,7 @@ export const datasetIcons: Record<
     ),
     centrum: (
       <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcons__valid)}
+        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
       >
         <IconAuto fill={Colors.white} />
       </div>

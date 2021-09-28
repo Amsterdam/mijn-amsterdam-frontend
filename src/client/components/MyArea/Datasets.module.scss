@@ -1,34 +1,34 @@
 @import '../../styles/_global.scss';
 
 $colors: (
-  grey: (
+  'grey': (
     background-color: $color-neutral-grey5,
   ),
-  lightBlue: (
+  'lightBlue': (
     background-color: $color-support-lightblue,
   ),
-  yellow: (
+  'yellow': (
     background-color: $color-support-yellow,
   ),
-  valid: (
+  'valid': (
     background-color: $color-support-valid,
   ),
-  orange: (
+  'orange': (
     background-color: $color-support-orange,
   ),
-  purple: (
+  'purple': (
     background-color: $color-support-purple,
   ),
-  lightGreen: (
+  'lightGreen': (
     background-color: $color-support-lightgreen,
   ),
-  pink: (
+  'pink': (
     background-color: $color-support-pink,
   ),
-  focus: (
+  'focus': (
     background-color: $color-support-focus,
   ),
-  black: (
+  'black': (
     background-color: $color-black,
   ),
 );
