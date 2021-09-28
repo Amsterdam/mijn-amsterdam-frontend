@@ -155,8 +155,8 @@ export default function MainNavBar({
     (action: string) =>
       trackEventWithProfileType(
         {
-          category: 'Search',
-          name: `Search bar toggle`,
+          category: 'Zoeken',
+          name: 'Zoekbalk open/dicht',
           action,
         },
         profileType

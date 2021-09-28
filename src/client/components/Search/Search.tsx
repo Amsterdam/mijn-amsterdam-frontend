@@ -113,11 +113,11 @@ export function Search({
     (action: string) =>
       trackEventWithProfileType(
         {
-          category: 'Search',
-          name: `Search${
+          category: 'Zoeken',
+          name: `Zoek${
             history.location.pathname.includes(AppRoutes.SEARCH)
-              ? ' Pagina'
-              : ''
+              ? 'pagina'
+              : 'balk'
           } interactie`,
           action,
         },
