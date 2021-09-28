@@ -1,11 +1,13 @@
+@import '../../../styles/_global.scss';
+
 .PanelListItem {
   position: relative;
-  border-top: 1px solid #e6e6e6;
+  border-top: 0.1rem $color-neutral-grey2 solid;
   > ol > li > ol > li {
     border-top: 0;
   }
   > ol > li {
-    margin-left: 37px;
+    margin-left: 3.7rem;
   }
 }
 

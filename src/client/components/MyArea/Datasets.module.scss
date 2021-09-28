@@ -1,10 +1,12 @@
+@import '../../styles/_global.scss';
+
 .DatasetIcon {
   margin-right: 0.8rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #ffffff;
+  border: 0.2rem $color-white solid;
   width: 2.8rem;
   height: 2.8rem;
 }

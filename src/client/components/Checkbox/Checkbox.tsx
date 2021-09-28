@@ -75,7 +75,7 @@ const Checkbox = forwardRef<
             styles.CheckboxInput,
             (checked || indeterminate) && styles.Checked
           )}
-          {...{ ...otherProps, disabled, ref }}
+          {...{ ...otherProps, disabled, ref, checked }}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             if (onChange) {
               onChange(e);
