@@ -5,8 +5,8 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
   left: 0;
 }
 
@@ -14,8 +14,8 @@
   display: flex;
   border-width: 1px;
   border-style: solid;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@
   background-color: $color-white;
   transition: background-color 0.2s ease-in-out;
   pointer-events: none;
-  padding: 0.25rem;
+  padding: 0.4rem;
 }
 
 .Checked {
@@ -46,7 +46,7 @@
   vertical-align: middle;
   margin-bottom: 1px;
   padding: 0;
-  margin-right: 0.5rem;
+  margin-right: 0.8rem;
   padding-left: 0;
   flex-shrink: 0;
   color: $color-neutral-grey4;

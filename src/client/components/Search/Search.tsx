@@ -1,25 +1,18 @@
-import SearchBar from '@amsterdam/asc-ui/lib/components/SearchBar/SearchBar';
-import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight } from '../../assets/icons';
-import {
-  trackEventWithProfileType,
-  trackSearch,
-} from '../../hooks/analytics.hook';
+import { trackSearch } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
-import {
-  useProfileTypeSwitch,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
+import { useProfileTypeSwitch } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
 import { SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
+import SearchBar from './SearchBar';
 
 interface ResultSetProps {
   results: SearchEntry[];
@@ -81,7 +74,7 @@ export function ResultSet({
 }
 
 interface SearchProps {
-  onFinish?: (reason?: string) => void;
+  onFinish?: (isSelection?: boolean) => void;
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
@@ -190,50 +183,47 @@ export function Search({
     <div
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
     >
-      <ThemeProvider>
-        <form
-          ref={searchBarRef}
-          onSubmit={(e) => {
-            e.preventDefault();
+      <form
+        ref={searchBarRef}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (term) {
+            trackSearchBarEvent('Submit search');
+            history.push(AppRoutes.SEARCH + '?term=' + term);
+            setResultsVisible(true);
+          }
+        }}
+      >
+        <SearchBar
+          inputProps={{
+            autoComplete: 'none',
+            autoCorrect: 'none',
+            autoCapitalize: 'none',
+            spellCheck: 'false',
+          }}
+          placeholder={
+            results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
+          }
+          onFocus={() => {
             if (term) {
-              trackSearchBarEvent('Submit search');
-              history.push(AppRoutes.SEARCH + '?term=' + term);
               setResultsVisible(true);
             }
           }}
-        >
-          <SearchBar
-            inputProps={{
-              autoComplete: 'none',
-              autoCorrect: 'none',
-              autoCapitalize: 'none',
-              spellCheck: 'false',
-            }}
-            placeholder={
-              results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
-            }
-            onFocus={() => {
-              if (term) {
-                setResultsVisible(true);
-              }
-            }}
-            onChange={(e) => {
-              setIsTyping(true);
-              setResultsVisible(true);
-
-              const term = e.target.value;
-              setTermDebounced(term);
-              trackSearchDebounced(term);
-            }}
-            onClear={() => {
-              setTerm('');
-              setIsDirty(false);
-              setResultsVisible(false);
-            }}
-            value={term || termInitial}
-          />
-        </form>
-      </ThemeProvider>
+          onChange={(e) => {
+            setIsTyping(true);
+            setResultsVisible(true);
+            const term = e.target.value;
+            setTermDebounced(term);
+            trackSearchDebounced(term);
+          }}
+          onClear={() => {
+            setTerm('');
+            setIsDirty(false);
+            setResultsVisible(false);
+          }}
+          value={term || termInitial}
+        />
+      </form>
 
       {isResultsVisible && (
         <div className={styles.Results}>
