@@ -110,7 +110,7 @@ export function displayPath(
   isExternal: boolean = false,
   replaceTerm: boolean = true
 ) {
-  const termSplitted = term.split(/\s/gi);
+  const termSplitted = term.trim().split(/\s+/g);
 
   return (
     <>
@@ -560,6 +560,7 @@ export const staticIndex: SearchEntry[] = [
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat.`,
     keywords: [
+      'brp',
       'gegevens',
       'profiel',
       'bevolkingsregister',

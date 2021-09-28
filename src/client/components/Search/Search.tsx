@@ -6,9 +6,15 @@ import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight } from '../../assets/icons';
-import { trackSearch } from '../../hooks/analytics.hook';
+import {
+  trackEventWithProfileType,
+  trackSearch,
+} from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
-import { useProfileTypeSwitch } from '../../hooks/useProfileType';
+import {
+  useProfileTypeSwitch,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
@@ -75,7 +81,7 @@ export function ResultSet({
 }
 
 interface SearchProps {
-  onFinish?: (isSelection?: boolean) => void;
+  onFinish?: (reason?: string) => void;
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
@@ -98,12 +104,38 @@ export function Search({
   const [isDirty, setIsDirty] = useState(false);
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
+  const profileType = useProfileTypeValue();
 
   useSearchIndex();
-  useProfileTypeSwitch(() => onFinish && onFinish());
+  useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
+
+  const trackSearchBarEvent = useCallback(
+    (action: string) =>
+      trackEventWithProfileType(
+        {
+          category: 'Zoeken',
+          name: `Zoek${
+            history.location.pathname.includes(AppRoutes.SEARCH)
+              ? 'pagina'
+              : 'balk'
+          } interactie`,
+          action,
+        },
+        profileType
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [profileType]
+  );
+
+  const trackSearchDebounced = useDebouncedCallback((term: string) => {
+    if (term) {
+      trackSearch(term);
+    } else {
+      trackSearchBarEvent('Verwijder term');
+    }
+  }, 2000);
 
   const setTermDebounced = useDebouncedCallback((term: string) => {
-    trackSearch(term);
     setTerm(term);
     setIsTyping(false);
     if (!term) {
@@ -122,12 +154,13 @@ export function Search({
         if (isResultsVisible && term) {
           inputEl()?.focus();
           setResultsVisible(false);
+          trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible && inputEl() !== document.activeElement) {
-          onFinish && onFinish();
+          onFinish && onFinish('Escape toets');
         }
       }
     },
-    [typeAhead, isResultsVisible, onFinish, term]
+    [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
   );
 
   useKeyDown(keyHandler);
@@ -163,6 +196,7 @@ export function Search({
           onSubmit={(e) => {
             e.preventDefault();
             if (term) {
+              trackSearchBarEvent('Submit search');
               history.push(AppRoutes.SEARCH + '?term=' + term);
               setResultsVisible(true);
             }
@@ -186,7 +220,10 @@ export function Search({
             onChange={(e) => {
               setIsTyping(true);
               setResultsVisible(true);
-              setTermDebounced(e.target.value);
+
+              const term = e.target.value;
+              setTermDebounced(term);
+              trackSearchDebounced(term);
             }}
             onClear={() => {
               setTerm('');
