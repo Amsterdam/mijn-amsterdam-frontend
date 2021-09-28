@@ -11,7 +11,11 @@ import {
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import { WmoItem } from '../../../server/services/wmo';
-import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  DocumentTitles,
+  FeatureToggle,
+} from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import {
@@ -35,6 +39,7 @@ export interface SearchEntry {
   description: string;
   keywords?: string[];
   profileTypes?: ProfileType[];
+  isEnabled?: boolean;
 }
 
 export interface ApiSearchConfig {
@@ -68,6 +73,9 @@ export interface ApiSearchConfig {
 
   // For which profile types this api's need to be indexed
   profileTypes: ProfileType[];
+
+  // Whether or not this api is active
+  isEnabled?: boolean;
 }
 
 export interface ApiBaseItem {
@@ -199,7 +207,7 @@ export function getApiSearchConfigs(profileType: ProfileType) {
     .filter((config) => config.profileTypes?.includes(profileType));
 }
 
-const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
+export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: Vergunning): string[] => {
@@ -382,6 +390,7 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
     },
   },
   {
+    isEnabled: FeatureToggle.financieleHulpActive,
     apiName: 'FINANCIELE_HULP',
     getApiBaseItems: (
       apiContent: Omit<FinancieleHulp, 'notificationTriggers'>
@@ -724,6 +733,7 @@ export const staticIndex: SearchEntry[] = [
     keywords: ['Milieuzone', 'Ontheffing'],
   },
   {
+    isEnabled: FeatureToggle.financieleHulpActive,
     url: AppRoutes.FINANCIELE_HULP,
     title: DocumentTitles[AppRoutes.FINANCIELE_HULP],
     displayTitle: (term: string) => displayPath(term, ['Financiële hulp']),
