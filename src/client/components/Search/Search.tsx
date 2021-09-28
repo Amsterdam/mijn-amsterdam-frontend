@@ -127,12 +127,15 @@ export function Search({
     [profileType]
   );
 
-  const setTermDebounced = useDebouncedCallback((term: string) => {
+  const trackSearchDebounced = useDebouncedCallback((term: string) => {
     if (term) {
       trackSearch(term);
     } else {
       trackSearchBarEvent('Verwijder term');
     }
+  }, 2000);
+
+  const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
     setIsTyping(false);
     if (!term) {
@@ -217,7 +220,10 @@ export function Search({
             onChange={(e) => {
               setIsTyping(true);
               setResultsVisible(true);
-              setTermDebounced(e.target.value);
+
+              const term = e.target.value;
+              setTermDebounced(term);
+              trackSearchDebounced(term);
             }}
             onClear={() => {
               setTerm('');

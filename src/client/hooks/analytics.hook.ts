@@ -47,16 +47,14 @@ export function trackEventWithProfileType(
   payload: TrackEventParams,
   profileType: ProfileType
 ) {
-  return (
-    MatomoInstance &&
-    MatomoInstance.trackEvent({
-      ...payload,
-      customDimensions: [
-        ...((payload.customDimensions as CustomDimension[]) || []),
-        profileTypeDimension(profileType),
-      ],
-    })
-  );
+  const payloadFinal = {
+    ...payload,
+    customDimensions: [
+      ...((payload.customDimensions as CustomDimension[]) || []),
+      profileTypeDimension(profileType),
+    ],
+  };
+  return MatomoInstance && MatomoInstance.trackEvent(payloadFinal);
 }
 
 export function trackPageView(

@@ -110,7 +110,7 @@ export function displayPath(
   isExternal: boolean = false,
   replaceTerm: boolean = true
 ) {
-  const termSplitted = term.split(/\s/gi);
+  const termSplitted = term.trim().split(/\s+/g);
 
   return (
     <>
