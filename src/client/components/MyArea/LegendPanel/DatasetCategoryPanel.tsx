@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { DATASETS } from '../../../../universal/config';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import {
@@ -8,7 +8,11 @@ import {
 } from '../MyArea.hooks';
 import { DatasetControlPanel } from './DatasetControlPanel';
 import styles from './PanelComponent.module.scss';
-import classnames from 'classnames';
+import { PanelList, PanelListItem } from './PanelList';
+
+export const CategoryPanel = ({ children }: { children: ReactNode }) => {
+  return <PanelList className={styles.CategoryPanel}>{children}</PanelList>;
+};
 
 export function DatasetCategoryPanel() {
   const profileType = useProfileTypeValue();
@@ -26,14 +30,14 @@ export function DatasetCategoryPanel() {
   }, [profileType]);
 
   return (
-    <ol
-      className={classnames(styles.CategoryPanel, styles.PanelList)}
-      id="skip-to-id-LegendPanel"
-    >
+    <CategoryPanel>
       {datasets
         .filter(([categoryId, category]) => !category.isDisabled)
         .map(([categoryId, category]) => (
-          <li className={styles.PanelListItem} key={`category-${categoryId}`}>
+          <PanelListItem
+            className={styles.PanelListItem}
+            key={`category-${categoryId}`}
+          >
             <DatasetControlPanel
               categoryId={categoryId}
               category={category}
@@ -41,8 +45,8 @@ export function DatasetCategoryPanel() {
               onFilterControlItemChange={onFilterControlItemChange}
               activeDatasetIds={activeDatasetIds}
             />
-          </li>
+          </PanelListItem>
         ))}
-    </ol>
+    </CategoryPanel>
   );
 }

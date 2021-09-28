@@ -33,7 +33,7 @@ const ViewerContainer: React.FC<Props> = ({
         {topLeft}
       </div>
       <div
-        className={classnames(styles.Item, styles.TopRigth)}
+        className={classnames(styles.Item, styles.TopRight)}
         data-testid="topRight"
       >
         {topRight}

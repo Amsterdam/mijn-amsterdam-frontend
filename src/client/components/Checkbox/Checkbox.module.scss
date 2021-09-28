@@ -5,8 +5,8 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   left: 0;
 }
 
@@ -14,27 +14,27 @@
   display: flex;
   border-width: 1px;
   border-style: solid;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   position: relative;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  background-color: #ffffff;
+  background-color: $color-white;
   transition: background-color 0.2s ease-in-out;
   pointer-events: none;
-  padding: 4px;
+  padding: 0.25rem;
 }
 
 .Checked {
-  color: #000000;
-  background-color: #000000;
+  color: $color-black;
+  background-color: $color-black;
   & svg {
     circle,
     rect,
     polygon,
     path {
-      fill: #ffffff;
+      fill: $color-white;
     }
   }
 }
@@ -45,13 +45,13 @@
   user-select: none;
   vertical-align: middle;
   margin-bottom: 1px;
-  padding: 0px;
-  margin-right: 10px;
+  padding: 0;
+  margin-right: 0.5rem;
   padding-left: 0;
-  flex-shrink: 0; /* IE11 fix */
-  color: #767676;
+  flex-shrink: 0;
+  color: $color-neutral-grey4;
   &:hover {
-    color: #000000;
+    color: $color-black;
   }
 }
 

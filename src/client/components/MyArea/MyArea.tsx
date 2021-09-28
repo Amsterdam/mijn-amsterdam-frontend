@@ -1,10 +1,17 @@
-import { constants } from '@amsterdam/arm-core';
+import { constants } from '@amsterdam/arm-core/lib/';
 import Map from './Map/Map';
 import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useMemo, useRef } from 'react';
+import {
+  forwardRef,
+  HTMLAttributes,
+  HTMLProps,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -55,6 +62,32 @@ function AttributionToggle() {
   return null;
 }
 
+function Container({ children, ...rest }: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div {...rest} className={styles.Container}>
+      {children}
+    </div>
+  );
+}
+
+function MapOffset({ children, ...rest }: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div {...rest} className={styles.MapOffset}>
+      {children}
+    </div>
+  );
+}
+
+const MapContainer = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
+  ({ children, ...rest }, ref) => {
+    return (
+      <div {...rest} className={styles.MapContainer} ref={ref}>
+        {children}
+      </div>
+    );
+  }
+);
+
 export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
@@ -84,7 +117,7 @@ export default function MyArea({
     return getQueryConfig();
   }, []);
 
-  const mapContainerRef = useRef(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const panelComponentAvailableHeight = getElementSize(
     mapContainerRef.current
   ).height;
@@ -143,11 +176,11 @@ export default function MyArea({
   }, [isWideScreen, showPanels, detailState, filterState]);
 
   return (
-    <div className={styles.Container}>
+    <Container>
       <MaintenanceNotifications page="buurt" />
       {!!showHeader && <MyAreaHeader showCloseButton={true} />}
-      <div className={styles.MapContainer} ref={mapContainerRef}>
-        <div className={styles.MapOffset} id="skip-to-id-Map">
+      <MapContainer ref={mapContainerRef}>
+        <MapOffset id="skip-to-id-Map">
           <Map
             fullScreen={true}
             aria-label={`Kaart van ${termReplace(
@@ -244,12 +277,12 @@ export default function MyArea({
           {!HOME.content?.address && isLoading(HOME) && (
             <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
           )}
-        </div>
+        </MapOffset>
 
         {!!showPanels && (
           <LegendPanel availableHeight={panelComponentAvailableHeight} />
         )}
-      </div>
-    </div>
+      </MapContainer>
+    </Container>
   );
 }

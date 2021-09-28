@@ -15,7 +15,7 @@ import {
   DatasetControlCheckbox,
 } from './DatasetControlCheckbox';
 import { DatasetPanel } from './DatasetPanel';
-import styles from './PanelComponent.module.scss';
+import { PanelList, PanelListItem } from './PanelList';
 
 export interface DatasetControlPanelProps {
   onControlItemChange: (type: 'category' | 'dataset', ids: string[]) => void;
@@ -98,10 +98,10 @@ export function DatasetControlPanel({
 
   return (
     <MyAreaCollapsiblePanel title={categoryTitle} initialState={initialState}>
-      <ol className={styles.PanelList}>
+      <PanelList>
         {Object.entries(category.datasets).map(([datasetId, dataset]) => {
           return (
-            <li className={styles.PanelListItem} key={`dataset-${datasetId}`}>
+            <PanelListItem key={`dataset-${datasetId}`}>
               <DatasetPanel
                 categoryId={categoryId}
                 datasetId={datasetId}
@@ -110,10 +110,10 @@ export function DatasetControlPanel({
                 onControlItemChange={onControlItemChange}
                 activeDatasetIds={activeDatasetIds}
               />
-            </li>
+            </PanelListItem>
           );
         })}
-      </ol>
+      </PanelList>
     </MyAreaCollapsiblePanel>
   );
 }

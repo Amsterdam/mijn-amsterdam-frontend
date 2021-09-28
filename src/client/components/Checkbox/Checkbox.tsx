@@ -13,16 +13,17 @@ import {
 
 import styles from './Checkbox.module.scss';
 
-type Props = {
+type CheckboxProps = {
   checked?: boolean;
   disabled?: boolean;
   error?: boolean;
   indeterminate?: boolean;
+  className?: string;
 };
 
 const Checkbox = forwardRef<
   HTMLInputElement,
-  Props & HTMLAttributes<HTMLInputElement>
+  CheckboxProps & HTMLAttributes<HTMLInputElement>
 >(
   (
     {
@@ -56,8 +57,7 @@ const Checkbox = forwardRef<
 
     return (
       <span
-        className={styles.CheckboxWrapperStyle}
-        {...{ className, disabled, checked, error }}
+        className={classnames(styles.CheckboxWrapperStyle, className)}
         aria-disabled={disabled}
       >
         <span
@@ -65,7 +65,6 @@ const Checkbox = forwardRef<
             styles.CheckboxIcon,
             (checked || indeterminate) && styles.Checked
           )}
-          {...{ disabled, checked, error, indeterminate }}
         >
           {!checked && indeterminate && <Indeterminate />}
           {checked && <Checkmark />}
@@ -76,7 +75,7 @@ const Checkbox = forwardRef<
             styles.CheckboxInput,
             (checked || indeterminate) && styles.Checked
           )}
-          {...{ ...otherProps, disabled, checked, ref }}
+          {...{ ...otherProps, disabled, ref }}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             if (onChange) {
               onChange(e);

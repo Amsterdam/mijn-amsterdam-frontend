@@ -1,0 +1,47 @@
+@import '../../styles/_global.scss';
+
+.SearchBarStyle {
+  display: flex;
+  position: relative;
+}
+
+.TextFieldStyle {
+  flex-grow: 1;
+  position: relative;
+  /** The searchbar input has a different height to fit the (small) header */
+}
+
+.SearchButton {
+  background-color: $color-primary-red;
+}
+
+.InputWrapper {
+  position: relative;
+}
+
+.FormLabelStyle {
+  display: block;
+  padding-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.InputStyle {
+  height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+  appearance: none;
+  font-size: 1rem;
+  border: solid 1px #767676;
+  border-radius: 0;
+  box-sizing: border-box;
+  line-height: 1.4rem;
+  padding: 0.5rem;
+  width: 100%;
+  height: 2.75rem;
+}
+
+.ButtonStyle {
+  min-width: auto;
+  margin-left: 0.25rem;
+  height: 2.25rem;
+  width: 2.2rem;
+}

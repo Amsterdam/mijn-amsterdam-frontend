@@ -19,7 +19,7 @@
 }
 
 .PanelWide {
-  width: 480px;
+  width: 30rem;
   top: 0;
   transform: translate3d(calc(-100% + 0px), 0, 0);
 }
@@ -32,26 +32,8 @@
   }
 }
 
-.PanelListItem {
-  position: relative;
-  border-top: 1px solid #e6e6e6;
-  > ol > li > ol > li {
-    border-top: 0;
-  }
-  > ol > li {
-    margin-left: 37px;
-  }
-}
-
-.PanelList {
-  padding: 0;
-  list-style-type: none;
-  margin: 0;
-  padding-left: 0;
-}
-
 .PanelContent {
-  padding: 16px 0 16px 0;
+  padding: 1rem 0 1rem 0;
 }
 
 .PanelNarrow {
@@ -67,14 +49,14 @@
 }
 
 .PanelInnerPhone {
-  padding-right: 16px;
-  padding-left: 16px;
+  padding-right: 1rem;
+  padding-left: 1rem;
   max-height: 100%;
 }
 
 .PanelInnerDesktop {
-  padding-right: 32px;
-  padding-left: 16px;
+  padding-right: 2rem;
+  padding-left: 1rem;
 }
 
 .PanelTogglePhone {
@@ -97,9 +79,9 @@
   &:after {
     content: '';
     display: block;
-    height: 8px;
-    width: 120px;
-    border-radius: 12px;
+    height: 0.5rem;
+    width: 7.5rem;
+    border-radius: 0.75rem;
     background: #e6e6e6;
   }
 }
@@ -115,7 +97,7 @@
   padding: 0;
   box-shadow: none;
   z-index: 2; // Place above innerpanels so we hide the scrollbar of that panel
-  width: 32px;
+  width: 2rem;
   transform: 'none';
   &[aria-expanded='true'] .Icon {
     transform: rotate(180deg);
@@ -124,8 +106,8 @@
 }
 
 .Icon {
-  height: 32px;
-  width: 16px;
+  height: 2rem;
+  width: 1rem;
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
@@ -133,19 +115,19 @@
   justify-content: center;
   left: 100%;
   position: absolute;
-  top: 20px;
+  top: 1.25rem;
 }
 
 .CloseButton {
   position: absolute;
-  right: 24px;
-  top: 16px;
+  right: 1.5rem;
+  top: 1rem;
   z-index: 3;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   svg {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -163,8 +145,8 @@
     align-items: center;
     > small {
       display: inline-block;
-      margin-top: 2px;
-      margin-left: 4px;
+      margin-top: 0.125rem;
+      margin-left: 0.25rem;
     }
   }
 }
@@ -180,7 +162,7 @@
 }
 
 .PropertyFilterPanel {
-  margin-left: 36px;
+  margin-left: 2.25rem;
 }
 
 .FilterPropertyName {
@@ -203,8 +185,8 @@
   right: 0;
   top: 3px;
   z-index: 3;
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   &:hover,
   &:focus {
     visibility: visible;

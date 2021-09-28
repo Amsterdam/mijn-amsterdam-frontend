@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import styles from './PanelComponent.module.scss';
 import { DatasetId } from '../../../../universal/config';
 import {
@@ -17,6 +17,7 @@ import {
   filterItemCheckboxState,
 } from './DatasetControlCheckbox';
 import { DatasetControlPanelProps } from './DatasetControlPanel';
+import { PanelList, PanelListItem } from './PanelList';
 
 interface DatasetPropertyFilterPanelProps {
   datasetId: DatasetId;
@@ -26,6 +27,18 @@ interface DatasetPropertyFilterPanelProps {
   valuesRefined?: DatasetPropertyValueWithCount;
   activeFilters: DatasetFilterSelection;
   onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
+}
+
+function PropertyFilterPanel({ children }: { children: ReactNode }) {
+  return <div className={styles.PropertyfilterPanel}>{children}</div>;
+}
+
+function FilterPropertyName({ children }: { children: ReactNode }) {
+  return <strong className={styles.FilterPropertyName}>{children}</strong>;
+}
+
+function FeatureCount({ children }: { children: ReactNode }) {
+  return <small>{children}</small>;
 }
 
 export function DatasetPropertyFilterPanel({
@@ -50,12 +63,12 @@ export function DatasetPropertyFilterPanel({
   );
 
   return (
-    <div className={styles.PropertyFilterPanel}>
+    <PropertyFilterPanel>
       {property.title && (
-        <strong className={styles.FilterPropertyName}>{property.title}</strong>
+        <FilterPropertyName>{property.title}</FilterPropertyName>
       )}
       {!valuesSorted.length && <span>laden...</span>}
-      <ol className={styles.PanelList}>
+      <PanelList>
         {valuesSorted.map(([value, featureCount], index) => {
           const { isChecked } = filterItemCheckboxState(
             activeFilters,
@@ -65,10 +78,7 @@ export function DatasetPropertyFilterPanel({
           );
 
           return (
-            <li
-              className={styles.PanelListItem}
-              key={`property-${datasetId + propertyName + index}`}
-            >
+            <PanelListItem key={`property-${datasetId + propertyName + index}`}>
               <DatasetControlCheckbox
                 isChecked={isChecked}
                 id={datasetId + propertyName + value}
@@ -81,13 +91,13 @@ export function DatasetPropertyFilterPanel({
                     ) || ''}
                     {value}
                     {featureCount >= 1 ? (
-                      <small>
+                      <FeatureCount>
                         (
                         {valuesRefined
                           ? valuesRefined[value] || 0
                           : featureCount}
                         )
-                      </small>
+                      </FeatureCount>
                     ) : (
                       ''
                     )}
@@ -106,10 +116,10 @@ export function DatasetPropertyFilterPanel({
                   );
                 }}
               />
-            </li>
+            </PanelListItem>
           );
         })}
-      </ol>
-    </div>
+      </PanelList>
+    </PropertyFilterPanel>
   );
 }

@@ -1,13 +1,17 @@
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import {
+  ButtonHTMLAttributes,
+  forwardRef,
+  HTMLProps,
   MouseEvent,
   PropsWithChildren,
+  ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useRef,
 } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, AnimatedProps, useSpring } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 
@@ -16,6 +20,7 @@ import { useWidescreen } from '../../../hooks/media.hook';
 import styles from './PanelComponent.module.scss';
 import { CloseButton } from '../../Button/Button';
 import classnames from 'classnames';
+import StyledComponent from '../../StyledComponent';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -27,6 +32,8 @@ export enum PanelState {
 function px(size: number) {
   return size + 'px';
 }
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const WIDE_PANEL_TIP_WIDTH = px(8 * spacing);
 export const WIDE_PANEL_PREVIEW_WIDTH = px(60 * spacing);
@@ -175,19 +182,88 @@ type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
 
+function Panel({
+  children,
+  className,
+  id,
+  ...rest
+}: {
+  children: ReactNode;
+  className?: string;
+  id?: string;
+}) {
+  return (
+    <animated.div
+      className={classnames(styles.Panel, className)}
+      id={id}
+      {...rest}
+    >
+      {children}
+    </animated.div>
+  );
+}
+
+const PanelInnerDesktop = forwardRef<HTMLElement, HTMLProps<HTMLDivElement>>(
+  ({ children }, ref) =>
+    StyledComponent({
+      tag: 'div',
+      ref,
+      className: classnames(styles.PanelInner, styles.PanelInnerDesktop),
+      children,
+    })
+);
+
+const PanelInnerPhone = forwardRef<HTMLElement, HTMLProps<HTMLDivElement>>(
+  ({ children }, ref) =>
+    StyledComponent({
+      tag: 'div',
+      ref,
+      className: classnames(styles.PanelInner, styles.PanelInnerPhone),
+      children,
+    })
+);
+
+function PanelWide({
+  children,
+  ...rest
+}: { children: ReactNode } & AnimatedProps<any>) {
+  return (
+    <Panel {...rest} className={styles.PanelWide}>
+      {children}
+    </Panel>
+  );
+}
+
+function PanelNarrow({
+  children,
+  id,
+  ...rest
+}: { children: ReactNode; id: string } & AnimatedProps<any>) {
+  return (
+    <Panel {...rest} className={styles.PanelNarrow} id={id}>
+      {children}
+    </Panel>
+  );
+}
+
+function ToggleButtonPhone({ ...rest }: ButtonProps) {
+  return <button {...rest} className={styles.PanelTogglePhone} />;
+}
+
+function ToggleButtonDesktop({ children, ...rest }: ButtonProps) {
+  return (
+    <button {...rest} className={styles.PanelToggleDesktop}>
+      {children}
+    </button>
+  );
+}
+
 function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
   const anim = useSpring({
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
     config: WIDE_PANEL_SPRING_CONFIG,
   });
-  return (
-    <animated.div
-      className={classnames(styles.Panel, styles.PanelWide)}
-      style={anim}
-    >
-      {children}
-    </animated.div>
-  );
+  return <PanelWide style={anim}>{children}</PanelWide>;
 }
 
 type PanelNarrowAnimatedProps = PropsWithChildren<{
@@ -215,16 +291,10 @@ function PanelNarrowAnimated({
     onSwipedDown,
     ...NARROW_PANEL_SWIPE_CONFIG,
   });
-
   return (
-    <animated.div
-      {...handlers}
-      id={id}
-      style={anim}
-      className={classnames(styles.Panel, styles.PanelNarrow)}
-    >
+    <PanelNarrow {...handlers} id={id} style={anim}>
       {children}
-    </animated.div>
+    </PanelNarrow>
   );
 }
 
@@ -309,8 +379,7 @@ export function PanelComponent({
         />
       )}
       {showToggleButton && (
-        <button
-          className={styles.PanelTogglePhone}
+        <ToggleButtonPhone
           aria-expanded={isPanelExpanded}
           aria-label={
             !isPanelExpanded ? `Maak ${id} paneel groter` : `Sluit ${id} paneel`
@@ -318,12 +387,7 @@ export function PanelComponent({
           onClick={cycleState}
         />
       )}
-      <div
-        className={classnames(styles.PanelInnerPhone, styles.PanelInner)}
-        ref={ref}
-      >
-        {children}
-      </div>
+      <PanelInnerPhone ref={ref}>{children}</PanelInnerPhone>
     </PanelNarrowAnimated>
   ) : (
     <PanelWideAnimated width={getPanelSize(state, false)}>
@@ -337,7 +401,7 @@ export function PanelComponent({
         />
       )}
       {showToggleButton && (
-        <button
+        <ToggleButtonDesktop
           className={styles.PanelToggleDesktop}
           aria-expanded={isPanelExpanded}
           aria-label={
@@ -348,14 +412,9 @@ export function PanelComponent({
           <span className={styles.Icon}>
             <IconChevronRight />
           </span>
-        </button>
+        </ToggleButtonDesktop>
       )}
-      <div
-        className={classnames(styles.PanelInnerDesktop, styles.PanelInner)}
-        ref={ref}
-      >
-        {children}
-      </div>
+      <PanelInnerDesktop ref={ref}>{children}</PanelInnerDesktop>
     </PanelWideAnimated>
   );
 }

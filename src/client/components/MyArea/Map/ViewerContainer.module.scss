@@ -20,26 +20,26 @@
   flex-direction: column;
   pointer-events: all;
   position: absolute;
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 .TopLeft {
-  left: 16px;
-  top: 16px;
+  left: 1rem;
+  top: 1rem;
 }
 
 .TopRight {
-  right: 16px;
-  top: 16px;
+  right: 1rem;
+  top: 1rem;
 }
 
 .BottomRight {
   right: 0px;
-  bottom: 16px;
-  padding-right: 16px;
+  bottom: 1rem;
+  padding-right: 1rem;
 }
 
 .BottomLeft {
-  bottom: 16px;
-  left: 16px;
+  bottom: 1rem;
+  left: 1rem;
 }

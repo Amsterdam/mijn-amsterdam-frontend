@@ -8,19 +8,19 @@
 }
 
 .ToggleButton {
-  padding: 16px;
+  padding: 1rem;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
-  line-height: 20px;
+  line-height: 1.25rem;
   text-transform: capitalize;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   margin-right: 2px;
   align-self: self-start;
   text-align: left;
@@ -31,7 +31,7 @@
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     background: url('../../../assets/images/aerial-background@2.png') no-repeat
-      top left / 120px 44px;
+      top left / 7.5rem 2.75rem;
   }
 }
 
@@ -40,6 +40,6 @@
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     background: url('../../../assets/images/topo-background@2.png') no-repeat
-      top left / 120px 44px;
+      top left / 7.5rem 2.75rem;
   }
 }
