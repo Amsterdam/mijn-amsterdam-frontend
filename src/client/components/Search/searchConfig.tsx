@@ -1,6 +1,10 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
-import { FinancieleHulp, Vergunning } from '../../../server/services';
+import {
+  FinancieleHulp,
+  KrefiaDeepLink,
+  Vergunning,
+} from '../../../server/services';
 import {
   FocusStadspas,
   FocusStadspasSaldo,
@@ -397,16 +401,21 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
     ) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
-        Object.values(apiContent.deepLinks).map((deepLink) => {
-          return {
-            ...deepLink,
-            title: deepLink.title,
-            link: {
-              to: deepLink.url,
+        Object.values(apiContent.deepLinks)
+          .filter(
+            (deepLink: KrefiaDeepLink): deepLink is KrefiaDeepLink =>
+              deepLink !== null
+          )
+          .map((deepLink) => {
+            return {
+              ...deepLink,
               title: deepLink.title,
-            },
-          };
-        });
+              link: {
+                to: deepLink.url,
+                title: deepLink.title,
+              },
+            };
+          });
       return deepLinks || [];
     },
     keywords: () => [
