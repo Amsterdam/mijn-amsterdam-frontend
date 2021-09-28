@@ -35,6 +35,14 @@
               "description": "Kindbudget test MijnAmsterdam",
               "urlTransactions": "/api/focus/stadspastransacties/gAAAAABfs6wSk83lMv3MAtPe391EqxgHHao5z7PXh1ZSihPf2BHaAJbpfxuRA-8UeEPg72nUbTMrPfhQ2I2OtTDmeBKOPABi5OB-NdL2Q14eUjV6bO3e5-r_G2OPuqMw2Luw35AenP9E",
               "datumAfloop": "2956-08-31T21:59:59.000Z"
+            },
+            {
+              "assigned": 50,
+              "balance": 34,
+              "code": "AMSTEST_1-9",
+              "description": "Kerstbonus test MijnAmsterdam",
+              "urlTransactions": "/api/focus/stadspastransacties/gAAAAABfs6wSk83lMv3MAtPe391EqxgHHao5z7PXh1ZSihPf2BHaAJbpfxuRA-8UeEPg72nUbTMrPfhQ2I2OtTDmeBKOPABi5OB-NdL2Q14eUjV6bO3e5-r_G2OPuqMw2Luw35AenP9E",
+              "datumAfloop": "2022-01-31T21:59:59.000Z"
             }
           ],
           "datumAfloop": "2021-08-31T21:59:59.000Z",
