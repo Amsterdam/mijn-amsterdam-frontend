@@ -1,5 +1,50 @@
 @import '../../styles/_global.scss';
 
+$colors: (
+  grey: (
+    background-color: $color-neutral-grey5,
+  ),
+  lightBlue: (
+    background-color: $color-support-lightblue,
+  ),
+  yellow: (
+    background-color: $color-support-yellow,
+  ),
+  valid: (
+    background-color: $color-support-valid,
+  ),
+  orange: (
+    background-color: $color-support-orange,
+  ),
+  purple: (
+    background-color: $color-support-purple,
+  ),
+  lightGreen: (
+    background-color: $color-support-lightgreen,
+  ),
+  pink: (
+    background-color: $color-support-pink,
+  ),
+  focus: (
+    background-color: $color-support-focus,
+  ),
+  black: (
+    background-color: $color-black,
+  ),
+);
+
+@function color-prop($color, $prop) {
+  @return map-get(map-get($colors, $color), $prop);
+}
+
+@mixin colorStyle($color: grey) {
+  &__#{$color} {
+    background-color: color-prop($color, background-color);
+
+    @content;
+  }
+}
+
 .DatasetIcon {
   margin-right: 0.8rem;
   border-radius: 50%;
@@ -9,6 +54,16 @@
   border: 0.2rem $color-white solid;
   width: 2.8rem;
   height: 2.8rem;
+  @include colorStyle('grey');
+  @include colorStyle('lightBlue');
+  @include colorStyle('yellow');
+  @include colorStyle('valid');
+  @include colorStyle('orange');
+  @include colorStyle('purple');
+  @include colorStyle('lightGreen');
+  @include colorStyle('pink');
+  @include colorStyle('focus');
+  @include colorStyle('black');
 }
 
 .DatasetIconCircle {
