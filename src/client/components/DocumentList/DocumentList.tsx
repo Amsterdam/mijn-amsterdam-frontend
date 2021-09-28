@@ -1,4 +1,4 @@
-import { Spinner } from '@amsterdam/asc-ui';
+import Spinner from '../Spinner/Spinner';
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';

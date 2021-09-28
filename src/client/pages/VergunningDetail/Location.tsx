@@ -1,8 +1,8 @@
-import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { LatLngLiteral } from 'leaflet';
 import { useState, useEffect } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config';
 import { Button, InfoDetail, Modal } from '../../components';
+import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
