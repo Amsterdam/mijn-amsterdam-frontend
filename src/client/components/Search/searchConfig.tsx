@@ -560,6 +560,7 @@ export const staticIndex: SearchEntry[] = [
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat.`,
     keywords: [
+      'brp',
       'gegevens',
       'profiel',
       'bevolkingsregister',

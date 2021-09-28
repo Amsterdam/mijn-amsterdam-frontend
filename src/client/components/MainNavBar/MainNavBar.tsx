@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { matchPath, NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
@@ -8,7 +8,10 @@ import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
+import {
+  trackEventWithProfileType,
+  trackItemPresentation,
+} from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
@@ -148,6 +151,19 @@ export default function MainNavBar({
   const location = useLocation();
   const profileType = useProfileTypeValue();
 
+  const trackSearchBarEvent = useCallback(
+    (action: string) =>
+      trackEventWithProfileType(
+        {
+          category: 'Search',
+          name: `Search bar toggle`,
+          action,
+        },
+        profileType
+      ),
+    [profileType]
+  );
+
   // Bind click outside and tab navigation interaction
   useEffect(() => {
     if (!hasBurgerMenu) {
@@ -215,12 +231,14 @@ export default function MainNavBar({
   useKeyUp((event) => {
     if (event.key === 'z' && !isSearchActive) {
       setSearchActive(true);
+      trackSearchBarEvent('Openen met z toets');
     }
   });
 
   useEffect(() => {
     setSearchActive(false);
-  }, [location.pathname]);
+    trackSearchBarEvent('Automatisch sluiten (navigatie)');
+  }, [location.pathname, trackSearchBarEvent]);
 
   useEffect(() => {
     if (isSearchActive) {
@@ -266,7 +284,12 @@ export default function MainNavBar({
         {FeatureToggle.isSearchEnabled && isDisplaySearch && (
           <IconButton
             className={styles.SearchButton}
-            onClick={() => setSearchActive(!isSearchActive)}
+            onClick={() => {
+              setSearchActive(!isSearchActive);
+              trackSearchBarEvent(
+                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
+              );
+            }}
             icon={isSearchActive ? IconClose : IconSearch}
           />
         )}
@@ -275,7 +298,14 @@ export default function MainNavBar({
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
-              <Search onFinish={() => setSearchActive(false)} />
+              <Search
+                onFinish={(reason) => {
+                  setSearchActive(false);
+                  if (reason) {
+                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                  }
+                }}
+              />
             </div>
           </div>
         </div>
