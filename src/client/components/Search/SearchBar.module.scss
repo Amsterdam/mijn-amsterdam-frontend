@@ -19,6 +19,12 @@
   margin-left: 0.4rem;
   padding: 0.8rem;
   bottom: 0px;
+  &:hover {
+    background-color: rgb(225, 0, 0);
+    svg path {
+      fill: $color-white;
+    }
+  }
 }
 
 .InputWrapper {
