@@ -1,9 +1,11 @@
-import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { PolylineOptions } from 'leaflet';
 import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styles from './Datasets.module.scss';
-import { MaPointFeature } from '../../../server/services/buurt/datasets';
+import {
+  MaPointFeature,
+  themeColors,
+} from '../../../server/services/buurt/datasets';
 import {
   IconAfvalGft,
   IconAfvalGlas,
@@ -36,6 +38,7 @@ import {
 } from '../../assets/icons/map';
 import classnames from 'classnames';
 
+//:TODO refactor colors properly
 export const datasetIcons: Record<
   string,
   ReactElement<any> | Record<string, ReactElement<any>>

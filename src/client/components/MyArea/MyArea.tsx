@@ -1,6 +1,4 @@
-import { constants } from '@amsterdam/arm-core/lib/';
 import Map from './Map/Map';
-import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -38,7 +36,11 @@ import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 import styles from './MyArea.module.scss';
 import ViewerContainer from './Map/ViewerContainer';
-import BaseLayerToggle from './Map/BaseLayerToggle';
+import BaseLayerToggle, {
+  AERIAL_AMSTERDAM_LAYERS,
+  BaseLayerType,
+  DEFAULT_AMSTERDAM_LAYERS,
+} from './Map/BaseLayerToggle';
 import Zoom from './Map/Zoom';
 
 const baseLayerOptions: TileLayerOptions = {
@@ -155,8 +157,8 @@ export default function MyArea({
 
   const mapLayers = useMemo(() => {
     return {
-      aerial: [constants.AERIAL_AMSTERDAM_LAYERS[0]],
-      topo: [constants.DEFAULT_AMSTERDAM_LAYERS[0]],
+      aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
+      topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
     };
   }, []);
 

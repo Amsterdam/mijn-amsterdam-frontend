@@ -1,4 +1,4 @@
-import BaseLayer from '@amsterdam/arm-core/lib/components/BaseLayer';
+import BaseLayer from './Map/BaseLayer';
 import Map from './Map/Map';
 import { LatLngLiteral } from 'leaflet';
 import 'leaflet/dist/leaflet.css';

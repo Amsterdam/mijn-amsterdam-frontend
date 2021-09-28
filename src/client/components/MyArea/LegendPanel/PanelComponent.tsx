@@ -1,4 +1,3 @@
-import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import {
   ButtonHTMLAttributes,
   forwardRef,
@@ -35,11 +34,11 @@ function px(size: number) {
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const WIDE_PANEL_TIP_WIDTH = px(8 * spacing);
-export const WIDE_PANEL_PREVIEW_WIDTH = px(60 * spacing);
-export const WIDE_PANEL_WIDTH = px(120 * spacing);
-export const NARROW_PANEL_PREVIEW_HEIGHT = px(60 * spacing);
-export const NARROW_PANEL_TIP_HEIGHT = px(10 * spacing);
+export const WIDE_PANEL_TIP_WIDTH = px(8 * 4);
+export const WIDE_PANEL_PREVIEW_WIDTH = px(60 * 4);
+export const WIDE_PANEL_WIDTH = px(120 * 4);
+export const NARROW_PANEL_PREVIEW_HEIGHT = px(60 * 4);
+export const NARROW_PANEL_TIP_HEIGHT = px(10 * 4);
 
 const NARROW_PANEL_SWIPE_CONFIG = {
   delta: 40, // min distance(px) before a swipe starts
