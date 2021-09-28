@@ -123,6 +123,7 @@ export function Search({
         },
         profileType
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [profileType]
   );
 
