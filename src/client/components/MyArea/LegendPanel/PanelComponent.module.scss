@@ -200,9 +200,7 @@
 .CaretIcon {
   height: 1em;
   width: 1em;
-  position: absolute;
-  top: 1.3rem;
-  transform: translateY(calc(-50% + 3px)) rotate(0);
+  transform: rotate(0);
   left: 0;
   transition: transform 200ms ease-out;
 }

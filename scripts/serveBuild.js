@@ -32,7 +32,6 @@ fs.readFile(
 app.use(compression());
 
 app.use(function (req, res, next) {
-  console.log(cfg, 'test');
   res.setHeader('Content-Security-Policy', cfg);
   return next();
 });
