@@ -328,7 +328,15 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       });
       return stadspassen || [];
     },
-    keywords: () => ['kindtegoed', 'saldo'],
+    keywords: () => [
+      'saldo',
+      'kind',
+      'budget',
+      'tegoed',
+      'stadspas',
+      'stad',
+      'pas',
+    ],
     title: (stadspas: FocusStadspas) => `Stadspas van ${stadspas.naam}`,
     displayTitle: (stadspas: FocusStadspas) => {
       return (term: string) => {
@@ -508,6 +516,9 @@ export const staticIndex: SearchEntry[] = [
       'Pas',
       'Transacties',
       'Hoeveel heb ik uitgegeven?',
+      'Tegoed',
+      'Bonus',
+      'Kind',
     ],
     profileTypes: ['private'],
   },
