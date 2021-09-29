@@ -5,6 +5,7 @@ import {
   MouseEvent,
   PropsWithChildren,
   ReactNode,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -181,26 +182,20 @@ type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
 
-function Panel({
-  children,
-  className,
-  id,
-  ...rest
-}: {
-  children: ReactNode;
-  className?: string;
-  id?: string;
-}) {
-  return (
-    <animated.div
-      className={classnames(styles.Panel, className)}
-      id={id}
-      {...rest}
-    >
-      {children}
-    </animated.div>
-  );
-}
+const Panel = forwardRef<HTMLElement, AnimatedProps<any>>(
+  ({ children, id, className, ...rest }, ref) => {
+    return (
+      <animated.div
+        className={classnames(styles.Panel, className)}
+        id={id}
+        ref={ref as RefObject<HTMLDivElement>}
+        {...rest}
+      >
+        {children}
+      </animated.div>
+    );
+  }
+);
 
 const PanelInnerDesktop = forwardRef<HTMLElement, HTMLProps<HTMLDivElement>>(
   ({ children }, ref) =>
@@ -233,17 +228,15 @@ function PanelWide({
   );
 }
 
-function PanelNarrow({
-  children,
-  id,
-  ...rest
-}: { children: ReactNode; id: string } & AnimatedProps<any>) {
-  return (
-    <Panel {...rest} className={styles.PanelNarrow} id={id}>
-      {children}
-    </Panel>
-  );
-}
+const PanelNarrow = forwardRef<HTMLElement, AnimatedProps<any>>(
+  ({ children, id, ...rest }, ref) => {
+    return (
+      <Panel {...rest} className={styles.PanelNarrow} id={id} ref={ref}>
+        {children}
+      </Panel>
+    );
+  }
+);
 
 function ToggleButtonPhone({ ...rest }: ButtonProps) {
   return <button {...rest} className={styles.PanelTogglePhone} />;
