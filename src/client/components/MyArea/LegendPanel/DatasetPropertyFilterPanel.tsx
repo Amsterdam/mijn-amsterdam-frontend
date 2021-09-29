@@ -89,7 +89,7 @@ export function DatasetPropertyFilterPanel({
                       datasetId,
                       getIconChildIdFromValue(datasetId, value)
                     ) || ''}
-                    {value}
+                    <p>{value}</p>
                     {featureCount >= 1 ? (
                       <FeatureCount>
                         (

@@ -157,8 +157,11 @@
 }
 
 .LabelText {
-  margin: 9.2px;
+  margin: 0.9rem;
   order: 1;
+  p {
+    margin: 0 0 0 0.8rem;
+  }
 }
 
 .PropertyFilterPanel {

@@ -50,7 +50,7 @@ export function DatasetPanel({
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
-          {dataset.title}
+          <p>{dataset.title}</p>
         </>
       }
       isIndeterminate={isIndeterminate}
