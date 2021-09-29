@@ -33,6 +33,13 @@ import {
   IconVolleybal,
   IconWior,
   IconZwembad,
+  IconAfvalMelding,
+  IconGroenWater,
+  IconOverlastBedrijven,
+  IconOverlastWater,
+  IconOverlastDieren,
+  IconCivieleConstructies,
+  IconMeldingen,
 } from '../../assets/icons/map';
 import classnames from 'classnames';
 
@@ -326,6 +333,63 @@ export const datasetIcons: Record<
       </div>
     ),
   },
+  meldingen_buurt: {
+    meldingen_buurt: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconMeldingen fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    afval: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconAfvalMelding fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'civiele-constructies': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconCivieleConstructies fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'overlast-van-dieren': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastDieren fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'overlast-op-het-water': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastWater fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'openbaar-groen-en-water': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconGroenWater fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'overlast-bedrijven-en-horeca': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'overlast-in-de-openbare-ruimte': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    schoon: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'wegen-verkeer-straatmeubilair': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    overig: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
   default: (
     <div
       className={classnames(
@@ -355,7 +419,6 @@ export function getIcon(id: string, childId?: string) {
 
 export function getIconChildIdFromValue(id: string, value: string) {
   let childId: undefined | string = undefined;
-
   switch (id) {
     default:
       childId = value?.toLowerCase();
@@ -369,7 +432,6 @@ export function getIconHtml(feature: MaPointFeature) {
   let datasetId = feature.properties.datasetId;
   let iconDefault = datasetIcons.default;
   let childId: undefined | string = undefined;
-
   switch (datasetId) {
     case 'sport':
     case 'gymzaal':
