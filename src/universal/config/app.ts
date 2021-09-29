@@ -11,6 +11,7 @@ export const FeatureToggle = {
   focusUitkeringsspecificatiesActive: true,
   identiteitsbewijzenActive: true,
   tonkActive: true,
+  bbzActive: !IS_PRODUCTION,
   eherkenningActive: true,
   vergunningenActive: true,
   cmsFooterActive: true,

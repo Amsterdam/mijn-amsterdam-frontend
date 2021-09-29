@@ -22,6 +22,7 @@ import {
 } from './focus-toxx-helpers';
 import { bbzDocumentLabelSet } from './focus-bbz-content';
 import { FocusItem, FocusItemStep } from './focus-types';
+import { FeatureToggle } from '../../../universal/config/app';
 
 export function createBBZResult(
   bbzdocumenten: FocusCombinedSourceResponse['tozodocumenten']
@@ -94,6 +95,10 @@ export async function fetchFOCUSBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.tonkActive) {
+    return apiSuccesResult([]);
+  }
+
   const response = await fetchFOCUSCombined(
     sessionID,
     passthroughRequestHeaders
