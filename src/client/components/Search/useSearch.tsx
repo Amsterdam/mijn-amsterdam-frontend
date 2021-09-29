@@ -34,7 +34,7 @@ export function generateSearchIndexPageEntry(
   apiConfig: ApiSearchConfig
 ): SearchEntry {
   const props: Array<
-    Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName'>
+    Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName' | 'isEnabled'>
   > = [
     'keywordSourceProps',
     'title',
@@ -44,7 +44,7 @@ export function generateSearchIndexPageEntry(
     'keywords',
   ];
 
-  const pageEntry = {} as SearchEntry;
+  const searchEntry = {} as SearchEntry;
 
   for (const prop of props) {
     const configValue = apiConfig[prop];
@@ -59,22 +59,23 @@ export function generateSearchIndexPageEntry(
     }
 
     if (prop === 'keywords') {
-      pageEntry.keywords = uniqueArray([
-        ...(pageEntry.keywords || []),
+      searchEntry.keywords = uniqueArray([
+        ...(searchEntry.keywords || []),
         ...value,
       ]);
     } else if (prop === 'keywordSourceProps') {
       value = Object.values(pick(item, value));
-      pageEntry.keywords = uniqueArray([
-        ...(pageEntry.keywords || []),
+      searchEntry.keywords = uniqueArray([
+        ...(searchEntry.keywords || []),
         ...value,
       ]);
     } else {
-      pageEntry[prop as keyof SearchEntry] = value;
+      const key: keyof SearchEntry = prop;
+      searchEntry[key] = value;
     }
   }
 
-  return pageEntry;
+  return searchEntry;
 }
 
 export function generateSearchIndexPageEntries(
@@ -85,9 +86,11 @@ export function generateSearchIndexPageEntries(
   const apiConfig = getApiSearchConfigs(profileType).find(
     (config) => config.apiName === apiName
   );
+  const isEnabled =
+    !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
 
-  if (!apiConfig) {
-    throw new Error(`${apiName} does not have search index entry.`);
+  if (!apiConfig || !isEnabled) {
+    return [];
   }
 
   return apiConfig
@@ -165,9 +168,13 @@ export function useSearchIndex() {
   const profileType = useProfileTypeValue();
   const isIndexed = useRef(false);
   const chapterPageEntries = useMemo(() => {
-    return staticIndex.filter(
-      (index) => !index.profileTypes || index.profileTypes.includes(profileType)
-    );
+    return staticIndex.filter((index) => {
+      const isEnabled = 'isEnabled' in index ? index.isEnabled : true;
+      return (
+        isEnabled &&
+        (!index.profileTypes || index.profileTypes.includes(profileType))
+      );
+    });
   }, [profileType]);
 
   useEffect(() => {

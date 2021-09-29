@@ -1,19 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import Fuse from 'fuse.js';
+import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
+import { useRecoilValue } from 'recoil';
+import { FeatureToggle } from '../../../universal/config';
+import { appStateAtom } from '../../hooks';
+import { ApiBaseItem, ApiSearchConfig, apiSearchConfigs } from './searchConfig';
 import {
-  generateSearchIndexPageEntry,
   generateSearchIndexPageEntries,
+  generateSearchIndexPageEntry,
+  isIndexReadyQuery,
+  searchConfigAtom,
   useSearch,
   useSearchIndex,
-  useSearchTerm,
-  useSearchResults,
-  searchConfigAtom,
-  isIndexReadyQuery,
 } from './useSearch';
-import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
-import { ApiBaseItem, ApiSearchConfig } from './searchConfig';
-import { appStateAtom } from '../../hooks';
-import { useRecoilValue } from 'recoil';
-import Fuse from 'fuse.js';
 
 const vergunningenData = [
   {
@@ -50,6 +48,24 @@ const vergunningenData = [
     },
   },
 ];
+
+const financieleHulpData = {
+  deepLinks: {
+    budgetbeheer: {
+      title: 'Beheer uw budget op FiBu',
+      url: 'http://host/bbr/2064866/3',
+    },
+    lening: {
+      title:
+        'Kredietsom \u20ac1.689,12 met openstaand termijnbedrag \u20ac79,66',
+      url: 'http://host/pl/2442531/1',
+    },
+    schuldhulp: {
+      title: 'Afkoopvoorstellen zijn verstuurd',
+      url: 'http://host/srv/2442531/2',
+    },
+  },
+};
 
 describe('Search hooks and helpers', () => {
   test('useSearch', () => {
@@ -163,6 +179,76 @@ describe('Search hooks and helpers', () => {
         },
       ]
     `);
+  });
+
+  test('generateSearchIndexPageEntries with disabled/enabled feature', () => {
+    const config = apiSearchConfigs.find(
+      (config) => config.apiName === 'FINANCIELE_HULP'
+    )!;
+    const origVal = config.isEnabled;
+    config.isEnabled = false;
+    const pageEntries = generateSearchIndexPageEntries(
+      'private',
+      'FINANCIELE_HULP',
+      financieleHulpData
+    );
+    expect(pageEntries).toMatchInlineSnapshot(`Array []`);
+    config.isEnabled = true;
+    const pageEntriesEnabled = generateSearchIndexPageEntries(
+      'private',
+      'FINANCIELE_HULP',
+      financieleHulpData
+    );
+    expect(pageEntriesEnabled).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "description": "Bekijk Beheer uw budget op FiBu",
+          "displayTitle": [Function],
+          "keywords": Array [
+            "Beheer uw budget op FiBu",
+            "lening",
+            "fibu",
+            "schuldhulpregeling",
+            "regeling",
+            "krediet",
+            "budgetbeheer",
+          ],
+          "title": "Beheer uw budget op FiBu",
+          "url": "http://host/bbr/2064866/3",
+        },
+        Object {
+          "description": "Bekijk Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
+          "displayTitle": [Function],
+          "keywords": Array [
+            "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
+            "lening",
+            "fibu",
+            "schuldhulpregeling",
+            "regeling",
+            "krediet",
+            "budgetbeheer",
+          ],
+          "title": "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
+          "url": "http://host/pl/2442531/1",
+        },
+        Object {
+          "description": "Bekijk Afkoopvoorstellen zijn verstuurd",
+          "displayTitle": [Function],
+          "keywords": Array [
+            "Afkoopvoorstellen zijn verstuurd",
+            "lening",
+            "fibu",
+            "schuldhulpregeling",
+            "regeling",
+            "krediet",
+            "budgetbeheer",
+          ],
+          "title": "Afkoopvoorstellen zijn verstuurd",
+          "url": "http://host/srv/2442531/2",
+        },
+      ]
+    `);
+    config.isEnabled = origVal;
   });
 
   test('useSearchIndex index not ready', () => {

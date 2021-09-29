@@ -1,6 +1,10 @@
 import React, { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
-import { FinancieleHulp, Vergunning } from '../../../server/services';
+import {
+  FinancieleHulp,
+  KrefiaDeepLink,
+  Vergunning,
+} from '../../../server/services';
 import {
   FocusStadspas,
   FocusStadspasSaldo,
@@ -11,7 +15,11 @@ import {
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import { WmoItem } from '../../../server/services/wmo';
-import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  DocumentTitles,
+  FeatureToggle,
+} from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import {
@@ -35,6 +43,7 @@ export interface SearchEntry {
   description: string;
   keywords?: string[];
   profileTypes?: ProfileType[];
+  isEnabled?: boolean;
 }
 
 export interface ApiSearchConfig {
@@ -68,6 +77,9 @@ export interface ApiSearchConfig {
 
   // For which profile types this api's need to be indexed
   profileTypes: ProfileType[];
+
+  // Whether or not this api is active
+  isEnabled?: boolean;
 }
 
 export interface ApiBaseItem {
@@ -110,7 +122,7 @@ export function displayPath(
   isExternal: boolean = false,
   replaceTerm: boolean = true
 ) {
-  const termSplitted = term.split(/\s/gi);
+  const termSplitted = term.trim().split(/\s+/g);
 
   return (
     <>
@@ -199,7 +211,7 @@ export function getApiSearchConfigs(profileType: ProfileType) {
     .filter((config) => config.profileTypes?.includes(profileType));
 }
 
-const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
+export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   {
     apiName: 'VERGUNNINGEN',
     keywordSourceProps: (vergunning: Vergunning): string[] => {
@@ -328,7 +340,15 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       });
       return stadspassen || [];
     },
-    keywords: () => ['kindtegoed', 'saldo'],
+    keywords: () => [
+      'saldo',
+      'kind',
+      'budget',
+      'tegoed',
+      'stadspas',
+      'stad',
+      'pas',
+    ],
     title: (stadspas: FocusStadspas) => `Stadspas van ${stadspas.naam}`,
     displayTitle: (stadspas: FocusStadspas) => {
       return (term: string) => {
@@ -375,22 +395,28 @@ const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
     },
   },
   {
+    isEnabled: FeatureToggle.financieleHulpActive,
     apiName: 'FINANCIELE_HULP',
     getApiBaseItems: (
       apiContent: Omit<FinancieleHulp, 'notificationTriggers'>
     ) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
-        Object.values(apiContent.deepLinks).map((deepLink) => {
-          return {
-            ...deepLink,
-            title: deepLink.title,
-            link: {
-              to: deepLink.url,
+        Object.values(apiContent.deepLinks)
+          .filter(
+            (deepLink: KrefiaDeepLink): deepLink is KrefiaDeepLink =>
+              deepLink !== null
+          )
+          .map((deepLink) => {
+            return {
+              ...deepLink,
               title: deepLink.title,
-            },
-          };
-        });
+              link: {
+                to: deepLink.url,
+                title: deepLink.title,
+              },
+            };
+          });
       return deepLinks || [];
     },
     keywords: () => [
@@ -509,6 +535,9 @@ export const staticIndex: SearchEntry[] = [
       'Pas',
       'Transacties',
       'Hoeveel heb ik uitgegeven?',
+      'Tegoed',
+      'Bonus',
+      'Kind',
     ],
     profileTypes: ['private'],
   },
@@ -561,6 +590,7 @@ export const staticIndex: SearchEntry[] = [
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat.`,
     keywords: [
+      'brp',
       'gegevens',
       'profiel',
       'bevolkingsregister',
@@ -713,6 +743,7 @@ export const staticIndex: SearchEntry[] = [
     keywords: ['Milieuzone', 'Ontheffing'],
   },
   {
+    isEnabled: FeatureToggle.financieleHulpActive,
     url: AppRoutes.FINANCIELE_HULP,
     title: DocumentTitles[AppRoutes.FINANCIELE_HULP],
     displayTitle: (term: string) => displayPath(term, ['Financiële hulp']),
