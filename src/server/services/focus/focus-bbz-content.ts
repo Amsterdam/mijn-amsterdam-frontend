@@ -59,7 +59,8 @@ const toekennenLabels: FocusStepContent = {
 
 const voorschotLabels: FocusStepContent = {
   notification: {
-    title: (document) => `${document.productTitle}: Wij hebben een voorschot betaald`,
+    title: (document) =>
+      `${document.productTitle}: Wij hebben een voorschot betaald`,
     description: (document) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt`,
   },
@@ -148,7 +149,7 @@ export const bbzDocumentLabelSet: Record<
     productSpecific: 'aanvraag',
   },
   '6195': {
-    omschrijving: 'Bbz toekennen via batch',
+    omschrijving: 'Transitie Bbz Toekennen batch',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
     product: 'Bbz',
@@ -173,15 +174,15 @@ export const bbzDocumentLabelSet: Record<
     stepType: 'hersteltermijn',
     productSpecific: 'uitkering',
   },
-  '5858': {
-    omschrijving: 'Bbz hersteltermijn aanvraag',
+  '6351': {
+    omschrijving: 'Transitie Bbz Hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief verzoek om meer informatie',
     product: 'Bbz',
     stepType: 'hersteltermijn',
     productSpecific: 'uitkering',
   },
-  '5860': {
+  '6368': {
     omschrijving: 'Brief aanvraag adviesrapport',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief aanvraag adviesrapport',
@@ -189,8 +190,8 @@ export const bbzDocumentLabelSet: Record<
     stepType: 'brief',
     productSpecific: 'uitkering',
   },
-  '5861': {
-    omschrijving: 'Bbz intrekking',
+  '6350': {
+    omschrijving: 'Transitie Bbz Intrekken',
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Bbz aanvraag',
     product: 'Bbz',
@@ -198,8 +199,8 @@ export const bbzDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     decision: 'intrekking',
   },
-  '5866': {
-    omschrijving: 'Bbz aanvraag buiten behandeling stellen',
+  '6353': {
+    omschrijving: 'Transitie Bbz buiten behandeling stellen',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
     product: 'Bbz',
@@ -215,8 +216,8 @@ export const bbzDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'brief',
   },
-  '5885': {
-    omschrijving: 'Bbz toekennen voorschot',
+  '6196': {
+    omschrijving: 'Transitie Bbz voorschot toekennen batch',
     labels: voorschotLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Bbz',
@@ -224,8 +225,8 @@ export const bbzDocumentLabelSet: Record<
     stepType: 'voorschot',
     decision: 'toekenning',
   },
-  '999': {
-    omschrijving: 'Bbz Toekennen voorschot via batch',
+  '6197': {
+    omschrijving: 'Transitie Bbz voorschot toekennen handmatig',
     labels: voorschotLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Bbz',
@@ -233,30 +234,21 @@ export const bbzDocumentLabelSet: Record<
     stepType: 'voorschot',
     decision: 'toekenning',
   },
-  '35802': {
-    omschrijving: 'Bbz afwijzing',
+  '6198': {
+    omschrijving: 'Transitie Bbz Afwijzen',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'Bbz',
     stepType: 'besluit',
     decision: 'afwijzing',
   },
-  '35840': {
-    omschrijving: 'Bbz toekenning Bbz',
+  '6194': {
+    omschrijving: 'Transitie Bbz Toekennen handmatig',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'Bbz',
     stepType: 'besluit',
     decision: 'afwijzing',
-  },
-  '35866': {
-    omschrijving: 'Bbz toekenning bbz',
-    labels: buitenBehandelingLabels,
-    documentTitle: 'Besluit buiten behandeling',
-    product: 'Bbz',
-    productSpecific: 'uitkering',
-    stepType: 'besluit',
-    decision: 'buitenbehandeling',
   },
   '6301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',

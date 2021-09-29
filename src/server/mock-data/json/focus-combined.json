@@ -791,7 +791,7 @@
       {
         "id": "6195",
         "documentCodeId": "6195",
-        "description": "BBZ Toekennen via batch",
+        "description": "Transitie Bbz Toekennen batch",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
@@ -813,32 +813,32 @@
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "5858",
-        "documentCodeId": "5858",
-        "description": "Bbz Hersteltermijn aanvraag",
+        "id": "6351",
+        "documentCodeId": "6351",
+        "description": "Transitie Bbz Hersteltermijn",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "5860",
-        "documentCodeId": "5860",
+        "id": "6368",
+        "documentCodeId": "6368",
         "description": "Bbz Aanvraag adviesrapport",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "5861",
-        "documentCodeId": "5861",
+        "id": "6350",
+        "documentCodeId": "6350",
         "description": "Bbz Intrekking",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "5866",
-        "documentCodeId": "5866",
+        "id": "6353",
+        "documentCodeId": "6353",
         "description": "Bbz Aanvraag buiten behandeling stellen",
         "type": "",
         "url": "",
@@ -853,32 +853,32 @@
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "5885",
-        "documentCodeId": "5885",
+        "id": "6196",
+        "documentCodeId": "6196",
         "description": "Bbz Toekennen voorschot",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "999",
-        "documentCodeId": "999",
+        "id": "6197",
+        "documentCodeId": "6197",
         "description": "Bbz Toekennen voorschot via batch",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "35802",
-        "documentCodeId": "35802",
+        "id": "6198",
+        "documentCodeId": "6198",
         "description": "Bbz afwijzing",
         "type": "",
         "url": "",
         "datePublished": "2021-09-20T00:00:00+01:00"
       },
       {
-        "id": "35840",
-        "documentCodeId": "35840",
+        "id": "6194",
+        "documentCodeId": "6194",
         "description": "Bbz Toekenning Bbz",
         "type": "",
         "url": "focus/document?id=218062038",
