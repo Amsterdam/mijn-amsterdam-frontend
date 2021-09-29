@@ -282,7 +282,7 @@ export const datasetEndpoints: Record<
     detailUrl: 'https://api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/',
     transformList: transformSiaApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: 0,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometrie',
   },
 };
@@ -463,9 +463,8 @@ function transformSiaApiListResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  console.log(datasetId);
   const features = getApiEmbeddedResponse(datasetId, responseData);
-  console.log('hallo');
+
   if (!features) {
     return [];
   }

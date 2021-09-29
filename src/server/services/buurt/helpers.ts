@@ -508,7 +508,6 @@ export function transformDsoApiListResponse(
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
-  console.log(config);
   const geometryKey = config.geometryKey || 'geometry';
 
   if (results && results.length) {
