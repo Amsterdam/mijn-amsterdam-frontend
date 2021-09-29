@@ -26,6 +26,10 @@ export function defaultDateTimeFormat(datestr: string | Date | number) {
   return dateFormat(datestr, `dd MMMM 'om' HH.mm 'uur'`);
 }
 
+export function dateTimeFormatYear(datestr: string | Date | number) {
+  return dateFormat(datestr, `dd MMMM yyyy 'om' HH.mm 'uur'`);
+}
+
 export function formatDurationInWords(datestr: string) {
   return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
 }

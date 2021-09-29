@@ -156,7 +156,6 @@ export function filterPointFeaturesWithinBoundingBox(
   bbox: [number, number, number, number]
 ) {
   const featuresFiltered = [];
-
   let i = 0;
   let len = features.length;
 
@@ -509,6 +508,7 @@ export function transformDsoApiListResponse(
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
+  console.log(config);
   const geometryKey = config.geometryKey || 'geometry';
 
   if (results && results.length) {
@@ -556,6 +556,5 @@ export function transformDsoApiListResponse(
       }
     }
   }
-
   return collection;
 }

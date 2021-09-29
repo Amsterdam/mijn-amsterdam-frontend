@@ -401,6 +401,12 @@ export function getIconHtml(feature: MaPointFeature) {
         feature.properties.gebiedsnaam
       );
       break;
+    case 'meldingen_buurt':
+      childId = getIconChildIdFromValue(
+        datasetId,
+        feature.properties.categorie
+      );
+      break;
     default:
       childId = datasetId;
       break;

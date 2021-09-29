@@ -14,6 +14,7 @@ import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
 import MyArePanelContentWIOR from './Wior';
+import MyArePanelContentMeldingenBuurt from './MeldingenBuurt';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
@@ -70,6 +71,13 @@ function MyAreaPanelContentSwitch({
     case 'wior':
       return (
         <MyArePanelContentWIOR
+          datasetId={feature?.datasetId}
+          panelItem={feature}
+        />
+      );
+    case 'meldingen_buurt':
+      return (
+        <MyArePanelContentMeldingenBuurt
           datasetId={feature?.datasetId}
           panelItem={feature}
         />

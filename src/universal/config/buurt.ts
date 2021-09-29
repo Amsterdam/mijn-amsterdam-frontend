@@ -274,6 +274,21 @@ export const DATASETS: DatasetCategories = {
       },
     },
   },
+  meldingen_buurt: {
+    isDisabled: false,
+    title: 'Meldingen',
+    datasets: {
+      meldingen_buurt: {
+        title: 'Meldingen',
+        filters: {
+          categorie: {
+            title: 'Categorie',
+            sort: 'asc',
+          },
+        },
+      },
+    },
+  },
   bedrijveninvesteringszones: {
     title: 'Bedrijveninvesteringszones',
     profileType: ['commercial', 'private-commercial'],

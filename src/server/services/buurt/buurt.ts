@@ -48,7 +48,7 @@ export async function fetchDataset(
 ) {
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
-    : -1;
+    : 0;
 
   let dataCache: FileCache | null = null;
 

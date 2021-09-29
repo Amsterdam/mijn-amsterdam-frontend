@@ -277,6 +277,14 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometrie',
   },
+  meldingen_buurt: {
+    listUrl: dsoApiListUrl('meldingen/meldingen_buurt'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/',
+    transformList: transformSiaApiListResponse,
+    featureType: 'Point',
+    cacheTimeMinutes: 0,
+    geometryKey: 'geometrie',
+  },
 };
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -447,5 +455,19 @@ export function transformWiorApiListResponse(
     }
   }
 
+  return transformDsoApiListResponse(datasetId, config, { features });
+}
+
+function transformSiaApiListResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  console.log(datasetId);
+  const features = getApiEmbeddedResponse(datasetId, responseData);
+  console.log('hallo');
+  if (!features) {
+    return [];
+  }
   return transformDsoApiListResponse(datasetId, config, { features });
 }
