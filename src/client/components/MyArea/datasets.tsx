@@ -386,7 +386,7 @@ export const datasetIcons: Record<
     ),
     overig: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+        <IconOverig fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
