@@ -65,6 +65,7 @@ const testState: any = {
       },
     ],
   },
+  FOCUS_BBZ: [],
   FOCUS_SPECIFICATIES: {
     status: 'OK',
     content: {

@@ -14,6 +14,9 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   bezwaar: 'Bezwaar',
   brief: 'Brief',
   mail: 'Mail',
+  voorschot: 'Voorschot',
+  tijdNodig: 'Tijd nodig',
+  akte: 'Akte',
 };
 
 // NOTE: MUST Keep in this order

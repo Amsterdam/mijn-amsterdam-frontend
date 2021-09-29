@@ -15,6 +15,7 @@ export const AppRoutes: Record<string, string> = {
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:type/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
+  'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
   BRP: '/persoonlijke-gegevens',

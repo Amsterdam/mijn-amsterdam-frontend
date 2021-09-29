@@ -21,6 +21,7 @@ export function isChapterActive(
     FOCUS_STADSPAS,
     FOCUS_TOZO,
     FOCUS_TONK,
+    FOCUS_BBZ,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -40,6 +41,7 @@ export function isChapterActive(
       const hasAanvragen = FOCUS_AANVRAGEN?.content?.length;
       const hasTozo = !!FOCUS_TOZO?.content?.length;
       const hasTonk = !!FOCUS_TONK?.content?.length;
+      const hasBbz = !!FOCUS_BBZ?.content?.length;
       const hasJaaropgaven = !!jaaropgaven?.length;
       const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
       return (
@@ -47,12 +49,14 @@ export function isChapterActive(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
           isLoading(FOCUS_TOZO) &&
-          isLoading(FOCUS_TONK)
+          isLoading(FOCUS_TONK) &&
+          isLoading(FOCUS_BBZ)
         ) &&
         (hasAanvragen ||
           hasTozo ||
           hasTonk ||
           hasJaaropgaven ||
+          hasBbz ||
           hasUitkeringsspecificaties)
       );
 

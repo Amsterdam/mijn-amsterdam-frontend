@@ -52,14 +52,20 @@ const decisionsDisplayProps = {
 };
 
 export default function Inkomen() {
-  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO, FOCUS_TONK } =
-    useAppStateGetter();
+  const {
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
+    FOCUS_TONK,
+    FOCUS_BBZ,
+  } = useAppStateGetter();
 
   const focusSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
   const aanvragen = FOCUS_AANVRAGEN.content;
   const tozoItems = FOCUS_TOZO.content;
   const tonkItems = FOCUS_TONK.content;
+  const bbzItems = FOCUS_BBZ.content;
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
@@ -69,7 +75,12 @@ export default function Inkomen() {
     }
 
     return addTitleLinkComponent(
-      [...(aanvragen || []), ...(tozoItems || []), ...(tonkItems || [])]
+      [
+        ...(aanvragen || []),
+        ...(tozoItems || []),
+        ...(tonkItems || []),
+        ...(bbzItems || []),
+      ]
         .filter((item) => item.productTitle !== 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
@@ -82,7 +93,7 @@ export default function Inkomen() {
         })
         .sort(dateSort('datePublished', 'desc'))
     );
-  }, [aanvragen, tozoItems, tonkItems]);
+  }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');
   const itemsDecided = items.filter((item) => item.status === 'Besluit');
@@ -95,9 +106,9 @@ export default function Inkomen() {
   const isLoadingFocus =
     isLoading(FOCUS_AANVRAGEN) ||
     isLoading(FOCUS_TOZO) ||
-    isLoading(FOCUS_TONK);
+    isLoading(FOCUS_TONK) ||
+    isLoading(FOCUS_BBZ);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
