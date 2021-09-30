@@ -447,8 +447,8 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                     aria-hidden="true"
                     class="Icon"
                     fill="#ffffff"
-                    height="32px"
-                    width="32px"
+                    height="32"
+                    width="32"
                   >
                     Info.svg
                   </svg>

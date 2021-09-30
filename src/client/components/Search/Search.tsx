@@ -3,16 +3,22 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight } from '../../assets/icons';
-import { trackSearch } from '../../hooks/analytics.hook';
+import { IconChevronRight, IconSearch } from '../../assets/icons';
+import { Colors } from '../../config/app';
+import {
+  trackEventWithProfileType,
+  trackSearch,
+} from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
-import { useProfileTypeSwitch } from '../../hooks/useProfileType';
-import Linkd, { Button } from '../Button/Button';
+import {
+  useProfileTypeSwitch,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
+import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
 import { SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
-import SearchBar from './SearchBar';
 
 interface ResultSetProps {
   results: SearchEntry[];
@@ -74,7 +80,7 @@ export function ResultSet({
 }
 
 interface SearchProps {
-  onFinish?: (isSelection?: boolean) => void;
+  onFinish?: (reason?: string) => void;
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
@@ -90,7 +96,7 @@ export function Search({
   typeAhead = true,
   extendedAMResults = false,
 }: SearchProps) {
-  const searchBarRef = useRef<HTMLFormElement>(null);
+  const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -136,19 +142,16 @@ export function Search({
     }
   }, 300);
 
-  const inputEl = () =>
-    searchBarRef.current?.querySelector<HTMLInputElement>('input');
-
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
       const isEscape = event.key === 'Escape';
       if (isEscape && typeAhead) {
         event.preventDefault();
         if (isResultsVisible && term) {
-          inputEl()?.focus();
+          searchBarRef.current?.focus();
           setResultsVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
-        } else if (!isResultsVisible && inputEl() !== document.activeElement) {
+        } else if (!isResultsVisible) {
           onFinish && onFinish('Escape toets');
         }
       }
@@ -161,7 +164,10 @@ export function Search({
   useEffect(() => {
     if (autoFocus) {
       // AutoFocus on the element doesn't seem to work properly with dynamic mounting
-      inputEl()?.focus();
+      searchBarRef.current?.focus();
+    }
+    if (termInitial && searchBarRef.current) {
+      searchBarRef.current.value = termInitial;
     }
     return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,23 +190,25 @@ export function Search({
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
     >
       <form
-        ref={searchBarRef}
+        className={styles.Form}
         onSubmit={(e) => {
           e.preventDefault();
           if (term) {
             trackSearchBarEvent('Submit search');
-            history.push(AppRoutes.SEARCH + '?term=' + term);
+            history.push(
+              `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
+            );
             setResultsVisible(true);
           }
         }}
       >
-        <SearchBar
-          inputProps={{
-            autoComplete: 'none',
-            autoCorrect: 'none',
-            autoCapitalize: 'none',
-            spellCheck: 'false',
-          }}
+        <input
+          ref={searchBarRef}
+          className={styles.Input}
+          autoComplete="none"
+          autoCorrect="none"
+          autoCapitalize="none"
+          spellCheck="false"
           placeholder={
             results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
           }
@@ -216,12 +224,15 @@ export function Search({
             setTermDebounced(term);
             trackSearchDebounced(term);
           }}
-          onClear={() => {
-            setTerm('');
-            setIsDirty(false);
-            setResultsVisible(false);
-          }}
-          value={term || termInitial}
+        />
+
+        <IconButton
+          className={styles.SubmitButton}
+          aria-label="Verstuur zoekopdracht"
+          type="submit"
+          iconSize="36"
+          iconFill={Colors.white}
+          icon={IconSearch}
         />
       </form>
 

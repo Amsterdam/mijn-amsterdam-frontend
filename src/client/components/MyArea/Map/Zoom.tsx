@@ -1,8 +1,8 @@
-import { Enlarge, Minimise } from '@amsterdam/asc-assets';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { memo } from 'react';
 import styles from './Zoom.module.scss';
 import { IconButton } from '../../Button/Button';
+import { IconEnlarge, IconMinimise } from '../../../assets/icons';
 
 const Zoom: React.FC = () => {
   const mapInstance = useMapInstance();
@@ -17,23 +17,21 @@ const Zoom: React.FC = () => {
         className={styles.Button}
         type="button"
         title="Inzoomen"
-        iconSize={'22px'}
-        data-testid="zoomIn"
+        iconSize="22"
         onClick={() => {
           handleZoom();
         }}
-        icon={Enlarge}
+        icon={IconEnlarge}
       />
       <IconButton
         className={styles.Button}
         type="button"
         title="Uitzoomen"
-        iconSize={'22px'}
-        data-testid="zoomOut"
+        iconSize="22"
         onClick={() => {
           handleZoom(true);
         }}
-        icon={Minimise}
+        icon={IconMinimise}
       />
     </div>
   );

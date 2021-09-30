@@ -9,6 +9,10 @@
   height: auto;
   padding-top: 3.2rem;
   z-index: 401;
+
+  @include mq-phone {
+    padding-top: 0;
+  }
 }
 
 .PanelInner {

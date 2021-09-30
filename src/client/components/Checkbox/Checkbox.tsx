@@ -1,4 +1,3 @@
-import { Checkmark, Indeterminate } from '@amsterdam/asc-assets';
 import classnames from 'classnames';
 import {
   ChangeEvent,
@@ -10,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
-
+import { IconCheckmark, IconIndeterminate } from '../../assets/icons';
 import styles from './Checkbox.module.scss';
 
 type CheckboxProps = {
@@ -66,8 +65,8 @@ const Checkbox = forwardRef<
             (checked || indeterminate) && styles.Checked
           )}
         >
-          {!checked && indeterminate && <Indeterminate />}
-          {checked && <Checkmark />}
+          {!checked && indeterminate && <IconIndeterminate />}
+          {checked && <IconCheckmark />}
         </span>
         <input
           type="checkbox"

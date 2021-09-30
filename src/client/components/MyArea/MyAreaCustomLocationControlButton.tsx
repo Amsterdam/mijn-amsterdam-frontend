@@ -20,7 +20,7 @@ export default function MyAreaCustomLocationControlButton({
       type="button"
       className={styles.Button}
       icon={IconPin}
-      iconSize="44px"
+      iconSize="32"
       onClick={() => {
         mapInstance.setView(latlng, zoom);
       }}

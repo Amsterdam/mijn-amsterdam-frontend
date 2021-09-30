@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import {
   ButtonHTMLAttributes,
   forwardRef,
@@ -5,7 +6,6 @@ import {
   MouseEvent,
   PropsWithChildren,
   ReactNode,
-  RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -14,13 +14,10 @@ import {
 import { animated, AnimatedProps, useSpring } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
-
 import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
-import styles from './PanelComponent.module.scss';
 import { CloseButton } from '../../Button/Button';
-import classnames from 'classnames';
-import StyledComponent from '../../StyledComponent';
+import styles from './PanelComponent.module.scss';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -33,7 +30,7 @@ function px(size: number) {
   return size + 'px';
 }
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const WIDE_PANEL_TIP_WIDTH = px(8 * 4);
 export const WIDE_PANEL_PREVIEW_WIDTH = px(60 * 4);
@@ -182,13 +179,12 @@ type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
 
-const Panel = forwardRef<HTMLElement, AnimatedProps<any>>(
-  ({ children, id, className, ...rest }, ref) => {
+const Panel = forwardRef<HTMLDivElement, AnimatedProps<any>>(
+  ({ children, className, ...rest }, ref) => {
     return (
       <animated.div
         className={classnames(styles.Panel, className)}
-        id={id}
-        ref={ref as RefObject<HTMLDivElement>}
+        ref={ref}
         {...rest}
       >
         {children}
@@ -197,41 +193,45 @@ const Panel = forwardRef<HTMLElement, AnimatedProps<any>>(
   }
 );
 
-const PanelInnerDesktop = forwardRef<HTMLElement, HTMLProps<HTMLDivElement>>(
-  ({ children }, ref) =>
-    StyledComponent({
-      tag: 'div',
-      ref,
-      className: classnames(styles.PanelInner, styles.PanelInnerDesktop),
-      children,
-    })
+const PanelInner = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
+  ({ children, className }, ref) => (
+    <div className={classnames(styles.PanelInner, className)} ref={ref}>
+      {children}
+    </div>
+  )
 );
 
-const PanelInnerPhone = forwardRef<HTMLElement, HTMLProps<HTMLDivElement>>(
-  ({ children }, ref) =>
-    StyledComponent({
-      tag: 'div',
-      ref,
-      className: classnames(styles.PanelInner, styles.PanelInnerPhone),
-      children,
-    })
+const PanelInnerDesktop = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
+  ({ children }, ref) => (
+    <PanelInner ref={ref} className={styles.PanelInnerDesktop}>
+      {children}
+    </PanelInner>
+  )
+);
+
+const PanelInnerPhone = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
+  ({ children }, ref) => (
+    <PanelInner ref={ref} className={styles.PanelInnerPhone}>
+      {children}
+    </PanelInner>
+  )
 );
 
 function PanelWide({
   children,
-  ...rest
+  style,
 }: { children: ReactNode } & AnimatedProps<any>) {
   return (
-    <Panel {...rest} className={styles.PanelWide}>
+    <Panel className={styles.PanelWide} style={style}>
       {children}
     </Panel>
   );
 }
 
-const PanelNarrow = forwardRef<HTMLElement, AnimatedProps<any>>(
-  ({ children, id, ...rest }, ref) => {
+const PanelNarrow = forwardRef<HTMLDivElement, AnimatedProps<any>>(
+  ({ children, ...rest }, ref) => {
     return (
-      <Panel {...rest} className={styles.PanelNarrow} id={id} ref={ref}>
+      <Panel {...rest} className={styles.PanelNarrow} ref={ref}>
         {children}
       </Panel>
     );

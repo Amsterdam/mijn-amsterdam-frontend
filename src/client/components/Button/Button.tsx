@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { Link } from 'react-router-dom';
 import { IconChevronRight, IconClose } from '../../assets/icons';
+import { Colors } from '../../config/app';
 import { trackLink } from '../../hooks/analytics.hook';
 import styles from './Button.module.scss';
 
@@ -238,8 +239,8 @@ export interface IconButtonProps
 export function IconButton({
   className,
   icon,
-  iconSize = '32px',
-  iconFill = '#000',
+  iconSize = '32',
+  iconFill = Colors.black,
   ...otherProps
 }: IconButtonProps) {
   const Icon = icon;

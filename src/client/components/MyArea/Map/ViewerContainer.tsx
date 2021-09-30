@@ -23,31 +23,14 @@ const ViewerContainer: React.FC<Props> = ({
     <div
       {...otherProps}
       className={styles.Wrapper}
-      data-testid="container"
       style={{ left: mapOffset?.left ?? '0' }}
     >
-      <div
-        className={classnames(styles.Item, styles.TopLeft)}
-        data-testid="topLeft"
-      >
-        {topLeft}
-      </div>
-      <div
-        className={classnames(styles.Item, styles.TopRight)}
-        data-testid="topRight"
-      >
-        {topRight}
-      </div>
-      <div
-        className={classnames(styles.Item, styles.BottomLeft)}
-        data-testid="bottomLeft"
-      >
+      <div className={classnames(styles.Item, styles.TopLeft)}>{topLeft}</div>
+      <div className={classnames(styles.Item, styles.TopRight)}>{topRight}</div>
+      <div className={classnames(styles.Item, styles.BottomLeft)}>
         {bottomLeft}
       </div>
-      <div
-        className={classnames(styles.Item, styles.BottomRight)}
-        data-testid="bottomRight"
-      >
+      <div className={classnames(styles.Item, styles.BottomRight)}>
         {bottomRight}
         {metaData && (
           <div>
