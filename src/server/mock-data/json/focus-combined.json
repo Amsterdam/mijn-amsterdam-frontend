@@ -798,7 +798,7 @@
       },
       {
         "id": "6195",
-        "documentCodeId": "6195",
+        "documentCodeId": "176195",
         "description": "Transitie Bbz Toekennen batch",
         "type": "",
         "url": "",
@@ -806,7 +806,7 @@
       },
       {
         "id": "5843",
-        "documentCodeId": "5843",
+        "documentCodeId": "175843",
         "description": "Bbz Toekenning bedrijfskapitaal",
         "type": "",
         "url": "",
@@ -814,7 +814,7 @@
       },
       {
         "id": "5855",
-        "documentCodeId": "5855",
+        "documentCodeId": "175855",
         "description": "Bbz Verlenging beslistermijn met 13 weken",
         "type": "",
         "url": "",
@@ -822,7 +822,7 @@
       },
       {
         "id": "6351",
-        "documentCodeId": "6351",
+        "documentCodeId": "176351",
         "description": "Transitie Bbz Hersteltermijn",
         "type": "",
         "url": "",
@@ -830,7 +830,7 @@
       },
       {
         "id": "6368",
-        "documentCodeId": "6368",
+        "documentCodeId": "176368",
         "description": "Bbz Aanvraag adviesrapport",
         "type": "",
         "url": "",
@@ -838,7 +838,7 @@
       },
       {
         "id": "6350",
-        "documentCodeId": "6350",
+        "documentCodeId": "176350",
         "description": "Bbz Intrekking",
         "type": "",
         "url": "",
@@ -846,7 +846,7 @@
       },
       {
         "id": "6353",
-        "documentCodeId": "6353",
+        "documentCodeId": "176353",
         "description": "Bbz Aanvraag buiten behandeling stellen",
         "type": "",
         "url": "",
@@ -854,7 +854,7 @@
       },
       {
         "id": "5884",
-        "documentCodeId": "5884",
+        "documentCodeId": "175884",
         "description": "Bbz Akte bedrijfskapitaal",
         "type": "",
         "url": "",
@@ -862,7 +862,7 @@
       },
       {
         "id": "6196",
-        "documentCodeId": "6196",
+        "documentCodeId": "176196",
         "description": "Bbz Toekennen voorschot",
         "type": "",
         "url": "",
@@ -870,7 +870,7 @@
       },
       {
         "id": "6197",
-        "documentCodeId": "6197",
+        "documentCodeId": "176197",
         "description": "Bbz Toekennen voorschot via batch",
         "type": "",
         "url": "",
@@ -878,7 +878,7 @@
       },
       {
         "id": "6198",
-        "documentCodeId": "6198",
+        "documentCodeId": "176198",
         "description": "Bbz afwijzing",
         "type": "",
         "url": "",
@@ -886,7 +886,7 @@
       },
       {
         "id": "6194",
-        "documentCodeId": "6194",
+        "documentCodeId": "176194",
         "description": "Bbz Toekenning Bbz",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -894,7 +894,7 @@
       },
       {
         "id": "35866",
-        "documentCodeId": "35866",
+        "documentCodeId": "1735866",
         "description": "Bbz Aanvraag buiten behandeling stellen",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -902,7 +902,7 @@
       },
       {
         "id": "6301",
-        "documentCodeId": "6301",
+        "documentCodeId": "176301",
         "description": " Ioaz Toekenning voorlopige uitkering",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -910,7 +910,7 @@
       },
       {
         "id": "6322",
-        "documentCodeId": "6322",
+        "documentCodeId": "176322",
         "description": " Ioaz Aanvraag hersteltermijn",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -918,7 +918,7 @@
       },
       {
         "id": "6332",
-        "documentCodeId": "6332",
+        "documentCodeId": "176332",
         "description": " Ioaz Aanvraag buiten behandeling stellen",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -926,7 +926,7 @@
       },
       {
         "id": "36301",
-        "documentCodeId": "36301",
+        "documentCodeId": "1736301",
         "description": "Ioaz Toekenning voorlopige uitkering",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -934,7 +934,7 @@
       },
       {
         "id": "36302",
-        "documentCodeId": "36302",
+        "documentCodeId": "1736302",
         "description": "Ioaz Toekenning definitieve uitkering",
         "type": "",
         "url": "focus/document?id=218062038",
@@ -942,7 +942,7 @@
       },
       {
         "id": "36303",
-        "documentCodeId": "36303",
+        "documentCodeId": "1736303",
         "description": "Ioaz Afwijzing uitkering",
         "type": "",
         "url": "focus/document?id=218062038",
