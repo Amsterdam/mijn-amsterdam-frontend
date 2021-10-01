@@ -155,10 +155,10 @@ describe('<ToeristischeVerhuur />', () => {
     expect(screen.getByText('Afgelopen verhuur')).toBeInTheDocument();
 
     expect(
-      screen.findAllByText(
-        'Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen.'
+      screen.getByText(
+        /Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen\./gi
       )
-    ).not.toBe(null);
+    ).toBeInTheDocument();
   });
 
   it('Shows alert for missing registration numbers', () => {
