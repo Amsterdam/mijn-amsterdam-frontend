@@ -12,7 +12,7 @@ import {
   TMA_SAML_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
-import { DEFAULT_PROFILE_TYPE } from '../../client/config/app';
+import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {

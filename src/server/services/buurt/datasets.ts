@@ -14,7 +14,7 @@ import {
   getPropertyFilters,
   transformDsoApiListResponse,
 } from './helpers';
-import { Colors } from '../../../client/config/app';
+import { Colors } from '../../../universal/config/app';
 
 enum zIndexPane {
   PARKEERZONES = '650',

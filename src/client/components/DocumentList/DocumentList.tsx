@@ -98,8 +98,8 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             profileType
           );
 
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, document.title);
+          if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);

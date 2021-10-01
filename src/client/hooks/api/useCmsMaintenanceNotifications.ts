@@ -1,4 +1,4 @@
-import { CMSMaintenanceNotification } from '../../../server/services/cms-maintenance-notifications';
+import type { CMSMaintenanceNotification } from '../../../server/services/cms-maintenance-notifications';
 import { ApiResponse } from '../../../universal/helpers';
 import { apiPristineResult } from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';

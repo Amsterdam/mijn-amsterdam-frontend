@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Vergunning } from '../../../server/services/vergunningen';
+import type { Vergunning } from '../../../server/services/vergunningen';
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';

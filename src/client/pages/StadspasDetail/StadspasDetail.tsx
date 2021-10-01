@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
-import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
+import type { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
+import type { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   apiPristineResult,

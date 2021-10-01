@@ -1,4 +1,4 @@
-import { getByLabelText, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
-import {
+import type {
   FOCUSIncomeSpecificationSourceDataContent,
   transformFOCUSIncomeSpecificationsData,
 } from '../../../server/services';

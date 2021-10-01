@@ -1,4 +1,4 @@
-import { GPP as GPPType } from '../../../server/services';
+import type { GPP as GPPType } from '../../../server/services';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
 

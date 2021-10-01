@@ -122,6 +122,7 @@ jest.mock('../../helpers/file-cache');
 jest.mock('../../../universal/config/env', () => {
   return {
     IS_AP: true,
+    getOtapEnvItem: (key: string) => key,
   };
 });
 jest.mock('../../../universal/config/buurt');

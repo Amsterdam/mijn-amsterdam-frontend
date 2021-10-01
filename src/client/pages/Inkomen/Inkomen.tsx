@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { FocusItem } from '../../../server/services/focus/focus-types';
+import type { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';

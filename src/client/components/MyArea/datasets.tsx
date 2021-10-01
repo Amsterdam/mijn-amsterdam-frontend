@@ -2,7 +2,7 @@ import { PolylineOptions } from 'leaflet';
 import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styles from './Datasets.module.scss';
-import { MaPointFeature } from '../../../server/services/buurt/datasets';
+import type { MaPointFeature } from '../../../server/services/buurt/datasets';
 import { Colors } from '../../config/app';
 import {
   IconAfvalGft,

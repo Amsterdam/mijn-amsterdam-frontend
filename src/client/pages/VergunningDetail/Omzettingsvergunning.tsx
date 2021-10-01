@@ -1,4 +1,4 @@
-import { Omzettingsvergunning as OmzettingsvergunningType } from '../../../server/services';
+import type { Omzettingsvergunning as OmzettingsvergunningType } from '../../../server/services';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
 

@@ -4,8 +4,7 @@ import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { MyCase } from '../../universal/types/App.types';
-import { ExternalUrls } from '../../client/config/app';
-import { FeatureToggle } from '../../universal/config/app';
+import { FeatureToggle, ExternalUrls } from '../../universal/config/app';
 import {
   apiDependencyError,
   apiSuccesResult,

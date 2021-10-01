@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { useState } from 'react';
-import { CMSFooterContent } from '../../../server/services/cms-content';
+import type { CMSFooterContent } from '../../../server/services/cms-content';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
 import { useCMSApi } from '../../hooks/api/useCmsApi';

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { ToeristischeVerhuur } from '../../../server/services';
+import type { ToeristischeVerhuur } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { PageContent } from '../../components';
 import InfoDetail, {

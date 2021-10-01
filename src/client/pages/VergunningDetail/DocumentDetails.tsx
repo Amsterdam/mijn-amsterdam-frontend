@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {
+import type {
   Vergunning,
   VergunningDocument,
 } from '../../../server/services/vergunningen';

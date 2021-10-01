@@ -1,4 +1,4 @@
-import { EvenementMelding as EvenementMeldingType } from '../../../server/services';
+import type { EvenementMelding as EvenementMeldingType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,

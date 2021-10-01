@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { TIPSData } from '../../../server/services/tips';
+import type { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';

@@ -2,7 +2,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-import {
+import type {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
