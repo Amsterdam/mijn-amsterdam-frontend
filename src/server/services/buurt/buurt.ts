@@ -30,6 +30,9 @@ import {
 
 const fileCaches: Record<string, FileCache> = {};
 
+// This values means that the file-cache will never expire. Update the cache by deleting the file.
+const CACHE_VALUE_NO_EXPIRE = -1;
+
 export function fileCache(name: string, cacheTimeMinutes: number) {
   if (!fileCaches[name]) {
     fileCaches[name] = new FileCache({
@@ -48,23 +51,27 @@ export async function fetchDataset(
 ) {
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
-    : 0;
+    : CACHE_VALUE_NO_EXPIRE;
 
   let dataCache: FileCache | null = null;
 
   if (datasetConfig.cache !== false) {
     dataCache = fileCache(datasetId, cacheTimeMinutes);
 
-    const features = dataCache.getKey('features');
-    const filters = dataCache.getKey('filters');
-    if (features) {
-      const apiData: DatasetResponse = {
-        features,
-      };
-      if (filters) {
-        apiData.filters = filters;
+    if (dataCache) {
+      const features = dataCache.getKey('features');
+      const filters = dataCache.getKey('filters');
+
+      if (features) {
+        const apiData: DatasetResponse = {
+          features,
+        };
+        if (filters) {
+          apiData.filters = filters;
+        }
+
+        return Promise.resolve(apiSuccesResult(apiData));
       }
-      return Promise.resolve(apiSuccesResult(apiData));
     }
   }
 
@@ -211,9 +218,14 @@ export async function loadFeatureDetail(
   }
 
   const [, config] = datasetConfig;
+  const detailUrl =
+    typeof config.detailUrl === 'function'
+      ? config.detailUrl(config)
+      : config.detailUrl;
+
   const url = config.idKeyDetail
-    ? `${config.detailUrl}?${config.idKeyDetail}=${id}`
-    : `${config.detailUrl}${id}`;
+    ? `${detailUrl}?${config.idKeyDetail}=${id}`
+    : `${detailUrl}${id}`;
 
   const requestConfig: DataRequestConfig = {
     url,

@@ -75,7 +75,7 @@ function MyAreaPanelContentSwitch({
           panelItem={feature}
         />
       );
-    case 'meldingen_buurt':
+    case 'meldingenBuurt':
       return (
         <MyArePanelContentMeldingenBuurt
           datasetId={feature?.datasetId}

@@ -15,6 +15,7 @@ import {
   transformDsoApiListResponse,
 } from './helpers';
 import { Colors } from '../../../universal/config/app';
+import { ENV } from '../../../universal/config/env';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -71,7 +72,7 @@ export const DEFAULT_API_REQUEST_TIMEOUT = 1000 * 60 * 3; // 3 mins
 export interface DatasetConfig {
   datasetIds?: DatasetId[];
   listUrl?: string | ((config: DatasetConfig) => string);
-  detailUrl?: string;
+  detailUrl?: string | ((config: DatasetConfig) => string);
   transformList?: (
     datasetId: DatasetId,
     config: DatasetConfig,
@@ -277,13 +278,19 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometrie',
   },
-  meldingen_buurt: {
-    listUrl: dsoApiListUrl('meldingen/meldingen_buurt'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/',
-    transformList: transformSiaApiListResponse,
+  meldingenBuurt: {
+    listUrl: () =>
+      `https://${
+        ENV === 'production' ? '' : 'acc.'
+      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+    detailUrl: () =>
+      `https://${
+        ENV === 'production' ? '' : 'acc.'
+      }api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/`,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    geometryKey: 'geometrie',
+    geometryKey: 'geometry',
   },
 };
 
@@ -455,18 +462,5 @@ export function transformWiorApiListResponse(
     }
   }
 
-  return transformDsoApiListResponse(datasetId, config, { features });
-}
-
-function transformSiaApiListResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any
-) {
-  const features = getApiEmbeddedResponse(datasetId, responseData);
-
-  if (!features) {
-    return [];
-  }
   return transformDsoApiListResponse(datasetId, config, { features });
 }

@@ -73,8 +73,8 @@ export default class FileCache {
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
   }
   getKey(key: string) {
-    var now = new Date().getTime();
-    var value = this.cache.getKey(key);
+    const now = new Date().getTime();
+    const value = this.cache.getKey(key);
 
     if (value === undefined || (value.expire !== false && value.expire < now)) {
       return undefined;
@@ -83,7 +83,7 @@ export default class FileCache {
     }
   }
   setKey(key: string, value: any) {
-    var now = new Date().getTime();
+    const now = new Date().getTime();
     this.cache.setKey(key, {
       expire: this.expire === false ? false : now + this.expire,
       data: value,

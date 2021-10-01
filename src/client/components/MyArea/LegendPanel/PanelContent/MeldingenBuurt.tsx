@@ -13,9 +13,6 @@ export default function MyArePanelContentMeldingenBuurt({
 }: MyArePanelContentMeldingenBuurtProps) {
   return (
     <GenericBase title={panelItem.categorie} supTitle="Meldingen">
-      {!!panelItem.projectnaam && (
-        <InfoDetail label="Projectnaam" value={panelItem.projectnaam} />
-      )}
       {!!panelItem.datumCreatie && (
         <InfoDetail
           label="Datum en tijd melding"

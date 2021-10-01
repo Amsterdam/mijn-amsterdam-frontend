@@ -48,9 +48,7 @@ const DatasetIcon: React.FC<{
   className?: string;
 }> = ({ children, className, color = Colors.white }) => {
   return (
-    <div className={classnames(styles.DatasetIcon, className)}>
-      <IconAfvalRest fill={color} />
-    </div>
+    <div className={classnames(styles.DatasetIcon, className)}>{children}</div>
   );
 };
 
@@ -264,60 +262,60 @@ export const datasetIcons: Record<
       </DatasetIcon>
     ),
   },
-  meldingen_buurt: {
-    meldingen_buurt: (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconMeldingen fill={themeColors.tint.level1} />
+  meldingenBuurt: {
+    meldingenBuurt: (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconMeldingen fill={Colors.white} />
       </DatasetIcon>
     ),
     afval: (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconAfvalMelding fill={themeColors.tint.level1} />
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconAfvalMelding fill={Colors.white} />
       </DatasetIcon>
     ),
-    'civiele-constructies': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconCivieleConstructies fill={themeColors.tint.level1} />
+    'civiele constructies': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconCivieleConstructies fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast-van-dieren': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastDieren fill={themeColors.tint.level1} />
+    'overlast van dieren': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastDieren fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast-op-het-water': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastWater fill={themeColors.tint.level1} />
+    'overlast op het water': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastWater fill={Colors.white} />
       </DatasetIcon>
     ),
-    'openbaar-groen-en-water': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconGroenWater fill={themeColors.tint.level1} />
+    'openbaar groen en water': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconGroenWater fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast-bedrijven-en-horeca': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+    'overlast bedrijven en horeca': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastBedrijven fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast-in-de-openbare-ruimte': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+    'overlast in de openbare ruimte': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastBedrijven fill={Colors.white} />
       </DatasetIcon>
     ),
     schoon: (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastBedrijven fill={Colors.white} />
       </DatasetIcon>
     ),
-    'wegen-verkeer-straatmeubilair': (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverlastBedrijven fill={themeColors.tint.level1} />
+    'wegen, verkeer en straatmeubilair': (
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverlastBedrijven fill={Colors.white} />
       </DatasetIcon>
     ),
     overig: (
-      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverig fill={themeColors.tint.level1} />
+      <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
+        <IconOverig fill={Colors.white} />
       </DatasetIcon>
     ),
   },
@@ -394,7 +392,7 @@ export function getIconHtml(feature: MaPointFeature) {
         feature.properties.gebiedsnaam
       );
       break;
-    case 'meldingen_buurt':
+    case 'meldingenBuurt':
       childId = getIconChildIdFromValue(
         datasetId,
         feature.properties.categorie

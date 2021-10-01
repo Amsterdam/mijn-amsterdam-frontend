@@ -274,16 +274,39 @@ export const DATASETS: DatasetCategories = {
       },
     },
   },
-  meldingen_buurt: {
+  meldingenBuurt: {
     isDisabled: false,
     title: 'Meldingen',
     datasets: {
-      meldingen_buurt: {
+      meldingenBuurt: {
         title: 'Meldingen',
         filters: {
           categorie: {
             title: 'Categorie',
             sort: 'asc',
+            valueConfig: {
+              'Civiele-constructies': {
+                title: 'Civiele constructies',
+              },
+              'Overlast-van-dieren': {
+                title: 'Overlast van dieren',
+              },
+              'Overlast-op-het-water': {
+                title: 'Overlast op het water',
+              },
+              'Openbaar-groen-en-water': {
+                title: 'Openbaar groen en water',
+              },
+              'Overlast-bedrijven-en-horeca': {
+                title: 'Overlast bedrijven en Horeca',
+              },
+              'Overlast-in-de-openbare-ruimte': {
+                title: 'Overlast in de openbare ruimte',
+              },
+              'Wegen-verkeer-straatmeubilair': {
+                title: 'Wegen, Verkeer en Straatmeubilair',
+              },
+            },
           },
         },
       },
