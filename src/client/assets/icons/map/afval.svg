@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Afval</title>
+    <path d="M6,14 C6,14.5522847 5.55228475,15 5,15 C4.44771525,15 4,14.5522847 4,14 L6,14 Z M12,14 C12,14.5522847 11.5522847,15 11,15 C10.4477153,15 10,14.5522847 10,14 L12,14 Z M13,5 L12,13 L4,13 L2.9954834,5 L13,5 Z M6,6 L5,6 L5,12 L11,12 L11,6 L10,6 L10,11 L6,11 L6,6 Z M10,1 L10,3 L14,3 L14,4 L2,4 L2,3 L6,3 L6,1 L10,1 Z M9,2 L7,2 L7,3 L9,3 L9,2 Z"></path>
+</svg>

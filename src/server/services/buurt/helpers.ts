@@ -156,7 +156,6 @@ export function filterPointFeaturesWithinBoundingBox(
   bbox: [number, number, number, number]
 ) {
   const featuresFiltered = [];
-
   let i = 0;
   let len = features.length;
 
@@ -556,6 +555,5 @@ export function transformDsoApiListResponse(
       }
     }
   }
-
   return collection;
 }

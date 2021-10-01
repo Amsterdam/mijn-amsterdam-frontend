@@ -31,6 +31,12 @@ $colors: (
   'black': (
     background-color: $color-black,
   ),
+  'blue': (
+    background-color: $color-support-blue,
+  ),
+  'bluePrimary': (
+    background-color: $color-primary-darkblue,
+  ),
 );
 
 @function color-prop($color, $prop) {
@@ -63,6 +69,8 @@ $colors: (
   @include colorStyle('pink');
   @include colorStyle('focus');
   @include colorStyle('black');
+  @include colorStyle('blue');
+  @include colorStyle('bluePrimary');
 }
 
 .DatasetIconCircle {
