@@ -69,7 +69,7 @@ async function fetchSource(
   if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
-        ? omit(response.content, ['notifications', 'tips'])
+        ? omit(response.content, ['notifications'])
         : null,
     });
   }

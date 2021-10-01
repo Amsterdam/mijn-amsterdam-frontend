@@ -43,294 +43,225 @@ import {
 } from '../../assets/icons/map';
 import classnames from 'classnames';
 
+const DatasetIcon: React.FC<{
+  color?: string;
+  className?: string;
+}> = ({ children, className, color = Colors.white }) => {
+  return (
+    <div className={classnames(styles.DatasetIcon, className)}>
+      <IconAfvalRest fill={color} />
+    </div>
+  );
+};
+
 export const datasetIcons: Record<
   string,
   ReactElement<any> | Record<string, ReactElement<any>>
 > = {
   afvalcontainers: {
     afvalcontainers: (
-      <div className={classnames(styles.DatasetIcon, styles.DatasetIcon__grey)}>
+      <DatasetIcon className={styles.DatasetIcon__grey}>
         <IconAfvalRest fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     rest: (
-      <div className={classnames(styles.DatasetIcon, styles.DatasetIcon__grey)}>
+      <DatasetIcon className={styles.DatasetIcon__grey}>
         <IconAfvalRest fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     papier: (
-      <div
-        className={classnames(
-          styles.DatasetIcon,
-          styles.DatasetIcon__lightBlue
-        )}
-      >
+      <DatasetIcon className={styles.DatasetIcon__lightBlue}>
         <IconAfvalPapier fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     glas: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__yellow)}
-      >
-        <IconAfvalGlas />
-      </div>
+      <DatasetIcon className={styles.DatasetIcon__yellow}>
+        <IconAfvalGlas fill={Colors.black} />
+      </DatasetIcon>
     ),
     textiel: (
-      <div className={classnames(styles.DatasetIcon, styles.DatasetIcon__grey)}>
+      <DatasetIcon className={styles.DatasetIcon__grey}>
         <IconAfvalTextiel fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     gft: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconAfvalGft fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     plastic: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__orange)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__orange}>
         <IconAfvalPlastic />
-      </div>
+      </DatasetIcon>
     ),
   },
   evenementen: {
     evenementen: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__purple)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__purple}>
         <IconEvenement fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   wior: {
     wior: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__focus)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__focus}>
         <IconWior fill={Colors.black} />
-      </div>
+      </DatasetIcon>
     ),
   },
   bekendmakingen: {
     bekendmakingen: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconBekendmaking fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   sport: {
     sport: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSport fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     gymzaal: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconGymzaal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     sporthal: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSporthal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     sportpark: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSportpark fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     sportzaal: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSportzaal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     zwembad: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconZwembad fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     hardlooproute: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconHardlopen fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     sportveld: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSportveld fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     sportaanbieder: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconGeneral fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     openbaresportplek: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconFitness fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   openbaresportplek: {
     voetbal: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconVoetbal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     beachvolley: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconVolleybal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     basketbal: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconBasketbal fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     'fitness / bootcamp': (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconFitness fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     tennis: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconTennis fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     'jeu de boules': (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconJeuDeBoules fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     overig: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconOverig fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     skate: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconSkate fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     tafeltennis: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconTafeltennis fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   parkeren: {
     parkeren: (
-      <div
-        className={classnames(
-          styles.DatasetIcon,
-          styles.DatasetIcon__lightBlue
-        )}
-      >
+      <DatasetIcon className={styles.DatasetIcon__lightBlue}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   parkeerzones: {
     oost: (
-      <div
-        className={classnames(
-          styles.DatasetIcon,
-          styles.DatasetIcon__lightBlue
-        )}
-      >
+      <DatasetIcon className={styles.DatasetIcon__lightBlue}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     west: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__purple)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__purple}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     noord: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     zuid: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__orange)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__orange}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     zuidoost: (
-      <div
-        className={classnames(
-          styles.DatasetIcon,
-          styles.DatasetIcon__lightGreen
-        )}
-      >
+      <DatasetIcon className={styles.DatasetIcon__lightGreen}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     'nieuw-west': (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__yellow)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__yellow}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     haven: (
-      <div className={classnames(styles.DatasetIcon, styles.DatasetIcon__pink)}>
+      <DatasetIcon className={styles.DatasetIcon__pink}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
     centrum: (
-      <div
-        className={classnames(styles.DatasetIcon, styles.DatasetIcon__valid)}
-      >
+      <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconAuto fill={Colors.white} />
-      </div>
+      </DatasetIcon>
     ),
   },
   meldingen_buurt: {
@@ -391,7 +322,7 @@ export const datasetIcons: Record<
     ),
   },
   default: (
-    <div
+    <DatasetIcon
       className={classnames(
         styles.DatasetIconCircle,
         styles.DatasetIcon__black
