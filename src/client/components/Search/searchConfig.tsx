@@ -1,20 +1,20 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
-import {
+import type {
   FinancieleHulp,
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
-import {
+import type {
   FocusStadspas,
   FocusStadspasSaldo,
 } from '../../../server/services/focus/focus-combined';
-import { FocusItem } from '../../../server/services/focus/focus-types';
-import {
+import type { FocusItem } from '../../../server/services/focus/focus-types';
+import type {
   ToeristischeVerhuurRegistratie,
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
-import { WmoItem } from '../../../server/services/wmo';
+import type { WmoItem } from '../../../server/services/wmo';
 import {
   AppRoutes,
   DocumentTitles,

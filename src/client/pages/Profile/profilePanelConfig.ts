@@ -6,7 +6,7 @@ import {
 import { isMokum } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
 import { ExternalUrls } from '../../config/app';
-import { KVKData } from '../../../server/services/kvk';
+import type { KVKData } from '../../../server/services/kvk';
 import { FeatureToggle } from '../../../universal/config';
 import styles from './Profile.module.scss';
 

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import {
+import type {
   ServiceID,
   ServicesTips,
   ServicesType,

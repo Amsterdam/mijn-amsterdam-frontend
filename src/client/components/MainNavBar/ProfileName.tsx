@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { ReactNode, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { KVKData } from '../../../server/services/kvk';
+import type { KVKData } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';

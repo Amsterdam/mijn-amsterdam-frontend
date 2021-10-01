@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from 'react';
-import { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
+import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
 import {

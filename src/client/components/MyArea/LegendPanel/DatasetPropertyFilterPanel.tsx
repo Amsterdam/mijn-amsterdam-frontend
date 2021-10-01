@@ -1,6 +1,5 @@
-import { themeSpacing } from '@amsterdam/asc-ui';
-import { useMemo } from 'react';
-import styled from 'styled-components';
+import { ReactNode, useMemo } from 'react';
+import styles from './PanelComponent.module.scss';
 import { DatasetId } from '../../../../universal/config';
 import {
   DatasetFilterSelection,
@@ -20,17 +19,6 @@ import {
 import { DatasetControlPanelProps } from './DatasetControlPanel';
 import { PanelList, PanelListItem } from './PanelList';
 
-const PropertyFilterPanel = styled.div`
-  margin-left: ${themeSpacing(9)};
-`;
-
-const FilterPropertyName = styled.strong`
-  display: block;
-  line-height: 3rem;
-`;
-
-const FeatureCount = styled.small``;
-
 interface DatasetPropertyFilterPanelProps {
   datasetId: DatasetId;
   propertyName: DatasetPropertyName;
@@ -39,6 +27,18 @@ interface DatasetPropertyFilterPanelProps {
   valuesRefined?: DatasetPropertyValueWithCount;
   activeFilters: DatasetFilterSelection;
   onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
+}
+
+function PropertyFilterPanel({ children }: { children: ReactNode }) {
+  return <div className={styles.PropertyfilterPanel}>{children}</div>;
+}
+
+function FilterPropertyName({ children }: { children: ReactNode }) {
+  return <strong className={styles.FilterPropertyName}>{children}</strong>;
+}
+
+function FeatureCount({ children }: { children: ReactNode }) {
+  return <small>{children}</small>;
 }
 
 export function DatasetPropertyFilterPanel({
@@ -89,7 +89,7 @@ export function DatasetPropertyFilterPanel({
                       datasetId,
                       getIconChildIdFromValue(datasetId, value)
                     ) || ''}
-                    {value}
+                    <p>{value}</p>
                     {featureCount >= 1 ? (
                       <FeatureCount>
                         (

@@ -40,7 +40,10 @@ const testState: VerhuurState = {
     content: {
       daysLeft: 26,
       registraties: toeristischeVerhuurRegistraties.content,
-      vergunningen: transformVergunningenToVerhuur(vergunningen),
+      vergunningen: transformVergunningenToVerhuur(
+        vergunningen,
+        new Date('2021-09-22')
+      ),
     },
   },
 };
@@ -51,7 +54,10 @@ const testState2: VerhuurState = {
     content: {
       daysLeft: 2,
       registraties: [],
-      vergunningen: transformVergunningenToVerhuur(vergunningen),
+      vergunningen: transformVergunningenToVerhuur(
+        vergunningen,
+        new Date('2021-09-22')
+      ),
     },
   },
 };
@@ -62,9 +68,10 @@ const testState3: VerhuurState = {
     content: {
       daysLeft: 2,
       registraties: toeristischeVerhuurRegistraties.content,
-      vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
-        (vergunning) => vergunning.caseType === CaseType.BBVergunning
-      ),
+      vergunningen: transformVergunningenToVerhuur(
+        vergunningen,
+        new Date('2021-09-22')
+      ).filter((vergunning) => vergunning.caseType === CaseType.BBVergunning),
     },
   },
 };
@@ -75,9 +82,10 @@ const testState4: VerhuurState = {
     content: {
       daysLeft: 2,
       registraties: toeristischeVerhuurRegistraties.content,
-      vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
-        (vergunning) => vergunning.caseType !== CaseType.BBVergunning
-      ),
+      vergunningen: transformVergunningenToVerhuur(
+        vergunningen,
+        new Date('2021-09-22')
+      ).filter((vergunning) => vergunning.caseType !== CaseType.BBVergunning),
     },
   },
 };
@@ -88,9 +96,10 @@ const testState5: VerhuurState = {
     content: {
       daysLeft: 0,
       registraties: toeristischeVerhuurRegistraties.content,
-      vergunningen: transformVergunningenToVerhuur(vergunningen).filter(
-        (vergunning) => vergunning.caseType !== CaseType.BBVergunning
-      ),
+      vergunningen: transformVergunningenToVerhuur(
+        vergunningen,
+        new Date('2021-09-22')
+      ).filter((vergunning) => vergunning.caseType !== CaseType.BBVergunning),
     },
   },
 };
@@ -111,6 +120,15 @@ describe('<ToeristischeVerhuur />', () => {
       initializeState={(snap) => initializeState(snap, state)}
     />
   );
+
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date('2021-09-22').getTime());
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component state={testState} />);

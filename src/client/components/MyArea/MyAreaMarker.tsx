@@ -1,4 +1,4 @@
-import { Marker } from '@amsterdam/arm-core';
+import Marker from './Map/Marker';
 import L, {
   LatLngLiteral,
   LeafletEventHandlerFn,

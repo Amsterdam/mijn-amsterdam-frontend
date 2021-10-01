@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
+import type { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
 
 // Code taken from https://github.com/yagoferrer/marker-spider/blob/master/lib/oms.coffee
 const twoPi = Math.PI * 2;

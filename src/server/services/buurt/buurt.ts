@@ -57,7 +57,6 @@ export async function fetchDataset(
 
     const features = dataCache.getKey('features');
     const filters = dataCache.getKey('filters');
-
     if (features) {
       const apiData: DatasetResponse = {
         features,
@@ -90,7 +89,6 @@ export async function fetchDataset(
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;
-
   if (typeof datasetConfig.transformList === 'function') {
     requestConfig.transformResponse = (responseData) =>
       datasetConfig.transformList!(datasetId, datasetConfig, responseData);
@@ -107,7 +105,6 @@ export async function fetchDataset(
     const filters =
       filterConfig &&
       createDynamicFilterConfig(datasetId, response.content, filterConfig);
-
     if (dataCache && response.content.length && datasetConfig.cache !== false) {
       dataCache.setKey('url', url);
       dataCache.setKey('features', response.content);

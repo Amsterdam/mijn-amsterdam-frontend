@@ -1,4 +1,4 @@
-import { TVMRVVObject as TVMRVVObjectType } from '../../../server/services';
+import type { TVMRVVObject as TVMRVVObjectType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,

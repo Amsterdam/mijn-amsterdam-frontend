@@ -7,10 +7,9 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../universal/helpers';
-import { LinkProps } from '../../universal/types';
+import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { StatusLineItem } from '../../client/components/StatusLine/StatusLine.types';
 
 // Example data
 // [
@@ -42,6 +41,17 @@ import { StatusLineItem } from '../../client/components/StatusLine/StatusLine.ty
 //   },
 // ];
 
+export interface WmoItemStep {
+  id: string;
+  status: string;
+  datePublished: string;
+  description: string;
+  documents: GenericDocument[];
+  isActive?: boolean;
+  isChecked?: boolean;
+  [key: string]: any;
+}
+
 export interface WmoItem {
   id: string;
   title: string; // Omschrijving
@@ -49,7 +59,7 @@ export interface WmoItem {
   supplierUrl: string; // Leverancier url
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
-  steps: StatusLineItem[];
+  steps: WmoItemStep[];
   voorzieningsoortcode: WmoApiItem['Voorzieningsoortcode'];
 }
 
@@ -556,7 +566,7 @@ function parseLabelContent(
 function formatWmoStatusLineItems(
   wmoItem: WmoSourceData,
   today: Date
-): StatusLineItem[] {
+): WmoItemStep[] {
   const labelData = Object.values(Labels).find((labelData, index) => {
     const type = wmoItem.deliveryType || '';
     return (
@@ -566,7 +576,7 @@ function formatWmoStatusLineItems(
   });
 
   if (labelData) {
-    const steps: StatusLineItem[] = labelData.statusItems.map(
+    const steps: WmoItemStep[] = labelData.statusItems.map(
       (statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
@@ -574,7 +584,7 @@ function formatWmoStatusLineItems(
           today
         ) as string;
 
-        const stepData: StatusLineItem = {
+        const stepData: WmoItemStep = {
           id: `status-step-${index}`,
           status: statusItem.status,
           description: parseLabelContent(

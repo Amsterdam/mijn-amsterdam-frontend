@@ -1,9 +1,8 @@
-import { Spinner } from '@amsterdam/asc-ui';
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { IconAlert, IconDownload } from '../../assets/icons';
+import { IconAlert, IconDownload, IconSpinner } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -99,8 +98,8 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             profileType
           );
 
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, document.title);
+          if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);
@@ -132,7 +131,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
     <span className={styles.DocumentLinkWrap}>
       <span className={styles.DownloadIcon}>
         {isLoading ? (
-          <Spinner aria-hidden="true" size={14} />
+          <IconSpinner aria-hidden="true" width="14" height="14" />
         ) : isErrorVisible ? (
           <IconAlert
             aria-hidden="true"

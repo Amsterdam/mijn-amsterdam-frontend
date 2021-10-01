@@ -1,0 +1,60 @@
+@import '../../styles/_global.scss';
+
+.CheckboxInput {
+  cursor: inherit;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 2.4rem;
+  height: 2.4rem;
+  left: 0;
+}
+
+.CheckboxIcon {
+  display: flex;
+  border-width: 0.1rem;
+  border-style: solid;
+  width: 2.4rem;
+  height: 2.4rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: $color-white;
+  transition: background-color 0.2s ease-in-out;
+  pointer-events: none;
+  padding: 0.4rem;
+}
+
+.Checked {
+  color: $color-black;
+  background-color: $color-black;
+  & svg {
+    circle,
+    rect,
+    polygon,
+    path {
+      fill: $color-white;
+    }
+  }
+}
+
+.CheckboxWrapper {
+  position: relative;
+  display: inline-flex;
+  user-select: none;
+  vertical-align: middle;
+  margin-bottom: 0.1rem;
+  padding: 0;
+  margin-right: 0.8rem;
+  padding-left: 0;
+  flex-shrink: 0;
+  color: $color-neutral-grey4;
+  &:hover {
+    color: $color-black;
+  }
+}
+
+.Disabled {
+  pointer-events: none;
+}

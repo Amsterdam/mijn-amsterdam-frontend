@@ -7,6 +7,10 @@
   position: relative;
 }
 
+.DashboardMap {
+  position: absolute;
+}
+
 .NavLink {
   display: block;
   position: absolute;
@@ -28,5 +32,4 @@
   padding: 2rem 4rem;
   width: 46rem;
   margin-left: calc(50% + 2rem);
-
 }

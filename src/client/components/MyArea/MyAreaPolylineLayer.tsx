@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useEffect, useMemo } from 'react';
-import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
+import type { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 
 const DEFAULT_POLYLINE_COLOR = '#EC0000';
 

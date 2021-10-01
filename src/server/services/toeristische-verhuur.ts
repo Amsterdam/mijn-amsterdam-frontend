@@ -51,7 +51,7 @@ export interface ToeristischeVerhuurRegistratieSource {
 }
 
 export type ToeristischeVerhuurRegistratie =
-  ToeristischeVerhuurRegistratieSource & { link: LinkProps };
+  ToeristischeVerhuurRegistratieSource & { link?: LinkProps };
 
 export interface ToeristischeVerhuurRegistratiesSourceData {
   content: ToeristischeVerhuurRegistratieSource[];
@@ -145,14 +145,15 @@ export function daysRentLeftInCalendarYear(
 }
 
 export function transformVergunningenToVerhuur(
-  vergunningen: VakantieverhuurVergunning[]
+  vergunningen: VakantieverhuurVergunning[],
+  dateCompare?: Date
 ): ToeristischeVerhuurVergunning[] {
   if (!Array.isArray(vergunningen)) {
     return [];
   }
   const vergunningenTransformed = vergunningen.map((vergunning) => {
     const isActual = vergunning.dateEnd
-      ? !isDateInPast(vergunning.dateEnd)
+      ? !isDateInPast(vergunning.dateEnd, dateCompare)
       : true;
 
     let status = vergunning.status;

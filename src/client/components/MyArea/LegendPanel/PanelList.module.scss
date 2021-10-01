@@ -1,0 +1,19 @@
+@import '../../../styles/_global.scss';
+
+.PanelListItem {
+  position: relative;
+  border-top: 0.1rem $color-neutral-grey2 solid;
+  > ol > li > ol > li {
+    border-top: 0;
+  }
+  > ol > li {
+    margin-left: 3.7rem;
+  }
+}
+
+.PanelList {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}

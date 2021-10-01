@@ -1,20 +1,20 @@
-import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
-import styled from 'styled-components';
+import classnames from 'classnames';
+import { ReactNode } from 'react';
+import styles from './PanelList.module.scss';
 
-export const PanelListItem = styled.li`
-  position: relative;
-  border-top: 1px solid ${themeColor('tint', 'level3')};
-  > ol > li > ol > li {
-    border-top: 0;
-  }
-  > ol > li {
-    margin-left: ${themeSpacing(9)};
-  }
-`;
+interface PanelListProps {
+  children: ReactNode;
+  className?: string;
+}
 
-export const PanelList = styled.ol<{ indent?: number }>`
-  padding: 0;
-  list-style-type: none;
-  margin: 0;
-  padding-left: ${(props) => (props.indent || 0) + 'rem'};
-`;
+export const PanelList = ({ children, className }: PanelListProps) => {
+  return (
+    <ol className={classnames(styles.PanelList, className)}>{children}</ol>
+  );
+};
+
+export const PanelListItem = ({ children, className }: PanelListProps) => {
+  return (
+    <li className={classnames(styles.PanelListItem, className)}>{children}</li>
+  );
+};

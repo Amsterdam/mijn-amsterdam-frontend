@@ -13,7 +13,7 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
-import {
+import type {
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,

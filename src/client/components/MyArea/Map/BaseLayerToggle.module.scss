@@ -1,0 +1,45 @@
+@import '../../../styles/_global.scss';
+
+.Wrapper {
+  outline: 2px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0;
+  display: flex;
+}
+
+.ToggleButton {
+  padding: 1rem;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 2rem;
+  text-transform: capitalize;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-right: 0.2rem;
+  align-self: self-start;
+  text-align: left;
+}
+
+.AerialType {
+  background: url('../../../assets/images/aerial-background.png');
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    background: url('../../../assets/images/aerial-background@2.png') no-repeat
+      top left / 12rem 4.4rem;
+  }
+}
+
+.TopoType {
+  background: url('../../../assets/images/topo-background.png');
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    background: url('../../../assets/images/topo-background@2.png') no-repeat
+      top left / 12rem 4.4rem;
+  }
+}

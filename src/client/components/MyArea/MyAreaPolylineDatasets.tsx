@@ -1,29 +1,8 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useMemo } from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
+import type { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 import { POLYLINE_DATASET_OPTIONS } from './datasets';
 import { MaPolylineLayer } from './MyAreaPolylineLayer';
-
-const Styles = createGlobalStyle`
-  .ma-marker-tooltip {
-    background: none;
-    border: 0;
-    color: white;
-    text-shadow:
-    -1px -1px 0 #000,
-     0   -1px 0 #000,
-     1px -1px 0 #000,
-     1px  0   0 #000,
-     1px  1px 0 #000,
-     0    1px 0 #000,
-    -1px  1px 0 #000,
-    -1px  0   0 #000;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: none;
-  }
-`;
 
 interface MyAreaPolylineDatasetsProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
@@ -57,7 +36,6 @@ export function MyAreaPolylineDatasets({
           />
         );
       })}
-      <Styles></Styles>
     </>
   );
 }

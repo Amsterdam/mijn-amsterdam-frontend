@@ -56,7 +56,7 @@ export function DatasetControlPanel({
       label={
         <>
           {getIcon(categoryId, categoryId) || ''}
-          {category.title}
+          <p>{category.title}</p>
         </>
       }
       onChange={() => {

@@ -1,6 +1,5 @@
-import { Checkbox, Label } from '@amsterdam/asc-ui';
+import classnames from 'classnames';
 import { FormEvent, ReactNode } from 'react';
-import styled from 'styled-components';
 import {
   DatasetCategory,
   DatasetFilterSelection,
@@ -8,7 +7,9 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
 } from '../../../../universal/config';
+import Checkbox from '../../Checkbox/Checkbox';
 import { filterActiveDatasets } from '../MyArea.hooks';
+import styles from './PanelComponent.module.scss';
 
 export function datasetCheckboxState(
   datasetId: DatasetId,
@@ -52,29 +53,6 @@ export function filterItemCheckboxState(
   };
 }
 
-const StyledCheckbox = styled(Checkbox)`
-  padding-left: 0;
-  > input {
-    left: 0;
-  }
-`;
-
-const StyledLabel = styled(Label)<{ isDimmed?: boolean }>`
-  display: flex;
-  align-items: center;
-  opacity: ${(props) => (props.isDimmed ? '0.5' : 1)};
-  font-weight: ${(props) => (props.isDimmed ? 'normal' : '500')};
-  > span {
-    display: flex;
-    align-items: center;
-    > small {
-      display: inline-block;
-      margin-top: 2px;
-      margin-left: 4px;
-    }
-  }
-`;
-
 interface DatasetControlCheckboxProps {
   id: string;
   label: ReactNode;
@@ -93,13 +71,17 @@ export function DatasetControlCheckbox({
   onChange,
 }: DatasetControlCheckboxProps) {
   return (
-    <StyledLabel htmlFor={id} label={label} isDimmed={isDimmed}>
-      <StyledCheckbox
+    <label
+      htmlFor={id}
+      className={classnames(styles.LabelStyle, isDimmed && styles.IsDimmed)}
+    >
+      <span className={styles.LabelText}>{label}</span>
+      <Checkbox
         id={id}
         checked={isChecked}
         indeterminate={isIndeterminate}
         onChange={onChange}
       />
-    </StyledLabel>
+    </label>
   );
 }

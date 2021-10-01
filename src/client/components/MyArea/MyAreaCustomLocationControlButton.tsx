@@ -1,8 +1,9 @@
-import { ControlButton } from '@amsterdam/arm-core';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LatLngLiteral } from 'leaflet';
 import { HOOD_ZOOM } from '../../../universal/config/buurt';
 import { IconPin } from '../../assets/icons/map';
+import styles from './Map/Zoom.module.scss';
+import { IconButton } from '../../components/Button/Button';
 
 interface MyAreaCustomLocationControlButtonProps {
   latlng: LatLngLiteral;
@@ -15,12 +16,11 @@ export default function MyAreaCustomLocationControlButton({
 }: MyAreaCustomLocationControlButtonProps) {
   const mapInstance = useMapInstance();
   return (
-    <ControlButton
-      variant="blank"
+    <IconButton
       type="button"
-      icon={<IconPin />}
-      size={44}
-      iconSize={26}
+      className={styles.Button}
+      icon={IconPin}
+      iconSize="32"
       onClick={() => {
         mapInstance.setView(latlng, zoom);
       }}

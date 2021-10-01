@@ -1,5 +1,29 @@
 @import '../../styles/_global.scss';
 
+.Container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.MapContainer {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.MapOffset {
+  height: 100%;
+  position: relative;
+}
+
+.Map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .LogoLink {
   display: flex;
   align-items: center;

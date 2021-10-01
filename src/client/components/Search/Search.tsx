@@ -1,11 +1,10 @@
-import SearchBar from '@amsterdam/asc-ui/lib/components/SearchBar/SearchBar';
-import ThemeProvider from '@amsterdam/asc-ui/lib/theme/ThemeProvider';
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight } from '../../assets/icons';
+import { IconChevronRight, IconSearch } from '../../assets/icons';
+import { Colors } from '../../config/app';
 import {
   trackEventWithProfileType,
   trackSearch,
@@ -15,7 +14,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import Linkd, { Button } from '../Button/Button';
+import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
 import { SearchEntry } from './searchConfig';
@@ -97,7 +96,7 @@ export function Search({
   typeAhead = true,
   extendedAMResults = false,
 }: SearchProps) {
-  const searchBarRef = useRef<HTMLFormElement>(null);
+  const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -143,19 +142,16 @@ export function Search({
     }
   }, 300);
 
-  const inputEl = () =>
-    searchBarRef.current?.querySelector<HTMLInputElement>('input');
-
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
       const isEscape = event.key === 'Escape';
       if (isEscape && typeAhead) {
         event.preventDefault();
         if (isResultsVisible && term) {
-          inputEl()?.focus();
+          searchBarRef.current?.focus();
           setResultsVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
-        } else if (!isResultsVisible && inputEl() !== document.activeElement) {
+        } else if (!isResultsVisible) {
           onFinish && onFinish('Escape toets');
         }
       }
@@ -168,7 +164,10 @@ export function Search({
   useEffect(() => {
     if (autoFocus) {
       // AutoFocus on the element doesn't seem to work properly with dynamic mounting
-      inputEl()?.focus();
+      searchBarRef.current?.focus();
+    }
+    if (termInitial && searchBarRef.current) {
+      searchBarRef.current.value = termInitial;
     }
     return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,50 +189,52 @@ export function Search({
     <div
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
     >
-      <ThemeProvider>
-        <form
+      <form
+        className={styles.Form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (term) {
+            trackSearchBarEvent('Submit search');
+            history.push(
+              `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
+            );
+            setResultsVisible(true);
+          }
+        }}
+      >
+        <input
           ref={searchBarRef}
-          onSubmit={(e) => {
-            e.preventDefault();
+          className={styles.Input}
+          autoComplete="none"
+          autoCorrect="none"
+          autoCapitalize="none"
+          spellCheck="false"
+          placeholder={
+            results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
+          }
+          onFocus={() => {
             if (term) {
-              trackSearchBarEvent('Submit search');
-              history.push(AppRoutes.SEARCH + '?term=' + term);
               setResultsVisible(true);
             }
           }}
-        >
-          <SearchBar
-            inputProps={{
-              autoComplete: 'none',
-              autoCorrect: 'none',
-              autoCapitalize: 'none',
-              spellCheck: 'false',
-            }}
-            placeholder={
-              results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
-            }
-            onFocus={() => {
-              if (term) {
-                setResultsVisible(true);
-              }
-            }}
-            onChange={(e) => {
-              setIsTyping(true);
-              setResultsVisible(true);
+          onChange={(e) => {
+            setIsTyping(true);
+            setResultsVisible(true);
+            const term = e.target.value;
+            setTermDebounced(term);
+            trackSearchDebounced(term);
+          }}
+        />
 
-              const term = e.target.value;
-              setTermDebounced(term);
-              trackSearchDebounced(term);
-            }}
-            onClear={() => {
-              setTerm('');
-              setIsDirty(false);
-              setResultsVisible(false);
-            }}
-            value={term || termInitial}
-          />
-        </form>
-      </ThemeProvider>
+        <IconButton
+          className={styles.SubmitButton}
+          aria-label="Verstuur zoekopdracht"
+          type="submit"
+          iconSize="36"
+          iconFill={Colors.white}
+          icon={IconSearch}
+        />
+      </form>
 
       {isResultsVisible && (
         <div className={styles.Results}>

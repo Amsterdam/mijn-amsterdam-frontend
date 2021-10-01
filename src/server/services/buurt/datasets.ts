@@ -1,4 +1,3 @@
-import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import {
@@ -15,6 +14,7 @@ import {
   getPropertyFilters,
   transformDsoApiListResponse,
 } from './helpers';
+import { Colors } from '../../../universal/config/app';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -322,14 +322,14 @@ function transformParkeerzoneCoords(
         feature.properties.gebiedsnaam?.split(' ')[0] || 'Amsterdam';
 
       const colors: Record<string, string> = {
-        oost: themeColors.supplement.lightblue,
-        west: themeColors.supplement.purple,
-        noord: themeColors.support.focus,
-        zuid: themeColors.supplement.orange,
-        zuidoost: themeColors.supplement.lightgreen,
-        'nieuw-west': themeColors.supplement.yellow,
-        haven: themeColors.supplement.pink,
-        centrum: themeColors.support.valid,
+        oost: Colors.supportLightblue,
+        west: Colors.supportPurple,
+        noord: Colors.supportFocus,
+        zuid: Colors.supportOrange,
+        zuidoost: Colors.supportLightgreen,
+        'nieuw-west': Colors.supportYellow,
+        haven: Colors.supportPink,
+        centrum: Colors.supportValid,
       };
 
       // Add custom color code

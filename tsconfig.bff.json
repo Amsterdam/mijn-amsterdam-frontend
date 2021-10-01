@@ -16,8 +16,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "importsNotUsedAsValues": "remove"
   },
+  "exclude": ["src/**/*.test.ts"],
   "include": [
     "src/server",
     "src/universal",

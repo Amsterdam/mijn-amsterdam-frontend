@@ -1,4 +1,4 @@
-import { GPK as GPKType } from '../../../server/services';
+import type { GPK as GPKType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 

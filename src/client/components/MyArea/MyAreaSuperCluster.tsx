@@ -7,7 +7,7 @@ import L, {
   LeafletMouseEventHandlerFn,
 } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
-import {
+import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';

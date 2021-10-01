@@ -1,6 +1,4 @@
-import { Heading, themeColor } from '@amsterdam/asc-ui';
 import { PropsWithChildren } from 'react';
-import styled from 'styled-components';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -8,20 +6,8 @@ import {
 import JsonString from './JsonString';
 import { usePhoneScreen } from '../../../../hooks/media.hook';
 import styles from './GenericBase.module.scss';
-
-const SuperTitle = styled(Heading)`
-  font-size: 1.6rem;
-  margin: 0;
-  color: ${themeColor('tint', 'level5')};
-  font-weight: normal;
-  margin-bottom: 1rem;
-`;
-
-export const Title = styled(Heading)<{ isPhone?: boolean }>`
-  font-size: ${(props) => (props.isPhone ? '2rem' : '3rem')};
-  margin: 0;
-  margin-bottom: 2rem;
-`;
+import classnames from 'classnames';
+import Heading from '../../../Heading/Heading';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;
@@ -55,11 +41,18 @@ export default function GenericBase({
   const isPhone = usePhoneScreen();
   return (
     <div className={styles.GenericBase}>
-      {!!supTitle && <SuperTitle as="h4">{supTitle}</SuperTitle>}
+      {!!supTitle && (
+        <Heading className={styles.SuperTitle} as="h4">
+          {supTitle}
+        </Heading>
+      )}
       {!!title && (
-        <Title as="h3" isPhone={isPhone}>
+        <Heading
+          as="h3"
+          className={classnames(styles.Title, isPhone && styles.IsPhone)}
+        >
           {title}
-        </Title>
+        </Heading>
       )}
       {children}
     </div>

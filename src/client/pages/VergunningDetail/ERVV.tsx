@@ -1,4 +1,4 @@
-import { ERVV as ERVVType } from '../../../server/services';
+import type { ERVV as ERVVType } from '../../../server/services';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
