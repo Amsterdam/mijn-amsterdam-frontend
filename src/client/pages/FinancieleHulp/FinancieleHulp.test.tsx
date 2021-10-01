@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import FinancieleHulpData from '../../../server/mock-data/json/financiele-hulp.json';
-import type { FinancieleHulp as FinancieleHulpContent } from '../../../server/services/financiele-hulp';
+import { FinancieleHulp as FinancieleHulpContent } from '../../../server/services/financiele-hulp';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import FinancieleHulp from './FinancieleHulp';

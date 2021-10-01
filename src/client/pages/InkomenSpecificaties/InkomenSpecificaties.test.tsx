@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
-import type {
+import {
   FOCUSIncomeSpecificationSourceDataContent,
   transformFOCUSIncomeSpecificationsData,
 } from '../../../server/services';
