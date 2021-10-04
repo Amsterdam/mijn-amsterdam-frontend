@@ -29,6 +29,7 @@ export const FeatureToggle = {
   toeristischeVerhuurActive: true,
   financieleHulpActive: !IS_PRODUCTION,
   isSearchEnabled: true,
+  meldingenBuurtActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

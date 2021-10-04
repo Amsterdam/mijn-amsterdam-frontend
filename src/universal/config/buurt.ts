@@ -275,7 +275,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   meldingenBuurt: {
-    isDisabled: false,
+    isDisabled: !FeatureToggle.meldingenBuurtActive,
     title: 'Meldingen',
     datasets: {
       meldingenBuurt: {
