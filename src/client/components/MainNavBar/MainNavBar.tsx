@@ -237,7 +237,10 @@ export default function MainNavBar({
 
   useEffect(() => {
     setSearchActive(false);
-    trackSearchBarEvent('Automatisch sluiten (navigatie)');
+    if (isSearchActive) {
+      trackSearchBarEvent('Automatisch sluiten (navigatie)');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, trackSearchBarEvent]);
 
   useEffect(() => {
