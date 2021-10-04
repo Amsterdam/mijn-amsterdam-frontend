@@ -168,7 +168,12 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/TONK']}
             component={InkomenDetailTonk}
           />
-          <Route path={AppRoutes['INKOMEN/BBZ']} component={InkomenDetailBbz} />
+          {FeatureToggle.inkomenBBZActive && (
+            <Route
+              path={AppRoutes['INKOMEN/BBZ']}
+              component={InkomenDetailBbz}
+            />
+          )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route

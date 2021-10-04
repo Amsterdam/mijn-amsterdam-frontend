@@ -95,7 +95,7 @@ export async function fetchFOCUSBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  if (!FeatureToggle.tonkActive) {
+  if (!FeatureToggle.inkomenBBZActive) {
     return apiSuccesResult([]);
   }
 
