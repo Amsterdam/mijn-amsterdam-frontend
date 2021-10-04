@@ -5,7 +5,6 @@ import DigiDLogo from '../../assets/images/digid-logo.svg';
 import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
-  Alert,
   Heading,
   LinkdInline,
   MaintenanceNotifications,
@@ -189,19 +188,6 @@ export default function Landing() {
               </a>{' '}
               voor meer informatie.
             </p>
-            <Alert type="warning" className={styles.AlertLanding}>
-              <div className={styles.InnerAlert}>
-                <p>
-                  Let op: <b>vanaf 1 september 2021</b> kunt u alleen nog
-                  inloggen met eHerkenning niveau 3. Zorg dat u op tijd
-                  overstapt naar eHerkenning niveau 3. Ga naar{' '}
-                  <a rel="noopener noreferrer" href="https://eherkenning.nl">
-                    eherkenning.nl
-                  </a>{' '}
-                  voor meer informatie.
-                </p>
-              </div>
-            </Alert>
           </div>
         )}
 
