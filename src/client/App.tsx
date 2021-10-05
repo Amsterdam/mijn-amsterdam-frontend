@@ -270,7 +270,7 @@ export default function App() {
     isEnabled: IS_AP,
   });
 
-  useUsabilla();
+  // useUsabilla();
 
   const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
