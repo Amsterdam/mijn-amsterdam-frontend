@@ -285,17 +285,14 @@ export const DATASETS: DatasetCategories = {
             title: 'Categorie',
             sort: 'asc',
             valueConfig: {
+              Afval: {
+                title: 'Afval en containers',
+              },
               'Civiele-constructies': {
-                title: 'Civiele constructies',
-              },
-              'Overlast-van-dieren': {
-                title: 'Overlast van dieren',
-              },
-              'Overlast-op-het-water': {
-                title: 'Overlast op het water',
+                title: 'Bruggen, kades, sluizen en oevers',
               },
               'Openbaar-groen-en-water': {
-                title: 'Openbaar groen en water',
+                title: 'Bomen, planten en water',
               },
               'Overlast-bedrijven-en-horeca': {
                 title: 'Overlast bedrijven en Horeca',
@@ -303,8 +300,20 @@ export const DATASETS: DatasetCategories = {
               'Overlast-in-de-openbare-ruimte': {
                 title: 'Overlast in de openbare ruimte',
               },
+              'Overlast-op-het-water': {
+                title: 'Overlast van boten',
+              },
+              'Overlast-van-dieren': {
+                title: 'Overlast van dieren',
+              },
+              Schoon: {
+                title: 'Onderhoud straten, gladheid en graffiti',
+              },
               'Wegen-verkeer-straatmeubilair': {
                 title: 'Wegen, Verkeer en Straatmeubilair',
+              },
+              Overig: {
+                title: 'Overig',
               },
             },
           },

@@ -1,12 +1,12 @@
+import classnames from 'classnames';
 import { PolylineOptions } from 'leaflet';
 import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import styles from './Datasets.module.scss';
 import type { MaPointFeature } from '../../../server/services/buurt/datasets';
-import { Colors } from '../../config/app';
 import {
   IconAfvalGft,
   IconAfvalGlas,
+  IconAfvalMelding,
   IconAfvalPapier,
   IconAfvalPlastic,
   IconAfvalRest,
@@ -14,13 +14,21 @@ import {
   IconAuto,
   IconBasketbal,
   IconBekendmaking,
+  IconCivieleConstructies,
   IconEvenement,
   IconFitness,
   IconGeneral,
+  IconGroenWater,
   IconGymzaal,
   IconHardlopen,
   IconJeuDeBoules,
+  IconMeldingen,
   IconOverig,
+  IconOverlastBedrijven,
+  IconOverlastDieren,
+  IconOverlastOpenbareRuimte,
+  IconOverlastWater,
+  IconSchoon,
   IconSkate,
   IconSport,
   IconSporthal,
@@ -31,17 +39,12 @@ import {
   IconTennis,
   IconVoetbal,
   IconVolleybal,
+  IconWegenVerkeerStraatmeubilair,
   IconWior,
   IconZwembad,
-  IconAfvalMelding,
-  IconGroenWater,
-  IconOverlastBedrijven,
-  IconOverlastWater,
-  IconOverlastDieren,
-  IconCivieleConstructies,
-  IconMeldingen,
 } from '../../assets/icons/map';
-import classnames from 'classnames';
+import { Colors } from '../../config/app';
+import styles from './Datasets.module.scss';
 
 const DatasetIcon: React.FC<{
   color?: string;
@@ -300,17 +303,17 @@ export const datasetIcons: Record<
     ),
     'overlast in de openbare ruimte': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
-        <IconOverlastBedrijven fill={Colors.white} />
+        <IconOverlastOpenbareRuimte fill={Colors.white} />
       </DatasetIcon>
     ),
     schoon: (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
-        <IconOverlastBedrijven fill={Colors.white} />
+        <IconSchoon fill={Colors.white} />
       </DatasetIcon>
     ),
     'wegen, verkeer en straatmeubilair': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
-        <IconOverlastBedrijven fill={Colors.white} />
+        <IconWegenVerkeerStraatmeubilair fill={Colors.white} />
       </DatasetIcon>
     ),
     overig: (

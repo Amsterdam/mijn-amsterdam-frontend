@@ -37,3 +37,6 @@ export { ReactComponent as IconOverlastWater } from './overlast-op-water.svg';
 export { ReactComponent as IconOverlastDieren } from './overlast-van-dieren.svg';
 export { ReactComponent as IconCivieleConstructies } from './civiele-constructies.svg';
 export { ReactComponent as IconMeldingen } from './meldingen.svg';
+export { ReactComponent as IconSchoon } from './schoon.svg';
+export { ReactComponent as IconOverlastOpenbareRuimte } from './overlast-in-de-openbare-ruimte.svg';
+export { ReactComponent as IconWegenVerkeerStraatmeubilair } from './wegen-verkeer-straatmeubilair.svg';
