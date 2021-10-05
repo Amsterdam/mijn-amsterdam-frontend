@@ -244,11 +244,11 @@ export const bbzDocumentLabelSet: Record<
   },
   '176194': {
     omschrijving: 'Transitie Bbz Toekennen handmatig',
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit afwijzing',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning',
     product: 'Bbz',
     stepType: 'besluit',
-    decision: 'afwijzing',
+    decision: 'toekenning',
   },
   '176301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',
