@@ -263,12 +263,12 @@ export default function App() {
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
 
-  useScript(
-    '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
-    false,
-    true,
-    IS_AP
-  );
+  useScript({
+    src: '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
+    defer: false,
+    async: true,
+    isEnabled: IS_AP,
+  });
 
   useUsabilla();
 
