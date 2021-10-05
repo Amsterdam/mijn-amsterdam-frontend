@@ -16,13 +16,11 @@ export function InkomenDetailTozo() {
           voordat uw documenten over de {inkomenItem?.productTitle || 'Tozo'} in
           Mijn Amsterdam staan.
         </p>
-        {!isLoading && (
-          <p>
-            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-              Meer informatie over de Tozo
-            </Linkd>
-          </p>
-        )}
+        <p>
+          <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+            Meer informatie over de Tozo
+          </Linkd>
+        </p>
       </>
     );
   }, []);
@@ -50,13 +48,11 @@ export function InkomenDetailTonk() {
           antwoord op al deze aanvragen. Het duurt maximaal 3 werkdagen voordat
           uw documenten over de TONK in Mijn Amsterdam staan.
         </p>
-        {!isLoading && (
-          <p>
-            <Linkd external={true} href={ExternalUrls.WPI_TONK}>
-              Meer informatie over de TONK
-            </Linkd>
-          </p>
-        )}
+        <p>
+          <Linkd external={true} href={ExternalUrls.WPI_TONK}>
+            Meer informatie over de TONK
+          </Linkd>
+        </p>
       </>
     );
   }, []);
@@ -123,13 +119,11 @@ export function InkomenDetailUitkering() {
           bijstandsuitkering. Het duurt maximaal 3 werkdagen voordat uw
           documenten over de bijstandsuitkering in Mijn Amsterdam staan.
         </p>
-        {!isLoading && (
-          <p>
-            <Linkd external={true} href={ExternalUrls.WPI_BIJSTANDSUITKERING}>
-              Meer informatie over de bijstandsuitkering
-            </Linkd>
-          </p>
-        )}
+        <p>
+          <Linkd external={true} href={ExternalUrls.WPI_BIJSTANDSUITKERING}>
+            Meer informatie over de bijstandsuitkering
+          </Linkd>
+        </p>
       </>
     );
   }, []);

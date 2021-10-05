@@ -167,7 +167,7 @@ export const bbzDocumentLabelSet: Record<
   '175855': {
     omschrijving: 'Bbz verlenging beslistermijn met 13 weken',
     labels: meerTijdLabels,
-    documentTitle: 'Brief verzoek om meer informatie',
+    documentTitle: 'Brief verlenging beslistermijn',
     product: 'Bbz',
     stepType: 'hersteltermijn',
     productSpecific: 'uitkering',
@@ -243,10 +243,11 @@ export const bbzDocumentLabelSet: Record<
   '176194': {
     omschrijving: 'Transitie Bbz Toekennen handmatig',
     labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning',
+    documentTitle: 'Besluit toekenning uitkering',
     product: 'Bbz',
     stepType: 'besluit',
     decision: 'toekenning',
+    productSpecific: 'uitkering',
   },
   '176301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',

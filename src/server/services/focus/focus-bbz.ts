@@ -76,8 +76,8 @@ export function createBBZResult(
 
   const bbzItems: FocusItem[] = [
     createToxxItem({
-      title: 'Bijstand voor zelfstandigen (Bbz)',
-      productTitle: 'Bijstand voor zelfstandigen (Bbz)',
+      title: 'Bbz',
+      productTitle: 'Bbz',
       steps: otherSteps,
       routeProps: {
         path: AppRoutes['INKOMEN/BBZ'],
