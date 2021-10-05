@@ -3,12 +3,19 @@ import { useEffect, useState } from 'react';
 
 const cachedScripts: string[] = [];
 
-export function useScript(
-  src: string,
-  defer: boolean = false,
-  async: boolean = true,
-  isEnabled: boolean = false
-) {
+interface UseScriptProps {
+  src: string;
+  defer: boolean;
+  async: boolean;
+  isEnabled: boolean;
+}
+
+export function useScript({
+  src,
+  defer = false,
+  async = true,
+  isEnabled = false,
+}: UseScriptProps) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({
     loaded: false,

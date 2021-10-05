@@ -30,7 +30,12 @@ export function waitForUsabillaLiveInWindow() {
 
 export function useUsabilla() {
   const isPhoneScreen = usePhoneScreen();
-  const [isUsabillaLoaded] = useScript('/js/usabilla.js', false, true, IS_AP);
+  const [isUsabillaLoaded] = useScript({
+    src: '/js/usabilla.js',
+    defer: false,
+    async: true,
+    isEnabled: IS_AP,
+  });
   useEffect(() => {
     if (isUsabillaLoaded) {
       const lightningjs = (window as any).lightningjs;
