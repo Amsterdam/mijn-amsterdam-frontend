@@ -38,7 +38,7 @@ import {
   useDeeplinkRedirect,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
-// import { useUsabilla } from './hooks/useUsabilla';
+import { useUsabilla } from './hooks/useUsabilla';
 import {
   Accessibility,
   Burgerzaken,
