@@ -66,9 +66,7 @@ const voorschotLabels: FocusStepContent = {
   },
   status: stepLabels.voorschot,
   description: (document) =>
-    `<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.
-        </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.</p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {
@@ -97,7 +95,7 @@ const intrekkenLabels: FocusStepContent = {
   },
   status: stepLabels.brief,
   description: (document) =>
-    `<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
 };
 
 const meerTijdLabels: FocusStepContent = {
@@ -120,7 +118,7 @@ const akteLabels: FocusStepContent = {
   },
   status: stepLabels.akte,
   description: (document) =>
-    `<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p>`,
 };
 
 const buitenBehandelingLabels: FocusStepContent = {

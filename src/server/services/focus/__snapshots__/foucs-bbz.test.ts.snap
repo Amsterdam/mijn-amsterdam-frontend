@@ -167,7 +167,7 @@ Object {
         Object {
           "datePublished": "2021-09-20T00:00:00+01:00",
           "decision": "intrekking",
-          "description": "<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "description": "<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
@@ -212,7 +212,7 @@ Object {
         },
         Object {
           "datePublished": "2021-09-20T00:00:00+01:00",
-          "description": "<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "description": "<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
@@ -234,9 +234,7 @@ Object {
         },
         Object {
           "datePublished": "2021-09-20T00:00:00+01:00",
-          "description": "<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "description": "<p>Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
@@ -258,9 +256,7 @@ Object {
         },
         Object {
           "datePublished": "2021-09-20T00:00:00+01:00",
-          "description": "<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.
-        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "description": "<p>Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de voorwaarden in de brief.</p>",
           "documents": Array [
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
