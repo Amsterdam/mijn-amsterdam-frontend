@@ -271,12 +271,12 @@ export const datasetIcons: Record<
         <IconMeldingen fill={Colors.white} />
       </DatasetIcon>
     ),
-    afval: (
+    'afval en containers': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconAfvalMelding fill={Colors.white} />
       </DatasetIcon>
     ),
-    'civiele constructies': (
+    'bruggen, kades, sluizen en oevers': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconCivieleConstructies fill={Colors.white} />
       </DatasetIcon>
@@ -286,12 +286,12 @@ export const datasetIcons: Record<
         <IconOverlastDieren fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast op het water': (
+    'overlast van boten': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconOverlastWater fill={Colors.white} />
       </DatasetIcon>
     ),
-    'openbaar groen en water': (
+    'bomen, planten en water': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconGroenWater fill={Colors.white} />
       </DatasetIcon>
@@ -306,7 +306,7 @@ export const datasetIcons: Record<
         <IconOverlastOpenbareRuimte fill={Colors.white} />
       </DatasetIcon>
     ),
-    schoon: (
+    'onderhoud straten, gladheid en graffiti': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconSchoon fill={Colors.white} />
       </DatasetIcon>

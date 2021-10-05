@@ -6,6 +6,7 @@ import {
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
+  DATASETS,
   FeatureType,
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
@@ -16,6 +17,7 @@ import {
 } from './helpers';
 import { Colors } from '../../../universal/config/app';
 import { ENV } from '../../../universal/config/env';
+import { capitalizeFirstLetter } from '../../../universal/helpers';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -287,12 +289,37 @@ export const datasetEndpoints: Record<
       `https://${
         ENV === 'production' ? '' : 'acc.'
       }api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/`,
-    transformList: transformDsoApiListResponse,
+    transformList: transformMeldingenBuurtResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometry',
   },
 };
+
+function transformMeldingenBuurtResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features =
+    responseData?.features.map((feature: any) => {
+      const categorie = feature.properties.categorie;
+
+      const config =
+        DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.categorie
+          ?.valueConfig;
+
+      const displayCat = capitalizeFirstLetter(categorie);
+
+      if (config && !(displayCat in config)) {
+        feature.properties.categorie = 'overig';
+      }
+
+      return feature;
+    }) || [];
+
+  return transformDsoApiListResponse(datasetId, config, { features });
+}
 
 function createCustomFractieOmschrijving(featureProps: any) {
   if (featureProps.serienummer?.trim().startsWith('Kerstboom')) {

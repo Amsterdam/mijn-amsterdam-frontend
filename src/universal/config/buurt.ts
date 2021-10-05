@@ -283,7 +283,6 @@ export const DATASETS: DatasetCategories = {
         filters: {
           categorie: {
             title: 'Categorie',
-            sort: 'asc',
             valueConfig: {
               Afval: {
                 title: 'Afval en containers',
