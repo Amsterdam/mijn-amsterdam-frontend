@@ -31,7 +31,7 @@ export function waitForUsabillaLiveInWindow() {
 export function useUsabilla() {
   const isPhoneScreen = usePhoneScreen();
   const [isUsabillaLoaded] = useScript({
-    src: '/js/usabilla.js',
+    src: '/js/usabilla-2021-10-05.js',
     defer: false,
     async: true,
     isEnabled: IS_AP,

@@ -8,6 +8,14 @@ import App from './client/App';
 import './client/styles/main.scss';
 import { ENV, getOtapEnvItem } from './universal/config/env';
 
+if (
+  /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
+  navigator.userAgent.indexOf('Trident/') > -1 ||
+  !('Map' in window && 'Set' in window)
+) {
+  window.location.replace('/no-support');
+}
+
 const release = `mijnamsterdam-frontend@${
   process.env.REACT_APP_VERSION || 'latest-unknown'
 }`;
