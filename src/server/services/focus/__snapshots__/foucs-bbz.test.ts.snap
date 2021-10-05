@@ -8,12 +8,12 @@ Object {
       "datePublished": "2021-09-20T00:00:00+01:00",
       "dateStart": "2021-09-17T00:00:00+01:00",
       "decision": "afwijzing",
-      "id": "1238294284",
+      "id": "2486412120",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen/bbz/1/1238294284",
+        "to": "/inkomen/bbz/1/2486412120",
       },
-      "productTitle": "Bijstand voor zelfstandigen (Bbz)",
+      "productTitle": "Bbz",
       "status": "Besluit",
       "steps": Array [
         Object {
@@ -99,7 +99,7 @@ Object {
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
               "id": "5855",
-              "title": "Brief verzoek om meer informatie",
+              "title": "Brief verlenging beslistermijn",
               "type": "pdf",
               "url": "/test-api/",
             },
@@ -305,13 +305,13 @@ Object {
           "datePublished": "2021-09-20T00:00:00+01:00",
           "decision": "toekenning",
           "description": "<p>
-          U hebt recht op Bbz. Bekijk de brief voor meer details.
+          U hebt recht op de Bbz uitkering. Bekijk de brief voor meer details.
         </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
               "datePublished": "2021-09-20T00:00:00+01:00",
               "id": "6194",
-              "title": "Besluit toekenning",
+              "title": "Besluit toekenning uitkering",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
@@ -319,7 +319,7 @@ Object {
           "id": "293530587",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Bbz (besluit: 20 september 2021).",
+          "notificationDescription": "U hebt recht op de Bbz uitkering (besluit: 20 september 2021).",
           "notificationLink": undefined,
           "notificationTitle": "Bbz: Uw aanvraag is toegekend",
           "product": "Bbz",
@@ -475,7 +475,7 @@ Object {
           "title": "besluit",
         },
       ],
-      "title": "Bijstand voor zelfstandigen (Bbz)",
+      "title": "Bbz",
       "type": "Tozo",
     },
   ],
