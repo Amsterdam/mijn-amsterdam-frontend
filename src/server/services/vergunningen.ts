@@ -87,6 +87,7 @@ export interface EvenementMelding extends VergunningBase {
 export interface Omzettingsvergunning extends VergunningBase {
   caseType: CaseType.Omzettingsvergunning;
   location: string | null;
+  dateWorkflowActive: string | null;
 }
 
 export interface ERVV extends VergunningBase {
@@ -336,6 +337,7 @@ export function createVergunningNotification(
 
     const notificationLink = notificationLinks[item.caseType] || item.link.to;
     const fullName = item.title;
+
     switch (true) {
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
@@ -363,30 +365,37 @@ export function createVergunningNotification(
         break;
       case item.status !== 'Afgehandeld':
         title = `${item.caseType} in behandeling`;
-        description = `Uw aanvraag voor een ${fullName} is in behandeling genomen.`;
+        description = `Uw vergunningsaanvraag voor een ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${item.caseType} afgehandeld`;
-        description = `Uw aanvraag voor een ${fullName} is afgehandeld.`;
+        description = `Uw vergunningsaanvraag voor een ${fullName} is afgehandeld.`;
         datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
   } else {
     let fullName: string = item.title;
     let shortName: string = item.title;
+
     switch (item.caseType) {
       case CaseType.GPP:
         shortName = item.caseType;
         break;
     }
+
     switch (true) {
+      case item.caseType === CaseType.Omzettingsvergunning &&
+        !item.dateWorkflowActive:
+        title = `${shortName} ontvangen`;
+        description = `Uw vergunningsaanvraag ${fullName} is geregistreerd.`;
+        break;
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
-        description = `Uw aanvraag ${fullName} is in behandeling genomen.`;
+        description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
-        description = `Uw aanvraag ${fullName} is afgehandeld.`;
+        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
         datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }

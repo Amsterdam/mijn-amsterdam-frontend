@@ -22,7 +22,7 @@ interface DocumentDetailsProps {
 
 export function DocumentDetails({
   vergunning,
-  opaque = false,
+  opaque = true,
 }: DocumentDetailsProps) {
   const profileType = useProfileTypeValue();
   const documentsUrl = vergunning?.documentsUrl
@@ -63,7 +63,7 @@ export function DocumentDetails({
     }
   }, [documentsUrl, fetchDocuments]);
 
-  if (opaque || !documents?.length) {
+  if (opaque && (!documents?.length || isLoadingDocuments)) {
     return null;
   }
 

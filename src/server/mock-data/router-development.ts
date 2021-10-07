@@ -8,7 +8,11 @@ export const routerDevelopment = express.Router();
 routerDevelopment.get(
   '/decosjoin/listdocuments/:key',
   (req: Request, res: Response, next: NextFunction) => {
-    res.json(VergunningenDocuments).end();
+    let response = VergunningenDocuments;
+    if (req.path.endsWith('no-documents')) {
+      response = { content: [], status: 'OK' };
+    }
+    res.json(response).end();
   }
 );
 

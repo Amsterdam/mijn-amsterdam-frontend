@@ -177,7 +177,7 @@ export default function VergunningVerhuur({
           </InfoDetailGroup>
         )}
         <Location label="Adres" location={vergunning.location} />
-        <DocumentDetails opaque vergunning={vergunning} />
+        <DocumentDetails vergunning={vergunning} />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

@@ -194,6 +194,39 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
+                  Z/000/000001.b
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 augustus 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
                   Z/000/000002
                 </td>
                 <td
@@ -271,7 +304,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Tijdelijke verkeersmaatregel
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
                   </span>
                 </td>
                 <td

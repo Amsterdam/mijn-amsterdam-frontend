@@ -2,7 +2,7 @@
   "content": [
     {
       "caseType": "Omzettingsvergunning",
-      "title": "Tijdelijke verkeersmaatregel",
+      "title": "Vergunning voor kamerverhuur (omzettingsvergunning)",
       "dateDecision": null,
       "dateRequest": "2021-03-28",
       "decision": null,
@@ -10,7 +10,21 @@
       "identifier": "Z/000/000001",
       "location": "BBlap 1 1017AB Amsterdam",
       "status": "Ontvangen",
-      "description": "Amstel 1 Omzettingsvergunning voor het een en ander"
+      "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
+      "dateWorkflowActive": null
+    },
+    {
+      "caseType": "Omzettingsvergunning",
+      "title": "Vergunning voor kamerverhuur (omzettingsvergunning)",
+      "dateDecision": null,
+      "dateRequest": "2021-08-28",
+      "decision": null,
+      "documentsUrl": "/api/decosjoin/listdocuments/no-documents",
+      "identifier": "Z/000/000001.b",
+      "location": "Amstel 1 1017AB Amsterdam",
+      "status": "In behandeling",
+      "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
+      "dateWorkflowActive": "2021-09-08"
     },
     {
       "caseType": "Evenement melding",

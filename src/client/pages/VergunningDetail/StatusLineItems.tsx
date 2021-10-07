@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { Vergunning } from '../../../server/services/vergunningen';
+import { CaseType } from '../../../universal/types/vergunningen';
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
@@ -12,6 +13,15 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
     }
 
     const isDone = vergunning.status === 'Afgehandeld';
+    let dateWorkflowActive = vergunning.dateRequest || '';
+
+    if (
+      vergunning.caseType === CaseType.Omzettingsvergunning &&
+      vergunning.dateWorkflowActive
+    ) {
+      dateWorkflowActive = vergunning.dateWorkflowActive;
+    }
+
     return [
       {
         id: 'item-1',
@@ -25,7 +35,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       {
         id: 'item-2',
         status: 'In behandeling',
-        datePublished: vergunning.dateRequest,
+        datePublished: dateWorkflowActive,
         description: '',
         documents: [],
         isActive: !isDone,
