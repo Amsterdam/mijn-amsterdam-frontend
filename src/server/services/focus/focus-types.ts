@@ -150,11 +150,7 @@ export interface LabelData {
 
 export type DocumentTitles = Record<string, string>;
 
-export type FocusDocumentStepType =
-  | 'aanvraag'
-  | 'herstelTermijn'
-  | 'besluit'
-  | 'intrekken';
+export type FocusDocumentStepType = 'aanvraag' | 'herstelTermijn' | 'besluit';
 
 export type FocusTonkStepType =
   | FocusDocumentStepType

@@ -185,7 +185,7 @@ export const tonkDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekking TONK aanvraag',
     product: 'TONK',
-    stepType: 'intrekken',
+    stepType: 'besluit',
     productSpecific: 'uitkering',
     decision: 'intrekking',
   },
