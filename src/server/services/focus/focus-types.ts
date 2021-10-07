@@ -150,63 +150,55 @@ export interface LabelData {
 
 export type DocumentTitles = Record<string, string>;
 
-export type FocusTonkStepType =
+export type FocusDocumentStepType =
   | 'aanvraag'
   | 'herstelTermijn'
   | 'besluit'
-  | 'intrekken'
+  | 'intrekken';
+
+export type FocusTonkStepType =
+  | FocusDocumentStepType
   | 'correctiemail'
   | 'verklaring';
 
 export type FocusBbzStepType =
-  | 'aanvraag'
-  | 'hersteltermijn'
-  | 'besluit'
+  | FocusDocumentStepType
+  | 'beslistermijn'
   | 'brief'
   | 'voorschot';
 
-export type FocusTonkLabelSet = {
-  labels: FocusStepContent;
-  omschrijving: string;
-  documentTitle: string;
-  product: 'TONK';
-  stepType: FocusTonkStepType;
-  productSpecific?: string;
-  datePublished?: string;
-  decision?: DecisionFormatted;
-};
-
-export type FocusBbzLabelSet = {
-  labels: FocusStepContent;
-  omschrijving: string;
-  documentTitle: string;
-  product: 'Bbz' | 'IOAZ';
-  stepType: FocusBbzStepType;
-  productSpecific?: string;
-  datePublished?: string;
-  decision?: DecisionFormatted;
-};
-
 export type FocusTozoStepType =
-  | 'aanvraag'
-  | 'herstelTermijn'
-  | 'besluit'
-  | 'intrekken'
+  | FocusDocumentStepType
   | 'vrijeBeschikking'
   | 'voorschot'
   | 'terugvordering'
   | 'verklaring';
 
-export type FocusTozoLabelSet = {
+export interface FocusDocumentLabelSet {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
-  productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
-  stepType: FocusTozoStepType;
+  product: string;
+  productSpecific?: 'uitkering' | 'lening';
+  stepType: string;
   datePublished?: string;
   decision?: DecisionFormatted;
-};
+}
+
+export interface FocusTozoLabelSet extends FocusDocumentLabelSet {
+  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
+  stepType: FocusTozoStepType;
+}
+
+export interface FocusTonkLabelSet extends FocusDocumentLabelSet {
+  product: 'TONK';
+  stepType: FocusTonkStepType;
+}
+
+export interface FocusBbzLabelSet extends FocusDocumentLabelSet {
+  product: 'Bbz' | 'IOAZ';
+  stepType: FocusBbzStepType;
+}
 
 export type ToxxLabelSet =
   | FocusTozoLabelSet

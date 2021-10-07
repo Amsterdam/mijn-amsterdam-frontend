@@ -38,6 +38,11 @@ const herstelTermijnLabels: FocusStepContent = {
       </p>`,
 };
 
+const briefAdviesRapportLabels: FocusStepContent = {
+  ...herstelTermijnLabels,
+  status: stepLabels.brief,
+};
+
 const toekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
@@ -49,11 +54,19 @@ const toekennenLabels: FocusStepContent = {
   status: stepLabels.besluit,
   description: (document) =>
     `<p>
-          U hebt recht op ${productName(document)}. ${
-      document.productTitle === 'IOAZ'
-        ? 'Kijk voor de voorwaarden in de brief.'
-        : 'Bekijk de brief voor meer details.'
-    }
+          U hebt recht op ${productName(
+            document
+          )}. Bekijk de brief voor meer details.
+        </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
+const toekennenVoorlopigLabels: FocusStepContent = {
+  ...toekennenLabels,
+  description: (document) =>
+    `<p>
+          U hebt recht op ${productName(
+            document
+          )}. Kijk voor de voorwaarden in de brief.
         </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
@@ -74,8 +87,7 @@ const afwijzenLabels: FocusStepContent = {
     title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
     description: (document) =>
       `U hebt geen recht op ${productName(
-        document,
-        false
+        document
       )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.besluit,
@@ -144,7 +156,6 @@ export const bbzDocumentLabelSet: Record<
     documentTitle: 'Aanvraag Bbz',
     product: 'Bbz',
     stepType: 'aanvraag',
-    productSpecific: 'aanvraag',
   },
   '176195': {
     omschrijving: 'Transitie Bbz Toekennen batch',
@@ -158,7 +169,7 @@ export const bbzDocumentLabelSet: Record<
   '175843': {
     omschrijving: 'Bbz toekenning bedrijfskapitaal',
     labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning uitkering',
+    documentTitle: 'Besluit toekenning lening',
     product: 'Bbz',
     stepType: 'besluit',
     productSpecific: 'lening',
@@ -169,24 +180,21 @@ export const bbzDocumentLabelSet: Record<
     labels: meerTijdLabels,
     documentTitle: 'Brief verlenging beslistermijn',
     product: 'Bbz',
-    stepType: 'hersteltermijn',
-    productSpecific: 'uitkering',
+    stepType: 'beslistermijn',
   },
   '176351': {
     omschrijving: 'Transitie Bbz Hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief verzoek om meer informatie',
     product: 'Bbz',
-    stepType: 'hersteltermijn',
-    productSpecific: 'uitkering',
+    stepType: 'herstelTermijn',
   },
   '176368': {
     omschrijving: 'Brief aanvraag adviesrapport',
-    labels: herstelTermijnLabels,
+    labels: briefAdviesRapportLabels,
     documentTitle: 'Brief aanvraag adviesrapport',
     product: 'Bbz',
     stepType: 'brief',
-    productSpecific: 'uitkering',
   },
   '176350': {
     omschrijving: 'Transitie Bbz Intrekken',
@@ -194,7 +202,6 @@ export const bbzDocumentLabelSet: Record<
     documentTitle: 'Brief intrekken Bbz aanvraag',
     product: 'Bbz',
     stepType: 'besluit',
-    productSpecific: 'uitkering',
     decision: 'intrekking',
   },
   '176353': {
@@ -202,7 +209,6 @@ export const bbzDocumentLabelSet: Record<
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
     product: 'Bbz',
-    productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'buitenbehandeling',
   },
@@ -211,7 +217,6 @@ export const bbzDocumentLabelSet: Record<
     labels: akteLabels,
     documentTitle: 'Brief akte bedrijfskapitaal',
     product: 'Bbz',
-    productSpecific: 'uitkering',
     stepType: 'brief',
   },
   '176196': {
@@ -219,7 +224,6 @@ export const bbzDocumentLabelSet: Record<
     labels: voorschotLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Bbz',
-    productSpecific: 'uitkering',
     stepType: 'voorschot',
     decision: 'toekenning',
   },
@@ -228,7 +232,6 @@ export const bbzDocumentLabelSet: Record<
     labels: voorschotLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Bbz',
-    productSpecific: 'voorschot',
     stepType: 'voorschot',
     decision: 'toekenning',
   },
@@ -245,9 +248,9 @@ export const bbzDocumentLabelSet: Record<
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
     product: 'Bbz',
+    productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'toekenning',
-    productSpecific: 'uitkering',
   },
   '176301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',
@@ -261,10 +264,9 @@ export const bbzDocumentLabelSet: Record<
   '176322': {
     omschrijving: 'Ioaz Aanvraag hersteltermijn',
     labels: herstelTermijnLabels,
-    documentTitle: 'Brief verzoek meer informatie',
+    documentTitle: 'Brief verzoek om meer informatie',
     product: 'IOAZ',
-    productSpecific: 'aanvraag',
-    stepType: 'hersteltermijn',
+    stepType: 'herstelTermijn',
   },
   '176332': {
     omschrijving: 'Ioaz aanvraag buiten behandeling stellen',
@@ -276,9 +278,10 @@ export const bbzDocumentLabelSet: Record<
   },
   '1736301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',
-    labels: toekennenLabels,
+    labels: toekennenVoorlopigLabels,
     documentTitle: 'Besluit toekenning uitkering',
     product: 'IOAZ',
+    productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'toekenning',
   },
@@ -287,8 +290,8 @@ export const bbzDocumentLabelSet: Record<
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
     product: 'IOAZ',
-    stepType: 'besluit',
     productSpecific: 'uitkering',
+    stepType: 'besluit',
     decision: 'toekenning',
   },
   '1736303': {
@@ -296,6 +299,7 @@ export const bbzDocumentLabelSet: Record<
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'IOAZ',
+    productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'afwijzing',
   },
