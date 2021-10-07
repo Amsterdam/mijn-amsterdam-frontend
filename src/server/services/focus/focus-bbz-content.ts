@@ -107,7 +107,7 @@ const intrekkenLabels: FocusStepContent = {
   },
   status: stepLabels.brief,
   description: (document) =>
-    `<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
+    `<p>U hebt uw Bbz aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const meerTijdLabels: FocusStepContent = {
