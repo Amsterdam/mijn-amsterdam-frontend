@@ -254,7 +254,7 @@ export const bbzDocumentLabelSet: Record<
   },
   '176301': {
     omschrijving: 'Ioaz Toekenning voorlopige uitkering',
-    labels: toekennenLabels,
+    labels: toekennenVoorlopigLabels,
     documentTitle: 'Besluit toekenning',
     product: 'IOAZ',
     stepType: 'besluit',
