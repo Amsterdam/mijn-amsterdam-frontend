@@ -76,6 +76,7 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
+          "decision": "intrekking",
           "description": "<p>U hebt uw TONK aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
           "documents": Array [
             Object {
@@ -94,7 +95,7 @@ Object {
           "notificationTitle": "TONK: Aanvraag ingetrokken",
           "product": "TONK",
           "status": "Brief",
-          "title": "intrekken",
+          "title": "besluit",
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",

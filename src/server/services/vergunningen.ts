@@ -381,6 +381,11 @@ export function createVergunningNotification(
       case CaseType.GPP:
         shortName = item.caseType;
         break;
+      case CaseType.Omzettingsvergunning:
+        if (item.dateWorkflowActive) {
+          datePublished = item.dateWorkflowActive;
+        }
+        break;
     }
 
     switch (true) {
