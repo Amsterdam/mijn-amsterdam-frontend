@@ -9,7 +9,6 @@ import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
-
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
@@ -61,7 +60,6 @@ export async function fetchDataset(
     if (dataCache) {
       const features = dataCache.getKey('features');
       const filters = dataCache.getKey('filters');
-
       if (features) {
         const apiData: DatasetResponse = {
           features,
@@ -243,7 +241,6 @@ export async function loadFeatureDetail(
   }
 
   const response = await requestData(requestConfig, sessionID, {});
-
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);
     // Replace the value of the `idKeyDetail` property. E.g. idKeyDetail = someOtherId  item.id = item.someOtherId;

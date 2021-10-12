@@ -11,6 +11,8 @@ const afvalUrls: Record<string, string> = {
   textiel:
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BD68460AA-EB08-4132-A69F-7763CD8431A2%7D',
   gft: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B4FDB05A6-EA6F-4475-A359-C19AD3578CF5%7D',
+  brood:
+    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B901ECC99-7B1F-40E8-9C6C-5CD95AC256E1%7D',
 };
 
 interface MyArePanelContentAfvalProps {

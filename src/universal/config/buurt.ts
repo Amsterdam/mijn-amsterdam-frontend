@@ -56,7 +56,7 @@ export type DatasetCategory = {
 export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
 export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
 
-const excludeFractieOmschrijving = ['Brood', 'brood'];
+const excludeFractieOmschrijving = [];
 const month = new Date().getMonth();
 // Exlude Kerstboom in all months but December and January
 if (month !== 11 && month !== 0) {

@@ -95,6 +95,11 @@ export const datasetIcons: Record<
         <IconAfvalPlastic />
       </DatasetIcon>
     ),
+    brood: (
+      <DatasetIcon className={styles.DatasetIcon__orange}>
+        <IconAfvalPlastic />
+      </DatasetIcon>
+    ),
   },
   evenementen: {
     evenementen: (
