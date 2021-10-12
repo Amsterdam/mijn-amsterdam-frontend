@@ -63,6 +63,7 @@ export function ResultSet({
               external={result.url.startsWith('http')}
               href={result.url}
               className={styles.ResultSetLink}
+              onClick={() => trackSearch(term, 'Results (click result)')}
             >
               {result.displayTitle ? result.displayTitle(term) : result.title}
               {extendedResults && (
@@ -126,13 +127,16 @@ export function Search({
     [profileType]
   );
 
-  const trackSearchDebounced = useDebouncedCallback((term: string) => {
-    if (term) {
-      trackSearch(term);
-    } else {
-      trackSearchBarEvent('Verwijder term');
-    }
-  }, 2000);
+  const trackSearchDebounced = useDebouncedCallback(
+    (term: string, category: string = 'Keyword input (typing)') => {
+      if (term) {
+        trackSearch(term, category);
+      } else {
+        trackSearchBarEvent('Verwijder term');
+      }
+    },
+    2000
+  );
 
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
@@ -199,6 +203,7 @@ export function Search({
               `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
             );
             setResultsVisible(true);
+            trackSearch(term, 'Submit form');
           }
         }}
       >
