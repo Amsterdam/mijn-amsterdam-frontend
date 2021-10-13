@@ -404,10 +404,20 @@ export function createVergunningNotification(
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
         description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
+        if (item.caseType === CaseType.EvenementVergunning) {
+          description = `Uw vergunningsaanvraag ${fullName} is ontvangen.`;
+          title = `${fullName} ontvangen`;
+        }
+        if (item.caseType === CaseType.EvenementMelding) {
+          description = `Uw ${fullName} is in behandeling genomen.`;
+        }
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
         description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
+        if (item.caseType === CaseType.EvenementMelding) {
+          description = `Uw ${fullName} is afgehandeld.`;
+        }
         datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }
