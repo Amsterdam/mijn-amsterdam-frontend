@@ -75,9 +75,15 @@ export interface GPP extends VergunningBase {
 export interface EvenementMelding extends VergunningBase {
   caseType: CaseType.EvenementMelding;
   location: string | null;
-  visitorCount: number | null;
-  activities: string | null;
-  eventType: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
+export interface EvenementVergunning extends VergunningBase {
+  caseType: CaseType.EvenementVergunning;
+  location: string | null;
   timeStart: string | null;
   timeEnd: string | null;
   dateStart: string | null;
@@ -153,6 +159,7 @@ export type Vergunning =
   | GPK
   | GPP
   | EvenementMelding
+  | EvenementVergunning
   | Omzettingsvergunning
   | ERVV
   | BZB
