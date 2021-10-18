@@ -32,7 +32,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         isChecked: true,
       },
     ];
-    if (vergunning.caseType === CaseType.EvenementMelding) {
+    if (vergunning.caseType !== CaseType.EvenementVergunning) {
       lineItems.push({
         id: 'item-2',
         status: 'In behandeling',
@@ -44,7 +44,8 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       });
     }
     lineItems.push({
-      id: vergunning.title === CaseType.EvenementMelding ? 'item-2' : 'item-3',
+      id:
+        vergunning.title === CaseType.EvenementVergunning ? 'item-2' : 'item-3',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
       description: '',

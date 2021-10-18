@@ -389,6 +389,7 @@ export function createVergunningNotification(
         shortName = item.caseType;
         break;
       case CaseType.Omzettingsvergunning:
+        shortName = `Aanvraag ${item.title.toLocaleLowerCase()}`;
         if (item.dateWorkflowActive) {
           datePublished = item.dateWorkflowActive;
         }
@@ -396,11 +397,6 @@ export function createVergunningNotification(
     }
 
     switch (true) {
-      case item.caseType === CaseType.Omzettingsvergunning &&
-        !item.dateWorkflowActive:
-        title = `${shortName} ontvangen`;
-        description = `Uw vergunningsaanvraag ${fullName} is geregistreerd.`;
-        break;
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
         description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
@@ -410,6 +406,13 @@ export function createVergunningNotification(
         }
         if (item.caseType === CaseType.EvenementMelding) {
           description = `Uw ${fullName} is in behandeling genomen.`;
+        }
+        if (
+          item.caseType === CaseType.Omzettingsvergunning &&
+          !item.dateWorkflowActive
+        ) {
+          title = `${shortName} ontvangen`;
+          description = `Uw vergunningsaanvraag ${fullName} is geregistreerd.`;
         }
         break;
       case item.status === 'Afgehandeld':

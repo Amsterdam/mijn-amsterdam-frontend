@@ -227,6 +227,39 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
+                  Z/000/000001.c
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
                   Z/000/000003
                 </td>
                 <td
@@ -737,6 +770,39 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                      
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/000/000001.d
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
                   </span>
                 </td>
               </tr>
