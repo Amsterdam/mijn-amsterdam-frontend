@@ -3,6 +3,7 @@ export enum CaseType {
   GPK = 'GPK',
   GPP = 'GPP',
   EvenementMelding = 'Evenement melding',
+  EvenementVergunning = 'Evenement vergunning',
   Omzettingsvergunning = 'Omzettingsvergunning',
   ERVV = 'E-RVV - TVM',
   VakantieVerhuur = 'Vakantieverhuur',

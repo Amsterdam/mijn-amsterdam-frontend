@@ -75,9 +75,15 @@ export interface GPP extends VergunningBase {
 export interface EvenementMelding extends VergunningBase {
   caseType: CaseType.EvenementMelding;
   location: string | null;
-  visitorCount: number | null;
-  activities: string | null;
-  eventType: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
+export interface EvenementVergunning extends VergunningBase {
+  caseType: CaseType.EvenementVergunning;
+  location: string | null;
   timeStart: string | null;
   timeEnd: string | null;
   dateStart: string | null;
@@ -153,6 +159,7 @@ export type Vergunning =
   | GPK
   | GPP
   | EvenementMelding
+  | EvenementVergunning
   | Omzettingsvergunning
   | ERVV
   | BZB
@@ -397,10 +404,20 @@ export function createVergunningNotification(
       case item.status !== 'Afgehandeld':
         title = `${shortName} in behandeling`;
         description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
+        if (item.caseType === CaseType.EvenementVergunning) {
+          description = `Uw vergunningsaanvraag ${fullName} is ontvangen.`;
+          title = `${fullName} ontvangen`;
+        }
+        if (item.caseType === CaseType.EvenementMelding) {
+          description = `Uw ${fullName} is in behandeling genomen.`;
+        }
         break;
       case item.status === 'Afgehandeld':
         title = `${shortName} afgehandeld`;
         description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
+        if (item.caseType === CaseType.EvenementMelding) {
+          description = `Uw ${fullName} is afgehandeld.`;
+        }
         datePublished = item.dateDecision ?? item.dateRequest;
         break;
     }

@@ -1,4 +1,5 @@
 import { ReactNode, useMemo } from 'react';
+
 import { DATASETS } from '../../../../universal/config';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import {
@@ -28,7 +29,6 @@ export function DatasetCategoryPanel() {
       );
     });
   }, [profileType]);
-
   return (
     <CategoryPanel>
       {datasets

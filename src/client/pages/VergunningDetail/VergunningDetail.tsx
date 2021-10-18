@@ -22,6 +22,7 @@ import { BZP } from './BZP';
 import { BZB } from './BZB';
 import styles from './VergunningDetail.module.scss';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { EvenementVergunning } from './EvenementVergunning';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -70,6 +71,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.Omzettingsvergunning && (
               <Omzettingsvergunning vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.EvenementVergunning && (
+              <EvenementVergunning vergunning={Vergunning} />
             )}
             {Vergunning.caseType === CaseType.EvenementMelding && (
               <EvenementMelding vergunning={Vergunning} />

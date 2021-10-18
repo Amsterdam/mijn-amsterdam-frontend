@@ -59,7 +59,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Z/000/000002
+          Z/000/000003
         </p>
       </div>
       <div
@@ -74,62 +74,6 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
           class="Value"
         >
           Evenement melding
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Omschrijving
-        </h3>
-        <p
-          class="Value"
-        >
-          Amstel 1 Evenement melding
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Soort evenement
-        </h3>
-        <p
-          class="Value"
-        >
-          Dance evenement
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Activiteit tijdens evenement
-        </h3>
-        <p
-          class="Value"
-        >
-          Dansen en plezier maken
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Aantal bezoekers
-        </h3>
-        <p
-          class="Value"
-        >
-          3.000
         </p>
       </div>
       <div
@@ -163,12 +107,12 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <h3
               class="Heading Heading__tiny Label"
             >
-              Vanaf
+              Op
             </h3>
             <p
               class="Value"
             >
-              02 augustus 2020 - 08:00 uur
+              13 oktober 2021
             </p>
           </div>
           <div
@@ -177,12 +121,26 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Van
             </h3>
             <p
               class="Value"
             >
-              02 augustus 2020 - 11:00 uur
+              08:00
+            </p>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Tot
+            </h3>
+            <p
+              class="Value"
+            >
+              11:00
             </p>
           </div>
         </div>
@@ -228,7 +186,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <time
                 class="StatusDate"
               >
-                01 mei 2021
+                17 oktober 2021
               </time>
             </div>
             <div
@@ -272,7 +230,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
               <time
                 class="StatusDate"
               >
-                01 mei 2021
+                17 oktober 2021
               </time>
             </div>
             <div
