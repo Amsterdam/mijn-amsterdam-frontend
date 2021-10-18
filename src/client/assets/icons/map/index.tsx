@@ -40,3 +40,4 @@ export { ReactComponent as IconMeldingen } from './meldingen.svg';
 export { ReactComponent as IconSchoon } from './schoon.svg';
 export { ReactComponent as IconOverlastOpenbareRuimte } from './overlast-in-de-openbare-ruimte.svg';
 export { ReactComponent as IconWegenVerkeerStraatmeubilair } from './wegen-verkeer-straatmeubilair.svg';
+export { ReactComponent as IconBread } from './bread.svg';

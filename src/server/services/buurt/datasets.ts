@@ -1,5 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
+
+import { Colors } from '../../../universal/config/app';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -9,15 +11,15 @@ import {
   DATASETS,
   FeatureType,
 } from '../../../universal/config/buurt';
+import { ENV } from '../../../universal/config/env';
+import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { DataRequestConfig } from '../../config';
 import {
+  discoverSingleApiEmbeddedResponse,
   getApiEmbeddedResponse,
   getPropertyFilters,
   transformDsoApiListResponse,
 } from './helpers';
-import { Colors } from '../../../universal/config/app';
-import { ENV } from '../../../universal/config/env';
-import { capitalizeFirstLetter } from '../../../universal/helpers';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -134,6 +136,7 @@ export const datasetEndpoints: Record<
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainersResponse,
+    transformDetail: transformAfvalcontainerDetailResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'id_nummer',
@@ -325,6 +328,12 @@ function createCustomFractieOmschrijving(featureProps: any) {
   if (featureProps.serienummer?.trim().startsWith('Kerstboom')) {
     return 'Kerstboom inzamellocatie';
   }
+  if (featureProps.type_id === '5467' || featureProps.type_id === '4371') {
+    return 'GFT';
+  }
+  if (featureProps.type_id === '4886') {
+    return 'Brood';
+  }
   return 'Overig';
 }
 
@@ -338,16 +347,47 @@ function transformAfvalcontainersResponse(
     : getApiEmbeddedResponse(datasetId, responseData);
   return transformDsoApiListResponse(datasetId, config, {
     features: features.map((feature: any) => {
-      const fractie_omschrijving =
-        feature.properties.fractie_omschrijving ||
-        createCustomFractieOmschrijving(feature.properties);
-
+      let fractie_omschrijving = feature.properties.fractie_omschrijving;
+      if (!fractie_omschrijving || fractie_omschrijving === 'GFT') {
+        fractie_omschrijving = createCustomFractieOmschrijving(
+          feature.properties
+        );
+      }
       return {
         ...feature,
-        fractie_omschrijving,
+        properties: {
+          ...feature.properties,
+          fractie_omschrijving,
+        },
       };
     }),
   });
+}
+
+function transformAfvalcontainerDetailResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const feature = discoverSingleApiEmbeddedResponse(responseData);
+  let fractieOmschrijving = feature.fractieOmschrijving;
+  if (!fractieOmschrijving || fractieOmschrijving === 'GFT') {
+    fractieOmschrijving = createCustomFractieOmschrijving({
+      ...feature,
+      type_id: feature.typeId,
+    });
+  }
+  return {
+    ...responseData,
+    _embedded: {
+      container: [
+        {
+          ...feature,
+          fractieOmschrijving,
+        },
+      ],
+    },
+  };
 }
 
 function transformParkeerzoneCoords(
