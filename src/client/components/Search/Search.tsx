@@ -28,6 +28,7 @@ interface ResultSetProps {
   term: string;
   extendedResults?: boolean;
   showIcon?: boolean;
+  onClickResult?: (result: SearchEntry) => void;
 }
 
 export function ResultSet({
@@ -38,6 +39,7 @@ export function ResultSet({
   term,
   extendedResults = false,
   showIcon = false,
+  onClickResult,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
@@ -63,6 +65,7 @@ export function ResultSet({
               external={result.url.startsWith('http')}
               href={result.url}
               className={styles.ResultSetLink}
+              onClick={() => onClickResult?.(result)}
             >
               {result.displayTitle ? result.displayTitle(term) : result.title}
               {extendedResults && (
@@ -104,6 +107,9 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
+  const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
+    ? 'Zoekpagina'
+    : 'Zoekbalk';
 
   useSearchIndex();
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
@@ -113,11 +119,7 @@ export function Search({
       trackEventWithProfileType(
         {
           category: 'Zoeken',
-          name: `Zoek${
-            history.location.pathname.includes(AppRoutes.SEARCH)
-              ? 'pagina'
-              : 'balk'
-          } interactie`,
+          name: `${searchCategory} interactie`,
           action,
         },
         profileType
@@ -125,14 +127,6 @@ export function Search({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [profileType]
   );
-
-  const trackSearchDebounced = useDebouncedCallback((term: string) => {
-    if (term) {
-      trackSearch(term);
-    } else {
-      trackSearchBarEvent('Verwijder term');
-    }
-  }, 2000);
 
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
@@ -199,6 +193,7 @@ export function Search({
               `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
             );
             setResultsVisible(true);
+            trackSearch(term, searchCategory);
           }
         }}
       >
@@ -222,7 +217,6 @@ export function Search({
             setResultsVisible(true);
             const term = e.target.value;
             setTermDebounced(term);
-            trackSearchDebounced(term);
           }}
         />
 
@@ -245,6 +239,7 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
+              onClickResult={() => trackSearchBarEvent(`Click result`)}
             />
           )}
           {isDirty && (
@@ -255,6 +250,7 @@ export function Search({
                 title="Overige informatie op Amsterdam.nl"
                 noResultsMessage="Niets gevonden op Amsterdam.nl"
                 extendedResults={extendedAMResults}
+                onClickResult={() => trackSearchBarEvent(`Click result`)}
                 results={
                   results?.am?.state === 'hasValue' &&
                   results?.am?.contents !== null

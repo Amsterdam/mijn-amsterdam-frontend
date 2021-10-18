@@ -84,7 +84,7 @@ export function InkomenDetailBbz() {
         </p>
         <p>
           Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
-          opgenomen
+          opgenomen.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_BBZ}>

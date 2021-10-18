@@ -39,8 +39,9 @@ export function trackEvent(payload: TrackEventParams) {
   return MatomoInstance && MatomoInstance.trackEvent(payload);
 }
 
-export function trackSearch(keyword: string) {
-  return MatomoInstance && MatomoInstance.trackSiteSearch({ keyword });
+export function trackSearch(keyword: string, category: string) {
+  const payload = { keyword, category };
+  return MatomoInstance && MatomoInstance.trackSiteSearch(payload);
 }
 
 export function trackEventWithProfileType(

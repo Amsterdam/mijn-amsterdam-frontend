@@ -28,12 +28,12 @@ const herstelTermijnLabels: FocusStepContent = {
   notification: {
     title: (document) => `${document.productTitle}: Meer informatie nodig`,
     description: (document) =>
-      `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
+      `Wij hebben meer informatie en tijd nodig om uw aanvraag voor ${document.productTitle} te behandelen.`,
   },
   status: stepLabels.herstelTermijn,
   description: (document) =>
     `<p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Wij hebben meer informatie en tijd nodig om uw aanvraag voor ${document.productTitle} te behandelen.
         Bekijk de brief voor meer details.
       </p>`,
 };
