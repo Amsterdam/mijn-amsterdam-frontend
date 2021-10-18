@@ -93,6 +93,21 @@
       "decision": null
     },
     {
+      "caseType": "Evenement vergunning",
+      "title": "Evenement vergunning",
+      "dateDecision": "2021-10-17",
+      "dateRequest": "2021-10-01",
+      "identifier": "Z/111/000004",
+      "location": "Amstel 1 1011PN Amsterdam",
+      "status": "Afgehandeld",
+      "description": "Amstel 1 Evenement vergunning",
+      "dateStart": "2021-10-13",
+      "dateEnd": "2021-10-13",
+      "timeEnd": "11:00",
+      "timeStart": "08:00",
+      "decision": null
+    },
+    {
       "caseType": "E-RVV - TVM",
       "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)",
       "dateDecision": null,

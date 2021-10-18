@@ -46,6 +46,16 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-01",
+        "id": "vergunning-3631039796-case",
+        "link": Object {
+          "title": "Bekijk hoe het met uw aanvraag staat",
+          "to": "/vergunningen/detail/3631039796",
+        },
+        "title": "Vergunningsaanvraag Evenement vergunning Z/111/000004",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
         "id": "vergunning-3689417852-case",
         "link": Object {
@@ -279,6 +289,17 @@ Object {
           "to": "/vergunningen/detail/3596778227",
         },
         "title": "Evenement vergunning ontvangen",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-17",
+        "description": "Uw vergunningsaanvraag Evenement vergunning is afgehandeld.",
+        "id": "vergunning-3631039796-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/3631039796",
+        },
+        "title": "Evenement vergunning afgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -563,6 +584,22 @@ Array [
     "identifier": "Z/111/000003",
     "location": "Amstel 1 1011PN Amsterdam",
     "status": "Ontvangen",
+    "timeEnd": "11:00",
+    "timeStart": "08:00",
+    "title": "Evenement vergunning",
+  },
+  Object {
+    "caseType": "Evenement vergunning",
+    "dateDecision": "2021-10-17",
+    "dateEnd": "2021-10-13",
+    "dateRequest": "2021-10-01",
+    "dateStart": "2021-10-13",
+    "decision": null,
+    "description": "Amstel 1 Evenement vergunning",
+    "id": "3631039796",
+    "identifier": "Z/111/000004",
+    "location": "Amstel 1 1011PN Amsterdam",
+    "status": "Afgehandeld",
     "timeEnd": "11:00",
     "timeStart": "08:00",
     "title": "Evenement vergunning",
