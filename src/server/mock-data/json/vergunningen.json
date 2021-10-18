@@ -47,8 +47,8 @@
     {
       "caseType": "Evenement melding",
       "title": "Evenement melding",
-      "dateDecision": "2021-10-17",
-      "dateRequest": null,
+      "dateDecision": null,
+      "dateRequest": "2021-10-17",
       "identifier": "Z/000/000003",
       "location": "Amstel 1 1011PN Amsterdam",
       "status": "Ontvangen",
@@ -80,7 +80,7 @@
     {
       "caseType": "Evenement vergunning",
       "title": "Evenement vergunning",
-      "dateDecision": "2021-10-17",
+      "dateDecision": null,
       "dateRequest": "2021-10-01",
       "identifier": "Z/111/000003",
       "location": "Amstel 1 1011PN Amsterdam",

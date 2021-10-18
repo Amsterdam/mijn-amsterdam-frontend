@@ -9,6 +9,7 @@ import { useSessionStorage } from '../../hooks/storage.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
+
 import Heading from '../Heading/Heading';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
