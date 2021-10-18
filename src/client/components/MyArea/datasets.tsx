@@ -14,6 +14,7 @@ import {
   IconAuto,
   IconBasketbal,
   IconBekendmaking,
+  IconBread,
   IconCivieleConstructies,
   IconEvenement,
   IconFitness,
@@ -93,6 +94,11 @@ export const datasetIcons: Record<
     plastic: (
       <DatasetIcon className={styles.DatasetIcon__orange}>
         <IconAfvalPlastic />
+      </DatasetIcon>
+    ),
+    brood: (
+      <DatasetIcon className={styles.DatasetIcon__purple}>
+        <IconBread />
       </DatasetIcon>
     ),
   },
