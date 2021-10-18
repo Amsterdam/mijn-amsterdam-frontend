@@ -45,6 +45,24 @@
       "decision": "Gemeld"
     },
     {
+      "caseType": "Evenement melding",
+      "title": "Evenement melding",
+      "dateDecision": "2021-10-17",
+      "dateRequest": null,
+      "identifier": "Z/000/000003",
+      "location": "Amstel 1 1011PN Amsterdam",
+      "status": "Ontvangen",
+      "description": "Amstel 1 Evenement melding",
+      "dateStart": "2021-10-13",
+      "dateEnd": "2021-10-13",
+      "timeEnd": "11:00",
+      "timeStart": "08:00",
+      "eventType": "Dance evenement",
+      "activities": "Dansen en plezier maken",
+      "visitorCount": "3.000",
+      "decision": null
+    },
+    {
       "caseType": "Evenement vergunning",
       "title": "Evenement vergunning",
       "dateDecision": "2021-10-17",
@@ -58,6 +76,21 @@
       "timeEnd": "11:00",
       "timeStart": "08:00",
       "decision": "Verleend"
+    },
+    {
+      "caseType": "Evenement vergunning",
+      "title": "Evenement vergunning",
+      "dateDecision": "2021-10-17",
+      "dateRequest": "2021-10-01",
+      "identifier": "Z/111/000003",
+      "location": "Amstel 1 1011PN Amsterdam",
+      "status": "Ontvangen",
+      "description": "Amstel 1 Evenement vergunning",
+      "dateStart": "2021-10-13",
+      "dateEnd": "2021-10-13",
+      "timeEnd": "11:00",
+      "timeStart": "08:00",
+      "decision": null
     },
     {
       "caseType": "E-RVV - TVM",
