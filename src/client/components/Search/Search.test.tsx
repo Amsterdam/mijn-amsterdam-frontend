@@ -21,9 +21,11 @@ describe('<Search />', () => {
 
   test('Render without crashing', () => {
     render(
-      <RecoilRoot>
-        <Search />
-      </RecoilRoot>
+      <BrowserRouter>
+        <RecoilRoot>
+          <Search />
+        </RecoilRoot>
+      </BrowserRouter>
     );
   });
 
