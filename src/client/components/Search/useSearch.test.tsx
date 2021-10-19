@@ -112,7 +112,9 @@ describe('Search hooks and helpers', () => {
     const configItem: ApiSearchConfig = {
       getApiBaseItems: () => [],
       displayTitle,
-      keywordSourceProps: (item: ApiBaseItem): string[] => ['somePropName'],
+      keywordsGeneratedFromProps: (item: ApiBaseItem): string[] => [
+        'somePropName',
+      ],
       keywords: (item: ApiBaseItem): string[] => ['jup'],
       title: (item: ApiBaseItem) => item.link.title,
       url: (item: ApiBaseItem) => item.link.to,
