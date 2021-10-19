@@ -13,13 +13,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
     }
 
     const isDone = vergunning.status === 'Afgehandeld';
-    let hasWorkflow = false;
-    let dateWorkflowActive = vergunning.dateRequest || '';
-
-    if (vergunning.caseType === CaseType.Omzettingsvergunning) {
-      dateWorkflowActive = vergunning.dateWorkflowActive || '';
-      hasWorkflow = true;
-    }
+    const hasWorkflow = vergunning.caseType === CaseType.Omzettingsvergunning;
     const lineItems = [
       {
         id: 'item-1',
@@ -35,11 +29,11 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       lineItems.push({
         id: 'item-2',
         status: 'In behandeling',
-        datePublished: dateWorkflowActive,
+        datePublished: vergunning.dateWorkflowActive || '',
         description: '',
         documents: [],
-        isActive: hasWorkflow ? !!dateWorkflowActive : !isDone,
-        isChecked: hasWorkflow ? !!dateWorkflowActive : true,
+        isActive: hasWorkflow ? !!vergunning.dateWorkflowActive : !isDone,
+        isChecked: hasWorkflow ? !!vergunning.dateWorkflowActive : true,
       });
     }
     lineItems.push({

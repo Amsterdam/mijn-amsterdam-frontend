@@ -40,6 +40,7 @@ export interface VergunningBase {
   description: string;
   identifier: string;
   dateRequest: string;
+  dateWorkflowActive: string | null;
   decision: string | null;
   dateDecision?: string | null;
   isActual: boolean;
@@ -390,7 +391,7 @@ export function createVergunningNotification(
         break;
       case CaseType.Omzettingsvergunning:
         shortName = `Aanvraag ${item.title.toLocaleLowerCase()}`;
-        if (item.dateWorkflowActive) {
+        if (!!item.dateWorkflowActive) {
           datePublished = item.dateWorkflowActive;
         }
         break;
