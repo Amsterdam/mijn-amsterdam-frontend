@@ -116,6 +116,7 @@ form[name='eherkenning'] button {
 .label-digid,
 .label-eherkenning {
   padding: 0 15px;
+  cursor: pointer;
 }
 
 .form-heading {
