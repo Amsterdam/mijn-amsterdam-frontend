@@ -128,6 +128,17 @@ export function Search({
     [profileType]
   );
 
+  const trackSearchDebounced = useDebouncedCallback(
+    (term: string, category: string = 'Keyword input (typing)') => {
+      if (term) {
+        trackSearch(term, category);
+      } else {
+        trackSearchBarEvent('Verwijder term');
+      }
+    },
+    2000
+  );
+
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
     setIsTyping(false);
@@ -217,6 +228,7 @@ export function Search({
             setResultsVisible(true);
             const term = e.target.value;
             setTermDebounced(term);
+            trackSearchDebounced(term);
           }}
         />
 
