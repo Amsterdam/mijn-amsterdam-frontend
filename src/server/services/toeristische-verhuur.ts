@@ -1,6 +1,7 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
+
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
@@ -19,24 +20,26 @@ import {
   isCurrentYear,
   isDateInPast,
 } from '../../universal/helpers/date';
-import { MyCase, MyNotification } from '../../universal/types';
-import { CaseType } from '../../universal/types/vergunningen';
-import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
-import { requestData } from '../helpers';
-import { LinkProps } from '../../universal/types/App.types';
 import {
-  BBVergunning,
-  fetchVergunningen,
   hasOtherValidVergunningOfSameType,
   isActualNotification,
   isExpired,
   isNearEndDate,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
+} from '../../universal/helpers/vergunningen';
+import { MyCase, MyNotification } from '../../universal/types';
+import { LinkProps } from '../../universal/types/App.types';
+import { CaseType } from '../../universal/types/vergunningen';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
+import { requestData } from '../helpers';
+import {
+  BBVergunning,
+  fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
   Vakantieverhuur,
   VakantieverhuurVergunningaanvraag,
   Vergunning,
-} from './vergunningen';
+} from './vergunningen/vergunningen';
 
 export interface ToeristischeVerhuurRegistratieSource {
   city: string;

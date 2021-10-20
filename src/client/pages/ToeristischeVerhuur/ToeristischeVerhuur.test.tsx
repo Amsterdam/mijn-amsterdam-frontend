@@ -1,18 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import toeristischeVerhuurRegistraties from '../../../server/mock-data/json/registraties-toeristische-verhuur.json';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
-import {
-  transformVergunningenToVerhuur,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
-import {
-  toeristischeVerhuurVergunningTypes,
-  transformVergunningenData,
-  Vergunning,
-  VergunningenData,
-} from '../../../server/services/vergunningen';
+import { transformVergunningenToVerhuur, VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur';
+import { toeristischeVerhuurVergunningTypes, transformVergunningenData, Vergunning, VergunningenData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { CaseType } from '../../../universal/types/vergunningen';

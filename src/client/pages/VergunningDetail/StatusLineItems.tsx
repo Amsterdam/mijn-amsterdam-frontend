@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import type { Vergunning } from '../../../server/services/vergunningen';
+import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import { isWorkflowItem } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import StatusLine, {
   StatusLineItem,
@@ -13,7 +14,6 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
     }
 
     const isDone = vergunning.status === 'Afgehandeld';
-    const hasWorkflow = vergunning.caseType === CaseType.Omzettingsvergunning;
     const lineItems = [
       {
         id: 'item-1',
@@ -32,8 +32,10 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         datePublished: vergunning.dateWorkflowActive || '',
         description: '',
         documents: [],
-        isActive: hasWorkflow ? !!vergunning.dateWorkflowActive : !isDone,
-        isChecked: hasWorkflow ? !!vergunning.dateWorkflowActive : true,
+        isActive: isWorkflowItem(vergunning.caseType)
+          ? !!vergunning.dateWorkflowActive && !isDone
+          : !isDone,
+        isChecked: !!vergunning.dateWorkflowActive,
       });
     }
     lineItems.push({

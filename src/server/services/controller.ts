@@ -29,7 +29,7 @@ import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
-import { fetchVergunningen } from './vergunningen';
+import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWMO } from './wmo';
 
 // Default service call just passing sessionID and request headers as arguments
