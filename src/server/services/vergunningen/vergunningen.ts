@@ -1,5 +1,4 @@
 import { generatePath } from 'react-router-dom';
-
 import { Chapters } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
@@ -7,12 +6,12 @@ import { apiSuccesResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import { hash, isRecentCase } from '../../../universal/helpers/utils';
 import {
-  hasOtherValidVergunningOfSameType,
+  hasOtherActualVergunningOfSameType,
+  hasWorkflow,
   isActualNotification,
   isExpireable,
   isExpired,
   isNearEndDate,
-  isWorkflowItem,
 } from '../../../universal/helpers/vergunningen';
 import {
   GenericDocument,
@@ -23,8 +22,10 @@ import {
 import { CaseType } from '../../../universal/types/vergunningen';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
-import { notificationContent } from './vergunningen-content';
+import {
+  notificationContent,
+  NotificationLabels,
+} from './vergunningen-content';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -175,11 +176,7 @@ export type VergunningenSourceData = {
   status: 'OK' | 'ERROR';
 };
 
-export type VergunningExpirable =
-  | GPK
-  | ToeristischeVerhuurVergunning
-  | BZP
-  | BZB;
+export type VergunningExpirable = Vergunning & { dateEnd?: string | null };
 
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
@@ -281,118 +278,68 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
   };
 }
 
+function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
+  const allItems = items.filter(
+    (caseItem: Vergunning) => caseItem.caseType === item.caseType
+  );
+  // Ignore formatting of the switch case statements for readability
+  switch (true) {
+    // prettier-ignore
+    case isExpireable(item.caseType) && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.almostExpired;
+
+    // prettier-ignore
+    case isExpireable(item.caseType) && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    // prettier-ignore
+    case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
+      return notificationContent[item.caseType]?.requested;
+
+    case item.status !== 'Afgehandeld':
+      return notificationContent[item.caseType]?.inProgress;
+
+    case item.status === 'Afgehandeld':
+      return notificationContent[item.caseType]?.done;
+  }
+}
+
+function assignNotificationProperties(
+  notification: MyNotification,
+  content: NotificationLabels,
+  vergunning: Vergunning
+) {
+  if (content) {
+    type Key = keyof NotificationLabels;
+    for (const [key, getValue] of Object.entries(content)) {
+      notification[key as Key] = getValue(vergunning);
+    }
+  }
+}
+
 export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[]
 ): MyNotification {
-  let title = 'Vergunningsaanvraag';
-  let description = 'Er is een update in uw vergunningsaanvraag.';
-  let datePublished = item.dateRequest;
-  let linkTo = item.link.to;
-  let cta = 'Bekijk details';
-  const allItems = items.filter(
-    (caseItem: Vergunning): caseItem is VergunningExpirable =>
-      caseItem.caseType === item.caseType
-  );
-
-  switch (true) {
-    case isExpireable(item.caseType) &&
-      item.decision === 'Verleend' &&
-      isNearEndDate(item as VergunningExpirable) &&
-      !hasOtherValidVergunningOfSameType(allItems, item as VergunningExpirable):
-      title =
-        notificationContent[item.caseType]?.almostExpired?.title(
-          item as VergunningExpirable
-        ) || title;
-      description =
-        notificationContent[item.caseType]?.almostExpired?.description(
-          item as VergunningExpirable
-        ) || description;
-      cta = notificationContent[item.caseType]?.almostExpired?.cta || cta;
-      linkTo =
-        notificationContent[item.caseType]?.almostExpired?.linkTo(
-          item as VergunningExpirable
-        ) || linkTo;
-      datePublished =
-        notificationContent[item.caseType]?.almostExpired?.datePublished(
-          item as VergunningExpirable
-        ) || datePublished;
-
-      break;
-    case isExpireable(item.caseType) &&
-      item.decision === 'Verleend' &&
-      isExpired(item as VergunningExpirable) &&
-      !hasOtherValidVergunningOfSameType(allItems, item as VergunningExpirable):
-      title =
-        notificationContent[item.caseType]?.isExpired?.title(
-          item as VergunningExpirable
-        ) || title;
-      description =
-        notificationContent[item.caseType]?.isExpired?.description(
-          item as VergunningExpirable
-        ) || description;
-      cta = notificationContent[item.caseType]?.isExpired?.cta || cta;
-      linkTo =
-        notificationContent[item.caseType]?.isExpired?.linkTo(
-          item as VergunningExpirable
-        ) || linkTo;
-      datePublished =
-        notificationContent[item.caseType]?.isExpired?.datePublished(
-          item as VergunningExpirable
-        ) || datePublished;
-      break;
-    case item.status !== 'Afgehandeld' &&
-      isWorkflowItem(item.caseType) &&
-      !item.dateWorkflowActive:
-      title =
-        notificationContent[item.caseType]?.requested?.title(item) || title;
-      description =
-        notificationContent[item.caseType]?.requested?.description(item) ||
-        description;
-      cta = notificationContent[item.caseType]?.requested?.cta || cta;
-      linkTo =
-        notificationContent[item.caseType]?.requested?.linkTo(item) || linkTo;
-      datePublished =
-        notificationContent[item.caseType]?.requested?.datePublished(item) ||
-        datePublished;
-      break;
-    case item.status !== 'Afgehandeld':
-      title =
-        notificationContent[item.caseType]?.inProgress?.title(item) || title;
-      description =
-        notificationContent[item.caseType]?.inProgress?.description(item) ||
-        description;
-      cta = notificationContent[item.caseType]?.inProgress?.cta || cta;
-      linkTo =
-        notificationContent[item.caseType]?.inProgress?.linkTo(item) || linkTo;
-      datePublished =
-        notificationContent[item.caseType]?.inProgress?.datePublished(item) ||
-        datePublished;
-      break;
-    case item.status === 'Afgehandeld':
-      title = notificationContent[item.caseType]?.done?.title(item) || title;
-      description =
-        notificationContent[item.caseType]?.done?.description(item) ||
-        description;
-      cta = notificationContent[item.caseType]?.done?.cta || cta;
-      linkTo = notificationContent[item.caseType]?.done?.linkTo(item) || linkTo;
-      datePublished =
-        notificationContent[item.caseType]?.done?.datePublished(item) ||
-        datePublished;
-      break;
-  }
-
-  return {
-    id: `vergunning-${item.id}-notification`,
-    datePublished,
+  const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
-    title,
-    description,
+    id: `vergunning-${item.id}-notification`,
+    title: 'Vergunningsaanvraag',
+    description: 'Er is een update in uw vergunningsaanvraag.',
+    datePublished: item.dateRequest,
     link: {
-      to: linkTo,
-      title: cta,
+      to: item.link.to,
+      title: 'Bekijk details',
     },
   };
+
+  const labels = getNotificationLabels(item, items);
+
+  if (labels) {
+    assignNotificationProperties(notification, labels, item);
+  }
+
+  return notification;
 }
 
 export async function fetchVergunningenGenerated(

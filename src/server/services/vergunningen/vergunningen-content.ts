@@ -1,53 +1,40 @@
 import { subMonths } from 'date-fns';
+import { LinkProps } from 'react-router-dom';
 import { dateFormat } from '../../../universal/helpers';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { Vergunning, VergunningExpirable } from './vergunningen';
 
-type NotificationPartContents = (item: Vergunning) => string;
-type NotificationPartExpirable = (item: VergunningExpirable) => string;
+type NotificationStatusType =
+  | 'almostExpired'
+  | 'isExpired'
+  | 'requested'
+  | 'inProgress'
+  | 'done';
+
+type NotificationProperty = 'title' | 'description' | 'datePublished' | 'link';
+type NotificationPropertyValue = (item: Vergunning) => string;
+type NotificationLink = (item: Vergunning) => LinkProps;
+
 type NotificationLinks = {
   [key in Vergunning['caseType']]?: string;
 };
 
-interface ContentItem {
-  title: NotificationPartContents;
-  description: NotificationPartContents;
-  datePublished: NotificationPartContents;
-  linkTo: NotificationPartContents;
-  cta: string;
+type NotificationLabelsBase = {
+  [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
+};
+
+export interface NotificationLabels extends NotificationLabelsBase {
+  link: NotificationLink;
 }
 
-interface ContentItemExpirable {
-  title: NotificationPartExpirable;
-  description: NotificationPartExpirable;
-  datePublished: NotificationPartExpirable;
-  linkTo: NotificationPartExpirable;
-  cta: string;
-}
+export type NotificatonContentLabels = {
+  [type in NotificationStatusType]?: NotificationLabels;
+};
 
-interface NotificatonContentItems {
-  almostExpired?: ContentItemExpirable;
-  isExpired?: ContentItemExpirable;
-  requested?: ContentItem;
-  inProgress?: ContentItem;
-  done?: ContentItem;
-}
-
-interface NotificationContent {
-  [CaseType.TVMRVVObject]: NotificatonContentItems;
-  [CaseType.GPK]: NotificatonContentItems;
-  [CaseType.GPP]: NotificatonContentItems;
-  [CaseType.EvenementMelding]: NotificatonContentItems;
-  [CaseType.EvenementVergunning]: NotificatonContentItems;
-  [CaseType.Omzettingsvergunning]: NotificatonContentItems;
-  [CaseType.ERVV]: NotificatonContentItems;
-  [CaseType.BZB]: NotificatonContentItems;
-  [CaseType.BZP]: NotificatonContentItems;
-  [CaseType.VakantieVerhuur]: NotificatonContentItems;
-  [CaseType.BBVergunning]: NotificatonContentItems;
-  [CaseType.VakantieverhuurVergunningaanvraag]: NotificatonContentItems;
-}
+type NotificationContent = {
+  [key in CaseType]?: NotificatonContentLabels;
+};
 
 const notificationLinks: NotificationLinks = {
   [CaseType.BZB]:
@@ -58,11 +45,10 @@ const notificationLinks: NotificationLinks = {
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
 };
 
-const almostExpiredContent: ContentItemExpirable = {
+const almostExpired: NotificationLabels = {
   title: (item) => `Uw ${item.caseType} loopt af`,
   description: (item) => `Uw ${item.title} loopt binnenkort af.`,
-  cta: `Vraag tijdig een nieuwe vergunning aan`,
-  datePublished: (item) =>
+  datePublished: (item: VergunningExpirable) =>
     dateFormat(
       subMonths(
         new Date(item.dateEnd ?? item.dateRequest),
@@ -70,123 +56,107 @@ const almostExpiredContent: ContentItemExpirable = {
       ),
       'yyyy-MM-dd'
     ),
-  linkTo: (item) => notificationLinks[item.caseType] || item.link.to,
+  link: (item) => ({
+    title: `Vraag tijdig een nieuwe vergunning aan`,
+    to: notificationLinks[item.caseType] || item.link.to,
+  }),
 };
 
-const isExpiredContent: ContentItemExpirable = {
+const isExpired: NotificationLabels = {
   title: (item) => `Uw ${item.caseType} is verlopen`,
   description: (item) => `Uw ${item.title} is verlopen.`,
-  cta: `Vraag zonodig een nieuwe vergunning aan`,
-  datePublished: (item) => item.dateEnd ?? item.dateRequest,
-  linkTo: (item) => notificationLinks[item.caseType] || item.link.to,
+  datePublished: (item: VergunningExpirable) =>
+    item.dateEnd ?? item.dateRequest,
+  link: (item) => ({
+    title: `Vraag zonodig een nieuwe vergunning aan`,
+    to: notificationLinks[item.caseType] || item.link.to,
+  }),
 };
 
-const requestedContent: ContentItem = {
+const requested: NotificationLabels = {
   title: (item) => `${item.caseType} ontvangen`,
   description: (item) => `Uw vergunningsaanvraag ${item.title} is ontvangen.`,
   datePublished: (item) => item.dateRequest,
-  linkTo: (item) => item.link.to,
-  cta: 'Bekijk details',
+  link: (item) => ({
+    title: 'Bekijk details',
+    to: item.link.to,
+  }),
 };
 
-const inProgressContent: ContentItem = {
+const inProgress: NotificationLabels = {
   title: (item) => `Uw ${item.caseType} is in behandeling`,
   description: (item) =>
     `Uw vergunningsaanvraag voor ${item.title} is in behandeling genomen.`,
   datePublished: (item) => item.dateRequest,
-  linkTo: (item) => item.link.to,
-  cta: 'Bekijk details',
+  link: (item) => ({
+    title: 'Bekijk details',
+    to: item.link.to,
+  }),
 };
 
-const doneContent: ContentItem = {
+const done: NotificationLabels = {
   title: (item) => `${item.caseType} afgehandeld`,
   description: (item) =>
     `Uw vergunningsaanvraag voor een ${item.title} is afgehandeld.`,
   datePublished: (item) => item.dateDecision ?? item.dateRequest,
-  linkTo: (item) => item.link.to,
-  cta: 'Bekijk details',
+  link: (item) => ({
+    title: 'Bekijk details',
+    to: item.link.to,
+  }),
 };
 
 export const notificationContent: NotificationContent = {
   [CaseType.BZB]: {
-    almostExpired: {
-      ...almostExpiredContent,
-    },
-    isExpired: {
-      ...isExpiredContent,
-    },
-    inProgress: {
-      ...inProgressContent,
-    },
-    done: {
-      ...doneContent,
-    },
+    almostExpired,
+    isExpired,
+    inProgress,
+    done,
   },
   [CaseType.BZP]: {
-    almostExpired: {
-      ...almostExpiredContent,
-    },
-    isExpired: {
-      ...isExpiredContent,
-    },
-    inProgress: {
-      ...inProgressContent,
-    },
-    done: {
-      ...doneContent,
-    },
+    almostExpired,
+    isExpired,
+    inProgress,
+    done,
   },
   [CaseType.GPK]: {
-    almostExpired: {
-      ...almostExpiredContent,
-    },
-    isExpired: {
-      ...isExpiredContent,
-    },
-    inProgress: {
-      ...inProgressContent,
-    },
-    done: {
-      ...doneContent,
-    },
+    almostExpired,
+    isExpired,
+    inProgress,
+    done,
   },
   [CaseType.GPP]: {
-    inProgress: {
-      ...inProgressContent,
-    },
-    done: {
-      ...doneContent,
-    },
+    inProgress,
+    done,
   },
   [CaseType.ERVV]: {
     inProgress: {
-      ...inProgressContent,
+      ...inProgress,
       title: (item) => `Uw ${item.title} is in behandeling`,
     },
     done: {
-      ...doneContent,
+      ...done,
       title: (item) => `Uw ${item.title} is afgehandeld`,
     },
   },
   [CaseType.TVMRVVObject]: {
     inProgress: {
-      ...inProgressContent,
+      ...inProgress,
       title: (item) => `Uw ${item.title} is in behandeling`,
     },
     done: {
-      ...doneContent,
+      ...done,
       title: (item) => `Uw ${item.title} is afgehandeld`,
     },
   },
   [CaseType.EvenementVergunning]: {
     inProgress: {
-      ...inProgressContent,
+      ...inProgress,
       title: (item) => `${item.title} ontvangen`,
       description: (item) =>
         `Uw vergunningsaanvraag ${item.title} is ontvangen.`,
     },
     done: {
-      ...doneContent,
+      ...done,
       title: (item) => `${item.title} afgehandeld`,
       description: (item) =>
         `Uw vergunningsaanvraag ${item.title} is afgehandeld.`,
@@ -194,25 +164,25 @@ export const notificationContent: NotificationContent = {
   },
   [CaseType.EvenementMelding]: {
     inProgress: {
-      ...inProgressContent,
+      ...inProgress,
       title: (item) => `${item.title} in behandeling`,
       description: (item) => `Uw ${item.title} is in behandeling genomen.`,
     },
     done: {
-      ...doneContent,
+      ...done,
       title: (item) => `${item.title} afgehandeld`,
       description: (item) => `Uw ${item.title} is afgehandeld.`,
     },
   },
   [CaseType.Omzettingsvergunning]: {
     requested: {
-      ...requestedContent,
+      ...requested,
       title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} ontvangen`,
       description: (item) =>
         `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is geregistreerd.`,
     },
     inProgress: {
-      ...inProgressContent,
+      ...inProgress,
       title: (item) =>
         `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
       description: (item) =>
@@ -220,12 +190,12 @@ export const notificationContent: NotificationContent = {
       datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
     },
     done: {
-      ...doneContent,
+      ...done,
       title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
     },
   },
   //TODO: Add those eventually later
-  [CaseType.VakantieVerhuur]: {},
-  [CaseType.BBVergunning]: {},
-  [CaseType.VakantieverhuurVergunningaanvraag]: {},
+  // [CaseType.VakantieVerhuur]: {},
+  // [CaseType.BBVergunning]: {},
+  // [CaseType.VakantieverhuurVergunningaanvraag]: {},
 };

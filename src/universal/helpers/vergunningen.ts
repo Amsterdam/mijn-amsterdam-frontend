@@ -1,5 +1,8 @@
 import { differenceInMonths } from 'date-fns';
-import { VergunningExpirable } from '../../server/services/vergunningen/vergunningen';
+import {
+  Vergunning,
+  VergunningExpirable,
+} from '../../server/services/vergunningen/vergunningen';
 import { CaseType } from '../types/vergunningen';
 import { isDateInPast, monthsFromNow } from './date';
 
@@ -37,22 +40,20 @@ export function isExpired(vergunning: VergunningExpirable) {
   return isDateInPast(vergunning.dateEnd);
 }
 
-export function hasOtherValidVergunningOfSameType(
-  items: Array<VergunningExpirable>,
-  item: VergunningExpirable
+export function hasOtherActualVergunningOfSameType(
+  items: Array<Vergunning>,
+  item: Vergunning
 ): boolean {
   return items.some(
-    (otherVergunning: VergunningExpirable) =>
+    (otherVergunning: Vergunning) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
   );
 }
 
-export const isWorkflowItem = (caseType: string) =>
+export const hasWorkflow = (caseType: CaseType) =>
   caseType === CaseType.Omzettingsvergunning;
 
-export const isExpireable = (caseType: string) =>
-  caseType === CaseType.GPK ||
-  caseType === CaseType.BZB ||
-  caseType === CaseType.BZP;
+export const isExpireable = (caseType: CaseType) =>
+  [CaseType.GPK, CaseType.BZB, CaseType.BZP].includes(caseType);

@@ -21,7 +21,7 @@ import {
   isDateInPast,
 } from '../../universal/helpers/date';
 import {
-  hasOtherValidVergunningOfSameType,
+  hasOtherActualVergunningOfSameType,
   isActualNotification,
   isExpired,
   isNearEndDate,
@@ -315,7 +315,7 @@ export function createToeristischeVerhuurNotification(
       // B&B + Vakantieverhuurvergunning
       case item.decision === 'Verleend' &&
         isNearEndDate(item) &&
-        !hasOtherValidVergunningOfSameType(items, item):
+        !hasOtherActualVergunningOfSameType(items, item):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
@@ -331,7 +331,7 @@ export function createToeristischeVerhuurNotification(
       // B&B + Vakantieverhuurvergunning
       case item.decision === 'Verleend' &&
         isExpired(item) &&
-        !hasOtherValidVergunningOfSameType(items, item):
+        !hasOtherActualVergunningOfSameType(items, item):
         title = `Uw ${vergunningTitleLower} is verlopen`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';

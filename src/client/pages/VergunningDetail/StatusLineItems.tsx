@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
-import { isWorkflowItem } from '../../../universal/helpers/vergunningen';
+import { hasWorkflow } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import StatusLine, {
   StatusLineItem,
@@ -32,7 +32,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         datePublished: vergunning.dateWorkflowActive || '',
         description: '',
         documents: [],
-        isActive: isWorkflowItem(vergunning.caseType)
+        isActive: hasWorkflow(vergunning.caseType)
           ? !!vergunning.dateWorkflowActive && !isDone
           : !isDone,
         isChecked: !!vergunning.dateWorkflowActive,
