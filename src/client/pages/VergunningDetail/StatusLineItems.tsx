@@ -14,6 +14,8 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
     }
 
     const isDone = vergunning.status === 'Afgehandeld';
+    const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
+
     const lineItems = [
       {
         id: 'item-1',
@@ -33,14 +35,13 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         description: '',
         documents: [],
         isActive: hasWorkflow(vergunning.caseType)
-          ? !!vergunning.dateWorkflowActive && !isDone
+          ? hasDateWorkflowActive && !isDone
           : !isDone,
-        isChecked: !!vergunning.dateWorkflowActive,
+        isChecked: hasDateWorkflowActive,
       });
     }
     lineItems.push({
-      id:
-        vergunning.title === CaseType.EvenementVergunning ? 'item-2' : 'item-3',
+      id: 'last-item',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
       description: '',
