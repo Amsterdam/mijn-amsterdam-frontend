@@ -1,3 +1,4 @@
+import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import type {
@@ -127,7 +128,7 @@ export function displayPath(
           if (replaceTerm) {
             termSplitted.forEach((term) => {
               segmentReplaced = segmentReplaced.replace(
-                new RegExp(term, 'ig'),
+                new RegExp(escapeRegex(term), 'ig'),
                 `<em>$&</em>`
               );
             });

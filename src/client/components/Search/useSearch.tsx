@@ -138,7 +138,6 @@ export async function searchAmsterdamNL(
 
 const options = {
   threshold: 0.4,
-  // includeScore: true,
   minMatchCharLength: 2,
   keys: ['description', 'url', { name: 'keywords', weight: 0.2 }],
 };
@@ -270,7 +269,6 @@ const mijnQuery = selector({
 
     if (indexReady && fuse.index !== null && !!term) {
       const rawResults = fuse.index.search(term);
-      console.log('search', term, rawResults);
       return rawResults.map((result) => {
         return result.item;
       });
