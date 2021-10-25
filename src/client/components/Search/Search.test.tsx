@@ -21,23 +21,27 @@ describe('<Search />', () => {
 
   test('Render without crashing', () => {
     render(
-      <RecoilRoot>
-        <Search />
-      </RecoilRoot>
+      <BrowserRouter>
+        <RecoilRoot>
+          <Search />
+        </RecoilRoot>
+      </BrowserRouter>
     );
   });
 
   test('Render without crashing', () => {
     render(
-      <RecoilRoot
-        initializeState={(snapshot) => {
-          snapshot.set(appStateAtom, {
-            VERGUNNINGEN: { status: 'OK', content: [] },
-          } as any);
-        }}
-      >
-        <Search />
-      </RecoilRoot>
+      <BrowserRouter>
+        <RecoilRoot
+          initializeState={(snapshot) => {
+            snapshot.set(appStateAtom, {
+              VERGUNNINGEN: { status: 'OK', content: [] },
+            } as any);
+          }}
+        >
+          <Search />
+        </RecoilRoot>
+      </BrowserRouter>
     );
     expect(screen.getByPlaceholderText('Zoeken naar...')).toBeInTheDocument();
   });

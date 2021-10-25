@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+
 import type {
   Vergunning,
   VergunningDocument,
-} from '../../../server/services/vergunningen';
+} from '../../../server/services/vergunningen/vergunningen';
 import {
   apiPristineResult,
   ApiResponse,

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import type { Vergunning } from '../../../server/services/vergunningen';
+import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import { hasWorkflow } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import StatusLine, {
   StatusLineItem,
@@ -13,14 +14,8 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
     }
 
     const isDone = vergunning.status === 'Afgehandeld';
-    let dateWorkflowActive = vergunning.dateRequest || '';
+    const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
 
-    if (
-      vergunning.caseType === CaseType.Omzettingsvergunning &&
-      vergunning.dateWorkflowActive
-    ) {
-      dateWorkflowActive = vergunning.dateWorkflowActive;
-    }
     const lineItems = [
       {
         id: 'item-1',
@@ -36,16 +31,17 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       lineItems.push({
         id: 'item-2',
         status: 'In behandeling',
-        datePublished: dateWorkflowActive,
+        datePublished: vergunning.dateWorkflowActive || '',
         description: '',
         documents: [],
-        isActive: !isDone,
-        isChecked: true,
+        isActive: hasWorkflow(vergunning.caseType)
+          ? hasDateWorkflowActive && !isDone
+          : !isDone,
+        isChecked: hasDateWorkflowActive,
       });
     }
     lineItems.push({
-      id:
-        vergunning.title === CaseType.EvenementVergunning ? 'item-2' : 'item-3',
+      id: 'last-item',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
       description: '',

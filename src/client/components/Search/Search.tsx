@@ -107,7 +107,7 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
-  const searchCategory = history?.location.pathname.includes(AppRoutes.SEARCH)
+  const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
 

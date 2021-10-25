@@ -1,29 +1,31 @@
-import { differenceInMonths, subMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-
-import { Chapters } from '../../universal/config/index';
-import { AppRoutes } from '../../universal/config/routes';
-import { apiDependencyError } from '../../universal/helpers';
-import { apiSuccesResult } from '../../universal/helpers/api';
+import { Chapters } from '../../../universal/config/index';
+import { AppRoutes } from '../../../universal/config/routes';
+import { apiDependencyError } from '../../../universal/helpers';
+import { apiSuccesResult } from '../../../universal/helpers/api';
+import { dateSort } from '../../../universal/helpers/date';
+import { hash, isRecentCase } from '../../../universal/helpers/utils';
 import {
-  dateFormat,
-  dateSort,
-  isDateInPast,
-  monthsFromNow,
-} from '../../universal/helpers/date';
-import { hash, isRecentCase } from '../../universal/helpers/utils';
+  hasOtherActualVergunningOfSameType,
+  hasWorkflow,
+  isActualNotification,
+  isExpireable,
+  isExpired,
+  isNearEndDate,
+} from '../../../universal/helpers/vergunningen';
 import {
   GenericDocument,
   LinkProps,
   MyCase,
   MyNotification,
-} from '../../universal/types/App.types';
-import { CaseType } from '../../universal/types/vergunningen';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
-import { ToeristischeVerhuurVergunning } from './toeristische-verhuur';
-
-const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
+} from '../../../universal/types/App.types';
+import { CaseType } from '../../../universal/types/vergunningen';
+import { getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
+import {
+  notificationContent,
+  NotificationLabels,
+} from './vergunningen-content';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -40,6 +42,7 @@ export interface VergunningBase {
   description: string;
   identifier: string;
   dateRequest: string;
+  dateWorkflowActive: string | null;
   decision: string | null;
   dateDecision?: string | null;
   isActual: boolean;
@@ -173,11 +176,7 @@ export type VergunningenSourceData = {
   status: 'OK' | 'ERROR';
 };
 
-type NotificationLinks = {
-  [key in Vergunning['caseType']]?: string;
-};
-
-type VergunningExpirable = GPK | ToeristischeVerhuurVergunning | BZP | BZB;
+export type VergunningExpirable = Vergunning & { dateEnd?: string | null };
 
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
@@ -189,8 +188,6 @@ export interface VergunningOptions {
   filter?: (vergunning: Vergunning) => boolean;
   appRoute: string | ((vergunning: Vergunning) => string);
 }
-
-export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export function transformVergunningenData(
   responseData: VergunningenSourceData
@@ -271,27 +268,6 @@ export async function fetchVergunningen(
   return response;
 }
 
-export function isNearEndDate(vergunning: VergunningExpirable) {
-  if (!vergunning.dateEnd) {
-    return false;
-  }
-
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
-  return (
-    !isExpired(vergunning) &&
-    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0
-  );
-}
-
-export function isExpired(vergunning: VergunningExpirable) {
-  if (!vergunning.dateEnd) {
-    return false;
-  }
-
-  return isDateInPast(vergunning.dateEnd);
-}
-
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {
     id: `vergunning-${item.id}-case`,
@@ -302,150 +278,68 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
   };
 }
 
-export function hasOtherValidVergunningOfSameType(
-  items: Array<VergunningExpirable>,
-  item: VergunningExpirable
-): boolean {
-  return items.some(
-    (otherVergunning: VergunningExpirable) =>
-      otherVergunning.caseType === item.caseType &&
-      otherVergunning.identifier !== item.identifier &&
-      !isExpired(otherVergunning)
+function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
+  const allItems = items.filter(
+    (caseItem: Vergunning) => caseItem.caseType === item.caseType
   );
+  // Ignore formatting of the switch case statements for readability
+  switch (true) {
+    // prettier-ignore
+    case isExpireable(item.caseType) && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.almostExpired;
+
+    // prettier-ignore
+    case isExpireable(item.caseType) && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    // prettier-ignore
+    case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
+      return notificationContent[item.caseType]?.requested;
+
+    case item.status !== 'Afgehandeld':
+      return notificationContent[item.caseType]?.inProgress;
+
+    case item.status === 'Afgehandeld':
+      return notificationContent[item.caseType]?.done;
+  }
+}
+
+function assignNotificationProperties(
+  notification: MyNotification,
+  content: NotificationLabels,
+  vergunning: Vergunning
+) {
+  if (content) {
+    type Key = keyof NotificationLabels;
+    for (const [key, getValue] of Object.entries(content)) {
+      notification[key as Key] = getValue(vergunning);
+    }
+  }
 }
 
 export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[]
 ): MyNotification {
-  const notificationLinks: NotificationLinks = {
-    [CaseType.BZB]:
-      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
-    [CaseType.BZP]:
-      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
-    [CaseType.GPK]:
-      'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
-  };
-  let title = 'Vergunningsaanvraag';
-  let description = 'Er is een update in uw vergunningsaanvraag.';
-  let datePublished = item.dateRequest;
-  let linkTo = item.link.to;
-  let cta = 'Bekijk details';
-
-  if (
-    item.caseType === CaseType.GPK ||
-    item.caseType === CaseType.BZB ||
-    item.caseType === CaseType.BZP
-  ) {
-    const allItems = items.filter(
-      (caseItem: Vergunning): caseItem is VergunningExpirable =>
-        caseItem.caseType === item.caseType
-    );
-
-    const notificationLink = notificationLinks[item.caseType] || item.link.to;
-    const fullName = item.title;
-
-    switch (true) {
-      case item.decision === 'Verleend' &&
-        isNearEndDate(item) &&
-        !hasOtherValidVergunningOfSameType(allItems, item):
-        title = `Uw ${item.caseType} loopt af`;
-        description = `Uw ${item.title} loopt binnenkort af.`;
-        cta = `Vraag tijdig een nieuwe vergunning aan`;
-        linkTo = notificationLink;
-        datePublished = dateFormat(
-          subMonths(
-            new Date(item.dateEnd!),
-            NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
-          ),
-          'yyyy-MM-dd'
-        );
-        break;
-      case item.decision === 'Verleend' &&
-        isExpired(item) &&
-        !hasOtherValidVergunningOfSameType(allItems, item):
-        title = `Uw ${item.caseType} is verlopen`;
-        description = `Uw ${fullName} is verlopen.`;
-        cta = `Vraag zonodig een nieuwe vergunning aan`;
-        linkTo = notificationLink;
-        datePublished = item.dateEnd!;
-        break;
-      case item.status !== 'Afgehandeld':
-        title = `${item.caseType} in behandeling`;
-        description = `Uw vergunningsaanvraag voor een ${fullName} is in behandeling genomen.`;
-        break;
-      case item.status === 'Afgehandeld':
-        title = `${item.caseType} afgehandeld`;
-        description = `Uw vergunningsaanvraag voor een ${fullName} is afgehandeld.`;
-        datePublished = item.dateDecision ?? item.dateRequest;
-        break;
-    }
-  } else {
-    let fullName: string = item.title;
-    let shortName: string = item.title;
-
-    switch (item.caseType) {
-      case CaseType.GPP:
-        shortName = item.caseType;
-        break;
-      case CaseType.Omzettingsvergunning:
-        shortName = `Aanvraag ${item.title.toLocaleLowerCase()}`;
-        if (item.dateWorkflowActive) {
-          datePublished = item.dateWorkflowActive;
-        }
-        break;
-    }
-
-    switch (true) {
-      case item.status !== 'Afgehandeld':
-        title = `${shortName} in behandeling`;
-        description = `Uw vergunningsaanvraag ${fullName} is in behandeling genomen.`;
-        if (item.caseType === CaseType.EvenementVergunning) {
-          description = `Uw vergunningsaanvraag ${fullName} is ontvangen.`;
-          title = `${fullName} ontvangen`;
-        }
-        if (item.caseType === CaseType.EvenementMelding) {
-          description = `Uw ${fullName} is in behandeling genomen.`;
-        }
-        if (
-          item.caseType === CaseType.Omzettingsvergunning &&
-          !item.dateWorkflowActive
-        ) {
-          title = `${shortName} ontvangen`;
-          description = `Uw vergunningsaanvraag ${fullName} is geregistreerd.`;
-        }
-        break;
-      case item.status === 'Afgehandeld':
-        title = `${shortName} afgehandeld`;
-        description = `Uw vergunningsaanvraag ${fullName} is afgehandeld.`;
-        if (item.caseType === CaseType.EvenementMelding) {
-          description = `Uw ${fullName} is afgehandeld.`;
-        }
-        datePublished = item.dateDecision ?? item.dateRequest;
-        break;
-    }
-  }
-  return {
-    id: `vergunning-${item.id}-notification`,
-    datePublished,
+  const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
-    title,
-    description,
+    id: `vergunning-${item.id}-notification`,
+    title: 'Vergunningsaanvraag',
+    description: 'Er is een update in uw vergunningsaanvraag.',
+    datePublished: item.dateRequest,
     link: {
-      to: linkTo,
-      title: cta,
+      to: item.link.to,
+      title: 'Bekijk details',
     },
   };
-}
 
-export function isActualNotification(
-  datePublished: string,
-  compareDate: Date
-): boolean {
-  return (
-    differenceInMonths(compareDate, new Date(datePublished)) <
-    MONTHS_TO_KEEP_NOTIFICATIONS
-  );
+  const labels = getNotificationLabels(item, items);
+
+  if (labels) {
+    assignNotificationProperties(notification, labels, item);
+  }
+
+  return notification;
 }
 
 export async function fetchVergunningenGenerated(

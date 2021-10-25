@@ -2,7 +2,8 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import type { BZB as BZBVergunning } from '../../../server/services/vergunningen';
+
+import type { BZB as BZBVergunning } from '../../../server/services/vergunningen/vergunningen';
 
 export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (

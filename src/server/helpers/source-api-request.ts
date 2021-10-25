@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import axios, { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
+import axios, { AxiosPromise, AxiosResponse } from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
