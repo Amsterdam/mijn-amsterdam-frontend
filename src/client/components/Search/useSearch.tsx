@@ -36,8 +36,7 @@ export function generateSearchIndexPageEntry(
   const props: Array<
     Exclude<keyof ApiSearchConfig, 'getApiBaseItems' | 'apiName' | 'isEnabled'>
   > = [
-    'keywordSourceProps',
-    'title',
+    'keywordsGeneratedFromProps',
     'displayTitle',
     'description',
     'url',
@@ -48,8 +47,7 @@ export function generateSearchIndexPageEntry(
 
   for (const prop of props) {
     const configValue = apiConfig[prop];
-
-    let value =
+    const value =
       typeof configValue === 'function'
         ? configValue(item, apiConfig)
         : configValue;
@@ -59,21 +57,20 @@ export function generateSearchIndexPageEntry(
     }
 
     if (prop === 'keywords') {
-      searchEntry.keywords = uniqueArray([
+      searchEntry.keywords = [...(searchEntry.keywords || []), ...value];
+    } else if (prop === 'keywordsGeneratedFromProps') {
+      const generatedKeywordValues = Object.values(pick(item, value));
+      searchEntry.keywords = [
         ...(searchEntry.keywords || []),
-        ...value,
-      ]);
-    } else if (prop === 'keywordSourceProps') {
-      value = Object.values(pick(item, value));
-      searchEntry.keywords = uniqueArray([
-        ...(searchEntry.keywords || []),
-        ...value,
-      ]);
+        ...generatedKeywordValues,
+      ];
     } else {
       const key: keyof SearchEntry = prop;
       searchEntry[key] = value;
     }
   }
+
+  searchEntry.keywords = uniqueArray(searchEntry.keywords.filter((x) => !!x));
 
   return searchEntry;
 }
@@ -110,7 +107,6 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
-        title: page.title,
         displayTitle: (term: string) =>
           displayPath(term, [page.highlight.title || page.title], true, false),
         keywords: page.sections,
@@ -141,10 +137,9 @@ export async function searchAmsterdamNL(
 }
 
 const options = {
-  threshold: 0.6,
-  includeScore: false,
+  threshold: 0.4,
   minMatchCharLength: 2,
-  keys: ['title', { name: 'keywords', weight: 0.2 }],
+  keys: ['description', 'url', { name: 'keywords', weight: 0.2 }],
 };
 
 export const searchConfigAtom = atom<{
