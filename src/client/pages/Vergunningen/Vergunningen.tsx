@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import type { Vergunning } from '../../../server/services/vergunningen';
+
+import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';

@@ -1,13 +1,9 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
-import {
-  toeristischeVerhuurVergunningTypes,
-  transformVergunningenData,
-  VergunningenSourceData,
-} from '../../../server/services/vergunningen';
+import { toeristischeVerhuurVergunningTypes, transformVergunningenData, VergunningenSourceData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
