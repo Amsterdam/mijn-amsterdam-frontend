@@ -4,8 +4,8 @@ exports[`BRP data api + transformation should transform the source data 1`] = `
 Object {
   "adres": Object {
     "_adresSleutel": "xxxcasdasfada",
-    "begindatumVerblijf": "1967-01-01T00:00:00Z",
-    "einddatumVerblijf": "1967-01-01T00:00:00Z",
+    "begindatumVerblijf": "1967-01-01",
+    "einddatumVerblijf": "1967-01-01",
     "huisletter": null,
     "huisnummer": "1",
     "huisnummertoevoeging": null,
@@ -17,8 +17,8 @@ Object {
   },
   "adresHistorisch": Array [
     Object {
-      "begindatumVerblijf": "2005-09-01T00:00:00Z",
-      "einddatumVerblijf": "2012-08-01T00:00:00Z",
+      "begindatumVerblijf": "2005-09-01",
+      "einddatumVerblijf": "2012-08-01",
       "huisletter": null,
       "huisnummer": "9",
       "huisnummertoevoeging": "H",
@@ -29,8 +29,8 @@ Object {
       "woonplaatsNaam": "Amsterdam",
     },
     Object {
-      "begindatumVerblijf": "1990-01-01T00:00:00Z",
-      "einddatumVerblijf": "2005-09-01T00:00:00Z",
+      "begindatumVerblijf": "1990-01-01",
+      "einddatumVerblijf": "2005-09-01",
       "huisletter": null,
       "huisnummer": "9",
       "huisnummertoevoeging": "3",
@@ -43,8 +43,8 @@ Object {
   ],
   "identiteitsbewijzen": Array [
     Object {
-      "datumAfloop": "2025-10-15T00:00:00Z",
-      "datumUitgifte": "2015-10-15T00:00:00Z",
+      "datumAfloop": "2025-10-15",
+      "datumUitgifte": "2015-10-15",
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
@@ -55,8 +55,8 @@ Object {
       "title": "paspoort",
     },
     Object {
-      "datumAfloop": "2020-09-11T00:00:00Z",
-      "datumUitgifte": "2010-09-11T00:00:00Z",
+      "datumAfloop": "2020-09-11",
+      "datumUitgifte": "2010-09-11",
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
@@ -91,7 +91,7 @@ Object {
   "ouders": Array [
     Object {
       "bsn": "123456780",
-      "geboortedatum": "1920-01-01T00:00:00Z",
+      "geboortedatum": "1920-01-01",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboer",
@@ -108,7 +108,7 @@ Object {
     },
     Object {
       "bsn": "123456780",
-      "geboortedatum": "1920-01-01T00:00:00Z",
+      "geboortedatum": "1920-01-01",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboerin",
@@ -126,8 +126,8 @@ Object {
   "persoon": Object {
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
     "bsn": "129095205",
-    "datumVertrekUitNederland": "1967-01-01T00:00:00Z",
-    "geboortedatum": "1950-01-01T00:00:00Z",
+    "datumVertrekUitNederland": "1967-01-01",
+    "geboortedatum": "1992-09-22",
     "geboortelandnaam": "Nederland",
     "geboorteplaatsnaam": "Lochem",
     "gemeentenaamInschrijving": "Amsterdam",
@@ -204,13 +204,13 @@ Object {
       "soortVerbintenisOmschrijving": "Huwelijk",
     },
     Object {
-      "datumOntbinding": "2006-01-01T00:00:00Z",
-      "datumSluiting": "2000-01-01T00:00:00Z",
+      "datumOntbinding": "2006-01-01",
+      "datumSluiting": "2000-01-01",
       "landnaamSluiting": "Nederland",
       "persoon": Object {
         "adellijkeTitelPredikaat": null,
         "bsn": "113731681",
-        "geboortedatum": "1950-01-06T00:00:00Z",
+        "geboortedatum": "1950-01-06",
         "geboortelandnaam": "Nederland",
         "geboorteplaatsnaam": "Amsterdam",
         "geslachtsaanduiding": "V",
