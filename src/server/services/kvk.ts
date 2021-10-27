@@ -1,7 +1,8 @@
 import { FeatureToggle } from '../../universal/config/app';
+import memoize from 'memoizee';
 import { apiSuccesResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 type Rechtsvorm = string;
@@ -174,7 +175,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
 
 const SERVICE_NAME = 'KVK';
 
-export async function fetchKVK(
+async function fetchAndTransformKVK(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -189,3 +190,10 @@ export async function fetchKVK(
   }
   return apiSuccesResult(null);
 }
+
+export const fetchKVK = memoize(fetchAndTransformKVK, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args) {
+    return args[0] + JSON.stringify(args[1]);
+  },
+});

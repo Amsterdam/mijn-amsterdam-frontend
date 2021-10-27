@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+import memoize from 'memoizee';
 import { Chapters } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
@@ -20,7 +21,7 @@ import {
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { getApiConfig } from '../../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import {
   notificationContent,
@@ -209,7 +210,7 @@ export function transformVergunningenData(
   return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
-export function fetchAllVergunningen(
+export function fetchAndTransformVergunningen(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -267,6 +268,13 @@ export async function fetchVergunningen(
 
   return response;
 }
+
+export const fetchAllVergunningen = memoize(fetchAndTransformVergunningen, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args) {
+    return args[0] + JSON.stringify(args[1]);
+  },
+});
 
 export function createVergunningRecentCase(item: Vergunning): MyCase {
   return {

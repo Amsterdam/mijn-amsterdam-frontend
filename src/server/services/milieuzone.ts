@@ -1,7 +1,8 @@
 import { Chapters } from '../../universal/config';
+import memoize from 'memoizee';
 import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { MyCase } from '../../universal/types/App.types';
 import { FeatureToggle, ExternalUrls } from '../../universal/config/app';
@@ -75,7 +76,7 @@ function transformMILIEUZONEData(
   };
 }
 
-async function fetchSource(
+async function fetchAndTransformMilieuZone(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   includeGenerated: boolean = false
@@ -98,6 +99,13 @@ async function fetchSource(
 
   return response;
 }
+
+const fetchSource = memoize(fetchAndTransformMilieuZone, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args: any[]) {
+    return args[0] + JSON.stringify(args[1]);
+  },
+});
 
 export async function fetchMILIEUZONE(
   sessionID: SessionID,
