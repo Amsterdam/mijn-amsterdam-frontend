@@ -1,8 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
-import { jsonCopy } from '../../universal/helpers';
-import { ApiConfig } from '../config';
-import { axiosRequest } from '../helpers';
-import vergunningenData from '../mock-data/json/vergunningen.json';
+import { jsonCopy } from '../../../universal/helpers';
+import { ApiConfig } from '../../config';
+import { axiosRequest } from '../../helpers';
+import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   fetchAllVergunningen,
   transformVergunningenData,

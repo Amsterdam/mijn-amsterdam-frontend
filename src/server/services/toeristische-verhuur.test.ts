@@ -9,7 +9,7 @@ import {
   daysRentLeftInCalendarYear,
   fetchToeristischeVerhuur,
 } from './toeristische-verhuur';
-import { toeristischeVerhuurVergunningTypes } from './vergunningen';
+import { toeristischeVerhuurVergunningTypes } from './vergunningen/vergunningen';
 
 describe('Toeristische verhuur service', () => {
   const axMock = new MockAdapter(axiosRequest);

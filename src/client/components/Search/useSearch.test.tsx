@@ -112,18 +112,18 @@ describe('Search hooks and helpers', () => {
     const configItem: ApiSearchConfig = {
       getApiBaseItems: () => [],
       displayTitle,
-      keywordSourceProps: (item: ApiBaseItem): string[] => ['somePropName'],
+      keywordsGeneratedFromProps: (item: ApiBaseItem): string[] => [
+        'somePropName',
+      ],
       keywords: (item: ApiBaseItem): string[] => ['jup'],
-      title: (item: ApiBaseItem) => item.link.title,
       url: (item: ApiBaseItem) => item.link.to,
       description: (item: ApiBaseItem) => {
         return `Bekijk ${item.title}`;
       },
       profileTypes: ['private'],
     };
-    const entry = generateSearchIndexPageEntry(item1, configItem);
 
-    expect(entry.title).toBe('test-link');
+    const entry = generateSearchIndexPageEntry(item1, configItem);
     expect(entry.url).toBe('/test/to/id');
     expect(entry.description).toBe('Bekijk test item 1');
     expect(entry.keywords).toEqual(['yes-no-maybe', 'jup']);
@@ -148,7 +148,6 @@ describe('Search hooks and helpers', () => {
             "Amstel 1 GPK aanvraag",
             "vergunningsaanvraag",
           ],
-          "title": "Europse gehandicaptenparkeerkaart (GPK) Z/000/000008",
           "url": "/vergunningen/detail/1726584505",
         },
         Object {
@@ -162,7 +161,6 @@ describe('Search hooks and helpers', () => {
             "Ontvangen",
             "vergunningsaanvraag",
           ],
-          "title": "Tijdelijke verkeersmaatregel Z/000/000001",
           "url": "/vergunningen/detail/1467362160",
         },
         Object {
@@ -174,7 +172,6 @@ describe('Search hooks and helpers', () => {
             "Afgehandeld",
             "vergunningsaanvraag",
           ],
-          "title": "Parkeerontheffingen Blauwe zone particulieren Z/21/1500000",
           "url": "/vergunningen/detail/1370220470",
         },
       ]
@@ -213,7 +210,6 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
-          "title": "Beheer uw budget op FiBu",
           "url": "http://host/bbr/2064866/3",
         },
         Object {
@@ -228,7 +224,6 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
-          "title": "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
           "url": "http://host/pl/2442531/1",
         },
         Object {
@@ -243,7 +238,6 @@ describe('Search hooks and helpers', () => {
             "krediet",
             "budgetbeheer",
           ],
-          "title": "Afkoopvoorstellen zijn verstuurd",
           "url": "http://host/srv/2442531/2",
         },
       ]
@@ -356,24 +350,75 @@ describe('Search hooks and helpers', () => {
               "Amstel 1 GPK aanvraag",
               "vergunningsaanvraag",
             ],
-            "title": "Europse gehandicaptenparkeerkaart (GPK) Z/000/000008",
             "url": "/vergunningen/detail/1726584505",
           },
-          "refIndex": 19,
+          "refIndex": 20,
         },
       ]
     `);
-    expect(state.index?.search('paspoort')[0].item.title).toBe(
-      'Burgerzaken overzicht'
-    );
-    expect(state.index?.search('aktes')[0].item.title).toBe(
-      'Burgerzaken overzicht'
-    );
-    expect(state.index?.search('Identiteitskaart')[0].item.title).toBe(
-      'Burgerzaken overzicht'
-    );
-    expect(state.index?.search('Stadspas')[0].item.title).toBe(
-      'Stadspas | overzicht'
-    );
+    expect(state.index?.search('paspoort')[0].item.displayTitle?.('paspoort'))
+      .toMatchInlineSnapshot(`
+      <React.Fragment>
+        <span
+          className="DisplayPath"
+        >
+          <Memo(InnerHtmlTag)
+            className="DisplayPathSegment"
+            el="span"
+          >
+            Burgerzaken
+          </Memo(InnerHtmlTag)>
+        </span>
+      </React.Fragment>
+    `);
+
+    expect(state.index?.search('aktes')[0].item.displayTitle?.('aktes'))
+      .toMatchInlineSnapshot(`
+      <React.Fragment>
+        <span
+          className="DisplayPath"
+        >
+          <Memo(InnerHtmlTag)
+            className="DisplayPathSegment"
+            el="span"
+          >
+            Burgerzaken
+          </Memo(InnerHtmlTag)>
+        </span>
+      </React.Fragment>
+    `);
+    expect(
+      state.index
+        ?.search('Identiteitskaart')[0]
+        .item.displayTitle?.('Identiteitskaart')
+    ).toMatchInlineSnapshot(`
+      <React.Fragment>
+        <span
+          className="DisplayPath"
+        >
+          <Memo(InnerHtmlTag)
+            className="DisplayPathSegment"
+            el="span"
+          >
+            Burgerzaken
+          </Memo(InnerHtmlTag)>
+        </span>
+      </React.Fragment>
+    `);
+    expect(state.index?.search('Stadspas')[0].item.displayTitle?.('Stadspas'))
+      .toMatchInlineSnapshot(`
+      <React.Fragment>
+        <span
+          className="DisplayPath"
+        >
+          <Memo(InnerHtmlTag)
+            className="DisplayPathSegment"
+            el="span"
+          >
+            &lt;em&gt;Stadspas&lt;/em&gt;
+          </Memo(InnerHtmlTag)>
+        </span>
+      </React.Fragment>
+    `);
   });
 });

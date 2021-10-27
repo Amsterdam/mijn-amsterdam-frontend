@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
 import {
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,
-} from '../../../server/services/vergunningen';
+} from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
