@@ -67,7 +67,7 @@
   display: grid;
   grid-template-columns: 4rem 0.2rem 12rem;
   grid-template-rows: 4rem 0.5rem 4rem;
-  margin-left: 3rem;
+  margin-left: 2rem;
 
   @include mq-phone() {
     margin-left: 1rem;
