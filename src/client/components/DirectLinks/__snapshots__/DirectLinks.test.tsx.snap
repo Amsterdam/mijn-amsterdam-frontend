@@ -211,15 +211,6 @@ exports[`<DirectLinks /> It renders private links 1`] = `
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="/uitleg"
-          id="Uitleg"
-        >
-          Dit ziet u in Mijn Amsterdam
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
           href="https://mijnsubsidies.amsterdam.nl/loket/"
           rel="external noopener noreferrer"
         >
