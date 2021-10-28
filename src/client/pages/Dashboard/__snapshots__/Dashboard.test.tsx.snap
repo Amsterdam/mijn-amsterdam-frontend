@@ -246,11 +246,30 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       <div
         class="Panel MyChaptersPanel"
       >
-        <h3
-          class="Heading Heading__large Title"
+        <div
+          class="Header"
         >
-          Mijn thema's
-        </h3>
+          <h3
+            class="Heading Heading__large Title"
+          >
+            Mijn thema's
+          </h3>
+          <a
+            aria-label="Dit ziet u in Mijn Amsterdam"
+            class="Button Button__plain Button__lean Linkd GeneralInfoLink"
+            href="/uitleg"
+          >
+            <svg
+              aria-hidden="true"
+              class="Icon Icon__left"
+              fill="#000"
+              height="14px"
+              width="14px"
+            >
+              Info.svg
+            </svg>
+          </a>
+        </div>
         <div
           class="Links"
         >

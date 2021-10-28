@@ -1,4 +1,4 @@
-import { ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { ChapterMenuItem } from '../../config/menuItems';
 import {
@@ -11,6 +11,8 @@ import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import styles from './MyChaptersPanel.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { IconInfo } from '../../assets/icons';
+import Linkd from '../Button/Button';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -41,9 +43,19 @@ export default function MyChaptersPanel({
 
   return (
     <Panel {...otherProps} className={styles.MyChaptersPanel}>
-      <Heading size="large" className={styles.Title}>
-        {title}
-      </Heading>
+      <div className={styles.Header}>
+        <Heading size="large" className={styles.Title}>
+          {title}
+        </Heading>
+        <Linkd
+          className={styles.GeneralInfoLink}
+          href={AppRoutes.GENERAL_INFO}
+          variant="plain"
+          icon={IconInfo}
+          lean={true}
+          aria-label="Dit ziet u in Mijn Amsterdam"
+        />
+      </div>
       <div className={styles.Links}>
         {items.map(({ id, to, title, rel }) => {
           return (
