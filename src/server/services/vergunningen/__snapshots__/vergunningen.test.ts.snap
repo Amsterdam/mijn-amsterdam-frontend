@@ -335,7 +335,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
-        "description": "Uw vergunningsaanvraag vergunning voor kamerverhuur (omzettingsvergunning) is geregistreerd.",
+        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) is geregistreerd.",
         "id": "vergunning-913567999-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -346,7 +346,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-18",
-        "description": "Uw vergunningsaanvraag voor een Vergunning voor kamerverhuur (omzettingsvergunning) is afgehandeld.",
+        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) is afgehandeld",
         "id": "vergunning-3664304440-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -368,7 +368,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-07-06",
-        "description": "Uw Europse gehandicaptenparkeerkaart (GPK) loopt binnenkort af.",
+        "description": "Uw Europese gehandicaptenparkeerkaart (GPK) loopt binnenkort af.",
         "id": "vergunning-1221166450-notification",
         "link": Object {
           "title": "Vraag tijdig een nieuwe vergunning aan",
@@ -390,7 +390,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
-        "description": "Uw vergunningsaanvraag vergunning voor kamerverhuur (omzettingsvergunning) is geregistreerd.",
+        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) is geregistreerd.",
         "id": "vergunning-333728632-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -727,7 +727,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "requestReason": "Men heeft iets nodig",
     "status": "Ontvangen",
-    "title": "Europse gehandicaptenparkeerkaart (GPK)",
+    "title": "Europese gehandicaptenparkeerkaart (GPK)",
   },
   Object {
     "caseType": "B&B - vergunning",
