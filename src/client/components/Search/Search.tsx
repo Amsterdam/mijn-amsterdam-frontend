@@ -54,7 +54,7 @@ export function ResultSet({
       <ul className={styles.ResultList}>
         {results.map((result, index) => (
           <li
-            key={result.title + index}
+            key={result.url + index}
             className={classnames(
               styles.ResultListItem,
               extendedResults && styles['is-extended']
@@ -67,7 +67,7 @@ export function ResultSet({
               className={styles.ResultSetLink}
               onClick={() => onClickResult?.(result)}
             >
-              {result.displayTitle ? result.displayTitle(term) : result.title}
+              {result.displayTitle(term)}
               {extendedResults && (
                 <p className={styles.ResultDescription}>
                   <span className={styles.ResultUrl}>{result.url}</span>

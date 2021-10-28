@@ -179,7 +179,7 @@ export const notificationContent: NotificationContent = {
       ...requested,
       title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} ontvangen`,
       description: (item) =>
-        `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is geregistreerd.`,
+        `Uw vergunningsaanvraag ${item.title} is geregistreerd.`,
     },
     inProgress: {
       ...inProgress,
@@ -192,6 +192,8 @@ export const notificationContent: NotificationContent = {
     done: {
       ...done,
       title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
+      description: (item) =>
+        `Uw vergunningsaanvraag ${item.title} is afgehandeld`,
     },
   },
   //TODO: Add those eventually later
