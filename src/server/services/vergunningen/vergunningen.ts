@@ -198,7 +198,7 @@ export function transformVergunningenData(
 
   let vergunningen: Vergunning[] = responseData?.content?.map((item) => {
     const id = hash(
-      `vergunning-${item.identifier || item.caseType + item.dateRequest}`
+      `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
     const vergunning = Object.assign({}, item, {
       id,
