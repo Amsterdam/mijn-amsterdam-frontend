@@ -1,6 +1,7 @@
 {
-  "staticIndex": {
-    "/": {
+  "staticSearchEntries": [
+    {
+      "url": "/",
       "displayTitle": "Home - Dashboard",
       "description": "Dashboard pagina met overzicht van wat u hebt op Mijn Amsterdam.",
       "keywords": [
@@ -18,7 +19,8 @@
         "Themas"
       ]
     },
-    "/uitleg": {
+    {
+      "url": "/uitleg",
       "displayTitle": "Informatie over Mijn Amsterdam",
       "description": "Op dit moment staat deze informatie in Mijn Amsterdam",
       "keywords": [
@@ -29,12 +31,11 @@
         "Inhoud"
       ]
     },
-    "/burgerzaken": {
+    {
+      "url": "/burgerzaken",
       "displayTitle": "Burgerzaken",
       "description": "Informatie over uw officiële documenten, zoals uw paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan ziet u hier de aankondiging.",
       "keywords": [
-        "Birgerzaken",
-        "Burgerdingen",
         "Burgerzaken",
         "Paspoort",
         "Passport",
@@ -51,9 +52,13 @@
         "Identiteitskaart",
         "Reis document",
         "Document"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "zorg-en-ondersteuning": {
+    {
+      "url": "/zorg-en-ondersteuning",
       "displayTitle": "Zorg en ondersteuning",
       "description": "Uw regelingen en hulpmiddelen vanuit de Wmo.",
       "keywords": [
@@ -72,9 +77,13 @@
         "Aanvraag",
         "Zorgaanvraag",
         "Taxi"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "/stadspas": {
+    {
+      "url": "/stadspas",
       "displayTitle": "Stadspas",
       "description": "Informatie over uw eigen Stadspas.",
       "keywords": [
@@ -97,9 +106,13 @@
         "Tegoed",
         "Bonus",
         "Kind"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "/inkomen": {
+    {
+      "url": "/inkomen",
       "displayTitle": "Inkomen",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
       "keywords": [
@@ -116,22 +129,42 @@
         "Bijzondere bijstand",
         "BBZ",
         "Specificatie"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "/inkomen/specificaties": {
-      "displayTitle": "Jaaropgaven & Uikeringsspecificaties",
+    {
+      "url": "/inkomen/specificaties/uitkering",
+      "displayTitle": "Uikeringsspecificaties",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
       "keywords": [
-        "Jaaropgaven & Uikeringsspecificaties",
+        "Uikeringsspecificaties",
+        "Specificaties",
+        "Uitkering"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/inkomen/specificaties/jaaropgave",
+      "displayTitle": "Jaaropgaves",
+      "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
+      "keywords": [
         "Jaaropgave",
         "Jaaropgaves",
         "Jaaropgaven",
         "Specificaties",
         "Uitkering"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "/overzicht-updates/1": {
-      "displayTitle": "Meldingen (Aktueel)",
+    {
+      "url": "/overzicht-updates/1",
+      "displayTitle": "Meldingen",
       "description": "Alle belangrijke meldingen",
       "keywords": [
         "Actueel overzicht",
@@ -142,7 +175,8 @@
         "Overzicht"
       ]
     },
-    "/persoonlijke-gegevens": {
+    {
+      "url": "/persoonlijke-gegevens",
       "displayTitle": "Persoonlijke gegevens (BRP)",
       "description": "Gegevens uit de BRP. In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat.",
       "keywords": [
@@ -159,6 +193,7 @@
         "huwelijk",
         "wijzigen",
         "adreswijziging",
+        "verhuizing",
         "aangifte",
         "verhuizen",
         "kinderen",
@@ -167,9 +202,13 @@
         "ingeschreven",
         "adres",
         "naam"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "/gegevens-handelsregister": {
+    {
+      "url": "/gegevens-handelsregister",
       "displayTitle": "Gegevens handelsregister",
       "description": "Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister van de Kamer van Koophandel. In dat register staan onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.",
       "keywords": [
@@ -188,9 +227,14 @@
         "Handelsnamen",
         "Hoofdvestiging",
         "Functionarissen"
+      ],
+      "profileTypes": [
+        "private-commercial",
+        "commercial"
       ]
     },
-    "/buurt": {
+    {
+      "url": "/buurt",
       "displayTitle": "Mijn buurt",
       "description": "Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.",
       "keywords": [
@@ -202,14 +246,16 @@
         "Omgeving"
       ]
     },
-    "/tips": {
+    {
+      "url": "/tips",
       "displayTitle": "(Persoonlijke) Tips",
       "description": "Tips over voorzieningen en activiteiten in Amsterdam.",
       "keywords": [
         "Tips"
       ]
     },
-    "/afval": {
+    {
+      "url": "/afval",
       "displayTitle": "Afval",
       "description": " Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.",
       "keywords": [
@@ -229,7 +275,8 @@
         "Dichtbij afval"
       ]
     },
-    "/toegankelijkheidsverklaring": {
+    {
+      "url": "/toegankelijkheidsverklaring",
       "displayTitle": "Toegankelijkheid",
       "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
       "keywords": [
@@ -242,7 +289,8 @@
         "Accessibility"
       ]
     },
-    "/vergunningen": {
+    {
+      "url": "/vergunningen",
       "displayTitle": "Vergunningen",
       "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
       "keywords": [
@@ -251,7 +299,8 @@
         "Vergunning"
       ]
     },
-    "/toeristische-verhuur": {
+    {
+      "url": "/toeristische-verhuur",
       "displayTitle": "Toeristische verhuur",
       "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
       "keywords": [
@@ -275,9 +324,13 @@
         "Cancel verhuur",
         "Afmelden",
         "Landelijk registratienummer"
+      ],
+      "profileTypes": [
+        "private"
       ]
     },
-    "https://belastingbalie.amsterdam.nl/digid.saml.php?start": {
+    {
+      "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
       "displayTitle": "Belastingen",
       "description": "Een overzicht van de belastingen.",
       "keywords": [
@@ -291,7 +344,8 @@
         "Aanslagen"
       ]
     },
-    "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger": {
+    {
+      "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
       "displayTitle": "Erfpacht",
       "description": "Een overzicht van de erfpacht.",
       "keywords": [
@@ -301,7 +355,8 @@
         "Betalen"
       ]
     },
-    "https://ontheffingen.amsterdam.nl/publiek/aanvragen": {
+    {
+      "url": "https://ontheffingen.amsterdam.nl/publiek/aanvragen",
       "displayTitle": "Milieuzone",
       "description": "Een overzicht van milieuzone.",
       "keywords": [
@@ -309,7 +364,8 @@
         "Ontheffing"
       ]
     },
-    "/financiele-hulp": {
+    {
+      "url": "/financiele-hulp",
       "displayTitle": "Financiële hulp",
       "description": "Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).",
       "keywords": [
@@ -325,9 +381,13 @@
         "fibu",
         "kredietbank",
         "budgetbeheer"
+      ],
+      "profileTypes": [
+        "private",
+        "private-commercial"
       ]
     }
-  },
+  ],
   "apiSearchConfigs": {
     "BURGERZAKEN": {
       "keywords": [],

@@ -27,7 +27,6 @@ import {
   getApiSearchConfigs,
   SearchConfigRemote,
   SearchEntry,
-  staticSearchEntries,
 } from './searchConfig';
 
 export function generateSearchIndexPageEntry(
@@ -163,8 +162,13 @@ export function useStaticSearchEntries() {
   const profileType = useProfileTypeValue();
 
   return useMemo(() => {
-    return staticSearchEntries
-      .filter((indexEntry) => {
+    if (
+      remoteSearchConfig.state === 'hasValue' &&
+      remoteSearchConfig.contents?.staticSearchEntries
+    ) {
+      const staticEntries: SearchEntry[] =
+        remoteSearchConfig.contents.staticSearchEntries;
+      return staticEntries.filter((indexEntry) => {
         const isEnabled =
           'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
         return (
@@ -172,29 +176,15 @@ export function useStaticSearchEntries() {
           (!indexEntry.profileTypes ||
             indexEntry.profileTypes.includes(profileType))
         );
-      })
-      .map((indexEntry) => {
-        const indexEntryRemote =
-          remoteSearchConfig.contents?.staticSearchEntries?.[indexEntry.url];
-        if (indexEntryRemote) {
-          return {
-            ...indexEntry,
-            ...indexEntryRemote,
-          };
-        }
-        return indexEntry;
       });
+    }
+    return null;
   }, [profileType, remoteSearchConfig]);
 }
 
 export function useAppStateReady(): [boolean, Array<keyof AppState>] {
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
-
-  if (remoteSearchConfig.state !== 'hasValue') {
-    return [false, []];
-  }
 
   const apiNamesToIndex = getApiSearchConfigs(profileType)
     .map((config) => config.apiName)
@@ -217,10 +207,10 @@ export function useSearchIndex() {
   const [isAppStateReady, apiNamesToIndex] = useAppStateReady();
 
   useEffect(() => {
-    if (isAppStateReady && !isIndexed.current) {
+    if (isAppStateReady && !!staticSearchEntries && !isIndexed.current) {
       isIndexed.current = true;
 
-      const sindex = new Fuse(staticSearchEntries, options);
+      const sindex = new Fuse([...staticSearchEntries], options);
       const sApiNames: Array<keyof AppState> = [];
 
       for (const stateKey of apiNamesToIndex) {
