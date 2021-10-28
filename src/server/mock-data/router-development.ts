@@ -26,6 +26,17 @@ routerDevelopment.get(
 );
 
 routerDevelopment.get(
+  '/search/config',
+  (req: Request, res: Response, next: NextFunction) => {
+    res.type('application/pdf');
+    res.sendFile(
+      path.join(__dirname, '../../client/components/Search/search-config.json')
+    );
+    // res.end();
+  }
+);
+
+routerDevelopment.get(
   '/focus/stadspastransacties/:id',
   (req: Request, res: Response, next: NextFunction) => {
     res
