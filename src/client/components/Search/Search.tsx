@@ -17,7 +17,7 @@ import {
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './Search.module.scss';
-import { SearchEntry } from './searchConfig';
+import { displayPath, SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
@@ -67,7 +67,9 @@ export function ResultSet({
               className={styles.ResultSetLink}
               onClick={() => onClickResult?.(result)}
             >
-              {result.displayTitle(term)}
+              {typeof result.displayTitle === 'function'
+                ? result.displayTitle(term)
+                : displayPath(term, [result.displayTitle])}
               {extendedResults && (
                 <p className={styles.ResultDescription}>
                   <span className={styles.ResultUrl}>{result.url}</span>
