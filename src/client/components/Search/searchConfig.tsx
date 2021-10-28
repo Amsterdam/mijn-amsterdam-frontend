@@ -16,11 +16,7 @@ import type {
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
-import {
-  AppRoutes,
-  DocumentTitles,
-  FeatureToggle,
-} from '../../../universal/config';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import {
@@ -33,7 +29,6 @@ import { LinkProps } from '../../../universal/types';
 import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { AppState } from '../../AppState';
 import { IconExternalLink } from '../../assets/icons';
-import { ExternalUrls } from '../../config/app';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
 
@@ -127,10 +122,13 @@ export function displayPath(
           let segmentReplaced = segment;
           if (replaceTerm) {
             termSplitted.forEach((term) => {
-              segmentReplaced = segmentReplaced.replace(
+              const replaced = segmentReplaced.replace(
                 new RegExp(escapeRegex(term), 'ig'),
                 `<em>$&</em>`
               );
+              if (replaced) {
+                segmentReplaced = replaced;
+              }
             });
           }
           return (
@@ -189,13 +187,8 @@ export type ApiSearchConfigRemote = Record<
   >
 >;
 
-export type staticSearchEntriesRemote = Record<
-  keyof AppState,
-  Pick<ApiSearchConfig, 'keywords' | 'description'>
->;
-
 export interface SearchConfigRemote {
-  staticSearchEntries: staticSearchEntriesRemote;
+  staticSearchEntries: SearchEntry[];
   apiSearchConfigs: ApiSearchConfigRemote;
 }
 
@@ -435,81 +428,5 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       'krediet',
       'budgetbeheer',
     ],
-  },
-];
-
-export const staticSearchEntries: Array<
-  Optional<SearchEntry, 'keywords' | 'description' | 'displayTitle'>
-> = [
-  {
-    url: AppRoutes.ROOT,
-  },
-  {
-    url: AppRoutes.GENERAL_INFO,
-  },
-  {
-    url: AppRoutes.BURGERZAKEN,
-    profileTypes: ['private'],
-  },
-  {
-    url: AppRoutes.ZORG,
-    profileTypes: ['private'],
-  },
-  {
-    url: AppRoutes.STADSPAS,
-    profileTypes: ['private'],
-  },
-  {
-    url: AppRoutes.INKOMEN,
-    profileTypes: ['private'],
-  },
-  {
-    url: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      type: 'uitkering',
-    }),
-    profileTypes: ['private'],
-  },
-  {
-    url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
-  },
-  {
-    url: AppRoutes.BRP,
-  },
-  {
-    url: AppRoutes.KVK,
-    profileTypes: ['private-commercial', 'commercial'],
-  },
-  {
-    url: AppRoutes.BUURT,
-  },
-  {
-    url: AppRoutes.TIPS,
-  },
-  {
-    url: AppRoutes.AFVAL,
-  },
-  {
-    url: AppRoutes.ACCESSIBILITY,
-  },
-  {
-    url: AppRoutes.VERGUNNINGEN,
-  },
-  {
-    url: AppRoutes.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'],
-  },
-  {
-    url: ExternalUrls.SSO_BELASTINGEN,
-  },
-  {
-    url: ExternalUrls.SSO_ERFPACHT + '',
-  },
-  {
-    url: ExternalUrls.SSO_MILIEUZONE + '',
-  },
-  {
-    isEnabled: FeatureToggle.financieleHulpActive,
-    url: AppRoutes.FINANCIELE_HULP,
-    profileTypes: ['private', 'private-commercial'],
   },
 ];
