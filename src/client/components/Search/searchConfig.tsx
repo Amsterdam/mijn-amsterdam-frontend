@@ -39,7 +39,7 @@ import styles from './Search.module.scss';
 
 export interface SearchEntry {
   url: string;
-  displayTitle: (term: string) => ReactNode;
+  displayTitle: ((term: string) => ReactNode) | string;
   description: string;
   keywords: string[];
   profileTypes?: ProfileType[];
@@ -67,7 +67,7 @@ export interface ApiSearchConfig {
   keywords: string[] | ((item: any, config: ApiSearchConfig) => string[]);
 
   // Return a component that acts as title in the search result list
-  displayTitle: (item: any, config: ApiSearchConfig) => ReactNode;
+  displayTitle: ((item: any, config: ApiSearchConfig) => ReactNode) | string;
 
   // The url to link to
   url: string | ((item: any, config: ApiSearchConfig) => string);
@@ -439,106 +439,77 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
 ];
 
 export const staticSearchEntries: Array<
-  Optional<SearchEntry, 'keywords' | 'description'>
+  Optional<SearchEntry, 'keywords' | 'description' | 'displayTitle'>
 > = [
   {
     url: AppRoutes.ROOT,
-    displayTitle: (term: string) => displayPath(term, ['Dashboard / Home']),
   },
   {
     url: AppRoutes.GENERAL_INFO,
-    displayTitle: (term: string) =>
-      displayPath(term, ['Informatie over Mijn Amsterdam']),
   },
   {
     url: AppRoutes.BURGERZAKEN,
-    displayTitle: (term: string) => displayPath(term, ['Burgerzaken']),
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.ZORG,
-    displayTitle: (term: string) => displayPath(term, ['Zorg']),
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.STADSPAS,
-    displayTitle: (term: string) => displayPath(term, ['Stadspas']),
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.INKOMEN,
-    displayTitle: (term: string) => displayPath(term, ['Inkomen']),
     profileTypes: ['private'],
   },
   {
     url: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
       type: 'uitkering',
     }),
-    displayTitle: (term: string) =>
-      displayPath(term, ['Jaaropgaven & Uikeringsspecificaties']),
     profileTypes: ['private'],
   },
   {
     url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
-    displayTitle: (term: string) => displayPath(term, ['Actuele meldingen']),
   },
   {
     url: AppRoutes.BRP,
-    displayTitle: (term: string) =>
-      displayPath(term, ['Persoonlijke gegevens (BRP)']),
-  },
-  {
-    url: AppRoutes.BRP,
-    displayTitle: (term: string) =>
-      displayPath(term, ['Persoonlijke gegevens']),
-    profileTypes: ['private'],
   },
   {
     url: AppRoutes.KVK,
-    displayTitle: (term: string) => displayPath(term, ['Mijn onderneming']),
     profileTypes: ['private-commercial', 'commercial'],
   },
   {
     url: AppRoutes.BUURT,
-    displayTitle: (term: string) => displayPath(term, ['Mijn buurt']),
   },
   {
     url: AppRoutes.TIPS,
-    displayTitle: (term: string) => displayPath(term, ['Tips']),
   },
   {
     url: AppRoutes.AFVAL,
-    displayTitle: (term: string) => displayPath(term, ['Afval']),
   },
   {
     url: AppRoutes.ACCESSIBILITY,
-    displayTitle: (term: string) => displayPath(term, ['Toegankelijkheid']),
   },
   {
     url: AppRoutes.VERGUNNINGEN,
-    displayTitle: (term: string) => displayPath(term, ['Vergunningen']),
   },
   {
     url: AppRoutes.TOERISTISCHE_VERHUUR,
-    displayTitle: (term: string) => displayPath(term, ['Toeristische verhuur']),
     profileTypes: ['private'],
   },
   {
     url: ExternalUrls.SSO_BELASTINGEN,
-    displayTitle: (term: string) => displayPath(term, ['Belastingen']),
   },
   {
     url: ExternalUrls.SSO_ERFPACHT + '',
-    displayTitle: (term: string) => displayPath(term, ['Erfpacht']),
   },
   {
     url: ExternalUrls.SSO_MILIEUZONE + '',
-    displayTitle: (term: string) => displayPath(term, ['Milieuzone']),
   },
   {
     isEnabled: FeatureToggle.financieleHulpActive,
     url: AppRoutes.FINANCIELE_HULP,
-    displayTitle: (term: string) => displayPath(term, ['Financiële hulp']),
     profileTypes: ['private', 'private-commercial'],
   },
 ];
