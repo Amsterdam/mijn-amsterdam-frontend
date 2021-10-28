@@ -108,9 +108,8 @@ export default function Stadspas() {
         <p>Hieronder vindt u meer informatie over uw eigen Stadspas.</p>
         {!isLoadingStadspas && FOCUS_STADSPAS.content?.type !== 'kind' && (
           <p>
-            Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt
-            alle Stadspassen van uw gezin te zien. De andere gezinsleden zien
-            alleen hun eigen Stadspas als ze zelf inloggen op Mijn Amsterdam.
+            Hebt u kinderen of een partner met een Stadspas? Dan ziet u
+            hieronder ook hun Stadspassen.
           </p>
         )}
         <p>
