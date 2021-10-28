@@ -25,8 +25,9 @@ import {
   ApiSearchConfig,
   displayPath,
   getApiSearchConfigs,
+  SearchConfigRemote,
   SearchEntry,
-  staticIndex,
+  staticSearchEntries,
 } from './searchConfig';
 
 export function generateSearchIndexPageEntry(
@@ -157,34 +158,69 @@ export function useSearch() {
   return useRecoilState(searchConfigAtom);
 }
 
+export function useStaticSearchEntries() {
+  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
+  const profileType = useProfileTypeValue();
+
+  return useMemo(() => {
+    return staticSearchEntries
+      .filter((indexEntry) => {
+        const isEnabled =
+          'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
+        return (
+          isEnabled &&
+          (!indexEntry.profileTypes ||
+            indexEntry.profileTypes.includes(profileType))
+        );
+      })
+      .map((indexEntry) => {
+        const indexEntryRemote =
+          remoteSearchConfig.contents?.staticSearchEntries?.[indexEntry.url];
+        if (indexEntryRemote) {
+          return {
+            ...indexEntry,
+            ...indexEntryRemote,
+          };
+        }
+        return indexEntry;
+      });
+  }, [profileType, remoteSearchConfig]);
+}
+
+export function useAppStateReady(): [boolean, Array<keyof AppState>] {
+  const appState = useAppStateGetter();
+  const profileType = useProfileTypeValue();
+  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
+
+  if (remoteSearchConfig.state !== 'hasValue') {
+    return [false, []];
+  }
+
+  const apiNamesToIndex = getApiSearchConfigs(profileType)
+    .map((config) => config.apiName)
+    .filter((stateKey) => !!appState[stateKey]?.status);
+
+  const isAppStateReady = apiNamesToIndex.every((stateKey) => {
+    return appState[stateKey].status !== 'PRISTINE';
+  });
+
+  return [isAppStateReady, apiNamesToIndex];
+}
+
 export function useSearchIndex() {
   const [{ index }, setSearchConfig] = useSearch();
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const isIndexed = useRef(false);
-  const chapterPageEntries = useMemo(() => {
-    return staticIndex.filter((index) => {
-      const isEnabled = 'isEnabled' in index ? index.isEnabled : true;
-      return (
-        isEnabled &&
-        (!index.profileTypes || index.profileTypes.includes(profileType))
-      );
-    });
-  }, [profileType]);
+  const staticSearchEntries = useStaticSearchEntries();
+  const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
+  const [isAppStateReady, apiNamesToIndex] = useAppStateReady();
 
   useEffect(() => {
-    const apiNamesToIndex = getApiSearchConfigs(profileType)
-      .map((config) => config.apiName)
-      .filter((stateKey) => !!appState[stateKey]?.status);
-
-    const isAppStateReady = apiNamesToIndex.every((stateKey) => {
-      return appState[stateKey].status !== 'PRISTINE';
-    });
-
     if (isAppStateReady && !isIndexed.current) {
       isIndexed.current = true;
 
-      const sindex = new Fuse(chapterPageEntries, options);
+      const sindex = new Fuse(staticSearchEntries, options);
       const sApiNames: Array<keyof AppState> = [];
 
       for (const stateKey of apiNamesToIndex) {
@@ -206,7 +242,16 @@ export function useSearchIndex() {
         apiNames: sApiNames,
       }));
     }
-  }, [chapterPageEntries, appState, index, profileType, setSearchConfig]);
+  }, [
+    apiNamesToIndex,
+    staticSearchEntries,
+    appState,
+    index,
+    profileType,
+    setSearchConfig,
+    remoteSearchConfig,
+    isAppStateReady,
+  ]);
 
   useProfileTypeSwitch(() => {
     // Reset the search index
@@ -238,6 +283,17 @@ const amsterdamNLQuery = selectorFamily({
         : null;
       return response;
     },
+});
+
+export const searchConfigRemote = selector<SearchConfigRemote>({
+  key: 'SearchConfigRemote',
+  get: async ({ get }) => {
+    const response: SearchConfigRemote = await fetch(
+      '/test-api/search/config'
+    ).then((response) => response.json());
+    console.log('response', response);
+    return response;
+  },
 });
 
 export const isIndexReadyQuery = selector({

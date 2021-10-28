@@ -181,6 +181,24 @@ type ApiSearchConfigEntry = Partial<ApiSearchConfig> & {
   apiName: keyof AppState;
 };
 
+export type ApiSearchConfigRemote = Record<
+  keyof AppState,
+  Pick<
+    ApiSearchConfig,
+    'keywords' | 'keywordsGeneratedFromProps' | 'description'
+  >
+>;
+
+export type staticSearchEntriesRemote = Record<
+  keyof AppState,
+  Pick<ApiSearchConfig, 'keywords' | 'description'>
+>;
+
+export interface SearchConfigRemote {
+  staticSearchEntries: staticSearchEntriesRemote;
+  apiSearchConfigs: ApiSearchConfigRemote;
+}
+
 interface ToeristischRegistratieItem {
   title: string;
   identifier: string;
@@ -188,7 +206,10 @@ interface ToeristischRegistratieItem {
   [key: string]: any;
 }
 
-export function getApiSearchConfigs(profileType: ProfileType) {
+export function getApiSearchConfigs(
+  profileType: ProfileType,
+  searchConfigsRemote?: SearchConfigRemote
+) {
   return apiSearchConfigs
     .map((config) => {
       const apiConfig: ApiSearchConfig & {
@@ -197,6 +218,13 @@ export function getApiSearchConfigs(profileType: ProfileType) {
         ...API_SEARCH_CONFIG_DEFAULT,
         ...config,
       };
+      if (searchConfigsRemote?.apiSearchConfigs?.[config.apiName]) {
+        // TODO: Merge deep strategy here.
+        Object.assign(
+          apiConfig,
+          searchConfigsRemote.apiSearchConfigs[config.apiName]
+        );
+      }
       return apiConfig;
     })
     .filter((config) => config.profileTypes?.includes(profileType));
@@ -410,368 +438,107 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   },
 ];
 
-export const staticIndex: SearchEntry[] = [
+export const staticSearchEntries: Array<
+  Optional<SearchEntry, 'keywords' | 'description'>
+> = [
   {
     url: AppRoutes.ROOT,
     displayTitle: (term: string) => displayPath(term, ['Dashboard / Home']),
-    description:
-      'Dashboard pagina met overzicht van wat u hebt op Mijn Amsterdam.',
-    keywords: [
-      DocumentTitles[AppRoutes.ROOT],
-      'Home',
-      'Dashboard',
-      'Start',
-      'Updates',
-      'Nieuws',
-      'Zaken',
-      'Lopende zaken',
-      'Recente zaken',
-      'Melding',
-      'Lopende aanvragen',
-      'Aanvragen',
-      'Themas',
-    ],
   },
   {
     url: AppRoutes.GENERAL_INFO,
     displayTitle: (term: string) =>
       displayPath(term, ['Informatie over Mijn Amsterdam']),
-    description: 'Op dit moment staat deze informatie in Mijn Amsterdam',
-    keywords: [
-      DocumentTitles[AppRoutes.GENERAL_INFO],
-      'Uitleg',
-      'About',
-      'Over',
-      'Inhoud',
-    ],
   },
   {
     url: AppRoutes.BURGERZAKEN,
     displayTitle: (term: string) => displayPath(term, ['Burgerzaken']),
-    description: `Informatie over uw officiële documenten, zoals uw
-          paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan
-          ziet u hier de aankondiging.`,
-    keywords: [
-      DocumentTitles[AppRoutes.BURGERZAKEN],
-      'Burgerdingen',
-      'Burgerzaken',
-      'Paspoort',
-      'Passport',
-      'Huwelijk',
-      'Huwelijksakte',
-      'Trouwen',
-      'Partnerschap',
-      'Akte',
-      'Aktes',
-      'ID/id',
-      'ID kaart',
-      'ID bewijs',
-      'Identiteitsbewijs',
-      'Identiteitskaart',
-      'Reis document',
-      'Document',
-    ],
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.ZORG,
     displayTitle: (term: string) => displayPath(term, ['Zorg']),
-    description: `Uw regelingen en hulpmiddelen vanuit de Wmo.`,
-    keywords: [
-      DocumentTitles[AppRoutes.ZORG],
-      'Zorg',
-      'Scootmobiel',
-      'Rollator',
-      'Thuishulp',
-      'Hulp in huis',
-      'Thuiszorg',
-      'WMO',
-      'Zorgvoorziening',
-      'Voorziening',
-      'Zorgproduct',
-      'Recht op zorg',
-      'Aanvraag',
-      'Zorgaanvraag',
-      'Taxi',
-    ],
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.STADSPAS,
     displayTitle: (term: string) => displayPath(term, ['Stadspas']),
-    description: `Informatie over uw eigen Stadspas.`,
-    keywords: [
-      DocumentTitles[AppRoutes.STADSPAS],
-      'Stadspas',
-      'Groene stip',
-      'Blauwe ruit',
-      'Gratis pas',
-      'Saldo checken',
-      'stadspasnummer',
-      'pasnummer',
-      'pas nummer',
-      'einddatum stadspas',
-      'besluit aanvraag',
-      'Geld ',
-      'Afschrijvingen',
-      'Gratis pas',
-      'Pas',
-      'Transacties',
-      'Hoeveel heb ik uitgegeven?',
-      'Tegoed',
-      'Bonus',
-      'Kind',
-    ],
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.INKOMEN,
     displayTitle: (term: string) => displayPath(term, ['Inkomen']),
-    description: `Informatie over uw uitkering en de
-          ondersteuning die u krijgt omdat u weinig geld hebt.`,
-    keywords: [
-      DocumentTitles[AppRoutes.INKOMEN],
-      'Geld',
-      'Uitkering',
-      'bijstandsuitkering',
-      'Bijstand',
-      'Werkloos',
-      'Aanvragen',
-      'Vakantiegeld',
-      'Tozo',
-      'Tonk',
-      'Bijzondere bijstand',
-      'BBZ',
-      'Specificatie',
-    ],
     profileTypes: ['private'],
   },
   {
-    url: AppRoutes.INKOMEN,
+    url: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'uitkering',
+    }),
     displayTitle: (term: string) =>
       displayPath(term, ['Jaaropgaven & Uikeringsspecificaties']),
-    description: `Informatie over uw uitkering en de
-          ondersteuning die u krijgt omdat u weinig geld hebt.`,
     profileTypes: ['private'],
-    keywords: [
-      'Jaaropgaven & Uikeringsspecificaties',
-      'Jaaropgave',
-      'Jaaropgaves',
-      'Jaaropgaven',
-      'Specificaties',
-      'Uitkering',
-    ],
   },
   {
     url: generatePath(AppRoutes.NOTIFICATIONS, { page: 1 }),
     displayTitle: (term: string) => displayPath(term, ['Actuele meldingen']),
-    description: `Alle belangrijke meldingen`,
-    keywords: [
-      DocumentTitles[AppRoutes.NOTIFICATIONS],
-      'Nieuws',
-      'Updates',
-      'Status',
-      'Betalen',
-      'Overzicht',
-    ],
   },
   {
     url: AppRoutes.BRP,
     displayTitle: (term: string) =>
       displayPath(term, ['Persoonlijke gegevens (BRP)']),
-    description: 'Gegevens uit de BRP',
-    keywords: ['BRP', 'Uittreksel', 'bevolkingsregister', 'Basisregistratie'],
   },
   {
     url: AppRoutes.BRP,
     displayTitle: (term: string) =>
       displayPath(term, ['Persoonlijke gegevens']),
-    description: `In de Basisregistratie Personen legt de gemeente persoonsgegevens over
-          u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
-          uw burgerlijke staat.`,
-    keywords: [
-      DocumentTitles[AppRoutes.BRP],
-      'gegevens',
-      'profiel',
-      'adressen',
-      'woningen',
-      'partners',
-      'huwelijk',
-      'wijzigen',
-      'adreswijziging',
-      'aangifte',
-      'verhuizen',
-      'kinderen',
-      'bewoners',
-      'aantal bewoners',
-      'ingeschreven',
-      'adres',
-      'naam',
-    ],
     profileTypes: ['private'],
   },
   {
     url: AppRoutes.KVK,
     displayTitle: (term: string) => displayPath(term, ['Mijn onderneming']),
-    description: `Hier ziet u hoe uw onderneming ingeschreven staat in het
-          Handelsregister van de Kamer van Koophandel. In dat register staan
-          onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.`,
-    keywords: [
-      DocumentTitles[AppRoutes.KVK],
-      'Zakelijk',
-      'gegevens',
-      'bedrijf',
-      'zzp',
-      'kvk',
-      'kamer van koophandel',
-      'handelsregister',
-      'bedrijfsgegevens',
-      'Onderneming',
-      'Mijn gegevens',
-      'Vestigingen',
-      'Handelsnamen',
-      'Hoofdvestiging',
-      'Functionarissen',
-    ],
     profileTypes: ['private-commercial', 'commercial'],
   },
   {
     url: AppRoutes.BUURT,
     displayTitle: (term: string) => displayPath(term, ['Mijn buurt']),
-    description: `Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.`,
-    keywords: [
-      DocumentTitles[AppRoutes.BUURT],
-      'buurt',
-      'straat',
-      'adres',
-      'kaart',
-      'map',
-      'Omgeving',
-    ],
   },
   {
     url: AppRoutes.TIPS,
     displayTitle: (term: string) => displayPath(term, ['Tips']),
-    description: `Tips over voorzieningen en activiteiten in Amsterdam.`,
-    keywords: [DocumentTitles[AppRoutes.TIPS]],
   },
   {
     url: AppRoutes.AFVAL,
     displayTitle: (term: string) => displayPath(term, ['Afval']),
-    description: ` Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.`,
-    keywords: [
-      DocumentTitles[AppRoutes.AFVAL],
-      'Containers',
-      'Afval containers',
-      'Afvalcontainers',
-      'Grofvuilen ophalen',
-      'Ophaaldagen',
-      'Afvalbrengplaats',
-      'Milieustraat',
-      'Afvalstraat',
-      'Afval wegbrngen',
-      'Afval Inlveren',
-      'Verf',
-      'Puin storten',
-      'Dichtbij afval',
-    ],
   },
   {
     url: AppRoutes.ACCESSIBILITY,
     displayTitle: (term: string) => displayPath(term, ['Toegankelijkheid']),
-    description: `Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.`,
-    keywords: [
-      DocumentTitles[AppRoutes.ACCESSIBILITY],
-      'A11Y',
-      'WCAG',
-      'Blind',
-      'Slechtziend',
-      'Beperking',
-    ],
   },
   {
     url: AppRoutes.VERGUNNINGEN,
     displayTitle: (term: string) => displayPath(term, ['Vergunningen']),
-    description: `Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.`,
-    keywords: [
-      DocumentTitles[AppRoutes.VERGUNNINGEN],
-      'Vergunningen',
-      'Aanvragen',
-      'Vergunning',
-    ],
   },
   {
     url: AppRoutes.TOERISTISCHE_VERHUUR,
     displayTitle: (term: string) => displayPath(term, ['Toeristische verhuur']),
-    description: `Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.`,
-    keywords: [
-      DocumentTitles[AppRoutes.TOERISTISCHE_VERHUUR],
-      'vergunning airbnb',
-      'vergunning B&B',
-      'vergunning Bed and Breakfast',
-      'vergunning bnb',
-      'Airbnb',
-      'Verhuur',
-      'Vakantie verhuur',
-      'Vakantieverhuur',
-      'Vakantiewoning',
-      'Kamer verhuren',
-      'Toeristen',
-      'Bed Breakfast',
-      'B&B',
-      'Vergunning',
-      'Afmelden',
-      'Verhuur plannen',
-      'Cancel verhuur',
-      'Afmelden',
-      'Landelijk registratienummer',
-    ],
     profileTypes: ['private'],
   },
   {
     url: ExternalUrls.SSO_BELASTINGEN,
     displayTitle: (term: string) => displayPath(term, ['Belastingen']),
-    description: `Een overzicht van de belastingen.`,
-    keywords: [
-      'Belastingen',
-      'Incasso',
-      'Belasting',
-      'Betalen',
-      'Gemeente belasting',
-      'iDeal betalen',
-      'Boete',
-      'Aanslagen',
-    ],
   },
   {
     url: ExternalUrls.SSO_ERFPACHT + '',
     displayTitle: (term: string) => displayPath(term, ['Erfpacht']),
-    description: `Een overzicht van de erfpacht.`,
-    keywords: ['Erfpacht', 'Canon', 'Afkopen', 'Betalen'],
   },
   {
     url: ExternalUrls.SSO_MILIEUZONE + '',
     displayTitle: (term: string) => displayPath(term, ['Milieuzone']),
-    description: `Een overzicht van milieuzone.`,
-    keywords: ['Milieuzone', 'Ontheffing'],
   },
   {
     isEnabled: FeatureToggle.financieleHulpActive,
     url: AppRoutes.FINANCIELE_HULP,
     displayTitle: (term: string) => displayPath(term, ['Financiële hulp']),
-    description: `Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).`,
-    keywords: [
-      DocumentTitles[AppRoutes.FINANCIELE_HULP],
-      'lening',
-      'schulden',
-      'schuldhulp',
-      'schuldhulpregeling',
-      'krediet',
-      'krefia',
-      'fibu',
-      'kredietbank',
-      'budgetbeheer',
-    ],
     profileTypes: ['private', 'private-commercial'],
   },
 ];

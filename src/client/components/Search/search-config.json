@@ -1,0 +1,34 @@
+{
+  "staticSearchEntries": {
+    "/burgerzaken": {
+      "description": "Informatie over uw officiële documenten, zoals uw paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan ziet u hier de aankondiging.",
+      "keywords": [
+        "SKRAKIPROZO",
+        "Burgerzaken",
+        "Burgerdingen",
+        "Burgerzaken",
+        "Paspoort",
+        "Passport",
+        "Huwelijk",
+        "Huwelijksakte",
+        "Trouwen",
+        "Partnerschap",
+        "Akte",
+        "Aktes",
+        "ID/id",
+        "ID kaart",
+        "ID bewijs",
+        "Identiteitsbewijs",
+        "Identiteitskaart",
+        "Reis document",
+        "Document"
+      ]
+    }
+  },
+  "apiSearchConfigs": {
+    "BURGERZAKEN": {
+      "keywords": [],
+      "keywordSourceProps": []
+    }
+  }
+}
