@@ -13,6 +13,7 @@ import {
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
+import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import {
@@ -285,7 +286,7 @@ export const searchConfigRemote = selector<SearchConfigRemote>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
     const response: SearchConfigRemote = await fetch(
-      '/test-api/search/config'
+      BFFApiUrls.SEARCH_CONFIGURATION
     ).then((response) => response.json());
     return response;
   },
