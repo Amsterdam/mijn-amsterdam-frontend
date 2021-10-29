@@ -26,7 +26,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         datePublished: vergunning.dateRequest,
         description: '',
         documents: [],
-        isActive: !inProgressActive,
+        isActive: !inProgressActive && !isDone,
         isChecked: true,
       },
     ];
