@@ -4,6 +4,7 @@ import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+import styles from './VergunningDetail.module.scss';
 
 export function EvenementMelding({
   vergunning,
@@ -16,7 +17,7 @@ export function EvenementMelding({
       <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
 
-      <InfoDetailGroup>
+      <InfoDetailGroup className={styles.EvenementMelding_DateAndTime}>
         <InfoDetail
           label="Op"
           value={
@@ -27,11 +28,11 @@ export function EvenementMelding({
         />
         <InfoDetail
           label="Van"
-          value={vergunning?.timeStart ? vergunning.timeStart : '-'}
+          value={vergunning?.timeStart ? `${vergunning.timeStart} uur` : '-'}
         />
         <InfoDetail
           label="Tot"
-          value={vergunning?.timeEnd ? vergunning.timeEnd : '-'}
+          value={vergunning?.timeEnd ? `${vergunning.timeEnd} uur` : '-'}
         />
       </InfoDetailGroup>
       {!!vergunning?.decision && (

@@ -96,7 +96,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
         </p>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetailGroup EvenementMelding_DateAndTime"
       >
         <div
           class="InfoDetailGroupContent"
@@ -126,7 +126,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              08:00
+              08:00 uur
             </p>
           </div>
           <div
@@ -140,7 +140,7 @@ exports[`<VergunningDetail /> Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              11:00
+              11:00 uur
             </p>
           </div>
         </div>
