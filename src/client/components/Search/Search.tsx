@@ -5,6 +5,7 @@ import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
+import { useAppStateReady } from '../../hooks';
 import {
   trackEventWithProfileType,
   trackSearch,
@@ -16,6 +17,7 @@ import {
 } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
+import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
 import { displayPath, SearchEntry } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
@@ -47,6 +49,12 @@ export function ResultSet({
         <Heading className={styles.ResultSetTitle} size="tiny">
           {title}
         </Heading>
+      )}
+      {isLoading && !results.length && (
+        <p className={styles.ResultsPending}>
+          <Spinner />
+          Zoeken...
+        </p>
       )}
       {!!term && !results.length && !isLoading && (
         <p className={styles.NoResults}>{noResultsMessage}</p>
@@ -105,13 +113,13 @@ export function Search({
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
+  const isAppStateReady = useAppStateReady();
 
   useSearchIndex();
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
@@ -181,12 +189,6 @@ export function Search({
   }, []);
 
   useEffect(() => {
-    if (results?.am?.state === 'hasValue' && results?.am?.contents !== null) {
-      setIsDirty(true);
-    }
-  }, [results?.am?.state, results?.am?.contents]);
-
-  useEffect(() => {
     if (term) {
       setResultsVisible(true);
     }
@@ -218,7 +220,7 @@ export function Search({
           autoCapitalize="none"
           spellCheck="false"
           placeholder={
-            results.isIndexReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
+            isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
           }
           onFocus={() => {
             if (term) {
@@ -246,44 +248,40 @@ export function Search({
 
       {isResultsVisible && (
         <div className={styles.Results}>
-          {!!results?.ma?.length && (
-            <ResultSet
-              term={term}
-              isLoading={isTyping}
-              results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-              noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              showIcon={extendedAMResults}
-              onClickResult={() => trackSearchBarEvent(`Click result`)}
-            />
-          )}
-          {isDirty && (
-            <>
-              <ResultSet
-                term={term}
-                isLoading={results?.am?.state === 'loading' || isTyping}
-                title="Overige informatie op Amsterdam.nl"
-                noResultsMessage="Niets gevonden op Amsterdam.nl"
-                extendedResults={extendedAMResults}
-                onClickResult={() => trackSearchBarEvent(`Click result`)}
-                results={
-                  results?.am?.state === 'hasValue' &&
-                  results?.am?.contents !== null
-                    ? results.am.contents.slice(0, maxResultCountDisplay / 2)
-                    : []
+          <ResultSet
+            term={term}
+            isLoading={isTyping || !isAppStateReady}
+            results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+            noResultsMessage="Niets gevonden op Mijn Amsterdam"
+            showIcon={extendedAMResults}
+            onClickResult={() => trackSearchBarEvent(`Click result`)}
+          />
+
+          <ResultSet
+            term={term}
+            isLoading={results?.am?.state === 'loading' || isTyping}
+            title="Overige informatie op Amsterdam.nl"
+            noResultsMessage="Niets gevonden op Amsterdam.nl"
+            extendedResults={extendedAMResults}
+            onClickResult={() => trackSearchBarEvent(`Click result`)}
+            results={
+              results?.am?.state === 'hasValue' &&
+              results?.am?.contents !== null
+                ? results.am.contents.slice(0, maxResultCountDisplay / 2)
+                : []
+            }
+          />
+
+          {extendedAMResults && (
+            <p>
+              <Button
+                onClick={() =>
+                  (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
                 }
-              />
-              {extendedAMResults && (
-                <p>
-                  <Button
-                    onClick={() =>
-                      (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
-                    }
-                  >
-                    Zoek verder op Amsterdam.nl
-                  </Button>
-                </p>
-              )}
-            </>
+              >
+                Zoek verder op Amsterdam.nl
+              </Button>
+            </p>
           )}
         </div>
       )}

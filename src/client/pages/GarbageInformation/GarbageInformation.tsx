@@ -87,7 +87,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
   const [restafval, grofvuil] = AFVAL.content || [];
   const profileType = useProfileTypeValue();
@@ -181,9 +181,9 @@ export default function GarbageInformation() {
           label="Uw adres"
           value={
             <>
-              {HOME.content?.address ? (
-                getFullAddress(HOME.content.address)
-              ) : isLoading(HOME) ? (
+              {MY_LOCATION.content?.address ? (
+                getFullAddress(MY_LOCATION.content.address)
+              ) : isLoading(MY_LOCATION) ? (
                 <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
               ) : (
                 'Onbekend adres'

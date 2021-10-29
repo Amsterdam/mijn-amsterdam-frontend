@@ -42,6 +42,7 @@ export interface SearchEntry {
 }
 
 export interface ApiSearchConfig {
+  stateKey: keyof AppState;
   // Extract searchable items from the api response
   getApiBaseItems: (
     apiContent: ApiSuccessResponse<any>['content']
@@ -54,12 +55,13 @@ export interface ApiSearchConfig {
   description: ReactNode | ((item: any, config: ApiSearchConfig) => ReactNode);
 
   // A list of keys of which the values are used for keywords
-  keywordsGeneratedFromProps:
-    | string[]
-    | ((item: any, config: ApiSearchConfig) => string[]);
+  keywordsGeneratedFromProps?: string[];
 
-  // A list of keywords
-  keywords: string[] | ((item: any, config: ApiSearchConfig) => string[]);
+  // A list of static keywords
+  keywords?: string[];
+
+  // A function to generate additional keywords derived from the data source
+  generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
   displayTitle: ((item: any, config: ApiSearchConfig) => ReactNode) | string;
@@ -80,32 +82,32 @@ export interface ApiBaseItem {
   [key: string]: any;
 }
 
-export const API_SEARCH_CONFIG_DEFAULT: ApiSearchConfig = {
-  getApiBaseItems: (apiContent: ApiSuccessResponse<any>['content']) => {
-    // Blindly assume apiContent returns an array with objects
-    if (Array.isArray(apiContent)) {
-      return apiContent;
-    }
+export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
+  {
+    getApiBaseItems: (apiContent: ApiSuccessResponse<any>['content']) => {
+      // Blindly assume apiContent returns an array with objects
+      if (Array.isArray(apiContent)) {
+        return apiContent;
+      }
 
-    // Blindly assume apiContent returns an object with arrays object filled arrays as key values.
-    if (apiContent !== null && typeof apiContent === 'object') {
-      return Object.values(apiContent)
-        .filter((value) => Array.isArray(value))
-        .flatMap((items) => items);
-    }
+      // Blindly assume apiContent returns an object with arrays object filled arrays as key values.
+      if (apiContent !== null && typeof apiContent === 'object') {
+        return Object.values(apiContent)
+          .filter((value) => Array.isArray(value))
+          .flatMap((items) => items);
+      }
 
-    return [];
-  },
-  keywordsGeneratedFromProps: (item: any): string[] => ['title'],
-  keywords: (item: any): string[] => [],
-  displayTitle: (item: any) => (term: string) =>
-    displayPath(term, [item.title]),
-  url: (item: any) => item.link.to,
-  description: (item: any) => {
-    return `Bekijk ${item.title}`;
-  },
-  profileTypes: ['private'],
-};
+      return [];
+    },
+    displayTitle: (item: any) => (term: string) =>
+      displayPath(term, [item.title]),
+    url: (item: any) => item.link.to,
+    description: (item: any) => {
+      return `Bekijk ${item.title}`;
+    },
+    profileTypes: ['private'],
+    keywordsGeneratedFromProps: ['title', 'description'],
+  };
 
 export function displayPath(
   term: string,
@@ -151,12 +153,14 @@ export function displayPath(
   );
 }
 
-const getFocusConfig = (apiName: keyof AppState): ApiSearchConfigEntry => ({
-  apiName,
-  keywordsGeneratedFromProps: (): string[] => {
-    return ['title', 'status', 'decision', 'productTitle'];
-  },
-  keywords: (aanvraag: FocusItem) =>
+const getFocusConfig = (
+  stateKey: keyof AppState
+): Pick<
+  ApiSearchConfig,
+  'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
+> => ({
+  stateKey,
+  generateKeywords: (aanvraag: FocusItem) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
@@ -170,14 +174,10 @@ const getFocusConfig = (apiName: keyof AppState): ApiSearchConfigEntry => ({
     };
   },
   profileTypes:
-    apiName === 'FOCUS_AANVRAGEN'
+    stateKey === 'FOCUS_AANVRAGEN'
       ? ['private']
       : ['private', 'private-commercial', 'commercial'],
 });
-
-type ApiSearchConfigEntry = Partial<ApiSearchConfig> & {
-  apiName: keyof AppState;
-};
 
 export type ApiSearchConfigRemote = Record<
   keyof AppState,
@@ -199,58 +199,20 @@ interface ToeristischRegistratieItem {
   [key: string]: any;
 }
 
-export function getApiSearchConfigs(
-  profileType: ProfileType,
-  searchConfigsRemote?: SearchConfigRemote
-) {
-  return apiSearchConfigs
-    .map((config) => {
-      const apiConfig: ApiSearchConfig & {
-        apiName: keyof AppState;
-      } = {
-        ...API_SEARCH_CONFIG_DEFAULT,
-        ...config,
-      };
-      if (searchConfigsRemote?.apiSearchConfigs?.[config.apiName]) {
-        // TODO: Merge deep strategy here.
-        Object.assign(
-          apiConfig,
-          searchConfigsRemote.apiSearchConfigs[config.apiName]
-        );
-      }
-      return apiConfig;
-    })
-    .filter((config) => config.profileTypes?.includes(profileType));
-}
-
-export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
+export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    apiName: 'VERGUNNINGEN',
-    keywordsGeneratedFromProps: (vergunning: Vergunning): string[] => {
-      const props = [
-        'caseType',
-        'title',
-        'status',
-        'decision',
-        'identifier',
-        'description',
-      ];
-
-      return props;
-    },
+    stateKey: 'VERGUNNINGEN' as keyof AppState,
     displayTitle: (vergunning: Vergunning) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
-    keywords: () => ['vergunningsaanvraag'],
-    profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
-    apiName: 'TOERISTISCHE_VERHUUR',
+    stateKey: 'TOERISTISCHE_VERHUUR' as keyof AppState,
     getApiBaseItems: (apiContent: {
       registraties: ToeristischeVerhuurRegistratie[];
       vergunningen: ToeristischeVerhuurVergunning[];
     }): ToeristischRegistratieItem[] => {
-      const registratienummers = apiContent.registraties.map((registratie) => {
+      const registratienummers = apiContent.registraties?.map((registratie) => {
         return {
           title: 'Landelijk registratienummer',
           identifier: registratie.registrationNumber,
@@ -260,7 +222,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
           },
         };
       });
-      const zaken = apiContent.vergunningen.map(
+      const zaken = apiContent.vergunningen?.map(
         (vergunning: ToeristischeVerhuurVergunning) => {
           const title = vergunning.title;
           return {
@@ -271,18 +233,8 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
           };
         }
       );
-      return [...zaken, ...registratienummers];
+      return [...(zaken || []), ...(registratienummers || [])];
     },
-    keywordsGeneratedFromProps: (): string[] => {
-      return ['caseType', 'title', 'status', 'decision', 'identifier'];
-    },
-    keywords: () => [
-      'bed',
-      'breakfast',
-      'bed and breakfast',
-      'verhuur',
-      'vergunningsaanvraag',
-    ],
     displayTitle: (toeristischVerhuurItem: ToeristischRegistratieItem) => {
       if (
         [
@@ -307,15 +259,10 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
         ]);
       };
     },
-
-    profileTypes: ['private', 'private-commercial'],
   },
   {
-    apiName: 'WMO',
-    keywordsGeneratedFromProps: (): string[] => {
-      return ['supplier', 'title', 'voorzieningsoortcode'];
-    },
-    keywords: (wmoItem: WmoItem): string[] =>
+    stateKey: 'WMO' as keyof AppState,
+    generateKeywords: (wmoItem: WmoItem): string[] =>
       uniqueArray(wmoItem.steps.flatMap((step) => [step.title, step.status])),
     displayTitle: (wmoItem: WmoItem) => {
       return (term: string) => {
@@ -328,12 +275,12 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
     },
   },
   {
-    apiName: 'FOCUS_STADSPAS',
+    stateKey: 'FOCUS_STADSPAS' as keyof AppState,
     getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
       const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
         return {
           ...stadspas,
-          title: 'Stadspas',
+          title: `Stadspas van ${stadspas.naam}`,
           link: {
             to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
             title: 'Stadspas',
@@ -342,15 +289,6 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       });
       return stadspassen || [];
     },
-    keywords: () => [
-      'saldo',
-      'kind',
-      'budget',
-      'tegoed',
-      'stadspas',
-      'stad',
-      'pas',
-    ],
     displayTitle: (stadspas: FocusStadspas) => {
       return (term: string) => {
         const segments = [`Stadspas van ${stadspas.naam}`];
@@ -363,7 +301,7 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
   getFocusConfig('FOCUS_BBZ'),
   getFocusConfig('FOCUS_AANVRAGEN'),
   {
-    apiName: 'BRP',
+    stateKey: 'BRP' as keyof AppState,
     getApiBaseItems: (apiContent: BRPData) => {
       const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
       const address = getFullAddress(apiContent.adres, true);
@@ -387,17 +325,13 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
       return [...identiteitsBewijzen, ...brpDataItems];
     },
     displayTitle: (item: Identiteitsbewijs | ApiBaseItem) => {
-      return (term: string) => {
-        if ('documentType' in item) {
-          return displayPath(term, [capitalizeFirstLetter(item.title)]);
-        }
-        return displayPath(term, [capitalizeFirstLetter(item.title)]);
-      };
+      return (term: string) =>
+        displayPath(term, [capitalizeFirstLetter(item.title)]);
     },
   },
   {
     isEnabled: FeatureToggle.financieleHulpActive,
-    apiName: 'FINANCIELE_HULP',
+    stateKey: 'FINANCIELE_HULP' as keyof AppState,
     getApiBaseItems: (
       apiContent: Omit<FinancieleHulp, 'notificationTriggers'>
     ) => {
@@ -420,13 +354,10 @@ export const apiSearchConfigs: Array<ApiSearchConfigEntry> = [
           });
       return deepLinks || [];
     },
-    keywords: () => [
-      'lening',
-      'fibu',
-      'schuldhulpregeling',
-      'regeling',
-      'krediet',
-      'budgetbeheer',
-    ],
   },
-];
+].map((apiConfig) => {
+  return {
+    ...API_SEARCH_CONFIG_DEFAULT,
+    ...apiConfig,
+  };
+});

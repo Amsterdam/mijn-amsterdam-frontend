@@ -18,13 +18,10 @@ import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
 // Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF because these services are based on
-// addresses that likely change whenever someone toggles between the private-commercial/privte profiles.
-const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
-  'HOME',
-  'AFVAL',
-  'AFVALPUNTEN',
-  'CMS_CONTENT',
-];
+// addresses that likely change whenever someone toggles between the private-commercial/private profiles.
+const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE: Array<
+  keyof Pick<AppState, 'MY_LOCATION' | 'AFVAL' | 'AFVALPUNTEN' | 'CMS_CONTENT'>
+> = ['MY_LOCATION', 'AFVAL', 'AFVALPUNTEN', 'CMS_CONTENT'];
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -192,4 +189,18 @@ export function useAppStateGetter() {
 
 export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
+}
+
+export function useAppStateReady() {
+  const appState = useAppStateGetter();
+  return useMemo(
+    () =>
+      Object.entries(appState).every(([appStateKey, state]) => {
+        return (
+          state.status !== 'PRISTINE' ||
+          (state.status === 'PRISTINE' && !state.isActive)
+        );
+      }),
+    [appState]
+  );
 }

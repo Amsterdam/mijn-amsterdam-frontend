@@ -24,7 +24,7 @@ import { fetchFOCUSTozo } from './focus/focus-tozo';
 import { fetchFOCUSBbz } from './focus/focus-bbz';
 import { fetchFinancieleHulp } from './financiele-hulp';
 import { fetchGenerated } from './generated';
-import { fetchHOME } from './home';
+import { fetchMyLocation } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
 import { createTipsRequestData, fetchTIPS } from './tips';
@@ -83,8 +83,12 @@ const VERGUNNINGEN = (sessionID: SessionID, req: Request) =>
   fetchVergunningen(sessionID, getPassthroughRequestHeaders(req));
 
 // Location, address, based services
-const HOME = (sessionID: SessionID, req: Request) =>
-  fetchHOME(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
+const MY_LOCATION = (sessionID: SessionID, req: Request) =>
+  fetchMyLocation(
+    sessionID,
+    getPassthroughRequestHeaders(req),
+    getProfileType(req)
+  );
 
 const AFVAL = (sessionID: SessionID, req: Request) =>
   fetchAFVAL(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
@@ -137,7 +141,7 @@ const SERVICES_INDEX = {
   FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
-  HOME,
+  MY_LOCATION,
   AFVAL,
   AFVALPUNTEN,
   BELASTINGEN,
@@ -164,7 +168,7 @@ type CommercialServices = Pick<
   | 'ERFPACHT'
   | 'NOTIFICATIONS'
   | 'CASES'
-  | 'HOME'
+  | 'MY_LOCATION'
   | 'KVK'
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
@@ -196,7 +200,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
-    HOME,
+    MY_LOCATION,
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
@@ -220,7 +224,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
-    HOME,
+    MY_LOCATION,
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
@@ -235,7 +239,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     ERFPACHT,
     NOTIFICATIONS,
     CASES,
-    HOME,
+    MY_LOCATION,
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,

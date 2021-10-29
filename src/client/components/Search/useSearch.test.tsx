@@ -1,7 +1,6 @@
 import Fuse from 'fuse.js';
 import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
 import { useRecoilValue } from 'recoil';
-import { FeatureToggle } from '../../../universal/config';
 import { appStateAtom } from '../../hooks';
 import { ApiBaseItem, ApiSearchConfig, apiSearchConfigs } from './searchConfig';
 import {
