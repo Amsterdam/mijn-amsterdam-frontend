@@ -12,10 +12,11 @@ import { HomeIconMarker } from './MyAreaMarker';
 import styles from './MyAreaDashboard.module.scss';
 
 export default function MyAreaDashboard() {
-  const { HOME } = useAppStateGetter();
+  const { MY_LOCATION } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const center =
-    HOME.content?.latlng || (DEFAULT_MAP_OPTIONS.center as LatLngLiteral);
+    MY_LOCATION.content?.latlng ||
+    (DEFAULT_MAP_OPTIONS.center as LatLngLiteral);
   return (
     <Map
       className={styles.DashboardMap}
@@ -28,18 +29,18 @@ export default function MyAreaDashboard() {
       }}
     >
       <BaseLayer />
-      {!!HOME.content?.address && center && (
+      {!!MY_LOCATION.content?.address && center && (
         <HomeIconMarker
           label={
-            HOME.content?.address
-              ? getFullAddress(HOME.content.address, true)
+            MY_LOCATION.content?.address
+              ? getFullAddress(MY_LOCATION.content.address, true)
               : ''
           }
           center={center}
           zoom={HOOD_ZOOM}
         />
       )}
-      {!HOME.content?.latlng && isLoading(HOME) && (
+      {!MY_LOCATION.content?.latlng && isLoading(MY_LOCATION) && (
         <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
       )}
     </Map>

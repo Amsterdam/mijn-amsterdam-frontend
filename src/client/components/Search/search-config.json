@@ -239,6 +239,7 @@
       "description": "Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.",
       "keywords": [
         "Mijn buurt",
+        "Mijn locatie",
         "straat",
         "adres",
         "kaart",
@@ -389,9 +390,104 @@
     }
   ],
   "apiSearchConfigs": {
-    "BURGERZAKEN": {
-      "keywords": [],
-      "keywordSourceProps": []
+    "FOCUS_AANVRAGEN": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_TOZO": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_TONK": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_BBZ": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "VERGUNNINGEN": {
+      "keywordsGeneratedFromProps": [
+        "caseType",
+        "title",
+        "status",
+        "decision",
+        "identifier",
+        "description"
+      ],
+      "keywords": [
+        "vergunningsaanvraag"
+      ],
+      "profileTypes": [
+        "private",
+        "private-commercial",
+        "commercial"
+      ]
+    },
+    "TOERISTISCHE_VERHUUR": {
+      "isEnabled": true,
+      "profileTypes": [
+        "private",
+        "private-commercial"
+      ],
+      "keywordsGeneratedFromProps": [
+        "caseType",
+        "title",
+        "status",
+        "decision",
+        "identifier"
+      ],
+      "keywords": [
+        "bed",
+        "breakfast",
+        "bed and breakfast",
+        "verhuur",
+        "vergunningsaanvraag"
+      ]
+    },
+    "WMO": {
+      "keyswordsGeneratedFromProps": [
+        "supplier",
+        "title",
+        "voorzieningsoortcode"
+      ]
+    },
+    "FOCUS_STADSPAS": {
+      "keywords": [
+        "saldo",
+        "kind",
+        "budget",
+        "tegoed",
+        "stadspas",
+        "stad",
+        "pas"
+      ]
+    },
+    "FINANCIELE_HULP": {
+      "keywords": [
+        "lening",
+        "fibu",
+        "schuldhulpregeling",
+        "regeling",
+        "krediet",
+        "budgetbeheer"
+      ]
     }
   }
 }

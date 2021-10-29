@@ -81,7 +81,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',
   MILIEUZONE: 'Milieuzone + actuele updates',
-  HOME: 'Uw locatie op de kaart',
+  MY_LOCATION: 'Uw locatie op de kaart',
   VERGUNNINGEN: 'Vergunningen + actuele updates',
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',

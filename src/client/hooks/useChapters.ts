@@ -29,7 +29,7 @@ export function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     TOERISTISCHE_VERHUUR,
-    HOME,
+    MY_LOCATION,
     KVK,
     FINANCIELE_HULP,
   }: AppState
@@ -93,7 +93,7 @@ export function isChapterActive(
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
-        !isLoading(HOME) &&
+        !isLoading(MY_LOCATION) &&
         isAmsterdam
       );
 
