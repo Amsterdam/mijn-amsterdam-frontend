@@ -19,3 +19,9 @@
 .LocationModalInner {
   height: 40rem;
 }
+
+.EvenementMelding_DateAndTime {
+  > * {
+    white-space: nowrap;
+  }
+}
