@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 import { IS_AP } from '../../universal/config';
 import {
@@ -274,4 +276,61 @@ export async function fetchCMSCONTENT(
   };
 
   return apiSuccesResult(cmsContent);
+}
+
+const searchFileCache = new FileCache({
+  name: 'search-config',
+  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+});
+
+export async function fetchSearchConfig(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
+  query?: Record<string, string>
+) {
+  const config = searchFileCache.getKey('CONFIG');
+
+  if (config.content && query?.cache !== 'renew') {
+    return Promise.resolve(config);
+  }
+  let dataRequest;
+
+  if (!IS_AP) {
+    dataRequest = new Promise((resolve, reject) => {
+      fs.readFile(
+        path.join(
+          __dirname,
+          '../../client/components/Search/search-config.json'
+        ),
+        (err, content) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(JSON.parse(content.toString()));
+        }
+      );
+    });
+  } else {
+    dataRequest = requestData<any>(
+      getApiConfig('SEARCH_CONFIG'),
+      sessionID,
+      passthroughRequestHeaders
+    );
+  }
+
+  return dataRequest
+    .then((apiData) => {
+      searchFileCache.setKey('CONFIG', apiData);
+      searchFileCache.save();
+      return apiData;
+    })
+    .catch((error) => {
+      const staleApiData = searchFileCache.getKeyStale('CONFIG');
+
+      if (staleApiData) {
+        return Promise.resolve(staleApiData);
+      }
+
+      throw error;
+    });
 }

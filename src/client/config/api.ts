@@ -61,6 +61,7 @@ export const BFFApiUrls = {
   SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
   SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
+  SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/search/config`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {

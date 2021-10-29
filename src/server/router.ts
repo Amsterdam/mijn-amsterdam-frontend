@@ -5,7 +5,11 @@ import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { axiosRequest } from './helpers/source-api-request';
-import { fetchBRP, fetchCMSCONTENT, loadClusterDatasets } from './services';
+import {
+  fetchCMSCONTENT,
+  fetchSearchConfig,
+  loadClusterDatasets,
+} from './services';
 import {
   loadFeatureDetail,
   loadPolylineFeatures,
@@ -152,7 +156,7 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchMaintenanceNotificationsActual(
+      const response = await fetchMaintenanceNotificationsActual(
         sessionID,
         getPassthroughRequestHeaders(req),
         queryParams(req)
@@ -177,7 +181,7 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
         })
       );
       res.json(rs.data);
-    } catch (error) {
+    } catch (error: any) {
       res.status(error?.response?.status || 500);
       res.json(error.message || 'Error requesting api data');
     }
@@ -185,3 +189,21 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
 
   next();
 });
+
+router.get(
+  BffEndpoints.SEARCH_CONFIG,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const sessionID = res.locals.sessionID;
+    try {
+      const response = await fetchSearchConfig(
+        sessionID,
+        getPassthroughRequestHeaders(req),
+        queryParams(req)
+      );
+      res.json(response);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+    next();
+  }
+);

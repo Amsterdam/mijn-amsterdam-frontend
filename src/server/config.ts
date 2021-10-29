@@ -72,6 +72,7 @@ export type SourceApiKey =
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'KVK'
+  | 'SEARCH_CONFIG'
   | 'FINANCIELE_HULP';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
@@ -114,12 +115,12 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
   },
   CMS_CONTENT_FOOTER: {
-    url: `https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
+    url: 'https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data',
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: `https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
+    url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
     cacheTimeout: ONE_HOUR_MS,
   },
   TIPS: {
@@ -146,6 +147,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.financieleHulpActive,
   },
+  SEARCH_CONFIG: {
+    // url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
+    url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/cypress.json',
+  },
 };
 
 export const ApiUrls = Object.entries(ApiConfig).reduce(
@@ -160,16 +165,18 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
 }
 
 export const BffEndpoints = {
-  SERVICES_TIPS: `/services/tips`,
-  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: `/services/tips/requestdataoverview`,
-  SERVICES_ALL: `/services/all`,
-  SERVICES_STREAM: `/services/stream`,
-  HEALTH: `/status/health`,
-  CMS_CONTENT: `/public/services/cms`,
-  CMS_MAINTENANCE_NOTIFICATIONS: `/public/services/cms/maintenance-notifications`,
-  MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
-  CACHE_OVERVIEW: `/status/cache`,
-  API_DIRECT: `/direct/:apiName`,
+  SERVICES_TIPS: '/services/tips',
+  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
+  SERVICES_ALL: '/services/all',
+  SERVICES_STREAM: '/services/stream',
+  HEALTH: '/status/health',
+  CMS_CONTENT: '/public/services/cms',
+  CMS_MAINTENANCE_NOTIFICATIONS:
+    '/public/services/cms/maintenance-notifications',
+  MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
+  CACHE_OVERVIEW: '/status/cache',
+  API_DIRECT: '/direct/:apiName',
+  SEARCH_CONFIG: '/search/config',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
