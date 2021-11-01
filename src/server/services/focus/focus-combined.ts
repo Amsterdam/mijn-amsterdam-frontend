@@ -1,5 +1,6 @@
+import memoize from 'memoizee';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../config';
+import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 
 export interface FocusDocument {
@@ -63,7 +64,7 @@ export interface FocusCombinedSourceResponse {
   stadspassaldo: FocusStadspasSaldo;
 }
 
-export async function fetchFOCUSCombined(
+export async function fetchAndTransformFOCUSCombined(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -76,3 +77,10 @@ export async function fetchFOCUSCombined(
     passthroughRequestHeaders
   );
 }
+
+export const fetchFOCUSCombined = memoize(fetchAndTransformFOCUSCombined, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args: any[]) {
+    return args[0] + JSON.stringify(args[1]);
+  },
+});

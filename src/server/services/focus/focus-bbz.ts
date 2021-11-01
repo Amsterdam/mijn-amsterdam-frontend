@@ -1,5 +1,4 @@
 import { AppRoutes } from '../../../universal/config/routes';
-import memoize from 'memoizee';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -24,7 +23,6 @@ import {
 import { bbzDocumentLabelSet } from './focus-bbz-content';
 import { FocusItem, FocusItemStep } from './focus-types';
 import { FeatureToggle } from '../../../universal/config/app';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config';
 
 export function createBBZResult(
   bbzdocumenten: FocusCombinedSourceResponse['tozodocumenten']
@@ -93,7 +91,7 @@ export function createBBZResult(
   return apiSuccesResult(bbzItems);
 }
 
-async function fetchAndTransformFOCUSBbz(
+export async function fetchFOCUSBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -117,13 +115,6 @@ async function fetchAndTransformFOCUSBbz(
 
   return response;
 }
-
-export const fetchFOCUSBbz = memoize(fetchAndTransformFOCUSBbz, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    return args[0] + JSON.stringify(args[1]);
-  },
-});
 
 export async function fetchFOCUSBbzGenerated(
   sessionID: SessionID,
