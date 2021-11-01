@@ -80,7 +80,6 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
       isActive: true,
     },
     TIPS: GenericLinks.TIPS,
-    UITLEG: GenericLinks.UITLEG,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     KREFIA: {

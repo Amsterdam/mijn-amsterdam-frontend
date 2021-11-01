@@ -2,21 +2,32 @@
 
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
-  padding: 3.2rem 0 4rem 0;
+  padding: 2rem 0 4rem 0;
 }
 
 .Title {
-  margin: 0 0 2rem 3.2rem;
+  margin: 0;
+}
 
-  @include mq-phone() {
-    margin-left: 1rem;
+.Header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1.8rem 2rem 1.8rem;
+  padding: 0 0 1.5rem 0;
+  border-bottom: 0.1rem solid $color-neutral-grey3;
+}
+
+.GeneralInfoLink {
+  @include select(Button_Icon) {
+    width: 2.2rem;
+    height: 2.2rem;
   }
 }
 
 .Links {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 3.2rem;
+  padding-left: 2rem;
 
   @include mq-tablet() {
     display: block;
@@ -54,9 +65,9 @@
 .LoadingPlaceholder {
   width: 100%;
   display: grid;
-  grid-template-columns: 4rem .2rem 12rem;
-  grid-template-rows: 4rem .5rem 4rem;
-  margin-left: 3rem;
+  grid-template-columns: 4rem 0.2rem 12rem;
+  grid-template-rows: 4rem 0.5rem 4rem;
+  margin-left: 2rem;
 
   @include mq-phone() {
     margin-left: 1rem;
@@ -81,8 +92,4 @@
   > :nth-child(4) {
     margin-top: 1rem;
   }
-}
-
-.LastVisitedChapter {
-
 }

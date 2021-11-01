@@ -7,6 +7,7 @@ import Heading, { HeadingTagName } from '../Heading/Heading';
 export interface InfoDetailGroupProps {
   children: ComponentChildren;
   label?: string;
+  className?: string;
 }
 
 export interface InfoDetailProps {
@@ -17,9 +18,13 @@ export interface InfoDetailProps {
   className?: string;
 }
 
-export function InfoDetailGroup({ children, label }: InfoDetailGroupProps) {
+export function InfoDetailGroup({
+  children,
+  label,
+  className,
+}: InfoDetailGroupProps) {
   return (
-    <div className={styles.InfoDetailGroup}>
+    <div className={classnames(styles.InfoDetailGroup, className)}>
       {!!label && <h3 className={styles.Label}>{label}</h3>}
       <div className={styles.InfoDetailGroupContent}>{children}</div>
     </div>
