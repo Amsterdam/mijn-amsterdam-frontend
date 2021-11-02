@@ -130,7 +130,11 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
   },
-  ERFPACHT: { url: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht` },
+  ERFPACHT: {
+    url: `${BFF_MS_API_BASE_URL}/erfpacht${
+      FeatureToggle.erfpachtV2EndpointActive ? '/v2' : ''
+    }/check-erfpacht`,
+  },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
