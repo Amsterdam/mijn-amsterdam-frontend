@@ -26,8 +26,8 @@ const MAX_TIPS_VISIBLE = 3;
 
 function sortAndFormatChapters(items: ChapterMenuItem[]) {
   const shortNameItems = items
-    .sort((a, b) => a.title.localeCompare(b.title))
-    .map((item) => item.title.substring(0, 3));
+    .map((item) => item.title.substring(0, 3))
+    .sort((a, b) => a.localeCompare(b));
   return shortNameItems.join();
 }
 
@@ -53,18 +53,16 @@ export default function Dashboard() {
   const profileType = useProfileTypeValue();
 
   useEffect(() => {
-    const chapterEventName = sortAndFormatChapters(myChapterItems);
-    if (
-      myChapterItems.length &&
-      !isMyChaptersLoading &&
-      chapterEventName !== prevChapters.current
-    ) {
-      prevChapters.current = chapterEventName;
-      trackItemPresentation(
-        'Tonen themas overzicht',
-        chapterEventName,
-        profileType
-      );
+    if (myChapterItems.length && !isMyChaptersLoading) {
+      const chapterEventName = sortAndFormatChapters(myChapterItems);
+      if (chapterEventName !== prevChapters.current) {
+        prevChapters.current = chapterEventName;
+        trackItemPresentation(
+          'Tonen themas overzicht',
+          chapterEventName,
+          profileType
+        );
+      }
     }
   }, [myChapterItems, profileType, isMyChaptersLoading]);
   return (

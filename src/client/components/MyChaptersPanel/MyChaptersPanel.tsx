@@ -27,7 +27,6 @@ export default function MyChaptersPanel({
   items = [],
   isLoading = true,
   trackCategory,
-  ...otherProps
 }: MyChaptersPanelProps) {
   const profileType = useProfileTypeValue();
   // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B started request with data returned from B.
@@ -42,7 +41,7 @@ export default function MyChaptersPanel({
   });
 
   return (
-    <Panel {...otherProps} className={styles.MyChaptersPanel}>
+    <Panel className={styles.MyChaptersPanel}>
       <div className={styles.Header}>
         <Heading size="large" className={styles.Title}>
           {title}
