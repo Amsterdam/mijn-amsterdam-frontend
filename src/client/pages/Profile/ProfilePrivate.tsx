@@ -65,7 +65,8 @@ export default function Profile() {
     if (
       FeatureToggle.residentCountActive &&
       typeof residentCount === 'number' &&
-      BRP.content?.adres
+      BRP.content?.adres &&
+      BRP.content?.adres.adresType === 'woon'
     ) {
       const brpContent = {
         ...BRP.content,

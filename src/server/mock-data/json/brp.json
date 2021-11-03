@@ -11,7 +11,8 @@
     "landnaam": "Nederland",
     "woonplaatsNaam": "Amsterdam",
     "begindatumVerblijf": "1967-01-01",
-    "einddatumVerblijf": "1967-01-01"
+    "einddatumVerblijf": "1967-01-01",
+    "adresType": "correspondentie"
   },
   "adresHistorisch": [
     {
@@ -24,7 +25,8 @@
       "postcode": "1098 NK",
       "straatnaam": "Ampèrestraat",
       "woonplaatsNaam": "Amsterdam",
-      "landnaam": "Nederland"
+      "landnaam": "Nederland",
+      "adresType": "woon"
     },
     {
       "begindatumVerblijf": "1990-01-01",
@@ -36,7 +38,8 @@
       "postcode": "1098 AA",
       "straatnaam": "Middenweg",
       "woonplaatsNaam": "Amsterdam",
-      "landnaam": "Nederland"
+      "landnaam": "Nederland",
+      "adresType": "woon"
     }
   ],
   "persoon": {
