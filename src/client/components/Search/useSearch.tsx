@@ -181,10 +181,6 @@ export const searchConfigAtom = atom<Fuse<SearchEntry> | null>({
   default: null,
 });
 
-export function useSearch() {
-  return useRecoilState(searchConfigAtom);
-}
-
 export function useStaticSearchEntries() {
   const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
   const profileType = useProfileTypeValue();
@@ -196,6 +192,7 @@ export function useStaticSearchEntries() {
     ) {
       const staticEntries: SearchEntry[] =
         remoteSearchConfig.contents.staticSearchEntries;
+
       return staticEntries.filter((indexEntry) => {
         const isEnabled =
           'isEnabled' in indexEntry ? indexEntry.isEnabled : true;
@@ -238,14 +235,17 @@ export function useSearchIndex() {
   const isIndexed = useRef(false);
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
-  const [, setSearchConfig] = useSearch();
+  const [searchState, setSearchConfig] = useRecoilState(searchConfigAtom);
 
   useEffect(() => {
-    if (!!staticSearchEntries && !!dynamicSearchEntries && !isIndexed.current) {
+    if (
+      (!!staticSearchEntries || !!dynamicSearchEntries) &&
+      !isIndexed.current
+    ) {
       isIndexed.current = true;
 
       const fuseInstance = new Fuse(
-        [...staticSearchEntries, ...dynamicSearchEntries],
+        [...(staticSearchEntries || []), ...(dynamicSearchEntries || [])],
         options
       );
 
@@ -258,6 +258,8 @@ export function useSearchIndex() {
     isIndexed.current = false;
     setSearchConfig(() => null);
   });
+
+  return searchState;
 }
 
 export const searchTermAtom = atom<string>({
@@ -282,9 +284,16 @@ const amsterdamNLQuery = selectorFamily({
     },
 });
 
+export const requestID = atom<number>({
+  key: 'searchTermrequestID',
+  default: 0,
+});
+
 export const searchConfigRemote = selector<SearchConfigRemote>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
+    // Subscribe to updates for requestID
+    get(requestID); // Update the requestID state to refetch this loadable.
     const response: SearchConfigRemote = await fetch(
       BFFApiUrls.SEARCH_CONFIGURATION
     ).then((response) => response.json());
