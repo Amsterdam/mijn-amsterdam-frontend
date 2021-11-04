@@ -161,6 +161,7 @@ export type FocusBbzStepType =
   | FocusDocumentStepType
   | 'beslistermijn'
   | 'brief'
+  | 'verklaring'
   | 'voorschot';
 
 export type FocusTozoStepType =

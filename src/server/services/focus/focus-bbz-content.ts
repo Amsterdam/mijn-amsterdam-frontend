@@ -146,6 +146,45 @@ const buitenBehandelingLabels: FocusStepContent = {
     )} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
+const inkomstenVerklaringLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: Wij hebben een wijziging van uw inkomsten ontvangen`,
+    description: (document) =>
+      `Wij hebben een wijziging van uw inkomsten voor ${
+        document.productTitle
+      } ontvangen op ${defaultDateTimeFormat(document.datePublished)}`,
+  },
+  status: stepLabels.inkomstenwijziging,
+  description: (document) =>
+    `
+    <p>Wij hebben een wijziging van uw inkomsten voor ${
+      document.productTitle
+    } ontvangen op ${defaultDateTimeFormat(document.datePublished)}</p>
+    <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>`,
+};
+
+const terugvorderingLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: U moet (een deel van) uw uitkering terugbetalen.`,
+    description: (document) =>
+      `U moet (een deel van) uw ${productName(
+        document,
+        false
+      )} terugbetalen. (besluit: ${defaultDateFormat(
+        document.datePublished
+      )}).`,
+  },
+  status: stepLabels.terugvorderingsbesluit,
+  description: (document) =>
+    `<p>
+    U moet (een deel van) uw ${productName(document, false)} terugbetalen.
+    Bekijk de brief voor meer details.
+    </p>
+    <p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+};
+
 export const bbzDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusBbzLabelSet
@@ -300,5 +339,31 @@ export const bbzDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'besluit',
     decision: 'afwijzing',
+  },
+  '851': {
+    omschrijving: 'BBZ2 Inkomsten Verklaring',
+    documentTitle: 'Wijziging inkomsten Bbz',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Bbz',
+    decision: 'afwijzing',
+  },
+  '176363': {
+    omschrijving: 'Transitie Bbz Terugvordering via batch',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'besluit',
+    labels: terugvorderingLabels,
+    product: 'Bbz',
+    productSpecific: 'uitkering',
+    decision: 'toekenning',
+  },
+  '176364': {
+    omschrijving: 'Transitie Bbz Terugvordering',
+    documentTitle: 'Besluit terugvordering',
+    stepType: 'besluit',
+    labels: terugvorderingLabels,
+    product: 'Bbz',
+    productSpecific: 'uitkering',
+    decision: 'toekenning',
   },
 };
