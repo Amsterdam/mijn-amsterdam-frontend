@@ -1,0 +1,493 @@
+{
+  "staticSearchEntries": [
+    {
+      "url": "/",
+      "displayTitle": "Home - Dashboard",
+      "description": "Dashboard pagina met overzicht van wat u hebt op Mijn Amsterdam.",
+      "keywords": [
+        "Home",
+        "Dashboard",
+        "Start",
+        "Updates",
+        "Nieuws",
+        "Zaken",
+        "Lopende zaken",
+        "Recente zaken",
+        "Melding",
+        "Lopende aanvragen",
+        "Aanvragen",
+        "Themas"
+      ]
+    },
+    {
+      "url": "/uitleg",
+      "displayTitle": "Informatie over Mijn Amsterdam",
+      "description": "Op dit moment staat deze informatie in Mijn Amsterdam",
+      "keywords": [
+        "Dit ziet u in Mijn Amsterdam",
+        "Uitleg",
+        "About",
+        "Over",
+        "Inhoud"
+      ]
+    },
+    {
+      "url": "/burgerzaken",
+      "displayTitle": "Burgerzaken",
+      "description": "Informatie over uw officiële documenten, zoals uw paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan ziet u hier de aankondiging.",
+      "keywords": [
+        "Burgerzaken",
+        "Paspoort",
+        "Passport",
+        "Huwelijk",
+        "Huwelijksakte",
+        "Trouwen",
+        "Partnerschap",
+        "Akte",
+        "Aktes",
+        "ID/id",
+        "ID kaart",
+        "ID bewijs",
+        "Identiteitsbewijs",
+        "Identiteitskaart",
+        "Reis document",
+        "Document"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/zorg-en-ondersteuning",
+      "displayTitle": "Zorg en ondersteuning",
+      "description": "Uw regelingen en hulpmiddelen vanuit de Wmo.",
+      "keywords": [
+        "Zorg en ondersteuning",
+        "Zorg",
+        "Scootmobiel",
+        "Rollator",
+        "Thuishulp",
+        "Hulp in huis",
+        "Thuiszorg",
+        "WMO",
+        "Zorgvoorziening",
+        "Voorziening",
+        "Zorgproduct",
+        "Recht op zorg",
+        "Aanvraag",
+        "Zorgaanvraag",
+        "Taxi"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/stadspas",
+      "displayTitle": "Stadspas",
+      "description": "Informatie over uw eigen Stadspas.",
+      "keywords": [
+        "Stadspas",
+        "Groene stip",
+        "Blauwe ruit",
+        "Gratis pas",
+        "Saldo checken",
+        "stadspasnummer",
+        "pasnummer",
+        "pas nummer",
+        "einddatum stadspas",
+        "besluit aanvraag",
+        "Geld ",
+        "Afschrijvingen",
+        "Gratis pas",
+        "Pas",
+        "Transacties",
+        "Hoeveel heb ik uitgegeven?",
+        "Tegoed",
+        "Bonus",
+        "Kind"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/inkomen",
+      "displayTitle": "Inkomen",
+      "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
+      "keywords": [
+        "Inkomen",
+        "Geld",
+        "Uitkering",
+        "bijstandsuitkering",
+        "Bijstand",
+        "Werkloos",
+        "Aanvragen",
+        "Vakantiegeld",
+        "Tozo",
+        "Tonk",
+        "Bijzondere bijstand",
+        "BBZ",
+        "Specificatie"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/inkomen/specificaties/uitkering",
+      "displayTitle": "Uikeringsspecificaties",
+      "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
+      "keywords": [
+        "Uikeringsspecificaties",
+        "Specificaties",
+        "Uitkering"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/inkomen/specificaties/jaaropgave",
+      "displayTitle": "Jaaropgaves",
+      "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
+      "keywords": [
+        "Jaaropgave",
+        "Jaaropgaves",
+        "Jaaropgaven",
+        "Specificaties",
+        "Uitkering"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/overzicht-updates/1",
+      "displayTitle": "Meldingen",
+      "description": "Alle belangrijke meldingen",
+      "keywords": [
+        "Actueel overzicht",
+        "Nieuws",
+        "Updates",
+        "Status",
+        "Betalen",
+        "Overzicht"
+      ]
+    },
+    {
+      "url": "/persoonlijke-gegevens",
+      "displayTitle": "Persoonlijke gegevens (BRP)",
+      "description": "Gegevens uit de BRP. In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat.",
+      "keywords": [
+        "Mijn gegevens",
+        "BRP",
+        "Uittreksel",
+        "bevolkingsregister",
+        "Basisregistratie",
+        "gegevens",
+        "profiel",
+        "adressen",
+        "woningen",
+        "partners",
+        "huwelijk",
+        "wijzigen",
+        "adreswijziging",
+        "verhuizing",
+        "aangifte",
+        "verhuizen",
+        "kinderen",
+        "bewoners",
+        "aantal bewoners",
+        "ingeschreven",
+        "adres",
+        "naam"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "/gegevens-handelsregister",
+      "displayTitle": "Gegevens handelsregister",
+      "description": "Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister van de Kamer van Koophandel. In dat register staan onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.",
+      "keywords": [
+        "Handelsregister",
+        "Zakelijk",
+        "gegevens",
+        "bedrijf",
+        "zzp",
+        "kvk",
+        "kamer van koophandel",
+        "handelsregister",
+        "bedrijfsgegevens",
+        "Onderneming",
+        "Mijn gegevens",
+        "Vestigingen",
+        "Handelsnamen",
+        "Hoofdvestiging",
+        "Functionarissen"
+      ],
+      "profileTypes": [
+        "private-commercial",
+        "commercial"
+      ]
+    },
+    {
+      "url": "/buurt",
+      "displayTitle": "Mijn buurt",
+      "description": "Een overzicht van gemeentelijke informatie rond uw eigen woning of bedrijf.",
+      "keywords": [
+        "Mijn buurt",
+        "Mijn locatie",
+        "straat",
+        "adres",
+        "kaart",
+        "map",
+        "Omgeving"
+      ]
+    },
+    {
+      "url": "/overzicht-tips",
+      "displayTitle": "(Persoonlijke) Tips",
+      "description": "Tips over voorzieningen en activiteiten in Amsterdam.",
+      "keywords": [
+        "Tips"
+      ]
+    },
+    {
+      "url": "/afval",
+      "displayTitle": "Afval",
+      "description": " Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.",
+      "keywords": [
+        "Afval",
+        "Containers",
+        "Afval containers",
+        "Afvalcontainers",
+        "Grofvuilen ophalen",
+        "Ophaaldagen",
+        "Afvalbrengplaats",
+        "Milieustraat",
+        "Afvalstraat",
+        "Afval wegbrngen",
+        "Afval Inlveren",
+        "Verf",
+        "Puin storten",
+        "Dichtbij afval"
+      ]
+    },
+    {
+      "url": "/toegankelijkheidsverklaring",
+      "displayTitle": "Toegankelijkheid",
+      "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
+      "keywords": [
+        "Toegankelijkheidsverklaring",
+        "A11Y",
+        "WCAG",
+        "Blind",
+        "Slechtziend",
+        "Beperking",
+        "Accessibility"
+      ]
+    },
+    {
+      "url": "/vergunningen",
+      "displayTitle": "Vergunningen",
+      "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
+      "keywords": [
+        "Vergunningen",
+        "Aanvragen",
+        "Vergunning"
+      ]
+    },
+    {
+      "url": "/toeristische-verhuur",
+      "displayTitle": "Toeristische verhuur",
+      "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
+      "keywords": [
+        "Toeristische verhuur",
+        "vergunning airbnb",
+        "vergunning B&B",
+        "vergunning Bed and Breakfast",
+        "vergunning bnb",
+        "Airbnb",
+        "Verhuur",
+        "Vakantie verhuur",
+        "Vakantieverhuur",
+        "Vakantiewoning",
+        "Kamer verhuren",
+        "Toeristen",
+        "Bed Breakfast",
+        "B&B",
+        "Vergunning",
+        "Afmelden",
+        "Verhuur plannen",
+        "Cancel verhuur",
+        "Afmelden",
+        "Landelijk registratienummer"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
+      "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
+      "displayTitle": "Belastingen",
+      "description": "Een overzicht van de belastingen.",
+      "keywords": [
+        "Belastingen",
+        "Incasso",
+        "Belasting",
+        "Betalen",
+        "Gemeente belasting",
+        "iDeal betalen",
+        "Boete",
+        "Aanslagen"
+      ]
+    },
+    {
+      "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
+      "displayTitle": "Erfpacht",
+      "description": "Een overzicht van de erfpacht.",
+      "keywords": [
+        "Erfpacht",
+        "Canon",
+        "Afkopen",
+        "Betalen"
+      ]
+    },
+    {
+      "url": "https://ontheffingen.amsterdam.nl/publiek/aanvragen",
+      "displayTitle": "Milieuzone",
+      "description": "Een overzicht van milieuzone.",
+      "keywords": [
+        "Milieuzone",
+        "Ontheffing"
+      ]
+    },
+    {
+      "url": "/financiele-hulp",
+      "displayTitle": "Financiële hulp",
+      "description": "Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).",
+      "keywords": [
+        "Financiële hulp",
+        "Financiele hulp",
+        "Financieel",
+        "lening",
+        "schulden",
+        "schuldhulp",
+        "schuldhulpregeling",
+        "krediet",
+        "krefia",
+        "fibu",
+        "kredietbank",
+        "budgetbeheer"
+      ],
+      "profileTypes": [
+        "private",
+        "private-commercial"
+      ]
+    }
+  ],
+  "apiSearchConfigs": {
+    "FOCUS_AANVRAGEN": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_TOZO": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_TONK": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "FOCUS_BBZ": {
+      "keywordsGeneratedFromProps": [
+        "title",
+        "status",
+        "decision",
+        "productTitle"
+      ]
+    },
+    "VERGUNNINGEN": {
+      "keywordsGeneratedFromProps": [
+        "caseType",
+        "title",
+        "status",
+        "decision",
+        "identifier",
+        "description"
+      ],
+      "keywords": [
+        "vergunningsaanvraag"
+      ],
+      "profileTypes": [
+        "private",
+        "private-commercial",
+        "commercial"
+      ]
+    },
+    "TOERISTISCHE_VERHUUR": {
+      "isEnabled": true,
+      "profileTypes": [
+        "private",
+        "private-commercial"
+      ],
+      "keywordsGeneratedFromProps": [
+        "caseType",
+        "title",
+        "status",
+        "decision",
+        "identifier"
+      ],
+      "keywords": [
+        "bed",
+        "breakfast",
+        "bed and breakfast",
+        "verhuur",
+        "vergunningsaanvraag"
+      ]
+    },
+    "WMO": {
+      "keyswordsGeneratedFromProps": [
+        "supplier",
+        "title",
+        "voorzieningsoortcode"
+      ]
+    },
+    "FOCUS_STADSPAS": {
+      "keywords": [
+        "saldo",
+        "kind",
+        "budget",
+        "tegoed",
+        "stadspas",
+        "stad",
+        "pas"
+      ]
+    },
+    "FINANCIELE_HULP": {
+      "keywords": [
+        "lening",
+        "fibu",
+        "schuldhulpregeling",
+        "regeling",
+        "krediet",
+        "budgetbeheer"
+      ]
+    }
+  }
+}
