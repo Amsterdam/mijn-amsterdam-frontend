@@ -175,7 +175,7 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   CACHE_OVERVIEW: '/status/cache',
   API_DIRECT: '/direct/:apiName',
-  SEARCH_CONFIG: '/search/config',
+  SEARCH_CONFIG: '/services/search-config',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
