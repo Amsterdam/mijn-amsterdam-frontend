@@ -31,6 +31,7 @@ export const FeatureToggle = {
   isSearchEnabled: true,
   meldingenBuurtActive: !IS_PRODUCTION,
   inkomenBBZActive: !IS_PRODUCTION,
+  erfpachtV2EndpointActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
