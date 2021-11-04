@@ -25,6 +25,25 @@ import {
 export const router = express.Router();
 
 router.get(
+  BffEndpoints.SEARCH_CONFIG,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const sessionID = res.locals.sessionID;
+    Sentry.captureMessage('Searchconfigendpointreached');
+    try {
+      const response = await fetchSearchConfig(
+        sessionID,
+        getPassthroughRequestHeaders(req),
+        queryParams(req)
+      );
+      res.json(response);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+    next();
+  }
+);
+
+router.get(
   BffEndpoints.SERVICES_ALL,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -189,21 +208,3 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
 
   next();
 });
-
-router.get(
-  BffEndpoints.SEARCH_CONFIG,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const sessionID = res.locals.sessionID;
-    try {
-      const response = await fetchSearchConfig(
-        sessionID,
-        getPassthroughRequestHeaders(req),
-        queryParams(req)
-      );
-      res.json(response);
-    } catch (error) {
-      Sentry.captureException(error);
-    }
-    next();
-  }
-);
