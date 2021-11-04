@@ -292,8 +292,8 @@ export const requestID = atom<number>({
 export const searchConfigRemote = selector<SearchConfigRemote>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
-    // Subscribe to updates for requestID
-    get(requestID); // Update the requestID state to refetch this loadable.
+    // Subscribe to updates ffrom requestID to re-evaluate selector to reload the SEARCH_CONFIG
+    get(requestID);
     const response: SearchConfigRemote = await fetch(
       BFFApiUrls.SEARCH_CONFIGURATION
     ).then((response) => response.json());
