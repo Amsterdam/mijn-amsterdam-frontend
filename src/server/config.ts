@@ -148,8 +148,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.financieleHulpActive,
   },
   SEARCH_CONFIG: {
-    // url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
-    url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/cypress.json',
+    url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
   },
 };
 
