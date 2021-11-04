@@ -28,7 +28,6 @@ router.get(
   BffEndpoints.SEARCH_CONFIG,
   async (req: Request, res: Response, next: NextFunction) => {
     const sessionID = res.locals.sessionID;
-    Sentry.captureMessage('Searchconfigendpointreached');
     try {
       const response = await fetchSearchConfig(
         sessionID,
@@ -36,10 +35,10 @@ router.get(
         queryParams(req)
       );
       res.json(response);
+      next();
     } catch (error) {
-      Sentry.captureException(error);
+      next(error);
     }
-    next();
   }
 );
 
@@ -49,10 +48,10 @@ router.get(
     try {
       const response = await loadServicesAll(req, res);
       res.json(response);
+      next();
     } catch (error) {
-      Sentry.captureException(error);
+      next(error);
     }
-    next();
   }
 );
 
@@ -164,10 +163,10 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
       queryParams(req)
     );
     res.json(response);
+    next();
   } catch (error) {
-    Sentry.captureException(error);
+    next(error);
   }
-  next();
 });
 
 router.get(
@@ -181,10 +180,10 @@ router.get(
         queryParams(req)
       );
       res.json(response);
+      next();
     } catch (error) {
-      Sentry.captureException(error);
+      next(error);
     }
-    next();
   }
 );
 
