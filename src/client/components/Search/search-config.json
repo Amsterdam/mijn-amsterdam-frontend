@@ -208,6 +208,20 @@
       ]
     },
     {
+      "url": "/persoonlijke-gegevens",
+      "displayTitle": "Aantal ingeschreven bewoners op mijn adres",
+      "description": "Hoeveel personen zijn er ingeschreven op mijn adres.",
+      "keywords": [
+        "Aantal",
+        "bewoners",
+        "ingeschreven",
+        "hoeveel"
+      ],
+      "profileTypes": [
+        "private"
+      ]
+    },
+    {
       "url": "/gegevens-handelsregister",
       "displayTitle": "Gegevens handelsregister",
       "description": "Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister van de Kamer van Koophandel. In dat register staan onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer.",
