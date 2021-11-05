@@ -11,7 +11,7 @@ import {
   useRecoilValueLoadable,
 } from 'recoil';
 import { pick, uniqueArray } from '../../../universal/helpers';
-import { isError } from '../../../universal/helpers/api';
+import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
@@ -289,15 +289,16 @@ export const requestID = atom<number>({
   default: 0,
 });
 
-export const searchConfigRemote = selector<SearchConfigRemote>({
+export const searchConfigRemote = selector<SearchConfigRemote | null>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
     // Subscribe to updates ffrom requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
-    const response: SearchConfigRemote = await fetch(
+    const response: ApiResponse<SearchConfigRemote> = await fetch(
       BFFApiUrls.SEARCH_CONFIGURATION
     ).then((response) => response.json());
-    return response;
+
+    return response.content;
   },
 });
 
