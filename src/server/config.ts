@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { FeatureToggle, API_BASE_PATH } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 import https from 'https';
+import fs from 'fs';
 
 export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
 export const DEV_USER_TYPE_HEADER: string = 'x-user-type';
@@ -155,7 +156,8 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      rejectUnauthorized: false,
+      cert: fs.readFileSync(String(process.env.BFF_SERVER_CLIENT_CERT)),
+      key: fs.readFileSync(String(process.env.BFF_SERVER_CLIENT_KEY)),
     }),
   },
 };
