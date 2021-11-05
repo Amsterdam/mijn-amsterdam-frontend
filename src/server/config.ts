@@ -156,11 +156,11 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      ca: fs
+      cert: fs
         .readFileSync(process.env.BFF_SERVER_CLIENT_CERT as string)
         .toString(),
-      key: fs
-        .readFileSync(process.env.BFF_SERVER_CLIENT_KEY as string)
+      ca: fs
+        .readFileSync(process.env.BFF_SERVER_CLIENT_CERT as string)
         .toString(),
     }),
   },
