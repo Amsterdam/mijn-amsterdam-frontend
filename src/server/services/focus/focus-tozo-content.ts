@@ -115,7 +115,11 @@ const toekennenLabels: FocusStepContent = {
         U hebt recht op ${productName(document)}. Bekijk de brief
         voor meer details.
       </p>
-      `,
+      ${
+        document.productSpecific !== 'lening'
+          ? "<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel='external noopener noreferrer' class='inline' href='https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/'>Kijk dan bij 'Wijziging of inkomsten doorgeven'</a></p>"
+          : ''
+      }`,
 };
 
 const afwijzenLabels: FocusStepContent = {
