@@ -30,7 +30,7 @@ import { fetchMILIEUZONE } from './milieuzone';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchWMO } from './wmo';
+import { fetchWmo } from './wmo';
 
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -70,7 +70,7 @@ const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_BBZ = callService(fetchFOCUSBbz);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
 
-const WMO = callService(fetchWMO);
+const WMO = callService(fetchWmo);
 
 const TOERISTISCHE_VERHUUR = (sessionID: SessionID, req: Request) =>
   fetchToeristischeVerhuur(
