@@ -30,10 +30,10 @@ export const AppRoutes: Record<string, string> = {
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',
-  'VERGUNNINGEN/DETAIL': '/vergunningen/detail/:id',
+  'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR':
-    '/toeristische-verhuur/vakantieverhuur/:id',
+    '/toeristische-verhuur/vakantieverhuur/:title/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
     '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
