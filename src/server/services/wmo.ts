@@ -26,7 +26,7 @@ export interface WmoApiItem {
   deliveryType: 'PGB' | 'ZIN' | '';
 }
 
-interface WmoApiData {
+export interface WmoApiData {
   content?: WmoApiItem[] | null;
   status: 'OK' | 'ERROR';
   message?: string;
