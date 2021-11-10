@@ -5,6 +5,7 @@ import {
 } from '../../server/services/vergunningen/vergunningen';
 import { CaseType } from '../types/vergunningen';
 import { isDateInPast, monthsFromNow } from './date';
+import { EvenementMelding } from '../../server/services/vergunningen/vergunningen';
 
 export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
@@ -59,6 +60,10 @@ export const isExpireable = (caseType: CaseType) =>
   [CaseType.GPK, CaseType.BZB, CaseType.BZP].includes(caseType);
 
 export const showDocuments = (caseType: CaseType) =>
-  ![CaseType.GPP, CaseType.GPK, CaseType.Omzettingsvergunning].includes(
-    caseType
-  );
+  ![
+    CaseType.GPP,
+    CaseType.GPK,
+    CaseType.Omzettingsvergunning,
+    CaseType.EvenementMelding,
+    CaseType.EvenementVergunning,
+  ].includes(caseType);
