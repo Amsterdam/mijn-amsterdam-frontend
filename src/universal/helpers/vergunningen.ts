@@ -5,7 +5,6 @@ import {
 } from '../../server/services/vergunningen/vergunningen';
 import { CaseType } from '../types/vergunningen';
 import { isDateInPast, monthsFromNow } from './date';
-import { EvenementMelding } from '../../server/services/vergunningen/vergunningen';
 
 export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
