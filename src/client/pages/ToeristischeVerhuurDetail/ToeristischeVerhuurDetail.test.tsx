@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+import slug from 'slugme';
 
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
@@ -52,6 +53,9 @@ describe('<ToeristischVerhuurDetail />', () => {
   const routeEntry = generatePath(
     AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
     {
+      title: slug(verhuur?.title, {
+        lower: true,
+      }),
       id: verhuur?.id,
     }
   );

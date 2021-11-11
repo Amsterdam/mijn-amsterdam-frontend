@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 import { Chapters } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
@@ -250,6 +251,9 @@ export async function fetchVergunningen(
         link: {
           to: options?.appRoute
             ? generatePath(appRoute, {
+                title: slug(vergunning.caseType, {
+                  lower: true,
+                }),
                 id: vergunning.id,
               })
             : '/',
