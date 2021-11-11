@@ -1,6 +1,7 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
@@ -234,6 +235,16 @@ async function fetchAndTransformToeristischeVerhuur(
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
           case CaseType.VakantieverhuurVergunningaanvraag:
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+          case CaseType.VakantieVerhuur:
+            return generatePath(
+              AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
+              {
+                title: slug(vergunning.title, {
+                  lower: true,
+                }),
+                id: vergunning.id,
+              }
+            );
           default:
             return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
         }
@@ -378,6 +389,9 @@ export function createToeristischeVerhuurNotification(
     const ctaLinkToDetail = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
       {
+        title: slug(item.title, {
+          lower: true,
+        }),
         id: item.id,
       }
     );

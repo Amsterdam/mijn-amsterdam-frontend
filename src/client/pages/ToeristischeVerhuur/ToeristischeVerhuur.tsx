@@ -51,7 +51,6 @@ const BB_VERGUNNING_DISCLAIMER =
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
-
   const hasVergunningenVakantieVerhuur = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
