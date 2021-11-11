@@ -1233,7 +1233,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Vorige woonadressen
+           Vorige adressen
         </button>
       </h3>
       <div
@@ -2551,7 +2551,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Vorige woonadressen
+           Vorige adressen
         </button>
       </h3>
       <div
@@ -4272,7 +4272,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
           >
             Chevron-Right.svg
           </svg>
-           Vorige woonadressen
+           Vorige adressen
         </button>
       </h3>
       <div
