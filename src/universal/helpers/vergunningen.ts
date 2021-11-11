@@ -59,6 +59,10 @@ export const isExpireable = (caseType: CaseType) =>
   [CaseType.GPK, CaseType.BZB, CaseType.BZP].includes(caseType);
 
 export const showDocuments = (caseType: CaseType) =>
-  ![CaseType.GPP, CaseType.GPK, CaseType.Omzettingsvergunning].includes(
-    caseType
-  );
+  ![
+    CaseType.GPP,
+    CaseType.GPK,
+    CaseType.Omzettingsvergunning,
+    CaseType.EvenementMelding,
+    CaseType.EvenementVergunning,
+  ].includes(caseType);
