@@ -10,7 +10,7 @@ Object {
         "id": "vergunning-4187042164-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/4187042164",
+          "to": "/vergunningen/evenement-melding/4187042164",
         },
         "title": "Vergunningsaanvraag Evenement melding Z/000/000003",
       },
@@ -20,7 +20,7 @@ Object {
         "id": "vergunning-3446432146-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3446432146",
+          "to": "/vergunningen/evenement-melding/3446432146",
         },
         "title": "Vergunningsaanvraag Evenement melding Z/000/000002",
       },
@@ -30,7 +30,7 @@ Object {
         "id": "vergunning-830781715-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/830781715",
+          "to": "/vergunningen/evenement-vergunning/830781715",
         },
         "title": "Vergunningsaanvraag Evenement vergunning Z/111/000002",
       },
@@ -40,7 +40,7 @@ Object {
         "id": "vergunning-3073404626-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3073404626",
+          "to": "/vergunningen/evenement-vergunning/3073404626",
         },
         "title": "Vergunningsaanvraag Evenement vergunning Z/111/000003",
       },
@@ -50,7 +50,7 @@ Object {
         "id": "vergunning-4081922197-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/4081922197",
+          "to": "/vergunningen/evenement-vergunning/4081922197",
         },
         "title": "Vergunningsaanvraag Evenement vergunning Z/111/000004",
       },
@@ -60,7 +60,7 @@ Object {
         "id": "vergunning-2331715774-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/2331715774",
+          "to": "/vergunningen/omzettingsvergunning/2331715774",
         },
         "title": "Vergunningsaanvraag Omzettingsvergunning Z/000/000001.b",
       },
@@ -70,7 +70,7 @@ Object {
         "id": "vergunning-913567999-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/913567999",
+          "to": "/vergunningen/omzettingsvergunning/913567999",
         },
         "title": "Vergunningsaanvraag Omzettingsvergunning Z/000/000001.c",
       },
@@ -80,7 +80,7 @@ Object {
         "id": "vergunning-3664304440-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3664304440",
+          "to": "/vergunningen/omzettingsvergunning/3664304440",
         },
         "title": "Vergunningsaanvraag Omzettingsvergunning Z/000/000001.d",
       },
@@ -90,7 +90,7 @@ Object {
         "id": "vergunning-3105266233-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3105266233",
+          "to": "/vergunningen/e-rvv-tvm/3105266233",
         },
         "title": "Vergunningsaanvraag E-RVV - TVM Z/000/000003",
       },
@@ -100,7 +100,7 @@ Object {
         "id": "vergunning-1221166450-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/1221166450",
+          "to": "/vergunningen/gpk/1221166450",
         },
         "title": "Vergunningsaanvraag GPK Z/000/000008",
       },
@@ -110,7 +110,7 @@ Object {
         "id": "vergunning-260384730-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/260384730",
+          "to": "/vergunningen/gpp/260384730",
         },
         "title": "Vergunningsaanvraag GPP Z/000/000009",
       },
@@ -120,7 +120,7 @@ Object {
         "id": "vergunning-333728632-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/333728632",
+          "to": "/vergunningen/omzettingsvergunning/333728632",
         },
         "title": "Vergunningsaanvraag Omzettingsvergunning Z/000/000001",
       },
@@ -130,7 +130,7 @@ Object {
         "id": "vergunning-3490008162-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3490008162",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/3490008162",
         },
         "title": "Vergunningsaanvraag Parkeerontheffingen Blauwe zone particulieren Z/21/1500000",
       },
@@ -140,7 +140,7 @@ Object {
         "id": "vergunning-3577730497-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3577730497",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
         },
         "title": "Vergunningsaanvraag Parkeerontheffingen Blauwe zone bedrijven Z/21/1600000",
       },
@@ -150,7 +150,7 @@ Object {
         "id": "vergunning-3607535691-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3607535691",
+          "to": "/vergunningen/tvm-rvv-object/3607535691",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597204",
       },
@@ -160,7 +160,7 @@ Object {
         "id": "vergunning-3276988108-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3276988108",
+          "to": "/vergunningen/tvm-rvv-object/3276988108",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597203",
       },
@@ -170,7 +170,7 @@ Object {
         "id": "vergunning-2804017741-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/2804017741",
+          "to": "/vergunningen/tvm-rvv-object/2804017741",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597202",
       },
@@ -180,7 +180,7 @@ Object {
         "id": "vergunning-1324498924-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/1324498924",
+          "to": "/vergunningen/tvm-rvv-object/1324498924",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597199",
       },
@@ -190,7 +190,7 @@ Object {
         "id": "vergunning-3452781026-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3452781026",
+          "to": "/vergunningen/tvm-rvv-object/3452781026",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597197",
       },
@@ -200,7 +200,7 @@ Object {
         "id": "vergunning-2872491299-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/2872491299",
+          "to": "/vergunningen/tvm-rvv-object/2872491299",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597196",
       },
@@ -210,7 +210,7 @@ Object {
         "id": "vergunning-3490212832-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3490212832",
+          "to": "/vergunningen/tvm-rvv-object/3490212832",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597195",
       },
@@ -220,7 +220,7 @@ Object {
         "id": "vergunning-2909923105-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/2909923105",
+          "to": "/vergunningen/tvm-rvv-object/2909923105",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597194",
       },
@@ -230,7 +230,7 @@ Object {
         "id": "vergunning-3706696166-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3706696166",
+          "to": "/vergunningen/tvm-rvv-object/3706696166",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1597193",
       },
@@ -240,7 +240,7 @@ Object {
         "id": "vergunning-976898368-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/976898368",
+          "to": "/vergunningen/tvm-rvv-object/976898368",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1595179",
       },
@@ -250,7 +250,7 @@ Object {
         "id": "vergunning-2594256166-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/2594256166",
+          "to": "/vergunningen/tvm-rvv-object/2594256166",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1592761",
       },
@@ -260,7 +260,7 @@ Object {
         "id": "vergunning-3468041544-case",
         "link": Object {
           "title": "Bekijk hoe het met uw aanvraag staat",
-          "to": "/vergunningen/detail/3468041544",
+          "to": "/vergunningen/tvm-rvv-object/3468041544",
         },
         "title": "Vergunningsaanvraag TVM - RVV - Object Z/20/1592521",
       },
@@ -273,7 +273,7 @@ Object {
         "id": "vergunning-4187042164-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/4187042164",
+          "to": "/vergunningen/evenement-melding/4187042164",
         },
         "title": "Evenement melding in behandeling",
       },
@@ -284,7 +284,7 @@ Object {
         "id": "vergunning-3446432146-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3446432146",
+          "to": "/vergunningen/evenement-melding/3446432146",
         },
         "title": "Evenement melding afgehandeld",
       },
@@ -295,7 +295,7 @@ Object {
         "id": "vergunning-830781715-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/830781715",
+          "to": "/vergunningen/evenement-vergunning/830781715",
         },
         "title": "Evenement vergunning afgehandeld",
       },
@@ -306,7 +306,7 @@ Object {
         "id": "vergunning-3073404626-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3073404626",
+          "to": "/vergunningen/evenement-vergunning/3073404626",
         },
         "title": "Evenement vergunning ontvangen",
       },
@@ -317,7 +317,7 @@ Object {
         "id": "vergunning-4081922197-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/4081922197",
+          "to": "/vergunningen/evenement-vergunning/4081922197",
         },
         "title": "Evenement vergunning afgehandeld",
       },
@@ -328,7 +328,7 @@ Object {
         "id": "vergunning-2331715774-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/2331715774",
+          "to": "/vergunningen/omzettingsvergunning/2331715774",
         },
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) in behandeling",
       },
@@ -339,7 +339,7 @@ Object {
         "id": "vergunning-913567999-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/913567999",
+          "to": "/vergunningen/omzettingsvergunning/913567999",
         },
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
@@ -350,7 +350,7 @@ Object {
         "id": "vergunning-3664304440-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3664304440",
+          "to": "/vergunningen/omzettingsvergunning/3664304440",
         },
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) afgehandeld",
       },
@@ -361,7 +361,7 @@ Object {
         "id": "vergunning-3105266233-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3105266233",
+          "to": "/vergunningen/e-rvv-tvm/3105266233",
         },
         "title": "Uw e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling",
       },
@@ -383,7 +383,7 @@ Object {
         "id": "vergunning-260384730-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/260384730",
+          "to": "/vergunningen/gpp/260384730",
         },
         "title": "Uw GPP is in behandeling",
       },
@@ -394,7 +394,7 @@ Object {
         "id": "vergunning-333728632-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/333728632",
+          "to": "/vergunningen/omzettingsvergunning/333728632",
         },
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
@@ -416,7 +416,7 @@ Object {
         "id": "vergunning-3577730497-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3577730497",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
         },
         "title": "Parkeerontheffingen Blauwe zone bedrijven afgehandeld",
       },
@@ -427,7 +427,7 @@ Object {
         "id": "vergunning-3607535691-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3607535691",
+          "to": "/vergunningen/tvm-rvv-object/3607535691",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
@@ -438,7 +438,7 @@ Object {
         "id": "vergunning-3276988108-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3276988108",
+          "to": "/vergunningen/tvm-rvv-object/3276988108",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
@@ -449,7 +449,7 @@ Object {
         "id": "vergunning-2804017741-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/2804017741",
+          "to": "/vergunningen/tvm-rvv-object/2804017741",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
@@ -460,7 +460,7 @@ Object {
         "id": "vergunning-1324498924-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/1324498924",
+          "to": "/vergunningen/tvm-rvv-object/1324498924",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
@@ -471,7 +471,7 @@ Object {
         "id": "vergunning-3452781026-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3452781026",
+          "to": "/vergunningen/tvm-rvv-object/3452781026",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -482,7 +482,7 @@ Object {
         "id": "vergunning-2872491299-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/2872491299",
+          "to": "/vergunningen/tvm-rvv-object/2872491299",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -493,7 +493,7 @@ Object {
         "id": "vergunning-3490212832-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3490212832",
+          "to": "/vergunningen/tvm-rvv-object/3490212832",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -504,7 +504,7 @@ Object {
         "id": "vergunning-2909923105-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/2909923105",
+          "to": "/vergunningen/tvm-rvv-object/2909923105",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -515,7 +515,7 @@ Object {
         "id": "vergunning-3706696166-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3706696166",
+          "to": "/vergunningen/tvm-rvv-object/3706696166",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -526,7 +526,7 @@ Object {
         "id": "vergunning-976898368-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/976898368",
+          "to": "/vergunningen/tvm-rvv-object/976898368",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
@@ -537,7 +537,7 @@ Object {
         "id": "vergunning-2594256166-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/2594256166",
+          "to": "/vergunningen/tvm-rvv-object/2594256166",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
@@ -548,7 +548,7 @@ Object {
         "id": "vergunning-3468041544-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/detail/3468041544",
+          "to": "/vergunningen/tvm-rvv-object/3468041544",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
