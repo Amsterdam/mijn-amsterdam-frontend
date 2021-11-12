@@ -5,9 +5,6 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
 # production
 build
 build-bff
@@ -21,16 +18,5 @@ build-bff
 .env.development.local
 .env.test.local
 .env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-/results
-/cypress/results
-/cypress/videos
-/cypress/screenshots
-/.vscode/settings.json
-screenshots
-/scrape-personas.js
 
 .eslintcache
