@@ -15,7 +15,6 @@ const testState: any = {
         id: 'wmo-item-1',
         title: 'Wmo item 1',
         supplier: 'Mantelzorg B.V',
-        supplierUrl: '',
         isActual: true,
         link: {
           to: 'http://example.org/ding',

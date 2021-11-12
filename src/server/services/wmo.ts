@@ -1,5 +1,5 @@
 import { generatePath } from 'react-router';
-import slug from 'slugme';
+import { hash } from '../../universal/helpers/utils';
 import { AppRoutes } from '../../universal/config';
 import {
   capitalizeFirstLetter,
@@ -11,36 +11,28 @@ import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
-// Example data
-// [
-//   {
-//     Omschrijving: 'ambulante ondersteuning',
-//     Wet: 1,
-//     Actueel: true,
-//     Volume: 1,
-//     Eenheid: '82',
-//     Frequentie: 3,
-//     Leveringsvorm: 'ZIN',
-//     Omvang: '1 stuks per vier weken',
-//     Leverancier: 'Leger des Heils',
-//     Checkdatum: '2019-10-09T00:00:00',
-//     Voorzieningsoortcode: 'AO5',
-//     Voorzieningcode: '021',
-//     Aanvraagdatum: '2018-11-20T00:00:00',
-//     Beschikkingsdatum: '2018-11-22T00:00:00',
-//     VoorzieningIngangsdatum: '2018-11-20T00:00:00',
-//     VoorzieningEinddatum: '2019-11-20T00:00:00',
-//     Levering: {
-//       Opdrachtdatum: '2018-11-22T00:00:00',
-//       Leverancier: 'Z00118',
-//       IngangsdatumGeldigheid: '2018-11-20T00:00:00',
-//       EinddatumGeldigheid: '2019-11-20T00:00:00',
-//       StartdatumLeverancier: '2018-11-20T00:00:00',
-//       EinddatumLeverancier: null,
-//     },
-//   },
-// ];
+// From Mijn Amsterdam WMONed api
+export interface WmoApiItem {
+  title: string;
+  dateStart: string;
+  dateEnd: string;
+  supplier: string;
+  isActual: boolean;
+  dateDecision: string;
+  serviceDateStart: string;
+  serviceDateEnd: string;
+  serviceOrderDate: string;
+  itemTypeCode: string;
+  deliveryType: 'PGB' | 'ZIN' | '';
+}
 
+export interface WmoApiData {
+  content?: WmoApiItem[] | null;
+  status: 'OK' | 'ERROR';
+  message?: string;
+}
+
+// To Mijn Amsterdam frontend
 export interface WmoItemStep {
   id: string;
   status: string;
@@ -56,11 +48,10 @@ export interface WmoItem {
   id: string;
   title: string; // Omschrijving
   supplier: string; // Leverancier
-  supplierUrl: string; // Leverancier url
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
   steps: WmoItemStep[];
-  voorzieningsoortcode: WmoApiItem['Voorzieningsoortcode'];
+  voorzieningsoortcode: WmoApiItem['itemTypeCode'];
 }
 
 function isDateInFuture(dateStr: string | Date, compareDate: Date) {
@@ -69,7 +60,7 @@ function isDateInFuture(dateStr: string | Date, compareDate: Date) {
 
 type TextPartContent = string;
 type TextPartContentFormatter = (
-  data: WmoSourceData,
+  data: WmoApiItem,
   today: Date
 ) => TextPartContent;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
@@ -86,16 +77,8 @@ const Labels: {
       status: string;
       datePublished: TextPartContents;
       description: TextPartContents;
-      isChecked: (
-        stepIndex: number,
-        data: WmoSourceData,
-        today: Date
-      ) => boolean;
-      isActive: (
-        stepIndex: number,
-        data: WmoSourceData,
-        today: Date
-      ) => boolean;
+      isChecked: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
+      isActive: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
     }>;
   };
 } = {
@@ -127,7 +110,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -137,7 +120,7 @@ const Labels: {
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
             }
           </p>`,
       },
@@ -193,7 +176,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -204,7 +187,7 @@ const Labels: {
                   ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                   : `Uw recht op ${
                       data.title
-                    } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                    } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
               }
             </p>
             ${
@@ -256,7 +239,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => data.dateFinish || '',
+        datePublished: (data) => data.dateEnd || '',
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -267,7 +250,7 @@ const Labels: {
                   ? `Op deze datum vervalt uw recht op ${data.title}.`
                   : `Uw recht op ${
                       data.title
-                    } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                    } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
               }
             </p>
 
@@ -311,9 +294,9 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, sourceData: WmoSourceData) => true,
-        isActive: (stepIndex, sourceData: WmoSourceData) => false,
-        description: (data: WmoSourceData) => {
+        isChecked: (stepIndex, sourceData: WmoApiItem) => true,
+        isActive: (stepIndex, sourceData: WmoApiItem) => false,
+        description: (data: WmoApiItem) => {
           return `
               <p>
                 U hebt recht op ${data.title} per ${defaultDateFormat(
@@ -353,12 +336,12 @@ const Labels: {
       {
         status: 'Levering gestart',
         datePublished: () => '',
-        isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+        isChecked: (stepIndex, sourceData: WmoApiItem, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, today),
-        isActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+          isDateInPast(sourceData.dateEnd, today),
+        isActive: (stepIndex, sourceData: WmoApiItem, today: Date) =>
           sourceData.isActual === true &&
-          isDateInFuture(sourceData.dateFinish, today),
+          isDateInFuture(sourceData.dateEnd, today),
         description: (data) =>
           `<p>
             ${data.supplier} is gestart met het leveren van ${data.title}.
@@ -367,10 +350,10 @@ const Labels: {
       {
         status: 'Levering gestopt',
         datePublished: () => '',
-        isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+        isChecked: (stepIndex, sourceData: WmoApiItem, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, today),
-        isActive: (stepIndex, sourceData: WmoSourceData) => false,
+          isDateInPast(sourceData.dateEnd, today),
+        isActive: (stepIndex, sourceData: WmoApiItem) => false,
         description: (data) =>
           `<p>
             ${
@@ -384,19 +367,19 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: (data, today) =>
-          isDateInFuture(data.dateFinish, today) ? '' : data.dateFinish,
+          isDateInFuture(data.dateEnd, today) ? '' : data.dateEnd,
         isChecked: () => false,
-        isActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+        isActive: (stepIndex, sourceData: WmoApiItem, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, today),
+          isDateInPast(sourceData.dateEnd, today),
         description: (data, today) =>
           `<p>
             ${
-              data.isActual && isDateInFuture(data.dateFinish, today)
+              data.isActual && isDateInFuture(data.dateEnd, today)
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
             }
           </p>`,
       },
@@ -432,15 +415,12 @@ const Labels: {
         status: 'Opdracht gegeven',
         datePublished: () => '',
         isChecked: (stepIndex, data, today: Date) =>
-          data.isActual === false ||
-          isDateInPast(data.dateStartServiceDelivery, today),
+          data.isActual === false || isDateInPast(data.serviceDateStart, today),
         isActive: (stepIndex, data, today: Date) =>
-          data.isActual
-            ? isDateInFuture(data.dateStartServiceDelivery, today)
-            : false,
+          data.isActual ? isDateInFuture(data.serviceDateStart, today) : false,
         description: (data) =>
           `<p>
-            De gemeente heeft opdracht gegeven aan ${data.serviceDeliverySupplier} om een ${data.title} aan u te leveren.
+            De gemeente heeft opdracht gegeven aan ${data.supplier} om een ${data.title} aan u te leveren.
           </p>`,
       },
       {
@@ -448,17 +428,15 @@ const Labels: {
         datePublished: () => '',
         isChecked: (stepIndex, data) => data.isActual === true,
         isActive: (stepIndex, data, today: Date) =>
-          data.isActual
-            ? isDateInPast(data.dateStartServiceDelivery, today)
-            : false,
+          data.isActual ? isDateInPast(data.serviceDateStart, today) : false,
         description: (data) =>
           `<p>
-            ${data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
+            ${data.supplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
           </p>`,
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -468,7 +446,7 @@ const Labels: {
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
             }
           </p>`,
       },
@@ -503,15 +481,12 @@ const Labels: {
         status: 'Opdracht gegeven',
         datePublished: () => '',
         isChecked: (stepIndex, data, today: Date) =>
-          data.isActual === false ||
-          isDateInPast(data.dateStartServiceDelivery, today),
+          data.isActual === false || isDateInPast(data.serviceDateStart, today),
         isActive: (stepIndex, data, today: Date) =>
-          data.isActual
-            ? isDateInFuture(data.dateStartServiceDelivery, today)
-            : false,
+          data.isActual ? isDateInFuture(data.serviceDateStart, today) : false,
         description: (data) =>
           `<p>
-            De gemeente heeft opdracht gegeven aan ${data.serviceDeliverySupplier} om de aanpassingen aan uw woning uit
+            De gemeente heeft opdracht gegeven aan ${data.supplier} om de aanpassingen aan uw woning uit
             te voeren.
           </p>`,
       },
@@ -520,18 +495,16 @@ const Labels: {
         datePublished: () => '',
         isChecked: (stepIndex, data) => data.isActual === true,
         isActive: (stepIndex, data, today: Date) =>
-          data.isActual
-            ? isDateInPast(data.dateStartServiceDelivery, today)
-            : false,
+          data.isActual ? isDateInPast(data.serviceDateStart, today) : false,
         description: (data) =>
           `<p>
-            ${data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
+            ${data.supplier} heeft aan ons doorgegeven dat de
             aanpassing aan uw woning is uitgevoerd.
           </p>`,
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -541,7 +514,7 @@ const Labels: {
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
+                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
             }
           </p>`,
       },
@@ -551,7 +524,7 @@ const Labels: {
 
 function parseLabelContent(
   text: TextPartContents,
-  data: WmoSourceData,
+  data: WmoApiItem,
   today: Date
 ): string {
   let rText = text || '';
@@ -564,7 +537,7 @@ function parseLabelContent(
 }
 
 function formatWmoStatusLineItems(
-  wmoItem: WmoSourceData,
+  wmoItem: WmoApiItem,
   today: Date
 ): WmoItemStep[] {
   const labelData = Object.values(Labels).find((labelData, index) => {
@@ -620,134 +593,48 @@ function formatWmoStatusLineItems(
   return [];
 }
 
-interface WmoSourceData {
-  title: string;
-  dateStart: string;
-  dateFinish: string;
-  supplier: string;
-  isActual: boolean;
-  dateDecision: string;
-  dateStartServiceDelivery: string;
-  dateFinishServiceDelivery: string;
-  dateRequestOrderStart: string;
-  serviceDeliverySupplier: string;
-  itemTypeCode: string;
-  deliveryType: 'PGB' | 'ZIN' | '';
-}
-
-interface WmoApiLevering {
-  Opdrachtdatum: string;
-  Leverancier: string;
-  IngangsdatumGeldigheid: string;
-  EinddatumGeldigheid: string | null;
-  StartdatumLeverancier: string;
-  EinddatumLeverancier: string | null;
-}
-
-export interface WmoApiItem {
-  Omschrijving: string;
-  Wet: number;
-  Actueel: boolean;
-  Volume: number;
-  Eenheid: string;
-  Frequentie: number;
-  Leveringsvorm: 'ZIN' | 'PGB' | '';
-  Omvang: string;
-  Leverancier: string;
-  Checkdatum: string | null;
-  Voorzieningsoortcode: string;
-  Voorzieningcode: string;
-  Aanvraagdatum: string;
-  Beschikkingsdatum: string;
-  VoorzieningIngangsdatum: string;
-  VoorzieningEinddatum: string | null;
-  Levering: WmoApiLevering | null;
-}
-
-export type WMOSourceData = WmoApiItem[];
-export type WMOData = WmoItem[];
-
-export function transformWMOResponse(
-  responseData: WMOSourceData,
+export function transformWmoResponse(
+  responseData: WmoApiItem[],
   today: Date
-): WMOData {
-  if (!Array.isArray(responseData)) {
-    return [];
-  }
+): WmoItem[] {
   const items = responseData
-    .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
-    .map((item, index) => {
-      const {
-        Omschrijving: title,
-        VoorzieningIngangsdatum: dateStart,
-        VoorzieningEinddatum: dateFinish,
-        Leverancier: supplier,
-        Actueel: isActual,
-        Beschikkingsdatum: dateDecision,
-        Voorzieningsoortcode: itemTypeCode,
-        Leveringsvorm: deliveryType,
-      } = item;
-
-      const {
-        StartdatumLeverancier: dateStartServiceDelivery,
-        EinddatumLeverancier: dateFinishServiceDelivery,
-        Opdrachtdatum: dateRequestOrderStart,
-      } = (item.Levering || {}) as WmoApiLevering;
-
-      const id = slug(`${title}-${index}`).toLowerCase();
-
-      const steps: WmoItem['steps'] = formatWmoStatusLineItems(
-        {
-          title,
-          dateStart,
-          dateFinish: dateFinish || '',
-          supplier,
-          isActual,
-          dateDecision,
-          dateStartServiceDelivery,
-          dateFinishServiceDelivery: dateFinishServiceDelivery || '',
-          dateRequestOrderStart,
-          serviceDeliverySupplier: supplier || 'Onbekend',
-          itemTypeCode,
-          deliveryType,
-        },
-        today
-      );
-
+    .sort(dateSort('dateStart', 'desc'))
+    .map((wmoItem, index) => {
+      const id = hash(`${wmoItem.title}-${index}`).toLowerCase();
+      const steps: WmoItem['steps'] = formatWmoStatusLineItems(wmoItem, today);
       const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
         id,
       });
 
       return {
         id,
-        title: capitalizeFirstLetter(title),
-        dateStart: defaultDateFormat(dateStart),
-        dateFinish: dateFinish ? defaultDateFormat(dateFinish) : '',
-        supplier,
-        // TODO: See if we can get a url to the suppliers websites
-        supplierUrl: '',
-        isActual,
+        title: capitalizeFirstLetter(wmoItem.title),
+        dateStart: defaultDateFormat(wmoItem.dateStart),
+        dateEnd: wmoItem.dateEnd ? defaultDateFormat(wmoItem.dateEnd) : '',
+        supplier: wmoItem.supplier,
+        isActual: wmoItem.isActual,
         link: {
           title: 'Meer informatie',
           to: route,
         },
         steps,
         // This field is added specifically for the Tips api.
-        voorzieningsoortcode: itemTypeCode,
+        voorzieningsoortcode: wmoItem.itemTypeCode,
       };
     });
 
   return items;
 }
 
-export function fetchWMO(
+export function fetchWmo(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<WMOData>(
+  return requestData<WmoItem[]>(
     getApiConfig('WMO', {
-      transformResponse: (responseData: WMOSourceData) =>
-        transformWMOResponse(responseData, new Date()),
+      transformResponse: (responseData: WmoApiData) => {
+        return transformWmoResponse(responseData.content || [], new Date());
+      },
     }),
     sessionID,
     passthroughRequestHeaders
