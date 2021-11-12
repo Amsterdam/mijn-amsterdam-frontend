@@ -327,7 +327,7 @@ describe('Search hooks and helpers', () => {
   test('useSearchIndex <success>', async () => {
     jest
       .spyOn(global, 'fetch')
-      .mockImplementation(setupFetchStub(remoteConfig) as any);
+      .mockImplementation(setupFetchStub({ content: remoteConfig }) as any);
 
     const wrapper = ({ children }: { children: ReactChildren }) => (
       <RecoilRoot
@@ -369,7 +369,7 @@ describe('Search hooks and helpers', () => {
             ],
             "url": "/vergunningen/detail/1726584505",
           },
-          "refIndex": 20,
+          "refIndex": 21,
         },
       ]
     `);

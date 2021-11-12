@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
