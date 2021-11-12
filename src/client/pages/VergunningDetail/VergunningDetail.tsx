@@ -23,16 +23,13 @@ import { BZB } from './BZB';
 import styles from './VergunningDetail.module.scss';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { EvenementVergunning } from './EvenementVergunning';
+import { showDocuments } from '../../../universal/helpers/vergunningen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const Vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
-  const showDocuments =
-    Vergunning?.caseType !== CaseType.GPP &&
-    Vergunning?.caseType !== CaseType.GPK &&
-    !!Vergunning?.documentsUrl;
   return (
     <DetailPage>
       <PageHeading
@@ -84,7 +81,10 @@ export default function VergunningDetail() {
             {Vergunning.caseType === CaseType.BZB && (
               <BZB vergunning={Vergunning} />
             )}
-            {showDocuments && <DocumentDetails vergunning={Vergunning} />}
+            {showDocuments(Vergunning?.caseType) &&
+              !!Vergunning?.documentsUrl && (
+                <DocumentDetails vergunning={Vergunning} />
+              )}
           </>
         )}
       </PageContent>

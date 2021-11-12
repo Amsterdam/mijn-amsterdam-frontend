@@ -1,10 +1,10 @@
-import { transformWMOResponse, WMOSourceData } from './wmo';
+import { transformWmoResponse, WmoApiData } from './wmo';
 import wmoData from '../mock-data/json/wmo.json';
 
-const testData = wmoData as WMOSourceData;
+const testData = wmoData as WmoApiData;
 
 it('Should format WMO data correctly', () => {
   expect(
-    transformWMOResponse(testData, new Date(2019, 8, 20))
+    transformWmoResponse(testData.content || [], new Date(2019, 8, 20))
   ).toMatchSnapshot();
 });

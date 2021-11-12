@@ -4,6 +4,7 @@ exports[`BRP data api + transformation should transform the source data 1`] = `
 Object {
   "adres": Object {
     "_adresSleutel": "xxxcasdasfada",
+    "adresType": "correspondentie",
     "begindatumVerblijf": "1967-01-01",
     "einddatumVerblijf": "1967-01-01",
     "huisletter": null,
@@ -17,6 +18,7 @@ Object {
   },
   "adresHistorisch": Array [
     Object {
+      "adresType": "woon",
       "begindatumVerblijf": "2005-09-01",
       "einddatumVerblijf": "2012-08-01",
       "huisletter": null,
@@ -29,6 +31,7 @@ Object {
       "woonplaatsNaam": "Amsterdam",
     },
     Object {
+      "adresType": "woon",
       "begindatumVerblijf": "1990-01-01",
       "einddatumVerblijf": "2005-09-01",
       "huisletter": null,

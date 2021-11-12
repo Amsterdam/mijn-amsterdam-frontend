@@ -67,7 +67,7 @@ describe('<Search />', () => {
                     status: 'Ontvangen',
                     description: 'Amstel 1 GPK aanvraag',
                     link: {
-                      to: '/vergunningen/detail/1726584505',
+                      to: '/vergunningen/gpk/1726584505',
                       title: 'Bekijk hoe het met uw aanvraag staat',
                     },
                   },
