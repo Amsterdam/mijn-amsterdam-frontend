@@ -7,7 +7,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import GarbageInformation from './GarbageInformation';
 
-//const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
+//const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
 const restafval = {
   title: 'Gooi zakken in container',
@@ -52,7 +52,7 @@ const testState: any = {
   },
   AFVAL: { status: 'OK', content: [restafval, grofvuil] },
   AFVALPUNTEN: { status: 'OK', content: { centers: [afvalpunt] } },
-  HOME: { status: 'OK', content: { latlng: { lat: 'x', lng: 'y' } } },
+  MY_LOCATION: { status: 'OK', content: { latlng: { lat: 'x', lng: 'y' } } },
 };
 
 function initializeState(snapshot: MutableSnapshot) {

@@ -78,7 +78,7 @@ export default function MyArea({
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
-  const { HOME } = useAppStateGetter();
+  const { MY_LOCATION } = useAppStateGetter();
   const termReplace = useTermReplacement();
 
   // Params passed by query will override all other options
@@ -103,12 +103,12 @@ export default function MyArea({
       center = customConfig.center;
     } else if (centerMarkerLatLng) {
       center = centerMarkerLatLng;
-    } else if (HOME.content?.latlng) {
-      center = HOME.content?.latlng;
+    } else if (MY_LOCATION.content?.latlng) {
+      center = MY_LOCATION.content?.latlng;
     }
 
     return center;
-  }, [centerMarkerLatLng, HOME.content, customConfig.center]);
+  }, [centerMarkerLatLng, MY_LOCATION.content, customConfig.center]);
 
   const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
     useMemo(() => {
@@ -159,11 +159,11 @@ export default function MyArea({
           >
             <AttributionToggle />
             {!centerMarkerLatLng &&
-              HOME.content?.address &&
-              HOME.content?.latlng && (
+              MY_LOCATION.content?.address &&
+              MY_LOCATION.content?.latlng && (
                 <HomeIconMarker
-                  label={getFullAddress(HOME.content.address, true)}
-                  center={HOME.content?.latlng}
+                  label={getFullAddress(MY_LOCATION.content.address, true)}
+                  center={MY_LOCATION.content?.latlng}
                   zoom={zoom}
                 />
               )}
@@ -196,11 +196,11 @@ export default function MyArea({
                       />
                     )}
                     {!centerMarkerLatLng &&
-                      HOME.content?.address &&
-                      HOME.content?.latlng && (
+                      MY_LOCATION.content?.address &&
+                      MY_LOCATION.content?.latlng && (
                         <HomeControlButton
                           zoom={zoom}
-                          latlng={HOME.content.latlng}
+                          latlng={MY_LOCATION.content.latlng}
                         />
                       )}
                     <Zoom />
@@ -217,11 +217,11 @@ export default function MyArea({
                       />
                     )}
                     {!centerMarkerLatLng &&
-                      HOME.content?.address &&
-                      HOME.content?.latlng && (
+                      MY_LOCATION.content?.address &&
+                      MY_LOCATION.content?.latlng && (
                         <HomeControlButton
                           zoom={zoom}
-                          latlng={HOME.content.latlng}
+                          latlng={MY_LOCATION.content.latlng}
                         />
                       )}
                     <Zoom />
@@ -243,7 +243,7 @@ export default function MyArea({
               <MyAreaDatasets datasetIds={datasetIds} />
             )}
           </Map>
-          {!HOME.content?.address && isLoading(HOME) && (
+          {!MY_LOCATION.content?.address && isLoading(MY_LOCATION) && (
             <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
           )}
         </div>

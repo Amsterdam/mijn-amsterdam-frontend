@@ -84,6 +84,7 @@ app.use(function onError(
 
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
+    Sentry.captureMessage('404 not found', { extra: { url: req.url } });
     send404(res);
   } else {
     res.end();

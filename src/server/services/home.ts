@@ -10,16 +10,16 @@ async function fetchPrivate(
 ) {
   const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
 
-  let HOME;
+  let MY_LOCATION;
 
   if (BRP.status === 'OK' && isMokum(BRP.content)) {
-    HOME = await fetchBAG(
+    MY_LOCATION = await fetchBAG(
       sessionID,
       passthroughRequestHeaders,
       BRP.content.adres
     );
-    if (!HOME.content?.latlng) {
-      HOME = apiSuccesResult({
+    if (!MY_LOCATION.content?.latlng) {
+      MY_LOCATION = apiSuccesResult({
         latlng: {
           lat: DEFAULT_LAT,
           lng: DEFAULT_LNG,
@@ -28,15 +28,15 @@ async function fetchPrivate(
       });
     }
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
-    HOME = apiSuccesResult({
+    MY_LOCATION = apiSuccesResult({
       latlng: null,
       address: null,
     });
   } else {
-    HOME = apiDependencyError({ BRP });
+    MY_LOCATION = apiDependencyError({ BRP });
   }
 
-  return HOME;
+  return MY_LOCATION;
 }
 
 async function fetchCommercial(
@@ -45,15 +45,19 @@ async function fetchCommercial(
 ) {
   const KVK = await fetchKVK(sessionID, passthroughRequestHeaders);
 
-  let HOME;
+  let MY_LOCATION;
 
   if (KVK.status === 'OK') {
     const address = KVK.content ? getKvkAddress(KVK.content) : null;
     if (address) {
-      HOME = await fetchBAG(sessionID, passthroughRequestHeaders, address);
+      MY_LOCATION = await fetchBAG(
+        sessionID,
+        passthroughRequestHeaders,
+        address
+      );
 
-      if (!HOME.content?.latlng) {
-        HOME = apiSuccesResult({
+      if (!MY_LOCATION.content?.latlng) {
+        MY_LOCATION = apiSuccesResult({
           latlng: {
             lat: DEFAULT_LAT,
             lng: DEFAULT_LNG,
@@ -62,16 +66,19 @@ async function fetchCommercial(
         });
       }
     } else {
-      HOME = apiErrorResult('Could not query BAG: address missing.', null);
+      MY_LOCATION = apiErrorResult(
+        'Could not query BAG: address missing.',
+        null
+      );
     }
   } else {
-    HOME = apiDependencyError({ KVK });
+    MY_LOCATION = apiDependencyError({ KVK });
   }
 
-  return HOME;
+  return MY_LOCATION;
 }
 
-export async function fetchHOME(
+export async function fetchMyLocation(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   profileType: ProfileType

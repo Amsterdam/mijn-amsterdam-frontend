@@ -9,7 +9,7 @@ import Dashboard from './Dashboard';
 import { Chapters } from '../../../universal/config/chapter';
 import { AppState } from '../../AppState';
 
-// TIPS, NOTIFICATIONS, CASES, BUURT, HOME
+// TIPS, NOTIFICATIONS, CASES, BUURT, MY_LOCATION
 
 const testState: any = {
   TIPS: {
@@ -44,7 +44,7 @@ const testState: any = {
       },
     ],
   },
-  HOME: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
+  MY_LOCATION: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
   NOTIFICATIONS: {
     status: 'OK',
     content: [

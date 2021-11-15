@@ -61,6 +61,7 @@ export const BFFApiUrls = {
   SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
   SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
+  SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
@@ -81,7 +82,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',
   MILIEUZONE: 'Milieuzone + actuele updates',
-  HOME: 'Uw locatie op de kaart',
+  MY_LOCATION: 'Uw locatie op de kaart',
   VERGUNNINGEN: 'Vergunningen + actuele updates',
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',

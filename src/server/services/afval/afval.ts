@@ -1,4 +1,4 @@
-import { fetchHOME } from '../home';
+import { fetchMyLocation } from '../home';
 import { fetchAfvalmomenten } from './afvalmomenten';
 import { fetchAfvalpunten } from './afvalpunten';
 import { apiDependencyError } from '../../../universal/helpers';
@@ -8,16 +8,16 @@ export async function fetchAFVAL(
   passthroughRequestHeaders: Record<string, string>,
   profileType: ProfileType
 ) {
-  const HOME = await fetchHOME(
+  const MY_LOCATION = await fetchMyLocation(
     sessionID,
     passthroughRequestHeaders,
     profileType
   );
 
-  if (HOME.status === 'OK') {
-    return await fetchAfvalmomenten(sessionID, HOME.content?.latlng);
+  if (MY_LOCATION.status === 'OK') {
+    return await fetchAfvalmomenten(sessionID, MY_LOCATION.content?.latlng);
   }
-  return apiDependencyError({ HOME });
+  return apiDependencyError({ MY_LOCATION });
 }
 
 export async function fetchAFVALPUNTEN(
@@ -25,14 +25,14 @@ export async function fetchAFVALPUNTEN(
   passthroughRequestHeaders: Record<string, string>,
   profileType: ProfileType
 ) {
-  const HOME = await fetchHOME(
+  const MY_LOCATION = await fetchMyLocation(
     sessionID,
     passthroughRequestHeaders,
     profileType
   );
 
-  if (HOME.status === 'OK') {
-    return await fetchAfvalpunten(HOME.content?.latlng);
+  if (MY_LOCATION.status === 'OK') {
+    return await fetchAfvalpunten(MY_LOCATION.content?.latlng);
   }
-  return apiDependencyError({ HOME });
+  return apiDependencyError({ MY_LOCATION });
 }
