@@ -5,6 +5,7 @@ import type {
   ServicesTips,
   ServicesType,
 } from '../server/services/controller';
+import { FeatureToggle } from '../universal/config';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
 export type AppState = {
@@ -26,9 +27,7 @@ export const PRISTINE_APPSTATE: AppState = {
     jaaropgaven: [],
     uitkeringsspecificaties: [],
   }),
-  FINANCIELE_HULP: apiPristineResult({
-    deepLinks: { budgetbeheer: null, lening: null, schuldhulp: null },
-  }),
+  FINANCIELE_HULP: apiPristineResult(null, FeatureToggle.financieleHulpActive),
   FOCUS_AANVRAGEN: apiPristineResult([]),
   FOCUS_TOZO: apiPristineResult([]),
   FOCUS_TONK: apiPristineResult([]),
@@ -38,12 +37,16 @@ export const PRISTINE_APPSTATE: AppState = {
   ERFPACHT: apiPristineResult({ isKnown: false }),
   BELASTINGEN: apiPristineResult({ isKnown: true }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
-  AKTES: apiPristineResult([]),
+  AKTES: apiPristineResult([], FeatureToggle.aktesActive),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],
     daysLeft: 0,
   }),
+  VERGUNNINGEN: apiPristineResult([]),
+
+  // KVK / Handelsregister
+  KVK: apiPristineResult(null),
 
   // Related
   BRP: apiPristineResult(null),
@@ -52,7 +55,7 @@ export const PRISTINE_APPSTATE: AppState = {
     centers: [],
     datePublished: '',
   }),
-  HOME: apiPristineResult(null),
+  MY_LOCATION: apiPristineResult(null),
 
   // CMS content
   CMS_CONTENT: apiPristineResult({
@@ -60,11 +63,6 @@ export const PRISTINE_APPSTATE: AppState = {
     footer: null,
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
-
-  VERGUNNINGEN: apiPristineResult([]),
-
-  // KVK / Handelsregister
-  KVK: apiPristineResult(null),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

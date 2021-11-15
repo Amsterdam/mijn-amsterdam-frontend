@@ -1,17 +1,35 @@
+import { renderHook } from '@testing-library/react-hooks';
 import Fuse from 'fuse.js';
-import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
-import { useRecoilValue } from 'recoil';
-import { FeatureToggle } from '../../../universal/config';
+import { ReactChildren } from 'react';
+import { RecoilRoot } from 'recoil';
+import { Vergunning } from '../../../server/services';
+import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks';
-import { ApiBaseItem, ApiSearchConfig, apiSearchConfigs } from './searchConfig';
+import * as remoteConfig from './search-config.json';
+import {
+  ApiBaseItem,
+  ApiSearchConfig,
+  apiSearchConfigs,
+  API_SEARCH_CONFIG_DEFAULT,
+  displayPath,
+  SearchEntry,
+} from './searchConfig';
 import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
-  isIndexReadyQuery,
-  searchConfigAtom,
-  useSearch,
+  requestID,
   useSearchIndex,
 } from './useSearch';
+
+export function setupFetchStub(data: any) {
+  return function fetchStub(_url: string) {
+    return new Promise((resolve) => {
+      resolve({
+        json: () => Promise.resolve(data),
+      });
+    });
+  };
+}
 
 const vergunningenData = [
   {
@@ -67,28 +85,18 @@ const financieleHulpData = {
   },
 };
 
-describe('Search hooks and helpers', () => {
-  test('useSearch', () => {
-    const {
-      result: {
-        current: [state],
-      },
-    } = renderRecoilHook(useSearch, {
-      states: [
-        {
-          recoilState: searchConfigAtom,
-          initialValue: {
-            index: null,
-            apiNames: ['test'],
-          },
-        },
-      ],
-    });
+function displayTitle(item?: SearchEntry, term: string = '') {
+  if (!item) {
+    return;
+  }
+  return typeof item.displayTitle === 'function'
+    ? item.displayTitle(term)
+    : displayPath(term, [item.displayTitle]);
+}
 
-    expect(state).toEqual({
-      index: null,
-      apiNames: ['test'],
-    });
+describe('Search hooks and helpers', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   test('generateSearchIndexPageEntry', () => {
@@ -110,12 +118,11 @@ describe('Search hooks and helpers', () => {
       };
     };
     const configItem: ApiSearchConfig = {
+      stateKey: 'MY_LOCATION',
       getApiBaseItems: () => [],
       displayTitle,
-      keywordsGeneratedFromProps: (item: ApiBaseItem): string[] => [
-        'somePropName',
-      ],
-      keywords: (item: ApiBaseItem): string[] => ['jup'],
+      keywordsGeneratedFromProps: ['somePropName'],
+      keywords: ['jup'],
       url: (item: ApiBaseItem) => item.link.to,
       description: (item: ApiBaseItem) => {
         return `Bekijk ${item.title}`;
@@ -130,10 +137,32 @@ describe('Search hooks and helpers', () => {
   });
 
   test('generateSearchIndexPageEntries', () => {
+    const apiConfigRemote = {
+      keywordsGeneratedFromProps: [
+        'caseType',
+        'title',
+        'status',
+        'decision',
+        'identifier',
+        'description',
+      ],
+      keywords: ['vergunningsaanvraag'],
+    };
     const pageEntries = generateSearchIndexPageEntries(
       'private',
-      'VERGUNNINGEN',
-      vergunningenData
+      {
+        VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
+      } as AppState,
+      [
+        {
+          ...API_SEARCH_CONFIG_DEFAULT,
+          stateKey: 'VERGUNNINGEN',
+          displayTitle: (vergunning: Vergunning) => (term: string) => {
+            return displayPath(term, [vergunning.title, vergunning.identifier]);
+          },
+          ...apiConfigRemote,
+        },
+      ]
     );
     expect(pageEntries).toMatchInlineSnapshot(`
       Array [
@@ -180,21 +209,42 @@ describe('Search hooks and helpers', () => {
 
   test('generateSearchIndexPageEntries with disabled/enabled feature', () => {
     const config = apiSearchConfigs.find(
-      (config) => config.apiName === 'FINANCIELE_HULP'
+      (config) => config.stateKey === 'FINANCIELE_HULP'
     )!;
+    const remoteConfig = {
+      keywords: [
+        'lening',
+        'fibu',
+        'schuldhulpregeling',
+        'regeling',
+        'krediet',
+        'budgetbeheer',
+      ],
+    };
     const origVal = config.isEnabled;
     config.isEnabled = false;
-    const pageEntries = generateSearchIndexPageEntries(
-      'private',
-      'FINANCIELE_HULP',
-      financieleHulpData
-    );
+
+    const appState = {
+      FINANCIELE_HULP: { content: financieleHulpData, status: 'OK' },
+    } as AppState;
+
+    const pageEntries = generateSearchIndexPageEntries('private', appState, [
+      {
+        ...config,
+        ...remoteConfig,
+      },
+    ]);
     expect(pageEntries).toMatchInlineSnapshot(`Array []`);
     config.isEnabled = true;
     const pageEntriesEnabled = generateSearchIndexPageEntries(
       'private',
-      'FINANCIELE_HULP',
-      financieleHulpData
+      appState,
+      [
+        {
+          ...config,
+          ...remoteConfig,
+        },
+      ]
     );
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
       Array [
@@ -245,97 +295,64 @@ describe('Search hooks and helpers', () => {
     config.isEnabled = origVal;
   });
 
-  test('useSearchIndex index not ready', () => {
-    const {
-      result: { current: state },
-    } = renderRecoilHook(
-      () => {
-        useSearchIndex();
-        return useRecoilValue(isIndexReadyQuery);
-      },
-      {
-        states: [
-          {
-            recoilState: searchConfigAtom,
-            initialValue: {
-              index: null,
-              apiNames: [],
-            },
-          },
-          {
-            recoilState: appStateAtom,
-            initialValue: {
-              VERGUNNINGEN: { content: [], status: 'PRISTINE' },
-            },
-          },
-        ],
-      }
+  test('useSearchIndex <failure>', async () => {
+    jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(() => Promise.reject() as any);
+
+    const wrapper = ({ children }: { children: ReactChildren }) => (
+      <RecoilRoot
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, {
+            VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
+          } as AppState);
+          snapshot.set(requestID, 1);
+        }}
+      >
+        {children}
+      </RecoilRoot>
     );
-    expect(state).toBe(false);
+
+    const { result, waitForNextUpdate } = renderHook(useSearchIndex, {
+      wrapper,
+    });
+
+    expect(result.current).toBeNull();
+
+    await waitForNextUpdate();
+
+    expect(result.current).toBeNull();
   });
 
-  test('useSearchIndex index is ready', () => {
-    const {
-      result: { current: state },
-    } = renderRecoilHook(
-      () => {
-        useSearchIndex();
-        return useRecoilValue(isIndexReadyQuery);
-      },
-      {
-        states: [
-          {
-            recoilState: searchConfigAtom,
-            initialValue: {
-              index: null,
-              apiNames: [],
-            },
-          },
-          {
-            recoilState: appStateAtom,
-            initialValue: {
-              VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-            },
-          },
-        ],
-      }
-    );
-    expect(state).toBe(true);
-  });
+  test('useSearchIndex <success>', async () => {
+    jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(setupFetchStub({ content: remoteConfig }) as any);
 
-  test('useSearchIndex', () => {
-    const {
-      result: {
-        current: [state],
-      },
-    } = renderRecoilHook(
-      () => {
-        useSearchIndex();
-        return useSearch();
-      },
-      {
-        states: [
-          {
-            recoilState: searchConfigAtom,
-            initialValue: {
-              index: null,
-              apiNames: [],
-            },
-          },
-          {
-            recoilState: appStateAtom,
-            initialValue: {
-              VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-            },
-          },
-        ],
-      }
+    const wrapper = ({ children }: { children: ReactChildren }) => (
+      <RecoilRoot
+        initializeState={(snapshot) =>
+          snapshot.set(appStateAtom, {
+            VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
+          } as AppState)
+        }
+      >
+        {children}
+      </RecoilRoot>
     );
 
-    expect(state.apiNames).toEqual(['VERGUNNINGEN']);
-    expect(state.index).not.toBeNull();
-    expect(state.index instanceof Fuse).toBe(true);
-    expect(state.index?.search('gehandicaptenparkeerkaart'))
+    const { result, waitForValueToChange } = renderHook(useSearchIndex, {
+      wrapper,
+    });
+
+    expect(result.current).toBeNull();
+
+    await waitForValueToChange(() => {
+      return result.current !== null;
+    });
+
+    expect(result.current instanceof Fuse).toBe(true);
+    expect(result.current?.search('gehandicaptenparkeerkaart'))
       .toMatchInlineSnapshot(`
       Array [
         Object {
@@ -352,11 +369,12 @@ describe('Search hooks and helpers', () => {
             ],
             "url": "/vergunningen/detail/1726584505",
           },
-          "refIndex": 20,
+          "refIndex": 21,
         },
       ]
     `);
-    expect(state.index?.search('paspoort')[0].item.displayTitle?.('paspoort'))
+
+    expect(displayTitle(result.current?.search('paspoort')[0].item, 'paspoort'))
       .toMatchInlineSnapshot(`
       <React.Fragment>
         <span
@@ -372,7 +390,7 @@ describe('Search hooks and helpers', () => {
       </React.Fragment>
     `);
 
-    expect(state.index?.search('aktes')[0].item.displayTitle?.('aktes'))
+    expect(displayTitle(result.current?.search('aktes')[0].item, 'aktes'))
       .toMatchInlineSnapshot(`
       <React.Fragment>
         <span
@@ -388,9 +406,10 @@ describe('Search hooks and helpers', () => {
       </React.Fragment>
     `);
     expect(
-      state.index
-        ?.search('Identiteitskaart')[0]
-        .item.displayTitle?.('Identiteitskaart')
+      displayTitle(
+        result.current?.search('Identiteitskaart')[0].item,
+        'Identiteitskaart'
+      )
     ).toMatchInlineSnapshot(`
       <React.Fragment>
         <span
@@ -405,7 +424,7 @@ describe('Search hooks and helpers', () => {
         </span>
       </React.Fragment>
     `);
-    expect(state.index?.search('Stadspas')[0].item.displayTitle?.('Stadspas'))
+    expect(displayTitle(result.current?.search('Stadspas')[0].item, 'Stadspas'))
       .toMatchInlineSnapshot(`
       <React.Fragment>
         <span

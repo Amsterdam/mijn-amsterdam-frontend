@@ -19,6 +19,7 @@ export type ApiSuccessResponse<T> = {
 export type ApiPristineResponse<T> = {
   content: T | null;
   status: 'PRISTINE';
+  isActive?: boolean;
 };
 
 // Used of the request to the api must be postponed, for example when using a feature toggle.
@@ -126,10 +127,14 @@ export function getFailedDependencies<T>(results: T) {
   return failedDependencies;
 }
 
-export function apiPristineResult<T>(content: T): ApiPristineResponse<T> {
+export function apiPristineResult<T>(
+  content: T,
+  isActive: boolean = true
+): ApiPristineResponse<T> {
   return {
     content,
     status: 'PRISTINE',
+    isActive,
   };
 }
 

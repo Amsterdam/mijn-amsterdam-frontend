@@ -1,11 +1,12 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
+import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { appStateAtom } from '../../hooks';
 import { Search } from './Search';
-import axios from 'axios';
-import { BrowserRouter } from 'react-router-dom';
+import * as remoteConfig from './search-config.json';
+import { setupFetchStub } from './useSearch.test';
 
 describe('<Search />', () => {
   let axiosGetSpy: jest.SpyInstance;
@@ -16,7 +17,7 @@ describe('<Search />', () => {
   });
 
   afterEach(() => {
-    axiosGetSpy.mockRestore();
+    jest.clearAllMocks();
   });
 
   test('Render without crashing', () => {
@@ -47,6 +48,10 @@ describe('<Search />', () => {
   });
 
   test('Enter search text', async () => {
+    jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(setupFetchStub(remoteConfig) as any);
+
     render(
       <BrowserRouter>
         <RecoilRoot
@@ -75,6 +80,7 @@ describe('<Search />', () => {
         </RecoilRoot>
       </BrowserRouter>
     );
+
     userEvent.type(
       screen.getByPlaceholderText('Zoeken naar...'),
       'gehandicaptenparkeerkaart'
@@ -110,6 +116,6 @@ describe('<Search />', () => {
     expect(axiosGetSpy).toBeCalledTimes(1);
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
-    expect(screen.getByText('/ Home')).toBeInTheDocument();
+    expect(screen.getByText('Home -')).toBeInTheDocument();
   });
 });

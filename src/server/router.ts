@@ -1,11 +1,14 @@
-import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { axiosRequest } from './helpers/source-api-request';
-import { fetchBRP, fetchCMSCONTENT, loadClusterDatasets } from './services';
+import {
+  fetchCMSCONTENT,
+  fetchSearchConfig,
+  loadClusterDatasets,
+} from './services';
 import {
   loadFeatureDetail,
   loadPolylineFeatures,
@@ -21,15 +24,33 @@ import {
 export const router = express.Router();
 
 router.get(
+  BffEndpoints.SEARCH_CONFIG,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const sessionID = res.locals.sessionID;
+    try {
+      const response = await fetchSearchConfig(
+        sessionID,
+        getPassthroughRequestHeaders(req),
+        queryParams(req)
+      );
+      res.json(response);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
   BffEndpoints.SERVICES_ALL,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await loadServicesAll(req, res);
       res.json(response);
+      next();
     } catch (error) {
-      Sentry.captureException(error);
+      next(error);
     }
-    next();
   }
 );
 
@@ -141,10 +162,10 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
       queryParams(req)
     );
     res.json(response);
+    next();
   } catch (error) {
-    Sentry.captureException(error);
+    next(error);
   }
-  next();
 });
 
 router.get(
@@ -152,16 +173,16 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchMaintenanceNotificationsActual(
+      const response = await fetchMaintenanceNotificationsActual(
         sessionID,
         getPassthroughRequestHeaders(req),
         queryParams(req)
       );
       res.json(response);
+      next();
     } catch (error) {
-      Sentry.captureException(error);
+      next(error);
     }
-    next();
   }
 );
 
@@ -177,7 +198,7 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
         })
       );
       res.json(rs.data);
-    } catch (error) {
+    } catch (error: any) {
       res.status(error?.response?.status || 500);
       res.json(error.message || 'Error requesting api data');
     }

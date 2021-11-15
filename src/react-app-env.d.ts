@@ -19,3 +19,5 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
   : any;
 
 type ProfileType = 'private' | 'private-commercial' | 'commercial';
+
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
