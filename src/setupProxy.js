@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 const scookieSession = require('cookie-session');
 
-// host + port for proxy only used on Test server and E2e tests
+// host + port for proxy only used on Test server
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 

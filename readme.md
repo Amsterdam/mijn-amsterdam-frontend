@@ -63,7 +63,6 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Testing and development
 
-- `cypress` for e2e testing
 - `ts-node` for BFF development
 
 ### Branch naming + PR
@@ -80,8 +79,3 @@ Every release to production is accompanied with a release tag in the from of: `r
 creates a [semver](https://semver.org/) version of the release tag and pushes it to origin. The CI/CD pipeline will automatically detect the tag and starts building a production image.
 
 The building and testing is done via Jenkins which uses `Docker` and `docker-compose` to control server stack requirements and pipeline set-up/running.
-
-### E2E testing
-
-The e2e tests run via de [CRA setupProxy](https://create-react-app.dev/docs/proxying-api-requests-in-development/) against the BFF api as server with the Axios Mock adapter enabled.
-Both React app and BFF are built first before they are subjected to the end-2-end tests.
