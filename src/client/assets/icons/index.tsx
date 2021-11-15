@@ -1,5 +1,4 @@
 export {
-  Checkmark as IconCheckmark,
   Enlarge as IconEnlarge,
   Indeterminate as IconIndeterminate,
   Minimise as IconMinimise,
@@ -10,7 +9,7 @@ export { ReactComponent as IconArrowRrimaryWhite } from './Arrow__primary-white.
 export { ReactComponent as IconBelastingen } from './belastingen.svg';
 export { ReactComponent as IconMyNotifications } from './Bell.svg';
 export { ReactComponent as IconBurgerZaken } from './burgerzaken.svg';
-// export { ReactComponent as IconChevronDown } from './Chevron-Down.svg';
+
 export { ReactComponent as IconChevronLeft } from './Chevron-Left.svg';
 export { ReactComponent as IconChevronRight } from './Chevron-Right.svg';
 // export { ReactComponent as IconChevronRight__primaryRed } from './Chevron-Right__primary-red.svg';
@@ -21,7 +20,7 @@ export { ReactComponent as IconDocument } from './Document.svg';
 export { ReactComponent as IconDownload } from './Download.svg';
 export { ReactComponent as IconErfpacht } from './erfpacht.svg';
 export { ReactComponent as IconExternalLink } from './External-Link.svg';
-// export { ReactComponent as IconCheckmark } from './Checkmark.svg';
+export { ReactComponent as IconCheckmark } from './Checkmark.svg';
 export { ReactComponent as IconFilter } from './Filter.svg';
 export { ReactComponent as IconFinancieleHulp } from './financiele-hulp.svg';
 export { ReactComponent as IconHomeCommercial } from './home-commercial.svg';
