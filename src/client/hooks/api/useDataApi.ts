@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import axios, { AxiosRequestConfig, AxiosTransformer } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
@@ -158,7 +158,7 @@ export function useDataApi<T>(
             payload: result.data || initialDataNoContent,
           });
         }
-      } catch (error) {
+      } catch (error: any) {
         if (!didCancel) {
           const errorMessage = error.response?.data?.message || error.message;
           const payload = apiErrorResult(
@@ -206,7 +206,7 @@ export function useDataApi<T>(
 }
 
 export function addAxiosResponseTransform(
-  transformer: AxiosTransformer | AxiosTransformer[]
+  transformer: AxiosResponseTransformer | AxiosResponseTransformer[]
 ) {
   return [
     ...(Array.isArray(axios.defaults.transformResponse)
