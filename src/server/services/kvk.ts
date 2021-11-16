@@ -114,13 +114,26 @@ export function getKvkAddress(kvkData: KVKData) {
   }
 
   if (vestigingen.length) {
-    const vestiging = kvkData?.vestigingen.find(
+    const hoofdVestiging = kvkData?.vestigingen.find(
       (vestiging) =>
-        !!vestiging.bezoekadres &&
-        (vestiging.bezoekadres.mokum === true ||
-          vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
+        vestiging.isHoofdvestiging &&
+        ((!!vestiging.bezoekadres &&
+          (vestiging.bezoekadres.mokum === true ||
+            vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')) ||
+          (!!vestiging.postadres &&
+            (vestiging.postadres.mokum === true ||
+              vestiging.postadres.woonplaatsNaam === 'Amsterdam')))
     );
-    address = vestiging?.bezoekadres || null;
+    address = hoofdVestiging?.bezoekadres || hoofdVestiging?.postadres || null;
+    if (!address) {
+      const vestiging = kvkData?.vestigingen.find(
+        (vestiging) =>
+          !!vestiging.bezoekadres &&
+          (vestiging.bezoekadres.mokum === true ||
+            vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
+      );
+      address = vestiging?.bezoekadres || null;
+    }
 
     if (!address) {
       const vestiging = kvkData?.vestigingen.find(
