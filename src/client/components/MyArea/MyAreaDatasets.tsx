@@ -30,7 +30,7 @@ interface MyAreaDatasetsProps {
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
-
+  console.log('1');
   useReflectUrlState();
 
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(

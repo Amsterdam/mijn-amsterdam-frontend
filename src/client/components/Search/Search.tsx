@@ -17,6 +17,7 @@ import {
 } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
+import { useResetMyAreaState } from '../MyArea/MyArea.hooks';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
 import { displayPath, SearchEntry } from './searchConfig';
@@ -116,12 +117,14 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
+  const resetMyArea = useResetMyAreaState();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
 
   useSearchIndex();
+
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
@@ -190,9 +193,11 @@ export function Search({
 
   useEffect(() => {
     if (term) {
+      console.log('trigger');
       setResultsVisible(true);
+      resetMyArea();
     }
-  }, [term]);
+  }, [term, resetMyArea]);
 
   return (
     <div

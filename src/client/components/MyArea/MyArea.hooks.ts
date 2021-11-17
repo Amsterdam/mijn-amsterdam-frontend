@@ -498,7 +498,6 @@ export function useReflectUrlState() {
   const filtersStr = Object.entries(activeFilters).length
     ? JSON.stringify(activeFilters)
     : '';
-
   useEffect(() => {
     if (
       matchPath(history.location.pathname, {
