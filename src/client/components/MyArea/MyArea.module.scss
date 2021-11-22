@@ -90,3 +90,20 @@
 .DirectSkipLinks {
   top: 1rem;
 }
+
+.SearchBarInner {
+  max-width: 60rem;
+  width: 60rem;
+  z-index: 500;
+}
+
+.SearchBar {
+  display: flex;
+  flex-direction: row;
+  width: 64rem;
+  align-items: center;
+}
+
+.SearchButton {
+  margin-left: 1rem;
+}

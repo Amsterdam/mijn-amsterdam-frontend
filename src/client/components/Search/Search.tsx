@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
@@ -95,24 +96,28 @@ export function ResultSet({
 
 interface SearchProps {
   onFinish?: (reason?: string) => void;
+  setVisible?: (value: boolean) => void;
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
+  isActive?: boolean;
 }
 
 export function Search({
   onFinish,
+  setVisible,
   term: termInitial = '',
   maxResultCountDisplay = 10,
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
+  isActive = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
-  const [isResultsVisible, setResultsVisible] = useState(false);
+  const [isResultsVisible, setResultsVisible] = useState(isActive);
   const [isTyping, setIsTyping] = useState(false);
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
@@ -122,7 +127,7 @@ export function Search({
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
-
+  const isMijnBuurt = history.location.pathname.includes(AppRoutes.BUURT);
   useSearchIndex();
 
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
@@ -157,6 +162,7 @@ export function Search({
     setIsTyping(false);
     if (!term) {
       setResultsVisible(false);
+      setVisible && setVisible(false);
     }
   }, 300);
 
@@ -168,13 +174,21 @@ export function Search({
         if (isResultsVisible && term) {
           searchBarRef.current?.focus();
           setResultsVisible(false);
+          setVisible && setVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
           onFinish && onFinish('Escape toets');
         }
       }
     },
-    [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
+    [
+      typeAhead,
+      isResultsVisible,
+      onFinish,
+      term,
+      trackSearchBarEvent,
+      setVisible,
+    ]
   );
 
   useKeyDown(keyHandler);
@@ -193,11 +207,18 @@ export function Search({
 
   useEffect(() => {
     if (term) {
-      console.log('trigger');
       setResultsVisible(true);
+      setVisible && setVisible(true);
       resetMyArea();
     }
-  }, [term, resetMyArea]);
+  }, [term, resetMyArea, setVisible]);
+
+  useEffect(() => {
+    if (!isActive) {
+      setResultsVisible(false);
+      setVisible && setVisible(false);
+    }
+  }, [isActive, setVisible]);
 
   return (
     <div
@@ -213,6 +234,7 @@ export function Search({
               `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
             );
             setResultsVisible(true);
+            setVisible && setVisible(true);
             trackSearch(term, searchCategory);
           }
         }}
@@ -230,11 +252,13 @@ export function Search({
           onFocus={() => {
             if (term) {
               setResultsVisible(true);
+              setVisible && setVisible(true);
             }
           }}
           onChange={(e) => {
             setIsTyping(true);
             setResultsVisible(true);
+            setVisible && setVisible(true);
             const term = e.target.value;
             setTermDebounced(term);
             trackSearchDebounced(term);
@@ -253,14 +277,38 @@ export function Search({
 
       {isResultsVisible && (
         <div className={styles.Results}>
+          {isMijnBuurt && (
+            <ResultSet
+              term={term}
+              isLoading={isTyping || !isAppStateReady}
+              results={results?.mb?.slice(0, maxResultCountDisplay / 2) || []}
+              title="Resultaten van Mijn buurt"
+              noResultsMessage="Niets gevonden op Mijn Amsterdam"
+              showIcon={extendedAMResults}
+              onClickResult={() => trackSearchBarEvent(`Click result`)}
+            />
+          )}
           <ResultSet
             term={term}
             isLoading={isTyping || !isAppStateReady}
             results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+            title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
             onClickResult={() => trackSearchBarEvent(`Click result`)}
           />
+
+          {!isMijnBuurt && (
+            <ResultSet
+              term={term}
+              isLoading={isTyping || !isAppStateReady}
+              results={results?.mb?.slice(0, maxResultCountDisplay / 2) || []}
+              title="Resultaten van Mijn buurt"
+              noResultsMessage="Niets gevonden op Mijn Amsterdam"
+              showIcon={extendedAMResults}
+              onClickResult={() => trackSearchBarEvent(`Click result`)}
+            />
+          )}
 
           <ResultSet
             term={term}
