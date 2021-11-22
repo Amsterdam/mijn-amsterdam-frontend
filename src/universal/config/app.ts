@@ -1,4 +1,5 @@
-import { IS_PRODUCTION, IS_AP, getOtapEnvItem } from './env';
+import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from './env';
+
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
@@ -11,7 +12,6 @@ export const FeatureToggle = {
   focusUitkeringsspecificatiesActive: true,
   identiteitsbewijzenActive: true,
   tonkActive: true,
-  bbzActive: true,
   eherkenningActive: true,
   vergunningenActive: true,
   cmsFooterActive: true,
@@ -30,7 +30,7 @@ export const FeatureToggle = {
   financieleHulpActive: !IS_PRODUCTION,
   isSearchEnabled: true,
   meldingenBuurtActive: !IS_PRODUCTION,
-  inkomenBBZActive: !IS_PRODUCTION,
+  inkomenBBZActive: true,
   erfpachtV2EndpointActive: !IS_PRODUCTION,
 };
 
