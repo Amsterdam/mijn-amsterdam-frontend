@@ -12,10 +12,10 @@ import { useKeyUp } from '../../hooks/useKey';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
+import { CloseButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
 import styles from './MyArea.module.scss';
-import { CloseButton } from '../Button/Button';
 
 interface MyAreaHeaderProps {
   showCloseButton?: boolean;
@@ -56,7 +56,6 @@ export default function MyAreaHeader({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, trackSearchBarEvent]);
-  console.log(isSearchActive);
   return (
     <>
       <div className={styles.Header}>
