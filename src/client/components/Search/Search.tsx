@@ -285,7 +285,11 @@ export function Search({
               title="Resultaten van Mijn buurt"
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={() => trackSearchBarEvent(`Click result`)}
+              onClickResult={() => {
+                trackSearchBarEvent(`Click result`);
+                setResultsVisible(false);
+                setVisible && setVisible(false);
+              }}
             />
           )}
           <ResultSet
@@ -295,7 +299,11 @@ export function Search({
             title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
-            onClickResult={() => trackSearchBarEvent(`Click result`)}
+            onClickResult={() => {
+              trackSearchBarEvent(`Click result`);
+              setResultsVisible(false);
+              setVisible && setVisible(false);
+            }}
           />
 
           {!isMijnBuurt && (
@@ -306,7 +314,11 @@ export function Search({
               title="Resultaten van Mijn buurt"
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={() => trackSearchBarEvent(`Click result`)}
+              onClickResult={() => {
+                trackSearchBarEvent(`Click result`);
+                setResultsVisible(false);
+                setVisible && setVisible(false);
+              }}
             />
           )}
 
@@ -316,7 +328,11 @@ export function Search({
             title="Overige informatie op Amsterdam.nl"
             noResultsMessage="Niets gevonden op Amsterdam.nl"
             extendedResults={extendedAMResults}
-            onClickResult={() => trackSearchBarEvent(`Click result`)}
+            onClickResult={() => {
+              trackSearchBarEvent(`Click result`);
+              setResultsVisible(false);
+              setVisible && setVisible(false);
+            }}
             results={
               results?.am?.state === 'hasValue' &&
               results?.am?.contents !== null

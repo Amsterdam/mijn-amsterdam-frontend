@@ -403,7 +403,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters=&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters=&zoom=12&loadingFeature=null",
       "displayTitle": "Afvalcontainers bij mij in de buurt",
       "description": "Afvalcontainers bij mij in de buurt.",
       "keywords": [
@@ -445,7 +445,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Glas%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Glas%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Glascontainers bij mij in de buurt",
       "description": "Glascontainers bij mij in de buurt.",
       "keywords": [
@@ -459,9 +459,9 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Papier%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Papier%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Papiercontainers bij mij in de buurt",
-      "description": "Papier containers bij mij in de buurt.",
+      "description": "Papiercontainers bij mij in de buurt.",
       "keywords": [
         "Papier",
         "Papier containers",
@@ -473,13 +473,13 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Plastic%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
-      "displayTitle": "Papiercontainers bij mij in de buurt",
-      "description": "Papier containers bij mij in de buurt.",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Plastic%22:1}}}}&zoom=12&loadingFeature=null",
+      "displayTitle": "Plasticcontainers bij mij in de buurt",
+      "description": "Plasticcontainers bij mij in de buurt.",
       "keywords": [
-        "Papier",
-        "Papier containers",
-        "Papiercontainer"
+        "Plastic",
+        "Plactic containers",
+        "Plasticontainer"
       ],
       "profileTypes": [
         "private",
@@ -487,9 +487,9 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Rest%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Rest%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Restcontainers bij mij in de buurt",
-      "description": "Rest containers bij mij in de buurt.",
+      "description": "Restcontainers bij mij in de buurt.",
       "keywords": [
         "rest",
         "rest containers",
@@ -501,7 +501,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Textiel%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Textiel%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Textielcontainers bij mij in de buurt",
       "description": "Textielontainers bij mij in de buurt.",
       "keywords": [
@@ -518,7 +518,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22geadopteerd_ind%22:{%22values%22:{%22Ja%22:1}}}}&zoom=12&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22geadopteerd_ind%22:{%22values%22:{%22Ja%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Geadopteerde afvalcontainers bij mij in de buurt",
       "description": "Geadopteerde afvalcontainers bij mij in de buurt.",
       "keywords": [
@@ -591,8 +591,8 @@
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bouwvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
-      "displayTitle": "Bestemmingsplan bij mij in de buurt",
-      "description": "Bestemmingsplan bij mij in de buurt",
+      "displayTitle": "Bouwvergunningen bij mij in de buurt",
+      "description": "Bouwvergunningen bij mij in de buurt",
       "keywords": [
         "Bouwvergunning",
         "Bouwvergunningen",
@@ -637,7 +637,8 @@
       "description": "Kapvergunningen bij mij in de buurt",
       "keywords": [
         "Kapvergunningen",
-        "Kapvergunning"
+        "Kapvergunning",
+        "Kap"
       ],
       "profileTypes": [
         "private",
@@ -650,7 +651,8 @@
       "description": "Milieuvergunningen bij mij in de buurt",
       "keywords": [
         "Milieuvergunningen",
-        "Milieuvergunning"
+        "Milieuvergunning",
+        "Millieu"
       ],
       "profileTypes": [
         "private",
@@ -663,7 +665,8 @@
       "description": "Omgevingsvergunningen bij mij in de buurt",
       "keywords": [
         "Omgevingsvergunningen",
-        "Omgevingsvergunning"
+        "Omgevingsvergunning",
+        "Omgeving"
       ],
       "profileTypes": [
         "private",
@@ -690,7 +693,9 @@
       "description": "Sloopvergunningen bij mij in de buurt",
       "keywords": [
         "sloopvergunningen",
-        "sloopvergunning"
+        "sloopvergunning",
+        "sloop",
+        "slopen"
       ],
       "profileTypes": [
         "private",
@@ -698,7 +703,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Verordeningen%20en%20reglementen%22:1}}}}&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Verordeningen%20en%20reglementen%22:1}}}}&zoom=11&loadingFeature=null",
       "displayTitle": "Verordeningen en regelementen bij mij in de buurt",
       "description": "Verordeningen en regelementen bij mij in de buurt",
       "keywords": [
@@ -711,7 +716,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22evenementen%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22evenementen%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Evenementen bij mij in de buurt",
       "description": "Evenementen bij mij in de buurt",
       "keywords": [
@@ -723,7 +728,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22evenementen%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22evenementen%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Evenementen bij mij in de buurt",
       "description": "Evenementen bij mij in de buurt",
       "keywords": [
@@ -735,7 +740,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sporten bij mij in de buurt",
       "description": "Sporten bij mij in de buurt",
       "keywords": [
@@ -748,7 +753,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sporten bij mij in de buurt",
       "description": "Sporten bij mij in de buurt",
       "keywords": [
@@ -761,7 +766,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22zwembad%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22zwembad%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Zwembaden bij mij in de buurt",
       "description": "Zwembaden bij mij in de buurt",
       "keywords": [
@@ -775,7 +780,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22zwembad%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22zwembad%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Zwembaden bij mij in de buurt",
       "description": "Zwembaden bij mij in de buurt",
       "keywords": [
@@ -789,7 +794,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sporthal%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sporthal%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sporthallen bij mij in de buurt",
       "description": "Sporthallen bij mij in de buurt",
       "keywords": [
@@ -802,12 +807,13 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22gymzaal%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22gymzaal%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Gymzalen bij mij in de buurt",
       "description": "Gymzalen bij mij in de buurt",
       "keywords": [
         "gymzaal",
-        "gymzalen"
+        "gymzalen",
+        "gym"
       ],
       "profileTypes": [
         "private",
@@ -815,7 +821,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sportzaal%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sportzaal%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sportzalen bij mij in de buurt",
       "description": "Sportzalen bij mij in de buurt",
       "keywords": [
@@ -828,7 +834,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22openbaresportplek%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22openbaresportplek%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Openbare sportplekken bij mij in de buurt",
       "description": "Openbare sportplekken bij mij in de buurt",
       "keywords": [
@@ -842,7 +848,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22hardlooproutes%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22hardlooproutes%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Hardlooproutes bij mij in de buurt",
       "description": "Hardlooproutes bij mij in de buurt",
       "keywords": [
@@ -856,7 +862,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sportpark%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sportpark%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sportparken bij mij in de buurt",
       "description": "Sportparken bij mij in de buurt",
       "keywords": [
@@ -869,7 +875,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22sportveld%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22sportveld%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Sportvelden bij mij in de buurt",
       "description": "Sportvelden bij mij in de buurt",
       "keywords": [
@@ -882,7 +888,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22wior%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22wior%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Werkzaamheden bij mij in de buurt",
       "description": "Werkzaamheden bij mij in de buurt",
       "keywords": [
@@ -897,7 +903,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22wior%22]&filters={%22wior%22:{%22datumStartUitvoering%22:{%22values%22:{%22Lopende%20werkzaamheden%22:1}}}}&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22wior%22]&filters={%22wior%22:{%22datumStartUitvoering%22:{%22values%22:{%22Lopende%20werkzaamheden%22:1}}}}&zoom=11&loadingFeature=null",
       "displayTitle": "Lopende Werkzaamheden bij mij in de buurt",
       "description": "Lopende Werkzaamheden bij mij in de buurt",
       "keywords": [
@@ -912,7 +918,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22meldingenBuurt%22]&filters=&zoom=11&center={%22lat%22:52.372950494299445,%22lng%22:4.834586581980725}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22meldingenBuurt%22]&filters=&zoom=11&loadingFeature=null",
       "displayTitle": "Meldingen bij mij in de buurt",
       "description": "Meldingen bij mij in de buurt",
       "keywords": [

@@ -91,19 +91,52 @@
   top: 1rem;
 }
 
-.SearchBarInner {
-  max-width: 60rem;
-  width: 60rem;
-  z-index: 500;
-}
-
 .SearchBar {
   display: flex;
   flex-direction: row;
   width: 64rem;
   align-items: center;
+  @include mq-phone() {
+    background: white;
+    margin-top: 5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    width: 100%;
+    z-index: 450;
+    position: absolute;
+  }
+}
+
+.SearchBarInner {
+  max-width: 60rem;
+  width: 60rem;
+  z-index: 500;
+  @include mq-phone() {
+    width: 90%;
+    margin: auto;
+  }
 }
 
 .SearchButton {
   margin-left: 1rem;
+}
+
+.Layover {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 449;
+  background: black;
+  opacity: 0.6;
+}
+
+.CloseWrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  z-index: 500;
+  width: 5rem;
 }

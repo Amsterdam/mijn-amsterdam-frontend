@@ -15,6 +15,7 @@ import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
 import styles from './MyArea.module.scss';
+import { CloseButton } from '../Button/Button';
 
 interface MyAreaHeaderProps {
   showCloseButton?: boolean;
@@ -57,38 +58,95 @@ export default function MyAreaHeader({
   }, [location.pathname, trackSearchBarEvent]);
   console.log(isSearchActive);
   return (
-    <div className={styles.Header}>
-      {!usePhoneScreen() && (
-        <nav
-          className={classnames(
-            mainHeaderStyles.DirectSkipLinks,
-            styles.DirectSkipLinks
-          )}
+    <>
+      <div className={styles.Header}>
+        {!usePhoneScreen() && (
+          <nav
+            className={classnames(
+              mainHeaderStyles.DirectSkipLinks,
+              styles.DirectSkipLinks
+            )}
+          >
+            <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
+              Direct naar: <b>Legenda paneel</b>
+            </Linkd>
+          </nav>
+        )}
+        <Link
+          className={styles.LogoLink}
+          to={AppRoutes.ROOT}
+          title="Terug naar home"
         >
-          <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
-            Direct naar: <b>Legenda paneel</b>
-          </Linkd>
-        </nav>
-      )}
-      <Link
-        className={styles.LogoLink}
-        to={AppRoutes.ROOT}
-        title="Terug naar home"
-      >
-        <Logo
-          role="img"
-          aria-label="Gemeente Amsterdam logo"
-          className={styles.Logo}
-        />
-        <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
-      </Link>
-      {!isSmallScreen && (
+          <Logo
+            role="img"
+            aria-label="Gemeente Amsterdam logo"
+            className={styles.Logo}
+          />
+          <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
+        </Link>
+        {!isSmallScreen && (
+          <div className={styles.SearchBar}>
+            <div className={styles.SearchBarInner}>
+              <Search
+                setVisible={(value: boolean) => {
+                  setSearchActive(value);
+                }}
+                isActive={isSearchActive}
+                onFinish={(reason) => {
+                  if (reason) {
+                    setSearchActive(false);
+                    if (reason) {
+                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                    }
+                  }
+                }}
+              />
+            </div>
+            {isSearchActive && (
+              <IconButton
+                className={styles.SearchButton}
+                onClick={() => {
+                  setSearchActive(!isSearchActive);
+                  trackSearchBarEvent(
+                    `${
+                      !isSearchActive === false ? 'Sluiten' : 'Openen'
+                    } met button`
+                  );
+                }}
+                icon={IconClose}
+              />
+            )}
+          </div>
+        )}
+        {isSmallScreen && (
+          <div className={styles.CloseWrapper}>
+            <IconButton
+              icon={isSearchActive ? IconClose : IconSearch}
+              onClick={() => {
+                setSearchActive(!isSearchActive);
+              }}
+            />
+          </div>
+        )}
+        {showCloseButton && (
+          <IconButton
+            icon={IconClose}
+            onClick={() => {
+              history.push(AppRoutes.ROOT);
+            }}
+          >
+            Kaart sluiten
+          </IconButton>
+        )}
+      </div>
+      {isSmallScreen && isSearchActive && (
         <div className={styles.SearchBar}>
           <div className={styles.SearchBarInner}>
             <Search
               setVisible={(value: boolean) => {
                 setSearchActive(value);
               }}
+              maxResultCountDisplay={isSmallScreen ? 4 : 10}
               isActive={isSearchActive}
               onFinish={(reason) => {
                 if (reason) {
@@ -100,33 +158,11 @@ export default function MyAreaHeader({
               }}
             />
           </div>
-          {isSearchActive && (
-            <IconButton
-              className={styles.SearchButton}
-              onClick={() => {
-                setSearchActive(!isSearchActive);
-                trackSearchBarEvent(
-                  `${
-                    !isSearchActive === false ? 'Sluiten' : 'Openen'
-                  } met button`
-                );
-              }}
-              icon={IconClose}
-            />
-          )}
         </div>
       )}
-
-      {showCloseButton && (
-        <IconButton
-          icon={IconClose}
-          onClick={() => {
-            history.push(AppRoutes.ROOT);
-          }}
-        >
-          Kaart sluiten
-        </IconButton>
+      {isSmallScreen && isSearchActive && (
+        <div className={styles.Layover}></div>
       )}
-    </div>
+    </>
   );
 }
