@@ -19,6 +19,7 @@ export type Chapter =
   | 'KVK'
   | 'TOERISTISCHE_VERHUUR'
   | 'SEARCH'
+  | 'SUBSIDIE'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -40,6 +41,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   FINANCIELE_HULP: 'FINANCIELE_HULP',
   SEARCH: 'SEARCH',
+  SUBSIDIE: 'SUBSIDIE',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -56,6 +58,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ROOT: 'Home',
   TIPS: 'Mijn tips',
   ERFPACHT: 'Erfpacht',
+  SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',

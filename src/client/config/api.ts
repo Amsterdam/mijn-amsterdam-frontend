@@ -78,6 +78,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   FOCUS_STADSPAS: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
+  SUBSIDIE: 'Subsidies',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',

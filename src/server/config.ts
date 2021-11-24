@@ -75,6 +75,7 @@ export type SourceApiKey =
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'KVK'
   | 'SEARCH_CONFIG'
+  | 'SUBSIDIE'
   | 'FINANCIELE_HULP';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
@@ -152,6 +153,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   FINANCIELE_HULP: {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.financieleHulpActive,
+  },
+  SUBSIDIE: {
+    url: `${BFF_MS_API_BASE_URL}/subsidie`,
   },
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
