@@ -315,6 +315,9 @@ export function createToeristischeVerhuurNotification(
     const ctaLinkToDetail = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
+        title: slug(item.caseType, {
+          lower: true,
+        }),
         id: item.id,
       }
     );
