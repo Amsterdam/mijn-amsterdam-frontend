@@ -69,6 +69,7 @@ export type SourceApiKey =
   | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
+  | 'SUBSIDIE'
   | 'BAG'
   | 'AKTES'
   | 'AFVAL'
@@ -137,6 +138,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/erfpacht${
       FeatureToggle.erfpachtV2EndpointActive ? '/v2' : ''
     }/check-erfpacht`,
+  },
+  SUBSIDIE: {
+    url: `${BFF_MS_API_BASE_URL}/subsidie`,
   },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
