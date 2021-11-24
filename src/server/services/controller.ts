@@ -16,7 +16,6 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchERFPACHT } from './erfpacht';
-import { fetchSubsidie } from './subsidie';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
@@ -105,7 +104,6 @@ const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
 const BELASTINGEN = callService(fetchBELASTING);
 const MILIEUZONE = callService(fetchMILIEUZONE);
 const ERFPACHT = callService(fetchERFPACHT);
-const SUBSIDIE = callService(fetchSubsidie);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
 const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
@@ -150,7 +148,6 @@ const SERVICES_INDEX = {
   MILIEUZONE,
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
-  SUBSIDIE,
   NOTIFICATIONS,
   CASES,
 };
@@ -169,7 +166,6 @@ type CommercialServices = Pick<
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
-  | 'SUBSIDIE'
   | 'NOTIFICATIONS'
   | 'CASES'
   | 'MY_LOCATION'
@@ -208,7 +204,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
     VERGUNNINGEN,
     WMO,
   },
@@ -233,7 +228,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
     VERGUNNINGEN,
     WMO,
   },
@@ -249,7 +243,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
     VERGUNNINGEN,
   },
 };

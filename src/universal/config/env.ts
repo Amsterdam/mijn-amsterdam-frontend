@@ -7,7 +7,6 @@ interface EnvVars {
   ssoErfpachtUrlEH?: string;
   ssoMilieuzoneUrl?: string;
   krefiaDirectLink?: string;
-  ssoSubsidiesUrl?: string;
 }
 
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
@@ -58,7 +57,6 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
-    ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/loket',
   },
   production: {
     analyticsId: 28,
@@ -72,8 +70,6 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
-    ssoSubsidiesUrl:
-      'https://mijnsubsidies.amsterdam.nl/lokettps://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
   },
 };
 
