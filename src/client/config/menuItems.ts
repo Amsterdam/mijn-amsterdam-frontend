@@ -64,20 +64,6 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['commercial'],
   },
   {
-    title: ChapterTitles.SUBSIDIE,
-    id: Chapters.SUBSIDIE,
-    to: ExternalUrls.EH_SSO_ERFPACHT || '',
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ChapterTitles.SUBSIDIE,
-    id: Chapters.SUBSIDIE,
-    to: ExternalUrls.EH_SSO_ERFPACHT || '',
-    rel: 'external',
-    profileTypes: ['commercial'],
-  },
-  {
     title: ChapterTitles.ZORG,
     id: Chapters.ZORG,
     to: AppRoutes.ZORG,

@@ -45,4 +45,3 @@ export { ReactComponent as IconTips } from './Tip.svg';
 export { ReactComponent as IconToeristischeVerhuur } from './toeristische-verhuur.svg';
 export { ReactComponent as IconVergunningen } from './vergunningen.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
-export { ReactComponent as IconSubsidie } from './subsidie.svg';
