@@ -7,6 +7,7 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
+import SUBSIDIE from './json/subsidie.json';
 import FINANCIELE_HULP from './json/financiele-hulp.json';
 import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
 import FOCUS_COMBINED from './json/focus-combined.json';
@@ -113,6 +114,15 @@ export const mockDataConfig: MockDataConfig = {
       //   return 'no-content';
       // }
       return await loadMockApiResponseJson(ERFPACHT);
+    },
+  },
+  [ApiUrls.SUBSIDIE]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
+      return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
   [ApiUrls.BAG]: {
