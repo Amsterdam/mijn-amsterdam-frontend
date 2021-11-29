@@ -73,7 +73,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.SUBSIDIE,
     id: Chapters.SUBSIDIE,
-    to: ExternalUrls.EH_SSO_ERFPACHT || '',
+    to: ExternalUrls.EH_SSO_SUBSIDIE || '',
     rel: 'external',
     profileTypes: ['commercial'],
   },
