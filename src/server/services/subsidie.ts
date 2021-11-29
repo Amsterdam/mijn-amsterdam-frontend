@@ -16,7 +16,6 @@ export interface SubsidieData {
 interface SubsidieSourceDataContent {
   isKnown: boolean;
   meldingen: MyNotification[];
-  tips: MyTip[];
 }
 
 interface SubsidieSourceData {
