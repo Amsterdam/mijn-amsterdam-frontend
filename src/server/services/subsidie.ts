@@ -58,9 +58,7 @@ async function fetchSource(
   includeGenerated: boolean = false
 ) {
   const response = await requestData<SubsidieData>(
-    getApiConfig('SUBSIDIE', {
-      transformResponse: transformSubsidieData,
-    }),
+    getApiConfig('SUBSIDIE'),
     sessionID,
     passthroughRequestHeaders
   );
