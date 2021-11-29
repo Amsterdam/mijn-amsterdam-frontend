@@ -65,7 +65,8 @@ export default function Profile() {
     if (
       FeatureToggle.residentCountActive &&
       typeof residentCount === 'number' &&
-      BRP.content?.adres?.adresType === 'woon'
+      // BRP.content?.adres?.adresType === 'woon'
+      BRP.content?.adres // quick fix for https://datapunt.atlassian.net/browse/MIJN-4022
     ) {
       const brpContent = {
         ...BRP.content,
