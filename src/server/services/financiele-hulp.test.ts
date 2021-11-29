@@ -7,7 +7,7 @@ import { axiosRequest } from '../helpers';
 import financieleHulpData from '../mock-data/json/financiele-hulp.json';
 import { fetchFinancieleHulp, fetchSource } from './financiele-hulp';
 
-describe('Financiële hulp service', () => {
+describe('Kredietbank & FIBU service', () => {
   const FINANCIELE_HULP_DUMMY_RESPONSE = jsonCopy(financieleHulpData);
 
   const DUMMY_URL_FINANCIELE_HULP = '/financiele-hulp';

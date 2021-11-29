@@ -45,7 +45,7 @@ describe('<FinancieleHulp />', () => {
 
   it('Shows the page succesfully', () => {
     render(<Component state={testState} />);
-    expect(screen.getByText('Financiële Hulp')).toBeInTheDocument();
+    expect(screen.getByText('Kredietbank & FIBU')).toBeInTheDocument();
     expect(
       screen.getByText('Meer informatie over de Kredietbank')
     ).toBeInTheDocument();

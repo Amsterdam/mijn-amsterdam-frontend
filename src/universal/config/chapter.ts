@@ -60,7 +60,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  FINANCIELE_HULP: 'Financiële Hulp',
+  FINANCIELE_HULP: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
 };
 

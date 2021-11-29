@@ -121,7 +121,7 @@ export default function FinancieleHulp() {
           className={styles.SectionBorderTop}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiële hulp overzicht / Schuldregeling',
+            category: 'Kredietbank & FIBU overzicht / Schuldregeling',
             name: 'Datatabel',
           }}
         >
@@ -139,7 +139,7 @@ export default function FinancieleHulp() {
           startCollapsed={!!deepLinks?.schuldhulp?.length}
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiële hulp overzicht / Leningen',
+            category: 'Kredietbank & FIBU overzicht / Leningen',
             name: 'Datatabel',
           }}
         >
@@ -159,7 +159,7 @@ export default function FinancieleHulp() {
           }
           isLoading={isLoading(FINANCIELE_HULP)}
           track={{
-            category: 'Financiële hulp overzicht / Financieel budgetbeheer',
+            category: 'Kredietbank & FIBU overzicht / Financieel budgetbeheer',
             name: 'Datatabel',
           }}
         >

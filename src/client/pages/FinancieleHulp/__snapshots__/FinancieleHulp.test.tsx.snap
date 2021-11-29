@@ -13,7 +13,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Financiële Hulp"
+          aria-label="Kredietbank & FIBU"
           class="ChapterIcon"
           fill="black"
         >
@@ -41,7 +41,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Financiële Hulp
+          Kredietbank & FIBU
         </h2>
       </div>
     </header>
