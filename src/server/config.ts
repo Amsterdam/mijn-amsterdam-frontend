@@ -155,7 +155,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.financieleHulpActive,
   },
   SUBSIDIE: {
-    url: `${BFF_MS_API_BASE_URL}/subsidie`,
+    url: `${BFF_MS_API_BASE_URL}/subsidie/summary`,
   },
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
