@@ -10,7 +10,7 @@ import {
 
 export interface SubsidieData {
   isKnown: boolean;
-  notifications?: MyNotification[];
+  notifications: MyNotification[];
 }
 
 interface SubsidieSourceDataContent {
