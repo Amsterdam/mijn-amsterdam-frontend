@@ -71,7 +71,6 @@ function transformSubsidieNotifications(
   notifications: MyNotification[],
   profileType?: ProfileType
 ) {
-  console.log(profileType);
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
         ...notification,
