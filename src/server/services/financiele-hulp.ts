@@ -47,11 +47,13 @@ function createNotification(
   return {
     id: `financiele-hulp-${type}-notification`,
     datePublished: message.datePublished,
-    title: isFibu ? 'Bericht FiBu' : `Bericht Kredietbank`,
+    title: isFibu
+      ? 'Bericht Budgetbeheer (FIBU)'
+      : `Bericht Kredietbank Amsterdam`,
     chapter: Chapters.FINANCIELE_HULP,
     description: isFibu
-      ? 'Er staan ongelezen berichten voor u klaar van FiBu'
-      : 'Er staan ongelezen berichten voor u klaar van de kredietbank',
+      ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
+      : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',
     link: { to: message.url, title: 'Bekijk uw bericht' },
   };
 }

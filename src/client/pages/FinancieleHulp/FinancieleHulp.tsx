@@ -17,7 +17,7 @@ import styles from './FinancieleHulp.module.scss';
 
 const DISPLAY_PROPS = {
   title: 'Status',
-  to: 'Bekijk op FiBu',
+  to: 'Bekijk op Krefia',
 };
 
 function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
@@ -32,6 +32,8 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
       let linkText = 'Bekijk';
       switch (key) {
         case 'budgetbeheer':
+          linkText = 'Ga naar budgebeheer';
+          break;
         case 'lening':
           linkText = 'Bekijk uw lening';
           break;
@@ -57,7 +59,8 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
 export default function FinancieleHulp() {
   const { FINANCIELE_HULP } = useAppStateGetter();
   const deepLinks = useDeepLinks(FINANCIELE_HULP.content?.deepLinks);
-
+  const isKredietbank = !!deepLinks?.schuldhulp || !!deepLinks?.lening;
+  const isFIBU = !!deepLinks?.budgetbeheer;
   return (
     <OverviewPage className={styles.FinancieleHulp}>
       <PageHeading
@@ -71,24 +74,43 @@ export default function FinancieleHulp() {
         {ChapterTitles.FINANCIELE_HULP}
       </PageHeading>
       <PageContent>
+        {isKredietbank && isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Budgetbeheer (FIBU) en/of Kredietbank Amsterdam.
+          </p>
+        )}
+        {isKredietbank && !isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Kredietbank Amsterdam.
+          </p>
+        )}
+        {!isKredietbank && isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Budgetbeheer (FIBU).
+          </p>
+        )}
+
         <p>
-          Een online plek waar u alle informatie over uw geldzaken kunt vinden
-          als klant van Budgetbeheer (FIBU).
-        </p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
-          >
-            Meer informatie over de Kredietbank
-          </Linkd>
+          {isKredietbank && (
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
+            >
+              Meer informatie over Kredietbank Amsterdam
+            </Linkd>
+          )}
           <br />
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
-          >
-            Meer informatie over FiBu
-          </Linkd>
+          {isFIBU && (
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
+            >
+              Meer informatie over Budgetbeheer (FIBU)
+            </Linkd>
+          )}
         </p>
       </PageContent>
       {deepLinks?.schuldhulp && (
