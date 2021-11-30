@@ -1,6 +1,6 @@
 import { Chapters } from '../../universal/config';
 import { omit } from '../../universal/helpers';
-import { MyNotification, MyTip } from '../../universal/types';
+import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
@@ -24,31 +24,15 @@ interface SubsidieSourceData {
   message?: string;
 }
 
-function transformSubsidieNotifications(notifications?: MyNotification[]) {
-  const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map((notification) => ({
-        ...notification,
-        chapter: Chapters.subsidie,
-        link: {
-          title:
-            notification.link?.title || 'Meer informatie over deze melding',
-          to: notification.link?.to || '',
-        },
-      }))
-    : [];
-
-  return notificationsTransformed;
-}
-
 function transformSubsidieData(responseData: SubsidieSourceData): SubsidieData {
-  const { isKnown, meldingen = [] } = responseData?.content || {
+  const { isKnown, notifications = [] } = responseData?.content || {
     isKnown: false,
-    meldingen: [],
+    notifications: [],
   };
 
   return {
     isKnown,
-    notifications: transformSubsidieNotifications(meldingen),
+    notifications: notifications,
   };
 }
 
@@ -58,7 +42,9 @@ async function fetchSource(
   includeGenerated: boolean = false
 ) {
   const response = await requestData<SubsidieData>(
-    getApiConfig('SUBSIDIE'),
+    getApiConfig('SUBSIDIE', {
+      transformResponse: transformSubsidieData,
+    }),
     sessionID,
     passthroughRequestHeaders
   );
@@ -81,9 +67,37 @@ export async function fetchSubsidie(
   return fetchSource(sessionID, passthroughRequestHeaders);
 }
 
+function transformSubsidieNotifications(
+  notifications: MyNotification[],
+  profileType?: ProfileType
+) {
+  console.log(profileType);
+  const notificationsTransformed = Array.isArray(notifications)
+    ? notifications.map((notification) => ({
+        ...notification,
+        chapter: Chapters.SUBSIDIE,
+        link: {
+          title:
+            notification.link?.title || 'Meer informatie over deze melding',
+          to: notification.link?.to || '',
+        },
+        description: `${notification.description}
+        ${
+          profileType === 'private-commercial'
+            ? '<p>Log in met eHerkenning om uw subsidie(aanvraag) te bekijken. Klik hiervoor bovenaan deze pagina op Uitloggen en kies voor Inloggen met eHerkenning.</p>'
+            : ''
+        }
+         `,
+      }))
+    : [];
+
+  return notificationsTransformed;
+}
+
 export async function fetchSubsidieGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  profileType?: ProfileType
 ) {
   const subsidie = await fetchSource(
     sessionID,
@@ -93,7 +107,10 @@ export async function fetchSubsidieGenerated(
   if (subsidie.status === 'OK' && subsidie.content.notifications) {
     if (subsidie.content.notifications) {
       return apiSuccesResult({
-        notifications: subsidie.content.notifications,
+        notifications: transformSubsidieNotifications(
+          subsidie.content.notifications,
+          profileType
+        ),
       });
     }
   }

@@ -8,6 +8,7 @@ import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
+import { fetchSubsidieGenerated } from './subsidie';
 import { fetchFinancieleHulpGenerated } from './financiele-hulp';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSBbzGenerated } from './focus/focus-bbz';
@@ -120,6 +121,7 @@ async function fetchServicesGenerated(
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
     erfpachtGeneratedResult,
+    subsidieGeneratedResult,
     maintenanceNotifications,
     stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
@@ -136,6 +138,7 @@ async function fetchServicesGenerated(
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders, profileType),
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
@@ -156,6 +159,7 @@ async function fetchServicesGenerated(
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
   const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
+  const subsidieGenerated = getSettledResult(subsidieGeneratedResult);
   const maintenanceNotificationsResult = getSettledResult(
     maintenanceNotifications
   );
@@ -178,6 +182,7 @@ async function fetchServicesGenerated(
     milieuzoneGenerated,
     vergunningenGenerated,
     erfpachtGenerated,
+    subsidieGenerated,
     maintenanceNotificationsResult,
     toeristischeVerhuurGenerated,
     stadspasGenerated,
