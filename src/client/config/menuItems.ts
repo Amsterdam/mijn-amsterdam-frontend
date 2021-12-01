@@ -107,9 +107,9 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
-    title: ChapterTitles.FINANCIELE_HULP,
-    id: Chapters.FINANCIELE_HULP,
-    to: AppRoutes.FINANCIELE_HULP,
+    title: ChapterTitles.KREFIA,
+    id: Chapters.KREFIA,
+    to: AppRoutes.KREFIA,
     profileTypes: ['private', 'private-commercial'],
   },
 ];

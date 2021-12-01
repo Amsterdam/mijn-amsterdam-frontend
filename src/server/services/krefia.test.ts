@@ -1,27 +1,25 @@
 import MockAdapter from 'axios-mock-adapter';
-import { fetchFinancieleHulpGenerated } from '.';
+import { fetchKrefiaGenerated } from '.';
 
 import { jsonCopy, omit } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
-import financieleHulpData from '../mock-data/json/financiele-hulp.json';
-import { fetchFinancieleHulp, fetchSource } from './financiele-hulp';
+import KrefiaData from '../mock-data/json/krefia.json';
+import { fetchKrefia, fetchSource } from './krefia';
 
 describe('Kredietbank & FIBU service', () => {
-  const FINANCIELE_HULP_DUMMY_RESPONSE = jsonCopy(financieleHulpData);
+  const KREFIA_DUMMY_RESPONSE = jsonCopy(KrefiaData);
 
-  const DUMMY_URL_FINANCIELE_HULP = '/financiele-hulp';
+  const DUMMY_URL_KREFIA = '/krefia';
 
-  ApiConfig.FINANCIELE_HULP.url = DUMMY_URL_FINANCIELE_HULP;
+  ApiConfig.KREFIA.url = DUMMY_URL_KREFIA;
 
   let axMock: any;
   let axiosRequestSpy: any;
 
   beforeEach(() => {
     axMock = new MockAdapter(axiosRequest);
-    axMock
-      .onGet(DUMMY_URL_FINANCIELE_HULP)
-      .reply(200, FINANCIELE_HULP_DUMMY_RESPONSE);
+    axMock.onGet(DUMMY_URL_KREFIA).reply(200, KREFIA_DUMMY_RESPONSE);
 
     axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
   });
@@ -33,24 +31,22 @@ describe('Kredietbank & FIBU service', () => {
 
   it('Should respond correctly', async () => {
     const response = await fetchSource('x1', { x: 'saml' });
-    expect(response).toEqual(FINANCIELE_HULP_DUMMY_RESPONSE);
+    expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
 
-    const responseDerived = await fetchFinancieleHulp('x1', { x: 'saml' });
+    const responseDerived = await fetchKrefia('x1', { x: 'saml' });
     expect(axiosRequestSpy.mock.calls.length).toEqual(1); // Use cached version
 
     const contentExpected = {
-      content: omit(FINANCIELE_HULP_DUMMY_RESPONSE.content, [
-        'notificationTriggers',
-      ]),
+      content: omit(KREFIA_DUMMY_RESPONSE.content, ['notificationTriggers']),
       status: 'OK',
     };
 
     expect(responseDerived).toEqual(contentExpected);
 
-    await fetchFinancieleHulp('x2', { x: 'saml' });
+    await fetchKrefia('x2', { x: 'saml' });
     expect(axiosRequestSpy.mock.calls.length).toEqual(2);
 
-    const generatedResponse = await fetchFinancieleHulpGenerated('x1', {
+    const generatedResponse = await fetchKrefiaGenerated('x1', {
       x: 'saml',
     });
 
@@ -58,10 +54,10 @@ describe('Kredietbank & FIBU service', () => {
       content: {
         notifications: [
           {
-            id: 'financiele-hulp-fibu-notification',
+            id: 'krefia-fibu-notification',
             datePublished: '2021-07-14T12:34:17',
             title: 'Bericht FiBu',
-            chapter: 'FINANCIELE_HULP',
+            chapter: 'KREFIA',
             description: 'Er staan ongelezen berichten voor u klaar van FiBu',
             link: {
               to: 'http://host/berichten/fibu',

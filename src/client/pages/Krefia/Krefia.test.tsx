@@ -1,24 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import FinancieleHulpData from '../../../server/mock-data/json/financiele-hulp.json';
-import { FinancieleHulp as FinancieleHulpContent } from '../../../server/services/financiele-hulp';
+import KrefiaData from '../../../server/mock-data/json/krefia.json';
+import { Krefia as KrefiaContent } from '../../../server/services/krefia';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
-import FinancieleHulp from './FinancieleHulp';
+import Krefia from './Krefia';
 import MockApp from '../MockApp';
 
 interface TestState {
-  FINANCIELE_HULP: {
+  KREFIA: {
     status: string;
-    content: FinancieleHulpContent;
+    content: KrefiaContent;
   };
 }
 
 const testState: TestState = {
-  FINANCIELE_HULP: {
+  KREFIA: {
     status: 'OK',
-    content: FinancieleHulpData.content as FinancieleHulpContent,
+    content: KrefiaData.content as KrefiaContent,
   },
 };
 
@@ -26,14 +26,14 @@ function initializeState(snapshot: MutableSnapshot, state: TestState) {
   snapshot.set(appStateAtom as any, state);
 }
 
-describe('<FinancieleHulp />', () => {
-  const routeEntry = generatePath(AppRoutes.FINANCIELE_HULP);
-  const routePath = AppRoutes.FINANCIELE_HULP;
+describe('<Krefia />', () => {
+  const routeEntry = generatePath(AppRoutes.KREFIA);
+  const routePath = AppRoutes.KREFIA;
   const Component = ({ state }: { state: TestState }) => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={FinancieleHulp}
+      component={Krefia}
       initializeState={(snap) => initializeState(snap, state)}
     />
   );
