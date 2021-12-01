@@ -312,27 +312,7 @@ const mijnQuery = selector({
     if (fuse !== null && !!term) {
       const rawResults = fuse.search(term);
 
-      return rawResults
-        .filter((result) => !result.item.url.includes('/buurt'))
-        .map((result) => result.item);
-    }
-
-    return [];
-  },
-});
-
-const mijnBuurtQuery = selector({
-  key: 'mijnBuurtQuery',
-  get: ({ get }) => {
-    const term = get(searchTermAtom);
-    const fuse = get(searchConfigAtom);
-
-    if (fuse !== null && !!term) {
-      const rawResults = fuse.search(term);
-
-      return rawResults
-        .filter((result) => result.item.url.includes('/buurt'))
-        .map((result) => result.item);
+      return rawResults.map((result) => result.item);
     }
 
     return [];
@@ -350,7 +330,6 @@ export function useSearchResults(
 ): SearchResults {
   return {
     ma: useRecoilValue(mijnQuery),
-    mb: useRecoilValue(mijnBuurtQuery),
     am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
   };
 }

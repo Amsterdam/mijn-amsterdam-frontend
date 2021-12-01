@@ -23,7 +23,6 @@ import {
   getQueryConfig,
   useActiveDatasetFilters,
   useActiveDatasetIds,
-  useResetMyAreaState,
 } from '../MyArea/MyArea.hooks';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
@@ -47,7 +46,6 @@ function setMijnBuurtResult(
   setActiveFilters: SetterOrUpdater<DatasetFilterSelection>
 ) {
   const queryConfig = getQueryConfig(result.url.split('?')[1]);
-  console.log(queryConfig);
   setActiveDatasetIds(queryConfig?.datasetIds ?? []);
   setActiveFilters(queryConfig?.filters ?? {});
 }
@@ -139,13 +137,12 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
-  const [activeDatasetIds, setActiveDatasetsIds] = useActiveDatasetIds();
-  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
+  const [, setActiveDatasetsIds] = useActiveDatasetIds();
+  const [, setActiveFilters] = useActiveDatasetFilters();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
-  const isMijnBuurt = history.location.pathname.includes(AppRoutes.BUURT);
   useSearchIndex();
 
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
@@ -294,28 +291,6 @@ export function Search({
 
       {isResultsVisible && (
         <div className={styles.Results}>
-          {isMijnBuurt && (
-            <ResultSet
-              term={term}
-              isLoading={isTyping || !isAppStateReady}
-              results={results?.mb?.slice(0, maxResultCountDisplay / 2) || []}
-              title="Resultaten van Mijn buurt"
-              noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              showIcon={extendedAMResults}
-              onClickResult={(result) => {
-                trackSearchBarEvent(`Click result`);
-                setResultsVisible(false);
-                setVisible && setVisible(false);
-                if (result.url.includes('/buurt')) {
-                  setMijnBuurtResult(
-                    result,
-                    setActiveDatasetsIds,
-                    setActiveFilters
-                  );
-                }
-              }}
-            />
-          )}
           <ResultSet
             term={term}
             isLoading={isTyping || !isAppStateReady}
@@ -323,35 +298,19 @@ export function Search({
             title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
-            onClickResult={() => {
+            onClickResult={(result) => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
               setVisible && setVisible(false);
+              if (result.url.includes('/buurt')) {
+                setMijnBuurtResult(
+                  result,
+                  setActiveDatasetsIds,
+                  setActiveFilters
+                );
+              }
             }}
           />
-
-          {!isMijnBuurt && (
-            <ResultSet
-              term={term}
-              isLoading={isTyping || !isAppStateReady}
-              results={results?.mb?.slice(0, maxResultCountDisplay / 2) || []}
-              title="Resultaten van Mijn buurt"
-              noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              showIcon={extendedAMResults}
-              onClickResult={(result) => {
-                trackSearchBarEvent(`Click result`);
-                setResultsVisible(false);
-                setVisible && setVisible(false);
-                if (result.url.includes('/buurt')) {
-                  setMijnBuurtResult(
-                    result,
-                    setActiveDatasetsIds,
-                    setActiveFilters
-                  );
-                }
-              }}
-            />
-          )}
 
           <ResultSet
             term={term}
