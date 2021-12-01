@@ -1,9 +1,10 @@
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { SetterOrUpdater } from 'recoil';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, DatasetFilterSelection } from '../../../universal/config';
 import { IconChevronRight, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
@@ -18,7 +19,12 @@ import {
 } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
-import { useResetMyAreaState } from '../MyArea/MyArea.hooks';
+import {
+  getQueryConfig,
+  useActiveDatasetFilters,
+  useActiveDatasetIds,
+  useResetMyAreaState,
+} from '../MyArea/MyArea.hooks';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
 import { displayPath, SearchEntry } from './searchConfig';
@@ -33,6 +39,17 @@ interface ResultSetProps {
   extendedResults?: boolean;
   showIcon?: boolean;
   onClickResult?: (result: SearchEntry) => void;
+}
+
+function setMijnBuurtResult(
+  result: SearchEntry,
+  setActiveDatasetIds: SetterOrUpdater<string[]>,
+  setActiveFilters: SetterOrUpdater<DatasetFilterSelection>
+) {
+  const queryConfig = getQueryConfig(result.url.split('?')[1]);
+  console.log(queryConfig);
+  setActiveDatasetIds(queryConfig?.datasetIds ?? []);
+  setActiveFilters(queryConfig?.filters ?? {});
 }
 
 export function ResultSet({
@@ -122,7 +139,8 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
-  const resetMyArea = useResetMyAreaState();
+  const [activeDatasetIds, setActiveDatasetsIds] = useActiveDatasetIds();
+  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
@@ -209,9 +227,8 @@ export function Search({
     if (term) {
       setResultsVisible(true);
       setVisible && setVisible(true);
-      resetMyArea();
     }
-  }, [term, resetMyArea, setVisible]);
+  }, [term, setVisible]);
 
   useEffect(() => {
     if (!isActive) {
@@ -285,10 +302,17 @@ export function Search({
               title="Resultaten van Mijn buurt"
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={() => {
+              onClickResult={(result) => {
                 trackSearchBarEvent(`Click result`);
                 setResultsVisible(false);
                 setVisible && setVisible(false);
+                if (result.url.includes('/buurt')) {
+                  setMijnBuurtResult(
+                    result,
+                    setActiveDatasetsIds,
+                    setActiveFilters
+                  );
+                }
               }}
             />
           )}
@@ -314,10 +338,17 @@ export function Search({
               title="Resultaten van Mijn buurt"
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={() => {
+              onClickResult={(result) => {
                 trackSearchBarEvent(`Click result`);
                 setResultsVisible(false);
                 setVisible && setVisible(false);
+                if (result.url.includes('/buurt')) {
+                  setMijnBuurtResult(
+                    result,
+                    setActiveDatasetsIds,
+                    setActiveFilters
+                  );
+                }
               }}
             />
           )}

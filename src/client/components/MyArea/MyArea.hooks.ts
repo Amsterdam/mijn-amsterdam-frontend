@@ -470,9 +470,13 @@ export interface QueryConfig {
   loadingFeature?: { id: string; datasetId: DatasetId };
 }
 
-export function getQueryConfig(): QueryConfig {
+export function getQueryConfig(searchEntry?: string): QueryConfig {
   return Object.fromEntries(
-    Array.from(new URLSearchParams(window.location.search).entries())
+    Array.from(
+      new URLSearchParams(
+        searchEntry ? searchEntry : window.location.search
+      ).entries()
+    )
       .map(([k, v]) => {
         return [k, v ? JSON.parse(v) : undefined];
       })
