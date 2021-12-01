@@ -47,7 +47,7 @@ describe('<Krefia />', () => {
     render(<Component state={testState} />);
     expect(screen.getByText('Kredietbank & FIBU')).toBeInTheDocument();
     expect(
-      screen.getByText('Meer informatie over de Kredietbank')
+      screen.getByText('Meer informatie over Kredietbank Amsterdam')
     ).toBeInTheDocument();
     expect(
       screen.getByText('Afkoopvoorstellen zijn verstuurd')
@@ -57,6 +57,6 @@ describe('<Krefia />', () => {
         'Kredietsom €1.689,12 met openstaand termijnbedrag €79,66'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Beheer uw budget op FiBu')).toBeInTheDocument();
+    expect(screen.getByText('Lopend')).toBeInTheDocument();
   });
 });

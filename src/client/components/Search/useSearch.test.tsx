@@ -209,7 +209,7 @@ describe('Search hooks and helpers', () => {
 
   test('generateSearchIndexPageEntries with disabled/enabled feature', () => {
     const config = apiSearchConfigs.find(
-      (config) => config.stateKey === 'FINANCIELE_HULP'
+      (config) => config.stateKey === 'KREFIA'
     )!;
     const remoteConfig = {
       keywords: [
@@ -225,7 +225,7 @@ describe('Search hooks and helpers', () => {
     config.isEnabled = false;
 
     const appState = {
-      FINANCIELE_HULP: { content: financieleHulpData, status: 'OK' },
+      KREFIA: { content: financieleHulpData, status: 'OK' },
     } as AppState;
 
     const pageEntries = generateSearchIndexPageEntries('private', appState, [
