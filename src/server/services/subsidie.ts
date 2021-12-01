@@ -67,10 +67,7 @@ export async function fetchSubsidie(
   return fetchSource(sessionID, passthroughRequestHeaders);
 }
 
-function transformSubsidieNotifications(
-  notifications: MyNotification[],
-  profileType?: ProfileType
-) {
+function transformSubsidieNotifications(notifications: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
         ...notification,
@@ -80,13 +77,6 @@ function transformSubsidieNotifications(
             notification.link?.title || 'Meer informatie over deze melding',
           to: notification.link?.to || '',
         },
-        description: `${notification.description}
-        ${
-          profileType === 'private-commercial'
-            ? '<p>Log in met eHerkenning om uw subsidie(aanvraag) te bekijken. Klik hiervoor bovenaan deze pagina op Uitloggen en kies voor Inloggen met eHerkenning.</p>'
-            : ''
-        }
-         `,
       }))
     : [];
 
@@ -95,8 +85,7 @@ function transformSubsidieNotifications(
 
 export async function fetchSubsidieGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  profileType?: ProfileType
+  passthroughRequestHeaders: Record<string, string>
 ) {
   const subsidie = await fetchSource(
     sessionID,
@@ -107,8 +96,7 @@ export async function fetchSubsidieGenerated(
     if (subsidie.content.notifications) {
       return apiSuccesResult({
         notifications: transformSubsidieNotifications(
-          subsidie.content.notifications,
-          profileType
+          subsidie.content.notifications
         ),
       });
     }

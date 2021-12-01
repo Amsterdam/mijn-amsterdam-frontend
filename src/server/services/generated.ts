@@ -77,11 +77,13 @@ async function fetchServicesGenerated(
       vergunningenGeneratedResult,
       erfpachtGeneratedResult,
       maintenanceNotifications,
+      subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
       fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
       fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
       fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+      fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
       fetchMaintenanceNotificationsDashboard(sessionID),
       fetchToeristischeVerhuurGenerated(
         sessionID,
@@ -97,6 +99,7 @@ async function fetchServicesGenerated(
     const maintenanceNotificationsResult = getSettledResult(
       maintenanceNotifications
     );
+    const subsidieGenerated = getSettledResult(subsidieGeneratedResult);
     const toeristischeVerhuurNotificationsResult = getSettledResult(
       toeristischeVerhuurGeneratedResult
     );
@@ -105,6 +108,7 @@ async function fetchServicesGenerated(
       milieuzoneGenerated,
       vergunningenGenerated,
       erfpachtGenerated,
+      subsidieGenerated,
       maintenanceNotificationsResult,
       toeristischeVerhuurNotificationsResult,
     ]);
@@ -138,7 +142,7 @@ async function fetchServicesGenerated(
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
-    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders, profileType),
+    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
