@@ -13,7 +13,7 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './FinancieleHulp.module.scss';
+import styles from './Krefia.module.scss';
 
 const DISPLAY_PROPS = {
   title: 'Status',
@@ -56,22 +56,22 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
   }, [deepLinksContent]);
 }
 
-export default function FinancieleHulp() {
-  const { FINANCIELE_HULP } = useAppStateGetter();
-  const deepLinks = useDeepLinks(FINANCIELE_HULP.content?.deepLinks);
+export default function Krefia() {
+  const { KREFIA } = useAppStateGetter();
+  const deepLinks = useDeepLinks(KREFIA.content?.deepLinks);
   const isKredietbank = !!deepLinks?.schuldhulp || !!deepLinks?.lening;
   const isFIBU = !!deepLinks?.budgetbeheer;
   return (
-    <OverviewPage className={styles.FinancieleHulp}>
+    <OverviewPage className={styles.Krefia}>
       <PageHeading
         backLink={{
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        isLoading={isLoading(FINANCIELE_HULP)}
+        isLoading={isLoading(KREFIA)}
         icon={<ChapterIcon />}
       >
-        {ChapterTitles.FINANCIELE_HULP}
+        {ChapterTitles.KREFIA}
       </PageHeading>
       <PageContent>
         {isKredietbank && isFIBU && (
@@ -115,11 +115,11 @@ export default function FinancieleHulp() {
       </PageContent>
       {deepLinks?.schuldhulp && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-schuldregeling"
+          id="SectionCollapsible-krefia-schuldregeling"
           title="Schuldregeling"
           startCollapsed={false}
           className={styles.SectionBorderTop}
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
             category: 'Kredietbank & FIBU overzicht / Schuldregeling',
             name: 'Datatabel',
@@ -134,10 +134,10 @@ export default function FinancieleHulp() {
       )}
       {deepLinks?.lening && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-leningen"
+          id="SectionCollapsible-krefia-leningen"
           title="Leningen"
           startCollapsed={!!deepLinks?.schuldhulp?.length}
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
             category: 'Kredietbank & FIBU overzicht / Leningen',
             name: 'Datatabel',
@@ -152,12 +152,12 @@ export default function FinancieleHulp() {
       )}
       {deepLinks?.budgetbeheer && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-budgetbeheer"
+          id="SectionCollapsible-krefia-budgetbeheer"
           title="Financieel budgetbeheer"
           startCollapsed={
             !!deepLinks?.schuldhulp?.length || !!deepLinks?.lening?.length
           }
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
             category: 'Kredietbank & FIBU overzicht / Financieel budgetbeheer',
             name: 'Datatabel',

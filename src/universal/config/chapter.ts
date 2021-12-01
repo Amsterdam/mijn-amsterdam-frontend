@@ -38,7 +38,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
-  FINANCIELE_HULP: 'FINANCIELE_HULP',
+  KREFIA: 'KREFIA',
   SEARCH: 'SEARCH',
 };
 
@@ -60,7 +60,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  FINANCIELE_HULP: 'Kredietbank & FIBU',
+  KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
 };
 
@@ -116,6 +116,6 @@ export const DocumentTitles = {
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING/VV'
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes.FINANCIELE_HULP]: `${ChapterTitles.FINANCIELE_HULP}`,
+  [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
 };

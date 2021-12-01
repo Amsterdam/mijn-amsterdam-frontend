@@ -67,7 +67,7 @@ function useHeroSrc() {
     case isChapterPath(AppRoutes.TOERISTISCHE_VERHUUR):
       imageName = 'toerisme';
       break;
-    case isChapterPath(AppRoutes.FINANCIELE_HULP):
+    case isChapterPath(AppRoutes.KREFIA):
       imageName = 'financiele-hulp';
       break;
 
