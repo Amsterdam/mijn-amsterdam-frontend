@@ -138,8 +138,11 @@ export function getApiErrors(appState: AppState): Error[] {
       ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
         return (
           typeof apiResponseData !== 'object' ||
-          apiResponseData?.status !== 'OK' ||
-          !!apiResponseData?.failedDependencies
+          apiResponseData == null ||
+          apiResponseData?.status === 'ERROR' ||
+          apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+          (apiResponseData?.status === 'OK' &&
+            !!apiResponseData?.failedDependencies)
         );
       }
     );

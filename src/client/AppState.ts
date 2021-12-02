@@ -35,7 +35,10 @@ export const PRISTINE_APPSTATE: AppState = {
   FOCUS_STADSPAS: apiPristineResult(null),
   WMO: apiPristineResult([]),
   ERFPACHT: apiPristineResult({ isKnown: false }),
-  SUBSIDIE: apiPristineResult({ isKnown: false, notifications: [] }),
+  SUBSIDIE: apiPristineResult(
+    { isKnown: false, notifications: [] },
+    FeatureToggle.subsidieActive
+  ),
   BELASTINGEN: apiPristineResult({ isKnown: true }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
   AKTES: apiPristineResult([], FeatureToggle.aktesActive),
