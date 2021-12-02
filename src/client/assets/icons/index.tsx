@@ -22,7 +22,7 @@ export { ReactComponent as IconErfpacht } from './erfpacht.svg';
 export { ReactComponent as IconExternalLink } from './External-Link.svg';
 export { ReactComponent as IconCheckmark } from './Checkmark.svg';
 export { ReactComponent as IconFilter } from './Filter.svg';
-export { ReactComponent as IconFinancieleHulp } from './financiele-hulp.svg';
+export { ReactComponent as IconKrefia } from './krefia.svg';
 export { ReactComponent as IconHomeCommercial } from './home-commercial.svg';
 export { ReactComponent as IconHomeSimple } from './home-simple.svg';
 export { ReactComponent as IconHome } from './home.svg';

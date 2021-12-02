@@ -380,12 +380,11 @@
       ]
     },
     {
-      "url": "/financiele-hulp",
-      "displayTitle": "Financiële hulp",
+      "url": "/kredietbank-fibu",
+      "displayTitle": "Kredietbank & FIBU",
       "description": "Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).",
       "keywords": [
-        "Financiële hulp",
-        "Financiele hulp",
+        "Kredietbank & FIBU",
         "Financieel",
         "lening",
         "schulden",
@@ -493,7 +492,7 @@
         "pas"
       ]
     },
-    "FINANCIELE_HULP": {
+    "KREFIA": {
       "keywords": [
         "lening",
         "fibu",

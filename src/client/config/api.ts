@@ -92,7 +92,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
     'Toeristische verhuur: Vergunningen + meldingen',
   TOERISTISCHE_VERHUUR_registraties:
     'Toeristische verhuur: Registratienummers + meldingen',
-  FINANCIELE_HULP: 'Financiële Hulp',
+  KREFIA: 'Kredietbank & FIBU',
 };
 
 export function createErrorDisplayData(

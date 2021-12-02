@@ -30,12 +30,12 @@ interface NotificationTriggers {
   krediet: NotificationTrigger | null;
 }
 
-export interface FinancieleHulp {
+export interface Krefia {
   notificationTriggers: NotificationTriggers | null;
   deepLinks: KrefiaDeepLinks;
 }
 
-export interface FinancieleHulpDetail {
+export interface KrefiaDetail {
   deepLinks: KrefiaDeepLinks;
 }
 
@@ -45,13 +45,15 @@ function createNotification(
 ): MyNotification {
   const isFibu = type === 'fibu';
   return {
-    id: `financiele-hulp-${type}-notification`,
+    id: `krefia-${type}-notification`,
     datePublished: message.datePublished,
-    title: isFibu ? 'Bericht FiBu' : `Bericht Kredietbank`,
-    chapter: Chapters.FINANCIELE_HULP,
+    title: isFibu
+      ? 'Bericht Budgetbeheer (FIBU)'
+      : `Bericht Kredietbank Amsterdam`,
+    chapter: Chapters.KREFIA,
     description: isFibu
-      ? 'Er staan ongelezen berichten voor u klaar van FiBu'
-      : 'Er staan ongelezen berichten voor u klaar van de kredietbank',
+      ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
+      : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',
     link: { to: message.url, title: 'Bekijk uw bericht' },
   };
 }
@@ -60,10 +62,10 @@ async function fetchAndTransformKrefia(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = await requestData<FinancieleHulp>(
-    getApiConfig('FINANCIELE_HULP', {
+  const response = await requestData<Krefia>(
+    getApiConfig('KREFIA', {
       transformResponse: (responseData: {
-        content: FinancieleHulp | null;
+        content: Krefia | null;
         status: 'OK';
       }) => responseData.content,
     }),
@@ -81,7 +83,7 @@ export const fetchSource = memoize(fetchAndTransformKrefia, {
   },
 });
 
-export async function fetchFinancieleHulp(
+export async function fetchKrefia(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -92,7 +94,7 @@ export async function fetchFinancieleHulp(
   return response;
 }
 
-export async function fetchFinancieleHulpGenerated(
+export async function fetchKrefiaGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
