@@ -9,7 +9,7 @@ import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchSubsidieGenerated } from './subsidie';
-import { fetchFinancieleHulpGenerated } from './financiele-hulp';
+import { fetchKrefiaGenerated } from './krefia';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSBbzGenerated } from './focus/focus-bbz';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
@@ -129,7 +129,7 @@ async function fetchServicesGenerated(
     maintenanceNotifications,
     stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
-    fetchFinancieleHulpGeneratedResult,
+    fetchKrefiaGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -146,7 +146,7 @@ async function fetchServicesGenerated(
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
-    fetchFinancieleHulpGenerated(sessionID, passthroughRequestHeaders),
+    fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -171,9 +171,7 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGeneratedResult
   );
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
-  const financieleHulpGenerated = getSettledResult(
-    fetchFinancieleHulpGeneratedResult
-  );
+  const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -190,7 +188,7 @@ async function fetchServicesGenerated(
     maintenanceNotificationsResult,
     toeristischeVerhuurGenerated,
     stadspasGenerated,
-    financieleHulpGenerated,
+    krefiaGenerated,
   ]);
 }
 

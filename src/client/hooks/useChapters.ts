@@ -32,7 +32,7 @@ export function isChapterActive(
     SUBSIDIE,
     MY_LOCATION,
     KVK,
-    FINANCIELE_HULP,
+    KREFIA,
   }: AppState
 ) {
   switch (item.id) {
@@ -130,10 +130,8 @@ export function isChapterActive(
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
 
-    case Chapters.FINANCIELE_HULP:
-      return (
-        !isLoading(FINANCIELE_HULP) && !!FINANCIELE_HULP.content?.deepLinks
-      );
+    case Chapters.KREFIA:
+      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
   }
 
   return false;

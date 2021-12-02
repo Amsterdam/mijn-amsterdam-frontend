@@ -1,24 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import FinancieleHulpData from '../../../server/mock-data/json/financiele-hulp.json';
-import { FinancieleHulp as FinancieleHulpContent } from '../../../server/services/financiele-hulp';
+import KrefiaData from '../../../server/mock-data/json/krefia.json';
+import { Krefia as KrefiaContent } from '../../../server/services/krefia';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
-import FinancieleHulp from './FinancieleHulp';
+import Krefia from './Krefia';
 import MockApp from '../MockApp';
 
 interface TestState {
-  FINANCIELE_HULP: {
+  KREFIA: {
     status: string;
-    content: FinancieleHulpContent;
+    content: KrefiaContent;
   };
 }
 
 const testState: TestState = {
-  FINANCIELE_HULP: {
+  KREFIA: {
     status: 'OK',
-    content: FinancieleHulpData.content as FinancieleHulpContent,
+    content: KrefiaData.content as KrefiaContent,
   },
 };
 
@@ -26,14 +26,14 @@ function initializeState(snapshot: MutableSnapshot, state: TestState) {
   snapshot.set(appStateAtom as any, state);
 }
 
-describe('<FinancieleHulp />', () => {
-  const routeEntry = generatePath(AppRoutes.FINANCIELE_HULP);
-  const routePath = AppRoutes.FINANCIELE_HULP;
+describe('<Krefia />', () => {
+  const routeEntry = generatePath(AppRoutes.KREFIA);
+  const routePath = AppRoutes.KREFIA;
   const Component = ({ state }: { state: TestState }) => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={FinancieleHulp}
+      component={Krefia}
       initializeState={(snap) => initializeState(snap, state)}
     />
   );
@@ -45,9 +45,9 @@ describe('<FinancieleHulp />', () => {
 
   it('Shows the page succesfully', () => {
     render(<Component state={testState} />);
-    expect(screen.getByText('Financiële Hulp')).toBeInTheDocument();
+    expect(screen.getByText('Kredietbank & FIBU')).toBeInTheDocument();
     expect(
-      screen.getByText('Meer informatie over de Kredietbank')
+      screen.getByText('Meer informatie over Kredietbank Amsterdam')
     ).toBeInTheDocument();
     expect(
       screen.getByText('Afkoopvoorstellen zijn verstuurd')
@@ -57,6 +57,6 @@ describe('<FinancieleHulp />', () => {
         'Kredietsom €1.689,12 met openstaand termijnbedrag €79,66'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Beheer uw budget op FiBu')).toBeInTheDocument();
+    expect(screen.getByText('Lopend')).toBeInTheDocument();
   });
 });

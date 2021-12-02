@@ -76,7 +76,7 @@ export type SourceApiKey =
   | 'KVK'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
-  | 'FINANCIELE_HULP';
+  | 'KREFIA';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -150,9 +150,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
   },
-  FINANCIELE_HULP: {
+  KREFIA: {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
-    postponeFetch: !FeatureToggle.financieleHulpActive,
+    postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
     url: `${BFF_MS_API_BASE_URL}/subsidie/summary`,
