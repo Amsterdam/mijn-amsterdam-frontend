@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
+import { apiPristineResult } from '../../universal/helpers';
 import { PRISTINE_APPSTATE } from '../AppState';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
@@ -16,6 +17,7 @@ jest.spyOn(console, 'info').mockImplementation();
 
 describe('useAppState', () => {
   const stateSliceMock = { FOO: { content: { hello: 'world' } } };
+  (PRISTINE_APPSTATE as any).FOO = apiPristineResult(null);
   const initialAppState = PRISTINE_APPSTATE;
 
   let dataApiSpy: jest.SpyInstance;
