@@ -67,7 +67,7 @@ const vergunningenData = [
   },
 ];
 
-const financieleHulpData = {
+const krefiaData = {
   deepLinks: {
     budgetbeheer: {
       title: 'Beheer uw budget op FiBu',
@@ -225,7 +225,7 @@ describe('Search hooks and helpers', () => {
     config.isEnabled = false;
 
     const appState = {
-      KREFIA: { content: financieleHulpData, status: 'OK' },
+      KREFIA: { content: krefiaData, status: 'OK' },
     } as AppState;
 
     const pageEntries = generateSearchIndexPageEntries('private', appState, [
