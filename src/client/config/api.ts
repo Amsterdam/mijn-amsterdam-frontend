@@ -77,6 +77,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   FOCUS_STADSPAS: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
+  SUBSIDIE: 'Subsidies',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',
@@ -137,8 +138,11 @@ export function getApiErrors(appState: AppState): Error[] {
       ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
         return (
           typeof apiResponseData !== 'object' ||
-          apiResponseData?.status !== 'OK' ||
-          !!apiResponseData?.failedDependencies
+          apiResponseData == null ||
+          apiResponseData?.status === 'ERROR' ||
+          apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+          (apiResponseData?.status === 'OK' &&
+            !!apiResponseData?.failedDependencies)
         );
       }
     );

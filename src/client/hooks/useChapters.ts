@@ -29,6 +29,7 @@ export function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     TOERISTISCHE_VERHUUR,
+    SUBSIDIE,
     MY_LOCATION,
     KVK,
     KREFIA,
@@ -99,6 +100,9 @@ export function isChapterActive(
 
     case Chapters.ERFPACHT:
       return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
+
+    case Chapters.SUBSIDIE:
+      return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
     case Chapters.BURGERZAKEN:
       const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;

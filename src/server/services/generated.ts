@@ -8,6 +8,7 @@ import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
+import { fetchSubsidieGenerated } from './subsidie';
 import { fetchKrefiaGenerated } from './krefia';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSBbzGenerated } from './focus/focus-bbz';
@@ -76,11 +77,13 @@ async function fetchServicesGenerated(
       vergunningenGeneratedResult,
       erfpachtGeneratedResult,
       maintenanceNotifications,
+      subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
       fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
       fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
       fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+      fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
       fetchMaintenanceNotificationsDashboard(sessionID),
       fetchToeristischeVerhuurGenerated(
         sessionID,
@@ -96,6 +99,7 @@ async function fetchServicesGenerated(
     const maintenanceNotificationsResult = getSettledResult(
       maintenanceNotifications
     );
+    const subsidieGenerated = getSettledResult(subsidieGeneratedResult);
     const toeristischeVerhuurNotificationsResult = getSettledResult(
       toeristischeVerhuurGeneratedResult
     );
@@ -104,6 +108,7 @@ async function fetchServicesGenerated(
       milieuzoneGenerated,
       vergunningenGenerated,
       erfpachtGenerated,
+      subsidieGenerated,
       maintenanceNotificationsResult,
       toeristischeVerhuurNotificationsResult,
     ]);
@@ -120,6 +125,7 @@ async function fetchServicesGenerated(
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
     erfpachtGeneratedResult,
+    subsidieGeneratedResult,
     maintenanceNotifications,
     stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
@@ -136,6 +142,7 @@ async function fetchServicesGenerated(
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
     fetchMaintenanceNotificationsDashboard(sessionID),
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
@@ -156,6 +163,7 @@ async function fetchServicesGenerated(
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
   const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
+  const subsidieGenerated = getSettledResult(subsidieGeneratedResult);
   const maintenanceNotificationsResult = getSettledResult(
     maintenanceNotifications
   );
@@ -163,7 +171,7 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGeneratedResult
   );
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
-  const KrefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
+  const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -176,10 +184,11 @@ async function fetchServicesGenerated(
     milieuzoneGenerated,
     vergunningenGenerated,
     erfpachtGenerated,
+    subsidieGenerated,
     maintenanceNotificationsResult,
     toeristischeVerhuurGenerated,
     stadspasGenerated,
-    KrefiaGenerated,
+    krefiaGenerated,
   ]);
 }
 

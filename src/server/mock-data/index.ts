@@ -15,6 +15,7 @@ import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-verhuur.json';
+import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 import { apiSuccesResult } from '../../universal/helpers';
@@ -113,6 +114,15 @@ export const mockDataConfig: MockDataConfig = {
       //   return 'no-content';
       // }
       return await loadMockApiResponseJson(ERFPACHT);
+    },
+  },
+  [ApiUrls.SUBSIDIE]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
+      return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
   [ApiUrls.BAG]: {

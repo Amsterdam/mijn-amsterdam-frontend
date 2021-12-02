@@ -101,6 +101,10 @@ describe('Api utils', () => {
         status: 'OK',
         failedDependencies,
       },
+      TEST_STATE_5: {
+        message: 'Could not resolve dependency',
+        status: 'DEPENDENCY_ERROR',
+      },
     } as Partial<AppState>;
 
     const expectedResult = [
@@ -123,6 +127,11 @@ describe('Api utils', () => {
         stateKey: 'TEST_STATE_4_FAIL_1',
         name: 'TEST_STATE_4_FAIL_1',
         error: '404 not found',
+      },
+      {
+        stateKey: 'TEST_STATE_5',
+        name: 'TEST_STATE_5',
+        error: 'Could not resolve dependency',
       },
     ];
 

@@ -7,6 +7,7 @@ export * from './buurt/buurt';
 export * from './buurt/supercluster';
 export * from './cms-content';
 export * from './erfpacht';
+export * from './subsidie';
 export * from './krefia';
 export * from './focus/focus-aanvragen';
 export * from './focus/focus-specificaties';
