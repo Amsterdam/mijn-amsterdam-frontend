@@ -74,7 +74,7 @@ describe('transformSourceData', () => {
       '[transformSourceData] Unknown stateKey encountered',
       {
         extra: {
-          stateKey: 'STATE_KEY',
+          unexpectedStateKeys: ['STATE_KEY'],
         },
       }
     );
