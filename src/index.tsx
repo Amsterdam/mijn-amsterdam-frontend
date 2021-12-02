@@ -2,6 +2,9 @@
 
 import * as Sentry from '@sentry/react';
 import 'react-app-polyfill/stable';
+import 'core-js/features/object/entries';
+import 'core-js/features/array/flat-map';
+import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
 import App from './client/App';
 

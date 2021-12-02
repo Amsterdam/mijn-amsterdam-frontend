@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "3.45.0",
+  "version": "3.48.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
@@ -76,6 +76,7 @@
     "classnames": "^2.3.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.19.1",
     "cors": "^2.8.5",
     "date-fns": "^2.23.0",
     "express": "^4.17.1",
