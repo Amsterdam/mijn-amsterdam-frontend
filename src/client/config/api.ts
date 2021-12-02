@@ -6,7 +6,6 @@ import {
   IS_AP,
 } from '../../universal/config';
 import { IS_ACCEPTANCE } from '../../universal/config/env';
-import { isError } from '../../universal/helpers';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { AppState } from '../AppState';
 import { Error } from '../components/ErrorMessages/ErrorMessages';
