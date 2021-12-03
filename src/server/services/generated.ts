@@ -19,7 +19,7 @@ import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
-import marked from 'marked';
+import { marked } from 'marked';
 import memoize from 'memoizee';
 
 export function getGeneratedItemsFromApiResults(

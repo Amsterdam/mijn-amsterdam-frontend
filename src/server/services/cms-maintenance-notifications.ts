@@ -1,5 +1,5 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
-import marked from 'marked';
+import { marked } from 'marked';
 import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccesResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';

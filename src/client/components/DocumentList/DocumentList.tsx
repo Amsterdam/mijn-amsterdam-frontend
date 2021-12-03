@@ -71,20 +71,15 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             );
           }
 
-          try {
-            return res.blob();
-          } catch (error) {
-            downloadFile(document);
-            Sentry.captureException(error, {
-              extra: {
-                title: document.title,
-                url: document.url,
-                message: 'Res.blob() failed.',
-              },
-            });
-          }
+          return res.blob();
         })
         .then((blob) => {
+          if (!blob) {
+            downloadFile(document);
+            setLoading(false);
+            return;
+          }
+
           const trackingUrl =
             window.location.pathname +
             addFileType(
