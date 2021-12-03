@@ -6,6 +6,7 @@ import {
   ChapterIcon,
   Linkd,
   LinkdInline,
+  LoadingContent,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -32,7 +33,7 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
       let linkText = 'Bekijk';
       switch (key) {
         case 'budgetbeheer':
-          linkText = 'Ga naar budgebeheer';
+          linkText = 'Ga naar budgetbeheer';
           break;
         case 'lening':
           linkText = 'Bekijk uw lening';
@@ -68,12 +69,12 @@ export default function Krefia() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        isLoading={isLoading(KREFIA)}
         icon={<ChapterIcon />}
       >
         {ChapterTitles.KREFIA}
       </PageHeading>
       <PageContent>
+        {isLoading(KREFIA) && <LoadingContent />}
         {isKredietbank && isFIBU && (
           <p>
             Een online plek waar u alle informatie over uw geldzaken kunt vinden

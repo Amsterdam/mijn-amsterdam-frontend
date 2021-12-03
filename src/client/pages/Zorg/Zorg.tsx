@@ -46,7 +46,6 @@ export default function Zorg() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        isLoading={isLoading(WMO)}
         icon={<ChapterIcon />}
       >
         {ChapterTitles.ZORG}
