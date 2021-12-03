@@ -154,13 +154,13 @@ export default function Krefia() {
       {deepLinks?.budgetbeheer && (
         <SectionCollapsible
           id="SectionCollapsible-krefia-budgetbeheer"
-          title="Financieel budgetbeheer"
+          title="Budgetbeheer"
           startCollapsed={
             !!deepLinks?.schuldhulp?.length || !!deepLinks?.lening?.length
           }
           isLoading={isLoading(KREFIA)}
           track={{
-            category: 'Kredietbank & FIBU overzicht / Financieel budgetbeheer',
+            category: 'Kredietbank & FIBU overzicht / Budgetbeheer',
             name: 'Datatabel',
           }}
         >

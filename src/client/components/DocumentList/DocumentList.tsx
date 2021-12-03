@@ -74,12 +74,6 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           return res.blob();
         })
         .then((blob) => {
-          if (!blob) {
-            downloadFile(document);
-            setLoading(false);
-            return;
-          }
-
           const trackingUrl =
             window.location.pathname +
             addFileType(
@@ -94,17 +88,24 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             profileType
           );
 
-          if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
-            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
+          if (!blob) {
+            downloadFile(document);
           } else {
-            try {
-              const fileUrl = window.URL.createObjectURL(blob);
-              downloadFile({
-                ...document,
-                url: fileUrl,
-              });
-            } catch (error) {
-              downloadFile(document);
+            if (
+              window.navigator &&
+              (window.navigator as any).msSaveOrOpenBlob
+            ) {
+              (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
+            } else {
+              try {
+                const fileUrl = window.URL.createObjectURL(blob);
+                downloadFile({
+                  ...document,
+                  url: fileUrl,
+                });
+              } catch (error) {
+                downloadFile(document);
+              }
             }
           }
         })
