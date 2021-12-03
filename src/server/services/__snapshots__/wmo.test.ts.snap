@@ -3,13 +3,83 @@
 exports[`Should format WMO data correctly 1`] = `
 Array [
   Object {
+    "dateEnd": "",
+    "dateStart": "24 augustus 2021",
+    "id": "2311932295",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2311932295",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+        "datePublished": "2021-08-26",
+        "description": "
+            <p>
+              U hebt recht op een handbewogen kinderrolstoel per 24 augustus 2021.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om een handbewogen kinderrolstoel aan u te leveren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat een handbewogen kinderrolstoel bij u is afgeleverd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Product geleverd",
+      },
+      Object {
+        "datePublished": null,
+        "description": "<p>
+            Uw recht op handbewogen kinderrolstoel is beëindigd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Welzorg",
+    "title": "Handbewogen kinderrolstoel",
+    "voorzieningsoortcode": "ROL",
+  },
+  Object {
     "dateEnd": "08 maart 2020",
     "dateStart": "14 april 2019",
-    "id": "3664271099",
+    "id": "1934044474",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3664271099",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1934044474",
     },
     "steps": Array [
       Object {
@@ -77,11 +147,11 @@ Array [
   Object {
     "dateEnd": "12 maart 2020",
     "dateStart": "13 maart 2019",
-    "id": "3532925466",
+    "id": "356612985",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3532925466",
+      "to": "/zorg-en-ondersteuning/voorzieningen/356612985",
     },
     "steps": Array [
       Object {
@@ -149,11 +219,11 @@ Array [
   Object {
     "dateEnd": "08 maart 2020",
     "dateStart": "09 maart 2019",
-    "id": "193302712",
+    "id": "1114722425",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/193302712",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1114722425",
     },
     "steps": Array [
       Object {
@@ -221,11 +291,11 @@ Array [
   Object {
     "dateEnd": "08 maart 2020",
     "dateStart": "09 maart 2019",
-    "id": "653427905",
+    "id": "187600422",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/653427905",
+      "to": "/zorg-en-ondersteuning/voorzieningen/187600422",
     },
     "steps": Array [
       Object {
@@ -293,11 +363,11 @@ Array [
   Object {
     "dateEnd": "31 december 2019",
     "dateStart": "01 januari 2019",
-    "id": "1564758718",
+    "id": "2486178431",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1564758718",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2486178431",
     },
     "steps": Array [
       Object {
@@ -365,11 +435,11 @@ Array [
   Object {
     "dateEnd": "31 december 2018",
     "dateStart": "31 december 2018",
-    "id": "2486178431",
+    "id": "218362300",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2486178431",
+      "to": "/zorg-en-ondersteuning/voorzieningen/218362300",
     },
     "steps": Array [
       Object {
@@ -436,11 +506,11 @@ Array [
   Object {
     "dateEnd": "08 maart 2019",
     "dateStart": "28 november 2018",
-    "id": "218362300",
+    "id": "1139782013",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/218362300",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1139782013",
     },
     "steps": Array [
       Object {
@@ -507,11 +577,11 @@ Array [
   Object {
     "dateEnd": "20 november 2019",
     "dateStart": "20 november 2018",
-    "id": "1139782013",
+    "id": "577518514",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1139782013",
+      "to": "/zorg-en-ondersteuning/voorzieningen/577518514",
     },
     "steps": Array [
       Object {
@@ -579,11 +649,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "24 oktober 2018",
-    "id": "3378519684",
+    "id": "2215576997",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3378519684",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2215576997",
     },
     "steps": Array [
       Object {
@@ -651,11 +721,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "07 september 2018",
-    "id": "3861343317",
+    "id": "611381709",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3861343317",
+      "to": "/zorg-en-ondersteuning/voorzieningen/611381709",
     },
     "steps": Array [
       Object {
@@ -721,11 +791,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "17 juli 2018",
-    "id": "3499538749",
+    "id": "1089844348",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3499538749",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1089844348",
     },
     "steps": Array [
       Object {
@@ -793,11 +863,11 @@ Array [
   Object {
     "dateEnd": "01 januari 2019",
     "dateStart": "06 juli 2018",
-    "id": "797571467",
+    "id": "3481743240",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/797571467",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3481743240",
     },
     "steps": Array [
       Object {
@@ -864,11 +934,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "20 april 2018",
-    "id": "1738948543",
+    "id": "3624221438",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1738948543",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3624221438",
     },
     "steps": Array [
       Object {
@@ -936,11 +1006,11 @@ Array [
   Object {
     "dateEnd": "13 april 2019",
     "dateStart": "14 april 2018",
-    "id": "3126867657",
+    "id": "472912430",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3126867657",
+      "to": "/zorg-en-ondersteuning/voorzieningen/472912430",
     },
     "steps": Array [
       Object {
@@ -1005,13 +1075,85 @@ Array [
     "voorzieningsoortcode": "WMH",
   },
   Object {
+    "dateEnd": "",
+    "dateStart": "06 april 2018",
+    "id": "520299896",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/520299896",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+        "datePublished": "2018-04-25",
+        "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing per 06 april 2018.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Aanpassing uitgevoerd",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": false,
+        "isChecked": false,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Welzorg",
+    "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
+  },
+  Object {
     "dateEnd": "08 maart 2019",
     "dateStart": "09 maart 2018",
-    "id": "2604218949",
+    "id": "825035591",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2604218949",
+      "to": "/zorg-en-ondersteuning/voorzieningen/825035591",
     },
     "steps": Array [
       Object {
@@ -1078,11 +1220,11 @@ Array [
   Object {
     "dateEnd": "21 februari 2019",
     "dateStart": "21 februari 2018",
-    "id": "2751557582",
+    "id": "112143628",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2751557582",
+      "to": "/zorg-en-ondersteuning/voorzieningen/112143628",
     },
     "steps": Array [
       Object {
@@ -1149,11 +1291,11 @@ Array [
   Object {
     "dateEnd": "30 december 2018",
     "dateStart": "01 januari 2018",
-    "id": "1733684653",
+    "id": "3997997795",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1733684653",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3997997795",
     },
     "steps": Array [
       Object {
@@ -1220,11 +1362,11 @@ Array [
   Object {
     "dateEnd": "16 februari 2018",
     "dateStart": "01 januari 2018",
-    "id": "112143628",
+    "id": "2376456770",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/112143628",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2376456770",
     },
     "steps": Array [
       Object {
@@ -1291,11 +1433,11 @@ Array [
   Object {
     "dateEnd": "23 november 2018",
     "dateStart": "24 november 2017",
-    "id": "3997997795",
+    "id": "2284269352",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3997997795",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2284269352",
     },
     "steps": Array [
       Object {
@@ -1362,11 +1504,11 @@ Array [
   Object {
     "dateEnd": "08 maart 2018",
     "dateStart": "01 juni 2017",
-    "id": "1761022339",
+    "id": "3880397096",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1761022339",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3880397096",
     },
     "steps": Array [
       Object {
@@ -1433,11 +1575,11 @@ Array [
   Object {
     "dateEnd": "13 april 2018",
     "dateStart": "01 juni 2017",
-    "id": "3232158953",
+    "id": "2080384683",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3232158953",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2080384683",
     },
     "steps": Array [
       Object {
@@ -1504,11 +1646,11 @@ Array [
   Object {
     "dateEnd": "01 mei 2018",
     "dateStart": "01 juni 2017",
-    "id": "3880397096",
+    "id": "3487826346",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3880397096",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3487826346",
     },
     "steps": Array [
       Object {
@@ -1575,11 +1717,11 @@ Array [
   Object {
     "dateEnd": "16 februari 2018",
     "dateStart": "01 juni 2017",
-    "id": "2080384683",
+    "id": "3735132013",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2080384683",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3735132013",
     },
     "steps": Array [
       Object {
@@ -1646,11 +1788,11 @@ Array [
   Object {
     "dateEnd": "02 januari 2018",
     "dateStart": "03 januari 2017",
-    "id": "4008938794",
+    "id": "1206430444",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/4008938794",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1206430444",
     },
     "steps": Array [],
     "supplier": undefined,
@@ -1659,12 +1801,63 @@ Array [
   },
   Object {
     "dateEnd": "",
-    "dateStart": "19 februari 2015",
-    "id": "120078938",
+    "dateStart": "28 april 2016",
+    "id": "3825488690",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/120078938",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3825488690",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+        "datePublished": "2016-06-10",
+        "description": "
+            <p>
+              U hebt recht op een financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen per 28 april 2016.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "
+            <p>
+              Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+            </p>
+            
+          ",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": false,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": null,
+    "title": "Financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen",
+    "voorzieningsoortcode": "MVV",
+  },
+  Object {
+    "dateEnd": "",
+    "dateStart": "19 februari 2015",
+    "id": "959665241",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/959665241",
     },
     "steps": Array [
       Object {
@@ -1731,12 +1924,82 @@ Array [
   },
   Object {
     "dateEnd": "",
+    "dateStart": "16 februari 2015",
+    "id": "3204693915",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3204693915",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+        "datePublished": "2015-02-16",
+        "description": "
+            <p>
+              U hebt recht op een driewielfiets 5-9 jr per 16 februari 2015.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om een driewielfiets 5-9 jr aan u te leveren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat een driewielfiets 5-9 jr bij u is afgeleverd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Product geleverd",
+      },
+      Object {
+        "datePublished": null,
+        "description": "<p>
+            Uw recht op driewielfiets 5-9 jr is beëindigd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Welzorg",
+    "title": "Driewielfiets 5-9 jr",
+    "voorzieningsoortcode": "FIE",
+  },
+  Object {
+    "dateEnd": "",
     "dateStart": "29 december 2014",
-    "id": "3945226891",
+    "id": "3682507143",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3945226891",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3682507143",
     },
     "steps": Array [
       Object {
@@ -1802,11 +2065,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "08 september 2014",
-    "id": "572315841",
+    "id": "3713250950",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/572315841",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3713250950",
     },
     "steps": Array [
       Object {
@@ -1872,11 +2135,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "08 september 2014",
-    "id": "959665241",
+    "id": "2231154110",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/959665241",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2231154110",
     },
     "steps": Array [
       Object {
@@ -1944,11 +2207,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "05 december 2013",
-    "id": "2276127574",
+    "id": "975175805",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2276127574",
+      "to": "/zorg-en-ondersteuning/voorzieningen/975175805",
     },
     "steps": Array [
       Object {
@@ -2016,11 +2279,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "06 mei 2013",
-    "id": "2083257687",
+    "id": "3679649212",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2083257687",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3679649212",
     },
     "steps": Array [
       Object {
@@ -2088,11 +2351,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "14 maart 2013",
-    "id": "3612306874",
+    "id": "1424403262",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3612306874",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1424403262",
     },
     "steps": Array [
       Object {
@@ -2157,12 +2420,152 @@ Array [
   },
   Object {
     "dateEnd": "",
-    "dateStart": "05 oktober 2012",
-    "id": "1906706122",
+    "dateStart": "07 februari 2013",
+    "id": "785385728",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/785385728",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+        "datePublished": "2013-06-17",
+        "description": "
+            <p>
+              U hebt recht op een buggy per 07 februari 2013.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om een buggy aan u te leveren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat een buggy bij u is afgeleverd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Product geleverd",
+      },
+      Object {
+        "datePublished": null,
+        "description": "<p>
+            Uw recht op buggy is beëindigd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Welzorg",
+    "title": "Buggy",
+    "voorzieningsoortcode": "OVE",
+  },
+  Object {
+    "dateEnd": "",
+    "dateStart": "30 november 2012",
+    "id": "3803568202",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1906706122",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3803568202",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+        "datePublished": "2012-11-30",
+        "description": "
+            <p>
+              U hebt recht op een autozitje per 30 november 2012.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om een autozitje aan u te leveren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat een autozitje bij u is afgeleverd.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Product geleverd",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": false,
+        "isChecked": false,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Welzorg",
+    "title": "Autozitje",
+    "voorzieningsoortcode": "OVE",
+  },
+  Object {
+    "dateEnd": "",
+    "dateStart": "05 oktober 2012",
+    "id": "1250447180",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1250447180",
     },
     "steps": Array [
       Object {
@@ -2228,11 +2631,11 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "05 oktober 2012",
-    "id": "40009835",
+    "id": "772624609",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/40009835",
+      "to": "/zorg-en-ondersteuning/voorzieningen/772624609",
     },
     "steps": Array [
       Object {

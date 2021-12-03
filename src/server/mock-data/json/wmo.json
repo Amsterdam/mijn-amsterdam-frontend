@@ -2,6 +2,19 @@
     "status": "OK",
     "content": [
         {
+            "dateDecision": "2016-06-10",
+            "dateEnd": null,
+            "dateStart": "2016-04-28",
+            "deliveryType": "",
+            "isActual": true,
+            "itemTypeCode": "MVV",
+            "serviceDateEnd": null,
+            "serviceDateStart": null,
+            "serviceOrderDate": null,
+            "supplier": null,
+            "title": "financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen"
+        },
+        {
             "dateDecision": "2012-11-30",
             "dateEnd": null,
             "dateStart": "2012-11-30",
