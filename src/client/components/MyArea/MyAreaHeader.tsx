@@ -11,7 +11,7 @@ import { useTabletScreen } from '../../hooks/media.hook';
 import { useKeyUp } from '../../hooks/useKey';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Linkd, { IconButton, Button } from '../Button/Button';
+import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
 import styles from './MyArea.module.scss';
@@ -55,6 +55,14 @@ export default function MyAreaHeader({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, trackSearchBarEvent]);
+
+  useEffect(() => {
+    if (isSearchActive) {
+      document.body.classList.add('is-typeAheadActive');
+    } else {
+      document.body.classList.remove('is-typeAheadActive');
+    }
+  }, [isSearchActive]);
   return (
     <>
       <div className={styles.Header}>
@@ -102,7 +110,7 @@ export default function MyAreaHeader({
             </div>
           </div>
         )}
-        {isSmallScreen && (
+        {isSmallScreen && !isSearchActive && (
           <div className={styles.CloseWrapper}>
             <IconButton
               icon={isSearchActive ? IconClose : IconSearch}
@@ -116,7 +124,9 @@ export default function MyAreaHeader({
           <IconButton
             icon={IconClose}
             onClick={() => {
-              history.push(AppRoutes.ROOT);
+              isSearchActive
+                ? setSearchActive(!isSearchActive)
+                : history.push(AppRoutes.ROOT);
             }}
           />
         ) : (
@@ -130,25 +140,23 @@ export default function MyAreaHeader({
         )}
       </div>
       {isSmallScreen && isSearchActive && (
-        <div className={styles.Search}>
+        <div className={styles.SearchBar}>
           <div className={styles.SearchBarInner}>
-            <div className={styles.SearchBar}>
-              <Search
-                setVisible={(value: boolean) => {
-                  setSearchActive(value);
-                }}
-                maxResultCountDisplay={10}
-                isActive={isSearchActive}
-                onFinish={(reason) => {
+            <Search
+              setVisible={(value: boolean) => {
+                setSearchActive(value);
+              }}
+              maxResultCountDisplay={10}
+              isActive={isSearchActive}
+              onFinish={(reason) => {
+                if (reason) {
+                  setSearchActive(false);
                   if (reason) {
-                    setSearchActive(false);
-                    if (reason) {
-                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                    }
+                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
-                }}
-              />
-            </div>
+                }
+              }}
+            />
           </div>
         </div>
       )}

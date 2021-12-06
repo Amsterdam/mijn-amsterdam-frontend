@@ -12,6 +12,7 @@ import {
   trackEventWithProfileType,
   trackSearch,
 } from '../../hooks/analytics.hook';
+import { useTabletScreen } from '../../hooks/media.hook';
 import { useKeyDown } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
@@ -139,6 +140,7 @@ export function Search({
   const profileType = useProfileTypeValue();
   const [, setActiveDatasetsIds] = useActiveDatasetIds();
   const [, setActiveFilters] = useActiveDatasetFilters();
+  const isSmallScreen = useTabletScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
@@ -278,17 +280,19 @@ export function Search({
             trackSearchDebounced(term);
           }}
         />
-        <IconButton
-          className={styles.CloseButton}
-          aria-label="Sluit resultaten"
-          type="reset"
-          iconSize="32"
-          onClick={() => {
-            setVisible && setVisible(false);
-            setResultsVisible(false);
-          }}
-          icon={IconClose}
-        />
+        {!isSmallScreen && (
+          <IconButton
+            className={styles.CloseButton}
+            aria-label="Sluit resultaten"
+            type="reset"
+            iconSize="32"
+            onClick={() => {
+              setVisible && setVisible(false);
+              setResultsVisible(false);
+            }}
+            icon={IconClose}
+          />
+        )}
 
         <IconButton
           className={styles.SubmitButton}

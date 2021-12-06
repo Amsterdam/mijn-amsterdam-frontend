@@ -46,6 +46,7 @@
 .Header {
   display: flex;
   height: 6.4rem;
+  min-height: 6.4rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   align-items: center;
@@ -96,37 +97,29 @@
   flex-direction: row;
   width: 64rem;
   align-items: center;
+
   @include mq-tablet() {
-    padding: 0;
-    width: 100%;
-    background-color: $color-white;
-    @include select('Search_SearchBar') {
-      form {
-        padding: 1rem;
-      }
+    background: white;
+    margin-top: 6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    width: 100vw;
+    z-index: 450;
+    position: absolute;
+    form {
+      padding: 1rem;
     }
-  }
-}
-
-.Search {
-  z-index: z-index(main-nav-bar-inner--tablet);
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 6rem;
-
-  @include mq-tablet() {
-    width: 100%;
-  }
-
-  @include mq-phone() {
-    width: 100%;
   }
 }
 
 .SearchBarInner {
   max-width: 60rem;
   z-index: 500;
+  @include mq-tablet() {
+    width: 100%;
+    margin: auto;
+  }
 }
 
 .SearchButton {
