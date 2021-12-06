@@ -11,7 +11,7 @@ import { useTabletScreen } from '../../hooks/media.hook';
 import { useKeyUp } from '../../hooks/useKey';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Linkd, { IconButton } from '../Button/Button';
+import Linkd, { IconButton, Button } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
 import styles from './MyArea.module.scss';
@@ -100,20 +100,6 @@ export default function MyAreaHeader({
                 }}
               />
             </div>
-            {isSearchActive && (
-              <IconButton
-                className={styles.SearchButton}
-                onClick={() => {
-                  setSearchActive(!isSearchActive);
-                  trackSearchBarEvent(
-                    `${
-                      !isSearchActive === false ? 'Sluiten' : 'Openen'
-                    } met button`
-                  );
-                }}
-                icon={IconClose}
-              />
-            )}
           </div>
         )}
         {isSmallScreen && (
@@ -126,40 +112,45 @@ export default function MyAreaHeader({
             />
           </div>
         )}
-        {showCloseButton && (
+        {isSmallScreen ? (
           <IconButton
             icon={IconClose}
             onClick={() => {
               history.push(AppRoutes.ROOT);
             }}
+          />
+        ) : (
+          <Button
+            onClick={() => {
+              history.push(AppRoutes.ROOT);
+            }}
           >
             Kaart sluiten
-          </IconButton>
+          </Button>
         )}
       </div>
       {isSmallScreen && isSearchActive && (
-        <div className={styles.SearchBar}>
+        <div className={styles.Search}>
           <div className={styles.SearchBarInner}>
-            <Search
-              setVisible={(value: boolean) => {
-                setSearchActive(value);
-              }}
-              maxResultCountDisplay={isSmallScreen ? 4 : 10}
-              isActive={isSearchActive}
-              onFinish={(reason) => {
-                if (reason) {
-                  setSearchActive(false);
+            <div className={styles.SearchBar}>
+              <Search
+                setVisible={(value: boolean) => {
+                  setSearchActive(value);
+                }}
+                maxResultCountDisplay={10}
+                isActive={isSearchActive}
+                onFinish={(reason) => {
                   if (reason) {
-                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                    setSearchActive(false);
+                    if (reason) {
+                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </div>
           </div>
         </div>
-      )}
-      {isSmallScreen && isSearchActive && (
-        <div className={styles.Layover}></div>
       )}
     </>
   );

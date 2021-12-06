@@ -96,39 +96,41 @@
   flex-direction: row;
   width: 64rem;
   align-items: center;
-  @include mq-phone() {
-    background: white;
-    margin-top: 5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    display: flex;
+  @include mq-tablet() {
+    padding: 0;
     width: 100%;
-    z-index: 450;
-    position: absolute;
+    background-color: $color-white;
+    @include select('Search_SearchBar') {
+      form {
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+.Search {
+  z-index: z-index(main-nav-bar-inner--tablet);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6rem;
+
+  @include mq-tablet() {
+    width: 100%;
+  }
+
+  @include mq-phone() {
+    width: 100%;
   }
 }
 
 .SearchBarInner {
   max-width: 60rem;
-  width: 60rem;
   z-index: 500;
-  @include mq-phone() {
-    width: 90%;
-    margin: auto;
-  }
 }
 
 .SearchButton {
   margin-left: 1rem;
-}
-
-.Layover {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: 449;
-  background: black;
-  opacity: 0.6;
 }
 
 .CloseWrapper {

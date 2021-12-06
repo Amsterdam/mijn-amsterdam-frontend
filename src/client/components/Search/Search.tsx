@@ -5,7 +5,7 @@ import { SetterOrUpdater } from 'recoil';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 
 import { AppRoutes, DatasetFilterSelection } from '../../../universal/config';
-import { IconChevronRight, IconSearch } from '../../assets/icons';
+import { IconChevronRight, IconClose, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
 import {
@@ -277,6 +277,17 @@ export function Search({
             setTermDebounced(term);
             trackSearchDebounced(term);
           }}
+        />
+        <IconButton
+          className={styles.CloseButton}
+          aria-label="Sluit resultaten"
+          type="reset"
+          iconSize="32"
+          onClick={() => {
+            setVisible && setVisible(false);
+            setResultsVisible(false);
+          }}
+          icon={IconClose}
         />
 
         <IconButton
