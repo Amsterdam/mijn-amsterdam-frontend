@@ -20,7 +20,6 @@ export function DatasetCategoryPanel() {
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
   const [activeDatasetIds] = useActiveDatasetIds();
-
   const datasets = useMemo(() => {
     return Object.entries(DATASETS).filter(([categoryId, category]) => {
       return (

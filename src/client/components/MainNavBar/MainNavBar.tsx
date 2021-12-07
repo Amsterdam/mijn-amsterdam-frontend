@@ -1,22 +1,18 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { matchPath, NavLink, useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 
-import { AppRoutes, FeatureToggle } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconClose, IconSearch } from '../../assets/icons';
+import { IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import {
-  trackEventWithProfileType,
-  trackItemPresentation,
-} from '../../hooks/analytics.hook';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
-import { useKeyUp } from '../../hooks/useKey';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { IconButton } from '../Button/Button';
@@ -26,6 +22,7 @@ import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import { Search } from '../Search/Search';
+import { useSearchOnPage } from '../Search/useSearch';
 import {
   mainMenuItemId,
   mainMenuItems,
@@ -151,19 +148,12 @@ export default function MainNavBar({
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const profileType = useProfileTypeValue();
-
-  const trackSearchBarEvent = useCallback(
-    (action: string) =>
-      trackEventWithProfileType(
-        {
-          category: 'Zoeken',
-          name: 'Zoekbalk open/dicht',
-          action,
-        },
-        profileType
-      ),
-    [profileType]
-  );
+  const {
+    isSearchActive,
+    setSearchActive,
+    trackSearchBarEvent,
+    isDisplaySearch,
+  } = useSearchOnPage();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -224,34 +214,6 @@ export default function MainNavBar({
     });
   }, [myChapterItems, profileType, termReplace]);
 
-  const [isSearchActive, setSearchActive] = useState(false);
-  const isDisplaySearch = !matchPath(location.pathname, {
-    path: AppRoutes.SEARCH,
-  });
-
-  useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive) {
-      setSearchActive(true);
-      trackSearchBarEvent('Openen met z toets');
-    }
-  });
-
-  useEffect(() => {
-    setSearchActive(false);
-    if (isSearchActive) {
-      trackSearchBarEvent('Automatisch sluiten (navigatie)');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, trackSearchBarEvent]);
-
-  useEffect(() => {
-    if (isSearchActive) {
-      document.body.classList.add('is-typeAheadActive');
-    } else {
-      document.body.classList.remove('is-typeAheadActive');
-    }
-  }, [isSearchActive]);
-
   return (
     <nav className={styles.MainNavBar}>
       {hasBurgerMenu && (
@@ -285,16 +247,14 @@ export default function MainNavBar({
         </>
       )}
       <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplaySearch && (
+        {FeatureToggle.isSearchEnabled && isDisplaySearch && !isSearchActive && (
           <IconButton
             className={styles.SearchButton}
             onClick={() => {
               setSearchActive(!isSearchActive);
-              trackSearchBarEvent(
-                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
-              );
+              trackSearchBarEvent(`Openen met button`);
             }}
-            icon={isSearchActive ? IconClose : IconSearch}
+            icon={IconSearch}
           />
         )}
       </div>
@@ -303,6 +263,7 @@ export default function MainNavBar({
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
+                setVisible={(value) => setSearchActive(value)}
                 onFinish={(reason) => {
                   setSearchActive(false);
                   if (reason) {

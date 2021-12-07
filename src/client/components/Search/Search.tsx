@@ -1,11 +1,16 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SetterOrUpdater } from 'recoil';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 
 import { AppRoutes, DatasetFilterSelection } from '../../../universal/config';
-import { IconChevronRight, IconClose, IconSearch } from '../../assets/icons';
+import {
+  IconChevronRight,
+  IconClose,
+  IconMarker,
+  IconSearch,
+} from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
 import {
@@ -103,6 +108,7 @@ export function ResultSet({
                 </p>
               )}
             </Linkd>
+            {result.url.includes('/buurt') && <IconMarker />}
           </li>
         ))}
       </ul>
@@ -225,16 +231,14 @@ export function Search({
   useEffect(() => {
     if (term) {
       setResultsVisible(true);
-      setVisible && setVisible(true);
     }
-  }, [term, setVisible]);
+  }, [term]);
 
   useEffect(() => {
     if (!isActive) {
       setResultsVisible(false);
-      setVisible && setVisible(false);
     }
-  }, [isActive, setVisible]);
+  }, [isActive]);
 
   return (
     <div
@@ -283,12 +287,13 @@ export function Search({
         {!isSmallScreen && (
           <IconButton
             className={styles.CloseButton}
-            aria-label="Sluit resultaten"
+            aria-label="Sluit zoeken"
             type="reset"
             iconSize="32"
             onClick={() => {
               setVisible && setVisible(false);
               setResultsVisible(false);
+              trackSearchBarEvent(`Sluiten met button`);
             }}
             icon={IconClose}
           />

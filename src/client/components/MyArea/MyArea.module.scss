@@ -114,11 +114,13 @@
 }
 
 .SearchBarInner {
-  max-width: 60rem;
+  max-width: 64rem;
   z-index: 500;
+  min-width: 64rem;
   @include mq-tablet() {
     width: 100%;
     margin: auto;
+    min-width: 100%;
   }
 }
 

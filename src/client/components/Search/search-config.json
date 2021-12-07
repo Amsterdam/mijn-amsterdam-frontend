@@ -532,7 +532,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22parkeerzones_uitzondering%22]&filters=&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22parkeerzones_uitzondering%22]&filters=&zoom=12&loadingFeature=null",
       "displayTitle": "Parkeervergunning uitzonderingen bij mij in de buurt",
       "description": "Parkeervergunning uitzonderingen bij mij in de buurt",
       "keywords": [
@@ -547,7 +547,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22parkeerzones%22]&filters=&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22parkeerzones%22]&filters=&zoom=12&loadingFeature=null",
       "displayTitle": "Parkeervergunning zones bij mij in de buurt",
       "description": "Parkeervergunning zones bij mij in de buurt",
       "keywords": [
@@ -562,7 +562,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22parkeerzones%22]&filters=&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22parkeerzones%22]&filters=&zoom=12&loadingFeature=null",
       "displayTitle": "Parkeren bij mij in de buurt",
       "description": "Parkeren bij mij in de buurt",
       "keywords": [
@@ -575,7 +575,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bestemmingsplan%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bestemmingsplan%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Bestemmingsplan bij mij in de buurt",
       "description": "Bestemmingsplan bij mij in de buurt",
       "keywords": [
@@ -590,7 +590,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bouwvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bouwvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Bouwvergunningen bij mij in de buurt",
       "description": "Bouwvergunningen bij mij in de buurt",
       "keywords": [
@@ -604,7 +604,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Bestemmingsplannen bij mij in de buurt",
       "description": "Bestemmingsplannnen bij mij in de buurt",
       "keywords": [
@@ -618,7 +618,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Evenementenvergunningen bij mij in de buurt",
       "description": "Evenementenvergunningen bij mij in de buurt",
       "keywords": [
@@ -632,7 +632,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Kapvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Kapvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Kapvergunningen bij mij in de buurt",
       "description": "Kapvergunningen bij mij in de buurt",
       "keywords": [
@@ -646,7 +646,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Milieuvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Milieuvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Milieuvergunningen bij mij in de buurt",
       "description": "Milieuvergunningen bij mij in de buurt",
       "keywords": [
@@ -660,7 +660,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Omgevingsvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Omgevingsvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Omgevingsvergunningen bij mij in de buurt",
       "description": "Omgevingsvergunningen bij mij in de buurt",
       "keywords": [
@@ -674,7 +674,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Reclamevergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Reclamevergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Reclamevergunningen bij mij in de buurt",
       "description": "Reclamevergunningen bij mij in de buurt",
       "keywords": [
@@ -688,7 +688,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Sloopvergunning%22:1}}}}&zoom=12&center={%22lat%22:52.37355036869674,%22lng%22:4.867366916466644}&loadingFeature=null",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Sloopvergunning%22:1}}}}&zoom=12&loadingFeature=null",
       "displayTitle": "Sloopvergunningen bij mij in de buurt",
       "description": "Sloopvergunningen bij mij in de buurt",
       "keywords": [

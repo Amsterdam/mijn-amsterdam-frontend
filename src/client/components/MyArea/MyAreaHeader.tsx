@@ -1,19 +1,17 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
-import { trackEventWithProfileType, usePhoneScreen } from '../../hooks';
+import { usePhoneScreen } from '../../hooks';
 import { useTabletScreen } from '../../hooks/media.hook';
-import { useKeyUp } from '../../hooks/useKey';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
+import { useSearchOnPage } from '../Search/useSearch';
 import styles from './MyArea.module.scss';
 
 interface MyAreaHeaderProps {
@@ -24,45 +22,11 @@ export default function MyAreaHeader({
   showCloseButton = true,
 }: MyAreaHeaderProps) {
   const history = useHistory();
-  const location = useLocation();
   const isSmallScreen = useTabletScreen();
   const termReplace = useTermReplacement();
-  const [isSearchActive, setSearchActive] = useState(false);
 
-  const profileType = useProfileTypeValue();
-  const trackSearchBarEvent = useCallback(
-    (action: string) =>
-      trackEventWithProfileType(
-        {
-          category: 'Zoeken',
-          name: 'Zoekbalk open/dicht',
-          action,
-        },
-        profileType
-      ),
-    [profileType]
-  );
-  useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive) {
-      setSearchActive(true);
-      trackSearchBarEvent('Openen met z toets');
-    }
-  });
-  useEffect(() => {
-    setSearchActive(false);
-    if (isSearchActive) {
-      trackSearchBarEvent('Automatisch sluiten (navigatie)');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, trackSearchBarEvent]);
-
-  useEffect(() => {
-    if (isSearchActive) {
-      document.body.classList.add('is-typeAheadActive');
-    } else {
-      document.body.classList.remove('is-typeAheadActive');
-    }
-  }, [isSearchActive]);
+  const { isSearchActive, setSearchActive, trackSearchBarEvent } =
+    useSearchOnPage();
   return (
     <>
       <div className={styles.Header}>

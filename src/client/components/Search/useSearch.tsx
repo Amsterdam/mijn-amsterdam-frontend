@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { matchPath, useLocation } from 'react-router-dom';
 import {
   atom,
   Loadable,
@@ -10,11 +11,14 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
+import { AppRoutes } from '../../../universal/config';
+import { useKeyUp } from '../../hooks/useKey';
 
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
+import { trackEventWithProfileType } from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import {
@@ -321,7 +325,6 @@ const mijnQuery = selector({
 
 export interface SearchResults {
   ma?: SearchEntry[];
-  mb?: SearchEntry[];
   am?: Loadable<SearchEntry[] | null>;
 }
 
@@ -331,5 +334,61 @@ export function useSearchResults(
   return {
     ma: useRecoilValue(mijnQuery),
     am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
+  };
+}
+
+export function useSearchOnPage(): {
+  isSearchActive: boolean;
+  setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
+  trackSearchBarEvent: (action: string) => void;
+  isDisplaySearch: boolean;
+} {
+  const profileType = useProfileTypeValue();
+  const [isSearchActive, setSearchActive] = useState(false);
+  const location = useLocation();
+  const isDisplaySearch = !matchPath(location.pathname, {
+    path: AppRoutes.SEARCH,
+  });
+
+  const trackSearchBarEvent = useCallback(
+    (action: string) =>
+      trackEventWithProfileType(
+        {
+          category: 'Zoeken',
+          name: 'Zoekbalk open/dicht',
+          action,
+        },
+        profileType
+      ),
+    [profileType]
+  );
+
+  useEffect(() => {
+    setSearchActive(false);
+    if (isSearchActive) {
+      trackSearchBarEvent('Automatisch sluiten (navigatie)');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, trackSearchBarEvent]);
+
+  useEffect(() => {
+    if (isSearchActive) {
+      document.body.classList.add('is-typeAheadActive');
+    } else {
+      document.body.classList.remove('is-typeAheadActive');
+    }
+  }, [isSearchActive]);
+  useKeyUp((event) => {
+    if (event.key === 'z' && !isSearchActive) {
+      setSearchActive(true);
+      trackSearchBarEvent('Openen met z toets');
+    }
+  });
+
+  return {
+    isSearchActive,
+    setSearchActive,
+    trackSearchBarEvent,
+    isDisplaySearch,
   };
 }

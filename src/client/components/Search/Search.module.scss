@@ -42,7 +42,10 @@
 .ResultListItem {
   margin: 0;
   padding: 0.6rem 0;
-
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
   &.is-extended {
     margin-bottom: 2rem;
   }
@@ -100,7 +103,6 @@
 }
 
 .DisplayPath {
-  display: inline-flex;
   width: calc(100% - 3rem);
 
   em {
@@ -110,8 +112,7 @@
 }
 
 .DisplayPathSegment {
-  white-space: nowrap;
-
+  margin-right: 1rem;
   &:not(:first-child) {
     color: $color-neutral-grey4;
     font-weight: normal;
