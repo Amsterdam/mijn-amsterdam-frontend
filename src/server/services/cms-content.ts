@@ -74,6 +74,14 @@ export interface CMSFooterContent {
   sub: LinkProps[];
 }
 
+interface FooterLink {
+  link: { label: string; url: string };
+}
+
+function linkArray(input: FooterLink[] | FooterLink) {
+  return Array.isArray(input) ? input : input ? [input] : [];
+}
+
 function transformFooterResponse(responseData: any) {
   const items = responseData?.applicatie?.blok?.zijbalk[0]?.lijst;
 
@@ -109,16 +117,8 @@ function transformFooterResponse(responseData: any) {
 
       if (item.verwijzing && item.verwijzing[0]) {
         const verwijzing = item.verwijzing[0];
-        const intern = Array.isArray(verwijzing.intern)
-          ? verwijzing.intern
-          : typeof verwijzing.intern === 'object'
-          ? [verwijzing.intern]
-          : [];
-        const extern = Array.isArray(verwijzing.extern)
-          ? verwijzing.extern
-          : typeof verwijzing.extern === 'object'
-          ? [verwijzing.extern]
-          : [];
+        const intern = linkArray(verwijzing.intern);
+        const extern = linkArray(verwijzing.extern);
         const links = [...extern, ...intern]
           .filter((item) => !!item.link)
           .map((item) => {
@@ -133,13 +133,12 @@ function transformFooterResponse(responseData: any) {
     } else if (item.verwijzing?.length) {
       const otherLinks = item.verwijzing.flatMap(
         (verwijzing: {
-          intern: Array<{ link: { label: string; url: string } }>;
-          extern: Array<{ link: { label: string; url: string } }>;
+          intern: FooterLink[] | FooterLink;
+          extern: FooterLink[] | FooterLink;
         }) => {
-          const links = [
-            ...(verwijzing.intern || []),
-            ...(verwijzing.extern || []),
-          ];
+          const intern = linkArray(verwijzing.intern);
+          const extern = linkArray(verwijzing.extern);
+          const links = [...intern, ...extern];
           return links
             .filter(({ link }) => !!link && !link.url.match(/(cookies)/g))
             .map(({ link }) => {
