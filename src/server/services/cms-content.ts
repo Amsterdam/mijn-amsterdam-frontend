@@ -74,11 +74,11 @@ export interface CMSFooterContent {
   sub: LinkProps[];
 }
 
-function linkArray(
-  input:
-    | Array<{ link: { label: string; url: string } }>
-    | { link: { label: string; url: string } }
-) {
+interface FooterLink {
+  link: { label: string; url: string };
+}
+
+function linkArray(input: FooterLink[] | FooterLink) {
   return Array.isArray(input) ? input : input ? [input] : [];
 }
 
@@ -133,12 +133,8 @@ function transformFooterResponse(responseData: any) {
     } else if (item.verwijzing?.length) {
       const otherLinks = item.verwijzing.flatMap(
         (verwijzing: {
-          intern:
-            | Array<{ link: { label: string; url: string } }>
-            | { link: { label: string; url: string } };
-          extern:
-            | Array<{ link: { label: string; url: string } }>
-            | { link: { label: string; url: string } };
+          intern: FooterLink[] | FooterLink;
+          extern: FooterLink[] | FooterLink;
         }) => {
           const intern = linkArray(verwijzing.intern);
           const extern = linkArray(verwijzing.extern);
