@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
+exports[`<Krefia /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage FinancieleHulp"
+    class="Page OverviewPage Krefia"
   >
     <header
       class="PageHeading hasIcon hasBackLink"
@@ -13,11 +13,11 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Financiële Hulp"
+          aria-label="Kredietbank & FIBU"
           class="ChapterIcon"
           fill="black"
         >
-          financiele-hulp.svg
+          krefia.svg
         </svg>
       </span>
       <div
@@ -41,7 +41,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Financiële Hulp
+          Kredietbank & FIBU
         </h2>
       </div>
     </header>
@@ -49,7 +49,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
       class="PageContent"
     >
       <p>
-        Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU).
+        Een online plek waar u alle informatie over uw geldzaken kunt vinden als klant van Budgetbeheer (FIBU) en/of Kredietbank Amsterdam.
       </p>
       <p>
         <a
@@ -66,7 +66,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over de Kredietbank
+          Meer informatie over Kredietbank Amsterdam
         </a>
         <br />
         <a
@@ -83,7 +83,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over FiBu
+          Meer informatie over Budgetbeheer (FIBU)
         </a>
       </p>
     </div>
@@ -129,7 +129,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                  Bekijk op FiBu
+                  Bekijk op Krefia
                 </th>
               </tr>
             </thead>
@@ -148,7 +148,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Bekijk op FiBu:
+                    Bekijk op Krefia:
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
@@ -206,7 +206,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                  Bekijk op FiBu
+                  Bekijk op Krefia
                 </th>
               </tr>
             </thead>
@@ -225,7 +225,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Bekijk op FiBu:
+                    Bekijk op Krefia:
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
@@ -257,7 +257,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Financieel budgetbeheer
+           Budgetbeheer
         </button>
       </h3>
       <div
@@ -283,7 +283,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                  Bekijk op FiBu
+                  Bekijk op Krefia
                 </th>
               </tr>
             </thead>
@@ -294,7 +294,7 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  Beheer uw budget op FiBu
+                  Lopend
                 </td>
                 <td
                   class="DisplayProp"
@@ -302,14 +302,14 @@ exports[`<FinancieleHulp /> Matches the Full Page snapshot 1`] = `
                   <span
                     class="DisplayPropLabel"
                   >
-                    Bekijk op FiBu:
+                    Bekijk op Krefia:
                   </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
                     href="http://host/bbr/2064866/3"
                     rel="external noopener noreferrer"
                   >
-                    Bekijk uw lening
+                    Ga naar budgetbeheer
                   </a>
                 </td>
               </tr>

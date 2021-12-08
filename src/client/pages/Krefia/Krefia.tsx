@@ -1,4 +1,5 @@
 import { ReactNode, useMemo } from 'react';
+
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
@@ -6,6 +7,7 @@ import {
   ChapterIcon,
   Linkd,
   LinkdInline,
+  LoadingContent,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -13,11 +15,11 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './FinancieleHulp.module.scss';
+import styles from './Krefia.module.scss';
 
 const DISPLAY_PROPS = {
   title: 'Status',
-  to: 'Bekijk op FiBu',
+  to: 'Bekijk op Krefia',
 };
 
 function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
@@ -32,6 +34,8 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
       let linkText = 'Bekijk';
       switch (key) {
         case 'budgetbeheer':
+          linkText = 'Ga naar budgetbeheer';
+          break;
         case 'lening':
           linkText = 'Bekijk uw lening';
           break;
@@ -54,52 +58,75 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
   }, [deepLinksContent]);
 }
 
-export default function FinancieleHulp() {
-  const { FINANCIELE_HULP } = useAppStateGetter();
-  const deepLinks = useDeepLinks(FINANCIELE_HULP.content?.deepLinks);
-
+export default function Krefia() {
+  const { KREFIA } = useAppStateGetter();
+  const deepLinks = useDeepLinks(KREFIA.content?.deepLinks);
+  const isKredietbank = !!deepLinks?.schuldhulp || !!deepLinks?.lening;
+  const isFIBU = !!deepLinks?.budgetbeheer;
   return (
-    <OverviewPage className={styles.FinancieleHulp}>
+    <OverviewPage className={styles.Krefia}>
       <PageHeading
         backLink={{
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        isLoading={isLoading(FINANCIELE_HULP)}
         icon={<ChapterIcon />}
       >
-        {ChapterTitles.FINANCIELE_HULP}
+        {ChapterTitles.KREFIA}
       </PageHeading>
       <PageContent>
+        {isLoading(KREFIA) && <LoadingContent />}
+        {isKredietbank && isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Budgetbeheer (FIBU) en/of Kredietbank Amsterdam.
+          </p>
+        )}
+        {isKredietbank && !isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Kredietbank Amsterdam.
+          </p>
+        )}
+        {!isKredietbank && isFIBU && (
+          <p>
+            Een online plek waar u alle informatie over uw geldzaken kunt vinden
+            als klant van Budgetbeheer (FIBU).
+          </p>
+        )}
+
         <p>
-          Een online plek waar u alle informatie over uw geldzaken kunt vinden
-          als klant van Budgetbeheer (FIBU).
-        </p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
-          >
-            Meer informatie over de Kredietbank
-          </Linkd>
-          <br />
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
-          >
-            Meer informatie over FiBu
-          </Linkd>
+          {isKredietbank && (
+            <>
+              <Linkd
+                external={true}
+                href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
+              >
+                Meer informatie over Kredietbank Amsterdam
+              </Linkd>
+              <br />
+            </>
+          )}
+
+          {isFIBU && (
+            <Linkd
+              external={true}
+              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
+            >
+              Meer informatie over Budgetbeheer (FIBU)
+            </Linkd>
+          )}
         </p>
       </PageContent>
       {deepLinks?.schuldhulp && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-schuldregeling"
+          id="SectionCollapsible-krefia-schuldregeling"
           title="Schuldregeling"
           startCollapsed={false}
           className={styles.SectionBorderTop}
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
-            category: 'Financiële hulp overzicht / Schuldregeling',
+            category: 'Kredietbank & FIBU overzicht / Schuldregeling',
             name: 'Datatabel',
           }}
         >
@@ -112,12 +139,12 @@ export default function FinancieleHulp() {
       )}
       {deepLinks?.lening && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-leningen"
+          id="SectionCollapsible-krefia-leningen"
           title="Leningen"
           startCollapsed={!!deepLinks?.schuldhulp?.length}
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
-            category: 'Financiële hulp overzicht / Leningen',
+            category: 'Kredietbank & FIBU overzicht / Leningen',
             name: 'Datatabel',
           }}
         >
@@ -130,14 +157,14 @@ export default function FinancieleHulp() {
       )}
       {deepLinks?.budgetbeheer && (
         <SectionCollapsible
-          id="SectionCollapsible-financiele-hulp-budgetbeheer"
-          title="Financieel budgetbeheer"
+          id="SectionCollapsible-krefia-budgetbeheer"
+          title="Budgetbeheer"
           startCollapsed={
             !!deepLinks?.schuldhulp?.length || !!deepLinks?.lening?.length
           }
-          isLoading={isLoading(FINANCIELE_HULP)}
+          isLoading={isLoading(KREFIA)}
           track={{
-            category: 'Financiële hulp overzicht / Financieel budgetbeheer',
+            category: 'Kredietbank & FIBU overzicht / Budgetbeheer',
             name: 'Datatabel',
           }}
         >

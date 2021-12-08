@@ -17,12 +17,13 @@ import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
+import { fetchSubsidie } from './subsidie';
 import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
 import { fetchFOCUSTonk } from './focus/focus-tonk';
 import { fetchFOCUSTozo } from './focus/focus-tozo';
 import { fetchFOCUSBbz } from './focus/focus-bbz';
-import { fetchFinancieleHulp } from './financiele-hulp';
+import { fetchKrefia } from './krefia';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
 import { fetchKVK } from './kvk';
@@ -62,7 +63,7 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callService(
   fetchMaintenanceNotificationsActual
 );
 const KVK = callService(fetchKVK);
-const FINANCIELE_HULP = callService(fetchFinancieleHulp);
+const KREFIA = callService(fetchKrefia);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
@@ -104,6 +105,7 @@ const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
 const BELASTINGEN = callService(fetchBELASTING);
 const MILIEUZONE = callService(fetchMILIEUZONE);
 const ERFPACHT = callService(fetchERFPACHT);
+const SUBSIDIE = callService(fetchSubsidie);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
 const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
@@ -132,7 +134,7 @@ const SERVICES_INDEX = {
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
-  FINANCIELE_HULP,
+  KREFIA,
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
@@ -148,6 +150,7 @@ const SERVICES_INDEX = {
   MILIEUZONE,
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
+  SUBSIDIE,
   NOTIFICATIONS,
   CASES,
 };
@@ -166,6 +169,7 @@ type CommercialServices = Pick<
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
+  | 'SUBSIDIE'
   | 'NOTIFICATIONS'
   | 'CASES'
   | 'MY_LOCATION'
@@ -191,7 +195,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
-    FINANCIELE_HULP,
+    KREFIA,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
@@ -204,6 +208,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
+    SUBSIDIE,
     VERGUNNINGEN,
     WMO,
   },
@@ -215,7 +220,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
-    FINANCIELE_HULP,
+    KREFIA,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
@@ -228,6 +233,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
+    SUBSIDIE,
     VERGUNNINGEN,
     WMO,
   },
@@ -243,6 +249,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KVK,
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
+    SUBSIDIE,
     VERGUNNINGEN,
   },
 };

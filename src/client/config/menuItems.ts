@@ -64,6 +64,20 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['commercial'],
   },
   {
+    title: ChapterTitles.SUBSIDIE,
+    id: Chapters.SUBSIDIE,
+    to: ExternalUrls.DIGID_SSO_SUBSIDIE || '',
+    rel: 'external',
+    profileTypes: ['private'],
+  },
+  {
+    title: ChapterTitles.SUBSIDIE,
+    id: Chapters.SUBSIDIE,
+    to: ExternalUrls.EH_SSO_SUBSIDIE || '',
+    rel: 'external',
+    profileTypes: ['commercial'],
+  },
+  {
     title: ChapterTitles.ZORG,
     id: Chapters.ZORG,
     to: AppRoutes.ZORG,
@@ -107,9 +121,9 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
-    title: ChapterTitles.FINANCIELE_HULP,
-    id: Chapters.FINANCIELE_HULP,
-    to: AppRoutes.FINANCIELE_HULP,
+    title: ChapterTitles.KREFIA,
+    id: Chapters.KREFIA,
+    to: AppRoutes.KREFIA,
     profileTypes: ['private', 'private-commercial'],
   },
 ];

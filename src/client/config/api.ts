@@ -1,4 +1,4 @@
-import * as Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import {
   API_BASE_PATH,
   AuthType,
@@ -6,8 +6,7 @@ import {
   IS_AP,
 } from '../../universal/config';
 import { IS_ACCEPTANCE } from '../../universal/config/env';
-import { isError } from '../../universal/helpers';
-import { ApiResponse } from '../../universal/helpers/api';
+import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { AppState } from '../AppState';
 import { Error } from '../components/ErrorMessages/ErrorMessages';
 
@@ -78,6 +77,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   FOCUS_STADSPAS: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
+  SUBSIDIE: 'Subsidies',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',
@@ -93,17 +93,20 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
     'Toeristische verhuur: Vergunningen + meldingen',
   TOERISTISCHE_VERHUUR_registraties:
     'Toeristische verhuur: Registratienummers + meldingen',
-  FINANCIELE_HULP: 'Financiële Hulp',
+  KREFIA: 'Kredietbank & FIBU',
 };
 
-function createErrorDisplayData(
+export function createErrorDisplayData(
   stateKey: string,
-  apiResponseData: ApiResponse<any>
+  apiResponseData: ApiResponse<any> | null | string
 ): Error {
   const name = ErrorNames[stateKey] || stateKey;
   let errorMessage =
-    ('message' in apiResponseData ? apiResponseData.message : null) ||
-    'Communicatie met api mislukt.';
+    (typeof apiResponseData === 'object' &&
+    apiResponseData !== null &&
+    'message' in apiResponseData
+      ? apiResponseData.message
+      : null) || 'Communicatie met api mislukt.';
   return {
     stateKey,
     name,
@@ -111,39 +114,59 @@ function createErrorDisplayData(
   };
 }
 
+export function createFailedDependenciesError(
+  stateKey: string,
+  failedDependencies: FailedDependencies
+) {
+  const apiErrors = [];
+  for (const [stateDependencyKey, apiDependencyResponseData] of Object.entries(
+    failedDependencies
+  )) {
+    apiErrors.push(
+      createErrorDisplayData(
+        `${stateKey}_${stateDependencyKey}`,
+        apiDependencyResponseData
+      )
+    );
+  }
+  return apiErrors;
+}
+
 export function getApiErrors(appState: AppState): Error[] {
-  return !!appState
-    ? Object.entries(appState)
-        .filter(([, apiResponseData]: [string, ApiResponse<any>]) => {
-          return (
-            isError(apiResponseData) ||
-            (apiResponseData.status === 'OK' &&
-              apiResponseData.failedDependencies)
-          );
-        })
-        .flatMap(([stateKey, apiResponseData]: [string, ApiResponse<any>]) => {
-          const apiErrors = [];
+  if (!!appState) {
+    const filteredResponses = Object.entries(appState).filter(
+      ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
+        return (
+          typeof apiResponseData !== 'object' ||
+          apiResponseData == null ||
+          apiResponseData?.status === 'ERROR' ||
+          apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+          (apiResponseData?.status === 'OK' &&
+            !!apiResponseData?.failedDependencies)
+        );
+      }
+    );
 
-          if (
-            apiResponseData.status === 'OK' &&
-            apiResponseData?.failedDependencies
-          ) {
-            for (const [
-              stateDependencyKey,
-              apiDependencyResponseData,
-            ] of Object.entries(apiResponseData.failedDependencies)) {
-              apiErrors.push(
-                createErrorDisplayData(
-                  `${stateKey}_${stateDependencyKey}`,
-                  apiDependencyResponseData
-                )
-              );
-            }
-          } else {
-            apiErrors.push(createErrorDisplayData(stateKey, apiResponseData));
-          }
+    const apiErrors = [];
 
-          return apiErrors;
-        })
-    : [];
+    for (const [stateKey, apiResponseData] of filteredResponses) {
+      if (
+        apiResponseData?.status === 'OK' &&
+        apiResponseData?.failedDependencies
+      ) {
+        apiErrors.push(
+          ...createFailedDependenciesError(
+            stateKey,
+            apiResponseData.failedDependencies
+          )
+        );
+      } else {
+        apiErrors.push(createErrorDisplayData(stateKey, apiResponseData));
+      }
+    }
+
+    return apiErrors;
+  }
+
+  return [];
 }

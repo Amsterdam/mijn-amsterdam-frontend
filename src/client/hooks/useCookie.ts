@@ -1,4 +1,4 @@
-import * as Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import { useCallback } from 'react';
 import { atom, useRecoilState } from 'recoil';
 

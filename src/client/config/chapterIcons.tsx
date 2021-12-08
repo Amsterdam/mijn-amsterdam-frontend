@@ -16,7 +16,8 @@ import {
   IconVergunningen,
   IconZorg,
   IconToeristischeVerhuur,
-  IconFinancieleHulp,
+  IconKrefia,
+  IconSubsidie,
   IconSearch,
 } from '../assets/icons';
 
@@ -33,11 +34,12 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.ROOT]: IconBurgerZaken,
   [Chapters.TIPS]: IconTips,
   [Chapters.ERFPACHT]: IconErfpacht,
+  [Chapters.SUBSIDIE]: IconSubsidie,
   [Chapters.ZORG]: IconZorg,
   [Chapters.VERGUNNINGEN]: IconVergunningen,
   [Chapters.KVK]: IconHomeCommercial,
   [Chapters.TOERISTISCHE_VERHUUR]: IconToeristischeVerhuur,
-  [Chapters.FINANCIELE_HULP]: IconFinancieleHulp,
+  [Chapters.KREFIA]: IconKrefia,
   ALERT: IconAlert,
   [Chapters.SEARCH]: IconSearch,
 };

@@ -2,7 +2,7 @@ import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import type {
-  FinancieleHulp,
+  Krefia,
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
@@ -330,11 +330,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.financieleHulpActive,
-    stateKey: 'FINANCIELE_HULP' as keyof AppState,
-    getApiBaseItems: (
-      apiContent: Omit<FinancieleHulp, 'notificationTriggers'>
-    ) => {
+    isEnabled: FeatureToggle.krefiaActive,
+    stateKey: 'KREFIA' as keyof AppState,
+    getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
         Object.values(apiContent.deepLinks)

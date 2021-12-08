@@ -71,18 +71,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             );
           }
 
-          try {
-            return res.blob();
-          } catch (error) {
-            downloadFile(document);
-            Sentry.captureException(error, {
-              extra: {
-                title: document.title,
-                url: document.url,
-                message: 'Res.blob() failed.',
-              },
-            });
-          }
+          return res.blob();
         })
         .then((blob) => {
           const trackingUrl =
@@ -99,17 +88,24 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             profileType
           );
 
-          if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
-            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
+          if (!blob) {
+            downloadFile(document);
           } else {
-            try {
-              const fileUrl = window.URL.createObjectURL(blob);
-              downloadFile({
-                ...document,
-                url: fileUrl,
-              });
-            } catch (error) {
-              downloadFile(document);
+            if (
+              window.navigator &&
+              (window.navigator as any).msSaveOrOpenBlob
+            ) {
+              (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
+            } else {
+              try {
+                const fileUrl = window.URL.createObjectURL(blob);
+                downloadFile({
+                  ...document,
+                  url: fileUrl,
+                });
+              } catch (error) {
+                downloadFile(document);
+              }
             }
           }
         })

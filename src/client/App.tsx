@@ -65,7 +65,7 @@ import {
   ZorgDetail,
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
-import FinancieleHulp from './pages/FinancieleHulp/FinancieleHulp';
+import Krefia from './pages/Krefia/Krefia';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
@@ -217,11 +217,8 @@ function AppAuthenticated() {
               component={ToeristischeVerhuur}
             />
           )}
-          {FeatureToggle.financieleHulpActive && (
-            <Route
-              path={AppRoutes.FINANCIELE_HULP}
-              component={FinancieleHulp}
-            />
+          {FeatureToggle.krefiaActive && (
+            <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route component={NotFound} />

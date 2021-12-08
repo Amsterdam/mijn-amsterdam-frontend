@@ -7,7 +7,7 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
-import FINANCIELE_HULP from './json/financiele-hulp.json';
+import KREFIA from './json/krefia.json';
 import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
 import FOCUS_COMBINED from './json/focus-combined.json';
 import KVK1 from './json/kvk-handelsregister.json';
@@ -15,6 +15,7 @@ import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-verhuur.json';
+import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 import { apiSuccesResult } from '../../universal/helpers';
@@ -115,6 +116,15 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(ERFPACHT);
     },
   },
+  [ApiUrls.SUBSIDIE]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
+      return await loadMockApiResponseJson(SUBSIDIE);
+    },
+  },
   [ApiUrls.BAG]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
@@ -209,13 +219,13 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
     },
   },
-  [ApiUrls.FINANCIELE_HULP]: {
+  [ApiUrls.KREFIA]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(FINANCIELE_HULP);
+        return await loadMockApiResponseJson(KREFIA);
       }
-      return await loadMockApiResponseJson(FINANCIELE_HULP);
+      return await loadMockApiResponseJson(KREFIA);
     },
   },
 };

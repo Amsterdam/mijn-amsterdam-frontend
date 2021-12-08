@@ -426,9 +426,15 @@ const Labels: {
       {
         status: 'Product geleverd',
         datePublished: () => '',
-        isChecked: (stepIndex, data) => data.isActual === true,
-        isActive: (stepIndex, data, today: Date) =>
-          data.isActual ? isDateInPast(data.serviceDateStart, today) : false,
+        isChecked: (stepIndex, data, today) =>
+          data.isActual
+            ? isDateInPast(data.serviceDateStart, today)
+            : data.isActual === false,
+        isActive: (stepIndex, data, today: Date) => {
+          return data.isActual
+            ? isDateInPast(data.serviceDateStart, today)
+            : false;
+        },
         description: (data) =>
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
@@ -437,16 +443,18 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: (data) => (data.isActual ? '' : data.dateEnd),
-        isChecked: () => false,
+        isChecked: (stepIndex, data) => data.isActual === false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
           `<p>
             ${
               data.isActual
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${
-                    data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                : `Uw recht op ${data.title} is beëindigd${
+                    data.dateEnd
+                      ? ` per ${defaultDateFormat(data.dateEnd)}`
+                      : ''
+                  }.`
             }
           </p>`,
       },

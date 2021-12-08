@@ -19,6 +19,7 @@ export type Chapter =
   | 'KVK'
   | 'TOERISTISCHE_VERHUUR'
   | 'SEARCH'
+  | 'SUBSIDIE'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -38,8 +39,9 @@ export const Chapters: Record<Chapter, Chapter> = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
-  FINANCIELE_HULP: 'FINANCIELE_HULP',
+  KREFIA: 'KREFIA',
   SEARCH: 'SEARCH',
+  SUBSIDIE: 'SUBSIDIE',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -56,11 +58,12 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ROOT: 'Home',
   TIPS: 'Mijn tips',
   ERFPACHT: 'Erfpacht',
+  SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  FINANCIELE_HULP: 'Financiële Hulp',
+  KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
 };
 
@@ -116,6 +119,6 @@ export const DocumentTitles = {
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING/VV'
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes.FINANCIELE_HULP]: `${ChapterTitles.FINANCIELE_HULP}`,
+  [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
 };

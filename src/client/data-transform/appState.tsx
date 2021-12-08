@@ -4,15 +4,38 @@ import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 export function transformSourceData(data: Partial<AppState> | null) {
   // Copy the pristine content to the error content so we keep our
   // pristine data state but with error status.
-  if (data && typeof data === 'object') {
+  const unexpectedStateKeys = [];
+  if (data !== null && typeof data === 'object') {
     const appStateKeys = Object.keys(data) as Array<keyof typeof data>;
     for (const key of appStateKeys) {
-      if (data[key] && data[key]?.status === 'ERROR') {
-        if (data[key]?.content === null) {
-          data[key]!.content =
-            PRISTINE_APPSTATE[key].content || data[key]!.content;
+      if (!PRISTINE_APPSTATE[key]) {
+        unexpectedStateKeys.push(key);
+        delete data[key];
+        continue;
+      }
+      if (
+        typeof data[key] !== 'object' ||
+        data[key] === null ||
+        data[key]?.status === 'ERROR'
+      ) {
+        if (typeof data[key] !== 'object' || data[key] === null) {
+          // @ts-ignore
+          data[key] = PRISTINE_APPSTATE[key];
+        } else {
+          data[key]!.content = PRISTINE_APPSTATE[key]?.content || null;
         }
       }
+    }
+
+    if (unexpectedStateKeys.length) {
+      Sentry.captureMessage(
+        '[transformSourceData] Unknown stateKey encountered',
+        {
+          extra: {
+            unexpectedStateKeys,
+          },
+        }
+      );
     }
 
     return data;
@@ -23,6 +46,7 @@ export function transformSourceData(data: Partial<AppState> | null) {
     {
       extra: {
         data,
+        cookie: document.cookie,
       },
     }
   );

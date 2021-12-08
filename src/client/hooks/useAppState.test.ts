@@ -1,7 +1,8 @@
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
-import { PRISTINE_APPSTATE } from '../AppState';
+import { apiPristineResult } from '../../universal/helpers';
+import * as appStateModule from '../AppState';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
 import { useAppStateRemote } from './useAppState';
@@ -16,7 +17,8 @@ jest.spyOn(console, 'info').mockImplementation();
 
 describe('useAppState', () => {
   const stateSliceMock = { FOO: { content: { hello: 'world' } } };
-  const initialAppState = PRISTINE_APPSTATE;
+
+  const initialAppState = appStateModule.PRISTINE_APPSTATE;
 
   let dataApiSpy: jest.SpyInstance;
   let axiosGetSpy: jest.SpyInstance;
@@ -37,6 +39,10 @@ describe('useAppState', () => {
   it('Should start with the SSE endpoint', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
+    (appStateModule.PRISTINE_APPSTATE as any) = {
+      ...appStateModule.PRISTINE_APPSTATE,
+      FOO: apiPristineResult(null),
+    };
     const { result } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
