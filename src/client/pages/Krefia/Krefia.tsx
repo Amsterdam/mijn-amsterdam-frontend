@@ -1,4 +1,5 @@
 import { ReactNode, useMemo } from 'react';
+
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
@@ -96,14 +97,17 @@ export default function Krefia() {
 
         <p>
           {isKredietbank && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
-            >
-              Meer informatie over Kredietbank Amsterdam
-            </Linkd>
+            <>
+              <Linkd
+                external={true}
+                href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
+              >
+                Meer informatie over Kredietbank Amsterdam
+              </Linkd>
+              <br />
+            </>
           )}
-          <br />
+
           {isFIBU && (
             <Linkd
               external={true}
