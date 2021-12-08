@@ -153,7 +153,6 @@ export async function loadDatasetFeatures(
   }
 
   const results = await Promise.all(requests);
-  console.log(results);
   return datasetApiResult(results);
 }
 

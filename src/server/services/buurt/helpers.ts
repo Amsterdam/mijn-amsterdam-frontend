@@ -419,9 +419,6 @@ export function datasetApiResult(
     (result): result is ApiSuccessResponse<DatasetResponse> =>
       result.status === 'OK' && result.content !== null
   );
-  console.log(
-    responses.flatMap((response) => response.content?.filters?.typeSport)
-  );
   return {
     features: responses.flatMap((response) => response.content.features),
     filters: Object.fromEntries(
