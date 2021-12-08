@@ -93,7 +93,7 @@ describe('transformSourceData', () => {
       {
         extra: {
           data,
-          cookie: '',
+          identity: '',
         },
       }
     );
