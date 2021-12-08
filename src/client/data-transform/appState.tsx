@@ -46,7 +46,7 @@ export function transformSourceData(data: Partial<AppState> | null) {
     {
       extra: {
         data,
-        cookie: document.cookie,
+        identity: document.cookie,
       },
     }
   );
