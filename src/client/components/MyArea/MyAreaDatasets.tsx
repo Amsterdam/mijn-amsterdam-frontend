@@ -23,6 +23,7 @@ import {
   useLoadingFeature,
   useOnMarkerClick,
   useSelectedFeatureCSS,
+  useSetSelectedFeature,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
@@ -41,7 +42,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   );
   const [clusterFeatures, setClusterFeatures] = useState<MaPointFeature[]>([]);
   const [, setFilterSelection] = useDatasetFilterSelection();
-  const [loadingFeature] = useLoadingFeature();
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
 
   const [errorResults, setErrorResults] = useState<
     Array<{ id: string; message: string }>
@@ -86,6 +87,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       ? activeFilters
       : queryConfig?.filters || activeFilters;
 
+    const activeFeature = queryConfig?.s
+      ? loadingFeature
+      : queryConfig?.loadingFeature || null;
+
     if (!isEqual(datasetIds, activeDatasetIds)) {
       setActiveDatasetIds(datasetIds);
     }
@@ -98,10 +103,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       map.setView(center, zoom);
     }
 
-    const loadingFeatureStr =
-      loadingFeature && !loadingFeature?.isError
-        ? JSON.stringify(loadingFeature)
-        : null;
+    if (!isEqual(activeFeature, loadingFeature)) {
+      setLoadingFeature(activeFeature);
+    }
 
     const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
 
@@ -114,13 +118,16 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     params.set('center', JSON.stringify(map.getCenter()));
     params.set('datasetIds', datasetIdsStr);
     params.set('filters', filtersStr);
+    params.set('loadingFeature', JSON.stringify(loadingFeature));
+
+    // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
     params.set('s', '1');
 
     const url = `${AppRoutes.BUURT}?${params}`;
 
     history.replace(url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, activeDatasetIds, activeFilters]);
+  }, [search, activeDatasetIds, activeFilters, loadingFeature]);
 
   const fetch = useCallback(
     async (
@@ -159,6 +166,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       const params = new URLSearchParams(search);
       params.set('zoom', map.getZoom().toString());
       params.set('center', JSON.stringify(map.getCenter()));
+
       const url = `${AppRoutes.BUURT}?${params}`;
       history.replace(url);
     },

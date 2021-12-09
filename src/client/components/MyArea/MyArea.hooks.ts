@@ -466,7 +466,7 @@ export interface QueryConfig {
   zoom?: number;
   center?: LatLngLiteral;
   loadingFeature?: { id: string; datasetId: DatasetId };
-  s?: '1';
+  s?: '1'; // Indicates the url was constructed on the /buurt page
 }
 
 export function getQueryConfig(searchEntry: string): QueryConfig {
