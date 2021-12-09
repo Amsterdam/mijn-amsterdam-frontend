@@ -2,7 +2,6 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useRef } from 'react';
-import { matchPath, useHistory } from 'react-router-dom';
 import {
   atom,
   AtomEffect,
@@ -18,7 +17,6 @@ import type {
   MaPolylineFeature,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
-import { AppRoutes } from '../../../universal/config';
 import {
   ACTIVE_DATASET_IDS_INITIAL,
   DatasetFilterSelection,
@@ -46,7 +44,7 @@ const NO_DATA_ERROR_RESPONSE = {
 const activeDatasetIdsDefaultValue = selector({
   key: 'activeDatasetIds/Default',
   get: () => {
-    const queryConfig = getQueryConfig();
+    const queryConfig = getQueryConfig(window.location.search);
     const defaultValue = queryConfig?.datasetIds?.length
       ? queryConfig.datasetIds
       : ACTIVE_DATASET_IDS_INITIAL;
@@ -77,7 +75,7 @@ export function useActiveDatasetIds() {
 const activeDatasetFiltersDefaultValue = selector({
   key: 'activeDatasetIdsDefaultValue',
   get: () => {
-    const queryConfig = getQueryConfig();
+    const queryConfig = getQueryConfig(window.location.search);
     return queryConfig?.filters || {};
   },
 });
@@ -112,7 +110,7 @@ interface LoadingFeature {
 const loadingFeatureDefaultValue = selector({
   key: 'loadingFeature/Default',
   get: () => {
-    const queryConfig = getQueryConfig();
+    const queryConfig = getQueryConfig(window.location.search);
     const defaultValue = queryConfig?.loadingFeature
       ? queryConfig?.loadingFeature
       : null;
@@ -468,55 +466,15 @@ export interface QueryConfig {
   zoom?: number;
   center?: LatLngLiteral;
   loadingFeature?: { id: string; datasetId: DatasetId };
+  s?: '1';
 }
 
-export function getQueryConfig(searchEntry?: string): QueryConfig {
+export function getQueryConfig(searchEntry: string): QueryConfig {
   return Object.fromEntries(
-    Array.from(
-      new URLSearchParams(
-        searchEntry ? searchEntry : window.location.search
-      ).entries()
-    )
+    Array.from(new URLSearchParams(searchEntry).entries())
       .map(([k, v]) => {
         return [k, v ? JSON.parse(v) : undefined];
       })
       .filter(([, v]) => !!v)
   );
-}
-
-export function useReflectUrlState() {
-  const map = useMapInstance();
-  const history = useHistory();
-
-  const [activeDatasetIds] = useActiveDatasetIds();
-  const [activeFilters] = useActiveDatasetFilters();
-  const [loadingFeature] = useLoadingFeature();
-
-  const loadingFeatureStr =
-    loadingFeature && !loadingFeature?.isError
-      ? JSON.stringify(loadingFeature)
-      : null;
-  const datasetIdsStr = activeDatasetIds.length
-    ? JSON.stringify(activeDatasetIds)
-    : '';
-  const filtersStr = Object.entries(activeFilters).length
-    ? JSON.stringify(activeFilters)
-    : '';
-  useEffect(() => {
-    if (
-      matchPath(history.location.pathname, {
-        path: AppRoutes.BUURT,
-        exact: true,
-        strict: false,
-      })
-    ) {
-      const url = `${
-        AppRoutes.BUURT
-      }?datasetIds=${datasetIdsStr}&filters=${filtersStr}&zoom=${map.getZoom()}&center=${JSON.stringify(
-        map.getCenter()
-      )}&loadingFeature=${loadingFeatureStr}`;
-
-      history.replace(url);
-    }
-  }, [datasetIdsStr, filtersStr, loadingFeatureStr, history, map]);
 }
