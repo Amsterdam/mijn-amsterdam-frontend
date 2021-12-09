@@ -289,7 +289,7 @@ export async function fetchSearchConfig(
 ) {
   const config = searchFileCache.getKey('CONFIG');
 
-  if (config?.content && query?.cache !== 'renew') {
+  if (IS_AP && config?.content && query?.cache !== 'renew') {
     return Promise.resolve(config);
   }
 
