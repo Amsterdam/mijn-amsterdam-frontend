@@ -287,7 +287,7 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
-      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&request=GetFeature&TYPENAMES=meldingen_buurt&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
     detailUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
