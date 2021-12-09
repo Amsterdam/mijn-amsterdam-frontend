@@ -46,7 +46,8 @@ export async function fetchDataset(
   sessionID: SessionID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
-  params?: { [key: string]: any }
+  params: { [key: string]: any } = {},
+  pruneCache: boolean = false
 ) {
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
@@ -54,7 +55,7 @@ export async function fetchDataset(
 
   let dataCache: FileCache | null = null;
 
-  if (datasetConfig.cache !== false) {
+  if (datasetConfig.cache !== false && !pruneCache) {
     dataCache = fileCache(datasetId, cacheTimeMinutes);
 
     if (dataCache) {
@@ -95,8 +96,13 @@ export async function fetchDataset(
 
   requestConfig.headers = ACCEPT_CRS_4326;
   if (typeof datasetConfig.transformList === 'function') {
-    requestConfig.transformResponse = (responseData) =>
-      datasetConfig.transformList!(datasetId, datasetConfig, responseData);
+    requestConfig.transformResponse = (responseData) => {
+      return datasetConfig.transformList!(
+        datasetId,
+        datasetConfig,
+        responseData
+      );
+    };
   }
 
   const response = await requestData<DatasetFeatures>(
@@ -153,6 +159,7 @@ export async function loadDatasetFeatures(
   }
 
   const results = await Promise.all(requests);
+
   return datasetApiResult(results);
 }
 
