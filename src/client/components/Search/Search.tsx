@@ -1,10 +1,8 @@
 import classnames from 'classnames';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SetterOrUpdater } from 'recoil';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
-
-import { AppRoutes, DatasetFilterSelection } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import {
   IconChevronRight,
   IconClose,
@@ -25,11 +23,6 @@ import {
 } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
-import {
-  getQueryConfig,
-  useActiveDatasetFilters,
-  useActiveDatasetIds,
-} from '../MyArea/MyArea.hooks';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
 import { displayPath, SearchEntry } from './searchConfig';
@@ -44,16 +37,6 @@ interface ResultSetProps {
   extendedResults?: boolean;
   showIcon?: boolean;
   onClickResult?: (result: SearchEntry) => void;
-}
-
-function setMijnBuurtResult(
-  result: SearchEntry,
-  setActiveDatasetIds: SetterOrUpdater<string[]>,
-  setActiveFilters: SetterOrUpdater<DatasetFilterSelection>
-) {
-  const queryConfig = getQueryConfig(result.url.split('?')[1]);
-  setActiveDatasetIds(queryConfig?.datasetIds ?? []);
-  setActiveFilters(queryConfig?.filters ?? {});
 }
 
 export function ResultSet({
@@ -144,8 +127,6 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
-  const [, setActiveDatasetsIds] = useActiveDatasetIds();
-  const [, setActiveFilters] = useActiveDatasetFilters();
   const isSmallScreen = useTabletScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
@@ -322,13 +303,6 @@ export function Search({
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
               setVisible && setVisible(false);
-              if (result.url.includes('/buurt')) {
-                setMijnBuurtResult(
-                  result,
-                  setActiveDatasetsIds,
-                  setActiveFilters
-                );
-              }
             }}
           />
 
