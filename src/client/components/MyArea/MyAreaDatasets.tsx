@@ -176,7 +176,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   // This callback runs whenever the map zooms / pans
   const onUpdate = useCallback(
     (event: LeafletEvent) => {
-      console.log('onUpdate', event.target.getZoom());
       setFeaturesLoadingDebounced(true);
       fetchDebounced(activeDatasetIds, activeFilters);
       reflectMapViewUrl(event.target);
