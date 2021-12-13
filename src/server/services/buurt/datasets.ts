@@ -92,8 +92,8 @@ export interface DatasetConfig {
   cacheTimeMinutes?: number;
   featureType: FeatureType;
   zIndex?: zIndexPane;
-  additionalStaticPropertyNames?: DatasetPropertyName[];
-  // NOTE: The ID key also has to be added to the `additionalStaticPropertyNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticPropertyNames` can be left empty.
+  additionalStaticFieldNames?: DatasetPropertyName[];
+  // NOTE: The ID key also has to be added to the `additionalStaticFieldNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticFieldNames` can be left empty.
   idKeyList?: string;
   idKeyDetail?: string;
   geometryKey?: string;
@@ -112,16 +112,17 @@ function dsoApiListUrl(
     const pageSizeParam = `&_pageSize=${pageSize}`;
 
     const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
-    const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
+    const fieldNames = propertyFilters ? Object.keys(propertyFilters) : [];
 
-    if (datasetConfig.additionalStaticPropertyNames) {
-      propertyNames.push(...datasetConfig.additionalStaticPropertyNames);
+    if (datasetConfig.additionalStaticFieldNames) {
+      fieldNames.push(...datasetConfig.additionalStaticFieldNames);
     }
 
-    const dsoApiUrl =
-      apiUrl +
-      (propertyNames.length ? ',' + propertyNames.join(',') : '') +
-      pageSizeParam;
+    const additionalFieldNames = fieldNames.length
+      ? ',' + fieldNames.join(',')
+      : '';
+
+    const dsoApiUrl = `${apiUrl}${additionalFieldNames}${pageSizeParam}&_format=json`;
 
     return dsoApiUrl;
   };
@@ -149,7 +150,7 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     // NOTE: Tried URL as unique ID but various events point to the same URL.
-    // additionalStaticPropertyNames: ['url'],
+    // additionalStaticFieldNames: ['url'],
     // idKeyList: 'url',
     // idKeyDetail: 'url',
   },
@@ -170,7 +171,7 @@ export const datasetEndpoints: Record<
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
-    additionalStaticPropertyNames: ['gebiedskleurcode', 'gebiedscode'],
+    additionalStaticFieldNames: ['gebiedskleurcode', 'gebiedscode'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
@@ -183,7 +184,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    additionalStaticPropertyNames: ['gebiedscode'],
+    additionalStaticFieldNames: ['gebiedscode'],
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
   },
@@ -215,7 +216,7 @@ export const datasetEndpoints: Record<
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
     transformList: transformGymzaalResponse,
     featureType: 'Point',
-    additionalStaticPropertyNames: ['type'],
+    additionalStaticFieldNames: ['type'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sportzaal: {
@@ -264,7 +265,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    additionalStaticPropertyNames: ['naam'],
+    additionalStaticFieldNames: ['naam'],
     idKeyList: 'naam',
     idKeyDetail: 'naam',
   },

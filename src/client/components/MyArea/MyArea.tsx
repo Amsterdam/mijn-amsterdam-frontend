@@ -2,6 +2,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -80,10 +81,11 @@ export default function MyArea({
   const isNarrowScreen = !isWideScreen;
   const { MY_LOCATION } = useAppStateGetter();
   const termReplace = useTermReplacement();
-
+  const history = useHistory();
   // Params passed by query will override all other options
   const customConfig = useMemo(() => {
-    return getQueryConfig();
+    return getQueryConfig(history.location.search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
