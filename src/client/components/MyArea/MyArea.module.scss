@@ -99,12 +99,15 @@
   align-items: center;
 
   @include mq-tablet() {
-    background: $color-white;
-    margin-top: 6rem;
+    width: 50rem;
+  }
+
+  @include mq-phone() {
+    margin-top: 14rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;
-    width: 100vw;
+    width: 95vw;
     z-index: 450;
     position: absolute;
     form {
@@ -114,10 +117,9 @@
 }
 
 .SearchBarInner {
-  max-width: 64rem;
   z-index: 500;
-  min-width: 64rem;
-  @include mq-tablet() {
+  width: 64rem;
+  @include mq-phone() {
     width: 100%;
     margin: auto;
     min-width: 100%;
@@ -135,5 +137,8 @@
   justify-content: center;
   background: $color-white;
   z-index: 500;
-  width: 5rem;
+
+  @include mq-phone() {
+    width: 5rem;
+  }
 }

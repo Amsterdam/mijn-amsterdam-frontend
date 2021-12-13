@@ -5,8 +5,7 @@ import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
-import { usePhoneScreen } from '../../hooks';
-import { useTabletScreen } from '../../hooks/media.hook';
+import { usePhoneScreen, useTabletScreen } from '../../hooks';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
@@ -22,7 +21,8 @@ export default function MyAreaHeader({
   showCloseButton = true,
 }: MyAreaHeaderProps) {
   const history = useHistory();
-  const isSmallScreen = useTabletScreen();
+  const isSmallScreen = usePhoneScreen();
+  const isTabletOrSmaller = useTabletScreen();
   const termReplace = useTermReplacement();
 
   const { isSearchActive, setSearchActive, trackSearchBarEvent } =
@@ -54,14 +54,11 @@ export default function MyAreaHeader({
           />
           <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
         </Link>
-        {!isSmallScreen && (
+        {(!isSmallScreen || isSearchActive) && (
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
-                setVisible={(value: boolean) => {
-                  setSearchActive(value);
-                }}
-                isActive={isSearchActive}
+                showCloseButton={!isTabletOrSmaller}
                 onFinish={(reason) => {
                   if (reason) {
                     setSearchActive(false);
@@ -77,14 +74,14 @@ export default function MyAreaHeader({
         {isSmallScreen && !isSearchActive && (
           <div className={styles.CloseWrapper}>
             <IconButton
-              icon={isSearchActive ? IconClose : IconSearch}
+              icon={IconSearch}
               onClick={() => {
                 setSearchActive(!isSearchActive);
               }}
             />
           </div>
         )}
-        {isSmallScreen ? (
+        {useTabletScreen() ? (
           <IconButton
             icon={IconClose}
             onClick={() => {
@@ -103,27 +100,6 @@ export default function MyAreaHeader({
           </Button>
         )}
       </div>
-      {isSmallScreen && isSearchActive && (
-        <div className={styles.SearchBar}>
-          <div className={styles.SearchBarInner}>
-            <Search
-              setVisible={(value: boolean) => {
-                setSearchActive(value);
-              }}
-              maxResultCountDisplay={10}
-              isActive={isSearchActive}
-              onFinish={(reason) => {
-                if (reason) {
-                  setSearchActive(false);
-                  if (reason) {
-                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                  }
-                }
-              }}
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }

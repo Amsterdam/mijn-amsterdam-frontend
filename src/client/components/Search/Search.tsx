@@ -15,7 +15,6 @@ import {
   trackEventWithProfileType,
   trackSearch,
 } from '../../hooks/analytics.hook';
-import { useTabletScreen } from '../../hooks/media.hook';
 import { useKeyDown } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
@@ -36,6 +35,7 @@ interface ResultSetProps {
   term: string;
   extendedResults?: boolean;
   showIcon?: boolean;
+  isMa?: boolean;
   onClickResult?: (result: SearchEntry) => void;
 }
 
@@ -47,6 +47,7 @@ export function ResultSet({
   term,
   extendedResults = false,
   showIcon = false,
+  isMa = false,
   onClickResult,
 }: ResultSetProps) {
   return (
@@ -90,8 +91,8 @@ export function ResultSet({
                   {result.description}
                 </p>
               )}
+              {result.url.includes('/buurt') && isMa && <IconMarker />}
             </Linkd>
-            {result.url.includes('/buurt') && <IconMarker />}
           </li>
         ))}
       </ul>
@@ -101,24 +102,24 @@ export function ResultSet({
 
 interface SearchProps {
   onFinish?: (reason?: string) => void;
-  setVisible?: (value: boolean) => void;
   term?: string;
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
   isActive?: boolean;
+  showCloseButton?: boolean;
 }
 
 export function Search({
   onFinish,
-  setVisible,
   term: termInitial = '',
   maxResultCountDisplay = 10,
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
   isActive = false,
+  showCloseButton = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
@@ -127,7 +128,6 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
-  const isSmallScreen = useTabletScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
@@ -166,7 +166,7 @@ export function Search({
     setIsTyping(false);
     if (!term) {
       setResultsVisible(false);
-      setVisible && setVisible(false);
+      onFinish && onFinish();
     }
   }, 300);
 
@@ -178,21 +178,13 @@ export function Search({
         if (isResultsVisible && term) {
           searchBarRef.current?.focus();
           setResultsVisible(false);
-          setVisible && setVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
           onFinish && onFinish('Escape toets');
         }
       }
     },
-    [
-      typeAhead,
-      isResultsVisible,
-      onFinish,
-      term,
-      trackSearchBarEvent,
-      setVisible,
-    ]
+    [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
   );
 
   useKeyDown(keyHandler);
@@ -219,7 +211,7 @@ export function Search({
     if (!isActive) {
       setResultsVisible(false);
     }
-  }, [isActive]);
+  }, [isActive, onFinish]);
 
   return (
     <div
@@ -235,7 +227,7 @@ export function Search({
               `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
             );
             setResultsVisible(true);
-            setVisible && setVisible(true);
+            onFinish && onFinish();
             trackSearch(term, searchCategory);
           }
         }}
@@ -253,32 +245,16 @@ export function Search({
           onFocus={() => {
             if (term) {
               setResultsVisible(true);
-              setVisible && setVisible(true);
             }
           }}
           onChange={(e) => {
             setIsTyping(true);
             setResultsVisible(true);
-            setVisible && setVisible(true);
             const term = e.target.value;
             setTermDebounced(term);
             trackSearchDebounced(term);
           }}
         />
-        {!isSmallScreen && (
-          <IconButton
-            className={styles.CloseButton}
-            aria-label="Sluit zoeken"
-            type="reset"
-            iconSize="32"
-            onClick={() => {
-              setVisible && setVisible(false);
-              setResultsVisible(false);
-              trackSearchBarEvent(`Sluiten met button`);
-            }}
-            icon={IconClose}
-          />
-        )}
 
         <IconButton
           className={styles.SubmitButton}
@@ -288,6 +264,21 @@ export function Search({
           iconFill={Colors.white}
           icon={IconSearch}
         />
+        {showCloseButton && (
+          <>
+            {isResultsVisible ? (
+              <IconButton
+                className={styles.CloseButton}
+                icon={IconClose}
+                onClick={() => {
+                  setResultsVisible(false);
+                }}
+              />
+            ) : (
+              <div className={styles.CloseButton} />
+            )}
+          </>
+        )}
       </form>
 
       {isResultsVisible && (
@@ -299,10 +290,11 @@ export function Search({
             title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
+            isMa
             onClickResult={(result) => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
-              setVisible && setVisible(false);
+              onFinish && onFinish();
             }}
           />
 
@@ -315,7 +307,7 @@ export function Search({
             onClickResult={() => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
-              setVisible && setVisible(false);
+              onFinish && onFinish();
             }}
             results={
               results?.am?.state === 'hasValue' &&

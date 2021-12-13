@@ -7,7 +7,7 @@ import { FeatureToggle } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconSearch } from '../../assets/icons';
+import { IconClose, IconSearch } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
@@ -247,14 +247,16 @@ export default function MainNavBar({
         </>
       )}
       <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplaySearch && !isSearchActive && (
+        {FeatureToggle.isSearchEnabled && isDisplaySearch && (
           <IconButton
             className={styles.SearchButton}
             onClick={() => {
               setSearchActive(!isSearchActive);
-              trackSearchBarEvent(`Openen met button`);
+              trackSearchBarEvent(
+                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
+              );
             }}
-            icon={IconSearch}
+            icon={isSearchActive ? IconClose : IconSearch}
           />
         )}
       </div>
@@ -263,7 +265,6 @@ export default function MainNavBar({
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
-                setVisible={(value) => setSearchActive(value)}
                 onFinish={(reason) => {
                   setSearchActive(false);
                   if (reason) {
