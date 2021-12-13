@@ -99,7 +99,7 @@
   align-items: center;
 
   @include mq-tablet() {
-    background: white;
+    background: $color-white;
     margin-top: 6rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
