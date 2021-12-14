@@ -81,7 +81,7 @@ export default function MyAreaHeader({
             />
           </div>
         )}
-        {useTabletScreen() ? (
+        {isTabletOrSmaller ? (
           <IconButton
             icon={IconClose}
             onClick={() => {
