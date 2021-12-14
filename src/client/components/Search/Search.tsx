@@ -123,7 +123,7 @@ export function Search({
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
-  const [isResultsVisible, setResultsVisible] = useState(isActive);
+  const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
