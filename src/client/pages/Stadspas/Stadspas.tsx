@@ -25,7 +25,7 @@ const stadspasDisplayProps = {
   naam: '',
   pasnummer: 'Stadspasnummer',
   displayDatumAfloop: 'Einddatum',
-  detailPageUrl: '',
+  detailPageUrl: 'Tegoed',
 };
 
 const requestsDisplayProps = {
