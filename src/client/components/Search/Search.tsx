@@ -47,7 +47,6 @@ export function ResultSet({
   term,
   extendedResults = false,
   showIcon = false,
-  isMa = false,
   onClickResult,
 }: ResultSetProps) {
   return (
