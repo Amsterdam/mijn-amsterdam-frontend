@@ -71,10 +71,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
     }
 
     return {
-      title:
-        BRP.content?.adres?.adresType === 'correspondentie'
-          ? 'Briefadres'
-          : 'Woonadres',
+      title: 'Adres',
       actionLinks,
     };
   },
