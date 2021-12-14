@@ -27,6 +27,11 @@ async function fetchPrivate(
         address: null,
         mokum: true,
       });
+    } else {
+      MY_LOCATION = apiSuccesResult({
+        ...MY_LOCATION.content,
+        mokum: true,
+      });
     }
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
     MY_LOCATION = apiSuccesResult({
@@ -52,11 +57,11 @@ async function fetchCommercial(
   if (KVK.status === 'OK') {
     const address = KVK.content ? getKvkAddress(KVK.content) : null;
     if (address) {
-      MY_LOCATION = {
-        ...(await fetchBAG(sessionID, passthroughRequestHeaders, address)),
-        mokum: true,
-      };
-
+      MY_LOCATION = await fetchBAG(
+        sessionID,
+        passthroughRequestHeaders,
+        address
+      );
       if (!MY_LOCATION.content?.latlng) {
         MY_LOCATION = apiSuccesResult({
           latlng: {
@@ -64,6 +69,12 @@ async function fetchCommercial(
             lng: DEFAULT_LNG,
           },
           address: null,
+          mokum: true,
+        });
+      } else {
+        MY_LOCATION = apiSuccesResult({
+          ...MY_LOCATION.content,
+          mokum: true,
         });
       }
     } else {

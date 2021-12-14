@@ -18,7 +18,7 @@ export default function MyAreaDashboard() {
   const isPrivate = profileType === 'private';
   // Check if the Map is nearly scrolled into view
   const isOnScreen = useOnScreen(ref, '-200px');
-  const isMokum = !!MY_LOCATION.content?.mokum;
+  const isMokum = MY_LOCATION.content?.mokum;
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
       {isOnScreen && <MyAreaLoader isDashboard={true} />}
