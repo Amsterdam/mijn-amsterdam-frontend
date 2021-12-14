@@ -207,11 +207,7 @@ export function Search({
     }
   }, [term]);
 
-  useEffect(() => {
-    if (!isActive) {
-      setResultsVisible(false);
-    }
-  }, [isActive, onFinish]);
+  
 
   return (
     <div
