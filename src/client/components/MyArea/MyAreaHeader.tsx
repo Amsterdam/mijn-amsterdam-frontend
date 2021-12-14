@@ -58,7 +58,6 @@ export default function MyAreaHeader({
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
-                showCloseButton={!isTabletOrSmaller}
                 onFinish={(reason) => {
                   if (reason) {
                     setSearchActive(false);

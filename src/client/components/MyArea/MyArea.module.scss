@@ -107,7 +107,7 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;
-    width: 95vw;
+    width: calc(100vw - 2rem);
     z-index: 450;
     position: absolute;
     form {
@@ -135,7 +135,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $color-white;
+
   z-index: 500;
 
   @include mq-phone() {

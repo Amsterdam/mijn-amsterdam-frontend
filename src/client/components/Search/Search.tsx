@@ -105,8 +105,6 @@ interface SearchProps {
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
-  isActive?: boolean;
-  showCloseButton?: boolean;
 }
 
 export function Search({
@@ -116,8 +114,6 @@ export function Search({
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
-  isActive = false,
-  showCloseButton = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const results = useSearchResults(extendedAMResults);
@@ -164,7 +160,6 @@ export function Search({
     setIsTyping(false);
     if (!term) {
       setResultsVisible(false);
-      onFinish && onFinish();
     }
   }, 300);
 
@@ -204,6 +199,22 @@ export function Search({
       setResultsVisible(true);
     }
   }, [term]);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        isResultsVisible &&
+        searchBarRef.current &&
+        !searchBarRef.current.contains(e.target)
+      ) {
+        setResultsVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  }, [isResultsVisible]);
 
   return (
     <div
@@ -255,21 +266,6 @@ export function Search({
           iconFill={Colors.white}
           icon={IconSearch}
         />
-        {showCloseButton && (
-          <>
-            {isResultsVisible ? (
-              <IconButton
-                className={styles.CloseButton}
-                icon={IconClose}
-                onClick={() => {
-                  setResultsVisible(false);
-                }}
-              />
-            ) : (
-              <div className={styles.CloseButton} />
-            )}
-          </>
-        )}
       </form>
 
       {isResultsVisible && (
