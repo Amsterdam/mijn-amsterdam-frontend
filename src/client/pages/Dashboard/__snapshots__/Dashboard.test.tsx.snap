@@ -393,7 +393,8 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             Mijn buurt
           </h3>
           <p>
-            Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.
+            U staat niet in Amsterdam ingeschreven in de Basisregistratie Personen (BRP). Uw adres kan daarom niet worden getoond in Mijn
+              Amsterdam.
           </p>
         </span>
       </a>

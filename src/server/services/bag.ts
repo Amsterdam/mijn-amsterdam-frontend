@@ -15,6 +15,7 @@ export interface BAGSourceData {
 export interface BAGData {
   latlng: LatLngLiteral | null;
   address?: Adres | null;
+  mokum?: boolean;
 }
 
 export function formatBAGData(
