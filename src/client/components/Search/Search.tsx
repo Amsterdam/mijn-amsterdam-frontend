@@ -205,8 +205,6 @@ export function Search({
     }
   }, [term]);
 
-  
-
   return (
     <div
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
@@ -221,7 +219,6 @@ export function Search({
               `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
             );
             setResultsVisible(true);
-            onFinish && onFinish();
             trackSearch(term, searchCategory);
           }
         }}
@@ -281,13 +278,11 @@ export function Search({
             term={term}
             isLoading={isTyping || !isAppStateReady}
             results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-            title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
             onClickResult={(result) => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
-              onFinish && onFinish();
             }}
           />
 
@@ -300,7 +295,6 @@ export function Search({
             onClickResult={() => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
-              onFinish && onFinish();
             }}
             results={
               results?.am?.state === 'hasValue' &&
