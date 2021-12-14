@@ -91,7 +91,7 @@ export function ResultSet({
                   {result.description}
                 </p>
               )}
-              {result.url.includes('/buurt') && isMa && <IconMarker />}
+              {result.url.startsWith(AppRoutes.BUURT) && <IconMarker />}
             </Linkd>
           </li>
         ))}
