@@ -285,7 +285,6 @@ export function Search({
             title="Resultaten van Mijn Amsterdam"
             noResultsMessage="Niets gevonden op Mijn Amsterdam"
             showIcon={extendedAMResults}
-            isMa
             onClickResult={(result) => {
               trackSearchBarEvent(`Click result`);
               setResultsVisible(false);
