@@ -35,7 +35,6 @@ interface ResultSetProps {
   term: string;
   extendedResults?: boolean;
   showIcon?: boolean;
-  isMa?: boolean;
   onClickResult?: (result: SearchEntry) => void;
 }
 
