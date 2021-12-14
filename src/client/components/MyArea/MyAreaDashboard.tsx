@@ -15,7 +15,7 @@ export default function MyAreaDashboard() {
   const profileType = useProfileTypeValue();
   const ref = useRef<HTMLDivElement | null>(null);
   const { MY_LOCATION } = useAppStateGetter();
-  const isPrivate = profileType === 'private'
+  const isPrivate = profileType === 'private';
   // Check if the Map is nearly scrolled into view
   const isOnScreen = useOnScreen(ref, '-200px');
   const isMokum = !!MY_LOCATION.content?.mokum;
@@ -30,7 +30,9 @@ export default function MyAreaDashboard() {
               {`U${
                 isPrivate ? '' : 'w bedrijf'
               } staat niet in Amsterdam ingeschreven in ${
-                isPrivate ? 'de Basisregistratie Personen (BRP)' : 'het handelsregister (KVK)'
+                isPrivate
+                  ? 'de Basisregistratie Personen (BRP)'
+                  : 'het handelsregister (KVK)'
               }. Uw adres kan daarom niet worden getoond in Mijn
               Amsterdam.`}
             </p>
