@@ -264,11 +264,15 @@ export const DATASETS: DatasetCategories = {
             title: 'Aanvang werkzaamheden',
             valueConfig: {
               Lopend: { title: 'Lopende werkzaamheden' },
+              Binnenkort: { title: 'Werkzaamheden binnenkort' },
               '0-1 jaar': { title: 'Binnen 1 jaar' },
               '1-3 jaar': { title: 'Over 1 tot 3 jaar' },
               '>3 jaar': { title: 'Over meer dan 3 jaar' },
               Onbekend: { title: 'Onbekend' },
             },
+          },
+          duur: {
+            title: 'Duur',
           },
         },
       },

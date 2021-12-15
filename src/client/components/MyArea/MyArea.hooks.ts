@@ -263,7 +263,6 @@ export function useFetchFeatures() {
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
       abortSignal.current?.cancel();
-
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
 
@@ -275,7 +274,7 @@ export function useFetchFeatures() {
         mapBounds.getNorth(),
       ];
       const zoom = map.getZoom();
-
+      console.log(mapBounds, filters);
       try {
         const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,

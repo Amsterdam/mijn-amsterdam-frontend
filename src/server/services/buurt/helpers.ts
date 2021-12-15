@@ -542,7 +542,6 @@ export function transformDsoApiListResponse(
             feature[geometryKey].coordinates
           );
         }
-
         collection.push({
           type: 'Feature',
           geometry: feature[geometryKey],
