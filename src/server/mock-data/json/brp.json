@@ -67,7 +67,7 @@
     "overlijdensdatum": null,
     "voornamen": "Wesley",
     "voorvoegselGeslachtsnaam": null,
-    "mokum": false,
+    "mokum": true,
     "indicatieGeheim": true
   },
   "ouders": [
