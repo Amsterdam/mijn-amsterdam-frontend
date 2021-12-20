@@ -931,6 +931,21 @@
         "private",
         "private-commercial"
       ]
+    },
+        {
+      "url": "/buurt?datasetIds=%5B%22sportaanbieder%22%5D&filters=%7B%22sportaanbieder%22%3A%7B%22indicatieStadspas%22%3A%7B%22values%22%3A%7B%22Ja%22%3A1%7D%7D%7D%7D",
+      "displayTitle": "Sporten met stadspas",
+      "description": "Sporten met stadspas",
+      "keywords": [
+        "Stadspas",
+        "sporten",
+        "pas",
+        "sport"
+      ],
+      "profileTypes": [
+        "private",
+        "private-commercial"
+      ]
     }
   ],
   "apiSearchConfigs": {
