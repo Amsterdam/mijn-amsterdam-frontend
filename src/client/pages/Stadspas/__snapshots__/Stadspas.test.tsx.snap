@@ -122,7 +122,9 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                 </th>
                 <th
                   class="DisplayProp"
-                />
+                >
+                  Tegoed
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -163,6 +165,11 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayProp"
                 >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tegoed:
+                  </span>
                   <a
                     class="Button Button__inline Button__lean Linkd LinkedInline"
                     href="/stadspas/saldo/200769"
