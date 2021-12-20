@@ -25,19 +25,12 @@ async function fetchPrivate(
           lng: DEFAULT_LNG,
         },
         address: null,
-        mokum: true,
-      });
-    } else {
-      MY_LOCATION = apiSuccesResult({
-        ...MY_LOCATION.content,
-        mokum: true,
       });
     }
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
     MY_LOCATION = apiSuccesResult({
       latlng: null,
       address: null,
-      mokum: false,
     });
   } else {
     MY_LOCATION = apiDependencyError({ BRP });
@@ -62,6 +55,7 @@ async function fetchCommercial(
         passthroughRequestHeaders,
         address
       );
+
       if (!MY_LOCATION.content?.latlng) {
         MY_LOCATION = apiSuccesResult({
           latlng: {
@@ -69,12 +63,6 @@ async function fetchCommercial(
             lng: DEFAULT_LNG,
           },
           address: null,
-          mokum: true,
-        });
-      } else {
-        MY_LOCATION = apiSuccesResult({
-          ...MY_LOCATION.content,
-          mokum: true,
         });
       }
     } else {
