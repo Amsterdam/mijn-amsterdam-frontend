@@ -259,7 +259,7 @@ export async function fetchBuurtGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const notification = getNotification(currentWork);
+  const notification = getNotification(wiorMeldingen);
   return apiSuccesResult({
     notifications: [notification],
   });
