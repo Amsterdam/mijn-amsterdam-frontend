@@ -2,24 +2,14 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+
 import { AppRoutes } from '../../../universal/config';
-import {
-  IconChevronRight,
-  IconClose,
-  IconMarker,
-  IconSearch,
-} from '../../assets/icons';
+import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
-import {
-  trackEventWithProfileType,
-  trackSearch,
-} from '../../hooks/analytics.hook';
+import { trackEventWithProfileType, trackSearch } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
-import {
-  useProfileTypeSwitch,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
+import { useProfileTypeSwitch, useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
@@ -116,6 +106,7 @@ export function Search({
   extendedAMResults = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<any>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -204,8 +195,8 @@ export function Search({
     const checkIfClickedOutside = (e: any) => {
       if (
         isResultsVisible &&
-        searchBarRef.current &&
-        !searchBarRef.current.contains(e.target)
+        resultsRef.current &&
+        !resultsRef.current.contains(e.target)
       ) {
         setResultsVisible(false);
       }
@@ -269,7 +260,7 @@ export function Search({
       </form>
 
       {isResultsVisible && (
-        <div className={styles.Results}>
+        <div className={styles.Results} ref={resultsRef}>
           <ResultSet
             term={term}
             isLoading={isTyping || !isAppStateReady}
