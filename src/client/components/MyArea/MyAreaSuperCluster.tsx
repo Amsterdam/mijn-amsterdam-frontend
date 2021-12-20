@@ -2,7 +2,6 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import classnames from 'classnames';
 import L, {
   LatLngLiteral,
-  LeafletEventHandlerFn,
   LeafletMouseEvent,
   LeafletMouseEventHandlerFn,
 } from 'leaflet';

@@ -23,7 +23,6 @@ import {
   useLoadingFeature,
   useOnMarkerClick,
   useSelectedFeatureCSS,
-  useSetSelectedFeature,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
