@@ -254,3 +254,13 @@ export async function loadFeatureDetail(
 
   return response;
 }
+
+export async function fetchBuurtGenerated(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const notification = getNotification(currentWork);
+  return apiSuccesResult({
+    notifications: [notification],
+  });
+}

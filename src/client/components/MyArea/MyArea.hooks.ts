@@ -274,7 +274,6 @@ export function useFetchFeatures() {
         mapBounds.getNorth(),
       ];
       const zoom = map.getZoom();
-      console.log(mapBounds, filters);
       try {
         const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
