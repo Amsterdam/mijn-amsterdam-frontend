@@ -7,9 +7,15 @@ import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
-import { trackEventWithProfileType, trackSearch } from '../../hooks/analytics.hook';
+import {
+  trackEventWithProfileType,
+  trackSearch,
+} from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
-import { useProfileTypeSwitch, useProfileTypeValue } from '../../hooks/useProfileType';
+import {
+  useProfileTypeSwitch,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
