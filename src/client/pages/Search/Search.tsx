@@ -14,7 +14,6 @@ export default function Search() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const [term, setTerm] = useSearchTerm();
-
   useEffect(() => {
     if (termParam) {
       setTerm(termParam);

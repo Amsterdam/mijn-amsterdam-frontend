@@ -26,7 +26,7 @@ import {
 } from './datasets';
 
 export function getApiEmbeddedResponse(id: string, responseData: any) {
-  const results = responseData?._embedded && responseData?._embedded[id];
+  const results = responseData?._embedded?.[id];
   return Array.isArray(results) ? results : null;
 }
 
@@ -369,7 +369,7 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
     ? Object.keys(propertyFilters)
     : [];
   const staticPropertyNames = datasetEndpoints[datasetId]
-    ? datasetEndpoints[datasetId].additionalStaticPropertyNames
+    ? datasetEndpoints[datasetId].additionalStaticFieldNames
     : [];
 
   if (filterPropertyNames && featureSourceProperties) {

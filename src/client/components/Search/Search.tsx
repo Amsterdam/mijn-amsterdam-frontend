@@ -2,8 +2,9 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight, IconSearch } from '../../assets/icons';
+import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady } from '../../hooks';
 import {
@@ -84,6 +85,7 @@ export function ResultSet({
                   {result.description}
                 </p>
               )}
+              {result.url.startsWith(AppRoutes.BUURT) && <IconMarker />}
             </Linkd>
           </li>
         ))}
@@ -110,6 +112,7 @@ export function Search({
   extendedAMResults = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<any>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -120,8 +123,8 @@ export function Search({
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
-
   useSearchIndex();
+
   useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
@@ -194,97 +197,121 @@ export function Search({
     }
   }, [term]);
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        isResultsVisible &&
+        resultsRef.current &&
+        !resultsRef.current.contains(e.target)
+      ) {
+        setResultsVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  }, [isResultsVisible]);
+
   return (
     <div
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
     >
-      <form
-        className={styles.Form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (term) {
-            trackSearchBarEvent('Submit search');
-            history.push(
-              `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
-            );
-            setResultsVisible(true);
-            trackSearch(term, searchCategory);
-          }
-        }}
-      >
-        <input
-          ref={searchBarRef}
-          className={styles.Input}
-          autoComplete="none"
-          autoCorrect="none"
-          autoCapitalize="none"
-          spellCheck="false"
-          placeholder={
-            isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
-          }
-          onFocus={() => {
+      <div ref={resultsRef}>
+        <form
+          className={styles.Form}
+          onSubmit={(e) => {
+            e.preventDefault();
             if (term) {
+              trackSearchBarEvent('Submit search');
+              history.push(
+                `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
+              );
               setResultsVisible(true);
+              trackSearch(term, searchCategory);
             }
           }}
-          onChange={(e) => {
-            setIsTyping(true);
-            setResultsVisible(true);
-            const term = e.target.value;
-            setTermDebounced(term);
-            trackSearchDebounced(term);
-          }}
-        />
-
-        <IconButton
-          className={styles.SubmitButton}
-          aria-label="Verstuur zoekopdracht"
-          type="submit"
-          iconSize="36"
-          iconFill={Colors.white}
-          icon={IconSearch}
-        />
-      </form>
-
-      {isResultsVisible && (
-        <div className={styles.Results}>
-          <ResultSet
-            term={term}
-            isLoading={isTyping || !isAppStateReady}
-            results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-            noResultsMessage="Niets gevonden op Mijn Amsterdam"
-            showIcon={extendedAMResults}
-            onClickResult={() => trackSearchBarEvent(`Click result`)}
-          />
-
-          <ResultSet
-            term={term}
-            isLoading={results?.am?.state === 'loading' || isTyping}
-            title="Overige informatie op Amsterdam.nl"
-            noResultsMessage="Niets gevonden op Amsterdam.nl"
-            extendedResults={extendedAMResults}
-            onClickResult={() => trackSearchBarEvent(`Click result`)}
-            results={
-              results?.am?.state === 'hasValue' &&
-              results?.am?.contents !== null
-                ? results.am.contents.slice(0, maxResultCountDisplay / 2)
-                : []
+        >
+          <input
+            ref={searchBarRef}
+            className={styles.Input}
+            autoComplete="none"
+            autoCorrect="none"
+            autoCapitalize="none"
+            spellCheck="false"
+            placeholder={
+              isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
             }
+            onFocus={() => {
+              if (term) {
+                setResultsVisible(true);
+              }
+            }}
+            onChange={(e) => {
+              setIsTyping(true);
+              setResultsVisible(true);
+              const term = e.target.value;
+              setTermDebounced(term);
+              trackSearchDebounced(term);
+            }}
           />
 
-          {extendedAMResults && (
-            <p>
-              <Button
-                onClick={() =>
-                  (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
-                }
-              >
-                Zoek verder op Amsterdam.nl
-              </Button>
-            </p>
-          )}
-        </div>
-      )}
+          <IconButton
+            className={styles.SubmitButton}
+            aria-label="Verstuur zoekopdracht"
+            type="submit"
+            iconSize="36"
+            iconFill={Colors.white}
+            icon={IconSearch}
+          />
+        </form>
+
+        {isResultsVisible && (
+          <div className={styles.Results}>
+            <ResultSet
+              term={term}
+              isLoading={isTyping || !isAppStateReady}
+              results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+              noResultsMessage="Niets gevonden op Mijn Amsterdam"
+              showIcon={extendedAMResults}
+              onClickResult={(result) => {
+                trackSearchBarEvent(`Click result`);
+                setResultsVisible(false);
+              }}
+            />
+
+            <ResultSet
+              term={term}
+              isLoading={results?.am?.state === 'loading' || isTyping}
+              title="Overige informatie op Amsterdam.nl"
+              noResultsMessage="Niets gevonden op Amsterdam.nl"
+              extendedResults={extendedAMResults}
+              onClickResult={() => {
+                trackSearchBarEvent(`Click result`);
+                setResultsVisible(false);
+              }}
+              results={
+                results?.am?.state === 'hasValue' &&
+                results?.am?.contents !== null
+                  ? results.am.contents.slice(0, maxResultCountDisplay / 2)
+                  : []
+              }
+            />
+
+            {extendedAMResults && (
+              <p>
+                <Button
+                  onClick={() =>
+                    (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
+                  }
+                >
+                  Zoek verder op Amsterdam.nl
+                </Button>
+              </p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

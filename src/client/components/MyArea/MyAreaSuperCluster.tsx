@@ -49,13 +49,11 @@ function createClusterMarker(
 
 interface MaSuperClusterLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
-  onUpdate: LeafletEventHandlerFn;
   features: MaSuperClusterFeature[];
 }
 
 export function MaSuperClusterLayer({
   onMarkerClick,
-  onUpdate,
   features,
 }: MaSuperClusterLayerProps) {
   const map = useMapInstance();
@@ -114,21 +112,14 @@ export function MaSuperClusterLayer({
       markerLayer.on('keyup', onKeyup);
     }
 
-    if (map) {
-      map.on('moveend', onUpdate);
-    }
-
     return () => {
       if (markerLayer) {
         markerLayer.off('click', onClick);
         markerLayer.off('keyup', onKeyup);
         markerLayer.remove();
       }
-      if (map) {
-        map.off('moveend', onUpdate);
-      }
     };
-  }, [markerLayer, clusterFeatures, onClick, map, onUpdate, onKeyup]);
+  }, [markerLayer, clusterFeatures, onClick, map, onKeyup]);
 
   return null;
 }
