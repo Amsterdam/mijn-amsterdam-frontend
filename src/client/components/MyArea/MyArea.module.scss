@@ -46,6 +46,7 @@
 .Header {
   display: flex;
   height: 6.4rem;
+  min-height: 6.4rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   align-items: center;
@@ -89,4 +90,56 @@
 
 .DirectSkipLinks {
   top: 1rem;
+  z-index: 1000;
+}
+
+.SearchBar {
+  display: flex;
+  flex-direction: row;
+  width: 64rem;
+  align-items: center;
+
+  @include mq-tablet() {
+    width: 50rem;
+  }
+
+  @include mq-phone() {
+    margin-top: 14rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    width: calc(100vw - 2rem);
+    z-index: 450;
+    position: absolute;
+    form {
+      padding: 1rem;
+    }
+  }
+}
+
+.SearchBarInner {
+  z-index: 500;
+  width: 64rem;
+  @include mq-phone() {
+    width: 100%;
+    margin: auto;
+    min-width: 100%;
+  }
+}
+
+.SearchButton {
+  margin-left: 1rem;
+}
+
+.CloseWrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 500;
+
+  @include mq-phone() {
+    width: 5rem;
+  }
 }

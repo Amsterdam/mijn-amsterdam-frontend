@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { DATASETS } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
@@ -10,9 +11,12 @@ import {
   loadClusterDatasets,
 } from './services';
 import {
+  fetchDataset,
+  loadDatasetFeatures,
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
+import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 import {
   loadServicesAll,
@@ -122,9 +126,20 @@ router.get(
     let response: ApiResponse<any> | null = null;
 
     try {
-      response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
+      if (datasetId && id) {
+        response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
+      } else if (datasetId && DATASETS.sport.datasets?.[datasetId]) {
+        const [[, datasetConfig]] = getDatasetEndpointConfig([datasetId]);
+        response = await fetchDataset(
+          res.locals.sessionID,
+          datasetId,
+          datasetConfig,
+          {},
+          !!req.query?.pruneCache
+        );
+      }
 
-      if (response.status !== 'OK') {
+      if (response?.status !== 'OK') {
         res.status(500);
       }
 

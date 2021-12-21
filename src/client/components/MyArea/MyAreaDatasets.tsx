@@ -1,23 +1,27 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LeafletEvent } from 'leaflet';
+import { LeafletEvent, Map } from 'leaflet';
+import isEqual from 'lodash.isequal';
 import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import type {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
+import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/buurt';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import {
+  getQueryConfig,
   useActiveDatasetFilters,
   useActiveDatasetIds,
   useDatasetFilterSelection,
   useFetchFeatures,
+  useLoadingFeature,
   useOnMarkerClick,
-  useReflectUrlState,
   useSelectedFeatureCSS,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
@@ -30,14 +34,14 @@ interface MyAreaDatasetsProps {
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
-
-  useReflectUrlState();
+  const history = useHistory();
 
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
   const [clusterFeatures, setClusterFeatures] = useState<MaPointFeature[]>([]);
   const [, setFilterSelection] = useDatasetFilterSelection();
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
 
   const [errorResults, setErrorResults] = useState<
     Array<{ id: string; message: string }>
@@ -52,11 +56,77 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     600
   );
 
+  const search = history.location.search;
   const fetchFeatures = useFetchFeatures();
-  const [activeDatasetIdsState] = useActiveDatasetIds();
-  const [activeFilters] = useActiveDatasetFilters();
-
+  const [activeDatasetIdsState, setActiveDatasetIds] = useActiveDatasetIds();
+  const [activeFilters, setActiveFilterSelection] = useActiveDatasetFilters();
   const activeDatasetIds = datasetIds || activeDatasetIdsState;
+
+  // Align URL and state. Takes URL as primary source of truth.
+  useEffect(() => {
+    const queryConfig = getQueryConfig(search);
+    const currentZoom = map.getZoom();
+    const currentCenter = map.getCenter();
+
+    const zoom = queryConfig?.s
+      ? currentZoom
+      : queryConfig?.zoom || currentZoom;
+
+    const center = queryConfig?.s
+      ? currentCenter
+      : queryConfig?.center || currentCenter;
+
+    const datasetIds = queryConfig?.s
+      ? activeDatasetIds
+      : Array.isArray(queryConfig?.datasetIds)
+      ? queryConfig?.datasetIds
+      : activeDatasetIds;
+
+    const filters = queryConfig?.s
+      ? activeFilters
+      : queryConfig?.filters || activeFilters;
+
+    const activeFeature = queryConfig?.s
+      ? loadingFeature
+      : queryConfig?.loadingFeature || null;
+
+    if (!isEqual(datasetIds, activeDatasetIds)) {
+      setActiveDatasetIds(datasetIds);
+    }
+
+    if (!isEqual(filters, activeFilters)) {
+      setActiveFilterSelection(filters);
+    }
+
+    if (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) {
+      map.setView(center, zoom);
+    }
+
+    if (!isEqual(activeFeature, loadingFeature)) {
+      setLoadingFeature(activeFeature);
+    }
+
+    const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
+
+    const filtersStr = Object.entries(filters).length
+      ? JSON.stringify(filters)
+      : '';
+
+    const params = new URLSearchParams(search);
+    params.set('zoom', map.getZoom().toString());
+    params.set('center', JSON.stringify(map.getCenter()));
+    params.set('datasetIds', datasetIdsStr);
+    params.set('filters', filtersStr);
+    params.set('loadingFeature', JSON.stringify(loadingFeature));
+
+    // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
+    params.set('s', '1');
+
+    const url = `${AppRoutes.BUURT}?${params}`;
+
+    history.replace(url);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, activeDatasetIds, activeFilters, loadingFeature]);
 
   const fetch = useCallback(
     async (
@@ -90,19 +160,40 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
   const fetchDebounced = useDebouncedCallback(fetch, 100);
 
+  const reflectMapViewUrl = useCallback(
+    (map: Map) => {
+      const params = new URLSearchParams(search);
+      params.set('zoom', map.getZoom().toString());
+      params.set('center', JSON.stringify(map.getCenter()));
+
+      const url = `${AppRoutes.BUURT}?${params}`;
+      history.replace(url);
+    },
+    [search, history]
+  );
+
   // This callback runs whenever the map zooms / pans
   const onUpdate = useCallback(
     (event: LeafletEvent) => {
       setFeaturesLoadingDebounced(true);
       fetchDebounced(activeDatasetIds, activeFilters);
+      reflectMapViewUrl(event.target);
     },
     [
+      reflectMapViewUrl,
       fetchDebounced,
       setFeaturesLoadingDebounced,
       activeDatasetIds,
       activeFilters,
     ]
   );
+
+  useEffect(() => {
+    map.on('moveend', onUpdate);
+    return () => {
+      map.off('moveend', onUpdate);
+    };
+  }, [map, onUpdate]);
 
   // Effect fetches everytime datasets are de/activated or filter selection is changed.
   useEffect(() => {
@@ -166,7 +257,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       />
       <MaSuperClusterLayer
         features={clusterFeatures}
-        onUpdate={onUpdate}
         onMarkerClick={onMarkerClick}
       />
     </>

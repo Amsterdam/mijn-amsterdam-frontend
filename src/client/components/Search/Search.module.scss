@@ -41,8 +41,8 @@
 
 .ResultListItem {
   margin: 0;
+  position: relative;
   padding: 0.6rem 0;
-
   &.is-extended {
     margin-bottom: 2rem;
   }
@@ -100,8 +100,8 @@
 }
 
 .DisplayPath {
-  display: inline-flex;
   width: calc(100% - 3rem);
+  display: inline-flex;
 
   em {
     font-style: normal;
@@ -111,7 +111,7 @@
 
 .DisplayPathSegment {
   white-space: nowrap;
-
+  margin-right: 0.5rem;
   &:not(:first-child) {
     color: $color-neutral-grey4;
     font-weight: normal;
@@ -163,4 +163,13 @@
       fill: $color-white;
     }
   }
+}
+
+.CloseButton {
+  height: 3.6rem;
+  min-width: 3.6rem;
+  width: 3.6rem;
+  margin-left: 0.4rem;
+  padding: 0.8rem;
+  bottom: 0;
 }

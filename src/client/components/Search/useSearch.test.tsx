@@ -369,7 +369,7 @@ describe('Search hooks and helpers', () => {
             ],
             "url": "/vergunningen/detail/1726584505",
           },
-          "refIndex": 21,
+          "refIndex": 60,
         },
       ]
     `);
