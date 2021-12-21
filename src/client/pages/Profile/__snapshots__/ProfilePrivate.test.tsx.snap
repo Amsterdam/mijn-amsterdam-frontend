@@ -594,11 +594,11 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
@@ -700,11 +700,11 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
@@ -1840,11 +1840,11 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
@@ -1958,11 +1958,11 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
@@ -3633,11 +3633,11 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
@@ -3739,11 +3739,11 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                         </td>
                       </tr>
                       <tr
-                        class="InfoPanelTableRow__datum-ontbinding"
+                        class="InfoPanelTableRow__einddatum"
                       >
                         <th>
                           <span>
-                            Datum ontbinding
+                            Einddatum
                           </span>
                         </th>
                         <td>
