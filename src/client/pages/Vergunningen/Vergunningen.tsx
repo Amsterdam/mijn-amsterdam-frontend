@@ -4,6 +4,7 @@ import type { Vergunning } from '../../../server/services/vergunningen/vergunnin
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { CaseType } from '../../../universal/types/vergunningen';
 import {
   addTitleLinkComponent,
   Alert,
@@ -59,6 +60,9 @@ export default function Vergunningen() {
       (vergunning) => vergunning.status !== 'Afgehandeld'
     );
   }, [vergunningen]);
+  const hasActualGPK = vergunningenActual.find(
+    (vergunning) => vergunning.caseType === CaseType.GPK
+  );
   return (
     <OverviewPage className={styles.Vergunningen}>
       <PageHeading
@@ -131,6 +135,17 @@ export default function Vergunningen() {
           items={vergunningenPrevious}
         />
       </SectionCollapsible>
+      {hasActualGPK && (
+        <PageContent>
+          <p className={styles.SuppressedParagraph}>
+            Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een
+            vaste parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u
+            hier in Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra
+            de GPK is gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn
+            Amsterdam.
+          </p>
+        </PageContent>
+      )}
     </OverviewPage>
   );
 }
