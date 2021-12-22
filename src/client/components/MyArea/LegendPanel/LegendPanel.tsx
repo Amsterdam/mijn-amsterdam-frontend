@@ -81,7 +81,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   }, [detailState, filterState, setFilterPanelState]);
 
   return (
-    <>
+    <div id="skip-to-id-LegendPanel">
       <PanelComponent
         id="filters"
         cycle={filterPanelCycle}
@@ -98,6 +98,6 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       >
         <MyAreaDetailPanel />
       </PanelComponent>
-    </>
+    </div>
   );
 }
