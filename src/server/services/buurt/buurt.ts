@@ -4,15 +4,29 @@ import {
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
-import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import { ApiResponse } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccesResult,
+  defaultDateFormat,
+} from '../../../universal/helpers';
+import {
+  apiDependencyError,
+  ApiResponse,
+} from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
+import { fetchMyLocation } from '../home';
+import {
+  filterFeaturesinRadius,
+  filterDatasetFeatures,
+  getBboxFromFeatures,
+} from './helpers';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
+  datasetEndpoints,
   DatasetFeatures,
   DatasetResponse,
   DEFAULT_API_REQUEST_TIMEOUT,
@@ -26,6 +40,8 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers';
+import { Chapters } from '../../../universal/config';
+import { dateFormat } from '../../../universal/helpers/date';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -192,7 +208,7 @@ export async function loadPolylineFeatures(
     result.features,
     bbox
   );
-
+  console.log(filters);
   return {
     ...result,
     ...filterAndRefineFeatures(
@@ -255,12 +271,79 @@ export async function loadFeatureDetail(
   return response;
 }
 
+function getNotification(wiorMeldingen: number) {
+  console.log(wiorMeldingen);
+  return {
+    id: `wior-meldingen-notification`,
+    datePublished: new Date().toISOString(),
+    chapter: Chapters.BUURT,
+    title: `Werkzaamheden (${wiorMeldingen}) gepland`,
+    description: `Bij u in de buurt zijn binnen enkelemaanden meerdaagsewerkzaamheden gepland`,
+    link: {
+      to: '/buurt?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Werkzaamheden binnenkort":1}},"duur":{"values":{"Meerdaags":1}}}}',
+      title: 'Bekijk de werkzaamheden op kaart',
+    },
+  };
+}
+
 export async function fetchBuurtGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  profileType: ProfileType
 ) {
-  const notification = getNotification(wiorMeldingen);
-  return apiSuccesResult({
-    notifications: [notification],
+  const datasetId = 'wior';
+  const config = datasetEndpoints.wior;
+  const filters = {
+    wior: {
+      datumStartUitvoering: {
+        values: {
+          'Werkzaamheden binnenkort': 1,
+        },
+      },
+      duur: {
+        values: {
+          Meerdaags: 1,
+        },
+      },
+    },
+  };
+  const wiorMeldingen = await fetchDataset(
+    sessionID,
+    datasetId,
+    config,
+    {}
+  ).then((result) => {
+    return {
+      ...result,
+      id: datasetId,
+    };
   });
+  const MY_LOCATION = await fetchMyLocation(
+    sessionID,
+    passthroughRequestHeaders,
+    profileType
+  );
+  if (
+    MY_LOCATION.status === 'OK' &&
+    MY_LOCATION.content?.latlng &&
+    wiorMeldingen?.status === 'OK'
+  ) {
+    const featuresInRadius = filterFeaturesinRadius(
+      MY_LOCATION.content?.latlng,
+      wiorMeldingen.content.features,
+      1.5
+    );
+    const filteredFeatures = filterDatasetFeatures(
+      featuresInRadius,
+      [datasetId],
+      filters
+    );
+    const bbox = getBboxFromFeatures(filteredFeatures);
+    console.log(bbox);
+    const notification = getNotification(filteredFeatures.length);
+    return apiSuccesResult({
+      notifications: [notification],
+    });
+  }
+  return apiDependencyError({ MY_LOCATION });
 }
