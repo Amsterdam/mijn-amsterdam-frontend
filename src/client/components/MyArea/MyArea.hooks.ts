@@ -1,6 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LatLngLiteral, LeafletEvent } from 'leaflet';
+import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useRef } from 'react';
 import {
   atom,
@@ -465,6 +465,7 @@ export interface QueryConfig {
   zoom?: number;
   center?: LatLngLiteral;
   loadingFeature?: { id: string; datasetId: DatasetId };
+  bbox?: LatLngBoundsLiteral;
   s?: '1'; // Indicates the url was constructed on the /buurt page
 }
 

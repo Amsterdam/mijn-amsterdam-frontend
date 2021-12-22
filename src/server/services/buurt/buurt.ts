@@ -4,11 +4,7 @@ import {
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
-import {
-  apiErrorResult,
-  apiSuccesResult,
-  defaultDateFormat,
-} from '../../../universal/helpers';
+import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
 import {
   apiDependencyError,
   ApiResponse,
@@ -41,7 +37,8 @@ import {
   getDynamicDatasetFilters,
 } from './helpers';
 import { Chapters } from '../../../universal/config';
-import { dateFormat } from '../../../universal/helpers/date';
+
+import { LatLngBoundsLiteral } from 'leaflet';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -277,7 +274,7 @@ export async function loadFeatureDetail(
   return response;
 }
 
-function getNotification(wiorMeldingen: number) {
+function getNotification(wiorMeldingen: number, bbox: LatLngBoundsLiteral) {
   console.log(wiorMeldingen);
   return {
     id: `wior-meldingen-notification`,
@@ -286,7 +283,7 @@ function getNotification(wiorMeldingen: number) {
     title: `Werkzaamheden (${wiorMeldingen}) gepland`,
     description: `Bij u in de buurt zijn binnen enkelemaanden meerdaagsewerkzaamheden gepland`,
     link: {
-      to: '/buurt?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Werkzaamheden binnenkort":1}},"duur":{"values":{"Meerdaags":1}}}}',
+      to: `/buurt?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de werkzaamheden op kaart',
     },
   };
@@ -303,7 +300,7 @@ export async function fetchBuurtGenerated(
     wior: {
       datumStartUitvoering: {
         values: {
-          'Werkzaamheden binnenkort': 1,
+          'Binnen enkele maanden': 1,
         },
       },
       duur: {
@@ -344,9 +341,12 @@ export async function fetchBuurtGenerated(
       [datasetId],
       filters
     );
-    const bbox = getBboxFromFeatures(filteredFeatures);
+    const bbox = getBboxFromFeatures(
+      filteredFeatures,
+      MY_LOCATION.content?.latlng
+    );
     console.log(bbox);
-    const notification = getNotification(filteredFeatures.length);
+    const notification = getNotification(filteredFeatures.length, bbox);
     return apiSuccesResult({
       notifications: [notification],
     });

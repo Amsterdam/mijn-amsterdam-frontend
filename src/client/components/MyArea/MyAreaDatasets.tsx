@@ -1,5 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LeafletEvent, Map } from 'leaflet';
+import { LatLngBoundsLiteral, LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,7 @@ import type {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
+import { toBoundLiteral } from '../../../server/services/buurt/helpers';
 import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
@@ -35,7 +36,6 @@ interface MyAreaDatasetsProps {
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
   const history = useHistory();
-
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
@@ -67,10 +67,13 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const queryConfig = getQueryConfig(search);
     const currentZoom = map.getZoom();
     const currentCenter = map.getCenter();
-
+    const currentBbox = toBoundLiteral(map.getBounds());
     const zoom = queryConfig?.s
       ? currentZoom
       : queryConfig?.zoom || currentZoom;
+    const bbox = queryConfig?.s
+      ? currentBbox
+      : queryConfig?.bbox || currentBbox;
 
     const center = queryConfig?.s
       ? currentCenter
@@ -106,6 +109,11 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setLoadingFeature(activeFeature);
     }
 
+    if (!isEqual(bbox, currentBbox)) {
+      console.log(bbox);
+      map.fitBounds(bbox);
+    }
+    console.log(bbox, currentBbox);
     const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
 
     const filtersStr = Object.entries(filters).length
