@@ -1,4 +1,9 @@
-import { LatLngLiteral, LatLngTuple } from 'leaflet';
+import {
+  LatLngBounds,
+  LatLngBoundsLiteral,
+  LatLngLiteral,
+  LatLngTuple,
+} from 'leaflet';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -607,18 +612,32 @@ export function filterFeaturesinRadius(
   return featuresFiltered;
 }
 
-export function getBboxFromFeatures(features: DatasetFeatures) {
+export function getBboxFromFeatures(
+  features: DatasetFeatures,
+  location: LatLngLiteral
+) {
   let lats: Array<number> = [];
   let lngs: Array<number> = [];
   let i = 0;
   let len = features.length;
-
+  lats.push(location.lat);
+  lngs.push(location.lng);
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
-    coords.map((coord) => {
-      lats.push(coord[0]);
-      lngs.push(coord[1]);
-    });
+    //find coord closest to center to calculate min bbox
+    const closestLat = coords.reduce((prev, curr) =>
+      Math.abs(curr[0] - location.lat) < Math.abs(prev[0] - location.lat)
+        ? curr
+        : prev
+    );
+    const closestLng = coords.reduce((prev, curr) =>
+      Math.abs(curr[1] - location.lng) < Math.abs(prev[1] - location.lng)
+        ? curr
+        : prev
+    );
+    console.log(closestLng, closestLat, location);
+    lats.push(closestLat[0]);
+    lngs.push(closestLng[1]);
   }
 
   // calc the min and max lng and lat
@@ -626,10 +645,19 @@ export function getBboxFromFeatures(features: DatasetFeatures) {
   const maxlat = Math.max.apply(null, lats);
   const minlng = Math.min.apply(null, lngs);
   const maxlng = Math.max.apply(null, lngs);
-
-  // create a bounding rectangle that can be used in leaflet
-  return [
+  const bbox: LatLngBoundsLiteral = [
     [minlat, minlng],
     [maxlat, maxlng],
+  ];
+  // create a bounding rectangle that can be used in leaflet
+  return bbox;
+}
+
+export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
+  const southWest = bounds.getSouthWest();
+  const northEast = bounds.getNorthEast();
+  return [
+    [southWest.lat, southWest.lng],
+    [northEast.lat, northEast.lng],
   ];
 }
