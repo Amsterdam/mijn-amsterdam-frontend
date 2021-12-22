@@ -110,10 +110,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     }
 
     if (!isEqual(bbox, currentBbox)) {
-      console.log(bbox);
       map.fitBounds(bbox);
     }
-    console.log(bbox, currentBbox);
     const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
 
     const filtersStr = Object.entries(filters).length

@@ -211,7 +211,6 @@ export async function loadPolylineFeatures(
     result.features,
     bbox
   );
-  console.log(filters);
   return {
     ...result,
     ...filterAndRefineFeatures(
@@ -274,14 +273,13 @@ export async function loadFeatureDetail(
   return response;
 }
 
-function getNotification(wiorMeldingen: number, bbox: LatLngBoundsLiteral) {
-  console.log(wiorMeldingen);
+function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
     chapter: Chapters.BUURT,
-    title: `Werkzaamheden (${wiorMeldingen}) gepland`,
-    description: `Bij u in de buurt zijn binnen enkelemaanden meerdaagsewerkzaamheden gepland`,
+    title: `Werkzaamheden gepland`,
+    description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {
       to: `/buurt?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de werkzaamheden op kaart',
@@ -345,10 +343,9 @@ export async function fetchBuurtGenerated(
       filteredFeatures,
       MY_LOCATION.content?.latlng
     );
-    console.log(bbox);
-    const notification = getNotification(filteredFeatures.length, bbox);
+    const notification = getNotification(bbox);
     return apiSuccesResult({
-      notifications: [notification],
+      notifications: filteredFeatures.length >= 2 ? [notification] : [],
     });
   }
   return apiDependencyError({ MY_LOCATION });
