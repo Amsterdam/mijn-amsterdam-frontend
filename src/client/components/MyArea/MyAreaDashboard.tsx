@@ -29,9 +29,7 @@ export default function MyAreaDashboard() {
         <span className={styles.NavLinkContentWrap}>
           <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
           {!mokum ? (
-            <p>
-              Uw adres kan niet worden getoond in Mijn Amsterdam.
-            </p>
+            <p>Uw adres kan niet worden getoond in Mijn Amsterdam.</p>
           ) : (
             <p>
               Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
