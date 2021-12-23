@@ -393,7 +393,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             Mijn buurt
           </h3>
           <p>
-            Uw adres kan niet worden getoond in Mijn Amsterdam.
+            Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.
           </p>
         </span>
       </a>
