@@ -30,14 +30,7 @@ export default function MyAreaDashboard() {
           <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
           {!mokum ? (
             <p>
-              {`U${
-                isPrivate ? '' : 'w bedrijf'
-              } staat niet in Amsterdam ingeschreven in ${
-                isPrivate
-                  ? 'de Basisregistratie Personen (BRP)'
-                  : 'het handelsregister (KVK)'
-              }. Uw adres kan daarom niet worden getoond in Mijn
-              Amsterdam.`}
+              Uw adres kan niet worden getoond in Mijn Amsterdam.
             </p>
           ) : (
             <p>
