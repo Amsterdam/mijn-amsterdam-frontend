@@ -12,6 +12,12 @@ import { AppState } from '../../AppState';
 // TIPS, NOTIFICATIONS, CASES, BUURT, MY_LOCATION
 
 const testState: any = {
+  BRP: {
+    status: 'OK',
+    content: {
+      mokum: true,
+    },
+  },
   TIPS: {
     status: 'OK',
     content: [
