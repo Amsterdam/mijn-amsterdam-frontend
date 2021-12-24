@@ -8,3 +8,8 @@ export enum AuthType {
   DIGID = 'D',
   IRMA = 'I',
 }
+
+export enum UserTpe {
+  BURGER = 'BURGER',
+  BEDRIJF = 'BEDRIJF',
+}

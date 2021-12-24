@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -9,22 +10,20 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import morgan from 'morgan';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
-import { apiErrorResult } from '../universal/helpers';
+import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT } from './config';
-import {
-  clearSession,
-  exitEarly,
-  secureValidation,
-  send404,
-  sessionID,
-} from './helpers/app';
+import { clearSession, exitEarly, send404, sessionID } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
+import morgan from 'morgan';
+import { auth, ConfigParams } from 'express-openid-connect';
+import { UserTpe } from '../universal/config';
+
+dotenv.config({ path: `.env${!IS_AP ? '.local' : ''}` });
 
 const isDebug = ENV === 'development';
-const options: Sentry.NodeOptions = {
+const sentryOptions: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
   debug: isDebug,
@@ -38,7 +37,19 @@ const options: Sentry.NodeOptions = {
   release: 'mijnamsterdam-bff@' + process.env.npm_package_version,
 };
 
-Sentry.init(options);
+Sentry.init(sentryOptions);
+
+const oidcConfig: ConfigParams = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.OIDC_SECRET,
+  baseURL: process.env.OIDC_BASE_URL,
+  clientID: process.env.OIDC_CLIENT_ID,
+  issuerBaseURL: process.env.OIDC_ISSUER_BASE_URL,
+  routes: {
+    postLogoutRedirect: process.env.REDIRECT_TO_AFTER_LOGOUT,
+  },
+};
 
 const app = express();
 
@@ -51,14 +62,42 @@ app.use(cors());
 app.use(cookieParser());
 app.use(compression());
 
-// Development routing for mock data
-if (!IS_AP) {
-  app.use('/test-api', routerDevelopment);
-}
-
 // Basic security measure
 app.use(exitEarly);
-app.use(secureValidation);
+
+// Enable OIDC
+app.use(auth(oidcConfig));
+
+const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
+
+// Possible refresh token call here?
+
+app.get('/auth/check', (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    // TODO: Extract validity from token
+    const now = new Date().getTime();
+    const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
+
+    res.send(
+      apiSuccesResult({
+        isAuthenticated: true,
+        userType: UserTpe.BURGER, // TODO: get from req.oidc.user.type ???
+        validUntil,
+      })
+    );
+  } else {
+    res.status(401).send(apiErrorResult('Not authenticated.', false));
+  }
+});
+
+app.get('/', (req, res) => {
+  return res.redirect(process.env.REDIRECT_TO_AFTER_LOGIN || '/auth/check');
+});
+
+// // Development routing for mock data
+if (!IS_AP) {
+  app.use(routerDevelopment);
+}
 
 // Generate session id
 app.use(sessionID);
