@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { DATASETS } from '../universal/config/buurt';
+import { DATASETS, getDatasetCategoryId } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
@@ -122,13 +122,18 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
     const id = req.params.id;
+    const datasetCategoryId = getDatasetCategoryId(datasetId);
 
     let response: ApiResponse<any> | null = null;
 
     try {
-      if (datasetId && id) {
+      if (datasetCategoryId && datasetId && id) {
         response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
-      } else if (datasetId && DATASETS.sport.datasets?.[datasetId]) {
+      } else if (
+        datasetCategoryId &&
+        datasetId &&
+        DATASETS?.[datasetCategoryId].datasets?.[datasetId]
+      ) {
         const [[, datasetConfig]] = getDatasetEndpointConfig([datasetId]);
         response = await fetchDataset(
           res.locals.sessionID,
