@@ -628,20 +628,6 @@ export function getBboxFromFeatures(
       lats.push(coord[0]);
       lngs.push(coord[1]);
     });
-    //find coord closest to center to calculate min bbox
-    // const closestLat = coords.reduce((prev, curr) =>
-    //   Math.abs(curr[0] - location.lat) < Math.abs(prev[0] - location.lat)
-    //     ? curr
-    //     : prev
-    // );
-    // const closestLng = coords.reduce((prev, curr) =>
-    //   Math.abs(curr[1] - location.lng) < Math.abs(prev[1] - location.lng)
-    //     ? curr
-    //     : prev
-    // );
-    // console.log(closestLng, closestLat, location);
-    // lats.push(closestLat[0]);
-    // lngs.push(closestLng[1]);
   }
   // calc the min and max lng and lat
   const minlat = Math.min.apply(null, lats);
