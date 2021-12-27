@@ -1,6 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LatLngLiteral, LeafletEvent } from 'leaflet';
+import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useRef } from 'react';
 import {
   atom,
@@ -12,6 +12,7 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
+
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -261,7 +262,6 @@ export function useFetchFeatures() {
     ): Promise<DatasetResponseContent | null> => {
       // Cancel all previous requests, the latest request will represent latest state
       abortSignal.current?.cancel();
-
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
 
@@ -273,7 +273,6 @@ export function useFetchFeatures() {
         mapBounds.getNorth(),
       ];
       const zoom = map.getZoom();
-
       try {
         const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
@@ -466,6 +465,7 @@ export interface QueryConfig {
   zoom?: number;
   center?: LatLngLiteral;
   loadingFeature?: { id: string; datasetId: DatasetId };
+  bbox?: LatLngBoundsLiteral;
   s?: '1'; // Indicates the url was constructed on the /buurt page
 }
 

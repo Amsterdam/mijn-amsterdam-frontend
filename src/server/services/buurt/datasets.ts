@@ -271,7 +271,7 @@ export const datasetEndpoints: Record<
   },
   wior: {
     listUrl: () => {
-      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,datumStartUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
+      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,datumStartUitvoering,datumEindeUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
         new Date(),
         'yyyy-MM-dd'
       )}`;
@@ -502,6 +502,7 @@ export function transformWiorApiListResponse(
   // Starts within
   const dateRanges = [
     { label: 'Lopend', range: [-Infinity, 0] },
+    { label: 'Binnenkort', range: [0.156, 0.5] },
     { label: '0-1 jaar', range: [0, 1] },
     { label: '1-3 jaar', range: [1, 3] },
     { label: '>3 jaar', range: [3, Infinity] },
@@ -510,7 +511,13 @@ export function transformWiorApiListResponse(
 
   for (const feature of features) {
     const start = feature.datumStartUitvoering;
+    const eind = feature.datumEindeUitvoering;
     if (start) {
+      if (new Date(eind) > new Date(start)) {
+        feature.duur = 'meerdaags';
+      } else {
+        feature.duur = 'enkel';
+      }
       const startsWithinYears =
         differenceInDays(new Date(start), Date.now()) / 365;
 
@@ -529,6 +536,5 @@ export function transformWiorApiListResponse(
       feature.datumStartUitvoering = 'Onbekend';
     }
   }
-
   return transformDsoApiListResponse(datasetId, config, { features });
 }

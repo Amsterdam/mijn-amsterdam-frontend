@@ -61,7 +61,6 @@ export function DatasetPropertyFilterPanel({
     }, // Sort on label
     [values, property]
   );
-
   return (
     <PropertyFilterPanel>
       {property.title && (

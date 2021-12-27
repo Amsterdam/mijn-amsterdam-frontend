@@ -95,7 +95,6 @@ export default function MyArea({
 
   const centerMarkerLabel = centerMarker?.label;
   const centerMarkerLatLng = centerMarker?.latlng;
-
   zoom = customConfig.zoom || zoom;
 
   const center = useMemo(() => {

@@ -1,4 +1,9 @@
-import { LatLngTuple } from 'leaflet';
+import {
+  LatLngBounds,
+  LatLngBoundsLiteral,
+  LatLngLiteral,
+  LatLngTuple,
+} from 'leaflet';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -542,7 +547,6 @@ export function transformDsoApiListResponse(
             feature[geometryKey].coordinates
           );
         }
-
         collection.push({
           type: 'Feature',
           geometry: feature[geometryKey],
@@ -556,4 +560,93 @@ export function transformDsoApiListResponse(
     }
   }
   return collection;
+}
+
+// solution from https://stackoverflow.com/a/54953800
+function getDistanceFromLatLonInKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1); // deg2rad below
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg: number) {
+  return deg * (Math.PI / 180);
+}
+
+export function filterFeaturesinRadius(
+  location: LatLngLiteral,
+  features: DatasetFeatures,
+  radius: number
+) {
+  const featuresFiltered = [];
+  let i = 0;
+  const len = features.length;
+
+  for (i; i < len; i += 1) {
+    const coords = flatten(features[i].geometry.coordinates);
+    const hasCoord = (coord: LatLngTuple) =>
+      getDistanceFromLatLonInKm(
+        coord[0],
+        coord[1],
+        location.lat,
+        location.lng
+      ) < radius;
+    if (coords.some(hasCoord)) {
+      featuresFiltered.push(features[i]);
+    }
+  }
+  return featuresFiltered;
+}
+
+export function getBboxFromFeatures(
+  features: DatasetFeatures,
+  location: LatLngLiteral
+) {
+  const lats: Array<number> = [];
+  const lngs: Array<number> = [];
+  let i = 0;
+  const len = features.length;
+  lats.push(location.lat);
+  lngs.push(location.lng);
+  for (i; i < len; i += 1) {
+    const coords = flatten(features[i].geometry.coordinates);
+    coords.forEach((coord) => {
+      lats.push(coord[0]);
+      lngs.push(coord[1]);
+    });
+  }
+  // calc the min and max lng and lat
+  const minlat = Math.min.apply(null, lats);
+  const maxlat = Math.max.apply(null, lats);
+  const minlng = Math.min.apply(null, lngs);
+  const maxlng = Math.max.apply(null, lngs);
+  const bbox: LatLngBoundsLiteral = [
+    [minlat, minlng],
+    [maxlat, maxlng],
+  ];
+  // create a bounding rectangle that can be used in leaflet
+  return bbox;
+}
+
+export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
+  const southWest = bounds.getSouthWest();
+  const northEast = bounds.getNorthEast();
+  return [
+    [southWest.lat, southWest.lng],
+    [northEast.lat, northEast.lng],
+  ];
 }

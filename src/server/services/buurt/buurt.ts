@@ -198,7 +198,6 @@ export async function loadPolylineFeatures(
     result.features,
     bbox
   );
-
   return {
     ...result,
     ...filterAndRefineFeatures(

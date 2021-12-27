@@ -8,6 +8,7 @@ import type {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
+import { toBoundLiteral } from '../../../server/services/buurt/helpers';
 import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
@@ -35,7 +36,6 @@ interface MyAreaDatasetsProps {
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
   const history = useHistory();
-
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
@@ -67,10 +67,13 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const queryConfig = getQueryConfig(search);
     const currentZoom = map.getZoom();
     const currentCenter = map.getCenter();
-
+    const currentBbox = toBoundLiteral(map.getBounds());
     const zoom = queryConfig?.s
       ? currentZoom
       : queryConfig?.zoom || currentZoom;
+    const bbox = queryConfig?.s
+      ? currentBbox
+      : queryConfig?.bbox || currentBbox;
 
     const center = queryConfig?.s
       ? currentCenter
@@ -98,7 +101,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setActiveFilterSelection(filters);
     }
 
-    if (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) {
+    if (
+      (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) &&
+      !bbox
+    ) {
       map.setView(center, zoom);
     }
 
@@ -106,6 +112,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setLoadingFeature(activeFeature);
     }
 
+    if (!isEqual(bbox, currentBbox)) {
+      map.fitBounds(bbox);
+    }
     const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
 
     const filtersStr = Object.entries(filters).length
@@ -118,6 +127,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     params.set('datasetIds', datasetIdsStr);
     params.set('filters', filtersStr);
     params.set('loadingFeature', JSON.stringify(loadingFeature));
+    if (queryConfig?.bbox) {
+      params.set('bbox', JSON.stringify(bbox));
+    }
 
     // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
     params.set('s', '1');
