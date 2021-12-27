@@ -194,7 +194,7 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGenerated,
     stadspasGenerated,
     krefiaGenerated,
-    WiorGenerated,
+    wiorGenerated,
   ]);
 }
 
