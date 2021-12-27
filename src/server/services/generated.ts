@@ -176,7 +176,7 @@ async function fetchServicesGenerated(
   );
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
-  const WiorGenerated = getSettledResult(fetchWiorGeneratedResult);
+  const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
