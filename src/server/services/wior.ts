@@ -69,7 +69,7 @@ export async function fetchWiorGenerated(
     const featuresInRadius = filterFeaturesinRadius(
       MY_LOCATION.content?.latlng,
       wiorMeldingen.content.features,
-      1.5
+      1 // KM
     );
     const filteredFeatures = filterDatasetFeatures(
       featuresInRadius,

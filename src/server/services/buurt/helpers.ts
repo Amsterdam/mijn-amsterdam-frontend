@@ -594,7 +594,7 @@ export function filterFeaturesinRadius(
 ) {
   const featuresFiltered = [];
   let i = 0;
-  let len = features.length;
+  const len = features.length;
 
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
@@ -616,15 +616,15 @@ export function getBboxFromFeatures(
   features: DatasetFeatures,
   location: LatLngLiteral
 ) {
-  let lats: Array<number> = [];
-  let lngs: Array<number> = [];
+  const lats: Array<number> = [];
+  const lngs: Array<number> = [];
   let i = 0;
-  let len = features.length;
+  const len = features.length;
   lats.push(location.lat);
   lngs.push(location.lng);
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
-    coords.map((coord) => {
+    coords.forEach((coord) => {
       lats.push(coord[0]);
       lngs.push(coord[1]);
     });
