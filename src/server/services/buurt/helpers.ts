@@ -616,10 +616,10 @@ export function getBboxFromFeatures(
   features: DatasetFeatures,
   location: LatLngLiteral
 ) {
-  let lats: Array<number> = [];
-  let lngs: Array<number> = [];
+  const lats: Array<number> = [];
+  const lngs: Array<number> = [];
   let i = 0;
-  let len = features.length;
+  const len = features.length;
   lats.push(location.lat);
   lngs.push(location.lng);
   for (i; i < len; i += 1) {
