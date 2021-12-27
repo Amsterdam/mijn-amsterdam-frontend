@@ -18,12 +18,12 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
 
 const DISPLAY_PROPS_ID_KAARTEN = {
-  title: '',
+  title: 'Type',
   datumAfloop: 'Geldig tot',
 };
 
 const DISPLAY_PROPS_AKTES = {
-  type: '',
+  type: 'Type',
   aktenummer: 'Aktenummer',
   registerjaar: 'Registerjaar',
 };

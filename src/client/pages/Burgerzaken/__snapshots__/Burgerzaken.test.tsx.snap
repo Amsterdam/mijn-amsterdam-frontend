@@ -185,7 +185,9 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
               >
                 <th
                   class="DisplayProp"
-                />
+                >
+                  Type
+                </th>
                 <th
                   class="DisplayProp"
                 >
@@ -205,6 +207,11 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Type:
+                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/70669889"
@@ -252,6 +259,11 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Type:
+                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/4150191554"
@@ -299,6 +311,11 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 <td
                   class="DisplayProp"
                 >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Type:
+                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/1975027871"

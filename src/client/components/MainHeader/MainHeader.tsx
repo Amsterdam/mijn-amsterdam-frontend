@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
 import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
@@ -31,6 +32,9 @@ export default function MainHeader({
     <header className={styles.header}>
       {!usePhoneScreen() && (
         <nav className={styles.DirectSkipLinks}>
+          <Linkd external={true} tabIndex={0} href="#skip-to-id-MainNav">
+            Direct naar: <b>Navigate menu</b>
+          </Linkd>
           <Linkd external={true} tabIndex={0} href="#skip-to-id-AppContent">
             Direct naar: <b>Pagina inhoud</b>
           </Linkd>

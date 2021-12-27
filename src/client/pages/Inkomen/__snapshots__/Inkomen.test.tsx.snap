@@ -124,7 +124,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                   
+                  Soort uitkering
                 </th>
                 <th
                   class="DisplayProp"
@@ -280,7 +280,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                   
+                  Soort uitkering
                 </th>
                 <th
                   class="DisplayProp"

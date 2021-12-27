@@ -59,7 +59,6 @@ export default function Table({
   const hasDisplayPropTableHeadingLabels = !!Object.keys(
     displayPropsFinal
   ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
-
   return (
     <table className={classnames(styles.Table, className)}>
       {hasDisplayPropTableHeadingLabels && (

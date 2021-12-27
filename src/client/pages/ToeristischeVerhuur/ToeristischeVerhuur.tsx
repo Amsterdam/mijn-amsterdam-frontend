@@ -30,7 +30,7 @@ const DISPLAY_PROPS_VERHUUR = {
 };
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
-  title: '',
+  title: 'Soort vergunning',
   status: 'Status',
   dateStart: 'Vanaf',
   dateEnd: 'Tot',

@@ -131,6 +131,12 @@
   margin-left: 1rem;
 }
 
+.CloseButton {
+  &:focus {
+    outline: 1px solid $color-primary-red;
+  }
+}
+
 .CloseWrapper {
   height: 100%;
   display: flex;

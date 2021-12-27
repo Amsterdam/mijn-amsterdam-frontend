@@ -16,7 +16,7 @@ $buttons: (
     text-color: $color-white,
     background-color-hover: $color-support-darkblue,
     border-color-hover: $color-support-darkblue,
-    outline-hover: default,
+    outline-hover: 1px solid $color-primary-red,
     text-color-hover: $color-white,
   ),
   secondary-inverted: (
@@ -104,7 +104,6 @@ $buttons: (
   text-decoration: none;
   font-weight: 500;
   padding: 0 1rem;
-
   @include buttonStyle('primary');
   @include buttonStyle('secondary');
   @include buttonStyle('secondary-inverted');
