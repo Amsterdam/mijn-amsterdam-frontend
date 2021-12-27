@@ -332,7 +332,7 @@ export async function fetchBuurtGenerated(
     const featuresInRadius = filterFeaturesinRadius(
       MY_LOCATION.content?.latlng,
       wiorMeldingen.content.features,
-      1.5
+      1.5 // KM
     );
     const filteredFeatures = filterDatasetFeatures(
       featuresInRadius,
