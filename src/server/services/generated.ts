@@ -22,7 +22,7 @@ import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 
 import { marked } from 'marked';
 import memoize from 'memoizee';
-import { fetchBuurtGenerated } from './buurt/buurt';
+import { fetchWiorGenerated } from './wior';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -132,7 +132,7 @@ async function fetchServicesGenerated(
     stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
     fetchKrefiaGeneratedResult,
-    fetchBuurtGeneratedResult,
+    fetchWiorGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -150,7 +150,7 @@ async function fetchServicesGenerated(
     fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
     fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
-    fetchBuurtGenerated(sessionID, passthroughRequestHeaders, profileType),
+    fetchWiorGenerated(sessionID, passthroughRequestHeaders, profileType),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -176,7 +176,7 @@ async function fetchServicesGenerated(
   );
   const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
-  const buurtGenerated = getSettledResult(fetchBuurtGeneratedResult);
+  const WiorGenerated = getSettledResult(fetchWiorGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -194,7 +194,7 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGenerated,
     stadspasGenerated,
     krefiaGenerated,
-    buurtGenerated,
+    WiorGenerated,
   ]);
 }
 
