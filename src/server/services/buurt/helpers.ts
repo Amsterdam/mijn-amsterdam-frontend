@@ -594,7 +594,7 @@ export function filterFeaturesinRadius(
 ) {
   const featuresFiltered = [];
   let i = 0;
-  let len = features.length;
+  const len = features.length;
 
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
