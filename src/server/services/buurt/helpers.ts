@@ -624,7 +624,7 @@ export function getBboxFromFeatures(
   lngs.push(location.lng);
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
-    coords.map((coord) => {
+    coords.forEach((coord) => {
       lats.push(coord[0]);
       lngs.push(coord[1]);
     });
