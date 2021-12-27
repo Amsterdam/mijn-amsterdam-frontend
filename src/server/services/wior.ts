@@ -1,5 +1,5 @@
 import { LatLngBoundsLiteral } from 'leaflet';
-import { Chapters } from '../../universal/config';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { apiDependencyError, apiSuccesResult } from '../../universal/helpers';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';
@@ -82,7 +82,10 @@ export async function fetchWiorGenerated(
     );
     const notification = getNotification(bbox);
     return apiSuccesResult({
-      notifications: filteredFeatures.length >= 2 ? [notification] : [],
+      notifications:
+        FeatureToggle.wiorMeldingen && filteredFeatures.length >= 2
+          ? [notification]
+          : [],
     });
   }
   return apiDependencyError({ MY_LOCATION });

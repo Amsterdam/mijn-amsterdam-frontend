@@ -5,24 +5,14 @@ import {
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import {
-  apiDependencyError,
-  ApiResponse,
-} from '../../../universal/helpers/api';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
-import { fetchMyLocation } from '../home';
-import {
-  filterFeaturesinRadius,
-  filterDatasetFeatures,
-  getBboxFromFeatures,
-} from './helpers';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
-  datasetEndpoints,
   DatasetFeatures,
   DatasetResponse,
   DEFAULT_API_REQUEST_TIMEOUT,
@@ -36,9 +26,6 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers';
-import { Chapters } from '../../../universal/config';
-
-import { LatLngBoundsLiteral } from 'leaflet';
 
 const fileCaches: Record<string, FileCache> = {};
 
