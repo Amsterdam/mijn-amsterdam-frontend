@@ -36,7 +36,7 @@ export default function MyNotificationsPage() {
     const end = start + PAGE_SIZE;
     return notifications.slice(start, end);
   }, [currentPage, notifications]);
-
+  console.log(notifications);
   const total = notifications.length;
 
   useEffect(() => {

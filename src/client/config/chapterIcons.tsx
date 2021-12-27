@@ -19,13 +19,14 @@ import {
   IconKrefia,
   IconSubsidie,
   IconSearch,
+  IconWior,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.AFVAL]: IconGarbage,
   [Chapters.BELASTINGEN]: IconBelastingen,
   [Chapters.BURGERZAKEN]: IconBurgerZaken,
-  [Chapters.BUURT]: IconBurgerZaken,
+  [Chapters.BUURT]: IconWior,
   [Chapters.INKOMEN]: IconInkomen,
   [Chapters.STADSPAS]: IconStadspas,
   [Chapters.BRP]: IconMijnGegevens,
