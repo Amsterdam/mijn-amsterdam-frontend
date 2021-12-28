@@ -31,7 +31,7 @@ export const FeatureToggle = {
   isSearchEnabled: true,
   meldingenBuurtActive: !IS_PRODUCTION,
   inkomenBBZActive: true,
-  erfpachtV2EndpointActive: !IS_PRODUCTION,
+  erfpachtV2EndpointActive: true,
   subsidieActive: !IS_PRODUCTION,
   wiorMeldingen: !IS_PRODUCTION,
 };
