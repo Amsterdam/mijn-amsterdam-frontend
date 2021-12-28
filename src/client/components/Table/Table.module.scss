@@ -27,7 +27,8 @@
       border-bottom: 0;
     }
   }
-  thead th {
+  thead th,
+  thead td {
     border-bottom: 0.2rem solid $color-neutral-grey2;
     padding-bottom: 0.5rem;
   }

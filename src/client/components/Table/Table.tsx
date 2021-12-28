@@ -59,21 +59,26 @@ export default function Table({
   const hasDisplayPropTableHeadingLabels = !!Object.keys(
     displayPropsFinal
   ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
+  const FirstHeadCellTag = !!displayPropsFinal[titleKey] ? 'th' : 'td';
+
   return (
     <table className={classnames(styles.Table, className)}>
       {hasDisplayPropTableHeadingLabels && (
         <thead>
           <tr className={styles.TableRow}>
             {!!items[0] && titleKey in items[0] && (
-              <th className={styles.DisplayProp}>
-                {displayPropsFinal[titleKey] || ' '}
-              </th>
+              <FirstHeadCellTag className={styles.DisplayProp}>
+                {displayPropsFinal[titleKey]}
+              </FirstHeadCellTag>
             )}
-            {displayPropEntries.map(([key, label]) => (
-              <th key={`th-${key}`} className={styles.DisplayProp}>
-                {label}
-              </th>
-            ))}
+            {displayPropEntries.map(([key, label]) => {
+              const EL = !!label ? 'th' : 'td';
+              return (
+                <EL key={`th-${key}`} className={styles.DisplayProp}>
+                  {label}
+                </EL>
+              );
+            })}
           </tr>
         </thead>
       )}
