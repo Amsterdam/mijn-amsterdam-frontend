@@ -16,7 +16,7 @@ $buttons: (
     text-color: $color-white,
     background-color-hover: $color-support-darkblue,
     border-color-hover: $color-support-darkblue,
-    outline-hover: 1px solid $color-primary-red,
+    outline-hover: default,
     text-color-hover: $color-white,
   ),
   secondary-inverted: (
@@ -61,7 +61,7 @@ $buttons: (
         background-color: $color-neutral-grey2;
         border: 1px solid $color-neutral-grey2;
         color: $color-neutral-grey4;
-        outline: default;
+        outline: auto;
         pointer-events: none;
       }
     }
@@ -105,15 +105,25 @@ $buttons: (
   font-weight: 500;
   padding: 0 1rem;
   @include buttonStyle('primary');
-  @include buttonStyle('secondary');
+  @include buttonStyle('secondary') {
+    &:focus {
+      position: relative;
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: .1rem solid $color-white;
+      }
+    }
+  }
   @include buttonStyle('secondary-inverted');
   @include buttonStyle('inline') {
     font-weight: normal;
     text-decoration: underline;
-
-    // &:visited {
-    //   color: $color-support-purple;
-    // }
   }
 
   @include buttonStyle('inline') {
