@@ -118,7 +118,6 @@ export default function MainNavSubmenu({
 
   return (
     <span
-      id="skip-to-id-MainNav"
       className={styles.MainNavSubmenu}
       data-submenu-id={id}
       onMouseEnter={onEnter}
