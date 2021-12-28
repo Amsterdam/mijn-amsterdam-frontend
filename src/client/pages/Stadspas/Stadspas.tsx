@@ -22,20 +22,18 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Stadspas.module.scss';
 
 const stadspasDisplayProps = {
-  naam: 'Naam',
+  naam: '',
   pasnummer: 'Stadspasnummer',
   displayDatumAfloop: 'Einddatum',
   detailPageUrl: 'Tegoed',
 };
 
 const requestsDisplayProps = {
-  title: 'Soort aanvraag',
   displayDateStart: 'Datum aanvraag',
   status: 'Status',
 };
 
 const decisionsDisplayProps = {
-  title: 'Soort aanvraag',
   displayDateStart: 'Datum aanvraag',
   displayDateEnd: 'Datum besluit',
 };

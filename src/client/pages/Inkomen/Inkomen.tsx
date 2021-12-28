@@ -42,13 +42,11 @@ export const incomSpecificationsRouteYearly = generatePath(
 );
 
 const requestsDisplayProps = {
-  title: 'Soort uitkering',
   displayDateStart: 'Datum aanvraag',
   status: 'Status',
 };
 
 const decisionsDisplayProps = {
-  title: 'Soort uitkering',
   displayDateStart: 'Datum aanvraag',
   displayDateEnd: 'Datum besluit',
 };
