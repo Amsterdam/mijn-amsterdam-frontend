@@ -107,11 +107,9 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                  Naam
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
@@ -136,11 +134,6 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayProp"
                 >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Naam:
-                  </span>
                   <span>
                     G Braber
                   </span>

@@ -183,11 +183,9 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                  Type
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
@@ -205,13 +203,8 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Type:
-                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/70669889"
@@ -257,13 +250,8 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Type:
-                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/4150191554"
@@ -309,13 +297,8 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Type:
-                  </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
                     href="/burgerzaken/akte/1975027871"

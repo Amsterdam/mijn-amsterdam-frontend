@@ -74,11 +74,9 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
           <tr
             class="TableRow"
           >
-            <th
+            <td
               class="DisplayProp"
-            >
-              Omschrijving
-            </th>
+            />
             <th
               class="DisplayProp"
             >
@@ -377,11 +375,9 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
           <tr
             class="TableRow"
           >
-            <th
+            <td
               class="DisplayProp"
-            >
-              Omschrijving
-            </th>
+            />
             <th
               class="DisplayProp"
             >
