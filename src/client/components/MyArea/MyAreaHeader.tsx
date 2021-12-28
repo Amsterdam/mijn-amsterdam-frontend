@@ -91,7 +91,6 @@ export default function MyAreaHeader({
           />
         ) : (
           <Button
-            className={styles.CloseButton}
             onClick={() => {
               history.push(AppRoutes.ROOT);
             }}
