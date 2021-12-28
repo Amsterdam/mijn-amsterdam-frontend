@@ -107,7 +107,7 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
                 />
                 <th

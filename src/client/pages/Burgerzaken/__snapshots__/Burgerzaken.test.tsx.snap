@@ -183,7 +183,7 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
                 />
                 <th
@@ -203,7 +203,7 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
@@ -250,7 +250,7 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
@@ -297,7 +297,7 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 class="TableRow"
               >
                 <td
-                  class="DisplayProp"
+                  class="DisplayPropTitle"
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"

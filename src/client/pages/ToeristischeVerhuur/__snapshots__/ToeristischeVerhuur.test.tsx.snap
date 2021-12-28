@@ -713,7 +713,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                 <th
                   class="DisplayProp"
                 >
-                   
+                  Soort vergunning
                 </th>
                 <th
                   class="DisplayProp"

@@ -241,8 +241,8 @@ export default function MainNavBar({
             className={styles.LinkContainer}
             style={linkContainerAnimationProps}
           >
-            {menuItemsComposed}
             <SecondaryLinks />
+            {menuItemsComposed}
           </animated.div>
         </>
       )}

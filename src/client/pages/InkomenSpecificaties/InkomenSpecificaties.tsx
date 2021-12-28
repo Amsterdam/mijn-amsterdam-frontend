@@ -22,14 +22,12 @@ import styles from './InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 
 export const specificationsTableDisplayProps = {
-  title: 'Omschrijving',
   category: 'Regeling',
   displayDatePublished: 'Datum',
   documentUrl: 'Documenten',
 };
 
 export const annualStatementsTableDisplayProps = {
-  title: 'Omschrijving',
   displayDatePublished: 'Datum',
   documentUrl: 'Documenten',
 };

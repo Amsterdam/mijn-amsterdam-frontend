@@ -18,12 +18,10 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
 
 const DISPLAY_PROPS_ID_KAARTEN = {
-  title: '',
   datumAfloop: 'Geldig tot',
 };
 
 const DISPLAY_PROPS_AKTES = {
-  type: '',
   aktenummer: 'Aktenummer',
   registerjaar: 'Registerjaar',
 };
@@ -126,6 +124,7 @@ export default function Burgerzeken() {
             }}
           >
             <Table
+              titleKey="type"
               className={styles.AktesTable}
               displayProps={DISPLAY_PROPS_AKTES}
               items={aktes}

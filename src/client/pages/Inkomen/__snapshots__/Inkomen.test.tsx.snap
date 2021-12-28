@@ -121,11 +121,9 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                   
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
@@ -277,11 +275,9 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                   
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
@@ -433,11 +429,9 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                  Omschrijving
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
@@ -559,11 +553,9 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               <tr
                 class="TableRow"
               >
-                <th
+                <td
                   class="DisplayProp"
-                >
-                  Omschrijving
-                </th>
+                />
                 <th
                   class="DisplayProp"
                 >
