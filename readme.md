@@ -8,7 +8,15 @@ is a portal for official communication with the municipality of Amsterdam. The a
 - React application
 - Node Express back-end-for-frontend (BFF)
 
-To see the application quickly running locally, clone the repo and cd into the project folder. Put the following commands in your terminal:
+To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the following content inside the file:
+
+```
+BROWSER=none
+REACT_APP_VERSION=$npm_package_version
+REACT_APP_ENV=development
+```
+
+Put the following commands in your terminal:
 
 ```
 $ npm install -g ts-node nodemon
