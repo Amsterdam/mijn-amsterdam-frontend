@@ -5,7 +5,7 @@ import AKTES from './json/aktes.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
-import BRP from './json/brp.json';
+import BRP from './json/brp';
 import ERFPACHT from './json/erfpacht.json';
 import KREFIA from './json/krefia.json';
 import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
