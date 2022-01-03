@@ -11,7 +11,7 @@ is a portal for official communication with the municipality of Amsterdam. The a
 To see the application quickly running locally, clone the repo and cd into the project folder. Put the following commands in your terminal:
 
 ```
-$ npm install -g ts-node
+$ npm install -g ts-node nodemon
 $ npm install
 $ npm run bff-api:watch
 $ npm start
