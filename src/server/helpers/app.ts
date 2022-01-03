@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
-import npath from 'path';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
@@ -16,7 +15,7 @@ import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {
-    path: npath.join(BFF_BASE_PATH, path),
+    path: BFF_BASE_PATH + path,
     exact: true,
   });
   return isRouteMatch;
