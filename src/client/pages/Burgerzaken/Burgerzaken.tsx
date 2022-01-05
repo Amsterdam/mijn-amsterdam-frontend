@@ -26,7 +26,7 @@ const DISPLAY_PROPS_AKTES = {
   registerjaar: 'Registerjaar',
 };
 
-export default function Burgerzeken() {
+export default function Burgerzaken() {
   const { BRP, AKTES } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
