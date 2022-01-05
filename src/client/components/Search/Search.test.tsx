@@ -1,4 +1,9 @@
-import { act, render, screen } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
@@ -20,7 +25,7 @@ describe('<Search />', () => {
     jest.clearAllMocks();
   });
 
-  test('Render without crashing', () => {
+  test('Render without crashing', async () => {
     render(
       <BrowserRouter>
         <RecoilRoot>
@@ -28,9 +33,11 @@ describe('<Search />', () => {
         </RecoilRoot>
       </BrowserRouter>
     );
+
+    await screen.findByPlaceholderText('Zoeken voorbereiden...');
   });
 
-  test('Render without crashing', () => {
+  test('Render without crashing', async () => {
     render(
       <BrowserRouter>
         <RecoilRoot
@@ -44,7 +51,8 @@ describe('<Search />', () => {
         </RecoilRoot>
       </BrowserRouter>
     );
-    expect(screen.getByPlaceholderText('Zoeken naar...')).toBeInTheDocument();
+
+    await screen.findByPlaceholderText('Zoeken naar...');
   });
 
   test('Enter search text', async () => {
@@ -117,5 +125,7 @@ describe('<Search />', () => {
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Home -')).toBeInTheDocument();
+
+    await screen.findByText('Zoeken...');
   });
 });
