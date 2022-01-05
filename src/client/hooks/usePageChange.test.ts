@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { usePageChange } from '.';
 import { trackPageViewWithProfileType } from './analytics.hook';
 import * as rrd from 'react-router-dom';
