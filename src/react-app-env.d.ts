@@ -1,6 +1,5 @@
 /// <reference types="react-scripts" />
 // TODO: Add typings for this function
-declare module 'use-debounce/lib/callback';
 declare module 'slugme';
 
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;

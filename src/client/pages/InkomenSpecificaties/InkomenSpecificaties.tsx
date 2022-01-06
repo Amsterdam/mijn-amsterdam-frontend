@@ -192,9 +192,7 @@ export default function InkomenSpecificaties() {
         }
         isLoading={isLoading(FOCUS_SPECIFICATIES)}
         hasItems={!!items.length}
-        noItemsMessage={
-          'Er zijn op dit moment nog geen documenten beschikbaar.'
-        }
+        noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >
         <Button
           variant="secondary-inverted"

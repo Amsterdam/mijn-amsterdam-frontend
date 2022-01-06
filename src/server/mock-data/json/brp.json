@@ -107,12 +107,11 @@
   ],
   "verbintenis": {
     "datumOntbinding": null,
-    "datumSluiting": "1999-01-01T01:01:01.000Z",
+    "datumSluiting": "1999-01-01",
     "landnaamSluiting": "Marokko",
     "persoon": {
       "bsn": "123456780",
-      "geboortedatum": "2019-07-08T09:14:58.963Z",
-      "geslachtsaanduiding": null,
+      "geboortedatum": "2019-07-08",
       "geslachtsnaam": "Bakker",
       "overlijdensdatum": null,
       "voornamen": "Souad",
@@ -124,13 +123,12 @@
   },
   "verbintenisHistorisch": [
     {
-      "datumOntbinding": "1998-07-08T09:14:58.963Z",
-      "datumSluiting": "1912-01-01T01:01:01.000Z",
+      "datumOntbinding": "1998-07-08",
+      "datumSluiting": "1912-01-01",
       "landnaamSluiting": "Marokko",
       "persoon": {
         "bsn": "123456780",
-        "geboortedatum": "2019-07-08T09:14:58.963Z",
-        "geslachtsaanduiding": null,
+        "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
         "overlijdensdatum": null,
         "voornamen": "Souad",
@@ -141,13 +139,12 @@
       "soortVerbintenisOmschrijving": "Huwelijk"
     },
     {
-      "datumOntbinding": "2019-07-08T09:14:58.963Z",
+      "datumOntbinding": "2019-07-08",
       "datumSluiting": "",
       "landnaamSluiting": "Marokko",
       "persoon": {
         "bsn": "123456780",
-        "geboortedatum": "2019-07-08T09:14:58.963Z",
-        "geslachtsaanduiding": null,
+        "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
         "overlijdensdatum": null,
         "voornamen": "Souad",
@@ -162,12 +159,10 @@
       "datumSluiting": "2000-01-01",
       "landnaamSluiting": "Nederland",
       "persoon": {
-        "adellijkeTitelPredikaat": null,
         "bsn": "113731681",
         "geboortedatum": "1950-01-06",
         "geboortelandnaam": "Nederland",
         "geboorteplaatsnaam": "Amsterdam",
-        "geslachtsaanduiding": "V",
         "geslachtsnaam": "Wolters",
         "omschrijvingAdellijkeTitel": "Barones",
         "omschrijvingGeslachtsaanduiding": "Vrouw",
@@ -185,7 +180,7 @@
   "kinderen": [
     {
       "bsn": "123456780",
-      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geboortedatum": "2019-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
       "overlijdensdatum": null,
@@ -194,10 +189,10 @@
     },
     {
       "bsn": "123456780",
-      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geboortedatum": "2019-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
-      "overlijdensdatum": "2019-07-08T09:14:58.963Z",
+      "overlijdensdatum": "2019-07-08",
       "voornamen": "Marwan",
       "voorvoegselGeslachtsnaam": null
     }

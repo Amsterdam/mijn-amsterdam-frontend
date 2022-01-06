@@ -84,9 +84,7 @@ describe('DocumentList', () => {
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
 
     await waitFor(() => expect(track).not.toHaveBeenCalled());
-    await waitFor(() =>
-      expect(screen.getByText('Download mislukt')).toBeInTheDocument()
-    );
+    await screen.findByText('Download mislukt');
     await waitFor(() =>
       expect(captureException).toHaveBeenCalledWith(
         new Error(`Failed to download document. Error: not found, Code: 404`),
