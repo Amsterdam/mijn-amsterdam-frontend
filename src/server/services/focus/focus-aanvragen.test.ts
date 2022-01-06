@@ -339,6 +339,11 @@ const testData: FocusProductFromSource[] = [
 ];
 
 describe('FOCUS_AANVRAGEN service', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date('2020-09-22').getTime());
+  });
+
   it('Normalizes the focus aanvragen items correctly', () => {
     expect(testData.map(normalizeFocusSourceProduct)).toMatchSnapshot();
   });
