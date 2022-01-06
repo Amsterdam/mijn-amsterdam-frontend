@@ -43,7 +43,7 @@ export default function MainHeader({
       <div className={styles.topBar}>
         <span className={styles.logoLink}>
           <a
-            href={'https://www.amsterdam.nl'}
+            href="https://www.amsterdam.nl"
             rel="external noreferrer noopener"
           >
             <Logo

@@ -3,7 +3,7 @@ import { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useDebouncedCallback } from 'use-debounce';
 import type {
   MaPointFeature,
   MaPolylineFeature,
