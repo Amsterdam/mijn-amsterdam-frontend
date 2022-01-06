@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-
 import { BrowserRouter } from 'react-router-dom';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import DirectLinks from './DirectLinks';
