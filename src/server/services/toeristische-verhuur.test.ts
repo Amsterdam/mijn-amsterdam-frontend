@@ -125,7 +125,7 @@ describe('Toeristische verhuur service', () => {
       response.content.vergunningen.every(
         (vergunning) => vergunning.caseType === 'B&B - vergunning'
       )
-    );
+    ).toBe(true);
     expect(response.content.registraties.length).toBe(0);
   });
 

@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
-import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
 import { apiPristineResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
+import { renderRecoilHook } from '../utils/renderRecoilHook';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
 import { useAppStateRemote } from './useAppState';

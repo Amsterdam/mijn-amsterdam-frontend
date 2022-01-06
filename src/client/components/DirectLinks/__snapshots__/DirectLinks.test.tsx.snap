@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<DirectLinks /> It renders additional links on phone 1`] = `
+exports[`<DirectLinks /> renders additional links on phone 1`] = `
 <DocumentFragment>
   <div
     class="DirectLinks"
@@ -38,7 +38,7 @@ exports[`<DirectLinks /> It renders additional links on phone 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<DirectLinks /> It renders commercial links 1`] = `
+exports[`<DirectLinks /> renders commercial links 1`] = `
 <DocumentFragment>
   <div
     class="DirectLinks"
@@ -175,7 +175,7 @@ exports[`<DirectLinks /> It renders commercial links 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<DirectLinks /> It renders private links 1`] = `
+exports[`<DirectLinks /> renders private links 1`] = `
 <DocumentFragment>
   <div
     class="DirectLinks"
@@ -321,7 +321,7 @@ exports[`<DirectLinks /> It renders private links 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<DirectLinks /> It renders private-commercial links 1`] = `
+exports[`<DirectLinks /> renders private-commercial links 1`] = `
 <DocumentFragment>
   <div
     class="DirectLinks"

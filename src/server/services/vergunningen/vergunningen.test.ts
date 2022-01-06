@@ -5,9 +5,9 @@ import { axiosRequest } from '../../helpers';
 import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   fetchAllVergunningen,
+  fetchVergunningenGenerated,
   transformVergunningenData,
   VergunningenSourceData,
-  fetchVergunningenGenerated,
 } from './vergunningen';
 
 describe('Vergunningen service', () => {
@@ -56,7 +56,7 @@ describe('Vergunningen service', () => {
     expect(response).toStrictEqual(successResponse);
   });
 
-  it('should should respond with an empty list', async () => {
+  it('should should respond with an empty list if api returns error', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_3;
     const response = await fetchAllVergunningen('x', { x: 'saml' });
     const errorResponse = {
