@@ -1,8 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
-import { FeatureToggle, API_BASE_PATH } from '../universal/config';
-import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 import https from 'https';
-import fs from 'fs';
+import { API_BASE_PATH, FeatureToggle } from '../universal/config';
+import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
 export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
 export const DEV_USER_TYPE_HEADER: string = 'x-user-type';

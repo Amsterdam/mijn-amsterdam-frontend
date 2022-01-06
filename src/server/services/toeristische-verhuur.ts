@@ -2,7 +2,6 @@ import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';

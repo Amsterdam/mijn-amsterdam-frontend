@@ -3,8 +3,8 @@ import { BRPDataFromSource } from '../../universal/types/brp';
 import brpData from '../mock-data/json/brp.json';
 import { transformBRPData, transformBRPNotifications } from './brp';
 
-const { adres } = brpData;
-const brpDataTyped: BRPDataFromSource = brpData;
+const brpDataTyped = brpData as BRPDataFromSource;
+const { adres } = brpDataTyped;
 
 describe('BRP data api + transformation', () => {
   it('should construct a bag search addresss', () => {

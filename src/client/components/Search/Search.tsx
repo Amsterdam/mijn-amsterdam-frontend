@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { AppRoutes } from '../../../universal/config';
 import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';

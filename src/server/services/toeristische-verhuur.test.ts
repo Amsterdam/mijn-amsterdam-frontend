@@ -114,18 +114,13 @@ describe('Toeristische verhuur service', () => {
     });
   });
 
-  it('Should return only B&B if commercial profiletype', async () => {
+  it('Should return only vergunningen if commercial profiletype', async () => {
     const response = await fetchToeristischeVerhuur(
       'x4.b',
       { x: 'saml' },
       'commercial'
     );
 
-    expect(
-      response.content.vergunningen.every(
-        (vergunning) => vergunning.caseType === 'B&B - vergunning'
-      )
-    );
     expect(response.content.registraties.length).toBe(0);
   });
 
