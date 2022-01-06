@@ -147,7 +147,7 @@ describe('<StatusDetail />', () => {
 
     const Component = () => (
       <MockApp
-        routeEntry={'http://some.page/with/path/segments/aanvraag-2'}
+        routeEntry="http://some.page/with/path/segments/aanvraag-2"
         routePath={routePath}
         component={DetailComponent}
         initializeState={initializeState}

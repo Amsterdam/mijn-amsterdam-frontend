@@ -12,7 +12,6 @@ import {
 } from './services';
 import {
   fetchDataset,
-  loadDatasetFeatures,
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';

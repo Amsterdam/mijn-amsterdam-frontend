@@ -339,11 +339,11 @@ const testData: FocusProductFromSource[] = [
 ];
 
 describe('FOCUS_AANVRAGEN service', () => {
-  it('Normalizes the focus aanvragen items correctly ', () => {
+  it('Normalizes the focus aanvragen items correctly', () => {
     expect(testData.map(normalizeFocusSourceProduct)).toMatchSnapshot();
   });
 
-  it('Translates some property values of the normalized focus aanvragen items correctly ', () => {
+  it('Translates some property values of the normalized focus aanvragen items correctly', () => {
     expect(
       testData
         .map(normalizeFocusSourceProduct)
@@ -352,7 +352,7 @@ describe('FOCUS_AANVRAGEN service', () => {
     ).toMatchSnapshot();
   });
 
-  it('Transforms the normalized focus aanvragen items correctly ', () => {
+  it('Transforms the normalized focus aanvragen items correctly', () => {
     expect(
       testData
         .map(normalizeFocusSourceProduct)
@@ -391,7 +391,7 @@ describe('FOCUS_AANVRAGEN service', () => {
     expect(getLatestStep(steps)).toBe('besluit');
   });
 
-  it('get the correct step', () => {
+  it('get the correct step if unknown step titles are supplied', () => {
     const steps = [
       {
         datePublished: '2020-05-01',

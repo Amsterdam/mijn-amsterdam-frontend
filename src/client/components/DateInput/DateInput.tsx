@@ -1,8 +1,7 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import { format, getDaysInMonth, parseISO, isValid } from 'date-fns';
-import { getMonth, range } from '../../../universal/helpers';
-
 import classnames from 'classnames';
+import { format, getDaysInMonth, isValid, parseISO } from 'date-fns';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { getMonth, range } from '../../../universal/helpers';
 import styles from './DateInput.module.scss';
 
 const DATE_INPUT_FORMAT = 'yyyy-MM-dd';

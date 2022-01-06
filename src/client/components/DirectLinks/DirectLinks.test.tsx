@@ -15,16 +15,16 @@ describe('<DirectLinks />', () => {
     ).asFragment();
   }
 
-  it('It renders private links', () => {
+  it('renders private links', () => {
     expect(getMountHtml('private')).toMatchSnapshot();
   });
-  it('It renders private-commercial links', () => {
+  it('renders private-commercial links', () => {
     expect(getMountHtml('private-commercial')).toMatchSnapshot();
   });
-  it('It renders commercial links', () => {
+  it('renders commercial links', () => {
     expect(getMountHtml('commercial')).toMatchSnapshot();
   });
-  it('It renders additional links on phone', () => {
+  it('renders additional links on phone', () => {
     (usePhoneScreen as jest.Mock).mockReturnValueOnce(true);
     expect(getMountHtml('private')).toMatchSnapshot();
   });
