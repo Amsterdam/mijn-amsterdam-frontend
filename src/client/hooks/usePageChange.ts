@@ -24,6 +24,8 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   return a.length < b.length ? 1 : -1;
 });
 
+const NOT_FOUND_TITLE = 'Pagina niet gevonden';
+
 export function usePageChange() {
   const location = useLocation();
   const termReplace = useTermReplacement();
@@ -60,8 +62,10 @@ export function usePageChange() {
                 strict: false,
               })
           )
-        ? 'Pagina niet gevonden'
+        ? NOT_FOUND_TITLE
         : PageTitleMain;
+
+    const isPageFound = title !== NOT_FOUND_TITLE;
 
     document.title = title;
 
@@ -75,11 +79,14 @@ export function usePageChange() {
           location.pathname
         );
       }
-      trackPageViewWithProfileType(
-        termReplace(title),
-        CustomTrackingUrls[location.pathname] || location.pathname,
-        profileType
-      );
+
+      if (isPageFound) {
+        trackPageViewWithProfileType(
+          termReplace(title),
+          CustomTrackingUrls[location.pathname] || location.pathname,
+          profileType
+        );
+      }
     }
   }, [location.pathname, termReplace, profileType]);
 }
