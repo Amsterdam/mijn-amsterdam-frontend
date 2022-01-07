@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -26,7 +26,9 @@ describe('<Search />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
+  it('Renders without crashing', async () => {
     render(<Component />);
+
+    await screen.findByPlaceholderText('Zoeken naar...');
   });
 });
