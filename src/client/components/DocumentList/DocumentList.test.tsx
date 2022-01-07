@@ -37,6 +37,9 @@ describe('DocumentList', () => {
   });
 
   it('Clicking a link fires tracking call', async () => {
+    const originalFn = console.error;
+    console.error = jest.fn(); // Hide warnings about navigation not implemented exceptions.
+
     const fetch = ((global as any).fetch = jest
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
@@ -63,6 +66,8 @@ describe('DocumentList', () => {
         'private'
       )
     );
+
+    console.error = originalFn;
   });
 
   it('Clicking a link fires tracking call', async () => {
