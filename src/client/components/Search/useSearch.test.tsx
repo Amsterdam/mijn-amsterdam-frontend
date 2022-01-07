@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import { ReactChildren } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Vergunning } from '../../../server/services';
+import { AppRoutes } from '../../../universal/config';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks';
 import * as remoteConfig from './search-config.json';
@@ -39,7 +40,7 @@ const vergunningenData = [
     status: 'Ontvangen',
     description: 'Amstel 1 GPK aanvraag',
     link: {
-      to: '/vergunningen/detail/1726584505',
+      to: AppRoutes.BUURT + '/vergunningen/detail/1726584505',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   },
@@ -177,7 +178,7 @@ describe('Search hooks and helpers', () => {
             "Amstel 1 GPK aanvraag",
             "vergunningsaanvraag",
           ],
-          "url": "/vergunningen/detail/1726584505",
+          "url": "/buurt/vergunningen/detail/1726584505",
         },
         Object {
           "description": "Bekijk Tijdelijke verkeersmaatregel",
@@ -367,7 +368,12 @@ describe('Search hooks and helpers', () => {
               "Amstel 1 GPK aanvraag",
               "vergunningsaanvraag",
             ],
-            "url": "/vergunningen/detail/1726584505",
+            "trailingIcon": <ForwardRef(SvgMarker)
+              className="ExternalUrl"
+              height="14"
+              width="14"
+            />,
+            "url": "/buurt/vergunningen/detail/1726584505",
           },
           "refIndex": 60,
         },

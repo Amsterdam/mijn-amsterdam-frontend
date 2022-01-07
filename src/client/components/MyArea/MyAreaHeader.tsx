@@ -20,7 +20,7 @@ export default function MyAreaHeader({
   showCloseButton = true,
 }: MyAreaHeaderProps) {
   const history = useHistory();
-  const isSmallScreen = usePhoneScreen();
+  const isPhoneScreen = usePhoneScreen();
   const isTabletOrSmaller = useTabletScreen();
   const termReplace = useTermReplacement();
 
@@ -53,7 +53,7 @@ export default function MyAreaHeader({
           />
           <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
         </Link>
-        {(!isSmallScreen || isSearchActive) && (
+        {(!isPhoneScreen || isSearchActive) && (
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
@@ -67,13 +67,13 @@ export default function MyAreaHeader({
             </div>
           </div>
         )}
-        {isSmallScreen && !isSearchActive && (
-          <div className={styles.CloseWrapper}>
+        {isPhoneScreen && !isSearchActive && (
+          <div className={styles.SearchButtonWrapper}>
             <IconButton
               icon={IconSearch}
+              title="Zoekbalk openen"
               onClick={() => {
-                setSearchActive(!isSearchActive);
-                trackSearchBarEvent(`Handmatig sluiten (Sluit button)`);
+                setSearchActive(true);
               }}
             />
           </div>
@@ -81,6 +81,7 @@ export default function MyAreaHeader({
         {isTabletOrSmaller ? (
           <IconButton
             icon={IconClose}
+            title={isSearchActive ? 'Zoekbalk sluiten' : 'Kaart sluiten'}
             onClick={() => {
               isSearchActive
                 ? setSearchActive(!isSearchActive)
