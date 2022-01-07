@@ -65,7 +65,7 @@ export function usePageChange() {
         ? NOT_FOUND_TITLE
         : PageTitleMain;
 
-    const pageFound = title !== NOT_FOUND_TITLE;
+    const isPageFound = title !== NOT_FOUND_TITLE;
 
     document.title = title;
 
@@ -80,7 +80,7 @@ export function usePageChange() {
         );
       }
 
-      if (pageFound) {
+      if (isPageFound) {
         trackPageViewWithProfileType(
           termReplace(title),
           CustomTrackingUrls[location.pathname] || location.pathname,
