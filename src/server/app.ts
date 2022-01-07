@@ -42,6 +42,7 @@ Sentry.init(options);
 const app = express();
 
 app.use(morgan('combined'));
+app.use(express.json());
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
