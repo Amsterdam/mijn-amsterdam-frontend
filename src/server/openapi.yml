@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: Authentication status service
+  description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
+  contact:
+    name: Datapunt Support
+    url: https://mijn.amsterdam.nl/
+    email: datapunt@amsterdam.nl
+  version: 3.55.0
+paths:
+  /status/health:
+    get:
+      description: Endpoint for checking whether the server has started.
+      responses:
+        '200':
+          description: Returns "OK" when server is started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthyResponse'
+  /services/search-config:
+    get:
+      description: Something todo with searching.
+      responses:
+        '200':
+          description: Returns stuff.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchConfigResponse'
+  /services/all:
+    get:
+      description: Some endpoint
+      responses:
+        '200':
+          description: Does stuff
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicesAllResponse'
+  /services/stream:
+    get:
+      description: endpoint
+      responses:
+        '200':
+          description: Used for stuff
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+  /services/tips:
+    get:
+      description: endpoint
+      responses:
+        '200':
+          description: Does things
+          content:
+            application/json:
+              schema:
+                $ref: '#/compontents/schemas/TipsResponse'
+
+components:
+  schemas:
+    HealthyResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - OK
+        content:
+          type: string
+          enum:
+            - OK
+    SearchConfigResponse:
+      type: object
+      properties:
+        staticSearchEntries:
+          oneOf: [$ref: '#/components/schemas/SearchEntry']
+        apiSearchConfigs:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfig']
+    SearchEntry:
+      type: object
+      properties:
+        url:
+          type: string
+        displayTitle:
+          type: string
+        description:
+          type: string
+        keywords:
+          type: array
+          items: {}
+        profileTypes:
+          type: array
+          items: {}
+        isEnabled:
+          type: boolean
+    ApiSearchConfig:
+      type: object
+      properties:
+        BRP:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        AKTES:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        CMS_CONTENT:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        CMS_MAINTENANCE_NOTIFICATIONS:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        KVK:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        KREFIA:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_AANVRAGEN:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_SPECIFICATIES:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_TOZO:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_TONK:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_BBZ:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        FOCUS_STADSPAS:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        WMO:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        VERGUNNINGEN:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        MY_LOCATION:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        AFVAL:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        AFVALPUNTEN:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        BELASTINGEN:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        MILIEUZONE:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        TOERISTISCHE_VERHUUR:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        ERFPACHT:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        SUBSIDIE:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        NOTIFICATIONS:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+        CASES:
+          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+    ApiSearchConfigResult:
+      type: object
+      properties:
+        keywords:
+          type: array
+          items: {}
+        keywordsGeneratedFromProps:
+          type: array
+          items: {}
+        description:
+          type: string
+    ServicesAllResponse:
+      type: object
+      properties:
+        AFVAL:
+          type: object
+        AFVALPUNTEN:
+          type: object
+        BRP:
+          type: object
+        BELASTINGEN:
+          type: object
+        CMS_CONTENT:
+          type: object
+        CMS_MAINTENANCE_NOTIFICATIONS:
+          type: object
+        ERFPACHT:
+          type: object
+        KREFIA:
+          type: object
+        FOCUS_AANVRAGEN:
+          type: object
+        FOCUS_SPECIFICATIES:
+          type: object
+        FOCUS_TOZO:
+          type: object
+        FOCUS_TONK:
+          type: object
+        FOCUS_BBZ:
+          type: object
+        FOCUS_STADSPAS:
+          type: object
+        NOTIFICATIONS:
+          type: object
+        CASES:
+          type: object
+        MY_LOCATION:
+          type: object
+        KVK:
+          type: object
+        MILIEUZONE:
+          type: object
+        TOERISTISCHE_VERHUUR:
+          type: object
+        SUBSIDIE:
+          type: object
+        VERGUNNINGEN:
+          type: object
+        WMO:
+          type: object
+    StreamResponse:
+      type: string
+    TipsResponse:
