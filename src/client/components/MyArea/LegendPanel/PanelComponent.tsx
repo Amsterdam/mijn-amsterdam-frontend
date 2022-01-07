@@ -11,7 +11,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { animated, AnimatedProps, useSpring } from 'react-spring';
+import { animated, AnimatedValue, useSpring } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import { IconChevronRight } from '../../../assets/icons';
@@ -179,7 +179,7 @@ type PanelWideAnimatedProps = PropsWithChildren<{
   width: string;
 }>;
 
-const Panel = forwardRef<HTMLDivElement, AnimatedProps<any>>(
+const Panel = forwardRef<HTMLDivElement, AnimatedValue<any>>(
   ({ children, className, ...rest }, ref) => {
     return (
       <animated.div
@@ -220,7 +220,7 @@ const PanelInnerPhone = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
 function PanelWide({
   children,
   style,
-}: { children: ReactNode } & AnimatedProps<any>) {
+}: { children: ReactNode } & AnimatedValue<any>) {
   return (
     <Panel className={styles.PanelWide} style={style}>
       {children}
@@ -228,7 +228,7 @@ function PanelWide({
   );
 }
 
-const PanelNarrow = forwardRef<HTMLDivElement, AnimatedProps<any>>(
+const PanelNarrow = forwardRef<HTMLDivElement, AnimatedValue<any>>(
   ({ children, ...rest }, ref) => {
     return (
       <Panel {...rest} className={styles.PanelNarrow} ref={ref}>
