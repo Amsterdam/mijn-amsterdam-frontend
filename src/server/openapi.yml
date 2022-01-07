@@ -57,7 +57,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/compontents/schemas/TipsResponse'
+                $ref: '#/components/schemas/TipsResponse'
+  /services/tips/requestdataoverview:
+    get:
+      description: endpoint
+      responses:
+        '200':
+          description: Does things
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TipsRequestResponse'
 
 components:
   schemas:
@@ -210,3 +220,51 @@ components:
     StreamResponse:
       type: string
     TipsResponse:
+      type: array
+      items: { oneOf: [$ref: '#/components/schemas/Tip'] }
+    TipsRequestResponse:
+      type: object
+      properties:
+        optin:
+          type: boolean
+        userData:
+          type: object
+        tips:
+          type: array
+          items: { oneOf: [$ref: '#/components/schemas/Tip'] }
+    Tip:
+      type: object
+      properties:
+        id:
+          type: string
+        datePublished:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        link:
+          type: object
+          properties:
+            to:
+              type: string
+            title:
+              type: string
+            target:
+              type: string
+            rel:
+              type: string
+            download:
+              type: string
+        imgUrl:
+          type: string
+        isPersonalized:
+          type: boolean
+        priority:
+          type: number
+        reason:
+          type: array
+          items: {}
+        audience:
+          type: array
+          items: {}
