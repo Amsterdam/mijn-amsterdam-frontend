@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { Link, useHistory } from 'react-router-dom';
-
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { IconClose, IconSearch } from '../../assets/icons';
@@ -61,9 +60,7 @@ export default function MyAreaHeader({
                 onFinish={(reason) => {
                   if (reason) {
                     setSearchActive(false);
-                    if (reason) {
-                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                    }
+                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
                 }}
               />
@@ -76,6 +73,7 @@ export default function MyAreaHeader({
               icon={IconSearch}
               onClick={() => {
                 setSearchActive(!isSearchActive);
+                trackSearchBarEvent(`Handmatig sluiten (Sluit button)`);
               }}
             />
           </div>

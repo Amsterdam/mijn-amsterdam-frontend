@@ -2,11 +2,10 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';
+import { IconChevronRight, IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { useAppStateReady } from '../../hooks';
+import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
   trackEventWithProfileType,
   trackSearch,
@@ -61,34 +60,36 @@ export function ResultSet({
         <p className={styles.NoResults}>{noResultsMessage}</p>
       )}
       <ul className={styles.ResultList}>
-        {results.map((result, index) => (
-          <li
-            key={result.url + index}
-            className={classnames(
-              styles.ResultListItem,
-              extendedResults && styles['is-extended']
-            )}
-          >
-            <Linkd
-              icon={showIcon ? IconChevronRight : null}
-              external={result.url.startsWith('http')}
-              href={result.url}
-              className={styles.ResultSetLink}
-              onClick={() => onClickResult?.(result)}
-            >
-              {typeof result.displayTitle === 'function'
-                ? result.displayTitle(term)
-                : displayPath(term, [result.displayTitle])}
-              {extendedResults && (
-                <p className={styles.ResultDescription}>
-                  <span className={styles.ResultUrl}>{result.url}</span>
-                  {result.description}
-                </p>
+        {results.map((result, index) => {
+          return (
+            <li
+              key={result.url + index}
+              className={classnames(
+                styles.ResultListItem,
+                extendedResults && styles['is-extended']
               )}
-              {result.url.startsWith(AppRoutes.BUURT) && <IconMarker />}
-            </Linkd>
-          </li>
-        ))}
+            >
+              <Linkd
+                icon={showIcon ? IconChevronRight : null}
+                external={result.url.startsWith('http')}
+                href={result.url}
+                className={styles.ResultSetLink}
+                onClick={() => onClickResult?.(result)}
+              >
+                {typeof result.displayTitle === 'function'
+                  ? result.displayTitle(term)
+                  : displayPath(term, [result.displayTitle])}
+                {result.trailingIcon}
+                {extendedResults && (
+                  <p className={styles.ResultDescription}>
+                    <span className={styles.ResultUrl}>{result.url}</span>
+                    {result.description}
+                  </p>
+                )}
+              </Linkd>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -119,13 +120,14 @@ export function Search({
   const [term, setTerm] = useSearchTerm();
   const history = useHistory();
   const profileType = useProfileTypeValue();
+  const isPhoneScreen = usePhoneScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
   useSearchIndex();
 
-  useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
+  useProfileTypeSwitch(() => onFinish?.('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
@@ -170,7 +172,7 @@ export function Search({
           setResultsVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
-          onFinish && onFinish('Escape toets');
+          onFinish?.('Escape toets');
         }
       }
     },
@@ -200,6 +202,7 @@ export function Search({
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
       if (
+        typeAhead &&
         isResultsVisible &&
         resultsRef.current &&
         !resultsRef.current.contains(e.target)
@@ -207,11 +210,13 @@ export function Search({
         setResultsVisible(false);
       }
     };
-    document.addEventListener('mousedown', checkIfClickedOutside);
+    if (!isPhoneScreen) {
+      document.addEventListener('mousedown', checkIfClickedOutside);
+    }
     return () => {
       document.removeEventListener('mousedown', checkIfClickedOutside);
     };
-  }, [isResultsVisible]);
+  }, [isResultsVisible, isPhoneScreen, typeAhead]);
 
   return (
     <div
@@ -275,8 +280,9 @@ export function Search({
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
               onClickResult={(result) => {
-                trackSearchBarEvent(`Click result`);
+                trackSearchBarEvent('Click result');
                 setResultsVisible(false);
+                onFinish?.('Click result');
               }}
             />
 
@@ -287,8 +293,9 @@ export function Search({
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
               onClickResult={() => {
-                trackSearchBarEvent(`Click result`);
+                trackSearchBarEvent('Click result');
                 setResultsVisible(false);
+                onFinish?.('Click result');
               }}
               results={
                 results?.am?.state === 'hasValue' &&

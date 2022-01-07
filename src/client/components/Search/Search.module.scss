@@ -16,7 +16,6 @@
   border: 0.1rem solid $color-neutral-grey4;
   margin-top: 0;
   border-top: 0;
-  z-index: -1;
   // transform: translateX(-1rem);
 
   @include mq-tablet() {
@@ -100,7 +99,7 @@
 }
 
 .DisplayPath {
-  width: calc(100% - 3rem);
+  width: calc(100% - 5rem);
   display: inline-flex;
 
   em {
