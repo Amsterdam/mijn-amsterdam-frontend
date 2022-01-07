@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/node';
-import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import express, {
@@ -9,6 +8,7 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
+import morgan from 'morgan';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT } from './config';
@@ -21,7 +21,6 @@ import {
 } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
-import morgan from 'morgan';
 
 const isDebug = ENV === 'development';
 const options: Sentry.NodeOptions = {
@@ -43,11 +42,11 @@ Sentry.init(options);
 const app = express();
 
 app.use(morgan('combined'));
+app.use(express.json());
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
-app.use(bodyParser.json({ limit: '1mb' }));
 app.use(compression());
 
 // Development routing for mock data
