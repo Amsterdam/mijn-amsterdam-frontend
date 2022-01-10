@@ -68,7 +68,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TipsRequestResponse'
-
+  /map/datasets/{datasetId}/{id}:
+    parameters:
+      - name: datasetId
+        in: path
+        required: true
+        description: The dataset id
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Some id
+        schema:
+          type: string
+    get:
+      description: Endpoint used to retrieve points of interest for the users area
+      responses:
+        '200':
+          description: Returns a list of Features
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MapDatasetResponse'
+  /status/cache:
+    get:
+      description: This endpoint gives an overview of the cache directory of the server.
+      responses:
+        '200':
+          description: Returns an object with cache overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CacheResponse'
+  /public/services/cms:
+    get:
+      description: Endpoint used to retrieve data from the CMS.
+      responses:
+        '200':
+          description: Returns an object with CMS data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CmsResponse'
+  /public/services/cms/maintenance-notifications:
+    get:
+      description: Endpoint used to retrieve data from the CMS.
+      responses:
+        '200':
+          description: Returns an object with CMS data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CmsMaintenanceResponse'
+  /direct/{apiName}:
+    parameters:
+      - name: apiName
+        in: path
+        required: true
+        description: The name of the api to request data from
+        schema:
+          type: string
+    get:
+      description: Retrieves data from the given api
+      responses:
+        '200':
+          description: Result is the direct response from the requested api
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiConfigResponse'
 components:
   schemas:
     HealthyResponse:
@@ -268,3 +337,110 @@ components:
         audience:
           type: array
           items: {}
+    MapDatasetResponse:
+      type: object
+      properties:
+        content:
+          oneOf: [$ref: '#/components/schemas/MapDataset']
+        status:
+          type: string
+        id:
+          type: string
+        failedDependencies:
+          type: object
+    MapDataset:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items: {}
+        polylines:
+          type: array
+          items: {}
+        errors:
+          type: array
+          items: {}
+        filters:
+          type: object
+    CacheResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        env:
+          type: string
+        keys:
+          type: array
+          items: {}
+    CmsResponse:
+      type: object
+      properties:
+        content:
+          oneOf: [$ref: '#/components/schemas/CmsData']
+        status:
+          type: string
+        id:
+          type: string
+        failedDependencies:
+          type: object
+    CmsData:
+      type: object
+      properties:
+        generalInfo:
+          type: object
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+        footer:
+          type: object
+          properties:
+            blocks:
+              type: array
+              items: {}
+            sub:
+              type: array
+              items: {}
+    CmsMaintenanceResponse:
+      type: object
+      properties:
+        content:
+          oneOf: [$ref: '#/components/schemas/CmsMaintenanceList']
+        status:
+          type: string
+        id:
+          type: string
+        failedDependencies:
+          type: object
+    CmsMaintenanceList:
+      type: array
+      items: { $ref: '#/components/schemas/CmsMaitenance' }
+    CmsMaitenance:
+      type: object
+      properties:
+        title:
+          type: string
+        datePublished:
+          type: string
+        dateStart:
+          type: string
+        dateEnd:
+          type: string
+        timeEnd:
+          type: string
+        timeStart:
+          type: string
+        description:
+          type: string
+        moreInformation:
+          type: string
+        path:
+          type: string
+        link:
+          type: string
+    ApiConfigResponse:
+      type: object
+      properties:
+        content:
+          type: object
