@@ -5,8 +5,8 @@ import {
   ReactNode,
   useState,
 } from 'react';
-import styles from './PanelComponent.module.scss';
 import { IconChevronRight } from '../../../assets/icons';
+import styles from './PanelComponent.module.scss';
 
 export enum CollapsedState {
   Expanded = 'Expanded',

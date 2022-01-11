@@ -63,6 +63,7 @@ export default function MyAreaHeader({
                     trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
                 }}
+                replaceResultUrl={1}
               />
             </div>
           </div>

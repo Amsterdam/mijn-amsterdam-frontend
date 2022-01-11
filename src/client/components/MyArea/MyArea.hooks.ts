@@ -12,7 +12,6 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
-
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -25,7 +24,7 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
   MY_AREA_TRACKING_CATEGORY,
-} from '../../../universal/config/buurt';
+} from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import { trackEventWithProfileType } from '../../hooks';

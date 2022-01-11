@@ -2,7 +2,10 @@ import {
   DatasetCategoryId,
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config';
-import { DatasetControl, DatasetId } from '../../../../universal/config/buurt';
+import {
+  DatasetControl,
+  DatasetId,
+} from '../../../../universal/config/myarea-datasets';
 import { trackEventWithProfileType } from '../../../hooks';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon } from '../datasets';

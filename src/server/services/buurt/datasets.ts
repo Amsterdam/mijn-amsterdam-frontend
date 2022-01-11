@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
-
 import { Colors } from '../../../universal/config/app';
+import { ENV } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -10,8 +10,7 @@ import {
   DatasetPropertyValue,
   DATASETS,
   FeatureType,
-} from '../../../universal/config/buurt';
-import { ENV } from '../../../universal/config/env';
+} from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { DataRequestConfig } from '../../config';
 import {

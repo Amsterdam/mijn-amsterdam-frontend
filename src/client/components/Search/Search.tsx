@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight, IconSearch } from '../../assets/icons';
+import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
@@ -15,7 +15,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import Linkd, { Button, IconButton } from '../Button/Button';
+import { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
@@ -41,8 +41,15 @@ export function ResultSet({
   term,
   extendedResults = false,
   showIcon = false,
-  onClickResult,
+  onClickResult: onClickResultCallback,
 }: ResultSetProps) {
+  const onClickResult = useCallback(
+    (result: SearchEntry) => {
+      onClickResultCallback?.(result);
+    },
+    [onClickResultCallback]
+  );
+
   return (
     <div className={styles.ResultSet}>
       {!!title && (
@@ -69,12 +76,13 @@ export function ResultSet({
                 extendedResults && styles['is-extended']
               )}
             >
-              <Linkd
-                icon={showIcon ? IconChevronRight : null}
-                external={result.url.startsWith('http')}
+              <a
                 href={result.url}
                 className={styles.ResultSetLink}
-                onClick={() => onClickResult?.(result)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onClickResult(result);
+                }}
               >
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
@@ -86,7 +94,7 @@ export function ResultSet({
                     {result.description}
                   </p>
                 )}
-              </Linkd>
+              </a>
             </li>
           );
         })}
@@ -102,22 +110,37 @@ interface SearchProps {
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
+  replaceResultUrl?: 1 | 0;
 }
 
 export function Search({
-  onFinish,
+  onFinish: onFinishCallback,
   term: termInitial = '',
   maxResultCountDisplay = 10,
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
+  replaceResultUrl = 0,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
+
   const [isTyping, setIsTyping] = useState(false);
-  const [term, setTerm] = useSearchTerm();
+  const [term, setTerm_] = useSearchTerm();
+
+  const setTerm = useCallback(
+    (term) => {
+      console.log('setting term!', term);
+      if (!term && searchBarRef.current) {
+        searchBarRef.current.value = term;
+      }
+      setTerm_(term);
+    },
+    [setTerm_]
+  );
+
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
@@ -125,9 +148,16 @@ export function Search({
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
-  useSearchIndex();
 
-  useProfileTypeSwitch(() => onFinish?.('Profiel toggle'));
+  const onFinish = useCallback(
+    (reason: string) => {
+      onFinishCallback?.(reason);
+    },
+    [onFinishCallback]
+  );
+
+  useSearchIndex();
+  useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
@@ -172,11 +202,36 @@ export function Search({
           setResultsVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
-          onFinish?.('Escape toets');
+          onFinish('Escape toets');
         }
       }
     },
     [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
+  );
+
+  const onClickResult = useCallback(
+    (result: SearchEntry) => {
+      trackSearchBarEvent('Click result');
+      setResultsVisible(false);
+      setTerm('');
+      onFinish('Click result');
+
+      setTimeout(() => {
+        if (replaceResultUrl) {
+          history.replace(result.url);
+        } else {
+          history.push(result.url);
+        }
+      }, 1000);
+    },
+    [
+      replaceResultUrl,
+      history,
+      trackSearchBarEvent,
+      setTerm,
+      setResultsVisible,
+      onFinish,
+    ]
   );
 
   useKeyDown(keyHandler);
@@ -189,7 +244,6 @@ export function Search({
     if (termInitial && searchBarRef.current) {
       searchBarRef.current.value = termInitial;
     }
-    return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -279,11 +333,7 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={(result) => {
-                trackSearchBarEvent('Click result');
-                setResultsVisible(false);
-                onFinish?.('Click result');
-              }}
+              onClickResult={onClickResult}
             />
 
             <ResultSet
@@ -292,11 +342,7 @@ export function Search({
               title="Overige informatie op Amsterdam.nl"
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              onClickResult={() => {
-                trackSearchBarEvent('Click result');
-                setResultsVisible(false);
-                onFinish?.('Click result');
-              }}
+              onClickResult={onClickResult}
               results={
                 results?.am?.state === 'hasValue' &&
                 results?.am?.contents !== null

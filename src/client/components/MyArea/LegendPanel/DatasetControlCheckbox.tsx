@@ -26,7 +26,7 @@ export function categoryCheckboxState(
   activeDatasetIds: DatasetId[]
 ) {
   const datasetIds = Object.keys(category.datasets);
-  const activeControlIds = filterActiveDatasets(datasetIds, activeDatasetIds);
+  const activeControlIds = filterActiveDatasets(datasetIds, activeDatasetIds); // || filtersThatActAsDataset
   const activeLength = activeControlIds.length;
   const datasetCount = datasetIds.length;
   const isChecked = !!activeLength && activeLength === datasetCount;

@@ -1,5 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { DATASETS, getDatasetCategoryId } from '../universal/config/buurt';
+import {
+  DATASETS,
+  getDatasetCategoryId,
+} from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
