@@ -375,7 +375,7 @@ describe('Search hooks and helpers', () => {
             />,
             "url": "/buurt/vergunningen/detail/1726584505",
           },
-          "refIndex": 60,
+          "refIndex": 56,
         },
       ]
     `);
