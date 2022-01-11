@@ -133,7 +133,7 @@ export function Search({
   const setTerm = useCallback(
     (term) => {
       if (!term && searchBarRef.current) {
-        searchBarRef.current.value = term;
+        searchBarRef.current.value = '';
       }
       setTerm_(term);
     },
@@ -261,6 +261,16 @@ export function Search({
     };
   }, [isResultsVisible, isPhoneScreen, typeAhead]);
 
+  useEffect(() => {
+    if (termInitial) {
+      setTerm(termInitial);
+      setResultsVisible(true);
+    } else {
+      setTerm('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div
       className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
@@ -290,7 +300,7 @@ export function Search({
             placeholder={
               isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
             }
-            onFocus={() => {
+            onClick={() => {
               if (term) {
                 setResultsVisible(true);
               }
