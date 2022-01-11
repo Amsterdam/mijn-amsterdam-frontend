@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useWidescreen, useLandScape } from '../../../hooks';
+import { useLandScape, useWidescreen } from '../../../hooks';
 import { PanelState, usePanelStateCycle } from './PanelComponent';
 
 export function useLegendPanelCycle() {
@@ -27,7 +27,7 @@ export function useLegendPanelCycle() {
   const filterPanelCycle = usePanelStateCycle(
     'filters',
     panelCycle.filters,
-    PanelState.Preview
+    PanelState.Tip
   );
   const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
 
