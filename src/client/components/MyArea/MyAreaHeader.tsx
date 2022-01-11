@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
@@ -9,6 +10,7 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
+import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import styles from './MyArea.module.scss';
 
@@ -26,6 +28,11 @@ export default function MyAreaHeader({
 
   const { isSearchActive, setSearchActive, trackSearchBarEvent } =
     useSearchOnPage();
+
+  const replaceResultUrl = useCallback((result: SearchEntry) => {
+    return result.url.startsWith(AppRoutes.BUURT);
+  }, []);
+
   return (
     <>
       <div className={styles.Header}>
@@ -63,7 +70,7 @@ export default function MyAreaHeader({
                     trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
                 }}
-                replaceResultUrl={1}
+                replaceResultUrl={replaceResultUrl}
               />
             </div>
           </div>

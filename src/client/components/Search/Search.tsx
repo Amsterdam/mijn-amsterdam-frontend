@@ -110,7 +110,7 @@ interface SearchProps {
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
-  replaceResultUrl?: 1 | 0;
+  replaceResultUrl?: (result: SearchEntry) => boolean;
 }
 
 export function Search({
@@ -120,7 +120,7 @@ export function Search({
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
-  replaceResultUrl = 0,
+  replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
@@ -132,7 +132,6 @@ export function Search({
 
   const setTerm = useCallback(
     (term) => {
-      console.log('setting term!', term);
       if (!term && searchBarRef.current) {
         searchBarRef.current.value = term;
       }
@@ -216,13 +215,11 @@ export function Search({
       setTerm('');
       onFinish('Click result');
 
-      setTimeout(() => {
-        if (replaceResultUrl) {
-          history.replace(result.url);
-        } else {
-          history.push(result.url);
-        }
-      }, 1000);
+      if (replaceResultUrl?.(result)) {
+        history.replace(result.url);
+      } else {
+        history.push(result.url);
+      }
     },
     [
       replaceResultUrl,

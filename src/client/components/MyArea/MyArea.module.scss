@@ -100,11 +100,11 @@
   align-items: center;
 
   @include mq-tablet() {
-    width: 50rem;
+    width: 40rem;
   }
 
   @include mq-phone() {
-    margin-top: 14rem;
+    top: 7rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;

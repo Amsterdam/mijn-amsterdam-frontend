@@ -4,8 +4,6 @@ import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useRef } from 'react';
 import {
   atom,
-  AtomEffect,
-  DefaultValue,
   selector,
   useRecoilState,
   useRecoilValue,
@@ -52,20 +50,9 @@ const activeDatasetIdsDefaultValue = selector({
   },
 });
 
-const persistOnUnload_UNSTABLE: AtomEffect<any> = ({ onSet, setSelf }) => {
-  onSet((state, oldState) => {
-    // This will persist the state across page navigation as the default value is set upon unloading of the atom.
-    // The atom will not be re-initialized when used again so it appears we can't have 'dynamic' default values. For example a default values derived from URL params.
-    if (state instanceof DefaultValue) {
-      setSelf(oldState);
-    }
-  });
-};
-
 const activeDatasetIdsAtom = atom<DatasetId[]>({
   key: 'activeDatasetIds',
   default: activeDatasetIdsDefaultValue,
-  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetIds() {
@@ -84,7 +71,6 @@ const activeDatasetFiltersDefaultValue = selector({
 const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
   key: 'activeDatasetFilters',
   default: activeDatasetFiltersDefaultValue,
-  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useActiveDatasetFilters() {
@@ -122,7 +108,6 @@ const loadingFeatureDefaultValue = selector({
 export const loadingFeatureAtom = atom<LoadingFeature | null>({
   key: 'loadingFeature',
   default: loadingFeatureDefaultValue,
-  effects_UNSTABLE: [persistOnUnload_UNSTABLE],
 });
 
 export function useLoadingFeature() {
