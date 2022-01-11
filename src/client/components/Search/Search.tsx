@@ -212,7 +212,6 @@ export function Search({
     (result: SearchEntry) => {
       trackSearchBarEvent('Click result');
       setResultsVisible(false);
-      setTerm('');
       onFinish('Click result');
 
       if (replaceResultUrl?.(result)) {
@@ -225,7 +224,6 @@ export function Search({
       replaceResultUrl,
       history,
       trackSearchBarEvent,
-      setTerm,
       setResultsVisible,
       onFinish,
     ]
@@ -243,12 +241,6 @@ export function Search({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (term) {
-      setResultsVisible(true);
-    }
-  }, [term]);
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
