@@ -36,18 +36,17 @@ export default function MyAreaHeader({
   return (
     <>
       <div className={styles.Header}>
-        {!usePhoneScreen() && (
-          <nav
-            className={classnames(
-              mainHeaderStyles.DirectSkipLinks,
-              styles.DirectSkipLinks
-            )}
-          >
-            <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
-              Direct naar: <b>Legenda paneel</b>
-            </Linkd>
-          </nav>
-        )}
+        <nav
+          className={classnames(
+            mainHeaderStyles.DirectSkipLinks,
+            styles.DirectSkipLinks
+          )}
+        >
+          <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
+            Direct naar: <b>Legenda paneel</b>
+          </Linkd>
+        </nav>
+
         <Link
           className={styles.LogoLink}
           to={AppRoutes.ROOT}
