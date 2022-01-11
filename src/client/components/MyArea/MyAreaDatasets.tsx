@@ -252,7 +252,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       {!!errorResults.length && (
         <ErrorMessages
           key="DatasetErrorMessages"
-          title="U ziet niet alle gegevens die wij willen tonen in Mijn buurt."
+          title="Wij kunnen de informatie over de locatie nu niet tonen."
           errors={errorResults.map((result) => {
             return {
               stateKey: result?.id || 'BUURT',
