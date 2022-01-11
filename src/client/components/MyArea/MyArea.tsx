@@ -145,19 +145,17 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
+  const ariaLabel = `Kaart van ${termReplace(
+    ChapterTitles.BUURT
+  ).toLowerCase()}`;
+
   return (
     <div className={styles.Container} style={{ height }}>
       <MaintenanceNotifications page="buurt" />
       {!!showHeader && <MyAreaHeader showCloseButton={true} />}
       <div className={styles.MapContainer} ref={mapContainerRef}>
         <div className={styles.MapOffset} id="skip-to-id-Map">
-          <Map
-            fullScreen={true}
-            aria-label={`Kaart van ${termReplace(
-              ChapterTitles.BUURT
-            ).toLowerCase()}`}
-            options={mapOptions}
-          >
+          <Map fullScreen={true} aria-label={ariaLabel} options={mapOptions}>
             <AttributionToggle />
             {!centerMarkerLatLng &&
               MY_LOCATION.content?.address &&
