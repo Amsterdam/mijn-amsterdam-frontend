@@ -5,19 +5,15 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  height: 100%;
+  height: 100vh;
+  height: var(--map-container-height);
 }
 
 .MapContainer {
   position: relative;
   height: 100%;
   overflow: hidden;
-  /* Safari 11+ hack for bypassing the bottom navigation bar behavior on IOS. see also: https://browserstrangeness.bitbucket.io/css_hacks.html#safari*/
-  @media (orientation: portrait) and (min-resolution:.001dpcm) {
-    @supports (-webkit-appearance:none) and (stroke-color:transparent) and (-webkit-overflow-scrolling: touch) {
-      margin-bottom: 8rem;
-    }
-  }
-  
 }
 
 .MapOffset {

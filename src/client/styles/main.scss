@@ -4,6 +4,10 @@
 @import 'global';
 @import 'normalize';
 
+:root {
+   --map-container-height: 100%;
+}
+
 html,
 body {
   min-height: 100%;
