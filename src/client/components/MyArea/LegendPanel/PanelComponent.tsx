@@ -154,13 +154,21 @@ function getPanelSize(
   availableHeight?: number
 ) {
   let size = '0px';
+  let narrowPanelPreviewHeight = NARROW_PANEL_PREVIEW_HEIGHT;
+
+  if (
+    availableHeight &&
+    availableHeight < parseInt(NARROW_PANEL_PREVIEW_HEIGHT, 10)
+  ) {
+    narrowPanelPreviewHeight = px(availableHeight);
+  }
   switch (state) {
     case PanelState.Tip:
       size = isNarrowScreen ? NARROW_PANEL_TIP_HEIGHT : WIDE_PANEL_TIP_WIDTH;
       break;
     case PanelState.Preview:
       size = isNarrowScreen
-        ? NARROW_PANEL_PREVIEW_HEIGHT
+        ? narrowPanelPreviewHeight
         : WIDE_PANEL_PREVIEW_WIDTH;
       break;
     case PanelState.Open:
