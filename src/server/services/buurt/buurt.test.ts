@@ -3,8 +3,8 @@ import {
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config';
 import {
-  apiSuccesResult,
   apiErrorResult,
+  apiSuccesResult,
 } from '../../../universal/helpers/api';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
@@ -16,11 +16,11 @@ import {
 } from './datasets';
 import {
   createDynamicFilterConfig,
-  getDynamicDatasetFilters,
   datasetApiResult,
-  filterPolylineFeaturesWithinBoundingBox,
   filterAndRefineFeatures,
+  filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
+  getDynamicDatasetFilters,
 } from './helpers';
 
 const DUMMY_DATA_RESPONSE = apiSuccesResult([
@@ -125,7 +125,7 @@ jest.mock('../../../universal/config/env', () => {
     getOtapEnvItem: (key: string) => key,
   };
 });
-jest.mock('../../../universal/config/buurt');
+jest.mock('../../../universal/config/myarea-datasets');
 
 const cacheGetKey = jest.fn();
 const cacheSetKey = jest.fn();
