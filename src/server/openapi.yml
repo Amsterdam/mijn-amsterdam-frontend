@@ -30,7 +30,8 @@ paths:
                 $ref: '#/components/schemas/SearchConfigResponse'
   /services/stream:
     get:
-      description: Used to send data from the different services to the client using an event stream.
+      description: Streams data from the different services to the client using an event stream.
+
       responses:
         '200':
           description: Returns an event stream with messages from the different services.
