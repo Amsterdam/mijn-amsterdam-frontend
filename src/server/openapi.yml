@@ -301,7 +301,9 @@ components:
           type: object
         tips:
           type: array
-          items: { oneOf: [$ref: '#/components/schemas/Tip'] }
+          items:
+            $ref: '#/components/schemas/Tip'
+
     Tip:
       type: object
       properties:
