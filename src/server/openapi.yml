@@ -42,7 +42,8 @@ paths:
                 $ref: '#/components/schemas/StreamResponse'
   /services/all:
     get:
-      description: And endpoint used to retrieve information from all services. Used when client doesnt support EvenSource.
+      description: An endpoint used to retrieve information from all services. Used when client doesn't support or is able to connect to the EventSource.
+
       responses:
         '200':
           description: Returns an object with all relevant data.
