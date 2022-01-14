@@ -400,7 +400,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/CmsData']
+          $ref: '#/components/schemas/CmsData'
+
         status:
           type: string
         id:
