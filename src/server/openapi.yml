@@ -170,72 +170,80 @@ components:
           type: string
         keywords:
           type: array
-          items: {}
+          items:
+            type: string
         profileTypes:
           type: array
-          items: {}
+          items:
+            type: string
+            enum:
+              - commercial
+              - private-commercial
+              - private
         isEnabled:
           type: boolean
     ApiSearchConfig:
       type: object
       properties:
         BRP:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         AKTES:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         CMS_CONTENT:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         CMS_MAINTENANCE_NOTIFICATIONS:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         KVK:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         KREFIA:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_AANVRAGEN:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_SPECIFICATIES:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_TOZO:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_TONK:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_BBZ:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         FOCUS_STADSPAS:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         WMO:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         VERGUNNINGEN:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         MY_LOCATION:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         AFVAL:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         AFVALPUNTEN:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         BELASTINGEN:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         MILIEUZONE:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         TOERISTISCHE_VERHUUR:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         ERFPACHT:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         SUBSIDIE:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         NOTIFICATIONS:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         CASES:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfigResult']
+          $ref: '#/components/schemas/ApiSearchConfigResult'
     ApiSearchConfigResult:
       type: object
       properties:
         keywords:
           type: array
-          items: {}
+          items:
+            type: string
         keywordsGeneratedFromProps:
           type: array
-          items: {}
+          items:
+            type: string
         description:
           type: string
     ServicesAllResponse:
@@ -354,13 +362,21 @@ components:
       properties:
         clusters:
           type: array
-          items: {}
+          items:
+            type: string
         polylines:
           type: array
-          items: {}
+          items:
+            type: string
         errors:
           type: array
-          items: {}
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              message:
+                type: string
         filters:
           type: object
     CacheResponse:
