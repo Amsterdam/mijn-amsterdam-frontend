@@ -28,6 +28,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchConfigResponse'
+  /services/stream:
+    get:
+      description: Used to send data from the different services to the client using an event stream.
+      responses:
+        '200':
+          description: Returns an event stream with messages from the different services.
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
   /services/all:
     get:
       description: And endpoint used to retrieve information from all services. Used when client doesnt support EvenSource.
@@ -38,16 +48,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServicesAllResponse'
-  /services/stream:
-    get:
-      description: Used to send data from services to the client.
-      responses:
-        '200':
-          description: Returns an event stream with messages from the different services.
-          content:
-            text/event-stream:
-              schema:
-                $ref: '#/components/schemas/StreamResponse'
   /services/tips:
     get:
       description: This endpoint returns relevant hints for the current user.
