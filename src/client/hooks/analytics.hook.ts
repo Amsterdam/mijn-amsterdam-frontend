@@ -61,7 +61,8 @@ export function trackEventWithProfileType(
 export function trackPageView(
   title?: string,
   url?: string,
-  customDimensions?: CustomDimension[]
+  customDimensions?: CustomDimension[],
+  data?: string[]
 ) {
   let href = url || document.location.href;
 
@@ -73,6 +74,7 @@ export function trackPageView(
     documentTitle: title || document.title,
     href,
     customDimensions,
+    data,
   };
 
   const payloadSZ = {
@@ -92,6 +94,19 @@ export function trackPageViewWithProfileType(
   profileType: ProfileType
 ) {
   return trackPageView(title, url, [profileTypeDimension(profileType)]);
+}
+
+export function trackDownloadWithProfileType(
+  title: string,
+  url: string,
+  profileType: ProfileType
+) {
+  return trackPageView(
+    title,
+    url,
+    [profileTypeDimension(profileType)],
+    ['download']
+  );
 }
 
 export function trackLink(url: string) {
