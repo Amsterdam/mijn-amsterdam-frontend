@@ -356,6 +356,9 @@ components:
           $ref: '#/components/schemas/MapDataset'
         status:
           type: string
+          enum:
+            - 'OK'
+            - 'ERROR'
         id:
           type: string
         failedDependencies:
@@ -400,6 +403,9 @@ components:
           $ref: '#/components/schemas/CmsData'
         status:
           type: string
+          enum:
+            - 'OK'
+            - 'ERROR'
         id:
           type: string
         failedDependencies:
@@ -430,6 +436,9 @@ components:
           $ref: '#/components/schemas/CmsMaintenanceList'
         status:
           type: string
+          enum:
+            - 'OK'
+            - 'ERROR'
         id:
           type: string
         failedDependencies:
