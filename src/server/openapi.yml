@@ -353,7 +353,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/MapDataset']
+          $ref: '#/components/schemas/MapDataset'
+
         status:
           type: string
         id:
