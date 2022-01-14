@@ -61,7 +61,7 @@ paths:
                 $ref: '#/components/schemas/TipsResponse'
   /services/tips/requestdataoverview:
     get:
-      description: Endpoint not used on the client
+      description: Endpoint to view the data send to the tips api (not used).
       responses:
         '200':
           description: Does things?
@@ -354,13 +354,12 @@ components:
       properties:
         content:
           $ref: '#/components/schemas/MapDataset'
-
         status:
           type: string
         id:
           type: string
         failedDependencies:
-          type: object
+          $ref: '#/components/schemas/FailedDependencies'
     MapDataset:
       type: object
       properties:
@@ -399,13 +398,12 @@ components:
       properties:
         content:
           $ref: '#/components/schemas/CmsData'
-
         status:
           type: string
         id:
           type: string
         failedDependencies:
-          type: object
+          $ref: '#/components/schemas/FailedDependencies'
     CmsData:
       type: object
       properties:
@@ -435,7 +433,7 @@ components:
         id:
           type: string
         failedDependencies:
-          type: object
+          $ref: '#/components/schemas/FailedDependencies'
     CmsMaintenanceList:
       type: array
       items:
@@ -468,3 +466,20 @@ components:
       properties:
         content:
           type: object
+    FailedDependencies:
+      type: array
+      items:
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+              - 'ERROR'
+          message:
+            type: string
+          id:
+            type: string
+          sentry:
+            type: string
+          content:
+            type: object
