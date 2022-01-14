@@ -25,6 +25,7 @@
 .PanelWide {
   width: 48rem;
   top: 0;
+  // + 0px acts as a pattern for the react-spring props calculation
   transform: translate3d(calc(-100% + 0px), 0, 0);
 }
 
@@ -42,6 +43,7 @@
 
 .PanelNarrow {
   right: 0;
+  // - 0px acts as a pattern for the react-spring props calculation
   transform: translate3d(0, calc(100% - 0px), 0);
 }
 
@@ -56,6 +58,7 @@
   padding-right: 1.6rem;
   padding-left: 1.6rem;
   max-height: 100%;
+  padding-top: 1rem;
 }
 
 .PanelInnerDesktop {
@@ -72,12 +75,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  top: 0;
-  left: 0;
-  right: 0;
   background: transparent;
-  flex-shrink: 0;
-  height: 40px;
+  height: 4rem;
   z-index: 2;
 
   &:after {
@@ -86,7 +85,7 @@
     height: 0.9rem;
     width: 12rem;
     border-radius: 1.2rem;
-    background: #e6e6e6;
+    background: $color-support-blue;
   }
 }
 
@@ -96,7 +95,7 @@
   bottom: 0;
   top: 0;
   display: block;
-  background-color: #ffffff;
+  background-color: $color-white;
   border: 0;
   padding: 0;
   box-shadow: none;
@@ -112,7 +111,7 @@
 .Icon {
   height: 3.2rem;
   width: 1.6rem;
-  background-color: #ffffff;
+  background-color: $color-white;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -138,7 +137,7 @@
 .LabelStyle {
   display: inline-flex;
   vertical-align: middle;
-  color: #000000;
+  color: $color-black;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -157,7 +156,7 @@
 
 .IsDimmed {
   opacity: 0.5;
-  font-weight: 'normal';
+  font-weight: normal;
 }
 
 .LabelText {
@@ -210,4 +209,8 @@
   transform: rotate(0);
   left: 0;
   transition: transform 200ms ease-out;
+}
+
+.PanelError {
+  margin-top: 2rem;
 }

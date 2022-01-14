@@ -28,7 +28,6 @@ import { uniqueArray } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { AppState } from '../../AppState';
-import { IconExternalLink } from '../../assets/icons';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
 
@@ -39,6 +38,7 @@ export interface SearchEntry {
   keywords: string[];
   profileTypes?: ProfileType[];
   isEnabled?: boolean;
+  trailingIcon?: ReactNode;
 }
 
 export interface ApiSearchConfig {
@@ -112,11 +112,9 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
 export function displayPath(
   term: string,
   segments: string[],
-  isExternal: boolean = false,
   replaceTerm: boolean = true
 ) {
   const termSplitted = term.trim().split(/\s+/g);
-
   return (
     <>
       <span className={styles.DisplayPath}>
@@ -144,11 +142,6 @@ export function displayPath(
           );
         })}
       </span>
-      {isExternal && (
-        <span className={styles.ExternalUrl}>
-          <IconExternalLink width="14" height="14" />
-        </span>
-      )}
     </>
   );
 }

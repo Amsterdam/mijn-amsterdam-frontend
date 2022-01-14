@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
   DatasetId,
-} from '../../../universal/config/buurt';
+} from '../../../universal/config/myarea-datasets';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import {
   getQueryConfig,
@@ -71,6 +71,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const zoom = queryConfig?.s
       ? currentZoom
       : queryConfig?.zoom || currentZoom;
+
     const bbox = queryConfig?.s
       ? currentBbox
       : queryConfig?.bbox || currentBbox;
@@ -85,9 +86,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       ? queryConfig?.datasetIds
       : activeDatasetIds;
 
-    const filters = queryConfig?.s
-      ? activeFilters
-      : queryConfig?.filters || activeFilters;
+    const filters = queryConfig?.s ? activeFilters : queryConfig?.filters || {};
 
     const activeFeature = queryConfig?.s
       ? loadingFeature
@@ -115,8 +114,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     if (!isEqual(bbox, currentBbox)) {
       map.fitBounds(bbox);
     }
-    const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
 
+    const datasetIdsStr = datasetIds.length ? JSON.stringify(datasetIds) : '';
     const filtersStr = Object.entries(filters).length
       ? JSON.stringify(filters)
       : '';
@@ -127,6 +126,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     params.set('datasetIds', datasetIdsStr);
     params.set('filters', filtersStr);
     params.set('loadingFeature', JSON.stringify(loadingFeature));
+
     if (queryConfig?.bbox) {
       params.set('bbox', JSON.stringify(bbox));
     }
@@ -252,7 +252,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       {!!errorResults.length && (
         <ErrorMessages
           key="DatasetErrorMessages"
-          title="U ziet niet alle gegevens die wij willen tonen in Mijn buurt."
+          title="Wij kunnen de informatie over de locatie nu niet tonen."
           errors={errorResults.map((result) => {
             return {
               stateKey: result?.id || 'BUURT',

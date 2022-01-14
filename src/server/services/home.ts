@@ -1,4 +1,7 @@
-import { DEFAULT_LAT, DEFAULT_LNG } from '../../universal/config/buurt';
+import {
+  DEFAULT_LAT,
+  DEFAULT_LNG,
+} from '../../universal/config/myarea-datasets';
 import { apiDependencyError, isMokum } from '../../universal/helpers';
 import { apiErrorResult, apiSuccesResult } from '../../universal/helpers/api';
 import { fetchBAG, fetchBRP } from './index';

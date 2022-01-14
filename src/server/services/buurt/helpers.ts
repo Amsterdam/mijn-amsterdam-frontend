@@ -12,7 +12,7 @@ import {
   DATASETS,
   getDatasetCategoryId,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/buurt';
+} from '../../../universal/config/myarea-datasets';
 import {
   ApiErrorResponse,
   ApiResponse,

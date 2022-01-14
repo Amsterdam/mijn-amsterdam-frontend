@@ -1,4 +1,3 @@
-import Marker from './Map/Marker';
 import L, {
   LatLngLiteral,
   LeafletEventHandlerFn,
@@ -6,11 +5,12 @@ import L, {
   MarkerOptions,
 } from 'leaflet';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { LOCATION_ZOOM } from '../../../universal/config/buurt';
+import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
 import iconUrl from '../../assets/icons/home.svg';
-import markerIconUrl from '../../assets/icons/map/pin.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
+import markerIconUrl from '../../assets/icons/map/pin.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import Marker from './Map/Marker';
 import styles from './MyArea.module.scss';
 import { useMapRef } from './useMap';
 

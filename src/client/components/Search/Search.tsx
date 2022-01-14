@@ -2,11 +2,10 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-
 import { AppRoutes } from '../../../universal/config';
-import { IconChevronRight, IconMarker, IconSearch } from '../../assets/icons';
+import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { useAppStateReady } from '../../hooks';
+import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
   trackEventWithProfileType,
   trackSearch,
@@ -16,7 +15,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import Linkd, { Button, IconButton } from '../Button/Button';
+import { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
@@ -42,8 +41,15 @@ export function ResultSet({
   term,
   extendedResults = false,
   showIcon = false,
-  onClickResult,
+  onClickResult: onClickResultCallback,
 }: ResultSetProps) {
+  const onClickResult = useCallback(
+    (result: SearchEntry) => {
+      onClickResultCallback?.(result);
+    },
+    [onClickResultCallback]
+  );
+
   return (
     <div className={styles.ResultSet}>
       {!!title && (
@@ -61,34 +67,37 @@ export function ResultSet({
         <p className={styles.NoResults}>{noResultsMessage}</p>
       )}
       <ul className={styles.ResultList}>
-        {results.map((result, index) => (
-          <li
-            key={result.url + index}
-            className={classnames(
-              styles.ResultListItem,
-              extendedResults && styles['is-extended']
-            )}
-          >
-            <Linkd
-              icon={showIcon ? IconChevronRight : null}
-              external={result.url.startsWith('http')}
-              href={result.url}
-              className={styles.ResultSetLink}
-              onClick={() => onClickResult?.(result)}
-            >
-              {typeof result.displayTitle === 'function'
-                ? result.displayTitle(term)
-                : displayPath(term, [result.displayTitle])}
-              {extendedResults && (
-                <p className={styles.ResultDescription}>
-                  <span className={styles.ResultUrl}>{result.url}</span>
-                  {result.description}
-                </p>
+        {results.map((result, index) => {
+          return (
+            <li
+              key={result.url + index}
+              className={classnames(
+                styles.ResultListItem,
+                extendedResults && styles['is-extended']
               )}
-              {result.url.startsWith(AppRoutes.BUURT) && <IconMarker />}
-            </Linkd>
-          </li>
-        ))}
+            >
+              <a
+                href={result.url}
+                className={styles.ResultSetLink}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onClickResult(result);
+                }}
+              >
+                {typeof result.displayTitle === 'function'
+                  ? result.displayTitle(term)
+                  : displayPath(term, [result.displayTitle])}
+                {result.trailingIcon}
+                {extendedResults && (
+                  <p className={styles.ResultDescription}>
+                    <span className={styles.ResultUrl}>{result.url}</span>
+                    {result.description}
+                  </p>
+                )}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -101,31 +110,53 @@ interface SearchProps {
   autoFocus?: boolean;
   typeAhead?: boolean;
   extendedAMResults?: boolean;
+  replaceResultUrl?: (result: SearchEntry) => boolean;
 }
 
 export function Search({
-  onFinish,
+  onFinish: onFinishCallback,
   term: termInitial = '',
   maxResultCountDisplay = 10,
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
+  replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
   const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
+
   const [isTyping, setIsTyping] = useState(false);
-  const [term, setTerm] = useSearchTerm();
+  const [term, setTerm_] = useSearchTerm();
+
+  const setTerm = useCallback(
+    (term) => {
+      if (!term && searchBarRef.current) {
+        searchBarRef.current.value = '';
+      }
+      setTerm_(term);
+    },
+    [setTerm_]
+  );
+
   const history = useHistory();
   const profileType = useProfileTypeValue();
+  const isPhoneScreen = usePhoneScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
-  useSearchIndex();
 
-  useProfileTypeSwitch(() => onFinish && onFinish('Profiel toggle'));
+  const onFinish = useCallback(
+    (reason: string) => {
+      onFinishCallback?.(reason);
+    },
+    [onFinishCallback]
+  );
+
+  useSearchIndex();
+  useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
@@ -170,11 +201,32 @@ export function Search({
           setResultsVisible(false);
           trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
-          onFinish && onFinish('Escape toets');
+          onFinish('Escape toets');
         }
       }
     },
     [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
+  );
+
+  const onClickResult = useCallback(
+    (result: SearchEntry) => {
+      trackSearchBarEvent('Click result');
+      setResultsVisible(false);
+      onFinish('Click result');
+
+      if (replaceResultUrl?.(result)) {
+        history.replace(result.url);
+      } else {
+        history.push(result.url);
+      }
+    },
+    [
+      replaceResultUrl,
+      history,
+      trackSearchBarEvent,
+      setResultsVisible,
+      onFinish,
+    ]
   );
 
   useKeyDown(keyHandler);
@@ -187,19 +239,13 @@ export function Search({
     if (termInitial && searchBarRef.current) {
       searchBarRef.current.value = termInitial;
     }
-    return () => setTerm('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (term) {
-      setResultsVisible(true);
-    }
-  }, [term]);
-
-  useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
       if (
+        typeAhead &&
         isResultsVisible &&
         resultsRef.current &&
         !resultsRef.current.contains(e.target)
@@ -207,11 +253,23 @@ export function Search({
         setResultsVisible(false);
       }
     };
-    document.addEventListener('mousedown', checkIfClickedOutside);
+    if (!isPhoneScreen) {
+      document.addEventListener('mousedown', checkIfClickedOutside);
+    }
     return () => {
       document.removeEventListener('mousedown', checkIfClickedOutside);
     };
-  }, [isResultsVisible]);
+  }, [isResultsVisible, isPhoneScreen, typeAhead]);
+
+  useEffect(() => {
+    if (termInitial) {
+      setTerm(termInitial);
+      setResultsVisible(true);
+    } else {
+      setTerm('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
@@ -242,7 +300,7 @@ export function Search({
             placeholder={
               isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
             }
-            onFocus={() => {
+            onClick={() => {
               if (term) {
                 setResultsVisible(true);
               }
@@ -274,10 +332,7 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
-              onClickResult={(result) => {
-                trackSearchBarEvent(`Click result`);
-                setResultsVisible(false);
-              }}
+              onClickResult={onClickResult}
             />
 
             <ResultSet
@@ -286,10 +341,7 @@ export function Search({
               title="Overige informatie op Amsterdam.nl"
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              onClickResult={() => {
-                trackSearchBarEvent(`Click result`);
-                setResultsVisible(false);
-              }}
+              onClickResult={onClickResult}
               results={
                 results?.am?.state === 'hasValue' &&
                 results?.am?.contents !== null

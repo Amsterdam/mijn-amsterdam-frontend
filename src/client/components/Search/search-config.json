@@ -360,6 +360,16 @@
       ]
     },
     {
+      "isEnabled": false,
+      "url": "https://mijnsubsidies.amsterdam.nl/loket/",
+      "displayTitle": "Subsidies",
+      "description": "Een overzicht van uw subsidies.",
+      "keywords": [
+        "Subsidie",
+        "Subsidies"
+      ]
+    },
+    {
       "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
       "displayTitle": "Erfpacht",
       "description": "Een overzicht van de erfpacht.",
@@ -574,21 +584,6 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bestemmingsplan%22:1}}}}",
-      "displayTitle": "Bestemmingsplan bij mij in de buurt",
-      "description": "Bestemmingsplan bij mij in de buurt",
-      "keywords": [
-        "bestemmingsplan",
-        "bestemmingsplannen",
-        "bestemmingplan",
-        "bestemmings"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
-    },
-    {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bouwvergunning%22:1}}}}",
       "displayTitle": "Bouwvergunningen bij mij in de buurt",
       "description": "Bouwvergunningen bij mij in de buurt",
@@ -603,13 +598,11 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}",
+      "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%Bestemmingsplan%22:1}}}}",
       "displayTitle": "Bestemmingsplannen bij mij in de buurt",
       "description": "Bestemmingsplannnen bij mij in de buurt",
       "keywords": [
-        "Evenementen",
-        "evenementenvergunning",
-        "evenementenvergunningen"
+        "Bestemmingsplan"
       ],
       "profileTypes": [
         "private",
@@ -727,51 +720,12 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22evenementen%22]",
-      "displayTitle": "Evenementen bij mij in de buurt",
-      "description": "Evenementen bij mij in de buurt",
-      "keywords": [
-        "Evenementen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
-    },
-    {
       "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]",
       "displayTitle": "Sporten bij mij in de buurt",
       "description": "Sporten bij mij in de buurt",
       "keywords": [
         "Sporten",
         "sport"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
-    },
-    {
-      "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]",
-      "displayTitle": "Sporten bij mij in de buurt",
-      "description": "Sporten bij mij in de buurt",
-      "keywords": [
-        "Sporten",
-        "sport"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
-    },
-    {
-      "url": "/buurt?datasetIds=[%22zwembad%22]",
-      "displayTitle": "Zwembaden bij mij in de buurt",
-      "description": "Zwembaden bij mij in de buurt",
-      "keywords": [
-        "Zwemmen",
-        "Zwembad",
-        "Zwembaden"
       ],
       "profileTypes": [
         "private",
@@ -848,7 +802,7 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22hardlooproutes%22]",
+      "url": "/buurt?datasetIds=[%22hardlooproute%22]",
       "displayTitle": "Hardlooproutes bij mij in de buurt",
       "description": "Hardlooproutes bij mij in de buurt",
       "keywords": [
@@ -932,7 +886,7 @@
         "private-commercial"
       ]
     },
-        {
+    {
       "url": "/buurt?datasetIds=%5B%22sportaanbieder%22%5D&filters=%7B%22sportaanbieder%22%3A%7B%22indicatieStadspas%22%3A%7B%22values%22%3A%7B%22Ja%22%3A1%7D%7D%7D%7D",
       "displayTitle": "Sporten met stadspas",
       "description": "Sporten met stadspas",

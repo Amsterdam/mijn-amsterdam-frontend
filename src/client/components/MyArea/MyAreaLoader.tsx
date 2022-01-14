@@ -16,15 +16,12 @@ export default function MyAreaLoader({
   showHeader = true,
   centerMarker,
   zoom,
-  height = '100vh',
   activeBaseLayerType,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
       fallback={
-        <div className={styles.MyAreaLoader} style={{ height }}>
-          Loading buurt bundle...
-        </div>
+        <div className={styles.MyAreaLoader}>Loading buurt bundle...</div>
       }
     >
       {isDashboard ? (
@@ -37,7 +34,6 @@ export default function MyAreaLoader({
           centerMarker={centerMarker}
           activeBaseLayerType={activeBaseLayerType}
           zoom={zoom}
-          height={height}
         />
       )}
     </Suspense>

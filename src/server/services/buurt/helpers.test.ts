@@ -1,4 +1,4 @@
-import * as config from '../../../universal/config/buurt';
+import * as config from '../../../universal/config/myarea-datasets';
 import { ApiResponse } from '../../../universal/helpers';
 import {
   DatasetConfig,
@@ -78,8 +78,7 @@ const DSO_API_RESULT2 = {
   _links: {
     self: { href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/' },
     next: {
-      href:
-        'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&_pageSize=1',
+      href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&_pageSize=1',
     },
     previous: { href: null },
   },
@@ -374,9 +373,9 @@ describe('Buurt helpers', () => {
   });
 
   it('Should filterDatasetFeatures, filter the right features with only datasetid', () => {
-    expect(
-      filterDatasetFeatures(features, ['parkeerzones'], {})
-    ).toStrictEqual([PARKEERZONE1]);
+    expect(filterDatasetFeatures(features, ['parkeerzones'], {})).toStrictEqual(
+      [PARKEERZONE1]
+    );
   });
 
   it('Should filterDatasetFeatures, filter the right features with datasetid and 1 filter', () => {

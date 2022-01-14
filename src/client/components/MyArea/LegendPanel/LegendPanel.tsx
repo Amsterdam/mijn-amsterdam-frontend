@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLandScape, useWidescreen } from '../../../hooks';
 import {
   useFetchPanelFeature,
@@ -21,6 +22,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
   const resetMyAreaState = useResetMyAreaState();
+  const location = useLocation();
 
   useFetchPanelFeature();
 
@@ -66,7 +68,8 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
     // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
   }, [loadingFeature, isNarrowScreen, setDetailPanelState, isLandscape]);
 
-  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
+  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in.
+  // If Detail panel is closed, restore the Filters panel state to the state it was in.
   useEffect(() => {
     if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
       prevFilterPanelState.current = filterState;
@@ -79,6 +82,22 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       prevFilterPanelState.current = null;
     }
   }, [detailState, filterState, setFilterPanelState]);
+
+  // If detailpanel is open and a search result is clicked, the detail panel should close.
+  useEffect(() => {
+    if (
+      (detailState === PanelState.Open || detailState === PanelState.Preview) &&
+      loadingFeature === null
+    ) {
+      setDetailPanelState(isNarrowScreen ? PanelState.Tip : PanelState.Closed);
+    }
+  }, [
+    detailState,
+    location.pathname,
+    loadingFeature,
+    setDetailPanelState,
+    isNarrowScreen,
+  ]);
 
   return (
     <div id="skip-to-id-LegendPanel">
