@@ -40,7 +40,8 @@ paths:
                 $ref: '#/components/schemas/StreamResponse'
   /services/all:
     get:
-      description: And endpoint used to retrieve information from all services. Used when client doesnt support EvenSource.
+      description: An endpoint used to retrieve information from all services. Used when client doesn't support or is able to connect to the EventSource.
+
       responses:
         '200':
           description: Returns an object with all relevant data.
@@ -352,7 +353,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/MapDataset']
+          $ref: '#/components/schemas/MapDataset'
+
         status:
           type: string
         id:
@@ -396,7 +398,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/CmsData']
+          $ref: '#/components/schemas/CmsData'
+
         status:
           type: string
         id:
