@@ -50,7 +50,8 @@
   font-weight: bold;
   padding: 0;
   text-align: left;
-
+  color: inherit;
+  
   &[aria-expanded='true'] .CaretIcon {
     transform: translateY(calc(-50% + 3px)) rotate(90deg);
   }

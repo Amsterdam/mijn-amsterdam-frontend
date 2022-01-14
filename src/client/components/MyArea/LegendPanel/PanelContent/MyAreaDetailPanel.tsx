@@ -1,20 +1,20 @@
-import styles from '../PanelComponent.module.scss';
 import {
   DatasetCategoryId,
   getDatasetCategoryId,
-} from '../../../../../universal/config/buurt';
+} from '../../../../../universal/config/myarea-datasets';
 import Alert from '../../../Alert/Alert';
 import LoadingContent from '../../../LoadingContent/LoadingContent';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks';
+import styles from '../PanelComponent.module.scss';
 import MyArePanelContentAfval from './Afval';
 import MyArePanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyArePanelContentBekendmaking from './Bekendmaking';
 import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
+import MyArePanelContentMeldingenBuurt from './MeldingenBuurt';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
 import MyArePanelContentWIOR from './Wior';
-import MyArePanelContentMeldingenBuurt from './MeldingenBuurt';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
@@ -91,9 +91,10 @@ export default function MyAreaDetailPanel() {
   const [loadingFeature] = useLoadingFeature();
 
   if (
-    !selectedFeature ||
-    !loadingFeature?.datasetId ||
-    selectedFeature.id !== loadingFeature?.id
+    (!selectedFeature ||
+      !loadingFeature?.datasetId ||
+      selectedFeature.id !== loadingFeature?.id) &&
+    !loadingFeature?.isError
   ) {
     return (
       <div className={styles.panelContent}>
@@ -104,10 +105,9 @@ export default function MyAreaDetailPanel() {
 
   if (loadingFeature?.isError) {
     return (
-      <Alert type="warning">
+      <Alert className={styles.PanelError} type="warning">
         <p>
-          Er kan op dit moment niet meer informatie getoond worden over dit
-          item.
+          Er kan op dit moment geen informatie getoond worden over deze locatie.
         </p>
       </Alert>
     );

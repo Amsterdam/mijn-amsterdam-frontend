@@ -1,8 +1,8 @@
 import { InfoDetail } from '../../..';
-import GenericBase from './GenericBase';
-import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
-import { DATASETS } from '../../../../../universal/config/buurt';
+import { DATASETS } from '../../../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers';
+import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
+import GenericBase from './GenericBase';
 
 interface MyArePanelContentMeldingenBuurtProps {
   panelItem: any;

@@ -26,6 +26,11 @@ export function categoryCheckboxState(
   activeDatasetIds: DatasetId[]
 ) {
   const datasetIds = Object.keys(category.datasets);
+  /**
+  TODO: add complex filter to also take Category -> Filters structure into account.
+  The common structure looks like Category -> Dataset -> Filters.
+  At the moment only direct dataset descendants are taken into account for determining intermediate state.
+  **/
   const activeControlIds = filterActiveDatasets(datasetIds, activeDatasetIds);
   const activeLength = activeControlIds.length;
   const datasetCount = datasetIds.length;

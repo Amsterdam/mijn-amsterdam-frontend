@@ -1,5 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config';
 import { Button, InfoDetail, Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
@@ -90,7 +90,6 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
                   latlng: bagApi.data,
                   label: location,
                 }}
-                height="40rem"
               />
             ) : (
               <p>Adres kan niet getoond worden</p>

@@ -1,9 +1,4 @@
-import {
-  act,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
@@ -25,7 +20,7 @@ describe('<Search />', () => {
     jest.clearAllMocks();
   });
 
-  test('Render without crashing', async () => {
+  test('Render search placeholder busy', async () => {
     render(
       <BrowserRouter>
         <RecoilRoot>
@@ -37,7 +32,7 @@ describe('<Search />', () => {
     await screen.findByPlaceholderText('Zoeken voorbereiden...');
   });
 
-  test('Render without crashing', async () => {
+  test('Render search placeholder ready', async () => {
     render(
       <BrowserRouter>
         <RecoilRoot

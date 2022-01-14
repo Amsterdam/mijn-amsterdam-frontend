@@ -21,6 +21,7 @@ interface CustomButtonProps {
   iconFill?: string;
   iconSize?: string;
   lean?: boolean;
+  replace?: boolean | undefined;
 }
 
 export interface LinkdProps
