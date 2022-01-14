@@ -1,6 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Authentication status service
+  title: Mijn Amsterdam BFF api definition
+
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
     name: Datapunt Support
@@ -309,7 +310,9 @@ components:
           type: object
         tips:
           type: array
-          items: { oneOf: [$ref: '#/components/schemas/Tip'] }
+          items:
+            $ref: '#/components/schemas/Tip'
+
     Tip:
       type: object
       properties:
@@ -425,7 +428,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/CmsMaintenanceList']
+          $ref: '#/components/schemas/CmsMaintenanceList'
+
         status:
           type: string
         id:
@@ -434,7 +438,9 @@ components:
           type: object
     CmsMaintenanceList:
       type: array
-      items: { $ref: '#/components/schemas/CmsMaitenance' }
+      items:
+        $ref: '#/components/schemas/CmsMaitenance'
+
     CmsMaitenance:
       type: object
       properties:
