@@ -420,7 +420,9 @@ components:
           type: object
     CmsMaintenanceList:
       type: array
-      items: { $ref: '#/components/schemas/CmsMaitenance' }
+      items:
+        $ref: '#/components/schemas/CmsMaitenance'
+
     CmsMaitenance:
       type: object
       properties:
