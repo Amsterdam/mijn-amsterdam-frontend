@@ -1,7 +1,6 @@
 openapi: 3.0.3
 info:
   title: Mijn Amsterdam BFF api definition
-
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
     name: Datapunt Support
@@ -32,7 +31,6 @@ paths:
   /services/stream:
     get:
       description: Streams data from the different services to the client using an event stream.
-
       responses:
         '200':
           description: Returns an event stream with messages from the different services.
@@ -157,9 +155,11 @@ components:
       type: object
       properties:
         staticSearchEntries:
-          oneOf: [$ref: '#/components/schemas/SearchEntry']
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEntry'
         apiSearchConfigs:
-          oneOf: [$ref: '#/components/schemas/ApiSearchConfig']
+          $ref: '#/components/schemas/ApiSearchConfig'
     SearchEntry:
       type: object
       properties:
@@ -312,7 +312,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tip'
-
     Tip:
       type: object
       properties:
@@ -393,7 +392,6 @@ components:
           type: array
           items:
             type: string
-
     CmsResponse:
       type: object
       properties:
@@ -429,7 +427,6 @@ components:
       properties:
         content:
           $ref: '#/components/schemas/CmsMaintenanceList'
-
         status:
           type: string
         id:
@@ -440,7 +437,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/CmsMaitenance'
-
     CmsMaitenance:
       type: object
       properties:
