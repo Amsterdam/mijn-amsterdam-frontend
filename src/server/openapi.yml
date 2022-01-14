@@ -372,7 +372,9 @@ components:
           type: string
         keys:
           type: array
-          items: {}
+          items:
+            type: string
+
     CmsResponse:
       type: object
       properties:
