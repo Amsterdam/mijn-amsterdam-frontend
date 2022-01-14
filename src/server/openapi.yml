@@ -412,7 +412,8 @@ components:
       type: object
       properties:
         content:
-          oneOf: [$ref: '#/components/schemas/CmsMaintenanceList']
+          $ref: '#/components/schemas/CmsMaintenanceList'
+
         status:
           type: string
         id:
