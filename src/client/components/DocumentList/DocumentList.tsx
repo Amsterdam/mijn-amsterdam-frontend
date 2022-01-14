@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
+import { trackDownloadWithProfileType } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
@@ -82,7 +82,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             );
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackPageViewWithProfileType(
+          trackDownloadWithProfileType(
             document.title,
             trackingUrl,
             profileType

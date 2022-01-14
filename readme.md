@@ -52,7 +52,7 @@ The codebase is also written in typescript so a compilation step is required for
 ### BFF Development api
 
 The BFF also has a router that's intended for development purposes only. Not all api requests are targeted at the BFF api in production, some requests are made to the microservice api's directly.
-For this pupose we have a development router with mock endpoints see `router-development.ts`. For example, vergunning documents and resident count are retrieved directly without going through the BFF.
+For this purpose we have a development router with mock endpoints see `router-development.ts`. For example, vergunning documents and resident count are retrieved directly without going through the BFF.
 It's basically an additional development server integrated in the BFF api.
 
 ## Tooling

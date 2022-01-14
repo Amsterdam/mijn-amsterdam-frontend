@@ -105,7 +105,7 @@ export function trackDownloadWithProfileType(
     title,
     url,
     [profileTypeDimension(profileType)],
-    ['download']
+    ['trackLink', `https://${window.location.hostname}${url}`, 'download']
   );
 }
 
