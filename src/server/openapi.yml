@@ -20,50 +20,50 @@ paths:
                 $ref: '#/components/schemas/HealthyResponse'
   /services/search-config:
     get:
-      description: Something todo with searching.
+      description: Provides information relevant to searching the site.
       responses:
         '200':
-          description: Returns stuff.
+          description: Returns an object with config data.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchConfigResponse'
   /services/all:
     get:
-      description: Some endpoint
+      description: And endpoint used to retrieve information from all services. Used when client doesnt support EvenSource.
       responses:
         '200':
-          description: Does stuff
+          description: Returns an object with all relevant data.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServicesAllResponse'
   /services/stream:
     get:
-      description: endpoint
+      description: Used to send data from services to the client.
       responses:
         '200':
-          description: Used for stuff
+          description: Returns an event stream with messages from the different services.
           content:
             text/event-stream:
               schema:
                 $ref: '#/components/schemas/StreamResponse'
   /services/tips:
     get:
-      description: endpoint
+      description: This endpoint returns relevant hints for the current user.
       responses:
         '200':
-          description: Does things
+          description: Returns a list of Tip objects.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TipsResponse'
   /services/tips/requestdataoverview:
     get:
-      description: endpoint
+      description: Endpoint not used on the client
       responses:
         '200':
-          description: Does things
+          description: Does things?
           content:
             application/json:
               schema:
@@ -93,7 +93,7 @@ paths:
                 $ref: '#/components/schemas/MapDatasetResponse'
   /status/cache:
     get:
-      description: This endpoint gives an overview of the cache directory of the server.
+      description: This endpoint gives an overview of the content inside the cache directory of the server.
       responses:
         '200':
           description: Returns an object with cache overview
@@ -113,10 +113,10 @@ paths:
                 $ref: '#/components/schemas/CmsResponse'
   /public/services/cms/maintenance-notifications:
     get:
-      description: Endpoint used to retrieve data from the CMS.
+      description: Endpoint used to retrieve maintenance notifications.
       responses:
         '200':
-          description: Returns an object with CMS data
+          description: Returns a list of CmsMaintenanceNotification objects
           content:
             application/json:
               schema:
