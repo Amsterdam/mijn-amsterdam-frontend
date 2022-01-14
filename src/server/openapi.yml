@@ -1,6 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Authentication status service
+  title: Mijn Amsterdam BFF api definition
+
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
     name: Datapunt Support
