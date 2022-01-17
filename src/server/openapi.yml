@@ -311,7 +311,24 @@ components:
         WMO:
           type: object
     StreamResponse:
-      type: string
+      type: array
+      format: event-stream
+      items:
+        oneOf:
+          - type: object
+            properties:
+              id:
+                type: string
+              data:
+                $ref: '#/components/schemas/StreamItem'
+          - type: object
+            properties:
+              id:
+                type: string
+              data:
+                type: string
+                enum:
+                  - close
     TipsResponse:
       type: array
       items: { oneOf: [$ref: '#/components/schemas/Tip'] }
@@ -505,3 +522,13 @@ components:
             type: string
           content:
             type: object
+    StreamItem:
+      type: object
+      properties:
+        content:
+          type: object
+        status:
+          type: string
+          enum:
+            - 'OK'
+            - 'ERROR'
