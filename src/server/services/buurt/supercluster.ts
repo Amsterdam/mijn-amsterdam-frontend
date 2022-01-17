@@ -2,7 +2,7 @@ import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 import {
   DatasetFilterSelection,
   DatasetId,
-} from '../../../universal/config/buurt';
+} from '../../../universal/config/myarea-datasets';
 import { loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
 import {

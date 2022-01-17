@@ -1,6 +1,6 @@
 import classnames from 'classnames';
+import { useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { IconClose, IconSearch } from '../../assets/icons';
@@ -10,6 +10,7 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import mainHeaderStyles from '../MainHeader/MainHeader.module.scss';
 import { Search } from '../Search/Search';
+import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import styles from './MyArea.module.scss';
 
@@ -21,27 +22,31 @@ export default function MyAreaHeader({
   showCloseButton = true,
 }: MyAreaHeaderProps) {
   const history = useHistory();
-  const isSmallScreen = usePhoneScreen();
+  const isPhoneScreen = usePhoneScreen();
   const isTabletOrSmaller = useTabletScreen();
   const termReplace = useTermReplacement();
 
   const { isSearchActive, setSearchActive, trackSearchBarEvent } =
     useSearchOnPage();
+
+  const replaceResultUrl = useCallback((result: SearchEntry) => {
+    return result.url.startsWith(AppRoutes.BUURT);
+  }, []);
+
   return (
     <>
       <div className={styles.Header}>
-        {!usePhoneScreen() && (
-          <nav
-            className={classnames(
-              mainHeaderStyles.DirectSkipLinks,
-              styles.DirectSkipLinks
-            )}
-          >
-            <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
-              Direct naar: <b>Legenda paneel</b>
-            </Linkd>
-          </nav>
-        )}
+        <nav
+          className={classnames(
+            mainHeaderStyles.DirectSkipLinks,
+            styles.DirectSkipLinks
+          )}
+        >
+          <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
+            Direct naar: <b>Legenda paneel</b>
+          </Linkd>
+        </nav>
+
         <Link
           className={styles.LogoLink}
           to={AppRoutes.ROOT}
@@ -54,28 +59,28 @@ export default function MyAreaHeader({
           />
           <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
         </Link>
-        {(!isSmallScreen || isSearchActive) && (
+        {(!isPhoneScreen || isSearchActive) && (
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
                 onFinish={(reason) => {
                   if (reason) {
                     setSearchActive(false);
-                    if (reason) {
-                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                    }
+                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
                 }}
+                replaceResultUrl={replaceResultUrl}
               />
             </div>
           </div>
         )}
-        {isSmallScreen && !isSearchActive && (
-          <div className={styles.CloseWrapper}>
+        {isPhoneScreen && !isSearchActive && (
+          <div className={styles.SearchButtonWrapper}>
             <IconButton
               icon={IconSearch}
+              title="Zoekbalk openen"
               onClick={() => {
-                setSearchActive(!isSearchActive);
+                setSearchActive(true);
               }}
             />
           </div>
@@ -83,6 +88,7 @@ export default function MyAreaHeader({
         {isTabletOrSmaller ? (
           <IconButton
             icon={IconClose}
+            title={isSearchActive ? 'Zoekbalk sluiten' : 'Kaart sluiten'}
             onClick={() => {
               isSearchActive
                 ? setSearchActive(!isSearchActive)

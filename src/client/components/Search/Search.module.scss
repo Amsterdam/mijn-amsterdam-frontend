@@ -16,7 +16,6 @@
   border: 0.1rem solid $color-neutral-grey4;
   margin-top: 0;
   border-top: 0;
-  z-index: -1;
   // transform: translateX(-1rem);
 
   @include mq-tablet() {
@@ -47,7 +46,7 @@
     margin-bottom: 2rem;
   }
 
-  svg {
+  [class*="Button_Icon__"] {
     position: relative;
     transform: translateY(1px);
     margin: 0 2px;
@@ -75,6 +74,7 @@
 .ResultSetLink {
   font-weight: normal;
   display: block;
+  text-decoration: none;
 
   &:hover {
     text-decoration: underline;
@@ -100,7 +100,7 @@
 }
 
 .DisplayPath {
-  width: calc(100% - 3rem);
+  width: calc(100% - 5rem);
   display: inline-flex;
 
   em {
@@ -127,6 +127,8 @@
 
 .ExternalUrl {
   float: right;
+  transform: translateY(6px);
+  position: relative;
 }
 
 .Form {

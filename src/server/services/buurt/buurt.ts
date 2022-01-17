@@ -1,9 +1,9 @@
+import { IS_AP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
   DatasetId,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/buurt';
-import { IS_AP } from '../../../universal/config/env';
+} from '../../../universal/config/myarea-datasets';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';

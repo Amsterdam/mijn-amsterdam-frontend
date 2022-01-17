@@ -1,5 +1,4 @@
 import { ReactNode, useMemo } from 'react';
-import styles from './PanelComponent.module.scss';
 import { DatasetId } from '../../../../universal/config';
 import {
   DatasetFilterSelection,
@@ -7,7 +6,7 @@ import {
   DatasetPropertyName,
   DatasetPropertyValueWithCount,
   MY_AREA_TRACKING_CATEGORY,
-} from '../../../../universal/config/buurt';
+} from '../../../../universal/config/myarea-datasets';
 import { sortAlpha } from '../../../../universal/helpers';
 import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
@@ -17,6 +16,7 @@ import {
   filterItemCheckboxState,
 } from './DatasetControlCheckbox';
 import { DatasetControlPanelProps } from './DatasetControlPanel';
+import styles from './PanelComponent.module.scss';
 import { PanelList, PanelListItem } from './PanelList';
 
 interface DatasetPropertyFilterPanelProps {
@@ -30,7 +30,7 @@ interface DatasetPropertyFilterPanelProps {
 }
 
 function PropertyFilterPanel({ children }: { children: ReactNode }) {
-  return <div className={styles.PropertyfilterPanel}>{children}</div>;
+  return <div className={styles.PropertyFilterPanel}>{children}</div>;
 }
 
 function FilterPropertyName({ children }: { children: ReactNode }) {

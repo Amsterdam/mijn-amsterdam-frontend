@@ -1,10 +1,10 @@
-import { IconButton } from '../../components/Button/Button';
 import { useMapInstance } from '@amsterdam/react-maps';
-import styles from './Map/Zoom.module.scss';
-import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { HOOD_ZOOM } from '../../../universal/config/buurt';
 import { LatLngLiteral } from 'leaflet';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
+import { IconHomeCommercial, IconHomeSimple } from '../../assets/icons';
+import { IconButton } from '../../components/Button/Button';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import styles from './Map/Zoom.module.scss';
 
 interface MyAreaHomeControlButtonProps {
   latlng: LatLngLiteral;

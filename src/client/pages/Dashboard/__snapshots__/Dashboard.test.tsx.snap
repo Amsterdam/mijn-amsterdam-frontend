@@ -376,7 +376,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
     >
       <div
         class="MyAreaLoader"
-        style="height: 100vh;"
       >
         Loading buurt bundle...
       </div>

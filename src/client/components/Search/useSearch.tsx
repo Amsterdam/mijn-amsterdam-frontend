@@ -1,3 +1,4 @@
+import { ExternalLink } from '@amsterdam/asc-assets';
 import axios from 'axios';
 import Fuse from 'fuse.js';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -12,19 +13,20 @@ import {
   useRecoilValueLoadable,
 } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
-import { useKeyUp } from '../../hooks/useKey';
-
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
+import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
 import { trackEventWithProfileType } from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import { useKeyUp } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import styles from './Search.module.scss';
 import {
   ApiBaseItem,
   ApiSearchConfig,
@@ -147,10 +149,13 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {
         displayTitle: (term: string) =>
-          displayPath(term, [page.highlight.title || page.title], true, false),
+          displayPath(term, [page.highlight.title || page.title], false),
         keywords: page.sections,
         description: page.description,
         url: page.url,
+        trailingIcon: (
+          <ExternalLink width="14" height="14" className={styles.ExternalUrl} />
+        ),
       };
     });
   }
@@ -248,11 +253,25 @@ export function useSearchIndex() {
       !isIndexed.current
     ) {
       isIndexed.current = true;
+      const entries = [
+        ...(staticSearchEntries || []),
+        ...(dynamicSearchEntries || []),
+      ].map((searchEntry) => {
+        if (searchEntry.url.startsWith(AppRoutes.BUURT)) {
+          return Object.assign({}, searchEntry, {
+            trailingIcon: (
+              <IconMarker
+                width="14"
+                height="14"
+                className={styles.ExternalUrl}
+              />
+            ),
+          });
+        }
+        return searchEntry;
+      });
 
-      const fuseInstance = new Fuse(
-        [...(staticSearchEntries || []), ...(dynamicSearchEntries || [])],
-        options
-      );
+      const fuseInstance = new Fuse(entries, options);
 
       setSearchConfig(fuseInstance);
     }
@@ -364,20 +383,13 @@ export function useSearchOnPage(): {
   );
 
   useEffect(() => {
-    setSearchActive(false);
-    if (isSearchActive) {
-      trackSearchBarEvent('Automatisch sluiten (navigatie)');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, trackSearchBarEvent]);
-
-  useEffect(() => {
     if (isSearchActive) {
       document.body.classList.add('is-typeAheadActive');
     } else {
       document.body.classList.remove('is-typeAheadActive');
     }
   }, [isSearchActive]);
+
   useKeyUp((event) => {
     if (event.key === 'z' && !isSearchActive) {
       setSearchActive(true);

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   ChapterIcon,
@@ -7,19 +6,11 @@ import {
   PageHeading,
   Search as SearchBar,
 } from '../../components';
-import { useSearchTerm } from '../../components/Search/useSearch';
 import styles from './Search.module.scss';
 
 export default function Search() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
-  const [term, setTerm] = useSearchTerm();
-  useEffect(() => {
-    if (termParam) {
-      setTerm(termParam);
-    }
-  }, [termParam, setTerm]);
-
   return (
     <Page className={styles.Search}>
       <PageHeading
@@ -36,7 +27,7 @@ export default function Search() {
       <PageContent>
         <SearchBar
           autoFocus={true}
-          term={term || termParam}
+          term={termParam}
           extendedAMResults={true}
           typeAhead={false}
           maxResultCountDisplay={20}

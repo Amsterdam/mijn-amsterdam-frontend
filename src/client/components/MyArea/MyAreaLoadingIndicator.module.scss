@@ -3,6 +3,7 @@
 .MyAreaLoader {
   width: 100%;
   height: 100%;
+  height: var(--map-container-height);
   position: absolute;
   display: flex;
   align-items: center;
