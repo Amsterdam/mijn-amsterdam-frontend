@@ -101,12 +101,20 @@ export function trackDownloadWithProfileType(
   url: string,
   profileType: ProfileType
 ) {
-  return trackPageView(
-    title,
-    url,
-    [profileTypeDimension(profileType)],
-    ['trackLink', `https://${window.location.hostname}${url}`, 'download']
-  );
+  let href = url;
+
+  if (IS_AP && !href.startsWith('http')) {
+    href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
+  }
+
+  const payload = {
+    documentTitle: title || document.title,
+    href,
+    customDimensions: [profileTypeDimension(profileType)],
+    data: ['trackLink', href, 'download'],
+  };
+
+  return MatomoInstance && MatomoInstance.track(payload);
 }
 
 export function trackLink(url: string) {
