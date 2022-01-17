@@ -94,7 +94,7 @@
     "leaflet": "^1.7.1",
     "lodash.escaperegexp": "^4.1.2",
     "lodash.isequal": "^4.5.0",
-    "marked": "^4.0.6",
+    "marked": "^4.0.10",
     "memoizee": "^0.4.15",
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
