@@ -71,7 +71,7 @@ exports[`<Krefia /> Matches the Full Page snapshot 1`] = `
         <br />
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
+          href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
           rel="external noopener noreferrer"
         >
           <svg

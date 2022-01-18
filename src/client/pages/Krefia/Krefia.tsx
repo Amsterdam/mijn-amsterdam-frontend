@@ -1,5 +1,4 @@
 import { ReactNode, useMemo } from 'react';
-
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers/api';
@@ -111,7 +110,7 @@ export default function Krefia() {
           {isFIBU && (
             <Linkd
               external={true}
-              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer/krefia-fibu/"
+              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
             >
               Meer informatie over Budgetbeheer (FIBU)
             </Linkd>
