@@ -111,6 +111,7 @@ interface SearchProps {
   typeAhead?: boolean;
   extendedAMResults?: boolean;
   replaceResultUrl?: (result: SearchEntry) => boolean;
+  useBagSearch?: boolean;
 }
 
 export function Search({
@@ -121,14 +122,16 @@ export function Search({
   typeAhead = true,
   extendedAMResults = false,
   replaceResultUrl,
+  useBagSearch = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
-  const results = useSearchResults(extendedAMResults);
+  const results = useSearchResults(extendedAMResults, useBagSearch);
   const [isResultsVisible, setResultsVisible] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);
   const [term, setTerm_] = useSearchTerm();
+  useSearchIndex();
 
   const setTerm = useCallback(
     (term) => {
@@ -155,7 +158,6 @@ export function Search({
     [onFinishCallback]
   );
 
-  useSearchIndex();
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
@@ -334,6 +336,22 @@ export function Search({
               showIcon={extendedAMResults}
               onClickResult={onClickResult}
             />
+
+            {useBagSearch && (
+              <ResultSet
+                term={term}
+                isLoading={isTyping || !isAppStateReady}
+                title="Gevonden adressen"
+                results={
+                  results?.ad?.state === 'hasValue' &&
+                  results?.ad?.contents !== null
+                    ? results?.ad?.contents.slice(0, maxResultCountDisplay / 2)
+                    : []
+                }
+                noResultsMessage="Niets gevonden in BAG"
+                onClickResult={onClickResult}
+              />
+            )}
 
             <ResultSet
               term={term}

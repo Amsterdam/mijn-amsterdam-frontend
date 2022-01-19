@@ -29,6 +29,7 @@ import {
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
   TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
 } from './config/api';
+import DebugObserver from './DebugObserver';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -282,6 +283,7 @@ export default function App() {
 
   return (
     <RecoilRoot>
+      <DebugObserver />
       <BrowserRouter>
         <ErrorBoundary
           onError={sendToSentry}

@@ -1,6 +1,7 @@
 import { ExternalLink } from '@amsterdam/asc-assets';
 import axios from 'axios';
 import Fuse from 'fuse.js';
+import { LatLngTuple } from 'leaflet';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
@@ -180,6 +181,44 @@ export async function searchAmsterdamNL(
   return response.data;
 }
 
+interface BagSearchResult {
+  adres: string;
+  postcode: string;
+  straatnaam: string;
+  huisnummer: number;
+  toevoeging: string;
+  woonplaats: string;
+  centroid: LatLngTuple;
+}
+
+function transformSearchBagresponse(responseData: any): SearchEntry[] {
+  if (Array.isArray(responseData?.results)) {
+    return responseData.results.map((address: BagSearchResult) => ({
+      displayTitle: `${address.adres} ${address.postcode} ${address.woonplaats}`,
+      keywords: [address.adres],
+      description: `Bekijk ${address.adres} ${address.postcode} ${address.woonplaats}`,
+      url: `/buurt?zoom=12&center=${encodeURIComponent(
+        JSON.stringify({ lat: address.centroid[1], lng: address.centroid[0] })
+      )}&datasetIds=&filters=&loadingFeature=null&s=1`,
+      trailingIcon: (
+        <IconMarker width="14" height="14" className={styles.ExternalUrl} />
+      ),
+    }));
+  }
+
+  return [];
+}
+
+async function searchBag(keywords: string) {
+  const url = `https://api.data.amsterdam.nl/atlas/search/adres/?q=${keywords}`;
+
+  const response = await axios.get<SearchEntry[]>(url, {
+    transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
+  });
+
+  return response.data;
+}
+
 const options = {
   threshold: 0.4,
   minMatchCharLength: 2,
@@ -196,6 +235,7 @@ export function useStaticSearchEntries() {
   const profileType = useProfileTypeValue();
 
   return useMemo(() => {
+    // TODO: Do we need useMemo?
     if (
       remoteSearchConfig.state === 'hasValue' &&
       remoteSearchConfig.contents?.staticSearchEntries
@@ -308,6 +348,17 @@ const amsterdamNLQuery = selectorFamily({
     },
 });
 
+const bagQuery = selectorFamily({
+  key: 'bagQuery',
+  get:
+    (useBagSearch: boolean) =>
+    async ({ get }) => {
+      const term = get(searchTermAtom);
+      const response = term && useBagSearch ? await searchBag(term) : null;
+      return response;
+    },
+});
+
 export const requestID = atom<number>({
   key: 'searchTermrequestID',
   default: 0,
@@ -316,7 +367,7 @@ export const requestID = atom<number>({
 export const searchConfigRemote = selector<SearchConfigRemote | null>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
-    // Subscribe to updates ffrom requestID to re-evaluate selector to reload the SEARCH_CONFIG
+    // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
     const response: ApiResponse<SearchConfigRemote> = await fetch(
       BFFApiUrls.SEARCH_CONFIGURATION
@@ -344,14 +395,17 @@ const mijnQuery = selector({
 
 export interface SearchResults {
   ma?: SearchEntry[];
+  ad?: Loadable<SearchEntry[] | null>;
   am?: Loadable<SearchEntry[] | null>;
 }
 
 export function useSearchResults(
-  useExtendedAmsterdamSearch: boolean = false
+  useExtendedAmsterdamSearch: boolean = false,
+  useBagSearch: boolean = false
 ): SearchResults {
   return {
     ma: useRecoilValue(mijnQuery),
+    ad: useRecoilValueLoadable(bagQuery(useBagSearch)),
     am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
   };
 }
