@@ -331,7 +331,9 @@ components:
                   - close
     TipsResponse:
       type: array
-      items: { oneOf: [$ref: '#/components/schemas/Tip'] }
+      items:
+        - $ref: '#/components/schemas/Tip'
+
     TipsRequestResponse:
       type: object
       properties:
