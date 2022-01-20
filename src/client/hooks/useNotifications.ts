@@ -33,13 +33,15 @@ const appStateNotificationsSelector = selectorFamily({
 
       if (appState.BRP?.content?.adres?.woonplaatsNaam === 'Weesp') {
         welcomeNotification =
-          profileType !== 'private'
+          profileType === 'private'
             ? WelcomeNotification2
             : WelcomeNotification2Commercial;
 
-        const notificationsSorted = [...notifications, welcomeNotification];
+        let notificationsSorted = [welcomeNotification, ...notifications];
 
-        notificationsSorted.sort(dateSort('datePublished', 'desc'));
+        notificationsSorted = notificationsSorted.sort(
+          dateSort('datePublished', 'desc')
+        );
 
         return notificationsSorted;
       }
