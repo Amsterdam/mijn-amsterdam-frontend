@@ -33,15 +33,6 @@ export function getFullAddress(
     : 'onbekend adres';
 }
 
-export function getBagSearchAddress(adres: {
-  straatnaam: string | null;
-  huisnummer: string | null;
-}) {
-  return adres
-    ? `${adres.straatnaam} ${adres.huisnummer || ''}`.trim()
-    : 'onbekend adres';
-}
-
 export function isMokum(
   brpContent: { mokum?: boolean; persoon?: { mokum: boolean } } | null
 ) {

@@ -1,5 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../universal/helpers';
+import { Adres } from '../../universal/types';
 import { ApiUrls } from '../config';
 import { axiosRequest } from '../helpers/source-api-request';
 import bagData from '../mock-data/json/bag.json';
@@ -14,26 +15,30 @@ describe('BAG service', () => {
   });
 
   axMock
-    .onGet(ApiUrls.BAG, { params: { q: 'straatje 25' } })
+    .onGet(ApiUrls.BAG, { params: { q: 'straatje 25', features: 2 } })
     .reply(200, DUMMY_RESPONSE);
 
   // Error response
   axMock.onGet(ApiUrls.BAG, { params: { q: 'undefined' } }).reply(500);
 
   it('should extraxt a lat/lon object', () => {
-    expect(formatBAGData(bagData as any)).toStrictEqual({
-      address: undefined,
+    const address = { straatnaam: 'Herengracht', huisnummer: '23' } as Adres;
+
+    expect(formatBAGData(bagData as any, address)).toStrictEqual({
+      address,
       latlng: {
-        lat: 52.372950494299445,
-        lng: 4.834586581980725,
+        lat: 52.37873183842775,
+        lng: 4.891968036478453,
       },
     });
   });
 
   it('should have a null lat/lon', () => {
+    const address = { straatnaam: 'Herengracht', huisnummer: '23' } as Adres;
     bagData.results = [];
-    expect(formatBAGData(bagData as any)).toStrictEqual({
-      address: undefined,
+
+    expect(formatBAGData(bagData as any, address)).toStrictEqual({
+      address,
       latlng: null,
     });
   });
@@ -42,7 +47,8 @@ describe('BAG service', () => {
     const address = {
       straatnaam: 'straatje',
       huisnummer: 25,
-    } as any;
+      woonplaatsNaam: 'Amsterdam',
+    } as unknown as Adres;
 
     const rs = await fetchBAG('x', { x: 'saml' }, address);
 
@@ -50,20 +56,18 @@ describe('BAG service', () => {
       status: 'OK',
       content: {
         address,
-        latlng: {
-          lat: 52.372950494299445,
-          lng: 4.834586581980725,
-        },
+        latlng: null,
       },
     });
   });
 
   it('Bag api should fail correct;y', async () => {
+    // Request non-existing mock url
     const rs = await fetchBAG('x', { x: 'saml' }, {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
-      message: 'Error: Request failed with status code 500',
+      message: 'Error: Request failed with status code 404',
       content: null,
     });
   });

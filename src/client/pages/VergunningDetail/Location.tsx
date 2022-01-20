@@ -1,6 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config';
+import {
+  extractAddress,
+  getLatLonByAddress,
+  isLocatedInWeesp,
+} from '../../../universal/helpers/bag';
 import { Button, InfoDetail, Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
@@ -28,21 +33,12 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
       return;
     }
     if (isLocationModalOpen) {
-      const address = location
-        .replace(/\sAmsterdam/gi, '')
-        .replace(/([1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2})/i, '')
-        .trim();
-
+      const address = extractAddress(location);
+      const isWeesp = isLocatedInWeesp(location);
       fetchBag({
-        url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
-        transformResponse: (response) => {
-          const result1 = response?.results[0];
-          if (result1 && result1.adres && result1.centroid) {
-            const [lng, lat] = result1.centroid;
-            return { lat, lng };
-          }
-          return null;
-        },
+        url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}&features=2`, // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
+        transformResponse: (response) =>
+          getLatLonByAddress(response?.results, address, isWeesp),
       });
     }
   }, [isLocationModalOpen, location, fetchBag, bagApi.isDirty]);
