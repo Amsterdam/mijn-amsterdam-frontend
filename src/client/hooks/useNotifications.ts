@@ -1,8 +1,13 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
 import { Chapters } from '../../universal/config';
+import { dateSort } from '../../universal/helpers';
+import {
+  WelcomeNotification,
+  WelcomeNotification2,
+  WelcomeNotification2Commercial,
+} from '../config/staticData';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { WelcomeNotification } from '../config/staticData';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',
@@ -12,7 +17,7 @@ const appStateNotificationsSelector = selectorFamily({
       const appState = get(appStateAtom);
       let notifications = appState.NOTIFICATIONS.content || [];
 
-      // Exlclude meldingen
+      // Exclude meldingen for the private-commercial (ZZP) profile.
       if (
         profileType === 'private-commercial' &&
         appState.NOTIFICATIONS.content
@@ -24,13 +29,27 @@ const appStateNotificationsSelector = selectorFamily({
         );
       }
 
-      return [...notifications, WelcomeNotification];
+      let welcomeNotification = WelcomeNotification;
+
+      if (appState.BRP?.content?.adres?.woonplaatsNaam === 'Weesp') {
+        welcomeNotification =
+          profileType !== 'private'
+            ? WelcomeNotification2
+            : WelcomeNotification2Commercial;
+
+        const notificationsSorted = [...notifications, welcomeNotification];
+
+        notificationsSorted.sort(dateSort('datePublished', 'desc'));
+
+        return notificationsSorted;
+      }
+
+      return [...notifications, welcomeNotification];
     },
 });
 
 export function useAppStateNotifications() {
   const profileType = useProfileTypeValue();
-
   const notifications = useRecoilValue(
     appStateNotificationsSelector(profileType)
   );
