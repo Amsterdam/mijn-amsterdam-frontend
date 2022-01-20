@@ -59,13 +59,25 @@ export default function MyNotificationsPage() {
         Actueel
       </PageHeading>
       <PageContent>
-        {currentPage !== 1 && <p>Pagina {currentPage}</p>}
         {isError(NOTIFICATIONS) && (
           <Alert type="warning">
             <p>Niet alle updates kunnen op dit moment worden getoond.</p>
           </Alert>
         )}
       </PageContent>
+      {total > PAGE_SIZE && (
+        <PageContent>
+          <Pagination
+            className={styles.Pagination}
+            totalCount={total}
+            pageSize={PAGE_SIZE}
+            currentPage={currentPage}
+            onPageClick={(page) => {
+              history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
+            }}
+          />
+        </PageContent>
+      )}
       <MyNotifications
         isLoading={isLoading(NOTIFICATIONS)}
         items={itemsPaginated}
