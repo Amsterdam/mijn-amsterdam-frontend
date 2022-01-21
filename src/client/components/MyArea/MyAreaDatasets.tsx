@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import type {
@@ -100,10 +100,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setActiveFilterSelection(filters);
     }
 
-    if (
-      (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) &&
-      !bbox
-    ) {
+    if (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) {
       map.setView(center, zoom);
     }
 
@@ -201,9 +198,11 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   );
 
   useEffect(() => {
-    map.on('moveend', onUpdate);
+    map.on('moveend viewreset', onUpdate);
+
     return () => {
       map.off('moveend', onUpdate);
+      // map.off('viewreset', onUpdate);
     };
   }, [map, onUpdate]);
 
