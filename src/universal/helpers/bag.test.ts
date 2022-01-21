@@ -67,6 +67,10 @@ describe('getLatLonByAddress', () => {
 
   test('isWeesp', () => {
     expect(isLocatedInWeesp('Weesperstraat 113 Amsterdam')).toBe(false);
+    expect(isLocatedInWeesp('Herengracht 23 Weesp')).toBe(true);
+
+    // This is an exception. Currently no addresses including the word "amsterdam" exist in Weesp so for now this function is sufficient.
+    expect(isLocatedInWeesp('Amsterdamse straatweg 999 Weesp')).toBe(false);
   });
 
   test('getBagSearchAddress', () => {

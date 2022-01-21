@@ -48,5 +48,7 @@ export function getBagSearchAddress(adres: {
 
 export function isLocatedInWeesp(address: string) {
   const lAddress = address.toLowerCase();
+  // NOTE: Currently no addresses including "amsterdam" are present in Weesp. So: Amsterdamse plein or Amsterdamse straatweg do not exist.
+  // Should this change in the future, this function won't hold up anymore and a more comprehensive test should be incorporated here.
   return lAddress.includes('weesp') && !lAddress.includes('amsterdam');
 }
