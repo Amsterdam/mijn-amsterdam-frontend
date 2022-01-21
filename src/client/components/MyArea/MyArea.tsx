@@ -102,7 +102,6 @@ export default function MyArea({
   const centerMarkerLatLng = centerMarker?.latlng;
   zoom = customConfig.zoom || zoom;
 
-  // TODO: Why is useMemo used?
   const center = useMemo(() => {
     let center = DEFAULT_MAP_OPTIONS.center;
 
@@ -117,7 +116,6 @@ export default function MyArea({
     return center;
   }, [centerMarkerLatLng, MY_LOCATION.content, customConfig.center]);
 
-  // TODO: Why is useMemo used?
   const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
     useMemo(() => {
       const options = {
@@ -130,17 +128,13 @@ export default function MyArea({
       return options;
     }, [center, zoom]);
 
-  // TODO: Why is useMemo used?
-  const mapLayers = useMemo(() => {
-    return {
-      aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
-      topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
-    };
-  }, []);
+  const mapLayers = {
+    aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
+    topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
+  };
 
   const { detailState, filterState } = useLegendPanelCycle();
 
-  // TODO: Why is useMemo used?
   const mapOffset = useMemo(() => {
     if (!showPanels) {
       return { left: '0' };
