@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { trackDownloadWithProfileType } from '../../hooks/analytics.hook';
+import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
@@ -13,11 +13,13 @@ import styles from './DocumentList.module.scss';
 interface DocumentLinkProps {
   document: GenericDocument;
   label?: string;
+  trackPath?: (document: GenericDocument) => string;
 }
 
 interface DocumentListProps {
   documents: GenericDocument[];
   isExpandedView?: boolean;
+  trackPath?: (document: GenericDocument) => string;
 }
 
 function downloadFile(docDownload: GenericDocument) {
@@ -42,7 +44,11 @@ function addFileType(url: string, type: string = '') {
   return url;
 }
 
-export function DocumentLink({ document, label }: DocumentLinkProps) {
+export function DocumentLink({
+  document,
+  label,
+  trackPath,
+}: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
@@ -74,15 +80,16 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           return res.blob();
         })
         .then((blob) => {
-          const trackingUrl =
-            window.location.pathname +
-            addFileType(
-              `/downloads/${document.download || document.title}`,
-              document.type
-            );
+          const trackingUrl = trackPath
+            ? trackPath(document)
+            : window.location.pathname +
+              addFileType(
+                `/downloads/${document.download || document.title}`,
+                document.type
+              );
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackDownloadWithProfileType(
+          trackPageViewWithProfileType(
             document.title,
             trackingUrl,
             profileType
@@ -163,6 +170,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
 export default function DocumentList({
   documents,
   isExpandedView = false,
+  trackPath,
 }: DocumentListProps) {
   return (
     <ul

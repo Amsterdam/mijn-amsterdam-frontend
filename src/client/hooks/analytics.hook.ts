@@ -96,27 +96,6 @@ export function trackPageViewWithProfileType(
   return trackPageView(title, url, [profileTypeDimension(profileType)]);
 }
 
-export function trackDownloadWithProfileType(
-  title: string,
-  url: string,
-  profileType: ProfileType
-) {
-  let href = url;
-
-  if (IS_AP && !href.startsWith('http')) {
-    href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
-  }
-
-  const payload = {
-    documentTitle: title || document.title,
-    href,
-    customDimensions: [profileTypeDimension(profileType)],
-    data: ['trackLink', href, 'download'],
-  };
-
-  return MatomoInstance && MatomoInstance.track(payload);
-}
-
 export function trackLink(url: string) {
   return (
     MatomoInstance &&
