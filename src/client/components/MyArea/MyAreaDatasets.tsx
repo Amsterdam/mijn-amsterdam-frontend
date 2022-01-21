@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import type {
@@ -202,7 +202,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
     return () => {
       map.off('moveend', onUpdate);
-      // map.off('viewreset', onUpdate);
     };
   }, [map, onUpdate]);
 
