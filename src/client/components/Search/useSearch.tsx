@@ -199,7 +199,7 @@ function transformSearchBagresponse(responseData: any): SearchEntry[] {
       description: `Bekijk ${address.adres} ${address.postcode} ${address.woonplaats}`,
       url: `/buurt?zoom=12&center=${encodeURIComponent(
         JSON.stringify({ lat: address.centroid[1], lng: address.centroid[0] })
-      )}&datasetIds=&filters=&loadingFeature=null&s=1`,
+      )}&datasetIds=&filters=&loadingFeature=null`,
       trailingIcon: (
         <IconMarker width="14" height="14" className={styles.ExternalUrl} />
       ),
