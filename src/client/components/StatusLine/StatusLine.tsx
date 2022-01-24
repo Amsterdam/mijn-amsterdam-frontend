@@ -265,7 +265,7 @@ interface StatusLineProps {
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
   highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class.
-  trackPath?: (document: GenericDocument) => string;
+  documentPathForTracking?: (document: GenericDocument) => string;
 }
 
 export default function StatusLine({
@@ -277,7 +277,7 @@ export default function StatusLine({
   id,
   maxStepCount,
   highlightKey = 'isActive',
-  trackPath,
+  documentPathForTracking,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + id,
@@ -340,7 +340,7 @@ export default function StatusLine({
                 <StatusLinePanelDocuments
                   documents={item.documents}
                   altDocumentContent={item.altDocumentContent}
-                  trackPath={trackPath}
+                  trackPath={documentPathForTracking}
                 />
               </LineItem>
             ))}

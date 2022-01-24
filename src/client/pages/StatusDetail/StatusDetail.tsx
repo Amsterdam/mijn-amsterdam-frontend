@@ -37,7 +37,7 @@ interface StatusDetailProps {
   showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   highlightKey?: string | false;
-  trackPath?: (document: GenericDocument) => string;
+  documentPathForTracking?: (document: GenericDocument) => string;
 }
 
 export default function StatusDetail({
@@ -48,7 +48,7 @@ export default function StatusDetail({
   chapter,
   statusLabel = 'Status',
   highlightKey,
-  trackPath,
+  documentPathForTracking,
 }: StatusDetailProps) {
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
@@ -141,7 +141,7 @@ export default function StatusDetail({
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
           id={`${chapter}-${stateKey}-status`}
-          trackPath={trackPath}
+          documentPathForTracking={documentPathForTracking}
         />
       )}
     </DetailPage>

@@ -34,7 +34,9 @@ export function InkomenDetailTozo() {
       maxStepCount={() => -1}
       highlightKey={false}
       statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
-      trackPath={(document) => `/downloads/inkomen/tozo/${document.title}`}
+      documentPathForTracking={(document) =>
+        `/downloads/inkomen/tozo/${document.title}`
+      }
     />
   );
 }
@@ -67,7 +69,9 @@ export function InkomenDetailTonk() {
       maxStepCount={() => -1}
       highlightKey={false}
       statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
-      trackPath={(document) => `/downloads/inkomen/tonk/${document.title}`}
+      documentPathForTracking={(document) =>
+        `/downloads/inkomen/tonk/${document.title}`
+      }
     />
   );
 }
@@ -106,7 +110,9 @@ export function InkomenDetailBbz() {
       maxStepCount={() => -1}
       highlightKey={false}
       statusLabel={() => `Bbz-aanvraag`}
-      trackPath={(document) => `/downloads/inkomen/bbz/${document.title}`}
+      documentPathForTracking={(document) =>
+        `/downloads/inkomen/bbz/${document.title}`
+      }
     />
   );
 }
@@ -140,7 +146,7 @@ export function InkomenDetailUitkering() {
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : undefined
       }
-      trackPath={(document) =>
+      documentPathForTracking={(document) =>
         `/downloads/inkomen/bijstandsuitkering/${document.title}`
       }
     />
