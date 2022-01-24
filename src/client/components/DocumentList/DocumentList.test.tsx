@@ -70,7 +70,7 @@ describe('DocumentList', () => {
     console.error = originalFn;
   });
 
-  it('trackPath function is used to create the link sent to with the tracking call', async () => {
+  it('trackPath function is used to create the link sent to the tracking call', async () => {
     const originalFn = console.error;
     console.error = jest.fn(); // Hide warnings about navigation not implemented exceptions.
 

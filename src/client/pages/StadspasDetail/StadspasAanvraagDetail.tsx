@@ -11,6 +11,7 @@ export default function StadspasAanvraagDetail() {
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : undefined
       }
+      trackPath={(document) => `/downloads/stadspas/${document.title}`}
     />
   );
 }
