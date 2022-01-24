@@ -70,6 +70,43 @@ describe('DocumentList', () => {
     console.error = originalFn;
   });
 
+  it('trackPath function is used to create the link sent to with the tracking call', async () => {
+    const originalFn = console.error;
+    console.error = jest.fn(); // Hide warnings about navigation not implemented exceptions.
+
+    (global as any).fetch = jest
+      .fn()
+      .mockResolvedValueOnce({ status: 200, blob: () => null });
+
+    (trackPageViewWithProfileType as jest.Mock).mockReturnValue(null);
+
+    render(
+      <RecoilRoot>
+        <BrowserRouter>
+          <DocumentList
+            documents={ITEMS}
+            trackPath={(document) => {
+              return '/compleet/ander/pad';
+            }}
+          />
+        </BrowserRouter>
+      </RecoilRoot>
+    );
+
+    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+
+    await waitFor(() =>
+      expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
+        ITEMS[0].title,
+        // The additional leading / is representing window.location.pathname
+        '/compleet/ander/pad',
+        'private'
+      )
+    );
+
+    console.error = originalFn;
+  });
+
   it('Clicking a link does not fire a tracking call when the link returns a 404 status', async () => {
     const fetch = ((global as any).fetch = jest
       .fn()

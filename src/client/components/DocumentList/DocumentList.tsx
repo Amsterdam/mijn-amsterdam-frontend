@@ -188,10 +188,15 @@ export default function DocumentList({
                 key={document.id}
                 document={document}
                 label="Download"
+                trackPath={trackPath}
               />
             </>
           ) : (
-            <DocumentLink key={document.id} document={document} />
+            <DocumentLink
+              key={document.id}
+              document={document}
+              trackPath={trackPath}
+            />
           )}
         </li>
       ))}
