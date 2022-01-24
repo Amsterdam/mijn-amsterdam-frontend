@@ -128,7 +128,7 @@ export function DocumentLink({
         });
       return false;
     },
-    [document, profileType, isLoading]
+    [document, profileType, isLoading, trackPath]
   );
 
   return (
