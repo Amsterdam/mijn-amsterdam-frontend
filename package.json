@@ -17,7 +17,7 @@
     "start": "cross-env REACT_APP_ENV=development react-scripts start",
     "test": "react-scripts test src/client",
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
-    "bff-api:test": "react-scripts test src/server",
+    "bff-api:test": "react-scripts test src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"

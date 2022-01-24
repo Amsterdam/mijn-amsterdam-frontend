@@ -21,6 +21,7 @@ async function fetchPrivate(
       passthroughRequestHeaders,
       BRP.content.adres
     );
+
     if (!MY_LOCATION.content?.latlng) {
       MY_LOCATION = apiSuccesResult({
         latlng: {
