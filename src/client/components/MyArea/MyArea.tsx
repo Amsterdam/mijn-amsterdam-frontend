@@ -77,7 +77,7 @@ function updateViewportHeight() {
 export default function MyArea({
   datasetIds,
   showPanels = true,
-  showHeader = true,
+  showHeader = false,
   centerMarker,
   zoom = HOOD_ZOOM,
   activeBaseLayerType = BaseLayerType.Topo,

@@ -13,7 +13,7 @@ export default function MyAreaLoader({
   isDashboard = false,
   datasetIds,
   showPanels = true,
-  showHeader = true,
+  showHeader = false,
   centerMarker,
   zoom,
   activeBaseLayerType,

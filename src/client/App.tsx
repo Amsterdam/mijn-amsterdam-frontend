@@ -110,13 +110,11 @@ function AppAuthenticated() {
 
   const [pathname, search] = redirectAfterLogin.split('?');
 
-  return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
-    <Switch>
-      <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-    </Switch>
-  ) : (
+  const isMyArea = matchPath(location.pathname, { path: AppRoutes.BUURT });
+
+  return (
     <>
-      <MainHeader isAuthenticated={true} />
+      <MainHeader isAuthenticated={true} isHeroVisible={!isMyArea} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           <Redirect
@@ -134,6 +132,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
