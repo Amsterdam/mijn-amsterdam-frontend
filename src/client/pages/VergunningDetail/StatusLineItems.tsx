@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { hasWorkflow } from '../../../universal/helpers/vergunningen';
+import { GenericDocument } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import StatusLine, {
   StatusLineItem,
@@ -59,7 +60,13 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
   return statusLineItems;
 }
 
-export function StatusLineItems({ vergunning }: { vergunning: Vergunning }) {
+export function StatusLineItems({
+  vergunning,
+  trackPath,
+}: {
+  vergunning: Vergunning;
+  trackPath?: (document: GenericDocument) => string;
+}) {
   const statusLineItems = useVergunningStatusLineItems(vergunning);
 
   if (!statusLineItems.length) {
@@ -72,6 +79,7 @@ export function StatusLineItems({ vergunning }: { vergunning: Vergunning }) {
       items={statusLineItems}
       showToggleMore={false}
       id={`vergunning-detail-${vergunning.id}`}
+      documentPathForTracking={trackPath}
     />
   );
 }

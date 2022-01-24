@@ -89,7 +89,14 @@ export default function VergunningDetail() {
         )}
       </PageContent>
       {!isLoading(VERGUNNINGEN) && Vergunning && (
-        <StatusLineItems vergunning={Vergunning} />
+        <StatusLineItems
+          vergunning={Vergunning}
+          trackPath={(document) =>
+            `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
+              document.title
+            }`
+          }
+        />
       )}
     </DetailPage>
   );

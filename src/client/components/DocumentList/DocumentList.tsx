@@ -13,11 +13,13 @@ import styles from './DocumentList.module.scss';
 interface DocumentLinkProps {
   document: GenericDocument;
   label?: string;
+  trackPath?: (document: GenericDocument) => string;
 }
 
 interface DocumentListProps {
   documents: GenericDocument[];
   isExpandedView?: boolean;
+  trackPath?: (document: GenericDocument) => string;
 }
 
 function downloadFile(docDownload: GenericDocument) {
@@ -42,7 +44,11 @@ function addFileType(url: string, type: string = '') {
   return url;
 }
 
-export function DocumentLink({ document, label }: DocumentLinkProps) {
+export function DocumentLink({
+  document,
+  label,
+  trackPath,
+}: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
@@ -74,12 +80,13 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           return res.blob();
         })
         .then((blob) => {
-          const trackingUrl =
-            window.location.pathname +
-            addFileType(
-              `/downloads/${document.download || document.title}`,
-              document.type
-            );
+          const trackingUrl = trackPath
+            ? trackPath(document)
+            : window.location.pathname +
+              addFileType(
+                `/downloads/${document.download || document.title}`,
+                document.type
+              );
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
           trackPageViewWithProfileType(
@@ -121,7 +128,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
         });
       return false;
     },
-    [document, profileType, isLoading]
+    [document, profileType, isLoading, trackPath]
   );
 
   return (
@@ -163,6 +170,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
 export default function DocumentList({
   documents,
   isExpandedView = false,
+  trackPath,
 }: DocumentListProps) {
   return (
     <ul
@@ -180,10 +188,15 @@ export default function DocumentList({
                 key={document.id}
                 document={document}
                 label="Download"
+                trackPath={trackPath}
               />
             </>
           ) : (
-            <DocumentLink key={document.id} document={document} />
+            <DocumentLink
+              key={document.id}
+              document={document}
+              trackPath={trackPath}
+            />
           )}
         </li>
       ))}

@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { LinkProps } from '../../../universal/types/App.types';
+import { LinkProps, GenericDocument } from '../../../universal/types/App.types';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -37,6 +37,7 @@ interface StatusDetailProps {
   showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   highlightKey?: string | false;
+  documentPathForTracking?: (document: GenericDocument) => string;
 }
 
 export default function StatusDetail({
@@ -47,6 +48,7 @@ export default function StatusDetail({
   chapter,
   statusLabel = 'Status',
   highlightKey,
+  documentPathForTracking,
 }: StatusDetailProps) {
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
@@ -139,6 +141,7 @@ export default function StatusDetail({
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
           id={`${chapter}-${stateKey}-status`}
+          documentPathForTracking={documentPathForTracking}
         />
       )}
     </DetailPage>

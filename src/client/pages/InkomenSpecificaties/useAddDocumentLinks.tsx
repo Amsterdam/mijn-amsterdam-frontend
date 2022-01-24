@@ -14,7 +14,13 @@ export function useAddDocumentLinkComponents(
         focusSpecificatiesContent.jaaropgaven =
           focusSpecificatiesContent.jaaropgaven.map((document) => {
             const documentUrl = (
-              <DocumentLink document={document} label="PDF" />
+              <DocumentLink
+                document={document}
+                label="PDF"
+                trackPath={(document) =>
+                  `/downloads/inkomen/jaaropgave/${document.title}`
+                }
+              />
             );
             return Object.assign({}, document, { documentUrl });
           });
@@ -23,7 +29,13 @@ export function useAddDocumentLinkComponents(
         focusSpecificatiesContent.uitkeringsspecificaties =
           focusSpecificatiesContent.uitkeringsspecificaties.map((document) => {
             const documentUrl = (
-              <DocumentLink document={document} label="PDF" />
+              <DocumentLink
+                document={document}
+                label="PDF"
+                trackPath={(document) =>
+                  `/downloads/inkomen/uitkeringsspecificatie/${document.title}`
+                }
+              />
             );
             return Object.assign({}, document, { documentUrl });
           });
