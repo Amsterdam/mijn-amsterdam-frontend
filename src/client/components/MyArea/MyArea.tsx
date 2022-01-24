@@ -68,9 +68,10 @@ export interface MyAreaProps {
 }
 
 function updateViewportHeight() {
+  // The 150 accounts for the header
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight}px`
+    `${window.innerHeight - 150}px`
   );
 }
 

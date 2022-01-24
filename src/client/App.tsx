@@ -11,7 +11,11 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-import { AppRoutes, FeatureToggle } from '../universal/config';
+import {
+  AppRoutes,
+  FeatureToggle,
+  NoHeaderHeroRoutes,
+} from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
@@ -110,11 +114,13 @@ function AppAuthenticated() {
 
   const [pathname, search] = redirectAfterLogin.split('?');
 
-  const isMyArea = matchPath(location.pathname, { path: AppRoutes.BUURT });
+  const isHeroVisible = !NoHeaderHeroRoutes.some((r) =>
+    matchPath(location.pathname, { path: r })
+  );
 
   return (
     <>
-      <MainHeader isAuthenticated={true} isHeroVisible={!isMyArea} />
+      <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           <Redirect
