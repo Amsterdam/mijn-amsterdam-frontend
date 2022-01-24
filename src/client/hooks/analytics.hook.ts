@@ -61,8 +61,7 @@ export function trackEventWithProfileType(
 export function trackPageView(
   title?: string,
   url?: string,
-  customDimensions?: CustomDimension[],
-  data?: string[]
+  customDimensions?: CustomDimension[]
 ) {
   let href = url || document.location.href;
 
@@ -74,7 +73,6 @@ export function trackPageView(
     documentTitle: title || document.title,
     href,
     customDimensions,
-    data,
   };
 
   const payloadSZ = {
