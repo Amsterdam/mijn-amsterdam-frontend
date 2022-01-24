@@ -79,7 +79,7 @@ export function StatusLineItems({
       items={statusLineItems}
       showToggleMore={false}
       id={`vergunning-detail-${vergunning.id}`}
-      trackPath={trackPath}
+      documentPathForTracking={trackPath}
     />
   );
 }
