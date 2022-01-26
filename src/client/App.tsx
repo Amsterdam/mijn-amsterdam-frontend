@@ -66,6 +66,7 @@ import {
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
 import Krefia from './pages/Krefia/Krefia';
+import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
@@ -221,6 +222,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
+          <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>
       </div>
