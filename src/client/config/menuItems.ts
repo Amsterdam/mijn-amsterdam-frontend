@@ -126,6 +126,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: AppRoutes.KREFIA,
     profileTypes: ['private', 'private-commercial'],
   },
+  {
+    title: ChapterTitles.PARKEREN,
+    id: Chapters.PARKEREN,
+    to: AppRoutes.PARKEREN,
+    profileTypes: ['private', 'private-commercial', 'commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {

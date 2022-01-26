@@ -132,6 +132,9 @@ export function isChapterActive(
 
     case Chapters.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
+
+    case Chapters.PARKEREN:
+      return true;
   }
 
   return false;

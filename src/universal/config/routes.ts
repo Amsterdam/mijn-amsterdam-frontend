@@ -41,6 +41,7 @@ export const AppRoutes: Record<string, string> = {
     '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
+  PARKEREN: '/parkeren-en-verkeer',
 };
 
 export const AppRoutesRedirect = [

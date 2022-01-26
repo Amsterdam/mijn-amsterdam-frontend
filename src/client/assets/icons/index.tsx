@@ -8,6 +8,7 @@ export { ReactComponent as IconArrowRrimaryWhite } from './Arrow__primary-white.
 export { ReactComponent as IconBelastingen } from './belastingen.svg';
 export { ReactComponent as IconMyNotifications } from './Bell.svg';
 export { ReactComponent as IconBurgerZaken } from './burgerzaken.svg';
+export { ReactComponent as IconParkeren } from './Car.svg';
 export { ReactComponent as IconCheckmark } from './Checkmark.svg';
 export { ReactComponent as IconChevronLeft } from './Chevron-Left.svg';
 export { ReactComponent as IconChevronRight } from './Chevron-Right.svg';
