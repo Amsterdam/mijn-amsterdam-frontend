@@ -107,5 +107,3 @@ export const CustomTrackingUrls = {
 };
 
 export const NoHeroRoutes = [AppRoutes.BUURT];
-
-export const NoFooterRoutes = [AppRoutes.BUURT];
