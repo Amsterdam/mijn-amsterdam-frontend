@@ -77,7 +77,6 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
             {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
             {!bagApi.isError && !!bagApi.data ? (
               <MyAreaLoader
-                showHeader={false}
                 showPanels={false}
                 zoom={LOCATION_ZOOM}
                 datasetIds={[]}
