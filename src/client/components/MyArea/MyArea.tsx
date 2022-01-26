@@ -70,7 +70,7 @@ export interface MyAreaProps {
 function updateViewportHeight() {
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight}px`
+    `${window.innerHeight - 150}px`
   );
 }
 
