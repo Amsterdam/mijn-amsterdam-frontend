@@ -66,11 +66,13 @@ export function StatusLinePanelDescription({
 interface StatusLinePanelDocumentsProps {
   documents: GenericDocument[];
   altDocumentContent?: AltDocumentContent;
+  trackPath?: (document: GenericDocument) => string;
 }
 
 export function StatusLinePanelDocuments({
   documents,
   altDocumentContent,
+  trackPath,
 }: StatusLinePanelDocumentsProps) {
   return (
     <StatusLinePanel name="documents">
@@ -81,7 +83,9 @@ export function StatusLinePanelDocuments({
       ) : (
         altDocumentContent
       )}
-      {!!documents.length && <DocumentList documents={documents} />}
+      {!!documents.length && (
+        <DocumentList documents={documents} trackPath={trackPath} />
+      )}
     </StatusLinePanel>
   );
 }
@@ -261,6 +265,7 @@ interface StatusLineProps {
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
   highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class.
+  documentPathForTracking?: (document: GenericDocument) => string;
 }
 
 export default function StatusLine({
@@ -272,6 +277,7 @@ export default function StatusLine({
   id,
   maxStepCount,
   highlightKey = 'isActive',
+  documentPathForTracking,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + id,
@@ -334,6 +340,7 @@ export default function StatusLine({
                 <StatusLinePanelDocuments
                   documents={item.documents}
                   altDocumentContent={item.altDocumentContent}
+                  trackPath={documentPathForTracking}
                 />
               </LineItem>
             ))}

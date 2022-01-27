@@ -10,6 +10,7 @@ import {
   apiSuccesResult,
   directApiUrlByProfileType,
 } from '../../../universal/helpers';
+import { GenericDocument } from '../../../universal/types';
 import DocumentList from '../../components/DocumentList/DocumentList';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -19,11 +20,13 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 interface DocumentDetailsProps {
   vergunning: Vergunning;
   opaque?: boolean; // Does not show loading feedback and no InfoDetail to the user if 0 documents are retrieved.
+  trackPath?: (document: GenericDocument) => string;
 }
 
 export function DocumentDetails({
   vergunning,
   opaque = true,
+  trackPath,
 }: DocumentDetailsProps) {
   const profileType = useProfileTypeValue();
   const documentsUrl = vergunning?.documentsUrl
@@ -81,7 +84,11 @@ export function DocumentDetails({
             ]}
           />
         ) : !!documents?.length ? (
-          <DocumentList documents={documents} isExpandedView={true} />
+          <DocumentList
+            documents={documents}
+            isExpandedView={true}
+            trackPath={trackPath}
+          />
         ) : (
           <span>Geen documenten beschikbaar</span>
         )

@@ -177,7 +177,14 @@ export default function VergunningVerhuur({
           </InfoDetailGroup>
         )}
         <Location label="Adres" location={vergunning.location} />
-        <DocumentDetails vergunning={vergunning} />
+        <DocumentDetails
+          vergunning={vergunning}
+          trackPath={(document) =>
+            `/downloads/toeristische-verhuur/${vergunning.caseType.toLocaleLowerCase()}/${
+              document.title
+            }`
+          }
+        />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine
