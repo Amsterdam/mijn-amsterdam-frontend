@@ -13,7 +13,6 @@ export default function MyAreaLoader({
   isDashboard = false,
   datasetIds,
   showPanels = true,
-  showHeader = true,
   centerMarker,
   zoom,
   activeBaseLayerType,
@@ -30,7 +29,6 @@ export default function MyAreaLoader({
         <MyAreaLazy
           datasetIds={datasetIds}
           showPanels={showPanels}
-          showHeader={showHeader}
           centerMarker={centerMarker}
           activeBaseLayerType={activeBaseLayerType}
           zoom={zoom}
