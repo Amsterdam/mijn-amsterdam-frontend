@@ -11,11 +11,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-import {
-  AppRoutes,
-  FeatureToggle,
-  NoHeaderHeroRoutes,
-} from '../universal/config';
+import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
