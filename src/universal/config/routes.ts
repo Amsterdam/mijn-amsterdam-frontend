@@ -105,3 +105,5 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
 export const CustomTrackingUrls = {
   [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
 };
+
+export const NoHeroRoutes = [AppRoutes.BUURT];
