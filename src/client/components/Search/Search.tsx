@@ -111,7 +111,6 @@ interface SearchProps {
   typeAhead?: boolean;
   extendedAMResults?: boolean;
   replaceResultUrl?: (result: SearchEntry) => boolean;
-  useBagSearch?: boolean;
 }
 
 export function Search({
@@ -122,11 +121,10 @@ export function Search({
   typeAhead = true,
   extendedAMResults = false,
   replaceResultUrl,
-  useBagSearch = false,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
-  const results = useSearchResults(extendedAMResults, useBagSearch);
+  const results = useSearchResults(extendedAMResults);
   const [isResultsVisible, setResultsVisible] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);

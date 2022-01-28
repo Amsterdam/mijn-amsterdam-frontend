@@ -46,6 +46,11 @@ const baseLayerOptions: TileLayerOptions = {
 // The height of the header. If we account for it the full map will be onscreen and scrolling is only needed to reach the footer.
 const HEADERHEIGHT = 150;
 
+const mapLayers = {
+  aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
+  topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
+};
+
 function AttributionToggle() {
   const isWideScreen = useWidescreen();
   const mapInstance = useMapInstance();
@@ -127,11 +132,6 @@ export default function MyArea({
       }
       return options;
     }, [center, zoom]);
-
-  const mapLayers = {
-    aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
-    topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
-  };
 
   const { detailState, filterState } = useLegendPanelCycle();
 
