@@ -17,7 +17,7 @@ import {
   NoHeaderHeroRoutes,
 } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
-import { AppRoutesRedirect } from '../universal/config/routes';
+import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -114,13 +114,13 @@ function AppAuthenticated() {
 
   const [pathname, search] = redirectAfterLogin.split('?');
 
-  const isHeroVisible = !NoHeaderHeroRoutes.some((r) =>
-    matchPath(location.pathname, { path: r })
+  const isNoHeroRoute = NoHeroRoutes.some((route) =>
+    matchPath(location.pathname, { path: route })
   );
 
   return (
     <>
-      <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
+      <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           <Redirect

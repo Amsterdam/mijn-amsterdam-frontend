@@ -32,7 +32,6 @@ import { getQueryConfig } from './MyArea.hooks';
 import styles from './MyArea.module.scss';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
-import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
@@ -61,7 +60,6 @@ function AttributionToggle() {
 export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
-  showHeader?: boolean;
   zoom?: number;
   centerMarker?: { latlng: LatLngLiteral; label: string };
   activeBaseLayerType?: BaseLayerType;
@@ -78,7 +76,6 @@ function updateViewportHeight() {
 export default function MyArea({
   datasetIds,
   showPanels = true,
-  showHeader = false,
   centerMarker,
   zoom = HOOD_ZOOM,
   activeBaseLayerType = BaseLayerType.Topo,
@@ -170,7 +167,6 @@ export default function MyArea({
   return (
     <div className={styles.Container}>
       <MaintenanceNotifications page="buurt" />
-      {!!showHeader && <MyAreaHeader showCloseButton={true} />}
       <div className={styles.MapContainer} ref={mapContainerRef}>
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (
