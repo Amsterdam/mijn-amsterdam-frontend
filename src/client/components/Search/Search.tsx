@@ -335,22 +335,6 @@ export function Search({
               onClickResult={onClickResult}
             />
 
-            {useBagSearch && (
-              <ResultSet
-                term={term}
-                isLoading={isTyping || !isAppStateReady}
-                title="Gevonden adressen"
-                results={
-                  results?.ad?.state === 'hasValue' &&
-                  results?.ad?.contents !== null
-                    ? results?.ad?.contents.slice(0, maxResultCountDisplay / 2)
-                    : []
-                }
-                noResultsMessage="Niets gevonden in BAG"
-                onClickResult={onClickResult}
-              />
-            )}
-
             <ResultSet
               term={term}
               isLoading={results?.am?.state === 'loading' || isTyping}

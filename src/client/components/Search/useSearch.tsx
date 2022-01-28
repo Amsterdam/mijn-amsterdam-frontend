@@ -209,14 +209,32 @@ function transformSearchBagresponse(responseData: any): SearchEntry[] {
   return [];
 }
 
-async function searchBag(keywords: string) {
-  const url = `https://api.data.amsterdam.nl/atlas/search/adres/?q=${keywords}`;
+function useBagSearchEntries() {
+  const [searchTerm] = useSearchTerm();
+  const [searchResults, setSearchResults] = useState<SearchEntry[] | null>(
+    null
+  );
 
-  const response = await axios.get<SearchEntry[]>(url, {
-    transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
-  });
+  useEffect(() => {
+    async function fetchBagData(keywords: string) {
+      if (!keywords || keywords?.length === 0) {
+        return false;
+      }
+      const url = `https://api.data.amsterdam.nl/atlas/search/adres/?q=${keywords}`;
 
-  return response.data;
+      const response = await axios.get<SearchEntry[]>(url, {
+        transformResponse: addAxiosResponseTransform(
+          transformSearchBagresponse
+        ),
+      });
+
+      return setSearchResults(response.data);
+    }
+
+    fetchBagData(searchTerm);
+  }, [searchTerm]);
+
+  return searchResults;
 }
 
 const options = {
@@ -284,17 +302,25 @@ export function useSearchIndex() {
   const isIndexed = useRef(false);
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
+  const bagSearchEntries = useBagSearchEntries();
   const [searchState, setSearchConfig] = useRecoilState(searchConfigAtom);
 
   useEffect(() => {
     if (
-      (!!staticSearchEntries || !!dynamicSearchEntries) &&
+      (!!staticSearchEntries || !!dynamicSearchEntries || !!bagSearchEntries) &&
       !isIndexed.current
     ) {
+      console.log(
+        'Build new searchindex',
+        staticSearchEntries,
+        dynamicSearchEntries,
+        bagSearchEntries
+      );
       isIndexed.current = true;
       const entries = [
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
+        ...(bagSearchEntries || []),
       ].map((searchEntry) => {
         if (searchEntry.url.startsWith(AppRoutes.BUURT)) {
           return Object.assign({}, searchEntry, {
@@ -314,7 +340,12 @@ export function useSearchIndex() {
 
       setSearchConfig(fuseInstance);
     }
-  }, [dynamicSearchEntries, staticSearchEntries, setSearchConfig]);
+  }, [
+    dynamicSearchEntries,
+    staticSearchEntries,
+    bagSearchEntries,
+    setSearchConfig,
+  ]);
 
   useProfileTypeSwitch(() => {
     // Reset the search index
@@ -343,17 +374,6 @@ const amsterdamNLQuery = selectorFamily({
       const response = term
         ? await searchAmsterdamNL(term, 10, useExtendedAmsterdamSearch)
         : null;
-      return response;
-    },
-});
-
-const bagQuery = selectorFamily({
-  key: 'bagQuery',
-  get:
-    () =>
-    async ({ get }) => {
-      const term = get(searchTermAtom);
-      const response = term ? await searchBag(term) : null;
       return response;
     },
 });
