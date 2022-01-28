@@ -19,7 +19,8 @@ export default function Parkeren() {
       >
         {ChapterTitles.PARKEREN}
       </PageHeading>
-      <PageContent id="skip-to-id-AppContent">
+      <PageContent>
+
         <p>
           Alle informatie over parkeren in Amsterdam vind u op{' '}
           <a
