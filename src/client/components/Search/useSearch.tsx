@@ -235,7 +235,6 @@ export function useStaticSearchEntries() {
   const profileType = useProfileTypeValue();
 
   return useMemo(() => {
-    // TODO: Do we need useMemo?
     if (
       remoteSearchConfig.state === 'hasValue' &&
       remoteSearchConfig.contents?.staticSearchEntries
@@ -351,10 +350,10 @@ const amsterdamNLQuery = selectorFamily({
 const bagQuery = selectorFamily({
   key: 'bagQuery',
   get:
-    (useBagSearch: boolean) =>
+    () =>
     async ({ get }) => {
       const term = get(searchTermAtom);
-      const response = term && useBagSearch ? await searchBag(term) : null;
+      const response = term ? await searchBag(term) : null;
       return response;
     },
 });
@@ -400,12 +399,10 @@ export interface SearchResults {
 }
 
 export function useSearchResults(
-  useExtendedAmsterdamSearch: boolean = false,
-  useBagSearch: boolean = false
+  useExtendedAmsterdamSearch: boolean = false
 ): SearchResults {
   return {
     ma: useRecoilValue(mijnQuery),
-    ad: useRecoilValueLoadable(bagQuery(useBagSearch)),
     am: useRecoilValueLoadable(amsterdamNLQuery(useExtendedAmsterdamSearch)),
   };
 }
