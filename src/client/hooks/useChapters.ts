@@ -35,6 +35,8 @@ export function isChapterActive(
     KREFIA,
   }: AppState
 ) {
+  const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
+
   switch (item.id) {
     case Chapters.INKOMEN:
       const { jaaropgaven, uitkeringsspecificaties } =
@@ -90,7 +92,6 @@ export function isChapterActive(
       );
 
     case Chapters.AFVAL:
-      const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
@@ -134,7 +135,7 @@ export function isChapterActive(
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Chapters.PARKEREN:
-      return true;
+      return isAmsterdam;
   }
 
   return false;
