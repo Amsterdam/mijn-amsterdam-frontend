@@ -332,7 +332,7 @@ components:
     TipsResponse:
       type: array
       items:
-        - $ref: '#/components/schemas/Tip'
+        $ref: '#/components/schemas/Tip'
 
     TipsRequestResponse:
       type: object
