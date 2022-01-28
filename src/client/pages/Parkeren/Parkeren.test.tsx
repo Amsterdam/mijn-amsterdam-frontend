@@ -22,10 +22,14 @@ describe('Parkeren', () => {
     />
   );
 
-  it('should contain the correct links', () => {
+  it('should render the component and show the correct title', () => {
     render(<Component />);
 
     expect(screen.getByText(ChapterTitles.PARKEREN)).toBeInTheDocument();
+  });
+
+  it('should contain the correct links', () => {
+    render(<Component />);
 
     expect(
       screen.getByText('Lees hier meer over parkeren')
