@@ -43,6 +43,9 @@ const baseLayerOptions: TileLayerOptions = {
     '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
 };
 
+// The height of the header. If we account for it the full map will be onscreen and scrolling is only needed to reach the footer.
+const HEADERHEIGHT = 150;
+
 function AttributionToggle() {
   const isWideScreen = useWidescreen();
   const mapInstance = useMapInstance();
@@ -66,10 +69,9 @@ export interface MyAreaProps {
 }
 
 function updateViewportHeight() {
-  // The 150 accounts for the header
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight - 150}px`
+    `${window.innerHeight - HEADERHEIGHT}px`
   );
 }
 
