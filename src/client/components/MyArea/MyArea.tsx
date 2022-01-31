@@ -32,7 +32,6 @@ import { getQueryConfig } from './MyArea.hooks';
 import styles from './MyArea.module.scss';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
-import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
@@ -43,6 +42,9 @@ const baseLayerOptions: TileLayerOptions = {
   attribution:
     '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
 };
+
+// The height of the header. If we account for it the full map will be onscreen and scrolling is only needed to reach the footer.
+const HEADERHEIGHT = 150;
 
 function AttributionToggle() {
   const isWideScreen = useWidescreen();
@@ -61,7 +63,6 @@ function AttributionToggle() {
 export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
-  showHeader?: boolean;
   zoom?: number;
   centerMarker?: { latlng: LatLngLiteral; label: string };
   activeBaseLayerType?: BaseLayerType;
@@ -70,14 +71,13 @@ export interface MyAreaProps {
 function updateViewportHeight() {
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight}px`
+    `${window.innerHeight - HEADERHEIGHT}px`
   );
 }
 
 export default function MyArea({
   datasetIds,
   showPanels = true,
-  showHeader = true,
   centerMarker,
   zoom = HOOD_ZOOM,
   activeBaseLayerType = BaseLayerType.Topo,
@@ -169,7 +169,6 @@ export default function MyArea({
   return (
     <div className={styles.Container}>
       <MaintenanceNotifications page="buurt" />
-      {!!showHeader && <MyAreaHeader showCloseButton={true} />}
       <div className={styles.MapContainer} ref={mapContainerRef}>
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (
