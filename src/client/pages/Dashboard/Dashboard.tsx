@@ -65,6 +65,7 @@ export default function Dashboard() {
       }
     }
   }, [myChapterItems, profileType, isMyChaptersLoading]);
+
   return (
     <>
       <Page className={styles.Dashboard}>
