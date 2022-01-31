@@ -97,7 +97,7 @@ describe('<Search />', () => {
       jest.runAllTimers();
     });
 
-    expect(axiosGetSpy).toBeCalledTimes(1);
+    expect(axiosGetSpy).toBeCalledTimes(2);
 
     axiosGetSpy.mockReset();
 
@@ -116,7 +116,7 @@ describe('<Search />', () => {
       jest.runAllTimers();
     });
 
-    expect(axiosGetSpy).toBeCalledTimes(1);
+    expect(axiosGetSpy).toBeCalledTimes(2);
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Home -')).toBeInTheDocument();
