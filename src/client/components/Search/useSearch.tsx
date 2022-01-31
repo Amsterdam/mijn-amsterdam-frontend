@@ -209,32 +209,27 @@ function transformSearchBagresponse(responseData: any): SearchEntry[] {
   return [];
 }
 
+async function searchBag(keywords: string) {
+  if (!keywords || keywords?.length === 0) {
+    return null;
+  }
+  const url = `https://api.data.amsterdam.nl/atlas/search/adres/?q=${keywords}`;
+
+  const response = await axios.get<SearchEntry[]>(url, {
+    transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
+  });
+
+  return response.data;
+}
+
 function useBagSearchEntries() {
-  const [searchTerm] = useSearchTerm();
-  const [searchResults, setSearchResults] = useState<SearchEntry[] | null>(
-    null
-  );
+  const searchResults = useRecoilValueLoadable(bagSeachResults);
 
-  useEffect(() => {
-    async function fetchBagData(keywords: string) {
-      if (!keywords || keywords?.length === 0) {
-        return false;
-      }
-      const url = `https://api.data.amsterdam.nl/atlas/search/adres/?q=${keywords}`;
+  if (searchResults.state === 'hasValue') {
+    return searchResults.contents;
+  }
 
-      const response = await axios.get<SearchEntry[]>(url, {
-        transformResponse: addAxiosResponseTransform(
-          transformSearchBagresponse
-        ),
-      });
-
-      return setSearchResults(response.data);
-    }
-
-    fetchBagData(searchTerm);
-  }, [searchTerm]);
-
-  return searchResults;
+  return null;
 }
 
 const options = {
@@ -279,44 +274,36 @@ function useDynamicSearchEntries() {
   const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  let searchEntries = null;
 
-  if (
-    isAppStateReady &&
-    remoteSearchConfig.state === 'hasValue' &&
-    remoteSearchConfig.contents?.apiSearchConfigs
-  ) {
-    searchEntries = generateSearchIndexPageEntries(
-      profileType,
-      appState,
-      combineApiSearchConfigs(
-        apiSearchConfigs,
-        remoteSearchConfig.contents?.apiSearchConfigs
-      )
-    );
-  }
-  return searchEntries;
+  // Because the results of this hook could be used as deps in other hooks we need to make the results stable using useMemo.
+  return useMemo(() => {
+    let searchEntries = null;
+    if (
+      isAppStateReady &&
+      remoteSearchConfig.state === 'hasValue' &&
+      remoteSearchConfig.contents?.apiSearchConfigs
+    ) {
+      searchEntries = generateSearchIndexPageEntries(
+        profileType,
+        appState,
+        combineApiSearchConfigs(
+          apiSearchConfigs,
+          remoteSearchConfig.contents?.apiSearchConfigs
+        )
+      );
+    }
+    return searchEntries;
+  }, [isAppStateReady, appState, profileType, remoteSearchConfig]);
 }
 
 export function useSearchIndex() {
-  const isIndexed = useRef(false);
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
   const bagSearchEntries = useBagSearchEntries();
   const [searchState, setSearchConfig] = useRecoilState(searchConfigAtom);
 
   useEffect(() => {
-    if (
-      (!!staticSearchEntries || !!dynamicSearchEntries || !!bagSearchEntries) &&
-      !isIndexed.current
-    ) {
-      console.log(
-        'Build new searchindex',
-        staticSearchEntries,
-        dynamicSearchEntries,
-        bagSearchEntries
-      );
-      isIndexed.current = true;
+    if (!!staticSearchEntries || !!dynamicSearchEntries || !!bagSearchEntries) {
       const entries = [
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
@@ -349,7 +336,6 @@ export function useSearchIndex() {
 
   useProfileTypeSwitch(() => {
     // Reset the search index
-    isIndexed.current = false;
     setSearchConfig(() => null);
   });
 
@@ -396,6 +382,17 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
   },
 });
 
+const bagSeachResults = selector<SearchEntry[] | null>({
+  key: 'BagSearchResults',
+  get: async ({ get }) => {
+    const term = get(searchTermAtom);
+
+    const response = await searchBag(term);
+
+    return response;
+  },
+});
+
 const mijnQuery = selector({
   key: 'mijnQuery',
   get: ({ get }) => {
@@ -414,7 +411,6 @@ const mijnQuery = selector({
 
 export interface SearchResults {
   ma?: SearchEntry[];
-  ad?: Loadable<SearchEntry[] | null>;
   am?: Loadable<SearchEntry[] | null>;
 }
 
