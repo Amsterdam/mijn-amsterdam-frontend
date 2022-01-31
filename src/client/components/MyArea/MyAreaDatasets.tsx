@@ -100,7 +100,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setActiveFilterSelection(filters);
     }
 
-    if (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) {
+    if (
+      (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) &&
+      isEqual(bbox, currentBbox)
+    ) {
       map.setView(center, zoom);
     }
 
