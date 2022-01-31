@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-
+import classnames from 'classnames';
 import { generatePath, useHistory } from 'react-router-dom';
+import { InnerHtml } from '..';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
@@ -14,15 +14,13 @@ import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { DocumentLink } from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { InnerHtml } from '..';
-import classnames from 'classnames';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -46,6 +44,7 @@ export default function MyNotifications({
 }: MyNotificationsProps) {
   const history = useHistory();
   const profileType = useProfileTypeValue();
+
   function showNotification(id: string, to: string) {
     history.push(to);
   }
@@ -57,12 +56,12 @@ export default function MyNotifications({
   return (
     <div
       {...otherProps}
-      className={classNames(styles.MyNotifications, styles.isLoading)}
+      className={classnames(styles.MyNotifications, styles.isLoading)}
     >
       <ul>
         {isLoading && (
           <li
-            className={classNames(
+            className={classnames(
               styles.MyNotificationItem,
               styles.FakeContent
             )}

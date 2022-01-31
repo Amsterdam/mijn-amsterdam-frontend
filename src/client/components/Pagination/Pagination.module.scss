@@ -16,7 +16,7 @@
   background: none;
   border: 0;
   padding: 0;
-  width: 2.8rem;
+  min-width: 2.8rem;
   height: 2rem;
   display: flex;
   justify-content: center;
@@ -44,7 +44,11 @@
     }
   }
   &.PagePrevButton {
-    margin-left: -1rem;
+    margin-left: -1.5rem;
+    margin-right: 3rem;
+  }
+  &.PageNextButton {
+    margin-left: 3rem;
   }
   &.PagePrevButton,
   &.PageNextButton {
