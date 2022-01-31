@@ -544,13 +544,13 @@ Object {
           "documents": Array [
             Object {
               "datePublished": "2021-10-20T00:00:00+01:00",
-              "id": "176364",
+              "id": "176365",
               "title": "Besluit terugvordering",
               "type": "pdf",
               "url": "/test-api/focus/document?id=218062038",
             },
           ],
-          "id": "1312914200",
+          "id": "1667214329",
           "isActive": true,
           "isChecked": true,
           "notificationDescription": "U moet (een deel van) uw Bbz uitkering terugbetalen. (besluit: 20 oktober 2021).",
