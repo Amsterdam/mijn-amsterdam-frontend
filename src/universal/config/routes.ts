@@ -41,6 +41,7 @@ export const AppRoutes: Record<string, string> = {
     '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
+  PARKEREN: '/parkeren-en-verkeer',
 };
 
 export const AppRoutesRedirect = [
@@ -105,3 +106,5 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
 export const CustomTrackingUrls = {
   [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
 };
+
+export const NoHeroRoutes = [AppRoutes.BUURT];

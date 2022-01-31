@@ -13,7 +13,7 @@ import { RecoilRoot } from 'recoil';
 
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
-import { AppRoutesRedirect } from '../universal/config/routes';
+import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -66,6 +66,7 @@ import {
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
 import Krefia from './pages/Krefia/Krefia';
+import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
@@ -110,13 +111,13 @@ function AppAuthenticated() {
 
   const [pathname, search] = redirectAfterLogin.split('?');
 
-  return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
-    <Switch>
-      <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-    </Switch>
-  ) : (
+  const isNoHeroRoute = NoHeroRoutes.some((route) =>
+    matchPath(location.pathname, { path: route })
+  );
+
+  return (
     <>
-      <MainHeader isAuthenticated={true} />
+      <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           <Redirect
@@ -134,6 +135,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -221,6 +223,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
+          <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>
       </div>

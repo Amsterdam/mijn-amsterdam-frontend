@@ -20,6 +20,7 @@ import {
   IconSubsidie,
   IconSearch,
   IconWior,
+  IconParkeren,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -43,4 +44,5 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.KREFIA]: IconKrefia,
   ALERT: IconAlert,
   [Chapters.SEARCH]: IconSearch,
+  [Chapters.PARKEREN]: IconParkeren,
 };

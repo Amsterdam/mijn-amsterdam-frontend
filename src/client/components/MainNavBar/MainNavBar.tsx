@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 
-import { FeatureToggle } from '../../../universal/config';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
@@ -22,6 +22,7 @@ import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import { Search } from '../Search/Search';
+import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import {
   mainMenuItemId,
@@ -190,6 +191,10 @@ export default function MainNavBar({
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
+  const replaceResultUrl = useCallback((result: SearchEntry) => {
+    return result.url.startsWith(AppRoutes.BUURT);
+  }, []);
+
   const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
     useBurgerMenuAnimation(isBurgerMenuVisible);
 
@@ -271,6 +276,7 @@ export default function MainNavBar({
                     trackSearchBarEvent(`Automatisch sluiten (${reason})`);
                   }
                 }}
+                replaceResultUrl={replaceResultUrl}
               />
             </div>
           </div>

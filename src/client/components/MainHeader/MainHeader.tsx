@@ -16,12 +16,13 @@ import styles from './MainHeader.module.scss';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
+  isHeroVisible?: boolean;
 }
 
 export default function MainHeader({
   isAuthenticated = false,
+  isHeroVisible = true,
 }: MainHeaderProps) {
-  const isHeroVisible = true;
   const appState = useAppStateGetter();
   const errors = useMemo(() => getApiErrors(appState), [appState]);
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
@@ -42,10 +43,7 @@ export default function MainHeader({
       )}
       <div className={styles.topBar}>
         <span className={styles.logoLink}>
-          <a
-            href="https://www.amsterdam.nl"
-            rel="external noreferrer noopener"
-          >
+          <a href="https://www.amsterdam.nl" rel="external noreferrer noopener">
             <Logo
               role="img"
               aria-label="Gemeente Amsterdam logo"
