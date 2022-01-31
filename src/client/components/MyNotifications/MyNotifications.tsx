@@ -1,4 +1,4 @@
-import { default as classNames, default as classnames } from 'classnames';
+import classnames from 'classnames';
 import { generatePath, useHistory } from 'react-router-dom';
 import { InnerHtml } from '..';
 import { AppRoutes } from '../../../universal/config';
@@ -56,12 +56,12 @@ export default function MyNotifications({
   return (
     <div
       {...otherProps}
-      className={classNames(styles.MyNotifications, styles.isLoading)}
+      className={classnames(styles.MyNotifications, styles.isLoading)}
     >
       <ul>
         {isLoading && (
           <li
-            className={classNames(
+            className={classnames(
               styles.MyNotificationItem,
               styles.FakeContent
             )}
