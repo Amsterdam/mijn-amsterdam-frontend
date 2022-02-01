@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010001025757/"
+        }
+      },
+      "type": "verblijfsobject",
+      "dataset": "v11_nummeraanduiding",
+      "adres": "Weesperplein 1",
+      "postcode": "",
+      "straatnaam": "Weesperplein",
+      "straatnaam_no_ws": "Weesperplein",
+      "huisnummer": 1,
+      "toevoeging": "1",
+      "bag_huisletter": "",
+      "bag_toevoeging": "",
+      "woonplaats": "Amsterdam",
+      "type_adres": "Hoofdadres",
+      "status": "Naamgeving uitgegeven",
+      "landelijk_id": "0363200000513852",
+      "vbo_status": "Verblijfsobject in gebruik",
+      "adresseerbaar_object_id": "0363010001025757",
+      "subtype": "verblijfsobject",
+      "centroid": [4.907992384700699, 52.362287357287045],
+      "subtype_id": "0363010001025757",
+      "_display": "Weesperplein 1"
+    }
+  ]
+}
