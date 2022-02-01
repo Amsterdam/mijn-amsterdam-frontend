@@ -28,6 +28,7 @@
 }
 
 .Flyeren_DateAndTime {
+  // So we can show the dates on a single line we remove padding on the p
   p {
     padding-right: 0px;
   }
