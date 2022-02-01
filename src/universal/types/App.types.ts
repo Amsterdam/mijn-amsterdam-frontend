@@ -1,4 +1,4 @@
-import { ReactNode, FunctionComponent, SVGProps } from 'react';
+import { FunctionComponent, ReactNode, SVGProps } from 'react';
 import { Chapter } from '../config';
 
 // Generic object interface

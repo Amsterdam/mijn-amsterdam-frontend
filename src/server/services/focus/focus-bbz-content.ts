@@ -361,7 +361,7 @@ export const bbzDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     decision: 'toekenning',
   },
-  '176364': {
+  '176365': {
     omschrijving: 'Transitie Bbz Terugvordering',
     documentTitle: 'Besluit terugvordering',
     stepType: 'besluit',
