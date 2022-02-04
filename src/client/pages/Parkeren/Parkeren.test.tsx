@@ -25,7 +25,7 @@ describe('Parkeren', () => {
   it('should render the component and show the correct title', () => {
     render(<Component />);
 
-    expect(screen.getByText(ChapterTitles.PARKEREN)).toBeInTheDocument();
+    expect(screen.getAllByText(ChapterTitles.PARKEREN)[0]).toBeInTheDocument();
   });
 
   it('should contain the correct links', () => {
@@ -36,7 +36,9 @@ describe('Parkeren', () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Log voor uw vergunning in op Mijn Parkeren')
+      screen.getByText(
+        'Log in op Mijn Parkeren voor uw parkeervergunnning voor bewoners'
+      )
     ).toBeInTheDocument();
   });
 });
