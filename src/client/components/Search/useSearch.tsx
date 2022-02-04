@@ -7,6 +7,7 @@ import { matchPath, useLocation } from 'react-router-dom';
 import {
   atom,
   Loadable,
+  noWait,
   selector,
   selectorFamily,
   useRecoilState,
@@ -193,13 +194,13 @@ interface BagSearchResult {
 
 function transformSearchBagresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.results)) {
-    return responseData.results.map((address: BagSearchResult) => ({
+    return responseData.results.slice(0, 5).map((address: BagSearchResult) => ({
       displayTitle: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-      keywords: [address.adres],
-      description: `Bekijk ${address.adres} ${address.postcode} ${address.woonplaats}`,
+      keywords: [address.adres, 'bag'],
+      description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
       url: `/buurt?zoom=12&center=${encodeURIComponent(
         JSON.stringify({ lat: address.centroid[1], lng: address.centroid[0] })
-      )}`,
+      )}&bag=1`,
       trailingIcon: (
         <IconMarker width="14" height="14" className={styles.ExternalUrl} />
       ),
@@ -222,26 +223,11 @@ async function searchBag(keywords: string) {
   return response.data;
 }
 
-function useBagSearchEntries() {
-  const searchResults = useRecoilValueLoadable(bagSeachResults);
-
-  if (searchResults.state === 'hasValue') {
-    return searchResults.contents;
-  }
-
-  return null;
-}
-
 const options = {
   threshold: 0.4,
   minMatchCharLength: 2,
   keys: ['description', 'url', { name: 'keywords', weight: 0.2 }],
 };
-
-export const searchConfigAtom = atom<Fuse<SearchEntry> | null>({
-  key: 'searchConfigState',
-  default: null,
-});
 
 export function useStaticSearchEntries() {
   const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
@@ -296,18 +282,16 @@ function useDynamicSearchEntries() {
   }, [isAppStateReady, appState, profileType, remoteSearchConfig]);
 }
 
+let fuseInstance: any;
 export function useSearchIndex() {
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
-  const bagSearchEntries = useBagSearchEntries();
-  const [searchState, setSearchConfig] = useRecoilState(searchConfigAtom);
 
   useEffect(() => {
-    if (!!staticSearchEntries || !!dynamicSearchEntries || !!bagSearchEntries) {
+    if (!!staticSearchEntries && !!dynamicSearchEntries) {
       const entries = [
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
-        ...(bagSearchEntries || []),
       ].map((searchEntry) => {
         if (searchEntry.url.startsWith(AppRoutes.BUURT)) {
           return Object.assign({}, searchEntry, {
@@ -323,23 +307,14 @@ export function useSearchIndex() {
         return searchEntry;
       });
 
-      const fuseInstance = new Fuse(entries, options);
-
-      setSearchConfig(fuseInstance);
+      fuseInstance = new Fuse(entries, options);
     }
-  }, [
-    dynamicSearchEntries,
-    staticSearchEntries,
-    bagSearchEntries,
-    setSearchConfig,
-  ]);
+  }, [dynamicSearchEntries, staticSearchEntries]);
 
   useProfileTypeSwitch(() => {
     // Reset the search index
-    setSearchConfig(() => null);
+    fuseInstance = null;
   });
-
-  return searchState;
 }
 
 export const searchTermAtom = atom<string>({
@@ -386,8 +361,16 @@ const bagSeachResults = selector<SearchEntry[] | null>({
   key: 'BagSearchResults',
   get: async ({ get }) => {
     const term = get(searchTermAtom);
-
     const response = await searchBag(term);
+
+    if (fuseInstance && response?.length) {
+      fuseInstance.remove((doc: SearchEntry) => {
+        return doc.keywords.indexOf('bag') !== -1;
+      });
+      for (const entry of response) {
+        fuseInstance.add(entry);
+      }
+    }
 
     return response;
   },
@@ -397,12 +380,11 @@ const mijnQuery = selector({
   key: 'mijnQuery',
   get: ({ get }) => {
     const term = get(searchTermAtom);
-    const fuse = get(searchConfigAtom);
+    get(noWait(bagSeachResults)); // Subscribes to updates from the bag results
 
-    if (fuse !== null && !!term) {
-      const rawResults = fuse.search(term);
-
-      return rawResults.map((result) => result.item);
+    if (fuseInstance !== null && !!term) {
+      const rawResults = fuseInstance.search(term);
+      return rawResults.map((result: any) => result.item);
     }
 
     return [];
