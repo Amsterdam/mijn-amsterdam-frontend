@@ -30,6 +30,8 @@ describe('<Search />', () => {
     nock('https://api.data.amsterdam.nl')
       .get('/atlas/search/adres/?q=gehandicaptenparkeerkaart')
       .reply(200, { results: [] })
+      .get('/atlas/search/adres/?q=Dashboard')
+      .reply(200, { results: [] })
       .get('/atlas/search/adres/?q=weesperplein')
       .reply(200, bagResponse);
 
