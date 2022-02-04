@@ -12,7 +12,6 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
       <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
-        <InfoDetail label="&nbsp;" value="Op de dagen van" />
         <InfoDetail
           label="Van"
           value={
@@ -22,21 +21,14 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           }
         />
         <InfoDetail
-          label="Tot"
+          label="Tot en met"
           value={
             vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
           }
         />
-      </InfoDetailGroup>
-      <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
-        <InfoDetail label="&nbsp;" value="Tussen de tijdstippen" />
         <InfoDetail
-          label="Van"
-          value={vergunning?.timeStart ? vergunning?.timeStart : '-'}
-        />
-        <InfoDetail
-          label="Tot"
-          value={vergunning?.timeEnd ? vergunning.timeEnd : '-'}
+          label="Tussen"
+          value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
         />
       </InfoDetailGroup>
     </>
