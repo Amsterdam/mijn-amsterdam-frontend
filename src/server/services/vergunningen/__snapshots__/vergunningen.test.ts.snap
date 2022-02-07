@@ -6,6 +6,16 @@ Object {
     "cases": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-13T00:00:00",
+        "id": "vergunning-1576394954-case",
+        "link": Object {
+          "title": "Bekijk hoe het met uw aanvraag staat",
+          "to": "/vergunningen/verspreiden-reclamemateriaal-sampling/1576394954",
+        },
+        "title": "Vergunningsaanvraag Verspreiden reclamemateriaal (sampling) Z/22/1597501",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-17",
         "id": "vergunning-4187042164-case",
         "link": Object {
@@ -266,6 +276,17 @@ Object {
       },
     ],
     "notifications": Array [
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-13T00:00:00",
+        "description": "Er is een update in uw vergunningsaanvraag.",
+        "id": "vergunning-1576394954-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/verspreiden-reclamemateriaal-sampling/1576394954",
+        },
+        "title": "Vergunningsaanvraag",
+      },
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-17",
@@ -560,6 +581,22 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "Verspreiden reclamemateriaal (sampling)",
+    "dateDecision": "2022-01-31T00:00:00",
+    "dateEnd": "2022-05-05T00:00:00",
+    "dateRequest": "2022-01-13T00:00:00",
+    "dateStart": "2022-05-01T00:00:00",
+    "dateWorkflowActive": "2022-01-13T00:00:00",
+    "decision": "Verleend",
+    "id": "1576394954",
+    "identifier": "Z/22/1597501",
+    "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
+    "status": "Afgehandeld",
+    "timeEnd": "17:00",
+    "timeStart": "10:00",
+    "title": "Verspreiden reclamemateriaal (sampling)",
+  },
   Object {
     "activities": "Dansen en plezier maken",
     "caseType": "Evenement melding",

@@ -650,6 +650,21 @@
       "description": "TVM / 3 PV - Arent Janszoon Ernststraat 888",
       "dateEnd": "2020-07-02",
       "dateWorkflowActive": "2019-06-13T00:00:00"
+    },
+    {
+      "caseType": "Verspreiden reclamemateriaal (sampling)",
+      "title": "Verspreiden reclamemateriaal (sampling)",
+      "identifier": "Z/22/1597501",
+      "dateRequest": "2022-01-13T00:00:00",
+      "dateDecision": "2022-01-31T00:00:00",
+      "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
+      "dateStart": "2022-05-01T00:00:00",
+      "dateEnd": "2022-05-05T00:00:00",
+      "timeStart": "10:00",
+      "timeEnd": "17:00",
+      "status": "Afgehandeld",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-01-13T00:00:00"
     }
   ],
   "status": "OK"

@@ -65,4 +65,5 @@ export const showDocuments = (caseType: CaseType) =>
     CaseType.Omzettingsvergunning,
     CaseType.EvenementMelding,
     CaseType.EvenementVergunning,
+    CaseType.Flyeren,
   ].includes(caseType);
