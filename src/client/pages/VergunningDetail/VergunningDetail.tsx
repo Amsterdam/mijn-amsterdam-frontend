@@ -21,6 +21,7 @@ import { TVMRVVObject } from './TVMRVVObject';
 import { BZP } from './BZP';
 import { BZB } from './BZB';
 import { Flyeren } from './Flyeren';
+import { AanbiedenDiensten } from './AanbiedenDiensten';
 import styles from './VergunningDetail.module.scss';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { EvenementVergunning } from './EvenementVergunning';
@@ -84,6 +85,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.Flyeren && (
               <Flyeren vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.AanbiedenDiensten && (
+              <AanbiedenDiensten vergunning={Vergunning} />
             )}
             {showDocuments(Vergunning?.caseType) &&
               !!Vergunning?.documentsUrl && (
