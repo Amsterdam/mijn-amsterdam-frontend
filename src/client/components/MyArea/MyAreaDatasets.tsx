@@ -127,12 +127,21 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     params.set('filters', filtersStr);
     params.set('loadingFeature', JSON.stringify(loadingFeature));
 
+    if (queryConfig?.markerLocation) {
+      params.set('markerLocation', JSON.stringify(queryConfig.markerLocation));
+    }
+
     if (queryConfig?.bbox) {
       params.set('bbox', JSON.stringify(bbox));
     }
 
     // Set the s parameter to indicate the url was constructed. s=1 means the atomState instead of the url is leading in setting the map state.
     params.set('s', '1');
+
+    // Quick escape when url is already correct.
+    if (`?${params}` === search) {
+      return;
+    }
 
     const url = `${AppRoutes.BUURT}?${params}`;
 

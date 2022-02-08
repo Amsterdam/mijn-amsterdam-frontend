@@ -451,6 +451,8 @@ export interface QueryConfig {
   loadingFeature?: { id: string; datasetId: DatasetId };
   bbox?: LatLngBoundsLiteral;
   s?: '1'; // Indicates the url was constructed on the /buurt page
+  marker?: 1 | undefined;
+  markerLocation?: LatLngLiteral;
 }
 
 export function getQueryConfig(searchEntry: string): QueryConfig {

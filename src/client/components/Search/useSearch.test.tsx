@@ -318,10 +318,10 @@ describe('Search hooks and helpers', () => {
       wrapper,
     });
 
-    expect(result.current).toBeNull();
+    expect(result.current).toBeUndefined();
 
     await waitForNextUpdate();
 
-    expect(result.current).toBeNull();
+    expect(result.current).toBeUndefined();
   });
 });
