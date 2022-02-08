@@ -198,9 +198,9 @@ function transformSearchBagresponse(responseData: any): SearchEntry[] {
       displayTitle: `${address.adres} ${address.postcode} ${address.woonplaats}`,
       keywords: [address.adres, 'bag'],
       description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-      url: `/buurt?zoom=12&center=${encodeURIComponent(
+      url: `/buurt?zoom=12&markerLocation=${encodeURIComponent(
         JSON.stringify({ lat: address.centroid[1], lng: address.centroid[0] })
-      )}&bag=1`,
+      )}`,
       trailingIcon: (
         <IconMarker width="14" height="14" className={styles.ExternalUrl} />
       ),

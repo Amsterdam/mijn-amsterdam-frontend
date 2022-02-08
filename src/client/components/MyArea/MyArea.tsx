@@ -95,8 +95,7 @@ export default function MyArea({
   // Params passed by query will override all other options
   const customConfig = useMemo(() => {
     return getQueryConfig(history.location.search);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [history.location?.search]);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const panelComponentAvailableHeight = getElementSize(
@@ -181,13 +180,15 @@ export default function MyArea({
                     zoom={zoom}
                   />
                 )}
-              {centerMarkerLatLng && mapOptions.center && (
-                <CustomLatLonMarker
-                  label={centerMarkerLabel || 'Gekozen locatie'}
-                  center={mapOptions.center}
-                  zoom={zoom}
-                />
-              )}
+              {(centerMarkerLatLng || customConfig.markerLocation) &&
+                mapOptions.center && (
+                  <CustomLatLonMarker
+                    label={centerMarkerLabel || 'Gekozen locatie'}
+                    center={customConfig.markerLocation || mapOptions.center}
+                    zoom={zoom}
+                    updateCenter={!customConfig.markerLocation}
+                  />
+                )}
               <ViewerContainer
                 mapOffset={mapOffset}
                 topLeft={
