@@ -27,9 +27,8 @@ function state(state: any) {
   return initializeState;
 }
 
-describe('<VergunningDetail />', () => {
-  (window as any).scrollTo = jest.fn();
-  const vergunning = content.find((v) => v.caseType === 'Evenement melding');
+function MockVergunningDetail({ identifier }: { identifier: string }) {
+  const vergunning = content.find((v) => v.identifier === identifier);
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
     title: slug(vergunning?.caseType, {
       lower: true,
@@ -38,7 +37,7 @@ describe('<VergunningDetail />', () => {
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
-  let Component = () => (
+  return (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
@@ -46,9 +45,37 @@ describe('<VergunningDetail />', () => {
       initializeState={state(testState)}
     />
   );
+}
 
-  it('Matches the Full Page snapshot', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+describe('<VergunningDetail />', () => {
+  beforeAll(() => {
+    (window as any).scrollTo = jest.fn();
+  });
+
+  describe('<EvenementMelding />', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/000/000003" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('<Flyeren />', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1597501" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('<GPP />', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/000/000009" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });
