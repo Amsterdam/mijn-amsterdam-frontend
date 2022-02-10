@@ -127,8 +127,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     params.set('filters', filtersStr);
     params.set('loadingFeature', JSON.stringify(loadingFeature));
 
-    if (queryConfig?.markerLocation) {
-      params.set('markerLocation', JSON.stringify(queryConfig.markerLocation));
+    if (queryConfig?.centerMarker) {
+      params.set('centerMarker', JSON.stringify(queryConfig.centerMarker));
     }
 
     if (queryConfig?.bbox) {
