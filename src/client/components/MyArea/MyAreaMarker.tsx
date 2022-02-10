@@ -72,6 +72,9 @@ function MyAreaMarker({
           }
         );
     }
+    return () => {
+      markerInstance?.unbindTooltip();
+    };
   }, [markerInstance, label]);
 
   const latLng = useMemo(() => {
@@ -131,29 +134,23 @@ interface HomeIconMarkerProps {
   center: LatLngLiteral;
   label: string;
   zoom?: number;
-  updateCenter?: boolean;
 }
 
 export function CustomLatLonMarker({
   center,
   zoom = LOCATION_ZOOM,
   label = '',
-  updateCenter = true,
 }: HomeIconMarkerProps) {
   const mapRef = useMapRef();
 
   const doCenter = useCallback(() => {
-    if (!mapRef.current || !updateCenter) {
+    if (!mapRef.current) {
       return null;
     }
     if (mapRef.current.getCenter().lat !== center.lat) {
       mapRef.current.setView(center, zoom);
     }
-  }, [zoom, center, mapRef, updateCenter]);
-
-  useEffect(() => {
-    doCenter();
-  }, [doCenter]);
+  }, [zoom, center, mapRef]);
 
   return (
     <MyAreaMarker

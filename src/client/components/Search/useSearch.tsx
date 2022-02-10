@@ -2,7 +2,7 @@ import { ExternalLink } from '@amsterdam/asc-assets';
 import axios from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   atom,
@@ -194,17 +194,23 @@ interface BagSearchResult {
 
 function transformSearchBagresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.results)) {
-    return responseData.results.slice(0, 5).map((address: BagSearchResult) => ({
-      displayTitle: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-      keywords: [address.adres, 'bag'],
-      description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-      url: `/buurt?zoom=12&markerLocation=${encodeURIComponent(
-        JSON.stringify({ lat: address.centroid[1], lng: address.centroid[0] })
-      )}`,
-      trailingIcon: (
-        <IconMarker width="14" height="14" className={styles.ExternalUrl} />
-      ),
-    }));
+    return responseData.results.slice(0, 5).map((address: BagSearchResult) => {
+      const displayTitle = `${address.adres} ${address.postcode} ${address.woonplaats}`;
+      return {
+        displayTitle,
+        keywords: [address.adres, 'bag'],
+        description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
+        url: `/buurt?zoom=12&centerMarker=${encodeURIComponent(
+          JSON.stringify({
+            latlng: { lat: address.centroid[1], lng: address.centroid[0] },
+            label: displayTitle,
+          })
+        )}`,
+        trailingIcon: (
+          <IconMarker width="14" height="14" className={styles.ExternalUrl} />
+        ),
+      };
+    });
   }
 
   return [];
