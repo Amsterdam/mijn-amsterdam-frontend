@@ -84,6 +84,13 @@ describe('<VergunningDetail />', () => {
       );
       expect(asFragment()).toMatchSnapshot();
     });
+
+    it('should match the full page snapshot for the status received variant', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1597712" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('<GPP />', () => {
