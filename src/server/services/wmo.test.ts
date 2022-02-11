@@ -1,5 +1,14 @@
-import { WmoApiItem } from '.';
-import { transformWmoResponse } from './wmo';
+import {
+  hasFutureDate,
+  hasHistoricDate,
+  isServiceDeliveryStarted,
+  WmoApiItem,
+} from '.';
+import {
+  isServiceDeliveryActive,
+  isServiceDeliveryStopped,
+  transformWmoResponse,
+} from './wmo';
 
 const apiTestItems: WmoApiItem[] = [
   {
@@ -177,5 +186,116 @@ describe('Transform api items', () => {
   test('All transformations', () => {
     let transformed = transformWmoResponse(apiTestItems, compareDate);
     expect(transformed).toMatchSnapshot();
+  });
+
+  test('hasFutureDate', () => {
+    expect(hasFutureDate('2020-01-01', compareDate)).toBe(false);
+    expect(hasFutureDate('2023-01-01', compareDate)).toBe(true);
+    expect(hasFutureDate(null, compareDate)).toBe(false);
+  });
+
+  test('hasHistoricDate', () => {
+    expect(hasHistoricDate('2020-01-01', compareDate)).toBe(true);
+    expect(hasHistoricDate('2023-01-01', compareDate)).toBe(false);
+    expect(hasHistoricDate(null, compareDate)).toBe(false);
+  });
+
+  test('isServiceDeliveryStarted', () => {
+    expect(
+      isServiceDeliveryStarted(
+        { serviceDateStart: null } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+    expect(
+      isServiceDeliveryStarted(
+        { serviceDateStart: '2020-01-01' } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(true);
+    expect(
+      isServiceDeliveryStarted(
+        { serviceDateStart: '2023-01-01' } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+  });
+
+  test('isServiceDeliveryStopped', () => {
+    expect(
+      isServiceDeliveryStopped(
+        { serviceDateEnd: null } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+    expect(
+      isServiceDeliveryStopped(
+        { serviceDateEnd: '2020-01-01' } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(true);
+    expect(
+      isServiceDeliveryStopped(
+        { serviceDateEnd: '2023-01-01' } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+  });
+
+  test('isServiceDeliveryActive', () => {
+    expect(
+      isServiceDeliveryActive(
+        {
+          serviceDateEnd: null,
+          serviceDateStart: null,
+          isActual: true,
+        } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+
+    expect(
+      isServiceDeliveryActive(
+        {
+          serviceDateEnd: '2020-01-01',
+          serviceDateStart: '2019-01-01',
+          isActual: true,
+        } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+
+    expect(
+      isServiceDeliveryActive(
+        {
+          serviceDateEnd: '2023-01-01',
+          serviceDateStart: '2022-12-01',
+          isActual: true,
+        } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+
+    expect(
+      isServiceDeliveryActive(
+        {
+          serviceDateEnd: '2023-01-01',
+          serviceDateStart: '2020-01-01',
+          isActual: false,
+        } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(false);
+
+    expect(
+      isServiceDeliveryActive(
+        {
+          serviceDateEnd: '2023-01-01',
+          serviceDateStart: '2020-01-01',
+          isActual: true,
+        } as WmoApiItem,
+        compareDate
+      )
+    ).toBe(true);
   });
 });

@@ -54,29 +54,44 @@ export interface WmoItem {
   voorzieningsoortcode: WmoApiItem['itemTypeCode'];
 }
 
-function hasFutureDate(dateStr: string | Date | null, compareDate: Date) {
+export function hasFutureDate(
+  dateStr: string | Date | null,
+  compareDate: Date
+) {
   if (dateStr === null) {
     return false;
   }
   return !isDateInPast(dateStr, compareDate);
 }
 
-function hasHistoricDate(dateStr: string | Date | null, compareDate: Date) {
+export function hasHistoricDate(
+  dateStr: string | Date | null,
+  compareDate: Date
+) {
   if (dateStr === null) {
     return false;
   }
   return isDateInPast(dateStr, compareDate);
 }
 
-function isServiceDeliveryStarted(sourceData: WmoApiItem, compareDate: Date) {
+export function isServiceDeliveryStarted(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
   return hasHistoricDate(sourceData.serviceDateStart, compareDate);
 }
 
-function isServiceDeliveryStopped(sourceData: WmoApiItem, compareDate: Date) {
+export function isServiceDeliveryStopped(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
   return hasHistoricDate(sourceData.serviceDateEnd, compareDate);
 }
 
-function isServiceDeliveryActive(sourceData: WmoApiItem, compareDate: Date) {
+export function isServiceDeliveryActive(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
   return (
     sourceData.isActual &&
     isServiceDeliveryStarted(sourceData, compareDate) &&
