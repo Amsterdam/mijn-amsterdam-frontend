@@ -183,19 +183,22 @@ export const BffEndpoints = {
   SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
   SERVICES_ALL: '/services/all',
   SERVICES_STREAM: '/services/stream',
-  HEALTH: '/status/health',
-  CMS_CONTENT: '/public/services/cms',
-  CMS_MAINTENANCE_NOTIFICATIONS:
-    '/public/services/cms/maintenance-notifications',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
-  CACHE_OVERVIEW: '/status/cache',
   API_DIRECT: '/direct/:apiName',
   SEARCH_CONFIG: '/services/search-config',
+  // Public endpoints
+  PUBLIC_OIDC_LOGIN: '/bff/public/login',
+  PUBLIC_OIDC_LOGOUT: '/bff/public/logout',
+  PUBLIC_CMS_CONTENT: '/public/services/cms',
+  PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
+    '/public/services/cms/maintenance-notifications',
+  PUBLIC_CACHE_OVERVIEW: '/status/cache',
+  PUBLIC_HEALTH: '/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
-  BffEndpoints.HEALTH,
-  BffEndpoints.CMS_CONTENT,
-  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.CACHE_OVERVIEW,
+  BffEndpoints.PUBLIC_HEALTH,
+  BffEndpoints.PUBLIC_CMS_CONTENT,
+  BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
+  BffEndpoints.PUBLIC_CACHE_OVERVIEW,
 ];

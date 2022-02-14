@@ -19,8 +19,34 @@ export const IS_IRMA_PATH_MATCH =
   /\/(test-)?api2(-|\/)login/g.test(window.location.pathname) ||
   Cookies.get(COOKIE_KEY_AUTH_TYPE) === AuthType.IRMA;
 
+const API_BASE_PATH_MODDED =
+  API_BASE_PATH +
+  (IS_COMMERCIAL_PATH_MATCH ? '1' : IS_IRMA_PATH_MATCH ? '2' : '');
+
+export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
+export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
+export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
+export const LOGOUT_URL = '/logout';
+
+export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoners`;
+export const BFF_API_PUBLIC_BASE_URL = !IS_AP
+  ? `http://localhost:5000/bff/public`
+  : `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/bff/public`;
+
+export const BFFApiUrls = {
+  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
+  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
+  MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
+  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
+  SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
+  SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
+  SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
+};
+
 // Urls directly used from front-end
-export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
+// export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
+export const TMA_LOGIN_URL_DIGID = `${BFF_API_PUBLIC_BASE_URL}/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
 export const TMA_LOGIN_URL_IRMA = `${API_BASE_PATH}2/login`;
 
@@ -37,31 +63,6 @@ export const TMA_LOGIN_URL_IRMA_AFTER_REDIRECT = IS_AP
 export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 export const LOGIN_URL_IRMA = TMA_LOGIN_URL_IRMA;
-
-const API_BASE_PATH_MODDED =
-  API_BASE_PATH +
-  (IS_COMMERCIAL_PATH_MATCH ? '1' : IS_IRMA_PATH_MATCH ? '2' : '');
-
-export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
-export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
-export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
-export const LOGOUT_URL = '/logout';
-
-export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoners`;
-export const BFF_API_PUBLIC_BASE_URL = !IS_AP
-  ? `http://localhost:5000/test-api/bff/public`
-  : `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/bff/public`;
-
-export const BFFApiUrls = {
-  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
-  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
-  MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
-  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
-  SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
-  SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
-  SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
-};
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',

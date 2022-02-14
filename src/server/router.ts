@@ -159,7 +159,7 @@ router.get(
 );
 
 router.get(
-  BffEndpoints.CACHE_OVERVIEW,
+  BffEndpoints.PUBLIC_CACHE_OVERVIEW,
   async (req: Request, res: Response, next: NextFunction) => {
     const overview = await cacheOverview();
     res.json(overview);
@@ -168,14 +168,14 @@ router.get(
 );
 
 router.get(
-  BffEndpoints.HEALTH,
+  BffEndpoints.PUBLIC_HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
     res.json({ status: 'OK' });
     next();
   }
 );
 
-router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
+router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
   const sessionID = res.locals.sessionID;
   try {
     const response = await fetchCMSCONTENT(
@@ -191,7 +191,7 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
 });
 
 router.get(
-  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
+  BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {

@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -10,15 +10,15 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
+import { auth, ConfigParams } from 'express-openid-connect';
+import morgan from 'morgan';
+import { UserTpe } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT } from './config';
-import { clearSession, exitEarly, send404, sessionID } from './helpers/app';
+import { BffEndpoints, BFF_BASE_PATH, BFF_PORT } from './config';
+import { clearSession, send404, sessionID } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
-import morgan from 'morgan';
-import { auth, ConfigParams } from 'express-openid-connect';
-import { UserTpe } from '../universal/config';
 
 dotenv.config({ path: `.env${!IS_AP ? '.local' : ''}` });
 
@@ -41,17 +41,24 @@ Sentry.init(sentryOptions);
 
 const oidcConfig: ConfigParams = {
   authRequired: false,
-  auth0Logout: true,
-  secret: process.env.OIDC_SECRET,
-  baseURL: process.env.OIDC_BASE_URL,
-  clientID: process.env.OIDC_CLIENT_ID,
-  issuerBaseURL: process.env.OIDC_ISSUER_BASE_URL,
+  auth0Logout: false,
+  secret: process.env.BFF_OIDC_SECRET,
+  baseURL: process.env.BFF_OIDC_BASE_URL,
+  clientID: process.env.BFF_OIDC_CLIENT_ID,
+  issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
-    postLogoutRedirect: process.env.REDIRECT_TO_AFTER_LOGOUT,
+    login: BffEndpoints.PUBLIC_OIDC_LOGIN,
+    logout: BffEndpoints.PUBLIC_OIDC_LOGOUT,
+    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
 
 const app = express();
+
+app.use((req, res, next) => {
+  console.log('before:', req.url);
+  next();
+});
 
 app.use(morgan('combined'));
 app.use(express.json());
@@ -63,7 +70,7 @@ app.use(cookieParser());
 app.use(compression());
 
 // Basic security measure
-app.use(exitEarly);
+// app.use(exitEarly);
 
 // Enable OIDC
 app.use(auth(oidcConfig));
@@ -91,7 +98,7 @@ app.get('/auth/check', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  return res.redirect(process.env.REDIRECT_TO_AFTER_LOGIN || '/auth/check');
+  return res.redirect(process.env.BFF_REDIRECT_TO_AFTER_LOGIN || '/auth/check');
 });
 
 // // Development routing for mock data
