@@ -20,28 +20,12 @@ export default function Parkeren() {
         {ChapterTitles.PARKEREN}
       </PageHeading>
       <PageContent>
-
         <p>
-          Alle informatie over parkeren in Amsterdam vind u op{' '}
-          <a
-            href="https://www.amsterdam.nl/parkeren-verkeer/"
-            rel="external noopener noreferrer"
-          >
-            Parkeren en verkeer
-          </a>
-          . Daar kunt u ook terecht voor informatie over fietskelders, laadpalen
-          voor elektrisch auto's en andere vragen die je hebt over parkeren of
-          vervoer.
-        </p>
-        <p>
-          Het aanvragen of wijzigen van een parkeervergunning kan in{' '}
-          <a
-            href="https://parkeervergunningen.amsterdam.nl/landing"
-            rel="external noopener noreferrer"
-          >
-            Mijn Parkeren
-          </a>{' '}
-          U moet wel opnieuw inloggen.
+          Alle informatie over parkeren in Amsterdam vindt u op amsterdam.nl.
+          Daar kunt u ook terecht voor informatie over fietskelders, laadpalen
+          voor elektrische auto's en andere vragen die u hebt over parkeren of
+          vervoer. Het aanvragen of wijzigen van een parkeervergunning voor
+          bewoners kan via Mijn Parkeren. U moet hier wel opnieuw inloggen.
         </p>
         <Linkd
           external={true}
@@ -52,9 +36,9 @@ export default function Parkeren() {
         <br />
         <Linkd
           external={true}
-          href="https://parkeervergunningen.amsterdam.nl/landing"
+          href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/"
         >
-          Log voor uw vergunning in op Mijn Parkeren
+          Lees hier meer over alle parkeervergunningen in Amsterdam
         </Linkd>
       </PageContent>
     </OverviewPage>
