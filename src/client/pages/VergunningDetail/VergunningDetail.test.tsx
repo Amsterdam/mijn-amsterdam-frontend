@@ -70,6 +70,29 @@ describe('<VergunningDetail />', () => {
     });
   });
 
+  describe('<AanbiedenDiensten />', () => {
+    it('should match the full page snapshot for multi date variant', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1597602" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should match the full page snapshot for single date variant', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1597471" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should match the full page snapshot for the status received variant', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1597712" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
   describe('<GPP />', () => {
     it('should match the full page snapshot', () => {
       const { asFragment } = render(
