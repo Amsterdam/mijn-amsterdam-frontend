@@ -79,7 +79,7 @@ const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 // Possible refresh token call here?
 
-app.get('/auth/check', (req, res) => {
+app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
   if (req.oidc.isAuthenticated()) {
     // TODO: Extract validity from token
     const now = new Date().getTime();
@@ -98,7 +98,9 @@ app.get('/auth/check', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  return res.redirect(process.env.BFF_REDIRECT_TO_AFTER_LOGIN || '/auth/check');
+  return res.redirect(
+    process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
+  );
 });
 
 // // Development routing for mock data

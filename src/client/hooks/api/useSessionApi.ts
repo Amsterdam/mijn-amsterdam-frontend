@@ -103,7 +103,7 @@ export function useSessionApi() {
   const [session, setSession] = useSessionAtom();
 
   const sessionValidMaxAge = getValidityInSeconds(
-    sessionData.validUntil || INITIAL_SESSION_CONTENT.validUntil
+    sessionData?.validUntil || INITIAL_SESSION_CONTENT.validUntil
   );
 
   const logoutSession = useCallback(() => {

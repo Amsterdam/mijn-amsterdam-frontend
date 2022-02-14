@@ -24,7 +24,6 @@ const API_BASE_PATH_MODDED =
   (IS_COMMERCIAL_PATH_MATCH ? '1' : IS_IRMA_PATH_MATCH ? '2' : '');
 
 export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
-export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
 
@@ -46,7 +45,7 @@ export const BFFApiUrls = {
 
 // Urls directly used from front-end
 // export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
-export const TMA_LOGIN_URL_DIGID = `${BFF_API_PUBLIC_BASE_URL}/login`;
+export const TMA_LOGIN_URL_DIGID = `${BFF_API_PUBLIC_BASE_URL}/auth/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
 export const TMA_LOGIN_URL_IRMA = `${API_BASE_PATH}2/login`;
 
@@ -63,6 +62,8 @@ export const TMA_LOGIN_URL_IRMA_AFTER_REDIRECT = IS_AP
 export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 export const LOGIN_URL_IRMA = TMA_LOGIN_URL_IRMA;
+
+export const AUTH_API_URL = `${BFF_API_PUBLIC_BASE_URL}/auth/check`;
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',
