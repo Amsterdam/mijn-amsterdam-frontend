@@ -154,7 +154,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
-    url: `${BFF_MS_API_BASE_URL}/subsidie/summary`,
+    url: `${BFF_MS_API_BASE_URL}/subsidies/summary`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {

@@ -158,6 +158,15 @@ export interface BZP extends VergunningBase {
   decision: string | null;
 }
 
+export interface Flyeren extends VergunningBase {
+  caseType: CaseType.Flyeren;
+  location: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  timeStart: string | null;
+  timeEnd: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -170,7 +179,8 @@ export type Vergunning =
   | BZP
   | Vakantieverhuur
   | BBVergunning
-  | VakantieverhuurVergunningaanvraag;
+  | VakantieverhuurVergunningaanvraag
+  | Flyeren;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];

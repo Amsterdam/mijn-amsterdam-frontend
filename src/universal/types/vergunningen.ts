@@ -11,4 +11,5 @@ export enum CaseType {
   BBVergunning = 'B&B - vergunning',
   BZP = 'Parkeerontheffingen Blauwe zone particulieren',
   BZB = 'Parkeerontheffingen Blauwe zone bedrijven',
+  Flyeren = 'Verspreiden reclamemateriaal (sampling)',
 }
