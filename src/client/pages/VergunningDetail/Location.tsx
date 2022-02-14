@@ -1,6 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { LOCATION_ZOOM } from '../../../universal/config';
+import { getOtapEnvItem, LOCATION_ZOOM } from '../../../universal/config';
 import {
   extractAddress,
   getLatLonByAddress,
@@ -36,7 +36,7 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
       const address = extractAddress(location);
       const isWeesp = isLocatedInWeesp(location);
       fetchBag({
-        url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}&features=2`, // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
+        url: `${getOtapEnvItem('bagUrl')}${address}`,
         transformResponse: (response) =>
           getLatLonByAddress(response?.results, address, isWeesp),
       });

@@ -1,19 +1,16 @@
 import { renderHook } from '@testing-library/react-hooks';
-import Fuse from 'fuse.js';
 import { ReactChildren } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Vergunning } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks';
-import * as remoteConfig from './search-config.json';
 import {
   ApiBaseItem,
   ApiSearchConfig,
   apiSearchConfigs,
   API_SEARCH_CONFIG_DEFAULT,
   displayPath,
-  SearchEntry,
 } from './searchConfig';
 import {
   generateSearchIndexPageEntries,
@@ -85,15 +82,6 @@ const krefiaData = {
     },
   },
 };
-
-function displayTitle(item?: SearchEntry, term: string = '') {
-  if (!item) {
-    return;
-  }
-  return typeof item.displayTitle === 'function'
-    ? item.displayTitle(term)
-    : displayPath(term, [item.displayTitle]);
-}
 
 describe('Search hooks and helpers', () => {
   afterEach(() => {

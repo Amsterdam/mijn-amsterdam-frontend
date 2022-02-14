@@ -28,11 +28,11 @@ describe('<Search />', () => {
       .reply(200, { content: remoteConfig });
 
     nock('https://api.data.amsterdam.nl')
-      .get('/atlas/search/adres/?q=gehandicaptenparkeerkaart')
+      .get('/atlas/search/adres/?features=2&q=gehandicaptenparkeerkaart')
       .reply(200, { results: [] })
-      .get('/atlas/search/adres/?q=Dashboard')
+      .get('/atlas/search/adres/?features=2&q=Dashboard')
       .reply(200, { results: [] })
-      .get('/atlas/search/adres/?q=weesperplein')
+      .get('/atlas/search/adres/?features=2&q=weesperplein')
       .reply(200, bagResponse);
 
     nock('https://api.swiftype.com')
