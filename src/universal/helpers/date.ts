@@ -1,14 +1,13 @@
 import {
+  differenceInDays,
+  differenceInMonths,
   format,
   formatDistanceToNow,
-  parseISO,
-  differenceInDays,
   isThisYear,
-  differenceInMonths,
+  parseISO,
 } from 'date-fns';
-
-import { DEFAULT_DATE_FORMAT } from '../config';
 import NL_LOCALE from 'date-fns/locale/nl';
+import { DEFAULT_DATE_FORMAT } from '../config';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {
@@ -50,7 +49,9 @@ export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
 
   return formattedTime;
 }
-
+/**
+ * Checks if date is a date is historic, today _is_ included.
+ */
 export function isDateInPast(date: string | Date, dateNow?: string | Date) {
   return new Date(date).getTime() <= new Date(dateNow || new Date()).getTime();
 }

@@ -191,12 +191,14 @@ describe('Transform api items', () => {
   test('hasFutureDate', () => {
     expect(hasFutureDate('2020-01-01', compareDate)).toBe(false);
     expect(hasFutureDate('2023-01-01', compareDate)).toBe(true);
+    expect(hasFutureDate(compareDate, compareDate)).toBe(false);
     expect(hasFutureDate(null, compareDate)).toBe(false);
   });
 
   test('hasHistoricDate', () => {
     expect(hasHistoricDate('2020-01-01', compareDate)).toBe(true);
     expect(hasHistoricDate('2023-01-01', compareDate)).toBe(false);
+    expect(hasHistoricDate(compareDate, compareDate)).toBe(true);
     expect(hasHistoricDate(null, compareDate)).toBe(false);
   });
 
