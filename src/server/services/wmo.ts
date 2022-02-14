@@ -134,7 +134,7 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, data) => true,
+        isChecked: () => true,
         isActive: (stepIndex, data) => data.isActual === true,
         description: (data) =>
           `
@@ -340,7 +340,7 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, sourceData: WmoApiItem) => true,
+        isChecked: () => true,
         isActive: (stepIndex, sourceData: WmoApiItem, today) =>
           !isServiceDeliveryStarted(sourceData, today),
         description: (data: WmoApiItem) => {
@@ -469,7 +469,7 @@ const Labels: {
         datePublished: () => '',
         isChecked: (stepIndex, sourceData, today: Date) =>
           isServiceDeliveryStarted(sourceData, today),
-        isActive: (stepIndex, sourceData, today: Date) => false, // This might change if we are going to use serviceOrderData
+        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om een ${data.title} aan u te leveren.
@@ -490,10 +490,8 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: (data) => (data.isActual ? '' : data.dateEnd) || '',
-        isChecked: (stepIndex, sourceData, today) =>
-          sourceData.isActual === false,
-        isActive: (stepIndex, sourceData, today) =>
-          sourceData.isActual === false,
+        isChecked: (stepIndex, sourceData) => sourceData.isActual === false,
+        isActive: (stepIndex, sourceData) => sourceData.isActual === false,
         description: (data) =>
           `<p>
             ${
@@ -540,7 +538,7 @@ const Labels: {
         datePublished: () => '',
         isChecked: (stepIndex, sourceData, today) =>
           isServiceDeliveryStarted(sourceData, today),
-        isActive: (stepIndex, sourceData, today: Date) => false, // This might change if we are going to use serviceOrderData
+        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om de aanpassingen aan uw woning uit
@@ -599,7 +597,7 @@ function formatWmoStatusLineItems(
   wmoItem: WmoApiItem,
   today: Date
 ): WmoItemStep[] {
-  const labelData = Object.values(Labels).find((labelData, index) => {
+  const labelData = Object.values(Labels).find((labelData) => {
     const type = wmoItem.deliveryType || '';
     return (
       labelData.deliveryType[type] &&
