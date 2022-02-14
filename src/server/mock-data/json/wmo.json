@@ -62,9 +62,22 @@
             "itemTypeCode": "WRA",
             "serviceDateEnd": null,
             "serviceDateStart": null,
+            "serviceOrderDate": null,
+            "supplier": "Welzorg",
+            "title": "woonruimteaanpassing (besluit / nog niet geleverd)"
+        },
+        {
+            "dateDecision": "2018-04-25",
+            "dateEnd": null,
+            "dateStart": "2018-04-06",
+            "deliveryType": "ZIN",
+            "isActual": true,
+            "itemTypeCode": "WRA",
+            "serviceDateEnd": null,
+            "serviceDateStart": null,
             "serviceOrderDate": "2018-04-26",
             "supplier": "Welzorg",
-            "title": "woonruimteaanpassing (nog niet geleverd)"
+            "title": "woonruimteaanpassing (opdracht gegeven)"
         },
         {
             "dateDecision": "2018-04-25",

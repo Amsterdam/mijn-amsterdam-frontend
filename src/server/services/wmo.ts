@@ -450,6 +450,7 @@ const Labels: {
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: (stepIndex, sourceData, today) =>
+          !hasHistoricDate(sourceData.serviceOrderDate, today) &&
           !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
@@ -468,8 +469,10 @@ const Labels: {
         status: 'Opdracht gegeven',
         datePublished: () => '',
         isChecked: (stepIndex, sourceData, today: Date) =>
-          isServiceDeliveryStarted(sourceData, today),
-        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
+          hasHistoricDate(sourceData.serviceOrderDate, today),
+        isActive: (stepIndex, sourceData, today) =>
+          hasHistoricDate(sourceData.serviceOrderDate, today) &&
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om een ${data.title} aan u te leveren.
@@ -519,6 +522,7 @@ const Labels: {
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: (stepIndex, sourceData, today) =>
+          !hasHistoricDate(sourceData.serviceOrderDate, today) &&
           !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
@@ -536,9 +540,11 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isChecked: (stepIndex, sourceData, today) =>
-          isServiceDeliveryStarted(sourceData, today),
-        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
+        isChecked: (stepIndex, sourceData, today: Date) =>
+          hasHistoricDate(sourceData.serviceOrderDate, today),
+        isActive: (stepIndex, sourceData, today) =>
+          hasHistoricDate(sourceData.serviceOrderDate, today) &&
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om de aanpassingen aan uw woning uit
