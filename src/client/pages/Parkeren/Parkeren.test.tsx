@@ -37,7 +37,7 @@ describe('Parkeren', () => {
 
     expect(
       screen.getByText(
-        'Log in op Mijn Parkeren voor uw parkeervergunnning voor bewoners'
+        'Lees hier meer over alle parkeervergunningen in Amsterdam'
       )
     ).toBeInTheDocument();
   });
