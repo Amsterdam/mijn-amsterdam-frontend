@@ -450,7 +450,8 @@ const Labels: {
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: (stepIndex, sourceData, today) =>
-          !hasHistoricDate(sourceData.serviceOrderDate, today),
+          !hasHistoricDate(sourceData.serviceOrderDate, today) &&
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
             <p>
@@ -521,7 +522,8 @@ const Labels: {
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: (stepIndex, sourceData, today) =>
-          !hasHistoricDate(sourceData.serviceOrderDate, today),
+          !hasHistoricDate(sourceData.serviceOrderDate, today) &&
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
             <p>
