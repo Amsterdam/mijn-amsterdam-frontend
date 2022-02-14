@@ -1,5 +1,4 @@
 import { generatePath } from 'react-router';
-import { hash } from '../../universal/helpers/utils';
 import { AppRoutes } from '../../universal/config';
 import {
   capitalizeFirstLetter,
@@ -7,6 +6,7 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../universal/helpers';
+import { hash } from '../../universal/helpers/utils';
 import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -15,13 +15,13 @@ import { requestData } from '../helpers';
 export interface WmoApiItem {
   title: string;
   dateStart: string;
-  dateEnd: string;
-  supplier: string;
+  dateEnd: string | null;
+  supplier: string | null;
   isActual: boolean;
   dateDecision: string;
-  serviceDateStart: string;
-  serviceDateEnd: string;
-  serviceOrderDate: string;
+  serviceDateStart: string | null;
+  serviceDateEnd: string | null;
+  serviceOrderDate: string | null;
   itemTypeCode: string;
   deliveryType: 'PGB' | 'ZIN' | '';
 }
@@ -47,15 +47,57 @@ export interface WmoItemStep {
 export interface WmoItem {
   id: string;
   title: string; // Omschrijving
-  supplier: string; // Leverancier
+  supplier: string | null; // Leverancier
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
   steps: WmoItemStep[];
   voorzieningsoortcode: WmoApiItem['itemTypeCode'];
 }
 
-function isDateInFuture(dateStr: string | Date, compareDate: Date) {
+export function hasFutureDate(
+  dateStr: string | Date | null,
+  compareDate: Date
+) {
+  if (dateStr === null) {
+    return false;
+  }
   return !isDateInPast(dateStr, compareDate);
+}
+
+export function hasHistoricDate(
+  dateStr: string | Date | null,
+  compareDate: Date
+) {
+  if (dateStr === null) {
+    return false;
+  }
+  return isDateInPast(dateStr, compareDate);
+}
+
+export function isServiceDeliveryStarted(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
+  return hasHistoricDate(sourceData.serviceDateStart, compareDate);
+}
+
+export function isServiceDeliveryStopped(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
+  return hasHistoricDate(sourceData.serviceDateEnd, compareDate);
+}
+
+export function isServiceDeliveryActive(
+  sourceData: WmoApiItem,
+  compareDate: Date
+) {
+  return (
+    sourceData.isActual &&
+    isServiceDeliveryStarted(sourceData, compareDate) &&
+    !isServiceDeliveryStopped(sourceData, compareDate) &&
+    !hasHistoricDate(sourceData.dateEnd, compareDate)
+  );
 }
 
 type TextPartContent = string;
@@ -92,7 +134,7 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === true,
+        isChecked: () => true,
         isActive: (stepIndex, data) => data.isActual === true,
         description: (data) =>
           `
@@ -110,7 +152,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd) || '',
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -118,9 +160,9 @@ const Labels: {
             ${
               data.isActual
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${
-                    data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                : `Uw recht op ${data.title} is beëindigd ${
+                    data.dateEnd ? `per ${defaultDateFormat(data.dateEnd)}` : ''
+                  }`
             }
           </p>`,
       },
@@ -159,7 +201,7 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === true,
+        isChecked: (stepIndex, data) => true,
         isActive: (stepIndex, data) => data.isActual === true,
         description: (data) =>
           `
@@ -176,7 +218,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd) || '',
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
@@ -185,9 +227,11 @@ const Labels: {
               ${
                 data.isActual
                   ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                  : `Uw recht op ${
-                      data.title
-                    } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                  : `Uw recht op ${data.title} is beëindigd ${
+                      data.dateEnd
+                        ? `per ${defaultDateFormat(data.dateEnd)}`
+                        : ''
+                    }`
               }
             </p>
             ${
@@ -222,7 +266,7 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === true,
+        isChecked: (stepIndex, data) => true,
         isActive: (stepIndex, data) => data.isActual === true,
         description: (data) =>
           `
@@ -248,9 +292,11 @@ const Labels: {
               ${
                 data.isActual
                   ? `Op deze datum vervalt uw recht op ${data.title}.`
-                  : `Uw recht op ${
-                      data.title
-                    } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                  : `Uw recht op ${data.title} is beëindigd ${
+                      data.dateEnd
+                        ? `per ${defaultDateFormat(data.dateEnd)}`
+                        : ''
+                    }`
               }
             </p>
 
@@ -294,8 +340,9 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
-        isChecked: (stepIndex, sourceData: WmoApiItem) => true,
-        isActive: (stepIndex, sourceData: WmoApiItem) => false,
+        isChecked: () => true,
+        isActive: (stepIndex, sourceData: WmoApiItem, today) =>
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data: WmoApiItem) => {
           return `
               <p>
@@ -337,11 +384,9 @@ const Labels: {
         status: 'Levering gestart',
         datePublished: () => '',
         isChecked: (stepIndex, sourceData: WmoApiItem, today: Date) =>
-          sourceData.isActual === false ||
-          isDateInPast(sourceData.dateEnd, today),
+          isServiceDeliveryStarted(sourceData, today),
         isActive: (stepIndex, sourceData: WmoApiItem, today: Date) =>
-          sourceData.isActual === true &&
-          isDateInFuture(sourceData.dateEnd, today),
+          isServiceDeliveryActive(sourceData, today),
         description: (data) =>
           `<p>
             ${data.supplier} is gestart met het leveren van ${data.title}.
@@ -351,9 +396,12 @@ const Labels: {
         status: 'Levering gestopt',
         datePublished: () => '',
         isChecked: (stepIndex, sourceData: WmoApiItem, today: Date) =>
-          sourceData.isActual === false ||
-          isDateInPast(sourceData.dateEnd, today),
-        isActive: (stepIndex, sourceData: WmoApiItem) => false,
+          isServiceDeliveryStopped(sourceData, today) ||
+          hasHistoricDate(sourceData.dateEnd, today),
+        isActive: (stepIndex, sourceData: WmoApiItem, today) =>
+          sourceData.isActual &&
+          isServiceDeliveryStopped(sourceData, today) &&
+          !sourceData.dateEnd,
         description: (data) =>
           `<p>
             ${
@@ -367,19 +415,23 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: (data, today) =>
-          isDateInFuture(data.dateEnd, today) ? '' : data.dateEnd,
-        isChecked: () => false,
-        isActive: (stepIndex, sourceData: WmoApiItem, today: Date) =>
+          (hasFutureDate(data.dateEnd, today) ? '' : data.dateEnd) || '',
+        isChecked: (stepIndex, sourceData, today) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateEnd, today),
-        description: (data, today) =>
+          hasHistoricDate(sourceData.dateEnd, today),
+        isActive: (stepIndex, sourceData, today) =>
+          sourceData.isActual === false ||
+          hasHistoricDate(sourceData.dateEnd, today),
+        description: (sourceData, today) =>
           `<p>
             ${
-              data.isActual && isDateInFuture(data.dateEnd, today)
+              sourceData.isActual && hasFutureDate(sourceData.dateEnd, today)
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${
-                    data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                : `Uw recht op ${sourceData.title} is beëindigd ${
+                    sourceData.dateEnd
+                      ? `per ${defaultDateFormat(sourceData.dateEnd)}`
+                      : ''
+                  }`
             }
           </p>`,
       },
@@ -397,7 +449,8 @@ const Labels: {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
-        isActive: () => false,
+        isActive: (stepIndex, sourceData, today) =>
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
             <p>
@@ -414,10 +467,9 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isChecked: (stepIndex, data, today: Date) =>
-          data.isActual === false || isDateInPast(data.serviceDateStart, today),
-        isActive: (stepIndex, data, today: Date) =>
-          data.isActual ? isDateInFuture(data.serviceDateStart, today) : false,
+        isChecked: (stepIndex, sourceData, today: Date) =>
+          isServiceDeliveryStarted(sourceData, today),
+        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om een ${data.title} aan u te leveren.
@@ -426,15 +478,10 @@ const Labels: {
       {
         status: 'Product geleverd',
         datePublished: () => '',
-        isChecked: (stepIndex, data, today) =>
-          data.isActual
-            ? isDateInPast(data.serviceDateStart, today)
-            : data.isActual === false,
-        isActive: (stepIndex, data, today: Date) => {
-          return data.isActual
-            ? isDateInPast(data.serviceDateStart, today)
-            : false;
-        },
+        isChecked: (stepIndex, sourceData, today) =>
+          isServiceDeliveryStarted(sourceData, today),
+        isActive: (stepIndex, sourceData, today: Date) =>
+          isServiceDeliveryActive(sourceData, today),
         description: (data) =>
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
@@ -442,9 +489,9 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isActive: (stepIndex, data) => data.isActual === false,
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd) || '',
+        isChecked: (stepIndex, sourceData) => sourceData.isActual === false,
+        isActive: (stepIndex, sourceData) => sourceData.isActual === false,
         description: (data) =>
           `<p>
             ${
@@ -471,7 +518,8 @@ const Labels: {
         status: 'Besluit',
         datePublished: (data) => data.dateDecision,
         isChecked: () => true,
-        isActive: () => false,
+        isActive: (stepIndex, sourceData, today) =>
+          !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
           `
             <p>
@@ -488,10 +536,9 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isChecked: (stepIndex, data, today: Date) =>
-          data.isActual === false || isDateInPast(data.serviceDateStart, today),
-        isActive: (stepIndex, data, today: Date) =>
-          data.isActual ? isDateInFuture(data.serviceDateStart, today) : false,
+        isChecked: (stepIndex, sourceData, today) =>
+          isServiceDeliveryStarted(sourceData, today),
+        isActive: () => false, // This might change if we are going to use sourceData.serviceOrderDate to determine a status here.
         description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.supplier} om de aanpassingen aan uw woning uit
@@ -501,9 +548,10 @@ const Labels: {
       {
         status: 'Aanpassing uitgevoerd',
         datePublished: () => '',
-        isChecked: (stepIndex, data) => data.isActual === true,
-        isActive: (stepIndex, data, today: Date) =>
-          data.isActual ? isDateInPast(data.serviceDateStart, today) : false,
+        isChecked: (stepIndex, sourceData, today) =>
+          isServiceDeliveryStarted(sourceData, today),
+        isActive: (stepIndex, sourceData, today) =>
+          isServiceDeliveryActive(sourceData, today),
         description: (data) =>
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat de
@@ -512,17 +560,18 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: (data) => (data.isActual ? '' : data.dateEnd),
-        isChecked: () => false,
-        isActive: (stepIndex, data) => data.isActual === false,
+        datePublished: (data) => (data.isActual ? '' : data.dateEnd) || '',
+        isChecked: (stepIndex, sourceData) => sourceData.isActual === false,
+        isActive: (stepIndex, sourceData, today) =>
+          sourceData.isActual === false,
         description: (data) =>
           `<p>
             ${
               data.isActual
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${
-                    data.title
-                  } is beëindigd per ${defaultDateFormat(data.dateEnd)}`
+                : `Uw recht op ${data.title} is beëindigd ${
+                    data.dateEnd ? `per ${defaultDateFormat(data.dateEnd)}` : ''
+                  }`
             }
           </p>`,
       },
@@ -532,13 +581,13 @@ const Labels: {
 
 function parseLabelContent(
   text: TextPartContents,
-  data: WmoApiItem,
+  sourceData: WmoApiItem,
   today: Date
 ): string {
   let rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(data, today);
+    return rText(sourceData, today);
   }
 
   return rText;
@@ -548,7 +597,7 @@ function formatWmoStatusLineItems(
   wmoItem: WmoApiItem,
   today: Date
 ): WmoItemStep[] {
-  const labelData = Object.values(Labels).find((labelData, index) => {
+  const labelData = Object.values(Labels).find((labelData) => {
     const type = wmoItem.deliveryType || '';
     return (
       labelData.deliveryType[type] &&
