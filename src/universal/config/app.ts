@@ -34,6 +34,7 @@ export const FeatureToggle = {
   erfpachtV2EndpointActive: true,
   subsidieActive: !IS_PRODUCTION,
   wiorMeldingen: !IS_PRODUCTION,
+  parkerenActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
