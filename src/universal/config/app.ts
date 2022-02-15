@@ -27,7 +27,7 @@ export const FeatureToggle = {
   aktesActive: !IS_AP,
   milieuzoneRecentCasesActive: !IS_AP,
   toeristischeVerhuurActive: true,
-  krefiaActive: !IS_PRODUCTION,
+  krefiaActive: true,
   isSearchEnabled: true,
   meldingenBuurtActive: !IS_PRODUCTION,
   inkomenBBZActive: true,
