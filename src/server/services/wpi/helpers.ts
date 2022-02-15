@@ -1,26 +1,26 @@
 import { differenceInMonths, format } from 'date-fns';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import { MyCase, StatusLine } from '../../../universal/types';
+import { MyCase } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as BijstandsuitkeringProcessLabels } from './content/bijstandsuitkering';
 import { requestProcess as StadspasProcessLabels } from './content/stadspas';
-import {
-  StatusItemRequestProcess,
-  WpiRequestProcess,
-  WpiRequestProcessLabels,
-} from './focus-types';
+import { WpiRequestProcess, WpiRequestProcessLabels } from './focus-types';
 
-export function transformToStatusLine<
-  T extends WpiRequestProcess,
-  L extends WpiRequestProcessLabels
->(requestProcess: T, labels: L): StatusLine {
+export function transformToStatusLine(
+  requestProcess: WpiRequestProcess,
+  labels: WpiRequestProcessLabels
+) {
   const steps = requestProcess.steps.map((statusStep) => {
     const description = labels[statusStep.id].description(
       requestProcess,
       statusStep
     );
+    const isActive = requestProcess.status === statusStep.id;
+    const isChecked = true;
     return {
       ...statusStep,
+      isActive,
+      isChecked,
       description,
     };
   });
@@ -31,17 +31,19 @@ export function transformToStatusLine<
   };
 }
 
-export function createFocusNotification(
-  requestProcess: StatusItemRequestProcess
-) {
+export function createFocusNotification(requestProcess: WpiRequestProcess) {
   const labels =
     requestProcess.title === 'Stadspas'
       ? StadspasProcessLabels
       : BijstandsuitkeringProcessLabels;
 
-  const stepsContent = labels[requestProcess.status].notification;
-  const titleTransform = stepsContent.title;
-  const descriptionTransform = stepsContent.description;
+  const requestStatus = requestProcess.steps.find(
+    (requestStatus) => requestStatus.id === requestProcess.status
+  )!; // Should always exist.
+
+  const notificationLabels = labels[requestProcess.status].notification;
+  const titleTransform = notificationLabels.title;
+  const descriptionTransform = notificationLabels.description;
 
   return {
     id: `${requestProcess.id}-notification`,
@@ -51,13 +53,12 @@ export function createFocusNotification(
         ? Chapters.STADSPAS
         : Chapters.INKOMEN,
     title: titleTransform
-      ? titleTransform(requestProcess, null)
+      ? titleTransform(requestProcess, requestStatus)
       : `Update: ${requestProcess.title} aanvraag.`,
     description: descriptionTransform
-      ? descriptionTransform(requestProcess, null)
+      ? descriptionTransform(requestProcess, requestStatus)
       : `U hebt updates over uw ${requestProcess.title}-aanvraag.`,
 
-    // TODO: Implement correct link
     link: {
       to: AppRoutes.INKOMEN,
       title: 'Bekijk hoe het met uw aanvraag staat',
@@ -65,11 +66,11 @@ export function createFocusNotification(
   };
 }
 
-export function createFocusRecentCase(item: StatusItemRequestProcess): MyCase {
+export function createFocusRecentCase(item: WpiRequestProcess): MyCase {
   return {
     id: `${item.id}-case`,
     title: item.title,
-    link: item.link,
+    link: { to: '', title: '' }, // TODO: Fix link
     chapter: Chapters.INKOMEN,
     datePublished: item.datePublished,
   };

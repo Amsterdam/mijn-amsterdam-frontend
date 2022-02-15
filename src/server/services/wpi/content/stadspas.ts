@@ -1,15 +1,7 @@
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { StadspasRequestProcessLabels } from '../focus-types';
+import { WpiRequestProcessLabels } from '../focus-types';
 
-export const requestProcess: StadspasRequestProcessLabels = {
-  link: (requestProcess) => ({
-    to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
-      id: requestProcess.id,
-    }),
-    title: 'Meer informatie',
-  }),
+export const requestProcess: WpiRequestProcessLabels = {
   aanvraag: {
     notification: {
       title: (requestProcess) =>

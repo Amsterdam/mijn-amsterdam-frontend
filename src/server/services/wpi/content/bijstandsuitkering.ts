@@ -1,5 +1,5 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { BijstandsuitkeringRequestProcessLabels } from '../focus-types';
+import { WpiRequestProcessLabels } from '../focus-types';
 
 export const FocusExternalUrls = {
   BijstandsUitkeringAanvragenRechten:
@@ -12,7 +12,7 @@ export const FocusExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
 };
 
-export const requestProcess: BijstandsuitkeringRequestProcessLabels = {
+export const requestProcess: WpiRequestProcessLabels = {
   aanvraag: {
     notification: {
       title: (requestProcess) =>
@@ -50,7 +50,7 @@ export const requestProcess: BijstandsuitkeringRequestProcessLabels = {
       `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór ${statusStep?.dateDecisionExpected} ons besluit.
+            nog extra informatie moet opsturen. U ontvangt vóór ${statusStep.dateDecisionExpected} ons besluit.
           </p>
           <p>
             Lees meer over uw
@@ -81,7 +81,7 @@ export const requestProcess: BijstandsuitkeringRequestProcessLabels = {
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór ${statusStep?.dateUserFeedbackExpected} opsturen. Dan ontvangt u
+            informatie vóór ${statusStep.dateUserFeedbackExpected} opsturen. Dan ontvangt u
             vóór ${statusStep?.dateDecisionExpected} ons besluit.
           </p>
           <p>

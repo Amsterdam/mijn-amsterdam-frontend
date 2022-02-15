@@ -14,18 +14,26 @@ import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
 import { WpiRequestProcess, WpiRequestProcessLabels } from './focus-types';
 import { transformToStatusLine } from './helpers';
 
+type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
+  response: ApiSuccessResponse<R>
+) => R;
+
 function fetchRequestProcess<R extends WpiRequestProcess>(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   apiConfigName: SourceApiKey,
-  labels: WpiRequestProcessLabels
+  labels: WpiRequestProcessLabels,
+  filterResponse: FilterResponse<any> = (response) => response.content
 ) {
   const response = requestData<StatusLine[]>(
     getApiConfig(apiConfigName, {
-      transformResponse: (response: ApiSuccessResponse<R[]>) =>
-        response.content.map((requestProcess) =>
-          transformToStatusLine(requestProcess, labels)
-        ),
+      transformResponse: [
+        filterResponse,
+        (response: R[]) =>
+          response.map((requestProcess) =>
+            transformToStatusLine(requestProcess, labels)
+          ),
+      ],
     }),
     sessionID,
     passthroughRequestHeaders
@@ -38,11 +46,17 @@ export function fetchBijstandsuitkering(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const filterResponse: FilterResponse = (response) =>
+    response.content.filter(
+      (requestProcess) => requestProcess.title === 'Bijstandsuitkering'
+    );
+
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
     'WPI_AANVRAGEN',
-    bijstandsuitkeringRequestProcessLabels
+    bijstandsuitkeringRequestProcessLabels,
+    filterResponse
   );
 }
 
@@ -50,15 +64,26 @@ export async function fetchStadspas(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const filterResponse: FilterResponse = (response) => {
+    console.log('response', response);
+    return response.content.filter(
+      (requestProcess) => requestProcess.title === 'Stadspas'
+    );
+  };
+
   const aanvragenRequest = fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
     'WPI_AANVRAGEN',
-    stadspasRequestProcessLabels
+    stadspasRequestProcessLabels,
+    filterResponse
   );
 
   const stadspassenRequest = requestData<StatusLine[]>(
-    getApiConfig('WPI_STADSPAS'),
+    getApiConfig('WPI_STADSPAS', {
+      transformResponse: (response: ApiSuccessResponse<any>) =>
+        response.content,
+    }),
     sessionID,
     passthroughRequestHeaders
   );
@@ -71,7 +96,7 @@ export async function fetchStadspas(
   // TODO: Fix partial errors
   return apiSuccesResult({
     aanvragen: aanvragenResult.content,
-    stadspassen: stadspassenResult.content,
+    ...stadspassenResult.content,
   });
 }
 
@@ -79,11 +104,20 @@ export function fetchTozo(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const filterResponse: FilterResponse = (response) => {
+    console.log('fetch tozo', response.content);
+    return response.content.filter((requestProcess) => {
+      console.log('req', requestProcess);
+      return requestProcess.title.startsWith('Tozo');
+    });
+  };
+
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
     'WPI_E_AANVRAGEN',
-    tozoRequestProcessLabels
+    tozoRequestProcessLabels,
+    filterResponse
   );
 }
 
@@ -91,11 +125,17 @@ export function fetchBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const filterResponse: FilterResponse = (response) =>
+    response.content.filter((requestProcess) =>
+      requestProcess.title.includes('Bbz')
+    );
+
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
     'WPI_E_AANVRAGEN',
-    bbzRequestProcessLabels
+    bbzRequestProcessLabels,
+    filterResponse
   );
 }
 
@@ -103,11 +143,17 @@ export function fetchTonk(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const filterResponse: FilterResponse = (response) =>
+    response.content.filter(
+      (requestProcess) => requestProcess.title === 'TONK'
+    );
+
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
     'WPI_E_AANVRAGEN',
-    tonkRequestProcessLabels
+    tonkRequestProcessLabels,
+    filterResponse
   );
 }
 
@@ -116,7 +162,10 @@ export function fetchSpecificaties(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const response = requestData<StatusLine[]>(
-    getApiConfig('WPI_SPECIFICATIES'),
+    getApiConfig('WPI_SPECIFICATIES', {
+      transformResponse: (response: ApiSuccessResponse<any>) =>
+        response.content,
+    }),
     sessionID,
     passthroughRequestHeaders
   );
@@ -124,6 +173,7 @@ export function fetchSpecificaties(
   return response;
 }
 
+// Notifications and Recent cases
 export function fetchBijstandsuitkeringGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>

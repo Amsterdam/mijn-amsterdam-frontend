@@ -1,8 +1,8 @@
-import { BbzRequestProcessLabels } from '../focus-types';
+import { WpiRequestStatusLabels } from '../focus-types';
 import { productName } from '../helpers';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
-const beslisTermijnLabels: BbzRequestProcessLabels['beslisTermijn'] = {
+const beslisTermijnLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess) => `${requestProcess.title}: Meer tijd nodig`,
     description: (requestProcess) =>
@@ -12,7 +12,7 @@ const beslisTermijnLabels: BbzRequestProcessLabels['beslisTermijn'] = {
     `<p>Wij hebben meer tijd nodig om uw aanvraag te behandelen. Bekijk de brief voor meer details.</p>`,
 };
 
-const akteLabels: BbzRequestProcessLabels['briefAkteBedrijfskapitaal'] = {
+const akteLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess) =>
       `${requestProcess.title}: Onderteken de akte voor bedrijfskapitaal`,
@@ -23,26 +23,22 @@ const akteLabels: BbzRequestProcessLabels['briefAkteBedrijfskapitaal'] = {
     `<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p>`,
 };
 
-const briefAdviesRapportLabels: BbzRequestProcessLabels['briefAdviesRapport'] =
-  {
-    notification: {
-      title: (requestProcess, statusStep) =>
-        `${requestProcess.title}: Meer informatie nodig`,
-      description: (requestProcess, statusStep) =>
-        `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
-    },
+const briefAdviesRapportLabels: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${requestProcess.title}: Meer informatie nodig`,
     description: (requestProcess, statusStep) =>
-      `<p>
+      `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
+  },
+  description: (requestProcess, statusStep) =>
+    `<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
       </p>`,
-  };
+};
 
-const bbzProcessAlias =
-  tozoRequestProcess as unknown as BbzRequestProcessLabels;
-
-const besluitLabels: BbzRequestProcessLabels['besluit'] = {
-  notification: bbzProcessAlias.besluit.notification,
+const besluitLabels: WpiRequestStatusLabels = {
+  notification: tozoRequestProcess.besluit.notification,
   description: (requestProcess, statusStep) => {
     switch (statusStep?.decision) {
       case 'toekenning':
@@ -67,19 +63,22 @@ const besluitLabels: BbzRequestProcessLabels['besluit'] = {
         </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       default:
-        return bbzProcessAlias.besluit.description(requestProcess, statusStep);
+        return tozoRequestProcess.besluit.description(
+          requestProcess,
+          statusStep
+        );
     }
   },
 };
 
-export const requestProcess: BbzRequestProcessLabels = {
-  aanvraag: bbzProcessAlias.aanvraag,
-  voorschot: bbzProcessAlias.voorschot,
-  herstelTermijn: bbzProcessAlias.herstelTermijn,
-  inkomstenwijziging: bbzProcessAlias.inkomstenwijziging,
-  terugvorderingsbesluit: bbzProcessAlias.terugvorderingsbesluit,
+export const requestProcess = {
+  aanvraag: tozoRequestProcess.aanvraag,
+  voorschot: tozoRequestProcess.voorschot,
+  herstelTermijn: tozoRequestProcess.herstelTermijn,
+  inkomstenwijziging: tozoRequestProcess.inkomstenwijziging,
+  terugvorderingsbesluit: tozoRequestProcess.terugvorderingsbesluit,
   besluit: besluitLabels,
-  intrekking: bbzProcessAlias.intrekking,
+  intrekking: tozoRequestProcess.intrekking,
   briefAdviesRapport: briefAdviesRapportLabels,
   briefAkteBedrijfskapitaal: akteLabels,
   beslisTermijn: beslisTermijnLabels,

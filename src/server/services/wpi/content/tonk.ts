@@ -1,9 +1,9 @@
 import { API_BASE_PATH } from '../../../../universal/config/api';
-import { TONKRequestProcessLabels } from '../focus-types';
+import { WpiRequestStatusLabels } from '../focus-types';
 import { documentDownloadName, productName } from '../helpers';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
-const weigeringVerlengingLabels: TONKRequestProcessLabels['briefWeigering'] = {
+const weigeringVerlengingLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess) => `${requestProcess.title}: Verlenging geweigerd`,
     description: (requestProcess, statusStep) =>
@@ -17,7 +17,7 @@ const weigeringVerlengingLabels: TONKRequestProcessLabels['briefWeigering'] = {
     `<p> U hebt uw ${requestProcess.title} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
-const correctieMailLabels: TONKRequestProcessLabels['correctiemail'] = {
+const correctieMailLabels: WpiRequestStatusLabels = {
   notification: {
     title: () => `Mail over verkeerde TONK-brief ontvangen`,
     description: () =>
@@ -38,10 +38,7 @@ const correctieMailLabels: TONKRequestProcessLabels['correctiemail'] = {
     `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
-const tonkProcessAlias =
-  tozoRequestProcess as unknown as TONKRequestProcessLabels;
-
-const besluitLabels: TONKRequestProcessLabels['besluit'] = {
+const besluitLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) => {
       switch (statusStep?.decision) {
@@ -52,7 +49,7 @@ const besluitLabels: TONKRequestProcessLabels['besluit'] = {
           return `${requestProcess.title}: Uw uitkering is verlengd`;
 
         default:
-          return tonkProcessAlias.besluit.notification.title(
+          return tozoRequestProcess.besluit.notification.title(
             requestProcess,
             statusStep
           );
@@ -75,7 +72,7 @@ const besluitLabels: TONKRequestProcessLabels['besluit'] = {
           )} is verlengd.`;
 
         default:
-          return tonkProcessAlias.besluit.notification.description(
+          return tozoRequestProcess.besluit.notification.description(
             requestProcess,
             statusStep
           );
@@ -98,16 +95,19 @@ const besluitLabels: TONKRequestProcessLabels['besluit'] = {
         )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       default:
-        return tonkProcessAlias.besluit.description(requestProcess, statusStep);
+        return tozoRequestProcess.besluit.description(
+          requestProcess,
+          statusStep
+        );
     }
   },
 };
 
-export const requestProcess: TONKRequestProcessLabels = {
-  aanvraag: tonkProcessAlias.aanvraag,
-  herstelTermijn: tonkProcessAlias.herstelTermijn,
+export const requestProcess = {
+  aanvraag: tozoRequestProcess.aanvraag,
+  herstelTermijn: tozoRequestProcess.herstelTermijn,
   besluit: besluitLabels,
-  intrekking: tonkProcessAlias.intrekking,
+  intrekking: tozoRequestProcess.intrekking,
   correctiemail: correctieMailLabels,
   briefWeigering: weigeringVerlengingLabels,
 };

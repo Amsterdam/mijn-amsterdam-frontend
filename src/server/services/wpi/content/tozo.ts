@@ -2,10 +2,10 @@ import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../universal/helpers';
-import { TozoRequestProcessLabels } from '../focus-types';
+import { WpiRequestStatusLabels } from '../focus-types';
 import { productName } from '../helpers';
 
-const aanvraagLabels: TozoRequestProcessLabels['aanvraag'] = {
+const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
       `Wij hebben uw aanvraag ${requestProcess.title} ontvangen`,
@@ -20,7 +20,7 @@ const aanvraagLabels: TozoRequestProcessLabels['aanvraag'] = {
       </p>`,
 };
 
-const voorschotLabels: TozoRequestProcessLabels['voorschot'] = {
+const voorschotLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) => {
       return `${requestProcess.title}: Wij hebben een voorschot betaald`;
@@ -35,7 +35,7 @@ const voorschotLabels: TozoRequestProcessLabels['voorschot'] = {
         </p>`,
 };
 
-const herstelTermijnLabels: TozoRequestProcessLabels['herstelTermijn'] = {
+const herstelTermijnLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
       `${requestProcess.title}: Meer informatie nodig`,
@@ -49,40 +49,38 @@ const herstelTermijnLabels: TozoRequestProcessLabels['herstelTermijn'] = {
       </p>`,
 };
 
-const inkomstenVerklaringLabels: TozoRequestProcessLabels['inkomstenwijziging'] =
-  {
-    notification: {
-      title: (requestProcess, statusStep) =>
-        `${requestProcess.title}: Wij hebben een wijziging van uw inkomsten ontvangen`,
-      description: (requestProcess, statusStep) =>
-        `Wij hebben een wijziging van uw inkomsten voor ${
-          requestProcess.title
-        } ontvangen op ${defaultDateTimeFormat(statusStep!.datePublished)}`,
-    },
+const inkomstenVerklaringLabels: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${requestProcess.title}: Wij hebben een wijziging van uw inkomsten ontvangen`,
     description: (requestProcess, statusStep) =>
-      `
+      `Wij hebben een wijziging van uw inkomsten voor ${
+        requestProcess.title
+      } ontvangen op ${defaultDateTimeFormat(statusStep!.datePublished)}`,
+  },
+  description: (requestProcess, statusStep) =>
+    `
     <p>Wij hebben een wijziging van uw inkomsten voor ${
       requestProcess.title
     } ontvangen op ${defaultDateTimeFormat(statusStep!.datePublished)}</p>
     <p>De wijziging wordt zo snel mogelijk verwerkt. Als u een nabetaling krijgt dan ziet u dat op uw uitkeringsspecificatie. Als u moet terugbetalen dan ontvangt u daarover een besluit per post.</p>`,
-  };
+};
 
-const terugvorderingLabels: TozoRequestProcessLabels['terugvorderingsbesluit'] =
-  {
-    notification: {
-      title: (requestProcess, statusStep) =>
-        `${requestProcess.title}: U moet (een deel van) uw uitkering terugbetalen.`,
-      description: (requestProcess, statusStep) =>
-        `U moet (een deel van) uw ${productName(
-          requestProcess,
-          statusStep,
-          false
-        )} terugbetalen. (besluit: ${defaultDateFormat(
-          statusStep!.datePublished
-        )}).`,
-    },
+const terugvorderingLabels: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${requestProcess.title}: U moet (een deel van) uw uitkering terugbetalen.`,
     description: (requestProcess, statusStep) =>
-      `<p>
+      `U moet (een deel van) uw ${productName(
+        requestProcess,
+        statusStep,
+        false
+      )} terugbetalen. (besluit: ${defaultDateFormat(
+        statusStep!.datePublished
+      )}).`,
+  },
+  description: (requestProcess, statusStep) =>
+    `<p>
     U moet (een deel van) uw ${productName(
       requestProcess,
       statusStep,
@@ -91,9 +89,9 @@ const terugvorderingLabels: TozoRequestProcessLabels['terugvorderingsbesluit'] =
     Bekijk de brief voor meer details.
     </p>
     <p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
-  };
+};
 
-const intrekkenLabels: TozoRequestProcessLabels['intrekking'] = {
+const intrekkenLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess) => `${requestProcess.title}: Aanvraag ingetrokken`,
     description: (requestProcess) =>
@@ -103,7 +101,7 @@ const intrekkenLabels: TozoRequestProcessLabels['intrekking'] = {
     `<p>U hebt uw ${requestProcess.title} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
-const besluitLabels: TozoRequestProcessLabels['besluit'] = {
+const besluitLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) => {
       switch (statusStep?.decision) {
@@ -177,7 +175,7 @@ const besluitLabels: TozoRequestProcessLabels['besluit'] = {
   },
 };
 
-export const requestProcess: TozoRequestProcessLabels = {
+export const requestProcess = {
   aanvraag: aanvraagLabels,
   voorschot: voorschotLabels,
   herstelTermijn: herstelTermijnLabels,
