@@ -1,9 +1,7 @@
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config';
 import { API_BASE_PATH } from '../../../../universal/config/api';
-import { documentDownloadName } from '../focus-specificaties';
 import { TONKRequestProcessLabels } from '../focus-types';
-import { productName, requestProcess as tozoRequestProcess } from './tozo';
+import { documentDownloadName, productName } from '../helpers';
+import { requestProcess as tozoRequestProcess } from './tozo';
 
 const weigeringVerlengingLabels: TONKRequestProcessLabels['briefWeigering'] = {
   notification: {
@@ -112,10 +110,4 @@ export const requestProcess: TONKRequestProcessLabels = {
   intrekking: tonkProcessAlias.intrekking,
   correctiemail: correctieMailLabels,
   briefWeigering: weigeringVerlengingLabels,
-  link: (requestProcess) => ({
-    to: generatePath(AppRoutes['INKOMEN/TONK'], {
-      id: requestProcess.id,
-    }),
-    title: 'Meer informatie',
-  }),
 };

@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+import { showDocuments } from '../../../universal/helpers/vergunningen';
+import { CaseType } from '../../../universal/types/vergunningen';
 import {
   Alert,
   ChapterIcon,
@@ -10,22 +12,20 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { AanbiedenDiensten } from './AanbiedenDiensten';
+import { BZB } from './BZB';
+import { BZP } from './BZP';
 import { DocumentDetails } from './DocumentDetails';
 import { ERVV } from './ERVV';
 import { EvenementMelding } from './EvenementMelding';
+import { EvenementVergunning } from './EvenementVergunning';
+import { Flyeren } from './Flyeren';
 import { GPK } from './GPK';
 import { GPP } from './GPP';
 import { Omzettingsvergunning } from './Omzettingsvergunning';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
-import { BZP } from './BZP';
-import { BZB } from './BZB';
-import { Flyeren } from './Flyeren';
-import { AanbiedenDiensten } from './AanbiedenDiensten';
 import styles from './VergunningDetail.module.scss';
-import { CaseType } from '../../../universal/types/vergunningen';
-import { EvenementVergunning } from './EvenementVergunning';
-import { showDocuments } from '../../../universal/helpers/vergunningen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();

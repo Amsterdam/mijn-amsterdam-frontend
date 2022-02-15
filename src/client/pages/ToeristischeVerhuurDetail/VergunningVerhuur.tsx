@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-
 import type {
   ToeristischeVerhuurBBVergunning,
   ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
+import { CaseType } from '../../../universal/types/vergunningen';
 import { PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
@@ -13,9 +13,8 @@ import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 import { Location } from '../VergunningDetail/Location';
-import { CaseType } from '../../../universal/types/vergunningen';
+import styles from './ToeristischeVerhuurDetail.module.scss';
 
 function useStatusLineItems(
   vergunning?:

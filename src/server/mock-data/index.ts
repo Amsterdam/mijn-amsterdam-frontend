@@ -10,8 +10,8 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
-import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
-import FOCUS_COMBINED from './json/focus-combined.json';
+import WPI_AANVRAGEN from './json/focus-aanvragen.json';
+import WPI_COMBINED from './json/focus-combined.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
@@ -90,23 +90,23 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WMO);
     },
   },
-  [ApiUrls.FOCUS_AANVRAGEN]: {
+  [ApiUrls.WPI_AANVRAGEN]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 3400,
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(FOCUS_AANVRAGEN);
+      return await loadMockApiResponseJson(WPI_AANVRAGEN);
     },
   },
-  [ApiUrls.FOCUS_COMBINED]: {
+  [ApiUrls.WPI_COMBINED]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(FOCUS_COMBINED);
+      return await loadMockApiResponseJson(WPI_COMBINED);
     },
   },
   [ApiUrls.ERFPACHT]: {

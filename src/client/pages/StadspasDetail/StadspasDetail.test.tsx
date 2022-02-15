@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
@@ -8,7 +7,7 @@ import MockApp from '../MockApp';
 import StadspasDetail from './StadspasDetail';
 
 const testState: any = {
-  FOCUS_STADSPAS: {
+  WPI_STADSPAS: {
     content: {
       type: 'hoofdpashouder',
       stadspassen: [
@@ -70,7 +69,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<StadspasDetail />', () => {
   const routeEntry = generatePath(AppRoutes['STADSPAS/SALDO'], {
-    id: testState.FOCUS_STADSPAS.content.stadspassen[0].id,
+    id: testState.WPI_STADSPAS.content.stadspassen[0].id,
   });
   const routePath = AppRoutes['STADSPAS/SALDO'];
 

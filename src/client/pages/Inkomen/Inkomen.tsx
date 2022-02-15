@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
+import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -52,20 +52,15 @@ const decisionsDisplayProps = {
 };
 
 export default function Inkomen() {
-  const {
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    FOCUS_TONK,
-    FOCUS_BBZ,
-  } = useAppStateGetter();
+  const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
+    useAppStateGetter();
 
   const focusSpecificatiesWithDocumentLinks =
-    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
-  const aanvragen = FOCUS_AANVRAGEN.content;
-  const tozoItems = FOCUS_TOZO.content;
-  const tonkItems = FOCUS_TONK.content;
-  const bbzItems = FOCUS_BBZ.content;
+    useAddDocumentLinkComponents(WPI_SPECIFICATIES);
+  const aanvragen = WPI_AANVRAGEN.content;
+  const tozoItems = WPI_TOZO.content;
+  const tonkItems = WPI_TONK.content;
+  const bbzItems = WPI_BBZ.content;
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
@@ -104,11 +99,11 @@ export default function Inkomen() {
   const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
 
   const isLoadingFocus =
-    isLoading(FOCUS_AANVRAGEN) ||
-    isLoading(FOCUS_TOZO) ||
-    isLoading(FOCUS_TONK) ||
-    isLoading(FOCUS_BBZ);
-  const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
+    isLoading(WPI_AANVRAGEN) ||
+    isLoading(WPI_TOZO) ||
+    isLoading(WPI_TONK) ||
+    isLoading(WPI_BBZ);
+  const isLoadingFocusSpecificaties = isLoading(WPI_SPECIFICATIES);
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
@@ -136,10 +131,10 @@ export default function Inkomen() {
           </Linkd>
         </p>
         <MaintenanceNotifications page="inkomen" />
-        {(isError(FOCUS_AANVRAGEN) ||
-          isError(FOCUS_SPECIFICATIES) ||
-          isError(FOCUS_TOZO) ||
-          isError(FOCUS_TONK)) && (
+        {(isError(WPI_AANVRAGEN) ||
+          isError(WPI_SPECIFICATIES) ||
+          isError(WPI_TOZO) ||
+          isError(WPI_TONK)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

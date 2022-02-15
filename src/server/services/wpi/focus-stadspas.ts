@@ -59,21 +59,21 @@ export async function fetchStadspasSaldoGenerated(
     },
   });
 
-  const FOCUS_STADSPAS = await fetchStadspasSaldo(
+  const WPI_STADSPAS = await fetchStadspasSaldo(
     sessionID,
     passthroughRequestHeaders
   );
 
   const notifications: MyNotification[] = [];
 
-  if (FOCUS_STADSPAS.status === 'OK') {
-    const stadspas = FOCUS_STADSPAS.content.stadspassen.find((stadspas) =>
+  if (WPI_STADSPAS.status === 'OK') {
+    const stadspas = WPI_STADSPAS.content.stadspassen.find((stadspas) =>
       stadspas.budgets.some(
         (budget) => budget.balance >= BUDGET_NOTIFICATION_BALANCE_THRESHOLD
       )
     );
     const needsNotification = !!stadspas;
-    const isParent = FOCUS_STADSPAS.content.type !== 'kind';
+    const isParent = WPI_STADSPAS.content.type !== 'kind';
     const now = new Date();
     if (
       needsNotification &&

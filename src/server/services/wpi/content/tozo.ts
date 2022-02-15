@@ -1,21 +1,9 @@
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../universal/helpers';
 import { TozoRequestProcessLabels } from '../focus-types';
-
-export function productName(
-  requestProcess: { title: string },
-  statusStep: Nullable<{ productSpecific?: 'lening' | 'uitkering' }>,
-  includeArticle: boolean = true
-) {
-  const hasProductSpecific = !!statusStep?.productSpecific;
-  return `${hasProductSpecific && includeArticle ? 'de ' : ''}${
-    requestProcess.title // TODO: This will result in a long title, correct this with an about or productTitle property.
-  }${hasProductSpecific ? ` ${statusStep?.productSpecific}` : ''}`;
-}
+import { productName } from '../helpers';
 
 const aanvraagLabels: TozoRequestProcessLabels['aanvraag'] = {
   notification: {
@@ -197,10 +185,4 @@ export const requestProcess: TozoRequestProcessLabels = {
   terugvorderingsbesluit: terugvorderingLabels,
   besluit: besluitLabels,
   intrekking: intrekkenLabels,
-  link: (requestProcess) => ({
-    to: generatePath(AppRoutes['INKOMEN/TOZO'], {
-      id: requestProcess.id,
-    }),
-    title: 'Meer informatie',
-  }),
 };

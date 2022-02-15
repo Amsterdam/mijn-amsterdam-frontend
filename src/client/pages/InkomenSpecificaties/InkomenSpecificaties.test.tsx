@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
-
+import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import InkomenSpecificaties from './InkomenSpecificaties';
 import {
   FOCUSIncomeSpecificationSourceDataContent,
   transformFOCUSIncomeSpecificationsData,
 } from '../../../server/services';
-import userEvent from '@testing-library/user-event';
+import { AppRoutes } from '../../../universal/config';
 import { dateSort } from '../../../universal/helpers/date';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
+import InkomenSpecificaties from './InkomenSpecificaties';
 
 const sourceData = {
   jaaropgaven: [
@@ -153,7 +152,7 @@ const content = transformFOCUSIncomeSpecificationsData(
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, {
-    FOCUS_SPECIFICATIES: {
+    WPI_SPECIFICATIES: {
       content,
       status: 'OK',
     },

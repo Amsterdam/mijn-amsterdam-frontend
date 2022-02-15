@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
-import type { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
+import type { FocusStadspasBudget } from '../../../server/services/wpi/focus-combined';
+import type { FocusStadspasTransaction } from '../../../server/services/wpi/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   apiPristineResult,
@@ -12,6 +12,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
   Alert,
@@ -29,7 +30,6 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
-import displayAmount from '../../../universal/helpers/text';
 
 interface TransactionProps {
   value: number;
@@ -194,15 +194,15 @@ function StadspasBudget({
 }
 
 export default function StadspasDetail() {
-  const { FOCUS_STADSPAS } = useAppStateGetter();
+  const { WPI_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.stadspassen.find(
+    ? WPI_STADSPAS?.content?.stadspassen.find(
         (pass) => pass.id === parseInt(id, 10)
       )
     : null;
-  const isErrorStadspas = isError(FOCUS_STADSPAS);
-  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
+  const isErrorStadspas = isError(WPI_STADSPAS);
+  const isLoadingStadspas = isLoading(WPI_STADSPAS);
   const noContent = !stadspasItem;
 
   return (
@@ -221,7 +221,7 @@ export default function StadspasDetail() {
             Meer informatie over het Kindtegoed
           </Linkd>
         </p>
-        {(isErrorStadspas || (!isLoading(FOCUS_STADSPAS) && noContent)) && (
+        {(isErrorStadspas || (!isLoading(WPI_STADSPAS) && noContent)) && (
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen.{' '}

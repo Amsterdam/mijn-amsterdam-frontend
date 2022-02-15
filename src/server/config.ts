@@ -57,8 +57,10 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 export type SourceApiKey =
   | 'AUTH'
   | 'WMO'
-  | 'FOCUS_COMBINED'
-  | 'FOCUS_AANVRAGEN'
+  | 'WPI_E_AANVRAGEN'
+  | 'WPI_AANVRAGEN'
+  | 'WPI_SPECIFICATIES'
+  | 'WPI_STADSPAS'
   | 'BELASTINGEN'
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
@@ -87,11 +89,17 @@ export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   },
-  FOCUS_COMBINED: {
-    url: `${BFF_MS_API_BASE_URL}/focus/combined`,
+  WPI_E_AANVRAGEN: {
+    url: `${BFF_MS_API_BASE_URL}/wpi/e-aanvragen`,
   },
-  FOCUS_AANVRAGEN: {
-    url: `${BFF_MS_API_BASE_URL}/focus/aanvragen`,
+  WPI_AANVRAGEN: {
+    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+  },
+  WPI_SPECIFICATIES: {
+    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+  },
+  WPI_STADSPAS: {
+    url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
   },
   BELASTINGEN: {
     url: `${BFF_MS_API_BASE_URL}/belastingen/get`,

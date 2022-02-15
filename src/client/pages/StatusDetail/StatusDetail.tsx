@@ -3,7 +3,10 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
+import {
+  GenericDocument,
+  StatusLine,
+} from '../../../universal/types/App.types';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -13,21 +16,13 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
-  StatusLine,
+  StatusLine as StatusLineComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
-import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StatusDetail.module.scss';
 
-export interface StatusSourceItem {
-  id: string;
-  title: string;
-  productTitle?: string;
-  link: LinkProps;
-  steps: StatusLineItem[];
-  [key: string]: any;
-}
+export type StatusSourceItem = StatusLine;
 
 interface StatusDetailProps {
   chapter: Chapter;
@@ -129,7 +124,7 @@ export default function StatusDetail({
         {isStateLoading && <LoadingContent />}
       </PageContent>
       {!!(statusItem?.steps && statusItem.steps.length) && (
-        <StatusLine
+        <StatusLineComponent
           trackCategory={`${chapter} / ${statusItem?.productTitle} status`}
           statusLabel={
             typeof statusLabel === 'function'

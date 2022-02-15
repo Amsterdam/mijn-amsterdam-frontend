@@ -3,7 +3,7 @@ import { AppRoutes } from '../../../../universal/config/routes';
 import { defaultDateFormat } from '../../../../universal/helpers';
 import { StadspasRequestProcessLabels } from '../focus-types';
 
-export const StadspasProcessLabels: StadspasRequestProcessLabels = {
+export const requestProcess: StadspasRequestProcessLabels = {
   link: (requestProcess) => ({
     to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
       id: requestProcess.id,

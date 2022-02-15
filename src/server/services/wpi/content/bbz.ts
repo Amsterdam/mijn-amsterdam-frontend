@@ -1,7 +1,6 @@
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config';
 import { BbzRequestProcessLabels } from '../focus-types';
-import { productName, requestProcess as tozoRequestProcess } from './tozo';
+import { productName } from '../helpers';
+import { requestProcess as tozoRequestProcess } from './tozo';
 
 const beslisTermijnLabels: BbzRequestProcessLabels['beslisTermijn'] = {
   notification: {
@@ -39,7 +38,8 @@ const briefAdviesRapportLabels: BbzRequestProcessLabels['briefAdviesRapport'] =
       </p>`,
   };
 
-const bbzProcessAlias = tozoRequestProcess as BbzRequestProcessLabels;
+const bbzProcessAlias =
+  tozoRequestProcess as unknown as BbzRequestProcessLabels;
 
 const besluitLabels: BbzRequestProcessLabels['besluit'] = {
   notification: bbzProcessAlias.besluit.notification,
@@ -83,10 +83,4 @@ export const requestProcess: BbzRequestProcessLabels = {
   briefAdviesRapport: briefAdviesRapportLabels,
   briefAkteBedrijfskapitaal: akteLabels,
   beslisTermijn: beslisTermijnLabels,
-  link: (requestProcess) => ({
-    to: generatePath(AppRoutes['INKOMEN/BBZ'], {
-      id: requestProcess.id,
-    }),
-    title: 'Meer informatie',
-  }),
 };

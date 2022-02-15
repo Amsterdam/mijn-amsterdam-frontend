@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import type { ToeristischeVerhuur } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { PageContent } from '../../components';
@@ -9,8 +8,8 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 import { Location } from '../VergunningDetail/Location';
+import styles from './ToeristischeVerhuurDetail.module.scss';
 
 function useStatusLineItems(vergunning?: ToeristischeVerhuur) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {

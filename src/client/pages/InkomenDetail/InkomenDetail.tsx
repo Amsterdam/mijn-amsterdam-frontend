@@ -28,7 +28,7 @@ export function InkomenDetailTozo() {
   return (
     <StatusDetail
       chapter="INKOMEN"
-      stateKey="FOCUS_TOZO"
+      stateKey="WPI_TOZO"
       showToggleMore={false}
       pageContent={pageContent}
       maxStepCount={() => -1}
@@ -63,7 +63,7 @@ export function InkomenDetailTonk() {
   return (
     <StatusDetail
       chapter="INKOMEN"
-      stateKey="FOCUS_TONK"
+      stateKey="WPI_TONK"
       showToggleMore={false}
       pageContent={pageContent}
       maxStepCount={() => -1}
@@ -104,7 +104,7 @@ export function InkomenDetailBbz() {
   return (
     <StatusDetail
       chapter="INKOMEN"
-      stateKey="FOCUS_BBZ"
+      stateKey="WPI_BBZ"
       showToggleMore={false}
       pageContent={pageContent}
       maxStepCount={() => -1}
@@ -117,7 +117,7 @@ export function InkomenDetailBbz() {
   );
 }
 
-export const MAX_STEP_COUNT_FOCUS_REQUEST = 4;
+export const MAX_STEP_COUNT_WPI_REQUEST = 4;
 
 export function InkomenDetailUitkering() {
   const pageContent = useCallback((isLoading, inkomenItem) => {
@@ -140,11 +140,11 @@ export function InkomenDetailUitkering() {
   return (
     <StatusDetail
       chapter="INKOMEN"
-      stateKey="FOCUS_AANVRAGEN"
+      stateKey="WPI_AANVRAGEN"
       showToggleMore={true}
       pageContent={pageContent}
       maxStepCount={(hasDecision) =>
-        !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : undefined
+        !hasDecision ? MAX_STEP_COUNT_WPI_REQUEST : undefined
       }
       documentPathForTracking={(document) =>
         `/downloads/inkomen/bijstandsuitkering/${document.title}`

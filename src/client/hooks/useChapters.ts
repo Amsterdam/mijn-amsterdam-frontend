@@ -15,12 +15,12 @@ export function isChapterActive(
   item: ChapterMenuItem,
   {
     WMO,
-    FOCUS_SPECIFICATIES,
-    FOCUS_AANVRAGEN,
-    FOCUS_STADSPAS,
-    FOCUS_TOZO,
-    FOCUS_TONK,
-    FOCUS_BBZ,
+    WPI_SPECIFICATIES,
+    WPI_AANVRAGEN,
+    WPI_STADSPAS,
+    WPI_TOZO,
+    WPI_TONK,
+    WPI_BBZ,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -39,20 +39,20 @@ export function isChapterActive(
   switch (item.id) {
     case Chapters.INKOMEN:
       const { jaaropgaven, uitkeringsspecificaties } =
-        FOCUS_SPECIFICATIES?.content ?? {};
-      const hasAanvragen = FOCUS_AANVRAGEN?.content?.length;
-      const hasTozo = !!FOCUS_TOZO?.content?.length;
-      const hasTonk = !!FOCUS_TONK?.content?.length;
-      const hasBbz = !!FOCUS_BBZ?.content?.length;
+        WPI_SPECIFICATIES?.content ?? {};
+      const hasAanvragen = WPI_AANVRAGEN?.content?.length;
+      const hasTozo = !!WPI_TOZO?.content?.length;
+      const hasTonk = !!WPI_TONK?.content?.length;
+      const hasBbz = !!WPI_BBZ?.content?.length;
       const hasJaaropgaven = !!jaaropgaven?.length;
       const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
       return (
         !(
-          isLoading(FOCUS_AANVRAGEN) &&
-          isLoading(FOCUS_SPECIFICATIES) &&
-          isLoading(FOCUS_TOZO) &&
-          isLoading(FOCUS_TONK) &&
-          isLoading(FOCUS_BBZ)
+          isLoading(WPI_AANVRAGEN) &&
+          isLoading(WPI_SPECIFICATIES) &&
+          isLoading(WPI_TOZO) &&
+          isLoading(WPI_TONK) &&
+          isLoading(WPI_BBZ)
         ) &&
         (hasAanvragen ||
           hasTozo ||
@@ -63,12 +63,12 @@ export function isChapterActive(
       );
 
     case Chapters.STADSPAS:
-      const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
-      const hasStadspasAanvragen = !!FOCUS_AANVRAGEN?.content?.filter(
+      const hasStadspasSaldo = !!WPI_STADSPAS?.content?.stadspassen?.length;
+      const hasStadspasAanvragen = !!WPI_AANVRAGEN?.content?.filter(
         (aanvraag) => aanvraag.productTitle === 'Stadspas'
       )?.length;
       const isLoadingStadspas =
-        isLoading(FOCUS_STADSPAS) || isLoading(FOCUS_AANVRAGEN);
+        isLoading(WPI_STADSPAS) || isLoading(WPI_AANVRAGEN);
       return !isLoadingStadspas && (hasStadspasSaldo || hasStadspasAanvragen);
 
     case Chapters.ZORG:

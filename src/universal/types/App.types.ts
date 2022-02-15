@@ -73,3 +73,26 @@ export interface GenericDocument {
   type: string;
   datePublished: string;
 }
+
+export type AltDocumentContent = string | JSX.Element;
+
+export interface StatusLineItem {
+  id: string;
+  status: string;
+  datePublished: string;
+  description: string;
+  documents: GenericDocument[];
+  isActive?: boolean;
+  isChecked?: boolean;
+  altDocumentContent?: AltDocumentContent;
+  [key: string]: any;
+}
+
+export interface StatusLine {
+  id: string;
+  title: string;
+  productTitle?: string;
+  link: LinkProps;
+  steps: StatusLineItem[];
+  [key: string]: any;
+}

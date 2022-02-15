@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import StatusDetail, { StatusSourceItem } from './StatusDetail';
-import userEvent from '@testing-library/user-event';
 
 const testState: any = {
-  FOCUS_TOZO: {
+  WPI_TOZO: {
     status: 'OK',
     content: [
       {
@@ -77,7 +77,7 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={false}
           pageContent={pageContent}
           maxStepCount={() => -1}
@@ -107,7 +107,7 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
@@ -137,7 +137,7 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}

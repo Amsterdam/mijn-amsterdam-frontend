@@ -7,15 +7,15 @@ export interface RequestStatusDocument {
   datePublished: string;
 }
 
-interface RequestStatusBase<Id extends string, Title extends string> {
+interface RequestStatusBase<Id extends string> {
   id: Id;
-  title: Title;
+  title: string;
   documents: RequestStatusDocument[];
   datePublished: string;
 }
 
 export interface RequestProcess<
-  Status extends RequestStatusBase<string, string>,
+  Status extends RequestStatusBase<string>,
   DecisionId
 > {
   id: string;
@@ -33,12 +33,12 @@ export type TextPartContents<R, T> = (
   statusStep: Nullable<T>
 ) => string;
 
-export type LinkContents<R, T = RequestStatusBase<string, string>> = (
+export type LinkContents<R, T = RequestStatusBase<string>> = (
   requestProcess: R,
   statusStep: Nullable<T>
 ) => LinkProps;
 
-export interface RequestStatusLabels<R, T = RequestStatusBase<string, string>> {
+export interface RequestStatusLabels<R, T = RequestStatusBase<string>> {
   description: TextPartContents<R, T>;
   notification: {
     title: TextPartContents<R, T>;
@@ -57,103 +57,88 @@ type RequestStatusStep<R> = R & {
  */
 
 // Bijstandsuitkering + Stadspas
-export type AanvraagRequestProcess = RequestProcess<
-  AanvraagRequestStatus,
-  AanvraagDecisionId
+export type UitkeringRequestProcess = RequestProcess<
+  UitkeringRequestStatus,
+  UitkeringDecisionId
 >;
 
-export type AanvraagRequestStatusStep =
-  RequestStatusStep<AanvraagRequestStatus>;
+export type UitkeringRequestStatusStep =
+  RequestStatusStep<UitkeringRequestStatus>;
 
-export interface StatusItemRequestProcess extends AanvraagRequestProcess {
-  steps: AanvraagRequestStatusStep[];
-  link: LinkProps;
+export interface StatusItemRequestProcess extends UitkeringRequestProcess {
+  steps: UitkeringRequestStatusStep[];
 }
 
-export type AanvraagRequestStatusTitle =
-  | 'Aanvraag'
+export type UitkeringRequestStatusTitle =
+  | 'Uitkering'
   | 'Informatie nodig'
   | 'In behandeling'
   | 'Besluit';
 
-export type AanvraagRequestStatusId =
+export type UitkeringRequestStatusId =
   | 'aanvraag'
   | 'inBehandeling'
   | 'herstelTermijn'
   | 'besluit';
 
-export type AanvraagDecisionId =
+export type UitkeringDecisionId =
   | 'toekenning'
   | 'afwijzing'
   | 'buitenbehandeling';
 
-type AanvraagRequestStatusBase = RequestStatusBase<
-  AanvraagRequestStatusId,
-  AanvraagRequestStatusTitle
->;
+type UitkeringRequestStatusBase = RequestStatusBase<UitkeringRequestStatusId>;
 
-export interface AanvraagRequestStatusAanvraag
-  extends AanvraagRequestStatusBase {
+export interface UitkeringRequestStatusAanvraag
+  extends UitkeringRequestStatusBase {
   id: 'aanvraag';
 }
 
-export interface AanvraagRequestStatusInBehandeling
-  extends AanvraagRequestStatusBase {
+export interface UitkeringRequestStatusInBehandeling
+  extends UitkeringRequestStatusBase {
   id: 'inBehandeling';
   dateDecisionExpected: string;
 }
 
-export interface AanvraagRequestStatusHerstelTermijn
-  extends AanvraagRequestStatusBase {
+export interface UitkeringRequestStatusHerstelTermijn
+  extends UitkeringRequestStatusBase {
   id: 'herstelTermijn';
   dateDecisionExpected: string;
   dateUserFeedbackExpected: string;
 }
 
-export interface AanvraagRequestStatusDecision
-  extends AanvraagRequestStatusBase {
+export interface UitkeringRequestStatusDecision
+  extends UitkeringRequestStatusBase {
   id: 'besluit';
-  decision: AanvraagDecisionId;
+  decision: UitkeringDecisionId;
 }
 
-export type AanvraagRequestStatus =
-  | AanvraagRequestStatusAanvraag
-  | AanvraagRequestStatusInBehandeling
-  | AanvraagRequestStatusHerstelTermijn
-  | AanvraagRequestStatusDecision;
+export type UitkeringRequestStatus =
+  | UitkeringRequestStatusAanvraag
+  | UitkeringRequestStatusInBehandeling
+  | UitkeringRequestStatusHerstelTermijn
+  | UitkeringRequestStatusDecision;
 
 export interface BijstandsuitkeringRequestProcessLabels {
   aanvraag: RequestStatusLabels<
-    AanvraagRequestProcess,
-    AanvraagRequestStatusAanvraag
+    UitkeringRequestProcess,
+    UitkeringRequestStatusAanvraag
   >;
   inBehandeling: RequestStatusLabels<
-    AanvraagRequestProcess,
-    AanvraagRequestStatusInBehandeling
+    UitkeringRequestProcess,
+    UitkeringRequestStatusInBehandeling
   >;
   herstelTermijn: RequestStatusLabels<
-    AanvraagRequestProcess,
-    AanvraagRequestStatusHerstelTermijn
+    UitkeringRequestProcess,
+    UitkeringRequestStatusHerstelTermijn
   >;
   besluit: RequestStatusLabels<
-    AanvraagRequestProcess,
-    AanvraagRequestStatusDecision
+    UitkeringRequestProcess,
+    UitkeringRequestStatusDecision
   >;
-  link: LinkContents<AanvraagRequestProcess>;
 }
 
 export type StadspasRequestProcessLabels =
   BijstandsuitkeringRequestProcessLabels;
-
-// TOZO, BBZ, TONK
-export type TozoRequestStatusTitle =
-  | 'Aanvraag'
-  | 'Informatie nodig'
-  | 'Voorschot'
-  | 'Terugvorderings- besluit'
-  | 'Wijziging inkomsten'
-  | 'Brief'
-  | 'Besluit';
 
 export type TozoRequestStatusId =
   | 'aanvraag'
@@ -164,16 +149,13 @@ export type TozoRequestStatusId =
   | 'terugvorderingsbesluit'
   | 'inkomstenwijziging';
 
-export type TozoDecisionId = AanvraagDecisionId | 'vrijeBeschikking';
+export type TozoDecisionId = UitkeringDecisionId | 'vrijeBeschikking';
 
-type TozoRequestStatusBase = RequestStatusBase<
-  TozoRequestStatusId,
-  TozoRequestStatusTitle
-> & {
+type TozoRequestStatusBase = RequestStatusBase<TozoRequestStatusId> & {
   productSpecific?: 'uitkering' | 'lening';
 };
 
-export interface TozoRequestStatusAanvraag extends TozoRequestStatusBase {
+export interface TozoRequestStatusAanvraaag extends TozoRequestStatusBase {
   id: 'aanvraag';
 }
 
@@ -205,7 +187,7 @@ export interface TozoRequestStatusIntrekking extends TozoRequestStatusBase {
 }
 
 export type TozoRequestStatus =
-  | TozoRequestStatusAanvraag
+  | TozoRequestStatusAanvraaag
   | TozoRequestStatusVoorschot
   | TozoRequestStatusHerstelTermijn
   | TozoRequestStatusDecision
@@ -222,11 +204,10 @@ export type TozoRequestStatusStep = RequestStatusStep<TozoRequestStatus>;
 
 export interface StatusItemRequestProcessTozo extends TozoRequestProcess {
   steps: TozoRequestStatusStep[];
-  link: LinkProps;
 }
 
 export interface TozoRequestProcessLabels {
-  aanvraag: RequestStatusLabels<TozoRequestProcess, TozoRequestStatusAanvraag>;
+  aanvraag: RequestStatusLabels<TozoRequestProcess, TozoRequestStatusAanvraaag>;
   voorschot: RequestStatusLabels<
     TozoRequestProcess,
     TozoRequestStatusVoorschot
@@ -248,7 +229,6 @@ export interface TozoRequestProcessLabels {
     TozoRequestProcess,
     TozoRequestStatusIntrekking
   >;
-  link: LinkContents<TozoRequestProcess>;
 }
 
 // Bbz
@@ -258,18 +238,9 @@ export type BbzRequestStatusId =
   | 'briefAkteBedrijfskapitaal'
   | 'beslisTermijn';
 
-export type BbzRequestStatusTitle =
-  | TozoRequestStatusTitle
-  | 'Brief'
-  | 'Akte'
-  | 'Tijd nodig';
+export type BbzDecisionId = UitkeringDecisionId | 'toekenningVoorlopig'; // IOAZ
 
-export type BbzDecisionId = AanvraagDecisionId | 'toekenningVoorlopig'; // IOAZ
-
-type BbzRequestStatusBase = RequestStatusBase<
-  BbzRequestStatusId,
-  BbzRequestStatusTitle
-> & {
+type BbzRequestStatusBase = RequestStatusBase<BbzRequestStatusId> & {
   productSpecific?: 'uitkering' | 'lening';
 };
 
@@ -309,7 +280,6 @@ export interface BbzRequestProcessLabels
     | 'terugvorderingsbesluit'
     | 'inkomstenwijziging'
     | 'intrekking'
-    | 'link'
   > {
   briefAdviesRapport: RequestStatusLabels<
     BbzRequestProcess,
@@ -328,7 +298,7 @@ export interface BbzRequestProcessLabels
 
 // TONK
 export type TONKDecisionId =
-  | AanvraagDecisionId
+  | UitkeringDecisionId
   | 'verlenging'
   | 'mogelijkeVerlenging'; // TONK
 
@@ -337,12 +307,7 @@ export type TONKRequestStatusId =
   | 'correctiemail'
   | 'briefWeigering';
 
-export type TONKRequestStatusTitle = TozoRequestStatusTitle | 'Brief' | 'Mail';
-
-type TONKRequestStatusBase = RequestStatusBase<
-  TONKRequestStatusId,
-  TONKRequestStatusTitle
-> & {
+type TONKRequestStatusBase = RequestStatusBase<TONKRequestStatusId> & {
   productSpecific: 'uitkering';
 };
 
@@ -372,7 +337,7 @@ export type TONKRequestProcess = RequestProcess<
 export interface TONKRequestProcessLabels
   extends Pick<
     TozoRequestProcessLabels,
-    'aanvraag' | 'herstelTermijn' | 'intrekking' | 'link'
+    'aanvraag' | 'herstelTermijn' | 'intrekking'
   > {
   correctiemail: RequestStatusLabels<
     TONKRequestProcess,
@@ -384,3 +349,16 @@ export interface TONKRequestProcessLabels
   >;
   besluit: RequestStatusLabels<TONKRequestProcess, TONKRequestStatusDecision>;
 }
+
+export type WpiRequestProcess =
+  | UitkeringRequestProcess
+  | TozoRequestProcess
+  | BbzRequestProcess
+  | TONKRequestProcess;
+
+export type WpiRequestProcessLabels =
+  | BijstandsuitkeringRequestProcessLabels
+  | StadspasRequestProcessLabels
+  | TozoRequestProcessLabels
+  | BbzRequestProcessLabels
+  | TONKRequestProcessLabels;

@@ -1,5 +1,3 @@
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { defaultDateFormat } from '../../../../universal/helpers';
 import { BijstandsuitkeringRequestProcessLabels } from '../focus-types';
 
@@ -14,25 +12,18 @@ export const FocusExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
 };
 
-export const BijstandsuitkeringProcessLabels: BijstandsuitkeringRequestProcessLabels =
-  {
-    link: (requestProcess) => ({
-      to: generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
-        id: requestProcess.id,
-      }),
-      title: 'Meer informatie',
-    }),
-    aanvraag: {
-      notification: {
-        title: (requestProcess) =>
-          `${requestProcess.title}: Wij hebben uw aanvraag ontvangen`,
-        description: (requestProcess) =>
-          `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${defaultDateFormat(
-            requestProcess.dateStart
-          )}.`,
-      },
+export const requestProcess: BijstandsuitkeringRequestProcessLabels = {
+  aanvraag: {
+    notification: {
+      title: (requestProcess) =>
+        `${requestProcess.title}: Wij hebben uw aanvraag ontvangen`,
       description: (requestProcess) =>
-        `
+        `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${defaultDateFormat(
+          requestProcess.dateStart
+        )}.`,
+    },
+    description: (requestProcess) =>
+      `
           <p>U hebt op ${defaultDateFormat(
             requestProcess.dateStart
           )} een bijstandsuitkering aangevraagd.</p>
@@ -45,18 +36,18 @@ export const BijstandsuitkeringProcessLabels: BijstandsuitkeringRequestProcessLa
             </a>
           </p>
         `,
+  },
+  inBehandeling: {
+    notification: {
+      title: (requestProcess) =>
+        `${requestProcess.title}: Wij behandelen uw aanvraag`,
+      description: (requestProcess) =>
+        `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${defaultDateFormat(
+          requestProcess.datePublished
+        )}.`,
     },
-    inBehandeling: {
-      notification: {
-        title: (requestProcess) =>
-          `${requestProcess.title}: Wij behandelen uw aanvraag`,
-        description: (requestProcess) =>
-          `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${defaultDateFormat(
-            requestProcess.datePublished
-          )}.`,
-      },
-      description: (requestProcess, statusStep) =>
-        `
+    description: (requestProcess, statusStep) =>
+      `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
             nog extra informatie moet opsturen. U ontvangt vóór ${statusStep?.dateDecisionExpected} ons besluit.
@@ -77,16 +68,16 @@ export const BijstandsuitkeringProcessLabels: BijstandsuitkeringRequestProcessLa
             </a>
           </p>
         `,
+  },
+  herstelTermijn: {
+    notification: {
+      title: (requestProcess) =>
+        `${requestProcess.title}: Meer informatie nodig`,
+      description: (requestProcess) =>
+        'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
     },
-    herstelTermijn: {
-      notification: {
-        title: (requestProcess) =>
-          `${requestProcess.title}: Meer informatie nodig`,
-        description: (requestProcess) =>
-          'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
-      },
-      description: (requestProcess, statusStep) =>
-        `
+    description: (requestProcess, statusStep) =>
+      `
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
@@ -99,43 +90,43 @@ export const BijstandsuitkeringProcessLabels: BijstandsuitkeringRequestProcessLa
             wij verder kunnen met de behandeling van uw aanvraag.
           </p>
         `,
-    },
-    besluit: {
-      notification: {
-        title: (requestProcess) => {
-          switch (requestProcess.decision) {
-            case 'afwijzing':
-              return `${requestProcess.title}: Uw aanvraag is afgewezen`;
-            case 'toekenning':
-              return `${requestProcess.title}: Uw aanvraag is toegekend`;
-            case 'buitenbehandeling':
-              return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
-          }
-          return '';
-        },
-        description: (requestProcess) => {
-          switch (requestProcess.decision) {
-            case 'afwijzing':
-              return `U hebt geen recht op een bijstandsuitkering (besluit ${defaultDateFormat(
-                requestProcess.datePublished
-              )}).`;
-            case 'toekenning':
-              return `U hebt recht op een bijstandsuitkering (besluit ${defaultDateFormat(
-                requestProcess.datePublished
-              )}).`;
-            case 'buitenbehandeling':
-              return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
-          }
-
-          return `Bekijk de brief voor meer details.`;
-        },
+  },
+  besluit: {
+    notification: {
+      title: (requestProcess) => {
+        switch (requestProcess.decision) {
+          case 'afwijzing':
+            return `${requestProcess.title}: Uw aanvraag is afgewezen`;
+          case 'toekenning':
+            return `${requestProcess.title}: Uw aanvraag is toegekend`;
+          case 'buitenbehandeling':
+            return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
+        }
+        return '';
       },
       description: (requestProcess) => {
         switch (requestProcess.decision) {
           case 'afwijzing':
-            return 'U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.';
+            return `U hebt geen recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+              requestProcess.datePublished
+            )}).`;
           case 'toekenning':
-            return `
+            return `U hebt recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+              requestProcess.datePublished
+            )}).`;
+          case 'buitenbehandeling':
+            return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
+        }
+
+        return `Bekijk de brief voor meer details.`;
+      },
+    },
+    description: (requestProcess) => {
+      switch (requestProcess.decision) {
+        case 'afwijzing':
+          return 'U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.';
+        case 'toekenning':
+          return `
             <p>
               U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
               details.
@@ -149,10 +140,10 @@ export const BijstandsuitkeringProcessLabels: BijstandsuitkeringRequestProcessLa
               </a>
             </p>
           `;
-          case 'buitenbehandeling':
-            return 'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.';
-        }
-        return '';
-      },
+        case 'buitenbehandeling':
+          return 'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.';
+      }
+      return '';
     },
-  };
+  },
+};

@@ -7,7 +7,7 @@ import MockApp from '../MockApp';
 import Stadspas from './Stadspas';
 
 const testState: any = {
-  FOCUS_STADSPAS: {
+  WPI_STADSPAS: {
     content: {
       type: 'hoofdpashouder',
       stadspassen: [
@@ -30,7 +30,7 @@ const testState: any = {
     },
     status: 'OK',
   },
-  FOCUS_AANVRAGEN: {
+  WPI_AANVRAGEN: {
     status: 'OK',
     content: [
       {

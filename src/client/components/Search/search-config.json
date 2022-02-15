@@ -903,7 +903,7 @@
     }
   ],
   "apiSearchConfigs": {
-    "FOCUS_AANVRAGEN": {
+    "WPI_AANVRAGEN": {
       "keywordsGeneratedFromProps": [
         "title",
         "status",
@@ -911,7 +911,7 @@
         "productTitle"
       ]
     },
-    "FOCUS_TOZO": {
+    "WPI_TOZO": {
       "keywordsGeneratedFromProps": [
         "title",
         "status",
@@ -919,7 +919,7 @@
         "productTitle"
       ]
     },
-    "FOCUS_TONK": {
+    "WPI_TONK": {
       "keywordsGeneratedFromProps": [
         "title",
         "status",
@@ -927,7 +927,7 @@
         "productTitle"
       ]
     },
-    "FOCUS_BBZ": {
+    "WPI_BBZ": {
       "keywordsGeneratedFromProps": [
         "title",
         "status",
@@ -981,7 +981,7 @@
         "voorzieningsoortcode"
       ]
     },
-    "FOCUS_STADSPAS": {
+    "WPI_STADSPAS": {
       "keywords": [
         "saldo",
         "kind",

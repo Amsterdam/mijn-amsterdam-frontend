@@ -7,15 +7,15 @@ import type {
   Vergunning,
 } from '../../../server/services';
 import type {
-  FocusStadspas,
-  FocusStadspasSaldo,
-} from '../../../server/services/focus/focus-combined';
-import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
-import type {
   ToeristischeVerhuurRegistratie,
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
+import type {
+  FocusStadspas,
+  FocusStadspasSaldo,
+} from '../../../server/services/wpi/focus-combined';
+import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -167,7 +167,7 @@ const getFocusConfig = (
     };
   },
   profileTypes:
-    stateKey === 'FOCUS_AANVRAGEN'
+    stateKey === 'WPI_AANVRAGEN'
       ? ['private']
       : ['private', 'private-commercial', 'commercial'],
 });
@@ -268,7 +268,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'FOCUS_STADSPAS' as keyof AppState,
+    stateKey: 'WPI_STADSPAS' as keyof AppState,
     getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
       const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
         return {
@@ -289,10 +289,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       };
     },
   },
-  getFocusConfig('FOCUS_TOZO'),
-  getFocusConfig('FOCUS_TONK'),
-  getFocusConfig('FOCUS_BBZ'),
-  getFocusConfig('FOCUS_AANVRAGEN'),
+  getFocusConfig('WPI_TOZO'),
+  getFocusConfig('WPI_TONK'),
+  getFocusConfig('WPI_BBZ'),
+  getFocusConfig('WPI_AANVRAGEN'),
   {
     stateKey: 'BRP' as keyof AppState,
     getApiBaseItems: (apiContent: BRPData) => {

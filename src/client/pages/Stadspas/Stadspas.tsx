@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
+import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -39,8 +39,8 @@ const decisionsDisplayProps = {
 };
 
 export default function Stadspas() {
-  const { FOCUS_AANVRAGEN, FOCUS_STADSPAS } = useAppStateGetter();
-  const aanvragen = FOCUS_AANVRAGEN.content;
+  const { WPI_AANVRAGEN, WPI_STADSPAS } = useAppStateGetter();
+  const aanvragen = WPI_AANVRAGEN.content;
 
   const items: StatusItemRequestProcess[] = useMemo(() => {
     if (!aanvragen) {
@@ -66,13 +66,13 @@ export default function Stadspas() {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
+  const hasStadspas = !!WPI_STADSPAS?.content?.stadspassen?.length;
 
   const stadspasItems = useMemo(() => {
-    if (!FOCUS_STADSPAS.content?.stadspassen) {
+    if (!WPI_STADSPAS.content?.stadspassen) {
       return [];
     }
-    return FOCUS_STADSPAS.content.stadspassen.map((stadspas) => {
+    return WPI_STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,
         displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
@@ -87,10 +87,10 @@ export default function Stadspas() {
         ),
       };
     });
-  }, [FOCUS_STADSPAS.content]);
+  }, [WPI_STADSPAS.content]);
 
-  const isLoadingFocus = isLoading(FOCUS_AANVRAGEN);
-  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
+  const isLoadingFocus = isLoading(WPI_AANVRAGEN);
+  const isLoadingStadspas = isLoading(WPI_STADSPAS);
 
   return (
     <OverviewPage className={styles.Stadspas}>
@@ -106,7 +106,7 @@ export default function Stadspas() {
       </PageHeading>
       <PageContent>
         <p>Hieronder vindt u meer informatie over uw eigen Stadspas.</p>
-        {!isLoadingStadspas && FOCUS_STADSPAS.content?.type !== 'kind' && (
+        {!isLoadingStadspas && WPI_STADSPAS.content?.type !== 'kind' && (
           <p>
             Hebt u kinderen of een partner met een Stadspas? Dan ziet u
             hieronder ook hun Stadspassen.
@@ -118,7 +118,7 @@ export default function Stadspas() {
           </Linkd>
         </p>
         <MaintenanceNotifications page="stadspas" />
-        {(isError(FOCUS_AANVRAGEN) || isError(FOCUS_STADSPAS)) && (
+        {(isError(WPI_AANVRAGEN) || isError(WPI_STADSPAS)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

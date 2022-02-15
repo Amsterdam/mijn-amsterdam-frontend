@@ -39,9 +39,9 @@ function Caret() {
 }
 
 export default function InkomenSpecificaties() {
-  const { FOCUS_SPECIFICATIES } = useAppStateGetter();
+  const { WPI_SPECIFICATIES } = useAppStateGetter();
   const focusSpecificatiesWithDocumentLinks =
-    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
+    useAddDocumentLinkComponents(WPI_SPECIFICATIES);
   const { type = 'uitkering', page = '1' } = useParams<{
     type: 'jaaropgave' | 'uitkering';
     page?: string;
@@ -172,12 +172,12 @@ export default function InkomenSpecificaties() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
-        isLoading={isLoading(FOCUS_SPECIFICATIES)}
+        isLoading={isLoading(WPI_SPECIFICATIES)}
       >
         Bijstandsuitkering
       </PageHeading>
       <PageContent>
-        {isError(FOCUS_SPECIFICATIES) && (
+        {isError(WPI_SPECIFICATIES) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -190,7 +190,7 @@ export default function InkomenSpecificaties() {
             ? 'Jaaropgaven'
             : 'Uitkeringsspecificaties'
         }
-        isLoading={isLoading(FOCUS_SPECIFICATIES)}
+        isLoading={isLoading(WPI_SPECIFICATIES)}
         hasItems={!!items.length}
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >

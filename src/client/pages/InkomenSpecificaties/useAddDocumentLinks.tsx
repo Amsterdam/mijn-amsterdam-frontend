@@ -3,12 +3,12 @@ import { AppState } from '../../AppState';
 import { DocumentLink } from '../../components/DocumentList/DocumentList';
 
 export function useAddDocumentLinkComponents(
-  FOCUS_SPECIFICATIES: AppState['FOCUS_SPECIFICATIES']
+  WPI_SPECIFICATIES: AppState['WPI_SPECIFICATIES']
 ) {
   return useMemo(() => {
-    if (FOCUS_SPECIFICATIES?.content) {
+    if (WPI_SPECIFICATIES?.content) {
       const focusSpecificatiesContent = {
-        ...FOCUS_SPECIFICATIES.content,
+        ...WPI_SPECIFICATIES.content,
       };
       if (focusSpecificatiesContent.jaaropgaven) {
         focusSpecificatiesContent.jaaropgaven =
@@ -41,10 +41,10 @@ export function useAddDocumentLinkComponents(
           });
       }
       return {
-        ...FOCUS_SPECIFICATIES,
+        ...WPI_SPECIFICATIES,
         content: focusSpecificatiesContent,
       };
     }
-    return FOCUS_SPECIFICATIES;
-  }, [FOCUS_SPECIFICATIES]);
+    return WPI_SPECIFICATIES;
+  }, [WPI_SPECIFICATIES]);
 }

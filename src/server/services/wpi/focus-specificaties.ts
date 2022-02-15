@@ -1,4 +1,4 @@
-import { differenceInMonths, format } from 'date-fns';
+import { differenceInMonths } from 'date-fns';
 import { Chapters, IS_PRODUCTION } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
 import {
@@ -23,13 +23,6 @@ const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
   displayDatePublished: string;
-}
-
-export function documentDownloadName(item: {
-  datePublished: string;
-  title: string;
-}) {
-  return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 
 function isNotificationActual(
@@ -147,15 +140,14 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const FOCUS_SPECIFICATIES = await fetchFOCUSSpecificaties(
+  const WPI_SPECIFICATIES = await fetchFOCUSSpecificaties(
     sessionID,
     passthroughRequestHeaders
   );
   const notifications: MyNotification[] = [];
 
-  if (FOCUS_SPECIFICATIES.status === 'OK') {
-    const { jaaropgaven, uitkeringsspecificaties } =
-      FOCUS_SPECIFICATIES.content;
+  if (WPI_SPECIFICATIES.status === 'OK') {
+    const { jaaropgaven, uitkeringsspecificaties } = WPI_SPECIFICATIES.content;
 
     const isActualJaaropgave =
       !IS_PRODUCTION ||
@@ -196,6 +188,6 @@ export async function fetchFOCUSSpecificationsGenerated(
   }
 
   return apiDependencyError({
-    FOCUS_SPECIFICATIES,
+    WPI_SPECIFICATIES,
   });
 }
