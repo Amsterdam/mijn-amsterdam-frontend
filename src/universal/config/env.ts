@@ -42,7 +42,7 @@ const otapServerEnv: OtapEnv = {
     bffSentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
-    ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/loket',
+    ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/inloggen',
   },
   test: {
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
@@ -59,7 +59,7 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
-    ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/loket',
+    ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/inloggen',
   },
   production: {
     analyticsId: 28,
@@ -73,7 +73,7 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
-    ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/loket',
+    ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/inloggen',
   },
 };
 
