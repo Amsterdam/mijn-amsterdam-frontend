@@ -10,7 +10,7 @@ import type {
   FocusStadspas,
   FocusStadspasSaldo,
 } from '../../../server/services/focus/focus-combined';
-import type { FocusItem } from '../../../server/services/focus/focus-types';
+import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
 import type {
   ToeristischeVerhuurRegistratie,
   ToeristischeVerhuurVergunning,
@@ -153,11 +153,11 @@ const getFocusConfig = (
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
 > => ({
   stateKey,
-  generateKeywords: (aanvraag: FocusItem) =>
+  generateKeywords: (aanvraag: StatusItemRequestProcess) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
-  displayTitle: (aanvraag: FocusItem) => {
+  displayTitle: (aanvraag: StatusItemRequestProcess) => {
     return (term: string) => {
       const segments = [`Aanvraag ${aanvraag.productTitle}`];
       if (aanvraag.status === 'Besluit') {

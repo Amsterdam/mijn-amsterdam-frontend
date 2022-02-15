@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { FocusItem } from '../../../server/services/focus/focus-types';
+import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -9,12 +9,12 @@ import {
   Alert,
   ChapterIcon,
   Linkd,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
@@ -42,7 +42,7 @@ export default function Stadspas() {
   const { FOCUS_AANVRAGEN, FOCUS_STADSPAS } = useAppStateGetter();
   const aanvragen = FOCUS_AANVRAGEN.content;
 
-  const items: FocusItem[] = useMemo(() => {
+  const items: StatusItemRequestProcess[] = useMemo(() => {
     if (!aanvragen) {
       return [];
     }

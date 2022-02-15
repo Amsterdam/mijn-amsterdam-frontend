@@ -25,7 +25,10 @@ export interface FocusInkomenSpecificatie
   displayDatePublished: string;
 }
 
-export function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
+export function documentDownloadName(item: {
+  datePublished: string;
+  title: string;
+}) {
   return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 

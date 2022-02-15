@@ -1,208 +1,386 @@
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
-// The process steps are in order of:
-export type StepTitle =
-  | 'aanvraag'
-  | 'inBehandeling'
-  | 'herstelTermijn'
-  | 'besluit'
-  | 'bezwaar'
-  | string;
+import { LinkProps } from '../../../universal/types/App.types';
 
-// The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
-export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
-// A decision can be made and currently have 3 values.
-export type Decision =
-  | 'Toekenning'
-  | 'Afwijzing'
-  | 'Buiten Behandeling'
-  | 'Intrekking';
-
-// The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
-export type ProductType =
-  | 'Tozo'
-  | 'Tonk'
-  | 'Bbz'
-  | 'Participatiewet'
-  | 'Bijzondere Bijstand'
-  | 'Minimafonds'
-  | string;
-
-// Shape of the data returned from the Api
-export interface FocusDocumentFromSource {
-  $ref: string;
-  id: number;
-  isBulk: boolean;
-  isDms: boolean;
-  omschrijving: string;
-}
-
-export interface FocusProductStepFromSource {
-  document: FocusDocumentFromSource[];
-  datum: string;
-  // status: RequestStatus;
-  aantalDagenHerstelTermijn?: string;
-  reden?: string;
-}
-
-export interface FocusProductFromSource {
-  _id: string;
-  soortProduct: ProductType;
-  typeBesluit?: Decision;
-  naam: string;
-  processtappen: {
-    [stepTitle in StepTitle]: FocusProductStepFromSource | null;
-  };
-  dienstverleningstermijn: number;
-  inspanningsperiode: number;
-}
-
-// Normalized source producs
-export interface FocusProductStep {
+export interface RequestStatusDocument {
   id: string;
-  title: StepTitle;
-  documents: GenericDocument[];
+  title: string;
+  url: string;
   datePublished: string;
-  aantalDagenHerstelTermijn?: number;
 }
 
-export interface FocusProduct {
+interface RequestStatusBase<Id extends string, Title extends string> {
+  id: Id;
+  title: Title;
+  documents: RequestStatusDocument[];
+  datePublished: string;
+}
+
+export interface RequestProcess<
+  Status extends RequestStatusBase<string, string>,
+  DecisionId
+> {
   id: string;
   title: string;
   dateStart: string;
-  datePublished: string;
-  type: ProductType;
-  decision?: DecisionFormatted | null;
-  steps: FocusProductStep[];
-  dienstverleningstermijn?: number;
-  inspanningsperiode?: number;
-  productTitle?: string;
+  dateEnd: string | null;
+  datePublished: string; // Date of latest step
+  steps: Status[];
+  status: Status['id'];
+  decision?: DecisionId | null;
 }
 
-export interface FocusItemStep {
-  id: string;
-  documents: GenericDocument[];
-  title: StepTitle;
-  description: string;
-  datePublished: string;
-  status: RequestStatus | '';
-  product?: string;
+export type TextPartContents<R, T> = (
+  requestProcess: R,
+  statusStep: Nullable<T>
+) => string;
+
+export type LinkContents<R, T = RequestStatusBase<string, string>> = (
+  requestProcess: R,
+  statusStep: Nullable<T>
+) => LinkProps;
+
+export interface RequestStatusLabels<R, T = RequestStatusBase<string, string>> {
+  description: TextPartContents<R, T>;
+  notification: {
+    title: TextPartContents<R, T>;
+    description: TextPartContents<R, T>;
+    link?: LinkContents<T>;
+  };
+}
+
+type RequestStatusStep<R> = R & {
   isActive?: boolean;
   isChecked?: boolean;
-  decision?: DecisionFormatted | null;
-  notificationTitle?: string;
-  notificationDescription?: string;
-  notificationLink?: LinkProps;
-}
+};
 
-export interface FocusItem extends FocusProduct {
-  status: RequestStatus;
-  steps: FocusItemStep[];
+/**
+ * Specific process configurations
+ */
+
+// Bijstandsuitkering + Stadspas
+export type AanvraagRequestProcess = RequestProcess<
+  AanvraagRequestStatus,
+  AanvraagDecisionId
+>;
+
+export type AanvraagRequestStatusStep =
+  RequestStatusStep<AanvraagRequestStatus>;
+
+export interface StatusItemRequestProcess extends AanvraagRequestProcess {
+  steps: AanvraagRequestStatusStep[];
   link: LinkProps;
-  dateEnd: string | null;
 }
 
-export type RequestStatus =
+export type AanvraagRequestStatusTitle =
   | 'Aanvraag'
   | 'Informatie nodig'
   | 'In behandeling'
-  | 'Besluit'
-  | 'Bezwaar'
-  | string;
+  | 'Besluit';
 
-export type DecisionFormatted =
+export type AanvraagRequestStatusId =
+  | 'aanvraag'
+  | 'inBehandeling'
+  | 'herstelTermijn'
+  | 'besluit';
+
+export type AanvraagDecisionId =
   | 'toekenning'
   | 'afwijzing'
-  | 'intrekking'
   | 'buitenbehandeling';
 
-export type TextPartContents = (data: any, customData?: any) => string;
-export type LinkContents = (data: any, customData?: any) => LinkProps;
+type AanvraagRequestStatusBase = RequestStatusBase<
+  AanvraagRequestStatusId,
+  AanvraagRequestStatusTitle
+>;
 
-export interface FocusStepContent {
-  description: TextPartContents;
-  status: RequestStatus;
-  notification?: {
-    title: TextPartContents;
-    description: TextPartContents;
-    link?: LinkContents;
-  };
+export interface AanvraagRequestStatusAanvraag
+  extends AanvraagRequestStatusBase {
+  id: 'aanvraag';
 }
 
-export type FocusStepContentDecision = {
-  [decision in DecisionFormatted]?: FocusStepContent;
+export interface AanvraagRequestStatusInBehandeling
+  extends AanvraagRequestStatusBase {
+  id: 'inBehandeling';
+  dateDecisionExpected: string;
+}
+
+export interface AanvraagRequestStatusHerstelTermijn
+  extends AanvraagRequestStatusBase {
+  id: 'herstelTermijn';
+  dateDecisionExpected: string;
+  dateUserFeedbackExpected: string;
+}
+
+export interface AanvraagRequestStatusDecision
+  extends AanvraagRequestStatusBase {
+  id: 'besluit';
+  decision: AanvraagDecisionId;
+}
+
+export type AanvraagRequestStatus =
+  | AanvraagRequestStatusAanvraag
+  | AanvraagRequestStatusInBehandeling
+  | AanvraagRequestStatusHerstelTermijn
+  | AanvraagRequestStatusDecision;
+
+export interface BijstandsuitkeringRequestProcessLabels {
+  aanvraag: RequestStatusLabels<
+    AanvraagRequestProcess,
+    AanvraagRequestStatusAanvraag
+  >;
+  inBehandeling: RequestStatusLabels<
+    AanvraagRequestProcess,
+    AanvraagRequestStatusInBehandeling
+  >;
+  herstelTermijn: RequestStatusLabels<
+    AanvraagRequestProcess,
+    AanvraagRequestStatusHerstelTermijn
+  >;
+  besluit: RequestStatusLabels<
+    AanvraagRequestProcess,
+    AanvraagRequestStatusDecision
+  >;
+  link: LinkContents<AanvraagRequestProcess>;
+}
+
+export type StadspasRequestProcessLabels =
+  BijstandsuitkeringRequestProcessLabels;
+
+// TOZO, BBZ, TONK
+export type TozoRequestStatusTitle =
+  | 'Aanvraag'
+  | 'Informatie nodig'
+  | 'Voorschot'
+  | 'Terugvorderings- besluit'
+  | 'Wijziging inkomsten'
+  | 'Brief'
+  | 'Besluit';
+
+export type TozoRequestStatusId =
+  | 'aanvraag'
+  | 'besluit'
+  | 'herstelTermijn'
+  | 'voorschot'
+  | 'intrekking'
+  | 'terugvorderingsbesluit'
+  | 'inkomstenwijziging';
+
+export type TozoDecisionId = AanvraagDecisionId | 'vrijeBeschikking';
+
+type TozoRequestStatusBase = RequestStatusBase<
+  TozoRequestStatusId,
+  TozoRequestStatusTitle
+> & {
+  productSpecific?: 'uitkering' | 'lening';
 };
 
-export interface ProductStepLabels {
-  aanvraag?: FocusStepContent;
-  inBehandeling?: FocusStepContent;
-  herstelTermijn?: FocusStepContent;
-  bezwaar?: FocusStepContent;
-  besluit?: FocusStepContentDecision;
-  link?: LinkContents;
-  [key: string]: any;
+export interface TozoRequestStatusAanvraag extends TozoRequestStatusBase {
+  id: 'aanvraag';
 }
 
-export interface LabelData {
-  [ProductType: string]: {
-    [productTitle: string]: ProductStepLabels;
-  };
+export interface TozoRequestStatusVoorschot extends TozoRequestStatusBase {
+  id: 'voorschot';
 }
 
-export type DocumentTitles = Record<string, string>;
-
-export type FocusDocumentStepType = 'aanvraag' | 'herstelTermijn' | 'besluit';
-
-export type FocusTonkStepType =
-  | FocusDocumentStepType
-  | 'correctiemail'
-  | 'verklaring';
-
-export type FocusBbzStepType =
-  | FocusDocumentStepType
-  | 'beslistermijn'
-  | 'brief'
-  | 'verklaring'
-  | 'voorschot';
-
-export type FocusTozoStepType =
-  | FocusDocumentStepType
-  | 'vrijeBeschikking'
-  | 'voorschot'
-  | 'terugvordering'
-  | 'verklaring';
-
-export interface FocusDocumentLabelSet {
-  labels: FocusStepContent;
-  omschrijving: string;
-  documentTitle: string;
-  product: string;
-  productSpecific?: 'uitkering' | 'lening';
-  stepType: string;
-  datePublished?: string;
-  decision?: DecisionFormatted;
+export interface TozoRequestStatusTerugvorderingsBesluit
+  extends TozoRequestStatusBase {
+  id: 'terugvorderingsbesluit';
 }
 
-export interface FocusTozoLabelSet extends FocusDocumentLabelSet {
-  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3' | 'Tozo 4' | 'Tozo 5';
-  stepType: FocusTozoStepType;
+export interface TozoRequestStatusHerstelTermijn extends TozoRequestStatusBase {
+  id: 'herstelTermijn';
 }
 
-export interface FocusTonkLabelSet extends FocusDocumentLabelSet {
-  product: 'TONK';
-  stepType: FocusTonkStepType;
+export interface TozoRequestStatusInkomstenwijziging
+  extends TozoRequestStatusBase {
+  id: 'inkomstenwijziging';
 }
 
-export interface FocusBbzLabelSet extends FocusDocumentLabelSet {
-  product: 'Bbz' | 'IOAZ';
-  stepType: FocusBbzStepType;
+export interface TozoRequestStatusDecision extends TozoRequestStatusBase {
+  id: 'besluit';
+  decision: TozoDecisionId;
 }
 
-export type ToxxLabelSet =
-  | FocusTozoLabelSet
-  | FocusTonkLabelSet
-  | FocusBbzLabelSet;
+export interface TozoRequestStatusIntrekking extends TozoRequestStatusBase {
+  id: 'intrekking';
+}
 
-export type ToxxLabelSetCollection = Record<
-  string,
-  FocusTozoLabelSet | FocusTonkLabelSet | FocusBbzLabelSet
+export type TozoRequestStatus =
+  | TozoRequestStatusAanvraag
+  | TozoRequestStatusVoorschot
+  | TozoRequestStatusHerstelTermijn
+  | TozoRequestStatusDecision
+  | TozoRequestStatusInkomstenwijziging
+  | TozoRequestStatusIntrekking
+  | TozoRequestStatusTerugvorderingsBesluit;
+
+export type TozoRequestProcess = RequestProcess<
+  TozoRequestStatus,
+  TozoDecisionId
 >;
+
+export type TozoRequestStatusStep = RequestStatusStep<TozoRequestStatus>;
+
+export interface StatusItemRequestProcessTozo extends TozoRequestProcess {
+  steps: TozoRequestStatusStep[];
+  link: LinkProps;
+}
+
+export interface TozoRequestProcessLabels {
+  aanvraag: RequestStatusLabels<TozoRequestProcess, TozoRequestStatusAanvraag>;
+  voorschot: RequestStatusLabels<
+    TozoRequestProcess,
+    TozoRequestStatusVoorschot
+  >;
+  herstelTermijn: RequestStatusLabels<
+    TozoRequestProcess,
+    TozoRequestStatusHerstelTermijn
+  >;
+  terugvorderingsbesluit: RequestStatusLabels<
+    TozoRequestProcess,
+    TozoRequestStatusTerugvorderingsBesluit
+  >;
+  inkomstenwijziging: RequestStatusLabels<
+    TozoRequestProcess,
+    TozoRequestStatusInkomstenwijziging
+  >;
+  besluit: RequestStatusLabels<TozoRequestProcess, TozoRequestStatusDecision>;
+  intrekking: RequestStatusLabels<
+    TozoRequestProcess,
+    TozoRequestStatusIntrekking
+  >;
+  link: LinkContents<TozoRequestProcess>;
+}
+
+// Bbz
+export type BbzRequestStatusId =
+  | TozoRequestStatusId
+  | 'briefAdviesRapport'
+  | 'briefAkteBedrijfskapitaal'
+  | 'beslisTermijn';
+
+export type BbzRequestStatusTitle =
+  | TozoRequestStatusTitle
+  | 'Brief'
+  | 'Akte'
+  | 'Tijd nodig';
+
+export type BbzDecisionId = AanvraagDecisionId | 'toekenningVoorlopig'; // IOAZ
+
+type BbzRequestStatusBase = RequestStatusBase<
+  BbzRequestStatusId,
+  BbzRequestStatusTitle
+> & {
+  productSpecific?: 'uitkering' | 'lening';
+};
+
+export interface BbzRequestStatusBriefAdviesRapport
+  extends BbzRequestStatusBase {
+  id: 'briefAdviesRapport';
+}
+
+export interface BbzRequestStatusBriefAkteBedrijfskapitaal
+  extends BbzRequestStatusBase {
+  id: 'briefAkteBedrijfskapitaal';
+}
+
+export interface BbzRequestStatusBeslisTermijn extends BbzRequestStatusBase {
+  id: 'beslisTermijn';
+}
+
+export interface BbzRequestStatusDecision extends BbzRequestStatusBase {
+  id: 'besluit';
+  decision: BbzDecisionId;
+}
+
+export type BbzRequestStatus =
+  | TozoRequestStatus
+  | BbzRequestStatusBriefAdviesRapport
+  | BbzRequestStatusBriefAkteBedrijfskapitaal
+  | BbzRequestStatusBeslisTermijn;
+
+export type BbzRequestProcess = RequestProcess<BbzRequestStatus, BbzDecisionId>;
+
+export interface BbzRequestProcessLabels
+  extends Pick<
+    TozoRequestProcessLabels,
+    | 'aanvraag'
+    | 'voorschot'
+    | 'herstelTermijn'
+    | 'terugvorderingsbesluit'
+    | 'inkomstenwijziging'
+    | 'intrekking'
+    | 'link'
+  > {
+  briefAdviesRapport: RequestStatusLabels<
+    BbzRequestProcess,
+    BbzRequestStatusBriefAdviesRapport
+  >;
+  briefAkteBedrijfskapitaal: RequestStatusLabels<
+    BbzRequestProcess,
+    BbzRequestStatusBriefAkteBedrijfskapitaal
+  >;
+  beslisTermijn: RequestStatusLabels<
+    BbzRequestProcess,
+    BbzRequestStatusBeslisTermijn
+  >;
+  besluit: RequestStatusLabels<BbzRequestProcess, BbzRequestStatusDecision>;
+}
+
+// TONK
+export type TONKDecisionId =
+  | AanvraagDecisionId
+  | 'verlenging'
+  | 'mogelijkeVerlenging'; // TONK
+
+export type TONKRequestStatusId =
+  | TozoRequestStatusId
+  | 'correctiemail'
+  | 'briefWeigering';
+
+export type TONKRequestStatusTitle = TozoRequestStatusTitle | 'Brief' | 'Mail';
+
+type TONKRequestStatusBase = RequestStatusBase<
+  TONKRequestStatusId,
+  TONKRequestStatusTitle
+> & {
+  productSpecific: 'uitkering';
+};
+
+export interface TONKRequestStatusCorrectieMail extends TONKRequestStatusBase {
+  id: 'correctiemail';
+}
+
+export interface TONKRequestStatusBriefWeigering extends TONKRequestStatusBase {
+  id: 'briefWeigering';
+}
+
+export interface TONKRequestStatusDecision extends TONKRequestStatusBase {
+  id: 'besluit';
+  decision: TONKDecisionId;
+}
+
+export type TONKRequestStatus =
+  | TozoRequestStatus
+  | TONKRequestStatusCorrectieMail
+  | TONKRequestStatusBriefWeigering;
+
+export type TONKRequestProcess = RequestProcess<
+  TONKRequestStatus,
+  TONKDecisionId
+>;
+
+export interface TONKRequestProcessLabels
+  extends Pick<
+    TozoRequestProcessLabels,
+    'aanvraag' | 'herstelTermijn' | 'intrekking' | 'link'
+  > {
+  correctiemail: RequestStatusLabels<
+    TONKRequestProcess,
+    TONKRequestStatusCorrectieMail
+  >;
+  briefWeigering: RequestStatusLabels<
+    TONKRequestProcess,
+    TONKRequestStatusBriefWeigering
+  >;
+  besluit: RequestStatusLabels<TONKRequestProcess, TONKRequestStatusDecision>;
+}

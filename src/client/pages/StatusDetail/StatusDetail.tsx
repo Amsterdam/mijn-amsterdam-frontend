@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { LinkProps, GenericDocument } from '../../../universal/types/App.types';
+import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -90,7 +90,7 @@ export default function StatusDetail({
         backLink={{ to: appRoute, title: ChapterTitles[chapter] }}
         isLoading={isStateLoading}
       >
-        {statusItem?.productTitle || title}
+        {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}

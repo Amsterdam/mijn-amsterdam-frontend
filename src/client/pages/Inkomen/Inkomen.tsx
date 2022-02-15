@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { FocusItem } from '../../../server/services/focus/focus-types';
+import type { StatusItemRequestProcess } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -10,12 +10,12 @@ import {
   Alert,
   ChapterIcon,
   Linkd,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -69,7 +69,7 @@ export default function Inkomen() {
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
-  const items: FocusItem[] = useMemo(() => {
+  const items: StatusItemRequestProcess[] = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
     }
