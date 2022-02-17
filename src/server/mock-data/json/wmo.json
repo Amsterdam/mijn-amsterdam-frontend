@@ -2,6 +2,19 @@
     "status": "OK",
     "content": [
         {
+            "dateDecision": "2022-02-13",
+            "dateEnd": null,
+            "dateStart": "2022-02-11",
+            "deliveryType": "ZIN",
+            "isActual": true,
+            "itemTypeCode": "FIE",
+            "serviceDateEnd": null,
+            "serviceDateStart": null,
+            "serviceOrderDate": "2022-02-13",
+            "supplier": "Medipoint",
+            "title": "rolstoelfiets met hulpmotor"
+        },
+        {
             "title": "hulp bij het huishouden (nog niet geleverd)",
             "isActual": true,
             "deliveryType": "ZIN",
