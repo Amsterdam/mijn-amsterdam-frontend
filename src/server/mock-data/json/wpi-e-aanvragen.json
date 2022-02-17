@@ -2,900 +2,527 @@
   "status": "OK",
   "content": [
     {
-      "documentCodeId": "785",
-      "description": "TOZO 3 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
-      "datePublished": "2020-02-05T00:00:00+01:00",
-      "id": "2180622340381",
-      "type": "",
-      "url": "focus/document?id=2180622340381"
-    },
-    {
-      "documentCodeId": "756",
-      "description": "Verkorte Aanvraag BBZ",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620381",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "770",
-      "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620382",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "777",
-      "description": "TOZO 2 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620383",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175296",
-      "description": "Toekennen voorschot Tozo",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620384",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175299",
-      "description": "Bbz Toekennen voorschot Tozo via batch",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620385",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175303",
-      "description": "Tozo Toekennen",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620386",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175304",
-      "description": "Tozo Afwijzen",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620387",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175359",
-      "description": "Tozo2 Afwijzen via batch",
-      "datePublished": "2020-09-28T00:00:00+01:00",
-      "id": "218062037878787",
-      "type": "",
-      "url": "focus/document?id=218062037878787"
-    },
-    {
-      "documentCodeId": "175305",
-      "description": "Tozo Buiten behandeling laten",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620388",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175306",
-      "description": "Tozo Hersteltermijn",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "2180620389",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175308",
-      "description": "Tozo Terugvordering voorschot",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203810",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175311",
-      "description": "Tozo Toekennen bedrijfskapitaal",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203811",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175314",
-      "description": "Tozo Toekennen via batch",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203812",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175317",
-      "description": "Tozo Intrekken met terugvordering voorschot",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203813",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175331",
-      "description": "Tozo Intrekken",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203814",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175334",
-      "description": "Tozo Vrije beschikking",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203815",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175335",
-      "description": "Tozo Afwijzen via batch",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203816",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175336",
-      "description": "Tozo2 Toekennen",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203817",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175337",
-      "description": "Tozo2 Afwijzen",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203818",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175338",
-      "description": "Tozo2 Toekennen bedrijfskapitaal",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203819",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175340",
-      "description": "Tozo2 Hersteltermijn",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203820",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175341",
-      "description": "Tozo2 Intrekken",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203821",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175342",
-      "description": "Tozo2 Buiten behandeling laten",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203822",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175343",
-      "description": "Tozo2 Terugvordering voorschot",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203823",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175344",
-      "description": "Tozo2 Intrekken met terugvordering voorschot",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203824",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175345",
-      "description": "Tozo2 Toekennen voorschot via batch",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203825",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175346",
-      "description": "Tozo2 Toekennen voorschot",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203826",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175347",
-      "description": "Tozo2 Toekennen via batch",
-      "datePublished": "2020-03-17T00:00:00+01:00",
-      "id": "21806203827",
-      "type": "",
-      "url": "focus/document?id=218062038"
-    },
-    {
-      "documentCodeId": "175309",
-      "description": "Tozo3 Toekennen",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175307",
-      "description": "Tozo3 Toekennen voorschot",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175310",
-      "description": "Tozo3 Hersteltermijn",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175357",
-      "description": "Tozo3 Toekennen via batch",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175358",
-      "description": "Tozo3 Buiten behandeling laten",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175364",
-      "description": "Tozo3 Afwijzen",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175367",
-      "description": "Tozo3 Intrekken met terugvordering voorschot",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175368",
-      "description": "Tozo3 Terugvordering voorschot",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175369",
-      "description": "Tozo3 Toekennen bedrijfskapitaal",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175370",
-      "description": "Tozo3 Intrekken",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175371",
-      "description": "Tozo3 Afwijzen via batch",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "175372",
-      "description": "Tozo3 Toekennen voorschot via batch",
-      "type": "",
-      "id": "",
-      "datePublished": "2020-10-01",
-      "url": "focus/document?id="
-    },
-    {
-      "documentCodeId": "802",
-      "description": "Tonk regeling aanvraag",
-      "datePublished": "2021-04-05T00:00:00+01:00",
-      "id": "802",
-      "type": "",
-      "url": "focus/document?id=2180622340381"
-    },
-    {
-      "documentCodeId": "802",
-      "description": "Tonk regeling aanvraag",
-      "datePublished": "2021-05-05T00:00:00+01:00",
-      "id": "802b",
-      "type": "",
-      "url": "focus/document?id=2180622340381"
-    },
-    {
-      "id": "176137",
-      "documentCodeId": "176137",
-      "description": "TONK hersteltermijn",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176138",
-      "documentCodeId": "176138",
-      "description": "TONK intrekken",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176149",
-      "documentCodeId": "176149",
-      "description": "TONK toekennen",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176156",
-      "documentCodeId": "176156",
-      "description": "TONK toekennen via batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176145",
-      "documentCodeId": "176145",
-      "description": "TONK afwijzen",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176155",
-      "documentCodeId": "176155",
-      "description": "TONK afwijzen via batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "176146",
-      "documentCodeId": "176146",
-      "description": "TONK Buiten behandeling laten",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-04-05T00:00:00+01:00"
-    },
-    {
-      "id": "800",
-      "documentCodeId": "800",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5654",
-      "documentCodeId": "175654",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Toekennen",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5651",
-      "documentCodeId": "175651",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Afwijzen",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5673",
-      "documentCodeId": "175673",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Afwijzen via batch",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5656",
-      "documentCodeId": "175656",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Toekennen bedrijfskapitaal",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5668",
-      "documentCodeId": "175668",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Hersteltermijn",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5670",
-      "documentCodeId": "175670",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Intrekken",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5652",
-      "documentCodeId": "175652",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Buiten behandeling laten",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5677",
-      "documentCodeId": "175677",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Toekennen voorschot via batch",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5657",
-      "documentCodeId": "175657",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Toekennen voorschot",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5674",
-      "documentCodeId": "175674",
-      "type": "",
-      "url": "",
-      "description": "Tozo4 Toekennen via batch",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "794",
-      "documentCodeId": "794",
-      "type": "",
-      "url": "",
-      "description": "Tozo 4 inkomstenwijziging",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "794",
-      "documentCodeId": "794",
-      "type": "",
-      "url": "",
-      "description": "Tozo 4 inkomstenwijziging",
-      "datePublished": "2021-04-02T00:00:00+01:00"
-    },
-    {
-      "id": "35650",
-      "documentCodeId": "1735650",
-      "type": "",
-      "url": "",
-      "description": "Tozo 4 Terugvorderingsbesluit",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "35645",
-      "documentCodeId": "1735645",
-      "type": "",
-      "url": "",
-      "description": "Tozo 4 Terugvorderingsbesluit",
-      "datePublished": "2021-04-10T00:00:00+01:00"
-    },
-    {
-      "id": "792",
-      "documentCodeId": "792",
-      "type": "",
-      "url": "",
-      "description": "Tozo 3 inkomstenwijziging",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "25650",
-      "documentCodeId": "1725650",
-      "type": "",
-      "url": "",
-      "description": "Tozo 3 Terugvorderingsbesluit",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "25645",
-      "documentCodeId": "1725645",
-      "type": "",
-      "url": "",
-      "description": "Tozo 3 Terugvorderingsbesluit",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "792",
-      "documentCodeId": "792",
-      "type": "",
-      "url": "",
-      "description": "Tozo 2 inkomstenwijziging",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5650",
-      "documentCodeId": "175650",
-      "type": "",
-      "url": "",
-      "description": "Tozo 2 Terugvorderingsbesluit",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "5645",
-      "documentCodeId": "175645",
-      "type": "",
-      "url": "",
-      "description": "Tozo 2 Terugvorderingsbesluit",
-      "datePublished": "2021-03-27T00:00:00+01:00"
-    },
-    {
-      "id": "837",
-      "documentCodeId": "837",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
-      "datePublished": "2021-06-14T00:00:00+01:00"
-    },
-    {
-      "id": "6167",
-      "documentCodeId": "176167",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Toekennen",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6165",
-      "documentCodeId": "176165",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Afwijzen",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6169",
-      "documentCodeId": "176169",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Afwijzen via batch",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6168",
-      "documentCodeId": "176168",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Toekennen bedrijfskapitaal",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6164",
-      "documentCodeId": "176164",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Hersteltermijn",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6163",
-      "documentCodeId": "176163",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Intrekken",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6166",
-      "documentCodeId": "176166",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Buiten behandeling laten",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6170",
-      "documentCodeId": "176170",
-      "type": "",
-      "url": "",
-      "description": "Tozo5 Toekennen via batch",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "6171",
-      "documentCodeId": "176171",
-      "description": "Tozo5 Toekennen voorschot via batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "25657",
-      "documentCodeId": "1725657",
-      "description": "Tozo5 Toekennen voorschot",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "45650",
-      "documentCodeId": "1745650",
-      "description": "Tozo5 Terugvorderen na inkomstenopgave",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "838",
-      "documentCodeId": "838",
-      "type": "",
-      "url": "",
-      "description": "Tozo 5 inkomstenwijziging",
-      "datePublished": "2021-07-14T00:00:00+01:00"
-    },
-    {
-      "id": "45645",
-      "documentCodeId": "1745645",
-      "description": "Tozo5 Terugvorderen na inkomstenopgave (batch)",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-22T00:00:00+01:00"
-    },
-    {
-      "id": "176180",
-      "documentCodeId": "176180",
-      "description": "TONK Ambtshalve verlenging via batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-20T00:00:00+01:00"
-    },
-    {
-      "id": "176182",
-      "documentCodeId": "176182",
-      "description": "TONK Besluit over verlenging",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-20T00:00:00+01:00"
-    },
-    {
-      "id": "1726182",
-      "documentCodeId": "1726182",
-      "description": "TONK Bevestigen weigering verlenging",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-07-20T00:00:00+01:00"
-    },
-    {
-      "id": "843",
-      "documentCodeId": "843",
-      "description": "Corriectiemail Tonk",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-07-20T00:00:00+01:00"
-    },
-    {
-      "id": "844",
-      "documentCodeId": "844",
-      "description": "BBZ2",
-      "type": "",
-      "url": "focus/document?id=634016092",
-      "datePublished": "2021-09-17T00:00:00+01:00"
-    },
-    {
-      "id": "6195",
-      "documentCodeId": "176195",
-      "description": "Transitie Bbz Toekennen batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "5843",
-      "documentCodeId": "175843",
-      "description": "Bbz Toekenning bedrijfskapitaal",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "5855",
-      "documentCodeId": "175855",
-      "description": "Bbz Verlenging beslistermijn met 13 weken",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6351",
-      "documentCodeId": "176351",
-      "description": "Transitie Bbz Hersteltermijn",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6368",
-      "documentCodeId": "176368",
-      "description": "Bbz Aanvraag adviesrapport",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6350",
-      "documentCodeId": "176350",
-      "description": "Bbz Intrekking",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6353",
-      "documentCodeId": "176353",
-      "description": "Bbz Aanvraag buiten behandeling stellen",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "5884",
-      "documentCodeId": "175884",
-      "description": "Bbz Akte bedrijfskapitaal",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6196",
-      "documentCodeId": "176196",
-      "description": "Bbz Toekennen voorschot",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6197",
-      "documentCodeId": "176197",
-      "description": "Bbz Toekennen voorschot via batch",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6198",
-      "documentCodeId": "176198",
-      "description": "Bbz afwijzing",
-      "type": "",
-      "url": "",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6194",
-      "documentCodeId": "176194",
-      "description": "Bbz Toekenning Bbz",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "35866",
-      "documentCodeId": "1735866",
-      "description": "Bbz Aanvraag buiten behandeling stellen",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6301",
-      "documentCodeId": "176301",
-      "description": " Ioaz Toekenning voorlopige uitkering",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6322",
-      "documentCodeId": "176322",
-      "description": " Ioaz Aanvraag hersteltermijn",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "6332",
-      "documentCodeId": "176332",
-      "description": " Ioaz Aanvraag buiten behandeling stellen",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "36301",
-      "documentCodeId": "1736301",
-      "description": "Ioaz Toekenning voorlopige uitkering",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "36302",
-      "documentCodeId": "1736302",
-      "description": "Ioaz Toekenning definitieve uitkering",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "36303",
-      "documentCodeId": "1736303",
-      "description": "Ioaz Afwijzing uitkering",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-09-20T00:00:00+01:00"
-    },
-    {
-      "id": "851",
-      "documentCodeId": "851",
-      "description": "BBZ2 Inkomsten Verklaring",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-10-20T00:00:00+01:00"
-    },
-    {
-      "id": "176363",
-      "documentCodeId": "176363",
-      "description": "Transitie Bbz Terugvordering via batch",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-10-20T00:00:00+01:00"
-    },
-    {
-      "id": "176365",
-      "documentCodeId": "176365",
-      "description": "Transitie Bbz Terugvordering",
-      "type": "",
-      "url": "focus/document?id=218062038",
-      "datePublished": "2021-10-20T00:00:00+01:00"
+      "id": "20aa14d54e639f3a24d46d73d2d1dda4",
+      "title": "tozo 1",
+      "dateStart": "2020-03-27T17:20:04+01:00",
+      "datePublished": "2020-04-08T17:20:04+02:00",
+      "dateEnd": "2020-04-08T17:20:04+02:00",
+      "decision": "toekenning",
+      "status": "besluit",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2020-03-27T17:20:04+01:00",
+          "documents": [
+            {
+              "id": "4400000027",
+              "dceId": "770",
+              "title": "Ontvangst- bevestiging Aanvraag\n2020-03-27T17:20:04+01:00",
+              "url": "/focus/document?id=4400000027&isBulk=True&isDms=False",
+              "datePublished": "2020-03-27T17:20:04+01:00"
+            },
+            {
+              "id": "4400000034",
+              "dceId": "770",
+              "title": "Ontvangst- bevestiging Aanvraag\n2020-04-01T17:20:04+02:00",
+              "url": "/focus/document?id=4400000034&isBulk=True&isDms=False",
+              "datePublished": "2020-04-01T17:20:04+02:00"
+            },
+            {
+              "id": "4400000033",
+              "dceId": "770",
+              "title": "Ontvangst- bevestiging Aanvraag\n2020-04-02T17:20:04+02:00",
+              "url": "/focus/document?id=4400000033&isBulk=True&isDms=False",
+              "datePublished": "2020-04-02T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "voorschot",
+          "title": "Voorschot",
+          "datePublished": "2020-04-03T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000058",
+              "dceId": "175296",
+              "title": "Brief betaling voorschot",
+              "url": "/focus/document?id=660000000000058&isBulk=False&isDms=False",
+              "datePublished": "2020-04-03T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2020-04-08T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000059",
+              "dceId": "175303",
+              "title": "Besluit toekenning uitkering",
+              "url": "/focus/document?id=660000000000059&isBulk=False&isDms=False",
+              "datePublished": "2020-04-08T17:20:04+02:00"
+            }
+          ],
+          "decision": "toekenning",
+          "productSpecific": "uitkering"
+        }
+      ]
+    },
+    {
+      "id": "d5ebbb6f0c614d3c5d2d46244225a54e",
+      "title": "tozo 2",
+      "dateStart": "2020-06-19T17:20:04+02:00",
+      "datePublished": "2020-07-04T17:20:04+02:00",
+      "dateEnd": "2020-07-04T17:20:04+02:00",
+      "decision": "afwijzing",
+      "status": "besluit",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2020-06-19T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "4400000071",
+              "dceId": "777",
+              "title": "Ontvangst- bevestiging Aanvraag\n2020-06-19T17:20:04+02:00",
+              "url": "/focus/document?id=4400000071&isBulk=True&isDms=False",
+              "datePublished": "2020-06-19T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "voorschot",
+          "title": "Voorschot",
+          "datePublished": "2020-06-23T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000413",
+              "dceId": "175345",
+              "title": "Brief betaling voorschot",
+              "url": "/focus/document?id=660000000000413&isBulk=False&isDms=False",
+              "datePublished": "2020-06-23T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2020-07-03T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000076",
+              "dceId": "175336",
+              "title": "Besluit toekenning uitkering",
+              "url": "/focus/document?id=660000000000076&isBulk=False&isDms=False",
+              "datePublished": "2020-07-03T17:20:04+02:00"
+            }
+          ],
+          "decision": "toekenning",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2020-07-04T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000077",
+              "dceId": "175337",
+              "title": "Besluit afwijzing",
+              "url": "/focus/document?id=660000000000077&isBulk=False&isDms=False",
+              "datePublished": "2020-07-04T17:20:04+02:00"
+            }
+          ],
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "4fd95b1258236fee33263d34c04515f7",
+      "title": "tozo 3",
+      "dateStart": "2020-10-14T17:20:04+02:00",
+      "datePublished": "2020-10-27T17:20:04+01:00",
+      "dateEnd": "2020-10-27T17:20:04+01:00",
+      "decision": "afwijzing",
+      "status": "besluit",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2020-10-14T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "4400000053",
+              "dceId": "785",
+              "title": "Ontvangst- bevestiging Aanvraag\n2020-10-14T17:20:04+02:00",
+              "url": "/focus/document?id=4400000053&isBulk=True&isDms=False",
+              "datePublished": "2020-10-14T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "voorschot",
+          "title": "Voorschot",
+          "datePublished": "2020-10-19T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000097",
+              "dceId": "175372",
+              "title": "Brief betaling voorschot",
+              "url": "/focus/document?id=660000000000097&isBulk=False&isDms=False",
+              "datePublished": "2020-10-19T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2020-10-23T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000000098",
+              "dceId": "175309",
+              "title": "Besluit toekenning uitkering",
+              "url": "/focus/document?id=660000000000098&isBulk=False&isDms=False",
+              "datePublished": "2020-10-23T17:20:04+02:00"
+            }
+          ],
+          "decision": "toekenning",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2020-10-27T17:20:04+01:00",
+          "documents": [
+            {
+              "id": "660000000000099",
+              "dceId": "175364",
+              "title": "Besluit afwijzing",
+              "url": "/focus/document?id=660000000000099&isBulk=False&isDms=False",
+              "datePublished": "2020-10-27T17:20:04+01:00"
+            }
+          ],
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "a991c7474990c183ea949eeebe54363a",
+      "title": "tozo 4",
+      "dateStart": "2021-04-02T18:53:05+02:00",
+      "datePublished": "2021-04-08T18:53:05+02:00",
+      "dateEnd": "2021-04-08T18:53:05+02:00",
+      "decision": "afwijzing",
+      "status": "besluit",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2021-04-02T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "4400000022",
+              "dceId": "800",
+              "title": "Ontvangst- bevestiging Aanvraag\n2021-04-02T18:53:05+02:00",
+              "url": "/focus/document?id=4400000022&isBulk=True&isDms=False",
+              "datePublished": "2021-04-02T18:53:05+02:00"
+            }
+          ]
+        },
+        {
+          "id": "voorschot",
+          "title": "Voorschot",
+          "datePublished": "2021-04-04T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000471",
+              "dceId": "175677",
+              "title": "Brief betaling voorschot",
+              "url": "/focus/document?id=660000000000471&isBulk=False&isDms=False",
+              "datePublished": "2021-04-04T18:53:05+02:00"
+            }
+          ]
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-04-06T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000472",
+              "dceId": "175654",
+              "title": "Besluit toekenning uitkering",
+              "url": "/focus/document?id=660000000000472&isBulk=False&isDms=False",
+              "datePublished": "2021-04-06T18:53:05+02:00"
+            }
+          ],
+          "decision": "toekenning",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-04-08T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000473",
+              "dceId": "175651",
+              "title": "Besluit afwijzing",
+              "url": "/focus/document?id=660000000000473&isBulk=False&isDms=False",
+              "datePublished": "2021-04-08T18:53:05+02:00"
+            }
+          ],
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "2ccc038219efa26cb68078371346c915",
+      "title": "tozo 5",
+      "dateStart": "2021-07-02T18:53:05+02:00",
+      "datePublished": "2021-07-08T18:53:05+02:00",
+      "dateEnd": "2021-07-08T18:53:05+02:00",
+      "decision": "afwijzing",
+      "status": "besluit",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2021-07-02T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "4400000123",
+              "dceId": "837",
+              "title": "Ontvangst- bevestiging Aanvraag\n2021-07-02T18:53:05+02:00",
+              "url": "/focus/document?id=4400000123&isBulk=True&isDms=False",
+              "datePublished": "2021-07-02T18:53:05+02:00"
+            }
+          ]
+        },
+        {
+          "id": "voorschot",
+          "title": "Voorschot",
+          "datePublished": "2021-07-04T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000053",
+              "dceId": "176171",
+              "title": "Brief betaling voorschot",
+              "url": "/focus/document?id=660000000000053&isBulk=False&isDms=False",
+              "datePublished": "2021-07-04T18:53:05+02:00"
+            }
+          ]
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-07-06T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000054",
+              "dceId": "176167",
+              "title": "Besluit toekenning uitkering",
+              "url": "/focus/document?id=660000000000054&isBulk=False&isDms=False",
+              "datePublished": "2021-07-06T18:53:05+02:00"
+            }
+          ],
+          "decision": "toekenning",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-07-08T18:53:05+02:00",
+          "documents": [
+            {
+              "id": "660000000000055",
+              "dceId": "176165",
+              "title": "Besluit afwijzing",
+              "url": "/focus/document?id=660000000000055&isBulk=False&isDms=False",
+              "datePublished": "2021-07-08T18:53:05+02:00"
+            }
+          ],
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "5ca2e7f75c021f8d6b23227ed802b158",
+      "title": "tonk",
+      "dateStart": "2021-01-05T17:20:04+01:00",
+      "datePublished": "2021-08-12T17:20:04+02:00",
+      "dateEnd": "2021-08-10T17:20:04+02:00",
+      "decision": "mogelijkeVerlenging",
+      "status": "briefWeigering",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2021-01-05T17:20:04+01:00",
+          "documents": [
+            {
+              "id": "4400000095",
+              "dceId": "802",
+              "title": "Aanvraag TONK\n2021-01-05T17:20:04+01:00",
+              "url": "/focus/document?id=4400000095&isBulk=True&isDms=False",
+              "datePublished": "2021-01-05T17:20:04+01:00"
+            }
+          ],
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "herstelTermijn",
+          "title": "Informatie nodig",
+          "datePublished": "2021-01-06T17:20:04+01:00",
+          "documents": [
+            {
+              "id": "660000000000500",
+              "dceId": "176137",
+              "title": "Brief meer informatie",
+              "url": "/focus/document?id=660000000000500&isBulk=False&isDms=False",
+              "datePublished": "2021-01-06T17:20:04+01:00"
+            }
+          ],
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-01-07T17:20:04+01:00",
+          "documents": [
+            {
+              "id": "660000000000501",
+              "dceId": "176146",
+              "title": "Besluit buiten behandeling",
+              "url": "/focus/document?id=660000000000501&isBulk=False&isDms=False",
+              "datePublished": "2021-01-07T17:20:04+01:00"
+            }
+          ],
+          "decision": "buitenBehandeling",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "correctiemail",
+          "title": "Mail",
+          "datePublished": "2021-08-08T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "4400000132",
+              "dceId": "843",
+              "title": "Mail verkeerde TONK-brief",
+              "url": "/focus/document?id=4400000132&isBulk=True&isDms=False",
+              "datePublished": "2021-08-08T17:20:04+02:00"
+            }
+          ],
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "besluit",
+          "title": "Besluit",
+          "datePublished": "2021-08-10T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000010184",
+              "dceId": "176182",
+              "title": "Besluit over verlenging",
+              "url": "/focus/document?id=660000000010184&isBulk=False&isDms=False",
+              "datePublished": "2021-08-10T17:20:04+02:00"
+            }
+          ],
+          "decision": "mogelijkeVerlenging",
+          "productSpecific": "uitkering"
+        },
+        {
+          "id": "briefWeigering",
+          "title": "Brief",
+          "datePublished": "2021-08-12T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000010185",
+              "dceId": "1726182",
+              "title": "Brief bevestiging weigering",
+              "url": "/focus/document?id=660000000010185&isBulk=False&isDms=False",
+              "datePublished": "2021-08-12T17:20:04+02:00"
+            }
+          ],
+          "productSpecific": "uitkering"
+        }
+      ]
+    },
+    {
+      "id": "acebd0b275ddae927f4467652b595ca3",
+      "title": "bbz",
+      "dateStart": "2021-09-01T17:20:04+02:00",
+      "datePublished": "2021-09-15T17:20:04+02:00",
+      "dateEnd": null,
+      "decision": null,
+      "status": "aanvraag",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "title": "Aanvraag",
+          "datePublished": "2021-09-01T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "4400000146",
+              "dceId": "844",
+              "title": "Aanvraag Bbz\n2021-09-01T17:20:04+02:00",
+              "url": "/focus/document?id=4400000146&isBulk=True&isDms=False",
+              "datePublished": "2021-09-01T17:20:04+02:00"
+            },
+            {
+              "id": "4400000147",
+              "dceId": "844",
+              "title": "Aanvraag Bbz\n2021-09-15T17:20:04+02:00",
+              "url": "/focus/document?id=4400000147&isBulk=True&isDms=False",
+              "datePublished": "2021-09-15T17:20:04+02:00"
+            }
+          ]
+        },
+        {
+          "id": "beslisTermijn",
+          "title": "Tijd nodig",
+          "datePublished": "2021-09-02T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000010211",
+              "dceId": "175855",
+              "title": "Brief verlenging beslistermijn",
+              "url": "/focus/document?id=660000000010211&isBulk=False&isDms=False",
+              "datePublished": "2021-09-02T17:20:04+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "51491181e840c5528f529ad58a2195bf",
+      "title": "ioaz",
+      "dateStart": "2021-09-16T17:20:04+02:00",
+      "datePublished": "2021-09-16T17:20:04+02:00",
+      "dateEnd": null,
+      "decision": null,
+      "status": "herstelTermijn",
+      "steps": [
+        {
+          "id": "herstelTermijn",
+          "title": "Informatie nodig",
+          "datePublished": "2021-09-16T17:20:04+02:00",
+          "documents": [
+            {
+              "id": "660000000010212",
+              "dceId": "176322",
+              "title": "Brief verzoek om meer informatie",
+              "url": "/focus/document?id=660000000010212&isBulk=False&isDms=False",
+              "datePublished": "2021-09-16T17:20:04+02:00"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

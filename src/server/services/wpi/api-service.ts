@@ -11,7 +11,12 @@ import { requestProcess as bijstandsuitkeringRequestProcessLabels } from './cont
 import { requestProcess as stadspasRequestProcessLabels } from './content/stadspas';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
 import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
-import { WpiRequestProcess, WpiRequestProcessLabels } from './focus-types';
+import {
+  WpiIncomeSpecificationResponseData,
+  WpiIncomeSpecificationResponseDataTransformed,
+  WpiRequestProcess,
+  WpiRequestProcessLabels,
+} from './focus-types';
 import { transformToStatusLine } from './helpers';
 
 type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
@@ -161,10 +166,11 @@ export function fetchSpecificaties(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = requestData<StatusLine[]>(
+  const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
     getApiConfig('WPI_SPECIFICATIES', {
-      transformResponse: (response: ApiSuccessResponse<any>) =>
-        response.content,
+      transformResponse: (
+        response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
+      ) => response.content,
     }),
     sessionID,
     passthroughRequestHeaders

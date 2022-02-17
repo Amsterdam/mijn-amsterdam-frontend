@@ -1,29 +1,23 @@
 import { differenceInMonths } from 'date-fns';
 import { Chapters, IS_PRODUCTION } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
-import {
-  dateFormat,
-  dateSort,
-  defaultDateFormat,
-} from '../../../universal/helpers';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccesResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
+import { fetchSpecificaties } from './api-service';
 import {
-  fetchFOCUSCombined,
-  FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
-} from './focus-combined';
+  WpiIncomeSpecification,
+  WpiIncomeSpecificationResponseData,
+  WpiIncomeSpecificationTransformed,
+} from './focus-types';
+import { documentDownloadName } from './helpers';
 
 const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
-
-export interface FocusInkomenSpecificatie
-  extends FocusInkomenSpecificatieFromSource {
-  displayDatePublished: string;
-}
 
 function isNotificationActual(
   type: 'uitkering' | 'jaaropgave',
@@ -39,7 +33,7 @@ function isNotificationActual(
 
 function transformIncomeSpecificationNotification(
   type: 'jaaropgave' | 'uitkering',
-  item: FocusInkomenSpecificatieFromSource
+  item: WpiIncomeSpecification
 ): MyNotification {
   if (type === 'jaaropgave') {
     return {
@@ -75,43 +69,30 @@ function transformIncomeSpecificationNotification(
 }
 
 function transformIncomSpecificationItem(
-  item: FocusInkomenSpecificatieFromSource
-): FocusInkomenSpecificatie {
+  item: WpiIncomeSpecification
+): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
-  const categoryFromSource = item.type;
+  const categoryFromSource = item.variant;
   return {
     ...item,
     category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
-    type: 'pdf',
     url,
     download: documentDownloadName(item),
     displayDatePublished,
   };
 }
 
-export interface FOCUSIncomeSpecificationSourceDataContent {
-  jaaropgaven: FocusInkomenSpecificatieFromSource[];
-  uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
-}
-
-export interface IncomeSpecifications {
-  jaaropgaven: FocusInkomenSpecificatie[];
-  uitkeringsspecificaties: FocusInkomenSpecificatie[];
-}
-
 export function transformFOCUSIncomeSpecificationsData(
-  responseContent: FOCUSIncomeSpecificationSourceDataContent
+  responseContent: WpiIncomeSpecificationResponseData
 ) {
-  const jaaropgaven = (responseContent.jaaropgaven || [])
-    .sort(dateSort('datePublished', 'desc'))
-    .map((item) => transformIncomSpecificationItem(item));
+  const jaaropgaven = (responseContent.jaaropgaven || []).map((item) =>
+    transformIncomSpecificationItem(item)
+  );
 
   const uitkeringsspecificaties = (
     responseContent.uitkeringsspecificaties || []
-  )
-    .sort(dateSort('datePublished', 'desc'))
-    .map((item) => transformIncomSpecificationItem(item));
+  ).map((item) => transformIncomSpecificationItem(item));
 
   return {
     jaaropgaven,
@@ -123,17 +104,18 @@ export async function fetchFOCUSSpecificaties(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const combinedData = await fetchFOCUSCombined(
+  const specificationsResponseData = await fetchSpecificaties(
     sessionID,
     passthroughRequestHeaders
   );
 
-  if (combinedData.status === 'OK') {
+  if (specificationsResponseData.status === 'OK') {
     return apiSuccesResult(
-      transformFOCUSIncomeSpecificationsData(combinedData.content)
+      transformFOCUSIncomeSpecificationsData(specificationsResponseData.content)
     );
   }
-  return combinedData;
+
+  return specificationsResponseData;
 }
 
 export async function fetchFOCUSSpecificationsGenerated(

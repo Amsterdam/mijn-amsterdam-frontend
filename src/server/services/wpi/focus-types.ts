@@ -49,3 +49,28 @@ export interface WpiRequestStatusLabels {
 export interface WpiRequestProcessLabels {
   [id: string]: WpiRequestStatusLabels;
 }
+
+export interface WpiIncomeSpecification {
+  datePublished: string;
+  id: string;
+  title: string;
+  variant: string;
+  url: string;
+}
+
+export interface WpiIncomeSpecificationTransformed
+  extends WpiIncomeSpecification {
+  displayDatePublished: string;
+  category: string;
+  download: string;
+}
+
+export interface WpiIncomeSpecificationResponseData {
+  jaaropgaven: WpiIncomeSpecification[];
+  uitkeringsspecificaties: WpiIncomeSpecification[];
+}
+
+export interface WpiIncomeSpecificationResponseDataTransformed {
+  jaaropgaven: WpiIncomeSpecificationTransformed[];
+  uitkeringsspecificaties: WpiIncomeSpecificationTransformed[];
+}
