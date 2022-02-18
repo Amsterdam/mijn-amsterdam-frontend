@@ -125,7 +125,7 @@ export default function StatusDetail({
       </PageContent>
       {!!(statusItem?.steps && statusItem.steps.length) && (
         <StatusLineComponent
-          trackCategory={`${chapter} / ${statusItem?.productTitle} status`}
+          trackCategory={`${chapter} / ${statusItem?.about} status`}
           statusLabel={
             typeof statusLabel === 'function'
               ? statusLabel(statusItem)

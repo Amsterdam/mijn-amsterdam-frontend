@@ -65,7 +65,7 @@ export function isChapterActive(
     case Chapters.STADSPAS:
       const hasStadspasSaldo = !!WPI_STADSPAS?.content?.stadspassen?.length;
       const hasStadspasAanvragen = !!WPI_AANVRAGEN?.content?.filter(
-        (aanvraag) => aanvraag.productTitle === 'Stadspas'
+        (aanvraag) => aanvraag.about === 'Stadspas'
       )?.length;
       const isLoadingStadspas =
         isLoading(WPI_STADSPAS) || isLoading(WPI_AANVRAGEN);

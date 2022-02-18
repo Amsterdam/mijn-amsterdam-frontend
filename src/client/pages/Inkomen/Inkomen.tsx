@@ -1,10 +1,10 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
   Alert,
@@ -64,30 +64,27 @@ export default function Inkomen() {
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
-  const items: StatusItemRequestProcess[] = useMemo(() => {
+  const items: StatusLine[] = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
     }
 
-    return addTitleLinkComponent(
-      [
-        ...(aanvragen || []),
-        ...(tozoItems || []),
-        ...(tonkItems || []),
-        ...(bbzItems || []),
-      ]
-        .filter((item) => item.productTitle !== 'Stadspas')
-        .map((item) => {
-          return Object.assign({}, item, {
-            displayDateEnd: defaultDateFormat(
-              item.dateEnd || item.datePublished
-            ),
-            displayDateStart: defaultDateFormat(item.dateStart),
-            status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
-          });
-        })
-        .sort(dateSort('datePublished', 'desc'))
-    );
+    const items = [
+      ...(aanvragen || []),
+      ...(tozoItems || []),
+      ...(tonkItems || []),
+      ...(bbzItems || []),
+    ]
+      .map((item) => {
+        return Object.assign({}, item, {
+          displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
+          displayDateStart: defaultDateFormat(item.dateStart),
+          status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
+        });
+      })
+      .sort(dateSort('datePublished', 'desc'));
+
+    return addTitleLinkComponent(items);
   }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');

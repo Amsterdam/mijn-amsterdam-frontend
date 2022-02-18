@@ -1,5 +1,5 @@
-import { WpiRequestStatusLabels } from '../focus-types';
 import { productName } from '../helpers';
+import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
 const beslisTermijnLabels: WpiRequestStatusLabels = {

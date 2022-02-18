@@ -3,7 +3,7 @@ import { parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   Button,
@@ -54,7 +54,7 @@ export default function InkomenSpecificaties() {
         ? focusSpecificatiesWithDocumentLinks.content?.jaaropgaven
         : focusSpecificatiesWithDocumentLinks.content
             ?.uitkeringsspecificaties) || []
-    );
+    ).sort(dateSort('datePublished', 'desc'));
   }, [isAnnualStatementOverviewPage, focusSpecificatiesWithDocumentLinks]);
 
   const maxDate = useMemo(() => {

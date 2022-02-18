@@ -70,7 +70,6 @@ export interface GenericDocument {
   title: string;
   url: string;
   download?: string;
-  type: string;
   datePublished: string;
 }
 
@@ -91,7 +90,7 @@ export interface StatusLineItem {
 export interface StatusLine {
   id: string;
   title: string;
-  productTitle?: string;
+  about?: string;
   link: LinkProps;
   steps: StatusLineItem[];
   [key: string]: any;

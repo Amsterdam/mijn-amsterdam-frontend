@@ -4,7 +4,7 @@ import { MyCase } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as BijstandsuitkeringProcessLabels } from './content/bijstandsuitkering';
 import { requestProcess as StadspasProcessLabels } from './content/stadspas';
-import { WpiRequestProcess, WpiRequestProcessLabels } from './focus-types';
+import { WpiRequestProcess, WpiRequestProcessLabels } from './wpi-types';
 
 export function transformToStatusLine(
   requestProcess: WpiRequestProcess,
@@ -96,6 +96,6 @@ export function productName(
 ) {
   const hasProductSpecific = !!statusStep?.productSpecific;
   return `${hasProductSpecific && includeArticle ? 'de ' : ''}${
-    requestProcess.title // TODO: This will result in a long title, correct this with an about or productTitle property.
+    requestProcess.title // TODO: This will result in a long title, correct this with an about or about property.
   }${hasProductSpecific ? ` ${statusStep?.productSpecific}` : ''}`;
 }

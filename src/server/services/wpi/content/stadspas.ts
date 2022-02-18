@@ -1,5 +1,9 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
-import { WpiRequestProcessLabels } from '../focus-types';
+import { generatePath } from 'react-router-dom';
+import { AppState } from '../../../../client/AppState';
+import { AppRoutes, Chapters } from '../../../../universal/config';
+import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
+import { MyNotification } from '../../../../universal/types';
+import { WpiRequestProcessLabels } from '../wpi-types';
 
 export const requestProcess: WpiRequestProcessLabels = {
   aanvraag: {
@@ -107,3 +111,65 @@ export const requestProcess: WpiRequestProcessLabels = {
     },
   },
 };
+
+const BUDGET_NOTIFICATION_DATE_START = '2021-06-01';
+const BUDGET_NOTIFICATION_DATE_END = '2021-08-31';
+const BUDGET_NOTIFICATION_BALANCE_THRESHOLD = 10;
+const BUDGET_NOTIFICATION_PARENT = `
+  Uw kind heeft nog een saldo van €${BUDGET_NOTIFICATION_BALANCE_THRESHOLD} of meer voor het kindtegoed.
+  Het saldo vervalt op ${defaultDateFormat(BUDGET_NOTIFICATION_DATE_END)}.
+  `;
+const BUDGET_NOTIFICATION_CHILD = `
+  Je hebt nog een saldo van €${BUDGET_NOTIFICATION_BALANCE_THRESHOLD} of meer voor het kindtegoed.
+  Het saldo vervalt op ${defaultDateFormat(BUDGET_NOTIFICATION_DATE_END)}.
+  `;
+
+export function getNotifications(
+  stadspasContent: AppState['WPI_STADSPAS']['content']
+) {
+  const notifications: MyNotification[] = [];
+
+  if (!stadspasContent) {
+    return notifications;
+  }
+
+  const createNotificationBudget = (
+    description: string,
+    stadspasId?: number
+  ) => ({
+    id: `stadspas-budget-notification`,
+    datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
+    chapter: Chapters.STADSPAS,
+    title: 'Stadspas kindtegoed: maak het saldo op',
+    description,
+    link: {
+      to: stadspasId
+        ? generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspasId })
+        : AppRoutes.STADSPAS,
+      title: 'Check het saldo',
+    },
+  });
+
+  const stadspas = stadspasContent.stadspassen?.find((stadspas) =>
+    stadspas.budgets.some(
+      (budget) => budget.budgetBalance >= BUDGET_NOTIFICATION_BALANCE_THRESHOLD
+    )
+  );
+
+  const needsNotification = !!stadspas;
+  const isParent = stadspasContent.ownerType !== 'kind';
+  const now = new Date();
+
+  if (
+    needsNotification &&
+    now >= new Date(BUDGET_NOTIFICATION_DATE_START) &&
+    now <= new Date(BUDGET_NOTIFICATION_DATE_END)
+  ) {
+    const notification = isParent
+      ? createNotificationBudget(BUDGET_NOTIFICATION_PARENT)
+      : createNotificationBudget(BUDGET_NOTIFICATION_CHILD, stadspas?.id);
+    notifications.push(notification);
+  }
+
+  return notifications;
+}

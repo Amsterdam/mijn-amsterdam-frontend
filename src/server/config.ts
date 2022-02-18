@@ -38,6 +38,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   cancelTimeout?: number;
   postponeFetch?: boolean;
   urls?: Record<string, string>;
+  cacheKey?: string;
 }
 
 const ONE_SECOND_MS = 1000;

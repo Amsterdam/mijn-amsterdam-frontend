@@ -1,39 +1,55 @@
+import { API_BASE_PATH } from '../../../universal/config';
 import {
   apiErrorResult,
   apiSuccesResult,
   ApiSuccessResponse,
+  defaultDateFormat,
 } from '../../../universal/helpers';
 import { MyNotification, StatusLine } from '../../../universal/types';
 import { getApiConfig, SourceApiKey } from '../../config';
 import { requestData } from '../../helpers';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as bijstandsuitkeringRequestProcessLabels } from './content/bijstandsuitkering';
-import { requestProcess as stadspasRequestProcessLabels } from './content/stadspas';
+import {
+  getNotifications as getStadspasNotifications,
+  requestProcess as stadspasRequestProcessLabels,
+} from './content/stadspas';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
 import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
+import { documentDownloadName, transformToStatusLine } from './helpers';
 import {
+  WpiIncomeSpecification,
   WpiIncomeSpecificationResponseData,
   WpiIncomeSpecificationResponseDataTransformed,
+  WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
   WpiRequestProcessLabels,
-} from './focus-types';
-import { transformToStatusLine } from './helpers';
+  WpiStadspasResponseData,
+} from './wpi-types';
+
+const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
 
 type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
   response: ApiSuccessResponse<R>
 ) => R;
 
+interface FetchConfig {
+  apiConfigName: SourceApiKey;
+  filterResponse: FilterResponse<any>;
+  requestCacheKey: string;
+}
+
 function fetchRequestProcess<R extends WpiRequestProcess>(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  apiConfigName: SourceApiKey,
   labels: WpiRequestProcessLabels,
-  filterResponse: FilterResponse<any> = (response) => response.content
+  fetchConfig: FetchConfig
 ) {
   const response = requestData<StatusLine[]>(
-    getApiConfig(apiConfigName, {
+    getApiConfig(fetchConfig.apiConfigName, {
+      cacheKey: fetchConfig.requestCacheKey,
       transformResponse: [
-        filterResponse,
+        fetchConfig.filterResponse,
         (response: R[]) =>
           response.map((requestProcess) =>
             transformToStatusLine(requestProcess, labels)
@@ -53,15 +69,18 @@ export function fetchBijstandsuitkering(
 ) {
   const filterResponse: FilterResponse = (response) =>
     response.content.filter(
-      (requestProcess) => requestProcess.title === 'Bijstandsuitkering'
+      (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
     );
 
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    'WPI_AANVRAGEN',
     bijstandsuitkeringRequestProcessLabels,
-    filterResponse
+    {
+      apiConfigName: 'WPI_AANVRAGEN',
+      filterResponse,
+      requestCacheKey: 'fetch-aanvragen-bijstandsuitkering-' + sessionID,
+    }
   );
 }
 
@@ -70,21 +89,23 @@ export async function fetchStadspas(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) => {
-    console.log('response', response);
     return response.content.filter(
-      (requestProcess) => requestProcess.title === 'Stadspas'
+      (requestProcess) => requestProcess.about === 'Stadspas'
     );
   };
 
   const aanvragenRequest = fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    'WPI_AANVRAGEN',
     stadspasRequestProcessLabels,
-    filterResponse
+    {
+      apiConfigName: 'WPI_AANVRAGEN',
+      filterResponse,
+      requestCacheKey: 'fetch-aanvragen-stadspas-' + sessionID,
+    }
   );
 
-  const stadspassenRequest = requestData<StatusLine[]>(
+  const stadspassenRequest = requestData<WpiStadspasResponseData>(
     getApiConfig('WPI_STADSPAS', {
       transformResponse: (response: ApiSuccessResponse<any>) =>
         response.content,
@@ -110,19 +131,20 @@ export function fetchTozo(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) => {
-    console.log('fetch tozo', response.content);
     return response.content.filter((requestProcess) => {
-      console.log('req', requestProcess);
-      return requestProcess.title.startsWith('Tozo');
+      return requestProcess.about.startsWith('Tozo');
     });
   };
 
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    'WPI_E_AANVRAGEN',
     tozoRequestProcessLabels,
-    filterResponse
+    {
+      apiConfigName: 'WPI_E_AANVRAGEN',
+      filterResponse,
+      requestCacheKey: 'fetch-aanvragen-tozo-' + sessionID,
+    }
   );
 }
 
@@ -132,15 +154,18 @@ export function fetchBbz(
 ) {
   const filterResponse: FilterResponse = (response) =>
     response.content.filter((requestProcess) =>
-      requestProcess.title.includes('Bbz')
+      requestProcess.about.startsWith('Bbz')
     );
 
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    'WPI_E_AANVRAGEN',
     bbzRequestProcessLabels,
-    filterResponse
+    {
+      apiConfigName: 'WPI_E_AANVRAGEN',
+      filterResponse,
+      requestCacheKey: 'fetch-aanvragen-bbz-' + sessionID,
+    }
   );
 }
 
@@ -150,16 +175,47 @@ export function fetchTonk(
 ) {
   const filterResponse: FilterResponse = (response) =>
     response.content.filter(
-      (requestProcess) => requestProcess.title === 'TONK'
+      (requestProcess) => requestProcess.about === 'TONK'
     );
 
   return fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    'WPI_E_AANVRAGEN',
     tonkRequestProcessLabels,
-    filterResponse
+    {
+      apiConfigName: 'WPI_E_AANVRAGEN',
+      filterResponse,
+      requestCacheKey: 'fetch-aanvragen-tonk-' + sessionID,
+    }
   );
+}
+
+export function transformIncomSpecificationItem(
+  item: WpiIncomeSpecification
+): WpiIncomeSpecificationTransformed {
+  const displayDatePublished = defaultDateFormat(item.datePublished);
+  const url = `${API_BASE_PATH}/${item.url}`;
+  const categoryFromSource = item.variant;
+  return {
+    ...item,
+    category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
+    url,
+    download: documentDownloadName(item),
+    displayDatePublished,
+  };
+}
+
+export function transformIncomSpecificationResponse(
+  response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
+) {
+  return {
+    jaaropgaven: response.content.jaaropgaven.map(
+      transformIncomSpecificationItem
+    ),
+    uitkeringsspecificaties: response.content.uitkeringsspecificaties.map(
+      transformIncomSpecificationItem
+    ),
+  };
 }
 
 export function fetchSpecificaties(
@@ -168,9 +224,7 @@ export function fetchSpecificaties(
 ) {
   const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
     getApiConfig('WPI_SPECIFICATIES', {
-      transformResponse: (
-        response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
-      ) => response.content,
+      transformResponse: transformIncomSpecificationResponse,
     }),
     sessionID,
     passthroughRequestHeaders
@@ -187,11 +241,19 @@ export function fetchBijstandsuitkeringGenerated(
   return apiSuccesResult([] as MyNotification[]);
 }
 
-export function fetchStadspasGenerated(
+export async function fetchStadspasGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return apiSuccesResult([] as MyNotification[]);
+  const { status, content } = await fetchStadspas(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  let notifications: MyNotification[] = [];
+  if (status === 'OK') {
+    notifications = getStadspasNotifications(content);
+  }
+  return apiSuccesResult(notifications);
 }
 
 export function fetchSpecificationsGenerated(

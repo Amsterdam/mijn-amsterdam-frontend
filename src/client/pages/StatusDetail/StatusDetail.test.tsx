@@ -15,7 +15,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         status: 'Besluit',
-        productTitle: 'Test item',
+        about: 'Test item',
         link: {
           to: 'http://some.page/with/path/segments/aanvraag-1',
           title: 'Aanvraag Test item',
@@ -82,7 +82,7 @@ describe('<StatusDetail />', () => {
           pageContent={pageContent}
           maxStepCount={() => -1}
           highlightKey={false}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }
@@ -110,7 +110,7 @@ describe('<StatusDetail />', () => {
           stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }
@@ -140,7 +140,7 @@ describe('<StatusDetail />', () => {
           stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
   Alert,
@@ -22,9 +22,9 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Stadspas.module.scss';
 
 const stadspasDisplayProps = {
-  naam: '',
-  pasnummer: 'Stadspasnummer',
-  displayDatumAfloop: 'Einddatum',
+  owner: '',
+  passNumber: 'Stadspasnummer',
+  displayDateEnd: 'Einddatum',
   detailPageUrl: 'Tegoed',
 };
 
@@ -39,16 +39,15 @@ const decisionsDisplayProps = {
 };
 
 export default function Stadspas() {
-  const { WPI_AANVRAGEN, WPI_STADSPAS } = useAppStateGetter();
-  const aanvragen = WPI_AANVRAGEN.content;
+  const { WPI_STADSPAS } = useAppStateGetter();
+  const aanvragen = WPI_STADSPAS.content?.aanvragen;
 
-  const items: StatusItemRequestProcess[] = useMemo(() => {
+  const items: StatusLine[] = useMemo(() => {
     if (!aanvragen) {
       return [];
     }
     return addTitleLinkComponent(
       aanvragen
-        .filter((aanvraag) => aanvraag.productTitle === 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
             displayDateEnd: defaultDateFormat(
@@ -75,7 +74,7 @@ export default function Stadspas() {
     return WPI_STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,
-        displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
+        displayDateEnd: defaultDateFormat(stadspas.dateEnd),
         detailPageUrl: !!stadspas.budgets.length && (
           <LinkdInline
             href={generatePath(AppRoutes['STADSPAS/SALDO'], {
@@ -89,7 +88,6 @@ export default function Stadspas() {
     });
   }, [WPI_STADSPAS.content]);
 
-  const isLoadingFocus = isLoading(WPI_AANVRAGEN);
   const isLoadingStadspas = isLoading(WPI_STADSPAS);
 
   return (
@@ -106,7 +104,7 @@ export default function Stadspas() {
       </PageHeading>
       <PageContent>
         <p>Hieronder vindt u meer informatie over uw eigen Stadspas.</p>
-        {!isLoadingStadspas && WPI_STADSPAS.content?.type !== 'kind' && (
+        {!isLoadingStadspas && WPI_STADSPAS.content?.ownerType !== 'kind' && (
           <p>
             Hebt u kinderen of een partner met een Stadspas? Dan ziet u
             hieronder ook hun Stadspassen.
@@ -118,7 +116,7 @@ export default function Stadspas() {
           </Linkd>
         </p>
         <MaintenanceNotifications page="stadspas" />
-        {(isError(WPI_AANVRAGEN) || isError(WPI_STADSPAS)) && (
+        {isError(WPI_STADSPAS) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -151,7 +149,7 @@ export default function Stadspas() {
         id="SectionCollapsible-stadspas-request-process"
         title="Lopende aanvragen"
         startCollapsed={hasStadspas}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingStadspas}
         hasItems={hasActiveRequests}
         track={{
           category: 'Stadspas overzicht / Lopende aanvragen',
@@ -170,7 +168,7 @@ export default function Stadspas() {
       <SectionCollapsible
         id="SectionCollapsible-stadspas-request-process-decisions"
         startCollapsed={true}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingStadspas}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
         track={{

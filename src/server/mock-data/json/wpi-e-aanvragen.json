@@ -2,8 +2,9 @@
   "status": "OK",
   "content": [
     {
-      "id": "20aa14d54e639f3a24d46d73d2d1dda4",
-      "title": "tozo 1",
+      "id": "5aa010eb4f8f4292f3626493297bee0d",
+      "title": "Tozo 1 (aangevraagd voor 1 juni 2020)",
+      "about": "Tozo 1",
       "dateStart": "2020-03-27T17:20:04+01:00",
       "datePublished": "2020-04-08T17:20:04+02:00",
       "dateEnd": "2020-04-08T17:20:04+02:00",
@@ -12,7 +13,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2020-03-27T17:20:04+01:00",
           "documents": [
             {
@@ -40,7 +41,7 @@
         },
         {
           "id": "voorschot",
-          "title": "Voorschot",
+          "status": "Voorschot",
           "datePublished": "2020-04-03T17:20:04+02:00",
           "documents": [
             {
@@ -54,7 +55,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2020-04-08T17:20:04+02:00",
           "documents": [
             {
@@ -71,8 +72,9 @@
       ]
     },
     {
-      "id": "d5ebbb6f0c614d3c5d2d46244225a54e",
-      "title": "tozo 2",
+      "id": "894441ef14967399d06515d0751f691a",
+      "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)",
+      "about": "Tozo 2",
       "dateStart": "2020-06-19T17:20:04+02:00",
       "datePublished": "2020-07-04T17:20:04+02:00",
       "dateEnd": "2020-07-04T17:20:04+02:00",
@@ -81,7 +83,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2020-06-19T17:20:04+02:00",
           "documents": [
             {
@@ -95,7 +97,7 @@
         },
         {
           "id": "voorschot",
-          "title": "Voorschot",
+          "status": "Voorschot",
           "datePublished": "2020-06-23T17:20:04+02:00",
           "documents": [
             {
@@ -109,7 +111,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2020-07-03T17:20:04+02:00",
           "documents": [
             {
@@ -125,7 +127,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2020-07-04T17:20:04+02:00",
           "documents": [
             {
@@ -141,8 +143,9 @@
       ]
     },
     {
-      "id": "4fd95b1258236fee33263d34c04515f7",
-      "title": "tozo 3",
+      "id": "73bc1890328ed8f5afc3d670d940d4bd",
+      "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)",
+      "about": "Tozo 3",
       "dateStart": "2020-10-14T17:20:04+02:00",
       "datePublished": "2020-10-27T17:20:04+01:00",
       "dateEnd": "2020-10-27T17:20:04+01:00",
@@ -151,7 +154,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2020-10-14T17:20:04+02:00",
           "documents": [
             {
@@ -165,7 +168,7 @@
         },
         {
           "id": "voorschot",
-          "title": "Voorschot",
+          "status": "Voorschot",
           "datePublished": "2020-10-19T17:20:04+02:00",
           "documents": [
             {
@@ -179,7 +182,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2020-10-23T17:20:04+02:00",
           "documents": [
             {
@@ -195,7 +198,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2020-10-27T17:20:04+01:00",
           "documents": [
             {
@@ -211,8 +214,9 @@
       ]
     },
     {
-      "id": "a991c7474990c183ea949eeebe54363a",
-      "title": "tozo 4",
+      "id": "383e8dbbdcb24b40f4300aab6410cfeb",
+      "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",
+      "about": "Tozo 4",
       "dateStart": "2021-04-02T18:53:05+02:00",
       "datePublished": "2021-04-08T18:53:05+02:00",
       "dateEnd": "2021-04-08T18:53:05+02:00",
@@ -221,7 +225,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2021-04-02T18:53:05+02:00",
           "documents": [
             {
@@ -235,7 +239,7 @@
         },
         {
           "id": "voorschot",
-          "title": "Voorschot",
+          "status": "Voorschot",
           "datePublished": "2021-04-04T18:53:05+02:00",
           "documents": [
             {
@@ -249,7 +253,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-04-06T18:53:05+02:00",
           "documents": [
             {
@@ -265,7 +269,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-04-08T18:53:05+02:00",
           "documents": [
             {
@@ -281,8 +285,9 @@
       ]
     },
     {
-      "id": "2ccc038219efa26cb68078371346c915",
-      "title": "tozo 5",
+      "id": "394c96cf9c9c56a62ffd3cd9ebe1ebd2",
+      "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)",
+      "about": "Tozo 5",
       "dateStart": "2021-07-02T18:53:05+02:00",
       "datePublished": "2021-07-08T18:53:05+02:00",
       "dateEnd": "2021-07-08T18:53:05+02:00",
@@ -291,7 +296,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2021-07-02T18:53:05+02:00",
           "documents": [
             {
@@ -305,7 +310,7 @@
         },
         {
           "id": "voorschot",
-          "title": "Voorschot",
+          "status": "Voorschot",
           "datePublished": "2021-07-04T18:53:05+02:00",
           "documents": [
             {
@@ -319,7 +324,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-07-06T18:53:05+02:00",
           "documents": [
             {
@@ -335,7 +340,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-07-08T18:53:05+02:00",
           "documents": [
             {
@@ -351,8 +356,9 @@
       ]
     },
     {
-      "id": "5ca2e7f75c021f8d6b23227ed802b158",
-      "title": "tonk",
+      "id": "d6a551cc9fb5eee40c3396f78c00786a",
+      "title": "TONK",
+      "about": "TONK",
       "dateStart": "2021-01-05T17:20:04+01:00",
       "datePublished": "2021-08-12T17:20:04+02:00",
       "dateEnd": "2021-08-10T17:20:04+02:00",
@@ -361,7 +367,7 @@
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2021-01-05T17:20:04+01:00",
           "documents": [
             {
@@ -376,7 +382,7 @@
         },
         {
           "id": "herstelTermijn",
-          "title": "Informatie nodig",
+          "status": "Informatie nodig",
           "datePublished": "2021-01-06T17:20:04+01:00",
           "documents": [
             {
@@ -391,7 +397,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-01-07T17:20:04+01:00",
           "documents": [
             {
@@ -407,7 +413,7 @@
         },
         {
           "id": "correctiemail",
-          "title": "Mail",
+          "status": "Mail",
           "datePublished": "2021-08-08T17:20:04+02:00",
           "documents": [
             {
@@ -422,7 +428,7 @@
         },
         {
           "id": "besluit",
-          "title": "Besluit",
+          "status": "Besluit",
           "datePublished": "2021-08-10T17:20:04+02:00",
           "documents": [
             {
@@ -438,7 +444,7 @@
         },
         {
           "id": "briefWeigering",
-          "title": "Brief",
+          "status": "Brief",
           "datePublished": "2021-08-12T17:20:04+02:00",
           "documents": [
             {
@@ -454,17 +460,18 @@
       ]
     },
     {
-      "id": "acebd0b275ddae927f4467652b595ca3",
-      "title": "bbz",
+      "id": "9748588bbdf6491845c9b6c2b13c8f28",
+      "title": "Bbz",
+      "about": "Bbz",
       "dateStart": "2021-09-01T17:20:04+02:00",
-      "datePublished": "2021-09-15T17:20:04+02:00",
+      "datePublished": "2021-09-16T17:20:04+02:00",
       "dateEnd": null,
       "decision": null,
-      "status": "aanvraag",
+      "status": "herstelTermijn",
       "steps": [
         {
           "id": "aanvraag",
-          "title": "Aanvraag",
+          "status": "Aanvraag",
           "datePublished": "2021-09-01T17:20:04+02:00",
           "documents": [
             {
@@ -485,7 +492,7 @@
         },
         {
           "id": "beslisTermijn",
-          "title": "Tijd nodig",
+          "status": "Tijd nodig",
           "datePublished": "2021-09-02T17:20:04+02:00",
           "documents": [
             {
@@ -496,21 +503,10 @@
               "datePublished": "2021-09-02T17:20:04+02:00"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "51491181e840c5528f529ad58a2195bf",
-      "title": "ioaz",
-      "dateStart": "2021-09-16T17:20:04+02:00",
-      "datePublished": "2021-09-16T17:20:04+02:00",
-      "dateEnd": null,
-      "decision": null,
-      "status": "herstelTermijn",
-      "steps": [
+        },
         {
           "id": "herstelTermijn",
-          "title": "Informatie nodig",
+          "status": "Informatie nodig",
           "datePublished": "2021-09-16T17:20:04+02:00",
           "documents": [
             {
@@ -520,7 +516,8 @@
               "url": "/focus/document?id=660000000010212&isBulk=False&isDms=False",
               "datePublished": "2021-09-16T17:20:04+02:00"
             }
-          ]
+          ],
+          "about": "IOAZ"
         }
       ]
     }

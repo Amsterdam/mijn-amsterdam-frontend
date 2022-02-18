@@ -1,5 +1,5 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WpiRequestProcessLabels } from '../focus-types';
+import { WpiRequestProcessLabels } from '../wpi-types';
 
 export const FocusExternalUrls = {
   BijstandsUitkeringAanvragenRechten:

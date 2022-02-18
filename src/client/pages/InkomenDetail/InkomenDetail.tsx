@@ -9,12 +9,11 @@ export function InkomenDetailTozo() {
       <>
         <p>
           Hieronder ziet u de status van uw aanvraag voor de{' '}
-          {inkomenItem?.productTitle || 'Tozo'}. Als u meerdere aanvragen voor
-          de {inkomenItem?.productTitle || 'Tozo'} hebt gedaan, dan krijgt u 1
-          besluit als antwoord op al uw aanvragen voor de{' '}
-          {inkomenItem?.productTitle || 'Tozo'}. Het duurt maximaal 3 werkdagen
-          voordat uw documenten over de {inkomenItem?.productTitle || 'Tozo'} in
-          Mijn Amsterdam staan.
+          {inkomenItem?.about || 'Tozo'}. Als u meerdere aanvragen voor de{' '}
+          {inkomenItem?.about || 'Tozo'} hebt gedaan, dan krijgt u 1 besluit als
+          antwoord op al uw aanvragen voor de {inkomenItem?.about || 'Tozo'}.
+          Het duurt maximaal 3 werkdagen voordat uw documenten over de{' '}
+          {inkomenItem?.about || 'Tozo'} in Mijn Amsterdam staan.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
@@ -33,7 +32,7 @@ export function InkomenDetailTozo() {
       pageContent={pageContent}
       maxStepCount={() => -1}
       highlightKey={false}
-      statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+      statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
       documentPathForTracking={(document) =>
         `/downloads/inkomen/tozo/${document.title}`
       }
@@ -68,7 +67,7 @@ export function InkomenDetailTonk() {
       pageContent={pageContent}
       maxStepCount={() => -1}
       highlightKey={false}
-      statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+      statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
       documentPathForTracking={(document) =>
         `/downloads/inkomen/tonk/${document.title}`
       }

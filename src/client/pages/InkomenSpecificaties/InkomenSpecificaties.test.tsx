@@ -1,45 +1,43 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import {
-  FOCUSIncomeSpecificationSourceDataContent,
-  transformFOCUSIncomeSpecificationsData,
-} from '../../../server/services';
+import { transformIncomSpecificationResponse } from '../../../server/services/wpi/api-service';
+import { WpiIncomeSpecificationResponseData } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes } from '../../../universal/config';
 import { dateSort } from '../../../universal/helpers/date';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
 
-const sourceData = {
+const sourceData: WpiIncomeSpecificationResponseData = {
   jaaropgaven: [
     {
       datePublished: '2011-01-28T00:00:00+01:00',
       id: '95330222',
       title: 'Jaaropgave',
-      type: '',
+      variant: '',
       url: 'focus/document?id=95330222&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-01-04T00:00:00+01:00',
       id: '20021871',
       title: 'Jaaropgave',
-      type: '',
+      variant: '',
       url: 'focus/document?id=20021871&isBulk=false&isDms=false',
     },
     {
       datePublished: '2011-01-28T00:00:00+01:00',
       id: '95330223',
       title: 'Jaaropgave',
-      type: '',
+      variant: '',
       url: 'focus/document?id=95330222&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-01-04T00:00:00+01:00',
       id: '20021872',
       title: 'Jaaropgave',
-      type: '',
+      variant: '',
       url: 'focus/document?id=20021871&isBulk=false&isDms=false',
     },
   ],
@@ -48,49 +46,49 @@ const sourceData = {
       datePublished: '2019-04-19T00:00:00+02:00',
       id: '24267671',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=24267671&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-04-19T00:00:00+02:00',
       id: '24267681',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=24267681&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-03-23T00:00:00+01:00',
       id: '24078481',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=24078481&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-03-23T00:00:00+01:00',
       id: '24078491',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=24078491&isBulk=false&isDms=false',
     },
     {
       datePublished: '2014-01-18T00:00:00+01:00',
       id: '30032581',
       title: 'Uitkeringsspecificatie',
-      type: 'WWB',
+      variant: 'WWB',
       url: 'focus/document?id=30032581&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-05-18T00:00:00+02:00',
       id: '31569261',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=31569261&isBulk=false&isDms=false',
     },
     {
       datePublished: '2019-05-18T00:00:00+02:00',
       id: '31569291',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=31569291&isBulk=false&isDms=false',
     },
 
@@ -98,57 +96,58 @@ const sourceData = {
       datePublished: '2012-04-19T00:00:00+02:00',
       id: 'x24267671',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=24267671&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-04-19T00:00:00+02:00',
       id: 'x24267681',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=24267681&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-03-23T00:00:00+01:00',
       id: 'x24078481',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=24078481&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-03-23T00:00:00+01:00',
       id: 'x24078491',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=24078491&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-01-18T00:00:00+01:00',
       id: 'x30032581',
       title: 'Uitkeringsspecificatie',
-      type: 'WWB',
+      variant: 'WWB',
       url: 'focus/document?id=30032581&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-05-18T00:00:00+02:00',
       id: 'x31569261',
       title: 'Uitkeringsspecificatie',
-      type: 'Participatiewet',
+      variant: 'Participatiewet',
       url: 'focus/document?id=31569261&isBulk=false&isDms=false',
     },
     {
       datePublished: '2012-05-18T00:00:00+02:00',
       id: 'x31569291',
       title: 'Uitkeringsspecificatie',
-      type: 'Bijzondere Bijstand',
+      variant: 'Bijzondere Bijstand',
       url: 'focus/document?id=31569291&isBulk=false&isDms=false',
     },
   ].sort(dateSort('datePublished', 'desc')),
 };
 
-const content = transformFOCUSIncomeSpecificationsData(
-  sourceData as FOCUSIncomeSpecificationSourceDataContent
-);
+const content = transformIncomSpecificationResponse({
+  content: sourceData,
+  status: 'OK',
+});
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, {
@@ -161,7 +160,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    type: 'uitkering',
+    variant: 'uitkering',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
@@ -184,42 +183,48 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
   });
 
   it('Allows filtering (search) the results', () => {
-    const { getByText, getByDisplayValue, queryByText } = render(<Component />);
+    render(<Component />);
 
-    expect(getByText('18 januari 2014')).toBeInTheDocument();
+    expect(screen.getByText('18 januari 2014')).toBeInTheDocument();
 
-    userEvent.click(getByText('Zoeken'));
+    userEvent.click(screen.getByText('Zoeken'));
 
-    expect(getByText('Datum van')).toBeInTheDocument();
-    expect(getByDisplayValue('2012-01-18')).toBeInTheDocument();
+    expect(screen.getByText('Datum van')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('2012-01-18')).toBeInTheDocument();
 
-    expect(getByText('Datum t/m')).toBeInTheDocument();
-    expect(getByDisplayValue('2019-05-18')).toBeInTheDocument();
+    expect(screen.getByText('Datum t/m')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('2019-05-18')).toBeInTheDocument();
 
-    expect(getByDisplayValue('Alle regelingen (14)')).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue('Alle regelingen (14)')
+    ).toBeInTheDocument();
 
-    userEvent.type(getByDisplayValue('2012-01-18'), '2019-03-23');
+    userEvent.type(screen.getByDisplayValue('2012-01-18'), '2019-03-23');
 
-    expect(getByDisplayValue('2019-03-23')).toBeInTheDocument();
-    expect(queryByText('18 januari 2014')).toBeNull();
+    expect(screen.getByDisplayValue('2019-03-23')).toBeInTheDocument();
+    expect(screen.queryByText('18 januari 2014')).toBeNull();
   });
 
   it('Has pagination', () => {
-    const { getByText, getByLabelText, asFragment } = render(<Component />);
-    expect(getByText('volgende')).toBeInTheDocument();
-    expect(getByLabelText('Huidige pagina, pagina 1')).toBeInTheDocument();
-    expect(getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
-    userEvent.click(getByText('volgende'));
-    expect(getByLabelText('Huidige pagina, pagina 2')).toBeInTheDocument();
-    expect(getByLabelText('Ga naar pagina 1')).toBeInTheDocument();
-    expect(getByText('18 januari 2012')).toBeInTheDocument();
-    expect(getByText('vorige')).toBeInTheDocument();
+    render(<Component />);
+    expect(screen.getByText('volgende')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Huidige pagina, pagina 1')
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
+    userEvent.click(screen.getByText('volgende'));
+    expect(
+      screen.getByLabelText('Huidige pagina, pagina 2')
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Ga naar pagina 1')).toBeInTheDocument();
+    expect(screen.getByText('18 januari 2012')).toBeInTheDocument();
+    expect(screen.getByText('vorige')).toBeInTheDocument();
   });
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    type: 'jaaropgave',
+    variant: 'jaaropgave',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 

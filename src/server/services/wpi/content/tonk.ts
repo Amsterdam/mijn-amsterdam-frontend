@@ -1,6 +1,6 @@
 import { API_BASE_PATH } from '../../../../universal/config/api';
-import { WpiRequestStatusLabels } from '../focus-types';
 import { documentDownloadName, productName } from '../helpers';
+import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
 const weigeringVerlengingLabels: WpiRequestStatusLabels = {

@@ -11,11 +11,10 @@ import type {
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
-import type {
-  FocusStadspas,
-  FocusStadspasSaldo,
-} from '../../../server/services/wpi/focus-combined';
-import type { StatusItemRequestProcess } from '../../../server/services/wpi/focus-types';
+import {
+  WpiStadspas,
+  WpiStadspasResponseData,
+} from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -25,7 +24,7 @@ import {
 } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types';
+import { LinkProps, StatusLine } from '../../../universal/types';
 import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
 import { AppState } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
@@ -153,13 +152,13 @@ const getFocusConfig = (
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
 > => ({
   stateKey,
-  generateKeywords: (aanvraag: StatusItemRequestProcess) =>
+  generateKeywords: (aanvraag: StatusLine) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
-  displayTitle: (aanvraag: StatusItemRequestProcess) => {
+  displayTitle: (aanvraag: StatusLine) => {
     return (term: string) => {
-      const segments = [`Aanvraag ${aanvraag.productTitle}`];
+      const segments = [`Aanvraag ${aanvraag.about}`];
       if (aanvraag.status === 'Besluit') {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
@@ -269,11 +268,11 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'WPI_STADSPAS' as keyof AppState,
-    getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
+    getApiBaseItems: (apiContent: WpiStadspasResponseData) => {
       const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
         return {
           ...stadspas,
-          title: `Stadspas van ${stadspas.naam}`,
+          title: `Stadspas van ${stadspas.owner}`,
           link: {
             to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
             title: 'Stadspas',
@@ -282,9 +281,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       });
       return stadspassen || [];
     },
-    displayTitle: (stadspas: FocusStadspas) => {
+    displayTitle: (stadspas: WpiStadspas) => {
       return (term: string) => {
-        const segments = [`Stadspas van ${stadspas.naam}`];
+        const segments = [`Stadspas van ${stadspas.owner}`];
         return displayPath(term, segments);
       };
     },

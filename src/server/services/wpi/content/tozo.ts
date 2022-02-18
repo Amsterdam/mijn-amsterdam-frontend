@@ -2,8 +2,8 @@ import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../universal/helpers';
-import { WpiRequestStatusLabels } from '../focus-types';
 import { productName } from '../helpers';
+import { WpiRequestStatusLabels } from '../wpi-types';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
