@@ -27,13 +27,14 @@ export const FeatureToggle = {
   aktesActive: !IS_AP,
   milieuzoneRecentCasesActive: !IS_AP,
   toeristischeVerhuurActive: true,
-  krefiaActive: !IS_PRODUCTION,
+  krefiaActive: true,
   isSearchEnabled: true,
   meldingenBuurtActive: !IS_PRODUCTION,
   inkomenBBZActive: true,
   erfpachtV2EndpointActive: true,
   subsidieActive: !IS_PRODUCTION,
   wiorMeldingen: !IS_PRODUCTION,
+  parkerenActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
@@ -70,7 +71,7 @@ export const ExternalUrls = {
   EH_SSO_BELASTINGEN:
     'https://belastingbalie.amsterdam.nl/eherkenning.saml.php?start',
   SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
-  DIGID_SSO_SUBSIDIE: 'https://mijnsubsidies.amsterdam.nl/loket/',
+  DIGID_SSO_SUBSIDIE: getOtapEnvItem('ssoSubsidiesUrl'),
   EH_SSO_SUBSIDIE: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:

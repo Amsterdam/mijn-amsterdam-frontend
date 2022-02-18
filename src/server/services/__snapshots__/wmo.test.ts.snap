@@ -1,85 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should format WMO data correctly 1`] = `
+exports[`Transform api items All transformations 1`] = `
 Array [
   Object {
     "dateEnd": "",
-    "dateStart": "24 augustus 2021",
-    "id": "2311932295",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2311932295",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2021-08-26",
-        "description": "
-            <p>
-              U hebt recht op een handbewogen kinderrolstoel per 24 augustus 2021.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om een handbewogen kinderrolstoel aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat een handbewogen kinderrolstoel bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": null,
-        "description": "<p>
-            Uw recht op handbewogen kinderrolstoel is beëindigd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Handbewogen kinderrolstoel",
-    "voorzieningsoortcode": "ROL",
-  },
-  Object {
-    "dateEnd": "08 maart 2020",
-    "dateStart": "14 april 2019",
-    "id": "1934044474",
+    "dateStart": "15 januari 2022",
+    "id": "102996420",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1934044474",
+      "to": "/zorg-en-ondersteuning/voorzieningen/102996420",
     },
     "steps": Array [
       Object {
@@ -88,10 +18,10 @@ Array [
               U krijgt dit besluit per post.
             </strong>
           </p>",
-        "datePublished": "2019-04-15",
+        "datePublished": "2022-01-15",
         "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 14 april 2019.
+                U hebt recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.
               </p>
               <p>
                 
@@ -102,18 +32,18 @@ Array [
             ",
         "documents": Array [],
         "id": "status-step-0",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "status": "Besluit",
       },
       Object {
         "datePublished": "",
         "description": "<p>
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           </p>",
         "documents": Array [],
         "id": "status-step-1",
-        "isActive": true,
+        "isActive": false,
         "isChecked": false,
         "status": "Levering gestart",
       },
@@ -131,7 +61,7 @@ Array [
       Object {
         "datePublished": "",
         "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+            Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd 
           </p>",
         "documents": Array [],
         "id": "status-step-3",
@@ -141,519 +71,17 @@ Array [
       },
     ],
     "supplier": "Emile Thuiszorg",
-    "title": "Hulp bij het huishouden",
+    "title": "Hulp bij het huishouden (nog niet geleverd)",
     "voorzieningsoortcode": "WMH",
   },
   Object {
-    "dateEnd": "12 maart 2020",
-    "dateStart": "13 maart 2019",
-    "id": "356612985",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/356612985",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2019-03-14",
-        "description": "
-              <p>
-                U hebt recht op dagbesteding per 13 maart 2019.
-              </p>
-              <p>
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van dagbesteding.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Niet van toepassing.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Dagbesteding",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "08 maart 2020",
-    "dateStart": "09 maart 2019",
-    "id": "1114722425",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1114722425",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2019-03-11",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 09 maart 2019.
-              </p>
-              <p>
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Niet van toepassing.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "08 maart 2020",
-    "dateStart": "09 maart 2019",
-    "id": "187600422",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/187600422",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2019-03-11",
-        "description": "
-              <p>
-                U hebt recht op dagbesteding 2019! 2 per 09 maart 2019.
-              </p>
-              <p>
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van dagbesteding 2019! 2.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Niet van toepassing.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Dagbesteding 2019! 2",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "31 december 2019",
-    "dateStart": "01 januari 2019",
-    "id": "2486178431",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2486178431",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2019-01-31",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 01 januari 2019.
-              </p>
-              <p>
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Familysupporters/Forsa is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Niet van toepassing.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Familysupporters/Forsa",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "31 december 2018",
-    "dateStart": "31 december 2018",
-    "id": "218362300",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/218362300",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2019-01-31",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 31 december 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Familysupporters/Forsa is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Familysupporters/Forsa heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-12-31",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 31 december 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Familysupporters/Forsa",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "08 maart 2019",
-    "dateStart": "28 november 2018",
-    "id": "1139782013",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1139782013",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-11-29",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 28 november 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2019-03-08",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 08 maart 2019
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "20 november 2019",
-    "dateStart": "20 november 2018",
-    "id": "577518514",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/577518514",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2018-11-22",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 20 november 2018.
-              </p>
-              <p>
-                
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Leger des Heils is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Niet van toepassing.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Leger des Heils",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
     "dateEnd": "",
-    "dateStart": "24 oktober 2018",
-    "id": "2215576997",
+    "dateStart": "15 december 2021",
+    "id": "3917854581",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2215576997",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3917854581",
     },
     "steps": Array [
       Object {
@@ -662,228 +90,16 @@ Array [
               U krijgt dit besluit per post.
             </strong>
           </p>",
-        "datePublished": "2018-12-27",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 24 oktober 2018.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "07 september 2018",
-    "id": "611381709",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/611381709",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2018-09-17",
-        "description": "
-            <p>
-              U hebt recht op een handbewogen rolstoel voor semi-permanent gebruik per 07 september 2018.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Medipoint B.V. om een handbewogen rolstoel voor semi-permanent gebruik aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Medipoint B.V. heeft aan ons doorgegeven dat een handbewogen rolstoel voor semi-permanent gebruik bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "title": "Handbewogen rolstoel voor semi-permanent gebruik",
-    "voorzieningsoortcode": "ROL",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "17 juli 2018",
-    "id": "1089844348",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1089844348",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2018-07-20",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 17 juli 2018.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "01 januari 2019",
-    "dateStart": "06 juli 2018",
-    "id": "3481743240",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3481743240",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-08-20",
+        "datePublished": "2022-01-15",
         "description": "
               <p>
-                U hebt recht op dagbesteding per 06 juli 2018.
+                U hebt recht op hulp bij het huishouden (geleverd) per 15 december 2021.
               </p>
               <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
+                  
               </p>
             ",
         "documents": Array [],
@@ -895,193 +111,49 @@ Array [
       Object {
         "datePublished": "",
         "description": "<p>
-            Vivium Zorggroep is gestart met het leveren van dagbesteding.
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           </p>",
         "documents": Array [],
         "id": "status-step-1",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "status": "Levering gestart",
       },
       Object {
         "datePublished": "",
         "description": "<p>
-            Vivium Zorggroep heeft aan ons doorgegeven dat u geen dagbesteding
-            meer krijgt.
+            Niet van toepassing.
           </p>",
         "documents": Array [],
         "id": "status-step-2",
         "isActive": false,
-        "isChecked": true,
+        "isChecked": false,
         "status": "Levering gestopt",
       },
       Object {
-        "datePublished": "2019-01-01",
-        "description": "<p>
-            Uw recht op dagbesteding is beëindigd per 01 januari 2019
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Vivium Zorggroep",
-    "title": "Dagbesteding",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "20 april 2018",
-    "id": "3624221438",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3624221438",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2018-05-09",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 20 april 2018.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
         "datePublished": "",
         "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+            Uw recht op hulp bij het huishouden (geleverd) is beëindigd 
           </p>",
         "documents": Array [],
         "id": "status-step-3",
         "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "13 april 2019",
-    "dateStart": "14 april 2018",
-    "id": "472912430",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/472912430",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-04-25",
-        "description": "
-              <p>
-                U hebt recht op hulp bij het huishouden per 14 april 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2019-04-13",
-        "description": "<p>
-            Uw recht op hulp bij het huishouden is beëindigd per 13 april 2019
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
         "isChecked": false,
         "status": "Einde recht",
       },
     ],
     "supplier": "Emile Thuiszorg",
-    "title": "Hulp bij het huishouden",
+    "title": "Hulp bij het huishouden (geleverd)",
     "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateEnd": "",
-    "dateStart": "06 april 2018",
-    "id": "520299896",
+    "dateStart": "15 december 2021",
+    "id": "879359140",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/520299896",
+      "to": "/zorg-en-ondersteuning/voorzieningen/879359140",
     },
     "steps": Array [
       Object {
@@ -1090,10 +162,153 @@ Array [
               U krijgt dit besluit per post.
             </strong>
           </p>",
-        "datePublished": "2018-04-25",
+        "datePublished": "2022-01-15",
+        "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.
+              </p>
+              <p>
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
+                  
+              </p>
+            ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Levering gestart",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Niet van toepassing.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Levering gestopt",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd 
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": false,
+        "isChecked": false,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Emile Thuiszorg",
+    "title": "Hulp bij het huishouden (tijdelijk gestopt)",
+    "voorzieningsoortcode": "WMH",
+  },
+  Object {
+    "dateEnd": "22 januari 2022",
+    "dateStart": "15 december 2021",
+    "id": "8927959",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/8927959",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+        "datePublished": "2022-01-15",
+        "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden (gestopt) per 15 december 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Levering gestart",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
+            meer krijgt.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActive": false,
+        "isChecked": true,
+        "status": "Levering gestopt",
+      },
+      Object {
+        "datePublished": "2022-01-22",
+        "description": "<p>
+            Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": true,
+        "isChecked": true,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "Emile Thuiszorg",
+    "title": "Hulp bij het huishouden (gestopt)",
+    "voorzieningsoortcode": "WMH",
+  },
+  Object {
+    "dateEnd": "",
+    "dateStart": "15 december 2021",
+    "id": "2314189731",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/2314189731",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+        "datePublished": "2022-01-15",
         "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing per 06 april 2018.
+              U hebt recht op een woonruimte aanpassing (opdracht gegeven) per 15 december 2021.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1109,25 +324,25 @@ Array [
       Object {
         "datePublished": "",
         "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            De gemeente heeft opdracht gegeven aan Aanpassing Thuiszorg om de aanpassingen aan uw woning uit
             te voeren.
           </p>",
         "documents": Array [],
         "id": "status-step-1",
-        "isActive": false,
+        "isActive": true,
         "isChecked": true,
         "status": "Opdracht gegeven",
       },
       Object {
         "datePublished": "",
         "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat de
+            Aanpassing Thuiszorg heeft aan ons doorgegeven dat de
             aanpassing aan uw woning is uitgevoerd.
           </p>",
         "documents": Array [],
         "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
+        "isActive": false,
+        "isChecked": false,
         "status": "Aanpassing uitgevoerd",
       },
       Object {
@@ -1142,302 +357,18 @@ Array [
         "status": "Einde recht",
       },
     ],
-    "supplier": "Welzorg",
-    "title": "Woonruimteaanpassing",
+    "supplier": "Aanpassing Thuiszorg",
+    "title": "Woonruimte aanpassing (opdracht gegeven)",
     "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "08 maart 2019",
-    "dateStart": "09 maart 2018",
-    "id": "825035591",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/825035591",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-04-19",
-        "description": "
-              <p>
-                U hebt recht op dagbesteding 2019! per 09 maart 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van dagbesteding 2019!.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding 2019!
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2019-03-08",
-        "description": "<p>
-            Uw recht op dagbesteding 2019! is beëindigd per 08 maart 2019
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Dagbesteding 2019!",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "21 februari 2019",
-    "dateStart": "21 februari 2018",
-    "id": "112143628",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/112143628",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-03-22",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 21 februari 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            2Learn B.V. is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            2Learn B.V. heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2019-02-21",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "2Learn B.V.",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "30 december 2018",
-    "dateStart": "01 januari 2018",
-    "id": "3997997795",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3997997795",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-08-13",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 01 januari 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Stichting Forsa Amsterdam is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Stichting Forsa Amsterdam heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-12-30",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 30 december 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Stichting Forsa Amsterdam",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "16 februari 2018",
-    "dateStart": "01 januari 2018",
-    "id": "2376456770",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2376456770",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2018-01-01",
-        "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 01 januari 2018.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-02-16",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 16 februari 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Cordaan",
-    "title": "Ambulante ondersteuning",
-    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateEnd": "23 november 2018",
     "dateStart": "24 november 2017",
-    "id": "2284269352",
+    "id": "1890986540",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2284269352",
+      "to": "/zorg-en-ondersteuning/voorzieningen/1890986540",
     },
     "steps": Array [
       Object {
@@ -1448,365 +379,48 @@ Array [
           </p>",
         "datePublished": "2017-11-24",
         "description": "
-              <p>
-                U hebt recht op ambulante ondersteuning per 24 november 2017.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+            <p>
+              U hebt recht op PGB item 1 per 24 november 2017.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
               indienen.
-              </p>
-            ",
+            </p>
+          ",
         "documents": Array [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van ambulante ondersteuning.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen ambulante ondersteuning
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
       },
       Object {
         "datePublished": "2018-11-23",
-        "description": "<p>
-            Uw recht op ambulante ondersteuning is beëindigd per 23 november 2018
-          </p>",
+        "description": "
+            <p>
+              Uw recht op PGB item 1 is beëindigd per 23 november 2018
+            </p>
+
+            
+          ",
         "documents": Array [],
-        "id": "status-step-3",
+        "id": "status-step-1",
         "isActive": true,
         "isChecked": false,
         "status": "Einde recht",
       },
     ],
-    "supplier": "Amstelring",
-    "title": "Ambulante ondersteuning",
+    "supplier": "PGB Ring",
+    "title": "PGB item 1",
     "voorzieningsoortcode": "AO5",
-  },
-  Object {
-    "dateEnd": "08 maart 2018",
-    "dateStart": "01 juni 2017",
-    "id": "3880397096",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3880397096",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2017-06-01",
-        "description": "
-              <p>
-                U hebt recht op dagbesteding per 01 juni 2017.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring is gestart met het leveren van dagbesteding.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-03-08",
-        "description": "<p>
-            Uw recht op dagbesteding is beëindigd per 08 maart 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Amstelring",
-    "title": "Dagbesteding",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "13 april 2018",
-    "dateStart": "01 juni 2017",
-    "id": "2080384683",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2080384683",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2017-06-01",
-        "description": "
-              <p>
-                U hebt recht op hulp bij het huishouden per 01 juni 2017.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-04-13",
-        "description": "<p>
-            Uw recht op hulp bij het huishouden is beëindigd per 13 april 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Emile Thuiszorg",
-    "title": "Hulp bij het huishouden",
-    "voorzieningsoortcode": "WMH",
-  },
-  Object {
-    "dateEnd": "01 mei 2018",
-    "dateStart": "01 juni 2017",
-    "id": "3487826346",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3487826346",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2017-06-01",
-        "description": "
-              <p>
-                U hebt recht op dagbesteding per 01 juni 2017.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan is gestart met het leveren van dagbesteding.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan heeft aan ons doorgegeven dat u geen dagbesteding
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-05-01",
-        "description": "<p>
-            Uw recht op dagbesteding is beëindigd per 01 mei 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Cordaan",
-    "title": "Dagbesteding",
-    "voorzieningsoortcode": "DBS",
-  },
-  Object {
-    "dateEnd": "16 februari 2018",
-    "dateStart": "01 juni 2017",
-    "id": "3735132013",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3735132013",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2017-06-01",
-        "description": "
-              <p>
-                U hebt recht op hulp bij het huishouden per 01 juni 2017.
-              </p>
-              <p>
-                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-              </p>
-            ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan is gestart met het leveren van hulp bij het huishouden.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestart",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Cordaan heeft aan ons doorgegeven dat u geen hulp bij het huishouden
-            meer krijgt.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Levering gestopt",
-      },
-      Object {
-        "datePublished": "2018-02-16",
-        "description": "<p>
-            Uw recht op hulp bij het huishouden is beëindigd per 16 februari 2018
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Cordaan",
-    "title": "Hulp bij het huishouden",
-    "voorzieningsoortcode": "WMH",
-  },
-  Object {
-    "dateEnd": "02 januari 2018",
-    "dateStart": "03 januari 2017",
-    "id": "1206430444",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1206430444",
-    },
-    "steps": Array [],
-    "supplier": undefined,
-    "title": "Specialistische jeugdhulp",
-    "voorzieningsoortcode": "JG01",
   },
   Object {
     "dateEnd": "",
     "dateStart": "28 april 2016",
-    "id": "3825488690",
+    "id": "762205280",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3825488690",
+      "to": "/zorg-en-ondersteuning/voorzieningen/762205280",
     },
     "steps": Array [
       Object {
@@ -1849,854 +463,6 @@ Array [
     "supplier": null,
     "title": "Financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen",
     "voorzieningsoortcode": "MVV",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "19 februari 2015",
-    "id": "959665241",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/959665241",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2015-06-23",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 19 februari 2015.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Ergomedi Bouw B.V. om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Ergomedi Bouw B.V. heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Ergomedi Bouw B.V.",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "16 februari 2015",
-    "id": "3204693915",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3204693915",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2015-02-16",
-        "description": "
-            <p>
-              U hebt recht op een driewielfiets 5-9 jr per 16 februari 2015.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om een driewielfiets 5-9 jr aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat een driewielfiets 5-9 jr bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": null,
-        "description": "<p>
-            Uw recht op driewielfiets 5-9 jr is beëindigd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Driewielfiets 5-9 jr",
-    "voorzieningsoortcode": "FIE",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "29 december 2014",
-    "id": "3682507143",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3682507143",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2005-03-21",
-        "description": "
-            <p>
-              U hebt recht op een scootmobiel voor buitengebruik per 29 december 2014.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Medipoint B.V. om een scootmobiel voor buitengebruik aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Medipoint B.V. heeft aan ons doorgegeven dat een scootmobiel voor buitengebruik bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "title": "Scootmobiel voor buitengebruik",
-    "voorzieningsoortcode": "SCO",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "08 september 2014",
-    "id": "3713250950",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3713250950",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2014-09-09",
-        "description": "
-            <p>
-              U hebt recht op een elektrische hulpaandrijving voor rolstoel per 08 september 2014.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Medipoint B.V. om een elektrische hulpaandrijving voor rolstoel aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Medipoint B.V. heeft aan ons doorgegeven dat een elektrische hulpaandrijving voor rolstoel bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "title": "Elektrische hulpaandrijving voor rolstoel",
-    "voorzieningsoortcode": "OVE",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "08 september 2014",
-    "id": "2231154110",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2231154110",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2014-09-11",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 08 september 2014.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Gebr Koenen B.V.",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "05 december 2013",
-    "id": "975175805",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/975175805",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2013-12-09",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 05 december 2013.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Gebr Koenen B.V.",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "06 mei 2013",
-    "id": "3679649212",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3679649212",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2013-05-17",
-        "description": "
-            <p>
-              U hebt recht op een woonruimteaanpassing per 06 mei 2013.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Aanpassing uitgevoerd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Gebr Koenen B.V.",
-    "title": "Woonruimteaanpassing",
-    "voorzieningsoortcode": "WRA",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "14 maart 2013",
-    "id": "1424403262",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1424403262",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2013-05-13",
-        "description": "
-            <p>
-              U hebt recht op een kinderspeelvoertuig per 14 maart 2013.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om een kinderspeelvoertuig aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat een kinderspeelvoertuig bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Kinderspeelvoertuig",
-    "voorzieningsoortcode": "OVE",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "07 februari 2013",
-    "id": "785385728",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/785385728",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
-        "datePublished": "2013-06-17",
-        "description": "
-            <p>
-              U hebt recht op een buggy per 07 februari 2013.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om een buggy aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat een buggy bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": null,
-        "description": "<p>
-            Uw recht op buggy is beëindigd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Buggy",
-    "voorzieningsoortcode": "OVE",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "30 november 2012",
-    "id": "3803568202",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3803568202",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2012-11-30",
-        "description": "
-            <p>
-              U hebt recht op een autozitje per 30 november 2012.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om een autozitje aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat een autozitje bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Welzorg",
-    "title": "Autozitje",
-    "voorzieningsoortcode": "OVE",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "05 oktober 2012",
-    "id": "1250447180",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1250447180",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2012-10-05",
-        "description": "
-            <p>
-              U hebt recht op een handbewogen rolstoel per 05 oktober 2012.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Medipoint B.V. om een handbewogen rolstoel aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Medipoint B.V. heeft aan ons doorgegeven dat een handbewogen rolstoel bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "title": "Handbewogen rolstoel",
-    "voorzieningsoortcode": "ROL",
-  },
-  Object {
-    "dateEnd": "",
-    "dateStart": "05 oktober 2012",
-    "id": "772624609",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/772624609",
-    },
-    "steps": Array [
-      Object {
-        "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
-        "datePublished": "2012-10-05",
-        "description": "
-            <p>
-              U hebt recht op een douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast) per 05 oktober 2012.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Besluit",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            De gemeente heeft opdracht gegeven aan Medipoint B.V. om een douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast) aan u te leveren.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActive": false,
-        "isChecked": true,
-        "status": "Opdracht gegeven",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Medipoint B.V. heeft aan ons doorgegeven dat een douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast) bij u is afgeleverd.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActive": true,
-        "isChecked": true,
-        "status": "Product geleverd",
-      },
-      Object {
-        "datePublished": "",
-        "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActive": false,
-        "isChecked": false,
-        "status": "Einde recht",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
-    "voorzieningsoortcode": "RWD",
   },
 ]
 `;

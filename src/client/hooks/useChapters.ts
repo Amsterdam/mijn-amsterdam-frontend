@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
@@ -135,7 +134,7 @@ export function isChapterActive(
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Chapters.PARKEREN:
-      return isAmsterdam;
+      return isAmsterdam && FeatureToggle.parkerenActive;
   }
 
   return false;

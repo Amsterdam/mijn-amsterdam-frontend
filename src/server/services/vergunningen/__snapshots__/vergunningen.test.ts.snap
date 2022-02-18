@@ -6,6 +6,36 @@ Object {
     "cases": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-02-07T00:00:00",
+        "id": "vergunning-1939428970-case",
+        "link": Object {
+          "title": "Bekijk hoe het met uw aanvraag staat",
+          "to": "/vergunningen/aanbieden-van-diensten/1939428970",
+        },
+        "title": "Vergunningsaanvraag Aanbieden van diensten Z/22/1597471",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-17T00:00:00",
+        "id": "vergunning-458936654-case",
+        "link": Object {
+          "title": "Bekijk hoe het met uw aanvraag staat",
+          "to": "/vergunningen/aanbieden-van-diensten/458936654",
+        },
+        "title": "Vergunningsaanvraag Aanbieden van diensten Z/22/1597602",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-17T00:00:00",
+        "id": "vergunning-3407608046-case",
+        "link": Object {
+          "title": "Bekijk hoe het met uw aanvraag staat",
+          "to": "/vergunningen/aanbieden-van-diensten/3407608046",
+        },
+        "title": "Vergunningsaanvraag Aanbieden van diensten Z/22/1597712",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-01-13T00:00:00",
         "id": "vergunning-1576394954-case",
         "link": Object {
@@ -276,6 +306,39 @@ Object {
       },
     ],
     "notifications": Array [
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-02-07T00:00:00",
+        "description": "Er is een update in uw vergunningsaanvraag.",
+        "id": "vergunning-1939428970-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/aanbieden-van-diensten/1939428970",
+        },
+        "title": "Vergunningsaanvraag",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-17T00:00:00",
+        "description": "Er is een update in uw vergunningsaanvraag.",
+        "id": "vergunning-458936654-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/aanbieden-van-diensten/458936654",
+        },
+        "title": "Vergunningsaanvraag",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-17T00:00:00",
+        "description": "Er is een update in uw vergunningsaanvraag.",
+        "id": "vergunning-3407608046-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/aanbieden-van-diensten/3407608046",
+        },
+        "title": "Vergunningsaanvraag",
+      },
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-01-13T00:00:00",
@@ -581,6 +644,44 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "Aanbieden van diensten",
+    "dateDecision": "2022-02-08T00:00:00",
+    "dateEnd": "2022-06-01T00:00:00",
+    "dateRequest": "2022-02-07T00:00:00",
+    "dateStart": "2022-06-01T00:00:00",
+    "dateWorkflowActive": "2022-02-07T00:00:00",
+    "decision": "Verleend",
+    "id": "1939428970",
+    "identifier": "Z/22/1597471",
+    "location": "Gustav Mahlerlaan 7 1082 PP Amsterdam",
+    "status": "Afgehandeld",
+    "title": "Aanbieden van diensten",
+  },
+  Object {
+    "caseType": "Aanbieden van diensten",
+    "dateDecision": "2022-02-08T00:00:00",
+    "dateEnd": "2022-04-05T00:00:00",
+    "dateRequest": "2022-01-17T00:00:00",
+    "dateStart": "2022-04-01T00:00:00",
+    "dateWorkflowActive": "2022-01-13T00:00:00",
+    "decision": "Verleend",
+    "id": "458936654",
+    "identifier": "Z/22/1597602",
+    "location": "Gustav Mahlerlaan 7 1082 PP Amsterdam",
+    "status": "Afgehandeld",
+    "title": "Aanbieden van diensten",
+  },
+  Object {
+    "caseType": "Aanbieden van diensten",
+    "dateDecision": "2022-02-08T00:00:00",
+    "dateRequest": "2022-01-17T00:00:00",
+    "dateWorkflowActive": "2022-01-13T00:00:00",
+    "id": "3407608046",
+    "identifier": "Z/22/1597712",
+    "status": "Ontvangen",
+    "title": "Aanbieden van diensten",
+  },
   Object {
     "caseType": "Verspreiden reclamemateriaal (sampling)",
     "dateDecision": "2022-01-31T00:00:00",

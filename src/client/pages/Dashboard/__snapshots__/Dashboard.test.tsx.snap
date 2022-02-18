@@ -356,7 +356,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             <span
               class="SubmenuItemTitle"
             >
-              Parkeren
+              Parkeren en verkeer
             </span>
           </a>
         </div>

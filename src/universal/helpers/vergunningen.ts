@@ -66,4 +66,5 @@ export const showDocuments = (caseType: CaseType) =>
     CaseType.EvenementMelding,
     CaseType.EvenementVergunning,
     CaseType.Flyeren,
+    CaseType.AanbiedenDiensten,
   ].includes(caseType);
