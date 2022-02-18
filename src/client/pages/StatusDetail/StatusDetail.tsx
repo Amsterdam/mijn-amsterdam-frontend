@@ -27,6 +27,9 @@ export type StatusSourceItem = StatusLine;
 interface StatusDetailProps {
   chapter: Chapter;
   stateKey: keyof AppState;
+  getItems?: (
+    content: AppState[keyof AppState]['content']
+  ) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   maxStepCount?: (hasDecision: boolean) => number | undefined;
   showToggleMore?: boolean;
@@ -37,6 +40,7 @@ interface StatusDetailProps {
 
 export default function StatusDetail({
   stateKey,
+  getItems,
   pageContent,
   maxStepCount,
   showToggleMore = true,
@@ -49,8 +53,8 @@ export default function StatusDetail({
   const STATE = appState[stateKey];
   const isStateLoading = isLoading(STATE);
   const statusItems: StatusSourceItem[] = useMemo(
-    () => STATE.content || [],
-    [STATE.content]
+    () => (getItems ? getItems(STATE.content) : STATE.content || []),
+    [STATE.content, getItems]
   );
 
   const { id } = useParams<{ id: string }>();

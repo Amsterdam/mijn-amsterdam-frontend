@@ -7,7 +7,8 @@ export default function StadspasAanvraagDetail() {
     <StatusDetail
       showToggleMore={true}
       chapter="STADSPAS"
-      stateKey="WPI_AANVRAGEN"
+      stateKey="WPI_STADSPAS"
+      getItems={(stadspasContent) => stadspasContent?.aanvragen || []}
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_WPI_REQUEST : undefined
       }

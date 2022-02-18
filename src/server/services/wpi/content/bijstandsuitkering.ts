@@ -105,10 +105,10 @@ export const requestProcess: WpiRequestProcessLabels = {
             return `${requestProcess.title}: Uw aanvraag is afgewezen`;
           case 'toekenning':
             return `${requestProcess.title}: Uw aanvraag is toegekend`;
-          case 'buitenbehandeling':
+          case 'buitenBehandeling':
             return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
         }
-        return '';
+        return `${requestProcess.title}: Besluit aanvraag`;
       },
       description: (requestProcess) => {
         switch (requestProcess.decision) {
@@ -120,7 +120,7 @@ export const requestProcess: WpiRequestProcessLabels = {
             return `U hebt recht op een bijstandsuitkering (besluit ${defaultDateFormat(
               requestProcess.datePublished
             )}).`;
-          case 'buitenbehandeling':
+          case 'buitenBehandeling':
             return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
         }
 
@@ -146,10 +146,10 @@ export const requestProcess: WpiRequestProcessLabels = {
               </a>
             </p>
           `;
-        case 'buitenbehandeling':
+        case 'buitenBehandeling':
           return 'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.';
       }
-      return '';
+      return `Wij hebben een besluit genomen over uw ${requestProcess.title} aanvraag.`;
     },
   },
 };

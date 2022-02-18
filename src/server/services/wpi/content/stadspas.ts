@@ -33,7 +33,9 @@ export const requestProcess: WpiRequestProcessLabels = {
       `
           <p>
             Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
-            vóór ${statusStep?.dateDecisionExpected} ons besluit.
+            vóór ${defaultDateFormat(
+              statusStep.dateDecisionExpected
+            )} ons besluit.
           </p>
           <p>
             <strong>
@@ -58,8 +60,12 @@ export const requestProcess: WpiRequestProcessLabels = {
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór ${statusStep?.dateUserFeedbackExpected} opsturen. Dan ontvangt u
-            vóór ${statusStep?.dateDecisionExpected} ons besluit.
+            informatie vóór ${defaultDateFormat(
+              statusStep.dateUserFeedbackExpected
+            )} opsturen. Dan ontvangt u
+            vóór ${defaultDateFormat(
+              statusStep.dateDecisionExpected
+            )} ons besluit.
           </p>
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
@@ -76,10 +82,10 @@ export const requestProcess: WpiRequestProcessLabels = {
             return `${requestProcess.title}: Uw aanvraag is afgewezen`;
           case 'toekenning':
             return `${requestProcess.title}: Uw aanvraag is toegekend`;
-          case 'buitenbehandeling':
+          case 'buitenBehandeling':
             return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
         }
-        return '';
+        return `${requestProcess.title}: Besluit aanvraag`;
       },
       description: (requestProcess) => {
         switch (requestProcess.decision) {
@@ -91,7 +97,7 @@ export const requestProcess: WpiRequestProcessLabels = {
             return `U hebt recht op een Stadspas (besluit ${defaultDateFormat(
               requestProcess.datePublished
             )}).`;
-          case 'buitenbehandeling':
+          case 'buitenBehandeling':
             return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
         }
 
@@ -104,10 +110,10 @@ export const requestProcess: WpiRequestProcessLabels = {
           return `U hebt geen recht op een Stadspas. Bekijk de brief voor meer details.`;
         case 'toekenning':
           return 'U hebt recht op een Stadspas. Bekijk de brief voor meer details.';
-        case 'buitenbehandeling':
+        case 'buitenBehandeling':
           return 'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.';
       }
-      return '';
+      return `Wij hebben een besluit genomen over uw ${requestProcess.title} aanvraag.`;
     },
   },
 };

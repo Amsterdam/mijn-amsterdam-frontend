@@ -94,13 +94,16 @@ export function documentDownloadName(item: {
 }
 
 export function productName(
-  requestProcess: { title: string },
-  statusStep: Nullable<{ productSpecific?: 'lening' | 'uitkering' }>,
+  requestProcess: { about: string },
+  statusStep: Nullable<{
+    productSpecific?: 'lening' | 'uitkering';
+    about?: string;
+  }>,
   includeArticle: boolean = true
 ) {
   const hasProductSpecific = !!statusStep?.productSpecific;
   return `${hasProductSpecific && includeArticle ? 'de ' : ''}${
-    requestProcess.title // TODO: This will result in a long title, correct this with an about or about property.
+    statusStep?.about || requestProcess.about
   }${hasProductSpecific ? ` ${statusStep?.productSpecific}` : ''}`;
 }
 

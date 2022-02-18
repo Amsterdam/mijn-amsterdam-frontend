@@ -4,6 +4,8 @@ import {
   apiSuccesResult,
   ApiSuccessResponse,
   defaultDateFormat,
+  getFailedDependencies,
+  getSettledResult,
 } from '../../../universal/helpers';
 import { MyNotification, StatusLine } from '../../../universal/types';
 import { getApiConfig, SourceApiKey } from '../../config';
@@ -118,16 +120,21 @@ export async function fetchStadspas(
     passthroughRequestHeaders
   );
 
-  const [aanvragenResult, stadspassenResult] = await Promise.all([
+  const [aanvragenResult, stadspassenResult] = await Promise.allSettled([
     aanvragenRequest,
     stadspassenRequest,
   ]);
 
-  // TODO: Fix partial errors
-  return apiSuccesResult({
-    aanvragen: aanvragenResult.content,
-    ...stadspassenResult.content,
-  });
+  const stadspassen = getSettledResult(stadspassenResult);
+  const aanvragen = getSettledResult(aanvragenResult);
+
+  return apiSuccesResult(
+    {
+      aanvragen: aanvragen.content,
+      ...stadspassen.content,
+    },
+    getFailedDependencies({ aanvragen, stadspassen })
+  );
 }
 
 export function fetchTozo(

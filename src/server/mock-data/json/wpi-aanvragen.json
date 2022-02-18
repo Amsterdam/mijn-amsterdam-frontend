@@ -209,7 +209,7 @@
       "title": "Stadspas",
       "about": "Stadspas",
       "status": "besluit",
-      "decision": "buiten behandeling",
+      "decision": "buitenBehandeling",
       "datePublished": "2019-06-23T15:05:53+02:00",
       "dateStart": "2019-06-08T15:05:53+02:00",
       "dateEnd": "2019-06-23T15:05:53+02:00",
@@ -247,7 +247,7 @@
           "status": "Besluit",
           "documents": [],
           "datePublished": "2019-06-23T15:05:53+02:00",
-          "decision": "buiten behandeling"
+          "decision": "buitenBehandeling"
         }
       ]
     }

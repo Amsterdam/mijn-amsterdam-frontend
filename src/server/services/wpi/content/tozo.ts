@@ -111,7 +111,7 @@ const besluitLabels: WpiRequestStatusLabels = {
         case 'afwijzing':
           return `${requestProcess.title}: Uw aanvraag is afgewezen`;
 
-        case 'buitenbehandeling':
+        case 'buitenBehandeling':
           return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
 
         default:
@@ -133,7 +133,7 @@ const besluitLabels: WpiRequestStatusLabels = {
             statusStep
           )} (besluit: ${defaultDateFormat(statusStep!.datePublished)}).`;
 
-        case 'buitenbehandeling':
+        case 'buitenBehandeling':
           return `Bekijk de brief voor meer details.`;
 
         default:
@@ -165,7 +165,7 @@ const besluitLabels: WpiRequestStatusLabels = {
         )}. Bekijk de brief voor meer details.
       </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
-      case 'buitenbehandeling':
+      case 'buitenBehandeling':
         return `<p>Wij behandelen uw aanvraag voor ${requestProcess.title} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       default:
