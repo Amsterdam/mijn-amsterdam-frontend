@@ -50,7 +50,9 @@ export const requestProcess: WpiRequestProcessLabels = {
       `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór ${statusStep.dateDecisionExpected} ons besluit.
+            nog extra informatie moet opsturen. U ontvangt vóór ${defaultDateFormat(
+              statusStep.dateDecisionExpected
+            )} ons besluit.
           </p>
           <p>
             Lees meer over uw
@@ -81,8 +83,12 @@ export const requestProcess: WpiRequestProcessLabels = {
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór ${statusStep.dateUserFeedbackExpected} opsturen. Dan ontvangt u
-            vóór ${statusStep?.dateDecisionExpected} ons besluit.
+            informatie vóór ${defaultDateFormat(
+              statusStep.dateUserFeedbackExpected
+            )} opsturen. Dan ontvangt u
+            vóór ${defaultDateFormat(
+              statusStep.dateDecisionExpected
+            )} ons besluit.
           </p>
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk

@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
-import VergunningenDocuments from './json/vergunningen-documenten.json';
 import { apiSuccesResult } from '../../universal/helpers/api';
+import VergunningenDocuments from './json/vergunningen-documenten.json';
 
 export const routerDevelopment = express.Router();
 
@@ -17,7 +17,7 @@ routerDevelopment.get(
 );
 
 routerDevelopment.get(
-  '/focus/document',
+  '/wpi/document',
   (req: Request, res: Response, next: NextFunction) => {
     res.type('application/pdf');
     res.sendFile(path.join(__dirname, 'document.pdf'));
@@ -26,7 +26,7 @@ routerDevelopment.get(
 );
 
 routerDevelopment.get(
-  '/focus/stadspastransacties/:id',
+  '/wpi/stadspastransacties/:id',
   (req: Request, res: Response, next: NextFunction) => {
     res
       .json(

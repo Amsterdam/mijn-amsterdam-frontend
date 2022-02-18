@@ -1,4 +1,5 @@
 import { differenceInMonths, format } from 'date-fns';
+import { generatePath, LinkProps } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import { MyCase } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
@@ -25,8 +26,11 @@ export function transformToStatusLine(
     };
   });
 
+  const activeStep = steps.find((step) => step.id === requestProcess.status);
+
   return {
     ...requestProcess,
+    status: activeStep?.status || requestProcess.status,
     steps,
   };
 }
@@ -98,4 +102,65 @@ export function productName(
   return `${hasProductSpecific && includeArticle ? 'de ' : ''}${
     requestProcess.title // TODO: This will result in a long title, correct this with an about or about property.
   }${hasProductSpecific ? ` ${statusStep?.productSpecific}` : ''}`;
+}
+
+export function addLink(requestProcess: WpiRequestProcess) {
+  let title = 'Bekijk uw aanvraag';
+
+  const id = requestProcess.id;
+  let link: LinkProps;
+
+  switch (requestProcess.about) {
+    case 'TONK':
+      link = {
+        to: generatePath(AppRoutes['INKOMEN/TONK'], {
+          id,
+          version: 1,
+        }),
+        title,
+      };
+      break;
+    case 'Tozo 1':
+    case 'Tozo 2':
+    case 'Tozo 3':
+    case 'Tozo 4':
+    case 'Tozo 5':
+      link = {
+        to: generatePath(AppRoutes['INKOMEN/TOZO'], {
+          id,
+          version: requestProcess.about.replace('Tozo ', ''),
+        }),
+        title,
+      };
+      break;
+    case 'Bijstandsuitkering':
+      link = {
+        to: generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
+          id,
+        }),
+        title,
+      };
+      break;
+    case 'Stadspas':
+      link = {
+        to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
+          id,
+        }),
+        title,
+      };
+      break;
+    case 'Bbz':
+      link = {
+        to: generatePath(AppRoutes['INKOMEN/BBZ'], {
+          id,
+          version: 1,
+        }),
+        title,
+      };
+      break;
+  }
+
+  return Object.assign(requestProcess, {
+    link,
+  });
 }

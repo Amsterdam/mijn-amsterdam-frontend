@@ -10,7 +10,7 @@ export interface WpiRequestStatusDocument {
 
 export interface WpiRequestStatus {
   id: string;
-  title: string;
+  status: string;
   documents: WpiRequestStatusDocument[];
   datePublished: string;
   productSpecific?: 'lening' | 'uitkering';

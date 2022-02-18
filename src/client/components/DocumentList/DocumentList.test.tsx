@@ -15,13 +15,13 @@ const ITEMS: GenericDocument[] = [
     datePublished: '2019-03-23T00:00:00+01:00',
     id: '24078091',
     title: 'Uitkeringsspecificatie',
-    url: '/api/focus/document?id=24078091&isBulk=false&isDms=false',
+    url: '/wpi/document?id=24078091&isBulk=false&isDms=false',
   },
   {
     datePublished: '2014-01-24T00:00:00+01:00',
     id: '30364921',
     title: 'Uitkeringsspecificatie',
-    url: '/api/focus/document?id=30364921&isBulk=false&isDms=false',
+    url: '/wpi/document?id=30364921&isBulk=false&isDms=false',
   },
 ];
 

@@ -16,7 +16,11 @@ import {
 } from './content/stadspas';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
 import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
-import { documentDownloadName, transformToStatusLine } from './helpers';
+import {
+  addLink,
+  documentDownloadName,
+  transformToStatusLine,
+} from './helpers';
 import {
   WpiIncomeSpecification,
   WpiIncomeSpecificationResponseData,
@@ -68,9 +72,9 @@ export function fetchBijstandsuitkering(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) =>
-    response.content.filter(
-      (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
-    );
+    response.content
+      .filter((requestProcess) => requestProcess.about === 'Bijstandsuitkering')
+      .map((requestProcess) => addLink(requestProcess));
 
   return fetchRequestProcess(
     sessionID,
@@ -89,9 +93,9 @@ export async function fetchStadspas(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) => {
-    return response.content.filter(
-      (requestProcess) => requestProcess.about === 'Stadspas'
-    );
+    return response.content
+      .filter((requestProcess) => requestProcess.about === 'Stadspas')
+      .map((requestProcess) => addLink(requestProcess));
   };
 
   const aanvragenRequest = fetchRequestProcess(
@@ -131,9 +135,11 @@ export function fetchTozo(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) => {
-    return response.content.filter((requestProcess) => {
-      return requestProcess.about.startsWith('Tozo');
-    });
+    return response.content
+      .filter((requestProcess) => {
+        return requestProcess.about.startsWith('Tozo');
+      })
+      .map((requestProcess) => addLink(requestProcess));
   };
 
   return fetchRequestProcess(
@@ -153,9 +159,9 @@ export function fetchBbz(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) =>
-    response.content.filter((requestProcess) =>
-      requestProcess.about.startsWith('Bbz')
-    );
+    response.content
+      .filter((requestProcess) => requestProcess.about.startsWith('Bbz'))
+      .map((requestProcess) => addLink(requestProcess));
 
   return fetchRequestProcess(
     sessionID,
@@ -174,9 +180,9 @@ export function fetchTonk(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const filterResponse: FilterResponse = (response) =>
-    response.content.filter(
-      (requestProcess) => requestProcess.about === 'TONK'
-    );
+    response.content
+      .filter((requestProcess) => requestProcess.about === 'TONK')
+      .map((requestProcess) => addLink(requestProcess));
 
   return fetchRequestProcess(
     sessionID,

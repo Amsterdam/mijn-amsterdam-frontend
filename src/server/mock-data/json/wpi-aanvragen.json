@@ -31,19 +31,19 @@
             {
               "id": "4400000007",
               "title": "Formulier Inlichtingen Klant",
-              "url": "/focus/document?id=4400000007&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000007&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             },
             {
               "id": "4400000010",
               "title": "Formulier Inlichtingen partner",
-              "url": "/focus/document?id=4400000010&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000010&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             },
             {
               "id": "4400000008",
               "title": "Aanvraagformulier WWB (kort)",
-              "url": "/focus/document?id=4400000008&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000008&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             }
           ],
@@ -53,7 +53,7 @@
         },
         {
           "id": "besluit",
-          "status": "beslissing",
+          "status": "Besluit",
           "documents": [],
           "datePublished": "2017-08-21T15:05:52+02:00",
           "decision": "afwijzing"
@@ -90,7 +90,7 @@
             {
               "id": "4400000011",
               "title": "Formulier Inlichtingen partner",
-              "url": "/focus/document?id=4400000011&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000011&isBulk=True&isDms=False",
               "datePublished": "2018-04-24T15:05:52+02:00"
             }
           ],
@@ -100,7 +100,7 @@
         },
         {
           "id": "besluit",
-          "status": "beslissing",
+          "status": "Besluit",
           "documents": [],
           "datePublished": "2018-04-25T15:05:52+02:00",
           "decision": "toekenning"
@@ -150,7 +150,7 @@
         },
         {
           "id": "besluit",
-          "status": "beslissing",
+          "status": "Besluit",
           "documents": [],
           "datePublished": "2019-04-28T00:00:00+02:00",
           "decision": "afwijzing"
@@ -174,7 +174,7 @@
             {
               "id": "4400000013",
               "title": "Aanvraag Stadspas (balie)",
-              "url": "/focus/document?id=4400000013&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000013&isBulk=True&isDms=False",
               "datePublished": "2019-05-08T15:05:52+02:00"
             }
           ],
@@ -197,7 +197,7 @@
         },
         {
           "id": "besluit",
-          "status": "beslissing",
+          "status": "Besluit",
           "documents": [],
           "datePublished": "2019-06-07T15:05:52+02:00",
           "decision": "toekenning"
@@ -221,7 +221,7 @@
             {
               "id": "4400000014",
               "title": "Aanvraag Stadspas (digitaal)",
-              "url": "/focus/document?id=4400000014&isBulk=True&isDms=False",
+              "url": "/wpi/document?id=4400000014&isBulk=True&isDms=False",
               "datePublished": "2019-06-08T15:05:53+02:00"
             }
           ],
@@ -244,7 +244,7 @@
         },
         {
           "id": "besluit",
-          "status": "beslissing",
+          "status": "Besluit",
           "documents": [],
           "datePublished": "2019-06-23T15:05:53+02:00",
           "decision": "buiten behandeling"
