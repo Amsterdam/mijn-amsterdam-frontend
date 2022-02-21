@@ -1,9 +1,13 @@
 import { generatePath } from 'react-router-dom';
-import { AppState } from '../../../../client/AppState';
 import { AppRoutes, Chapters } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
-import { WpiRequestProcessLabels } from '../wpi-types';
+import { createProcessNotification, isRequestProcessActual } from '../helpers';
+import {
+  WpiRequestProcess,
+  WpiRequestProcessLabels,
+  WpiStadspasResponseData,
+} from '../wpi-types';
 
 export const requestProcess: WpiRequestProcessLabels = {
   aanvraag: {
@@ -130,14 +134,27 @@ const BUDGET_NOTIFICATION_CHILD = `
   Het saldo vervalt op ${defaultDateFormat(BUDGET_NOTIFICATION_DATE_END)}.
   `;
 
-export function getNotifications(
-  stadspasContent: AppState['WPI_STADSPAS']['content']
+export function getAanvraagNotifications(
+  stadspasAanvragen: WpiRequestProcess[]
+) {
+  const today = new Date();
+
+  const aanvraagNotifications = stadspasAanvragen
+    ?.filter((aanvraag) => {
+      return isRequestProcessActual(aanvraag.datePublished, today);
+    })
+    .map((aanvraag) =>
+      createProcessNotification(aanvraag, requestProcess, Chapters.STADSPAS)
+    );
+
+  return aanvraagNotifications || [];
+}
+
+export function getBudgetNotifications(
+  ownerType: WpiStadspasResponseData['ownerType'],
+  stadspassen: WpiStadspasResponseData['stadspassen']
 ) {
   const notifications: MyNotification[] = [];
-
-  if (!stadspasContent) {
-    return notifications;
-  }
 
   const createNotificationBudget = (
     description: string,
@@ -156,14 +173,14 @@ export function getNotifications(
     },
   });
 
-  const stadspas = stadspasContent.stadspassen?.find((stadspas) =>
+  const stadspas = stadspassen.find((stadspas) =>
     stadspas.budgets.some(
       (budget) => budget.budgetBalance >= BUDGET_NOTIFICATION_BALANCE_THRESHOLD
     )
   );
 
   const needsNotification = !!stadspas;
-  const isParent = stadspasContent.ownerType !== 'kind';
+  const isParent = ownerType !== 'kind';
   const now = new Date();
 
   if (

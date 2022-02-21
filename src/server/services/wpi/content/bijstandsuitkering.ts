@@ -1,5 +1,7 @@
+import { Chapters } from '../../../../universal/config';
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WpiRequestProcessLabels } from '../wpi-types';
+import { createProcessNotification, isRequestProcessActual } from '../helpers';
+import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 
 export const FocusExternalUrls = {
   BijstandsUitkeringAanvragenRechten:
@@ -153,3 +155,19 @@ export const requestProcess: WpiRequestProcessLabels = {
     },
   },
 };
+
+export function getNotifications(
+  bijstandsuitkeringAanvragen: WpiRequestProcess[]
+) {
+  const today = new Date();
+
+  const aanvraagNotifications = bijstandsuitkeringAanvragen
+    ?.filter((aanvraag) => {
+      return isRequestProcessActual(aanvraag.datePublished, today);
+    })
+    .map((aanvraag) =>
+      createProcessNotification(aanvraag, requestProcess, Chapters.INKOMEN)
+    );
+
+  return aanvraagNotifications || [];
+}

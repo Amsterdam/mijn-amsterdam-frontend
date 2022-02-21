@@ -1,13 +1,22 @@
 import { differenceInMonths } from 'date-fns';
 import { AppState } from '../../../../client/AppState';
-import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
-import { dateFormat } from '../../../../universal/helpers';
+import {
+  API_BASE_PATH,
+  Chapters,
+  IS_PRODUCTION,
+} from '../../../../universal/config';
+import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { documentDownloadName } from '../helpers';
-import { WpiIncomeSpecification } from '../wpi-types';
+import {
+  WpiIncomeSpecification,
+  WpiIncomeSpecificationTransformed,
+} from '../wpi-types';
 
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
+
+const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
 
 function isNotificationActual(
   type: 'uitkering' | 'jaaropgave',
@@ -103,4 +112,19 @@ export function getNotifications(
   }
 
   return notifications;
+}
+
+export function transformIncomSpecificationItem(
+  item: WpiIncomeSpecification
+): WpiIncomeSpecificationTransformed {
+  const displayDatePublished = defaultDateFormat(item.datePublished);
+  const url = `${API_BASE_PATH}/${item.url}`;
+  const categoryFromSource = item.variant;
+  return {
+    ...item,
+    category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
+    url,
+    download: documentDownloadName(item),
+    displayDatePublished,
+  };
 }

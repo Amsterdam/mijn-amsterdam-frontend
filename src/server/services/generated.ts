@@ -16,14 +16,7 @@ import { fetchSubsidieGenerated } from './subsidie';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
-import {
-  fetchBbzGenerated,
-  fetchBijstandsuitkeringGenerated,
-  fetchSpecificationsGenerated,
-  fetchStadspasGenerated,
-  fetchTonkGenerated,
-  fetchTozoGenerated,
-} from './wpi';
+import { fetchWpiNotifications } from './wpi';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -119,12 +112,6 @@ async function fetchServicesGenerated(
 
   const [
     brpGeneratedResult,
-    wpiBijstandsuitkeringGeneratedResult,
-    wpiStadspasGeneratedResult,
-    wpiSpecificatiesGeneratedResult,
-    wpiTozoGeneratedResult,
-    wpiTonkGeneratedResult,
-    wpiBbzGeneratedResult,
     belastingGeneratedResult,
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
@@ -134,14 +121,9 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGeneratedResult,
     fetchKrefiaGeneratedResult,
     fetchWiorGeneratedResult,
+    fetchWpiNotificationsResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
-    fetchBijstandsuitkeringGenerated(sessionID, passthroughRequestHeaders),
-    fetchStadspasGenerated(sessionID, passthroughRequestHeaders),
-    fetchSpecificationsGenerated(sessionID, passthroughRequestHeaders),
-    fetchTozoGenerated(sessionID, passthroughRequestHeaders),
-    fetchTonkGenerated(sessionID, passthroughRequestHeaders),
-    fetchBbzGenerated(sessionID, passthroughRequestHeaders),
     fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
@@ -151,19 +133,10 @@ async function fetchServicesGenerated(
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
     fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
     fetchWiorGenerated(sessionID, passthroughRequestHeaders, profileType),
+    fetchWpiNotifications(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
-  const wpiBijstandsuitkeringGenerated = getSettledResult(
-    wpiBijstandsuitkeringGeneratedResult
-  );
-  const wpiStadspasGenerated = getSettledResult(wpiStadspasGeneratedResult);
-  const wpiSpecificatiesGenerated = getSettledResult(
-    wpiSpecificatiesGeneratedResult
-  );
-  const wpiTozoGenerated = getSettledResult(wpiTozoGeneratedResult);
-  const wpiTonkGenerated = getSettledResult(wpiTonkGeneratedResult);
-  const wpiBbzGenerated = getSettledResult(wpiBbzGeneratedResult);
   const belastingGenerated = getSettledResult(belastingGeneratedResult);
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
@@ -177,15 +150,10 @@ async function fetchServicesGenerated(
   );
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
   const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
+  const wpiGenerated = getSettledResult(fetchWpiNotificationsResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
-    wpiBijstandsuitkeringGenerated,
-    wpiStadspasGenerated,
-    wpiSpecificatiesGenerated,
-    wpiTozoGenerated,
-    wpiTonkGenerated,
-    wpiBbzGenerated,
     belastingGenerated,
     milieuzoneGenerated,
     vergunningenGenerated,
@@ -195,6 +163,7 @@ async function fetchServicesGenerated(
     toeristischeVerhuurGenerated,
     krefiaGenerated,
     wiorGenerated,
+    wpiGenerated,
   ]);
 }
 

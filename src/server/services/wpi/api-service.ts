@@ -1,39 +1,39 @@
-import { API_BASE_PATH } from '../../../universal/config';
+import { Chapters } from '../../../universal/config';
 import {
-  apiErrorResult,
   apiSuccesResult,
   ApiSuccessResponse,
-  defaultDateFormat,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers';
-import { MyNotification, StatusLine } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { getApiConfig, SourceApiKey } from '../../config';
 import { requestData } from '../../helpers';
-import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
-import { requestProcess as bijstandsuitkeringRequestProcessLabels } from './content/bijstandsuitkering';
 import {
-  getNotifications as getStadspasNotifications,
+  getNotifications as getBijstandsuitkeringNotifications,
+  requestProcess as bijstandsuitkeringRequestProcessLabels,
+} from './content/bijstandsuitkering';
+import {
+  getNotifications as getSpecificatieNotifications,
+  transformIncomSpecificationItem,
+} from './content/specificaties';
+import {
+  getAanvraagNotifications as getStadspasAanvraagNotifications,
+  getBudgetNotifications as getStadspasBudgetNotifications,
   requestProcess as stadspasRequestProcessLabels,
 } from './content/stadspas';
-import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
-import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
 import {
   addLink,
-  documentDownloadName,
+  createProcessNotification,
+  getEAanvraagRequestProcessLabels,
   transformToStatusLine,
 } from './helpers';
 import {
-  WpiIncomeSpecification,
   WpiIncomeSpecificationResponseData,
   WpiIncomeSpecificationResponseDataTransformed,
-  WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
   WpiRequestProcessLabels,
   WpiStadspasResponseData,
 } from './wpi-types';
-
-const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
 
 type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
   response: ApiSuccessResponse<R>
@@ -48,18 +48,26 @@ interface FetchConfig {
 function fetchRequestProcess<R extends WpiRequestProcess>(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  labels: WpiRequestProcessLabels,
+  getLabels: (
+    requestProcess: WpiRequestProcess
+  ) => WpiRequestProcessLabels | undefined,
   fetchConfig: FetchConfig
 ) {
-  const response = requestData<StatusLine[]>(
+  const response = requestData<WpiRequestProcess[]>(
     getApiConfig(fetchConfig.apiConfigName, {
       cacheKey: fetchConfig.requestCacheKey,
       transformResponse: [
         fetchConfig.filterResponse,
         (response: R[]) =>
-          response.map((requestProcess) =>
-            transformToStatusLine(requestProcess, labels)
-          ),
+          response.flatMap((requestProcess) => {
+            const labels = getLabels(requestProcess);
+            if (labels) {
+              return [transformToStatusLine(requestProcess, labels)];
+            } else {
+              // Log Unknown Process
+            }
+            return [];
+          }),
       ],
     }),
     sessionID,
@@ -69,7 +77,7 @@ function fetchRequestProcess<R extends WpiRequestProcess>(
   return response;
 }
 
-export function fetchBijstandsuitkering(
+export async function fetchBijstandsuitkering(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -78,22 +86,28 @@ export function fetchBijstandsuitkering(
       .filter((requestProcess) => requestProcess.about === 'Bijstandsuitkering')
       .map((requestProcess) => addLink(requestProcess));
 
-  return fetchRequestProcess(
+  const response = await fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    bijstandsuitkeringRequestProcessLabels,
+    () => bijstandsuitkeringRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
       requestCacheKey: 'fetch-aanvragen-bijstandsuitkering-' + sessionID,
     }
   );
+
+  return response;
 }
 
 export async function fetchStadspas(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
-) {
+): Promise<
+  ApiSuccessResponse<
+    Partial<WpiStadspasResponseData> & { aanvragen?: WpiRequestProcess[] }
+  >
+> {
   const filterResponse: FilterResponse = (response) => {
     return response.content
       .filter((requestProcess) => requestProcess.about === 'Stadspas')
@@ -103,7 +117,7 @@ export async function fetchStadspas(
   const aanvragenRequest = fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    stadspasRequestProcessLabels,
+    () => stadspasRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -111,7 +125,7 @@ export async function fetchStadspas(
     }
   );
 
-  const stadspassenRequest = requestData<WpiStadspasResponseData>(
+  const stadspasRequest = requestData<WpiStadspasResponseData>(
     getApiConfig('WPI_STADSPAS', {
       transformResponse: (response: ApiSuccessResponse<any>) =>
         response.content,
@@ -120,102 +134,79 @@ export async function fetchStadspas(
     passthroughRequestHeaders
   );
 
-  const [aanvragenResult, stadspassenResult] = await Promise.allSettled([
+  const [aanvragenResponse, stadspasResponse] = await Promise.allSettled([
     aanvragenRequest,
-    stadspassenRequest,
+    stadspasRequest,
   ]);
 
-  const stadspassen = getSettledResult(stadspassenResult);
-  const aanvragen = getSettledResult(aanvragenResult);
+  const stadspas = getSettledResult(stadspasResponse);
+  const aanvragen = getSettledResult(aanvragenResponse);
 
   return apiSuccesResult(
     {
-      aanvragen: aanvragen.content,
-      ...stadspassen.content,
+      aanvragen: aanvragen.content || [],
+      ...stadspas.content,
     },
-    getFailedDependencies({ aanvragen, stadspassen })
+    getFailedDependencies({ aanvragen, stadspas })
   );
 }
 
-export function fetchTozo(
+export async function fetchEAanvragen(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  about?: string[]
 ) {
   const filterResponse: FilterResponse = (response) => {
-    return response.content
-      .filter((requestProcess) => {
-        return requestProcess.about.startsWith('Tozo');
-      })
-      .map((requestProcess) => addLink(requestProcess));
+    return response.content.map((requestProcess) => addLink(requestProcess));
   };
 
-  return fetchRequestProcess(
+  const response = await fetchRequestProcess(
     sessionID,
     passthroughRequestHeaders,
-    tozoRequestProcessLabels,
+    getEAanvraagRequestProcessLabels,
     {
       apiConfigName: 'WPI_E_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-tozo-' + sessionID,
+      requestCacheKey: 'fetch-e-aanvragen-' + sessionID,
     }
   );
+
+  if (about && response.status === 'OK') {
+    return apiSuccesResult(
+      response.content.filter((requestProcess) =>
+        about.includes(requestProcess.about)
+      )
+    );
+  }
+
+  return response;
 }
 
-export function fetchBbz(
+export async function fetchTozo(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const filterResponse: FilterResponse = (response) =>
-    response.content
-      .filter((requestProcess) => requestProcess.about.startsWith('Bbz'))
-      .map((requestProcess) => addLink(requestProcess));
-
-  return fetchRequestProcess(
-    sessionID,
-    passthroughRequestHeaders,
-    bbzRequestProcessLabels,
-    {
-      apiConfigName: 'WPI_E_AANVRAGEN',
-      filterResponse,
-      requestCacheKey: 'fetch-aanvragen-bbz-' + sessionID,
-    }
-  );
+  return fetchEAanvragen(sessionID, passthroughRequestHeaders, [
+    'Tozo 1',
+    'Tozo 2',
+    'Tozo 3',
+    'Tozo 4',
+    'Tozo 5',
+  ]);
 }
 
-export function fetchTonk(
+export async function fetchBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const filterResponse: FilterResponse = (response) =>
-    response.content
-      .filter((requestProcess) => requestProcess.about === 'TONK')
-      .map((requestProcess) => addLink(requestProcess));
-
-  return fetchRequestProcess(
-    sessionID,
-    passthroughRequestHeaders,
-    tonkRequestProcessLabels,
-    {
-      apiConfigName: 'WPI_E_AANVRAGEN',
-      filterResponse,
-      requestCacheKey: 'fetch-aanvragen-tonk-' + sessionID,
-    }
-  );
+  return fetchEAanvragen(sessionID, passthroughRequestHeaders, ['Bbz']);
 }
 
-export function transformIncomSpecificationItem(
-  item: WpiIncomeSpecification
-): WpiIncomeSpecificationTransformed {
-  const displayDatePublished = defaultDateFormat(item.datePublished);
-  const url = `${API_BASE_PATH}/${item.url}`;
-  const categoryFromSource = item.variant;
-  return {
-    ...item,
-    category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
-    url,
-    download: documentDownloadName(item),
-    displayDatePublished,
-  };
+export async function fetchTonk(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return fetchEAanvragen(sessionID, passthroughRequestHeaders, ['TONK']);
 }
 
 export function transformIncomSpecificationResponse(
@@ -246,94 +237,105 @@ export function fetchSpecificaties(
   return response;
 }
 
-// Notifications and Recent cases
-export function fetchBijstandsuitkeringGenerated(
+export async function fetchWpiNotifications(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return apiSuccesResult([] as MyNotification[]);
-}
-
-export async function fetchStadspasGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  const { status, content } = await fetchStadspas(
-    sessionID,
-    passthroughRequestHeaders
-  );
   let notifications: MyNotification[] = [];
-  if (status === 'OK') {
-    notifications = getStadspasNotifications(content);
+
+  // Stadspas
+  {
+    const { status, content } = await fetchStadspas(
+      sessionID,
+      passthroughRequestHeaders
+    );
+
+    if (status === 'OK') {
+      if (content.aanvragen?.length) {
+        const aanvraagNotifications = getStadspasAanvraagNotifications(
+          content.aanvragen
+        );
+        if (aanvraagNotifications) {
+          notifications.push(...aanvraagNotifications);
+        }
+      }
+      if (content.ownerType && content.stadspassen?.length) {
+        const budgetNotifications = getStadspasBudgetNotifications(
+          content.ownerType,
+          content.stadspassen
+        );
+
+        if (budgetNotifications) {
+          notifications.push(...budgetNotifications);
+        }
+      }
+    }
   }
-  return apiSuccesResult(notifications);
-}
 
-export function fetchSpecificationsGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  return apiSuccesResult([] as MyNotification[]);
-}
+  // Bijstandsuitkeringen
+  {
+    const { status, content } = await fetchBijstandsuitkering(
+      sessionID,
+      passthroughRequestHeaders
+    );
 
-export function fetchTozoGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  return apiSuccesResult([] as MyNotification[]);
-}
+    if (status === 'OK') {
+      if (content?.length) {
+        const aanvraagNotifications =
+          getBijstandsuitkeringNotifications(content);
+        if (aanvraagNotifications) {
+          notifications.push(...aanvraagNotifications);
+        }
+      }
+    }
+  }
 
-export function fetchTonkGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  return apiSuccesResult([] as MyNotification[]);
-}
+  // E-Aanvragen
+  {
+    const { status, content } = await fetchEAanvragen(
+      sessionID,
+      passthroughRequestHeaders
+    );
 
-export function fetchBbzGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  return apiSuccesResult([] as MyNotification[]);
-}
+    if (status === 'OK') {
+      if (content?.length) {
+        const eAanvraagNotifications = content.flatMap((requestProcess) => {
+          const labels = getEAanvraagRequestProcessLabels(requestProcess);
 
-export async function fetchNotificationsAndRecentCases(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
-  // const WPI_AANVRAGEN = await fetchAanvragen(
-  //   sessionID,
-  //   passthroughRequestHeaders
-  // );
-  // const compareDate = new Date();
+          if (labels) {
+            const notification = createProcessNotification(
+              requestProcess,
+              labels,
+              Chapters.INKOMEN
+            );
 
-  // let notifications: MyNotification[] = [];
-  // let cases: MyCase[] = [];
+            return [notification];
+          }
+          return [];
+        });
 
-  // if (WPI_AANVRAGEN.status === 'OK') {
-  //   const items = WPI_AANVRAGEN.content;
-  //   notifications = items
-  //     .filter(
-  //       (item) =>
-  //         !IS_PRODUCTION ||
-  //         isNotificationActual(item.datePublished, compareDate)
-  //     )
-  //     .map(createFocusNotification);
+        if (eAanvraagNotifications) {
+          notifications.push(...eAanvraagNotifications);
+        }
+      }
+    }
+  }
 
-  //   cases = items
-  //     .filter(
-  //       (item) =>
-  //         isRecentCase(item.datePublished, compareDate) ||
-  //         item.status !== 'besluit'
-  //     )
-  //     .map(createFocusRecentCase)
-  //     .filter((recentCase) => recentCase !== null);
+  // Specificaties
+  {
+    const { status, content } = await fetchSpecificaties(
+      sessionID,
+      passthroughRequestHeaders
+    );
 
-  //   return apiSuccesResult({
-  //     cases,
-  //     notifications,
-  //   });
-  // }
-
-  return apiErrorResult('Not implemented', null);
+    if (status === 'OK') {
+      if (content) {
+        const specificatieNotifications = getSpecificatieNotifications(content);
+        if (specificatieNotifications) {
+          notifications.push(...specificatieNotifications);
+        }
+      }
+    }
+  }
+  return apiSuccesResult({ notifications });
 }

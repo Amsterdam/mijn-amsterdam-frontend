@@ -1,5 +1,4 @@
-import { LinkProps } from 'react-router-dom';
-import { StatusLine } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types';
 
 export interface WpiRequestStatusDocument {
   id: string;
@@ -41,19 +40,20 @@ export interface WpiRequestProcess {
   steps: WpiRequestStatus[];
   status: WpiRequestStatus['id'];
   decision: string | null;
+  link?: LinkProps;
 }
 
-export type WpiTextPartContents<T = string> = (
+export type WpiRequestProcessContent<T = string> = (
   requestProcess: WpiRequestProcess,
   statusStep: WpiRequestStatus
 ) => T;
 
 export interface WpiRequestStatusLabels {
-  description: WpiTextPartContents;
+  description: WpiRequestProcessContent;
   notification: {
-    title: WpiTextPartContents;
-    description: WpiTextPartContents;
-    link?: WpiTextPartContents<LinkProps>;
+    title: WpiRequestProcessContent;
+    description: WpiRequestProcessContent;
+    link?: WpiRequestProcessContent<LinkProps>;
   };
 }
 
@@ -111,7 +111,6 @@ export interface WpiStadspasTransaction {
 }
 
 export interface WpiStadspasResponseData {
-  aanvragen: StatusLine[];
   stadspassen: WpiStadspas[];
   ownerType: 'kind' | 'hoofdpashouder' | 'partner';
   adminNumber: string;
