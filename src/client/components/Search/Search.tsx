@@ -129,6 +129,7 @@ export function Search({
 
   const [isTyping, setIsTyping] = useState(false);
   const [term, setTerm_] = useSearchTerm();
+  useSearchIndex();
 
   const setTerm = useCallback(
     (term) => {
@@ -155,7 +156,6 @@ export function Search({
     [onFinishCallback]
   );
 
-  useSearchIndex();
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
   const trackSearchBarEvent = useCallback(
