@@ -286,6 +286,14 @@ export const bbzDocumentLabelSet: Record<
     stepType: 'besluit',
     decision: 'afwijzing',
   },
+  '1736198': {
+    omschrijving: 'Transitie Bbz Afwijzen',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'Bbz',
+    stepType: 'besluit',
+    decision: 'afwijzing',
+  },
   '176194': {
     omschrijving: 'Transitie Bbz Toekennen handmatig',
     labels: toekennenLabels,
