@@ -1,19 +1,16 @@
 import { renderHook } from '@testing-library/react-hooks';
-import Fuse from 'fuse.js';
 import { ReactChildren } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Vergunning } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks';
-import * as remoteConfig from './search-config.json';
 import {
   ApiBaseItem,
   ApiSearchConfig,
   apiSearchConfigs,
   API_SEARCH_CONFIG_DEFAULT,
   displayPath,
-  SearchEntry,
 } from './searchConfig';
 import {
   generateSearchIndexPageEntries,
@@ -85,15 +82,6 @@ const krefiaData = {
     },
   },
 };
-
-function displayTitle(item?: SearchEntry, term: string = '') {
-  if (!item) {
-    return;
-  }
-  return typeof item.displayTitle === 'function'
-    ? item.displayTitle(term)
-    : displayPath(term, [item.displayTitle]);
-}
 
 describe('Search hooks and helpers', () => {
   afterEach(() => {
@@ -318,132 +306,10 @@ describe('Search hooks and helpers', () => {
       wrapper,
     });
 
-    expect(result.current).toBeNull();
+    expect(result.current).toBeUndefined();
 
     await waitForNextUpdate();
 
-    expect(result.current).toBeNull();
-  });
-
-  test('useSearchIndex <success>', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockImplementation(setupFetchStub({ content: remoteConfig }) as any);
-
-    const wrapper = ({ children }: { children: ReactChildren }) => (
-      <RecoilRoot
-        initializeState={(snapshot) =>
-          snapshot.set(appStateAtom, {
-            VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-          } as AppState)
-        }
-      >
-        {children}
-      </RecoilRoot>
-    );
-
-    const { result, waitForValueToChange } = renderHook(useSearchIndex, {
-      wrapper,
-    });
-
-    expect(result.current).toBeNull();
-
-    await waitForValueToChange(() => {
-      return result.current !== null;
-    });
-
-    expect(result.current instanceof Fuse).toBe(true);
-    expect(result.current?.search('gehandicaptenparkeerkaart'))
-      .toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "item": Object {
-            "description": "Bekijk Europse gehandicaptenparkeerkaart (GPK)",
-            "displayTitle": [Function],
-            "keywords": Array [
-              "GPK",
-              "Europse gehandicaptenparkeerkaart (GPK)",
-              "Z/000/000008",
-              "Ontvangen",
-              "Amstel 1 GPK aanvraag",
-              "vergunningsaanvraag",
-            ],
-            "trailingIcon": <ForwardRef(SvgMarker)
-              className="ExternalUrl"
-              height="14"
-              width="14"
-            />,
-            "url": "/buurt/vergunningen/detail/1726584505",
-          },
-          "refIndex": 56,
-        },
-      ]
-    `);
-
-    expect(displayTitle(result.current?.search('paspoort')[0].item, 'paspoort'))
-      .toMatchInlineSnapshot(`
-      <React.Fragment>
-        <span
-          className="DisplayPath"
-        >
-          <Memo(InnerHtmlTag)
-            className="DisplayPathSegment"
-            el="span"
-          >
-            Burgerzaken
-          </Memo(InnerHtmlTag)>
-        </span>
-      </React.Fragment>
-    `);
-
-    expect(displayTitle(result.current?.search('aktes')[0].item, 'aktes'))
-      .toMatchInlineSnapshot(`
-      <React.Fragment>
-        <span
-          className="DisplayPath"
-        >
-          <Memo(InnerHtmlTag)
-            className="DisplayPathSegment"
-            el="span"
-          >
-            Burgerzaken
-          </Memo(InnerHtmlTag)>
-        </span>
-      </React.Fragment>
-    `);
-    expect(
-      displayTitle(
-        result.current?.search('Identiteitskaart')[0].item,
-        'Identiteitskaart'
-      )
-    ).toMatchInlineSnapshot(`
-      <React.Fragment>
-        <span
-          className="DisplayPath"
-        >
-          <Memo(InnerHtmlTag)
-            className="DisplayPathSegment"
-            el="span"
-          >
-            Burgerzaken
-          </Memo(InnerHtmlTag)>
-        </span>
-      </React.Fragment>
-    `);
-    expect(displayTitle(result.current?.search('Stadspas')[0].item, 'Stadspas'))
-      .toMatchInlineSnapshot(`
-      <React.Fragment>
-        <span
-          className="DisplayPath"
-        >
-          <Memo(InnerHtmlTag)
-            className="DisplayPathSegment"
-            el="span"
-          >
-            &lt;em&gt;Stadspas&lt;/em&gt;
-          </Memo(InnerHtmlTag)>
-        </span>
-      </React.Fragment>
-    `);
+    expect(result.current).toBeUndefined();
   });
 });

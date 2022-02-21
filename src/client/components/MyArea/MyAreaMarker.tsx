@@ -72,6 +72,9 @@ function MyAreaMarker({
           }
         );
     }
+    return () => {
+      markerInstance?.unbindTooltip();
+    };
   }, [markerInstance, label]);
 
   const latLng = useMemo(() => {
@@ -148,10 +151,6 @@ export function CustomLatLonMarker({
       mapRef.current.setView(center, zoom);
     }
   }, [zoom, center, mapRef]);
-
-  useEffect(() => {
-    doCenter();
-  }, [doCenter]);
 
   return (
     <MyAreaMarker

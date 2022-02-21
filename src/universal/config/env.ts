@@ -8,6 +8,7 @@ interface EnvVars {
   ssoMilieuzoneUrl?: string;
   krefiaDirectLink?: string;
   ssoSubsidiesUrl?: string;
+  bagUrl?: string;
 }
 
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
@@ -43,9 +44,11 @@ const otapServerEnv: OtapEnv = {
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/inloggen',
+    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
   },
   test: {
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
+    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
   },
   acceptance: {
     analyticsId: 25,
@@ -60,6 +63,7 @@ const otapServerEnv: OtapEnv = {
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/inloggen',
+    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
   },
   production: {
     analyticsId: 28,
@@ -74,6 +78,7 @@ const otapServerEnv: OtapEnv = {
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
     ssoSubsidiesUrl: 'https://mijnsubsidies.amsterdam.nl/inloggen',
+    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
   },
 };
 

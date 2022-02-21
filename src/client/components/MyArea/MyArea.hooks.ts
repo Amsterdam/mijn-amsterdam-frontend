@@ -1,7 +1,8 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   atom,
   selector,
@@ -21,11 +22,20 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
+  HOOD_ZOOM,
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../universal/helpers';
+import {
+  capitalizeFirstLetter,
+  getFullAddress,
+} from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
-import { trackEventWithProfileType } from '../../hooks';
+import { DEFAULT_MAP_OPTIONS } from '../../config/map';
+import {
+  trackEventWithProfileType,
+  useAppStateGetter,
+  useAppStateReady,
+} from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
@@ -451,6 +461,10 @@ export interface QueryConfig {
   loadingFeature?: { id: string; datasetId: DatasetId };
   bbox?: LatLngBoundsLiteral;
   s?: '1'; // Indicates the url was constructed on the /buurt page
+  centerMarker?: {
+    label: string;
+    latlng: LatLngLiteral;
+  };
 }
 
 export function getQueryConfig(searchEntry: string): QueryConfig {
@@ -461,4 +475,145 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
       })
       .filter(([, v]) => !!v)
   );
+}
+
+export function useMapLocations(
+  mapInstance?: L.Map,
+  centerMarker?: { latlng: LatLngLiteral; label: string },
+  zoom?: number
+) {
+  const history = useHistory();
+
+  /**
+   * Determine center location. The following options exist:
+   * Custom marker
+   * 1. default latlng
+   * 2. latlng from props.centerMarker
+   * 3. latlng from urlConfig.centerMarker
+   *
+   * Home marker
+   * 1. latlng from personal data, controls "home" button.
+   *
+   * If moving the map, center is updated for url sharing purposes (sharing the mapview at that specific location), latlng for custom and home marker should stay the same.
+   */
+  // Primary address Location from personal data (BRP / KVK)
+  const { MY_LOCATION } = useAppStateGetter();
+
+  // Params passed by query will override all other options
+  const urlQueryConfig = useMemo(() => {
+    return new URLSearchParams(history.location?.search);
+  }, [history.location?.search]);
+
+  zoom = parseInt(`${urlQueryConfig.get('zoom') || zoom || HOOD_ZOOM}`, 10);
+
+  const queryCenterMarker = urlQueryConfig.get('centerMarker');
+
+  const customLocationMarker = useMemo(() => {
+    const customLocationMarker =
+      !!queryCenterMarker && typeof queryCenterMarker === 'string'
+        ? JSON.parse(queryCenterMarker)
+        : centerMarker;
+    const centerMarkerLabel = customLocationMarker?.label;
+    const centerMarkerLatLng = customLocationMarker?.latlng;
+
+    let latlng = DEFAULT_MAP_OPTIONS.center!;
+    let label = 'Amsterdam centrum';
+    let type = 'default';
+
+    if (centerMarkerLatLng) {
+      latlng = centerMarkerLatLng;
+    }
+
+    if (centerMarkerLabel) {
+      label = centerMarkerLabel;
+    }
+
+    if (centerMarkerLabel || centerMarkerLatLng) {
+      type = 'custom';
+    }
+
+    return {
+      latlng,
+      label,
+      type,
+    };
+  }, [queryCenterMarker, centerMarker]);
+
+  const homeLocationMarker = useMemo(() => {
+    if (MY_LOCATION.content?.latlng && !centerMarker) {
+      const latlng = MY_LOCATION.content.latlng;
+      const label = MY_LOCATION.content?.address
+        ? getFullAddress(MY_LOCATION.content.address, true)
+        : 'Mijn locatie';
+      return { latlng, label, type: 'home' };
+    }
+    return null;
+  }, [MY_LOCATION.content, centerMarker]);
+
+  const urlQueryCenter = urlQueryConfig.get('center');
+  const centerStateLatLng = useMemo(() => {
+    if (urlQueryCenter) {
+      return JSON.parse(urlQueryCenter);
+    }
+  }, [urlQueryCenter]);
+
+  const mapCenter: LatLngLiteral = useMemo(() => {
+    let center = customLocationMarker.latlng;
+
+    if (centerStateLatLng) {
+      center = centerStateLatLng;
+    } else if (customLocationMarker.type === 'custom') {
+      center = customLocationMarker.latlng;
+    } else if (homeLocationMarker) {
+      center = homeLocationMarker?.latlng;
+    }
+
+    return center;
+    // Disable hook dependencies, the mapOptions only need to be determined once.
+    // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isAppStateReady = useAppStateReady();
+  const isReady = !urlQueryConfig.get('center');
+  const isReadyForSetViewUpdates = useRef(isReady);
+
+  /**
+   * If a Map center query param is encountered we have to show the user this location, it reflects the map state at the moment the url was created.
+   * Because of the undeterministic nature of the various data that this used by this component the isReadyForSetViewUpdates ref is used. We don't want
+   * the component to set the view on another coordinate if the user didn't have the chance to view the map as intended.
+   *
+   * The following scenario was taken into account:
+   * 1. Url with a center param
+   * 2. Map is loaded on center param
+   * 3. Home location arrives from the server
+   * 4. Map is recentered on home location.
+   *
+   * This is not nice UX therefor we set isReadyForSetViewUpdates after appState is ready and mapInstance exists.
+   * */
+  useEffect(() => {
+    if (mapInstance && isReadyForSetViewUpdates.current === true) {
+      let centerMarker = customLocationMarker;
+      if (customLocationMarker.type === 'default' && !!homeLocationMarker) {
+        centerMarker = homeLocationMarker;
+      }
+      mapInstance.setView(centerMarker.latlng, zoom);
+    }
+    // Disable because we don't want to re-center the map everytime the zoom level changes.
+    // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customLocationMarker, homeLocationMarker, mapInstance]);
+
+  useEffect(() => {
+    if (mapInstance && isAppStateReady) {
+      isReadyForSetViewUpdates.current = true;
+    }
+  }, [mapInstance, isAppStateReady]);
+
+  return {
+    mapCenter,
+    homeLocationMarker,
+    customLocationMarker,
+    mapZoom: zoom,
+  };
 }

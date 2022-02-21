@@ -1,18 +1,20 @@
 import { ExternalLink } from '@amsterdam/asc-assets';
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { LatLngTuple } from 'leaflet';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   atom,
   Loadable,
+  noWait,
   selector,
   selectorFamily,
   useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, getOtapEnvItem } from '../../../universal/config';
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
@@ -180,16 +182,58 @@ export async function searchAmsterdamNL(
   return response.data;
 }
 
+interface BagSearchResult {
+  adres: string;
+  postcode: string;
+  straatnaam: string;
+  huisnummer: number;
+  toevoeging: string;
+  woonplaats: string;
+  centroid: LatLngTuple;
+}
+
+function transformSearchBagresponse(responseData: any): SearchEntry[] {
+  if (Array.isArray(responseData?.results)) {
+    return responseData.results.slice(0, 5).map((address: BagSearchResult) => {
+      const displayTitle = `${address.adres} ${address.postcode} ${address.woonplaats}`;
+      return {
+        displayTitle,
+        keywords: [address.adres, 'bag'],
+        description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
+        url: `/buurt?zoom=12&centerMarker=${encodeURIComponent(
+          JSON.stringify({
+            latlng: { lat: address.centroid[1], lng: address.centroid[0] },
+            label: displayTitle,
+          })
+        )}`,
+        trailingIcon: (
+          <IconMarker width="14" height="14" className={styles.ExternalUrl} />
+        ),
+      };
+    });
+  }
+
+  return [];
+}
+
+async function searchBag(keywords: string) {
+  if (!keywords || keywords?.length === 0) {
+    return null;
+  }
+  const url = `${getOtapEnvItem('bagUrl')}${keywords}`;
+
+  const response = await axios.get<SearchEntry[]>(url, {
+    transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
+  });
+
+  return response.data;
+}
+
 const options = {
   threshold: 0.4,
   minMatchCharLength: 2,
   keys: ['description', 'url', { name: 'keywords', weight: 0.2 }],
 };
-
-export const searchConfigAtom = atom<Fuse<SearchEntry> | null>({
-  key: 'searchConfigState',
-  default: null,
-});
 
 export function useStaticSearchEntries() {
   const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
@@ -222,37 +266,35 @@ function useDynamicSearchEntries() {
   const remoteSearchConfig = useRecoilValueLoadable(searchConfigRemote);
   const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  let searchEntries = null;
 
-  if (
-    isAppStateReady &&
-    remoteSearchConfig.state === 'hasValue' &&
-    remoteSearchConfig.contents?.apiSearchConfigs
-  ) {
-    searchEntries = generateSearchIndexPageEntries(
-      profileType,
-      appState,
-      combineApiSearchConfigs(
-        apiSearchConfigs,
-        remoteSearchConfig.contents?.apiSearchConfigs
-      )
-    );
-  }
-  return searchEntries;
+  // Because the results of this hook could be used as deps in other hooks we need to make the results stable using useMemo.
+  return useMemo(() => {
+    let searchEntries = null;
+    if (
+      isAppStateReady &&
+      remoteSearchConfig.state === 'hasValue' &&
+      remoteSearchConfig.contents?.apiSearchConfigs
+    ) {
+      searchEntries = generateSearchIndexPageEntries(
+        profileType,
+        appState,
+        combineApiSearchConfigs(
+          apiSearchConfigs,
+          remoteSearchConfig.contents?.apiSearchConfigs
+        )
+      );
+    }
+    return searchEntries;
+  }, [isAppStateReady, appState, profileType, remoteSearchConfig]);
 }
 
+let fuseInstance: any;
 export function useSearchIndex() {
-  const isIndexed = useRef(false);
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
-  const [searchState, setSearchConfig] = useRecoilState(searchConfigAtom);
 
   useEffect(() => {
-    if (
-      (!!staticSearchEntries || !!dynamicSearchEntries) &&
-      !isIndexed.current
-    ) {
-      isIndexed.current = true;
+    if (!!staticSearchEntries && !!dynamicSearchEntries) {
       const entries = [
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
@@ -271,19 +313,14 @@ export function useSearchIndex() {
         return searchEntry;
       });
 
-      const fuseInstance = new Fuse(entries, options);
-
-      setSearchConfig(fuseInstance);
+      fuseInstance = new Fuse(entries, options);
     }
-  }, [dynamicSearchEntries, staticSearchEntries, setSearchConfig]);
+  }, [dynamicSearchEntries, staticSearchEntries]);
 
   useProfileTypeSwitch(() => {
     // Reset the search index
-    isIndexed.current = false;
-    setSearchConfig(() => null);
+    fuseInstance = null;
   });
-
-  return searchState;
 }
 
 export const searchTermAtom = atom<string>({
@@ -316,7 +353,7 @@ export const requestID = atom<number>({
 export const searchConfigRemote = selector<SearchConfigRemote | null>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
-    // Subscribe to updates ffrom requestID to re-evaluate selector to reload the SEARCH_CONFIG
+    // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
     const response: ApiResponse<SearchConfigRemote> = await fetch(
       BFFApiUrls.SEARCH_CONFIGURATION
@@ -326,16 +363,34 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
   },
 });
 
+const bagSeachResults = selector<SearchEntry[] | null>({
+  key: 'BagSearchResults',
+  get: async ({ get }) => {
+    const term = get(searchTermAtom);
+    const response = await searchBag(term);
+
+    if (fuseInstance && response?.length) {
+      fuseInstance.remove((doc: SearchEntry) => {
+        return doc.keywords.indexOf('bag') !== -1;
+      });
+      for (const entry of response) {
+        fuseInstance.add(entry);
+      }
+    }
+
+    return response;
+  },
+});
+
 const mijnQuery = selector({
   key: 'mijnQuery',
   get: ({ get }) => {
     const term = get(searchTermAtom);
-    const fuse = get(searchConfigAtom);
+    get(noWait(bagSeachResults)); // Subscribes to updates from the bag results
 
-    if (fuse !== null && !!term) {
-      const rawResults = fuse.search(term);
-
-      return rawResults.map((result) => result.item);
+    if (fuseInstance !== null && !!term) {
+      const rawResults = fuseInstance.search(term);
+      return rawResults.map((result: any) => result.item);
     }
 
     return [];
