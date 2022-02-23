@@ -1,6 +1,5 @@
 import { AppRoutes } from '../../../universal/config';
 import { ExternalUrls } from '../../config/app';
-import { FeatureToggle } from '../../../universal/config/app';
 
 export interface DirectLink {
   title: string;
@@ -82,12 +81,6 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     TIPS: GenericLinks.TIPS,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
-    KREFIA: {
-      title: 'Kredietbank',
-      url: ExternalUrls.KREFIA,
-      isExternalLink: true,
-      isActive: FeatureToggle.KrefiaDirectLinkActive,
-    },
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
     AMSTERDAM: GenericLinks.AMSTERDAM,
