@@ -63,13 +63,11 @@ export function isChapterActive(
       );
 
     case Chapters.STADSPAS:
-      const hasStadspasSaldo = !!WPI_STADSPAS?.content?.stadspassen?.length;
-      const hasStadspasAanvragen = !!WPI_AANVRAGEN?.content?.filter(
-        (aanvraag) => aanvraag.about === 'Stadspas'
-      )?.length;
-      const isLoadingStadspas =
-        isLoading(WPI_STADSPAS) || isLoading(WPI_AANVRAGEN);
-      return !isLoadingStadspas && (hasStadspasSaldo || hasStadspasAanvragen);
+      const hasStadspas =
+        !!WPI_STADSPAS?.content?.stadspassen?.length ||
+        !!WPI_STADSPAS?.content?.aanvragen?.length;
+      const isLoadingStadspas = isLoading(WPI_STADSPAS);
+      return !isLoadingStadspas && hasStadspas;
 
     case Chapters.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;

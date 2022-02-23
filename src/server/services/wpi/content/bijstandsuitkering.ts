@@ -3,7 +3,7 @@ import { defaultDateFormat } from '../../../../universal/helpers';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 
-export const FocusExternalUrls = {
+export const WpiExternalUrls = {
   BijstandsUitkeringAanvragenRechten:
     'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d',
   BijstandsUitkeringAanvragenPlichten:
@@ -31,7 +31,7 @@ export const requestProcess: WpiRequestProcessLabels = {
           )} een bijstandsuitkering aangevraagd.</p>
           <p>
             <a
-              href=${FocusExternalUrls.BijstandsUitkeringAanvragen}
+              href=${WpiExternalUrls.BijstandsUitkeringAanvragen}
               rel="external noopener noreferrer"
             >
               Wat kunt u van ons verwachten?
@@ -60,12 +60,12 @@ export const requestProcess: WpiRequestProcessLabels = {
             Lees meer over uw
             <br />
             <a
-              href=${FocusExternalUrls.BijstandsUitkeringAanvragenRechten}
+              href=${WpiExternalUrls.BijstandsUitkeringAanvragenRechten}
               rel="external noopener noreferrer"
             >
               rechten
             </a> en <a
-              href=${FocusExternalUrls.BijstandsUitkeringAanvragenPlichten}
+              href=${WpiExternalUrls.BijstandsUitkeringAanvragenPlichten}
               rel="external noopener noreferrer"
             >
               plichten
@@ -141,7 +141,7 @@ export const requestProcess: WpiRequestProcessLabels = {
             </p>
             <p>
               <a
-                href=${FocusExternalUrls.BetaalDataUitkering}
+                href=${WpiExternalUrls.BetaalDataUitkering}
                 rel="external noopener noreferrer"
               >
                 Bekijk hier de betaaldata van de uitkering

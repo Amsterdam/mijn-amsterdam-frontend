@@ -101,6 +101,7 @@ export interface WpiStadspas {
   owner: string;
   dateEnd: string;
   budgets: WpiStadspasBudget[];
+  link?: LinkProps;
 }
 
 export interface WpiStadspasTransaction {

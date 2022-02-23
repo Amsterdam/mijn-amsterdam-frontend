@@ -1,4 +1,5 @@
-import { Chapters } from '../../../universal/config';
+import { generatePath } from 'react-router-dom';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiSuccesResult,
   ApiSuccessResponse,
@@ -145,7 +146,17 @@ export async function fetchStadspas(
   return apiSuccesResult(
     {
       aanvragen: aanvragen.content || [],
-      ...stadspas.content,
+      stadspassen: (stadspas.content?.stadspassen || []).map((stadspas) => {
+        return {
+          ...stadspas,
+          link: {
+            to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
+            title: `Stadspas van ${stadspas.owner}`,
+          },
+        };
+      }),
+      ownerType: stadspas.content?.ownerType,
+      adminNumber: stadspas.content?.adminNumber,
     },
     getFailedDependencies({ aanvragen, stadspas })
   );

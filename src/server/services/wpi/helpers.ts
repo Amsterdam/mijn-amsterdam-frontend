@@ -1,7 +1,7 @@
 import { differenceInMonths, format } from 'date-fns';
 import { generatePath, LinkProps } from 'react-router-dom';
-import { AppRoutes, Chapter } from '../../../universal/config';
-import { MyNotification } from '../../../universal/types';
+import { API_BASE_PATH, AppRoutes, Chapter } from '../../../universal/config';
+import { GenericDocument, MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -20,6 +20,7 @@ export function transformToStatusLine(
 
     return {
       ...statusStep,
+      documents: addApiBasePathToDocumentUrls(statusStep.documents),
       isActive: false,
       isChecked: true,
       description,
@@ -34,6 +35,15 @@ export function transformToStatusLine(
     status: activeStep?.status || requestProcess.status,
     steps,
   };
+}
+
+export function addApiBasePathToDocumentUrls(documents: GenericDocument[]) {
+  return documents.map((document) => {
+    return {
+      ...document,
+      url: API_BASE_PATH + document.url,
+    };
+  });
 }
 
 export function createProcessNotification(

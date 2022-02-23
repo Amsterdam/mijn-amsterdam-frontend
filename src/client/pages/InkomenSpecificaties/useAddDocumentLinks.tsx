@@ -7,12 +7,12 @@ export function useAddDocumentLinkComponents(
 ) {
   return useMemo(() => {
     if (WPI_SPECIFICATIES?.content) {
-      const focusSpecificatiesContent = {
+      const wpiSpecificatiesContent = {
         ...WPI_SPECIFICATIES.content,
       };
-      if (focusSpecificatiesContent.jaaropgaven) {
-        focusSpecificatiesContent.jaaropgaven =
-          focusSpecificatiesContent.jaaropgaven.map((document) => {
+      if (wpiSpecificatiesContent.jaaropgaven) {
+        wpiSpecificatiesContent.jaaropgaven =
+          wpiSpecificatiesContent.jaaropgaven.map((document) => {
             const documentUrl = (
               <DocumentLink
                 document={document}
@@ -25,9 +25,9 @@ export function useAddDocumentLinkComponents(
             return Object.assign({}, document, { documentUrl });
           });
       }
-      if (focusSpecificatiesContent.uitkeringsspecificaties) {
-        focusSpecificatiesContent.uitkeringsspecificaties =
-          focusSpecificatiesContent.uitkeringsspecificaties.map((document) => {
+      if (wpiSpecificatiesContent.uitkeringsspecificaties) {
+        wpiSpecificatiesContent.uitkeringsspecificaties =
+          wpiSpecificatiesContent.uitkeringsspecificaties.map((document) => {
             const documentUrl = (
               <DocumentLink
                 document={document}
@@ -42,7 +42,7 @@ export function useAddDocumentLinkComponents(
       }
       return {
         ...WPI_SPECIFICATIES,
-        content: focusSpecificatiesContent,
+        content: wpiSpecificatiesContent,
       };
     }
     return WPI_SPECIFICATIES;

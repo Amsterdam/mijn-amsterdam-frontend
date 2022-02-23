@@ -1,6 +1,5 @@
 import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
-import { generatePath } from 'react-router-dom';
 import type {
   Krefia,
   KrefiaDeepLink,
@@ -12,7 +11,7 @@ import type {
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
 import {
-  WpiStadspas,
+  WpiRequestProcess,
   WpiStadspasResponseData,
 } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
@@ -24,8 +23,12 @@ import {
 } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
-import { LinkProps, StatusLine } from '../../../universal/types';
-import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
+import {
+  BRPData,
+  Identiteitsbewijs,
+  LinkProps,
+  StatusLine,
+} from '../../../universal/types';
 import { AppState } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
@@ -77,7 +80,7 @@ export interface ApiSearchConfig {
 
 export interface ApiBaseItem {
   title: string;
-  link: LinkProps;
+  link?: LinkProps;
   [key: string]: any;
 }
 
@@ -100,7 +103,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
     },
     displayTitle: (item: any) => (term: string) =>
       displayPath(term, [item.title]),
-    url: (item: any) => item.link.to,
+    url: (item: any) => item.link?.to || '/',
     description: (item: any) => {
       return `Bekijk ${item.title}`;
     },
@@ -145,7 +148,7 @@ export function displayPath(
   );
 }
 
-const getFocusConfig = (
+const getWpiConfig = (
   stateKey: keyof AppState
 ): Pick<
   ApiSearchConfig,
@@ -268,30 +271,40 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'WPI_STADSPAS' as keyof AppState,
-    getApiBaseItems: (apiContent: WpiStadspasResponseData) => {
-      const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
-        return {
-          ...stadspas,
-          title: `Stadspas van ${stadspas.owner}`,
-          link: {
-            to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
-            title: 'Stadspas',
-          },
-        };
-      });
-      return stadspassen || [];
+    getApiBaseItems: (
+      apiContent: WpiStadspasResponseData & {
+        aanvragen?: WpiRequestProcess[];
+      }
+    ) => {
+      const stadspassen =
+        apiContent?.stadspassen?.map((stadspas) => {
+          return {
+            ...stadspas,
+            title: `Stadspas van ${stadspas.owner}`,
+          };
+        }) || [];
+      const aanvragen = apiContent?.aanvragen || [];
+      return [...stadspassen, ...aanvragen];
     },
-    displayTitle: (stadspas: WpiStadspas) => {
+    displayTitle: (item: {
+      title: string;
+      about?: string;
+      datePublished: string;
+      status?: string;
+    }) => {
       return (term: string) => {
-        const segments = [`Stadspas van ${stadspas.owner}`];
+        const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
+        if (item.status === 'Besluit') {
+          segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
+        }
         return displayPath(term, segments);
       };
     },
   },
-  getFocusConfig('WPI_TOZO'),
-  getFocusConfig('WPI_TONK'),
-  getFocusConfig('WPI_BBZ'),
-  getFocusConfig('WPI_AANVRAGEN'),
+  getWpiConfig('WPI_TOZO'),
+  getWpiConfig('WPI_TONK'),
+  getWpiConfig('WPI_BBZ'),
+  getWpiConfig('WPI_AANVRAGEN'),
   {
     stateKey: 'BRP' as keyof AppState,
     getApiBaseItems: (apiContent: BRPData) => {

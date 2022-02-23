@@ -40,7 +40,7 @@ function Caret() {
 
 export default function InkomenSpecificaties() {
   const { WPI_SPECIFICATIES } = useAppStateGetter();
-  const focusSpecificatiesWithDocumentLinks =
+  const wpiSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(WPI_SPECIFICATIES);
   const { type = 'uitkering', page = '1' } = useParams<{
     type: 'jaaropgave' | 'uitkering';
@@ -51,11 +51,11 @@ export default function InkomenSpecificaties() {
   const items = useMemo(() => {
     return (
       (isAnnualStatementOverviewPage
-        ? focusSpecificatiesWithDocumentLinks.content?.jaaropgaven
-        : focusSpecificatiesWithDocumentLinks.content
-            ?.uitkeringsspecificaties) || []
+        ? wpiSpecificatiesWithDocumentLinks.content?.jaaropgaven
+        : wpiSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties) ||
+      []
     ).sort(dateSort('datePublished', 'desc'));
-  }, [isAnnualStatementOverviewPage, focusSpecificatiesWithDocumentLinks]);
+  }, [isAnnualStatementOverviewPage, wpiSpecificatiesWithDocumentLinks]);
 
   const maxDate = useMemo(() => {
     if (items.length) {

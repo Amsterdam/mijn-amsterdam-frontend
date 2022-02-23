@@ -187,7 +187,11 @@ export default function Landing() {
                 eherkenning.nl
               </a>{' '}
               voor meer informatie.
+              <br />
+              <br />
+              We kunnen op dit moment geen ID-kaarten tonen.
             </p>
+            {/* <p>We kunnen op dit moment geen ID-kaarten tonen.</p> */}
           </div>
         )}
 

@@ -55,15 +55,15 @@ export default function Inkomen() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
 
-  const focusSpecificatiesWithDocumentLinks =
+  const wpiSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(WPI_SPECIFICATIES);
   const aanvragen = WPI_AANVRAGEN.content;
   const tozoItems = WPI_TOZO.content;
   const tonkItems = WPI_TONK.content;
   const bbzItems = WPI_BBZ.content;
   const uitkeringsspecificaties =
-    focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
-  const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
+    wpiSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
+  const jaaropgaven = wpiSpecificatiesWithDocumentLinks.content?.jaaropgaven;
   const items: StatusLine[] = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
@@ -95,12 +95,12 @@ export default function Inkomen() {
   const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
   const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
 
-  const isLoadingFocus =
+  const isLoadingWpi =
     isLoading(WPI_AANVRAGEN) ||
     isLoading(WPI_TOZO) ||
     isLoading(WPI_TONK) ||
     isLoading(WPI_BBZ);
-  const isLoadingFocusSpecificaties = isLoading(WPI_SPECIFICATIES);
+  const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
@@ -142,7 +142,7 @@ export default function Inkomen() {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen overzicht / Lopende aanvragen',
@@ -161,7 +161,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={true}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
         track={{
@@ -180,7 +180,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-specifications-monthly"
         startCollapsed={true}
-        isLoading={isLoadingFocusSpecificaties}
+        isLoading={isLoadingWpiSpecificaties}
         title="Uitkeringsspecificaties"
         hasItems={!!uitkeringsspecificaties?.length}
         track={{
@@ -206,7 +206,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-specifications-yearly"
         startCollapsed={true}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         title="Jaaropgaven"
         hasItems={!!jaaropgaven?.length}
         track={{
