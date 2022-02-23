@@ -100,6 +100,7 @@ export default function Inkomen() {
     isLoading(WPI_TOZO) ||
     isLoading(WPI_TONK) ||
     isLoading(WPI_BBZ);
+
   const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
   return (
     <OverviewPage className={styles.Inkomen}>
