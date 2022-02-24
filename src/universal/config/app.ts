@@ -71,8 +71,7 @@ export const ExternalUrls = {
   EH_SSO_BELASTINGEN:
     'https://belastingbalie.amsterdam.nl/eherkenning.saml.php?start',
   SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
-  DIGID_SSO_SUBSIDIE: getOtapEnvItem('ssoSubsidiesUrl'),
-  EH_SSO_SUBSIDIE: 'https://mijnsubsidies.amsterdam.nl/loket/',
+  SSO_SUBSIDIE: getOtapEnvItem('ssoSubsidiesUrl'),
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
