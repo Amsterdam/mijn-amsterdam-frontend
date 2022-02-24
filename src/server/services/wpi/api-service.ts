@@ -261,7 +261,7 @@ export async function fetchWpiNotifications(
       passthroughRequestHeaders
     );
 
-    if (status === 'OK') {
+    if (status === 'OK' && !!content) {
       if (content.aanvragen?.length) {
         const aanvraagNotifications = getStadspasAanvraagNotifications(
           content.aanvragen

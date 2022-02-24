@@ -8,7 +8,7 @@ import { WpiRequestStatusLabels } from '../wpi-types';
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
-      `Wij hebben uw aanvraag ${requestProcess.title} ontvangen`,
+      `Wij hebben uw aanvraag ${requestProcess.about} ontvangen`,
     description: (requestProcess, statusStep) =>
       `Wij hebben uw aanvraag ${
         requestProcess.title
@@ -16,14 +16,14 @@ const aanvraagLabels: WpiRequestStatusLabels = {
   },
   description: (requestProcess, statusStep) =>
     `<p>
-        Wij hebben uw aanvraag ${requestProcess.title} ontvangen.
+        Wij hebben uw aanvraag ${requestProcess.about} ontvangen.
       </p>`,
 };
 
 const voorschotLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) => {
-      return `${requestProcess.title}: Wij hebben een voorschot betaald`;
+      return `${requestProcess.about}: Wij hebben een voorschot betaald`;
     },
     description: (requestProcess, statusStep) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt.`,
@@ -38,7 +38,7 @@ const voorschotLabels: WpiRequestStatusLabels = {
 const herstelTermijnLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
-      `${requestProcess.title}: Meer informatie nodig`,
+      `${requestProcess.about}: Meer informatie nodig`,
     description: (requestProcess, statusStep) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -52,7 +52,7 @@ const herstelTermijnLabels: WpiRequestStatusLabels = {
 const inkomstenVerklaringLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
-      `${requestProcess.title}: Wij hebben een wijziging van uw inkomsten ontvangen`,
+      `${requestProcess.about}: Wij hebben een wijziging van uw inkomsten ontvangen`,
     description: (requestProcess, statusStep) =>
       `Wij hebben een wijziging van uw inkomsten voor ${
         requestProcess.title
@@ -69,7 +69,7 @@ const inkomstenVerklaringLabels: WpiRequestStatusLabels = {
 const terugvorderingLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
-      `${requestProcess.title}: U moet (een deel van) uw uitkering terugbetalen.`,
+      `${requestProcess.about}: U moet (een deel van) uw uitkering terugbetalen.`,
     description: (requestProcess, statusStep) =>
       `U moet (een deel van) uw ${productName(
         requestProcess,
@@ -93,12 +93,12 @@ const terugvorderingLabels: WpiRequestStatusLabels = {
 
 const intrekkenLabels: WpiRequestStatusLabels = {
   notification: {
-    title: (requestProcess) => `${requestProcess.title}: Aanvraag ingetrokken`,
+    title: (requestProcess) => `${requestProcess.about}: Aanvraag ingetrokken`,
     description: (requestProcess) =>
-      `U hebt uw ${requestProcess.title} aanvraag ingetrokken.`,
+      `U hebt uw ${requestProcess.about} aanvraag ingetrokken.`,
   },
   description: (requestProcess) =>
-    `<p>U hebt uw ${requestProcess.title} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>U hebt uw ${requestProcess.about} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const besluitLabels: WpiRequestStatusLabels = {
@@ -106,17 +106,17 @@ const besluitLabels: WpiRequestStatusLabels = {
     title: (requestProcess, statusStep) => {
       switch (statusStep?.decision) {
         case 'toekenning':
-          return `${requestProcess.title}: Uw aanvraag is toegekend`;
+          return `${requestProcess.about}: Uw aanvraag is toegekend`;
 
         case 'afwijzing':
-          return `${requestProcess.title}: Uw aanvraag is afgewezen`;
+          return `${requestProcess.about}: Uw aanvraag is afgewezen`;
 
         case 'buitenBehandeling':
-          return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;
+          return `${requestProcess.about}: Wij behandelen uw aanvraag niet meer`;
 
         default:
         case 'vrijeBeschikking':
-          return `${requestProcess.title}: Besluit aanvraag`;
+          return `${requestProcess.about}: Besluit aanvraag`;
       }
     },
     description: (requestProcess, statusStep) => {
@@ -138,7 +138,7 @@ const besluitLabels: WpiRequestStatusLabels = {
 
         default:
         case 'vrijeBeschikking':
-          return `Wij hebben een besluit genomen over uw ${requestProcess.title} aanvraag.`;
+          return `Wij hebben een besluit genomen over uw ${requestProcess.about} aanvraag.`;
       }
     },
   },
@@ -166,11 +166,11 @@ const besluitLabels: WpiRequestStatusLabels = {
       </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       case 'buitenBehandeling':
-        return `<p>Wij behandelen uw aanvraag voor ${requestProcess.title} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+        return `<p>Wij behandelen uw aanvraag voor ${requestProcess.about} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       default:
       case 'vrijeBeschikking':
-        return `<p>Wij hebben een besluit genomen over uw ${requestProcess.title} aanvraag. Bekijk de brief voor meer details.</p>`;
+        return `<p>Wij hebben een besluit genomen over uw ${requestProcess.about} aanvraag. Bekijk de brief voor meer details.</p>`;
     }
   },
 };

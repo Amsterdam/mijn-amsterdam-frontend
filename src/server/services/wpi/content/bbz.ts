@@ -4,7 +4,7 @@ import { requestProcess as tozoRequestProcess } from './tozo';
 
 const beslisTermijnLabels: WpiRequestStatusLabels = {
   notification: {
-    title: (requestProcess) => `${requestProcess.title}: Meer tijd nodig`,
+    title: (requestProcess) => `${requestProcess.about}: Meer tijd nodig`,
     description: (requestProcess) =>
       `Wij hebben meer tijd nodig om uw aanvraag te behandelen.`,
   },
@@ -15,7 +15,7 @@ const beslisTermijnLabels: WpiRequestStatusLabels = {
 const akteLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess) =>
-      `${requestProcess.title}: Onderteken de akte voor bedrijfskapitaal`,
+      `${requestProcess.about}: Onderteken de akte voor bedrijfskapitaal`,
     description: (requestProcess) =>
       `Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend.`,
   },
@@ -26,11 +26,11 @@ const akteLabels: WpiRequestStatusLabels = {
 const briefAdviesRapportLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
-      `${requestProcess.title}: Meer informatie nodig`,
-    description: (requestProcess, statusStep) =>
+      `${requestProcess.about}: Meer informatie nodig`,
+    description: () =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
-  description: (requestProcess, statusStep) =>
+  description: () =>
     `<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
