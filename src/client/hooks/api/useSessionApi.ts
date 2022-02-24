@@ -10,12 +10,12 @@ import {
 import {
   AUTH_API_URL,
   IS_COMMERCIAL_PATH_MATCH,
+  IS_IRMA_PATH_MATCH,
   LOGOUT_URL,
 } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
-import { IS_IRMA_PATH_MATCH } from '../../config/api';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -116,15 +116,7 @@ export function useSessionApi() {
   }, []);
 
   useEffect(() => {
-    const onBeforeUnload = () => {
-      if (sessionValidMaxAge > 0) {
-        saveUserTypeForReloadingAndNewTabs(sessionValidMaxAge);
-      }
-    };
-    window.addEventListener('beforeunload', onBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload);
-    };
+    saveUserTypeForReloadingAndNewTabs(sessionValidMaxAge);
   }, [sessionValidMaxAge]);
 
   useEffect(() => {
