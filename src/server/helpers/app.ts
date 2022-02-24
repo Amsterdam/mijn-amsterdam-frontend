@@ -2,16 +2,16 @@ import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
-import { IS_AP } from '../../universal/config';
+import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../universal/config';
+import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import {
   BffEndpoints,
   BFF_BASE_PATH,
-  DEV_USER_TYPE_HEADER,
   PUBLIC_BFF_ENDPOINTS,
   TMA_SAML_HEADER,
+  X_AUTH_TYPE_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
-import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {
@@ -33,15 +33,24 @@ export function isBffPublicEndpoint(requestPath: string) {
   );
 }
 
+export function getAuthTypeFromHeader(
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const type: AuthType = passthroughRequestHeaders[
+    X_AUTH_TYPE_HEADER
+  ] as AuthType;
+
+  if (type === AuthType.EHERKENNING) {
+    return 'eherkenning';
+  }
+  return 'digid';
+}
+
 export function getPassthroughRequestHeaders(req: Request) {
   const passthroughHeaders: Record<string, string> = {
     [TMA_SAML_HEADER]: (req.headers[TMA_SAML_HEADER] || '') as string,
+    [X_AUTH_TYPE_HEADER]: (req.cookies[COOKIE_KEY_AUTH_TYPE] || '') as string,
   };
-  if (!IS_AP) {
-    passthroughHeaders[DEV_USER_TYPE_HEADER] = (req.headers[
-      DEV_USER_TYPE_HEADER
-    ] || '') as string;
-  }
   return passthroughHeaders;
 }
 

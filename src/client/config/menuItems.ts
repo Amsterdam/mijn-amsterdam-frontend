@@ -65,14 +65,14 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.SUBSIDIE,
     id: Chapters.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authSource=digid`,
+    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.SUBSIDIE,
     id: Chapters.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authSource=eherkenning`,
+    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
   },
