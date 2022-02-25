@@ -43,6 +43,7 @@ export function getAuthTypeFromHeader(
   if (type === AuthType.EHERKENNING) {
     return 'eherkenning';
   }
+
   return 'digid';
 }
 
@@ -68,13 +69,8 @@ export function exitEarly(req: Request, res: Response, next: NextFunction) {
 }
 
 export function sessionID(req: Request, res: Response, next: NextFunction) {
-  uid(18, function generateSessionIdFromUid(err: Error, sessionID: string) {
-    if (err) {
-      next(err);
-    }
-    res.locals.sessionID = sessionID;
-    next();
-  });
+  res.locals.sessionID = uid.sync(18);
+  next();
 }
 
 export function send404(res: Response) {
