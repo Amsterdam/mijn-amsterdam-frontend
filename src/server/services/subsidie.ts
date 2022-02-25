@@ -48,25 +48,28 @@ function transformSubsidieData(
       return Object.assign(notification, {
         link: {
           ...notification.link,
-          to: new URL(`${urlTo.origin}${urlTo.pathname}?${params.toString()}`),
+          to: new URL(
+            `${urlTo.origin}${urlTo.pathname}?${params.toString()}`
+          ).toString(),
         },
       });
     }),
   };
 }
 
-async function fetchSource(
+export async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   includeGenerated: boolean = false
 ) {
   const response = await requestData<SubsidieData>(
     getApiConfig('SUBSIDIE', {
-      transformResponse: (responseData) =>
-        transformSubsidieData(
+      transformResponse: (responseData) => {
+        return transformSubsidieData(
           responseData,
           getAuthTypeFromHeader(passthroughRequestHeaders)
-        ),
+        );
+      },
     }),
     sessionID,
     passthroughRequestHeaders
