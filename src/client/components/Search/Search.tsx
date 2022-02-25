@@ -214,10 +214,15 @@ export function Search({
       setResultsVisible(false);
       onFinish('Click result');
 
-      if (replaceResultUrl?.(result)) {
-        history.replace(result.url);
+      if (result.url.startsWith('https')) {
+        window.location.href = result.url;
+        return;
       } else {
-        history.push(result.url);
+        if (replaceResultUrl?.(result)) {
+          history.replace(result.url);
+        } else {
+          history.push(result.url);
+        }
       }
     },
     [

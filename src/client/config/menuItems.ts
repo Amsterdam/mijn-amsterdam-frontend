@@ -1,13 +1,12 @@
 import {
   AppRoutes,
-  ChapterTitles,
-  Chapters,
   Chapter,
+  Chapters,
+  ChapterTitles,
 } from '../../universal/config';
-
-import { ExternalUrls } from './app';
 import { LinkProps } from '../../universal/types/App.types';
 import { termReplace } from '../hooks/useTermReplacement';
+import { ExternalUrls } from './app';
 
 export interface ChapterMenuItem extends LinkProps {
   id: Chapter;
@@ -66,14 +65,14 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.SUBSIDIE,
     id: Chapters.SUBSIDIE,
-    to: ExternalUrls.DIGID_SSO_SUBSIDIE || '',
+    to: `${ExternalUrls.SSO_SUBSIDIE}?authSource=digid`,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.SUBSIDIE,
     id: Chapters.SUBSIDIE,
-    to: ExternalUrls.EH_SSO_SUBSIDIE || '',
+    to: `${ExternalUrls.SSO_SUBSIDIE}?authSource=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
   },
