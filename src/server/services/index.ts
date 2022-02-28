@@ -12,6 +12,12 @@ export * from './focus/focus-specificaties';
 export * from './focus/focus-tozo';
 export * from './generated';
 export { fetchKrefia, fetchKrefiaGenerated } from './krefia';
+export type {
+  Krefia,
+  KrefiaDeepLink,
+  KrefiaDeepLinks,
+  KrefiaDetail,
+} from './krefia';
 export * from './milieuzone';
 export * from './subsidie';
 export * from './tips';
