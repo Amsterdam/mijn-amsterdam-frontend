@@ -388,7 +388,7 @@ const mijnQuery = selector({
     const term = get(searchTermAtom);
     get(noWait(bagSeachResults)); // Subscribes to updates from the bag results
 
-    if (fuseInstance !== null && !!term) {
+    if (fuseInstance && !!term) {
       const rawResults = fuseInstance.search(term);
       return rawResults.map((result: any) => result.item);
     }
