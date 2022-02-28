@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/node';
 import express from 'express';
 import {
   addServiceResultHandler,
+  clearSession,
   exitEarly,
   getAuthTypeFromHeader,
   getPassthroughRequestHeaders,
@@ -15,6 +16,7 @@ import {
   sendMessage,
   sessionID,
 } from './app';
+import { cache } from './source-api-request';
 
 describe('server/helpers/app', () => {
   test('isValidRequestPath', () => {
@@ -222,8 +224,17 @@ describe('server/helpers/app', () => {
   });
 
   test('clearSession', () => {
-    // const result = clearSession();
-    // expect(result).toBe(null);
+    const sessionID = '11223300xx';
+    const nextMock = jest.fn();
+    cache.put(sessionID, { foo: 'bar' });
+
+    expect(cache.get(sessionID)).toEqual({ foo: 'bar' });
+
+    clearSession({} as any, { locals: { sessionID } } as any, nextMock);
+
+    expect(cache.get(sessionID)).toBe(null);
+    expect(cache.keys()).toEqual([]);
+    expect(nextMock).toBeCalledTimes(1);
   });
 
   test('sendMessage', () => {
