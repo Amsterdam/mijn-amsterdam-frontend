@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, {
   ErrorRequestHandler,
@@ -47,6 +48,7 @@ app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
+app.use(cookieParser());
 app.use(compression());
 
 // Development routing for mock data
