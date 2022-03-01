@@ -7,8 +7,17 @@ export * from './buurt/buurt';
 export * from './buurt/supercluster';
 export * from './cms-content';
 export * from './erfpacht';
+export * from './focus/focus-aanvragen';
+export * from './focus/focus-specificaties';
+export * from './focus/focus-tozo';
 export * from './generated';
-export * from './krefia';
+export { fetchKrefia, fetchKrefiaGenerated } from './krefia';
+export type {
+  Krefia,
+  KrefiaDeepLink,
+  KrefiaDeepLinks,
+  KrefiaDetail,
+} from './krefia';
 export * from './milieuzone';
 export * from './subsidie';
 export * from './tips';

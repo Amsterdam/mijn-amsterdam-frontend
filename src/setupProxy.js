@@ -97,9 +97,6 @@ module.exports = function (app) {
       },
       onProxyReq: function onProxyReq(proxyReq, req, res) {
         proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
-        if (req.session.userType) {
-          proxyReq.setHeader('x-user-type', req.session.userType);
-        }
       },
     })
   );

@@ -1,12 +1,14 @@
+import { URL, URLSearchParams } from 'url';
 import { Chapters } from '../../universal/config';
 import { omit } from '../../universal/helpers';
-import { MyNotification } from '../../universal/types';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
 import {
   apiDependencyError,
   apiSuccesResult,
 } from '../../universal/helpers/api';
+import { MyNotification } from '../../universal/types';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
+import { getAuthTypeFromHeader } from '../helpers/app';
 
 export interface SubsidieData {
   isKnown: boolean;
@@ -24,7 +26,10 @@ interface SubsidieSourceData {
   message?: string;
 }
 
-function transformSubsidieData(responseData: SubsidieSourceData): SubsidieData {
+function transformSubsidieData(
+  responseData: SubsidieSourceData,
+  authType: 'digid' | 'eherkenning'
+): SubsidieData {
   const { isKnown, notifications = [] } = responseData?.content || {
     isKnown: false,
     notifications: [],
@@ -32,18 +37,37 @@ function transformSubsidieData(responseData: SubsidieSourceData): SubsidieData {
 
   return {
     isKnown,
-    notifications: notifications,
+    notifications: notifications.map((notification) => {
+      const urlTo = new URL(notification.link?.to || '/');
+      const params = new URLSearchParams(urlTo.search);
+
+      if (!params.get('authMethod')) {
+        params.set('authMethod', authType);
+      }
+
+      return Object.assign(notification, {
+        link: {
+          ...notification.link,
+          to: new URL(
+            `${urlTo.origin}${urlTo.pathname}?${params.toString()}`
+          ).toString(),
+        },
+      });
+    }),
   };
 }
 
-async function fetchSource(
+export async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   includeGenerated: boolean = false
 ) {
+  const authType = getAuthTypeFromHeader(passthroughRequestHeaders);
   const response = await requestData<SubsidieData>(
     getApiConfig('SUBSIDIE', {
-      transformResponse: transformSubsidieData,
+      transformResponse: (responseData) => {
+        return transformSubsidieData(responseData, authType);
+      },
     }),
     sessionID,
     passthroughRequestHeaders

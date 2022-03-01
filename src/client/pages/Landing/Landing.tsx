@@ -186,12 +186,10 @@ export default function Landing() {
               <a rel="noopener noreferrer" href="https://eherkenning.nl">
                 eherkenning.nl
               </a>{' '}
-              voor meer informatie.
-              <br />
-              <br />
-              We kunnen op dit moment geen ID-kaarten tonen.
+              voor meer informatie.<br></br>
+              Voorlopig is inloggen met een Ketenmachtiging voor eHerkenning
+              (niveau 3) nog niet mogelijk. We werken aan een oplossing.
             </p>
-            {/* <p>We kunnen op dit moment geen ID-kaarten tonen.</p> */}
           </div>
         )}
 

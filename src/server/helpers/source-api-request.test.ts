@@ -4,7 +4,11 @@ import {
   apiPostponeResult,
   apiSuccesResult,
 } from '../../universal/helpers/api';
-import { BFF_MS_API_BASE_URL, TMA_SAML_HEADER } from '../config';
+import {
+  BFF_MS_API_BASE_URL,
+  TMA_SAML_HEADER,
+  X_AUTH_TYPE_HEADER,
+} from '../config';
 import { axiosRequest, cache, requestData } from './source-api-request';
 
 describe('requestData.ts', () => {
@@ -18,7 +22,8 @@ describe('requestData.ts', () => {
   const SESS_ID_2 = 'y2';
 
   const SAML_TOKEN = 'xxx1010101xxxx';
-  const HEADERS = { [TMA_SAML_HEADER]: SAML_TOKEN };
+  const HEADERS_FILTERED = { [TMA_SAML_HEADER]: SAML_TOKEN };
+  const HEADERS = { ...HEADERS_FILTERED, [X_AUTH_TYPE_HEADER]: 'D' };
 
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
@@ -67,7 +72,7 @@ describe('requestData.ts', () => {
     );
 
     expect(axiosRequestSpy).toHaveBeenCalledTimes(1);
-    expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS);
+    expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS_FILTERED);
   });
 
   it('Caches the response', async () => {
