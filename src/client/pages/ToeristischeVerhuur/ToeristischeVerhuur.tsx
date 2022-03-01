@@ -91,10 +91,7 @@ export default function ToeristischeVerhuur() {
       }
     }
 
-    return [
-      addTitleLinkComponent(verhuur, 'dateStart'),
-      addTitleLinkComponent(vergunningen, 'title'),
-    ];
+    return [verhuur, addTitleLinkComponent(vergunningen, 'title')];
   }, [content?.vergunningen]);
 
   const cancelledVerhuur = useMemo(() => {

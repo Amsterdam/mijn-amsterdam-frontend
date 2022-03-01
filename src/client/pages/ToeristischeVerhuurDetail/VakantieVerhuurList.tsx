@@ -1,8 +1,13 @@
 import {
   ToeristischeVerhuur,
+  ToeristischeVerhuurVergunning,
   ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
-import { SectionCollapsible, Table } from '../../components';
+import {
+  addTitleLinkComponent,
+  SectionCollapsible,
+  Table,
+} from '../../components';
 import { useAppStateGetter } from '../../hooks';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 
@@ -13,6 +18,26 @@ const DISPLAY_PROPS_VERHUUR = {
   duration: 'Aantal nachten',
 };
 
+const filterVerhuur = (vergunning: ToeristischeVerhuurVergunningaanvraag) => {
+  return (v: ToeristischeVerhuurVergunning) => {
+    if (
+      !['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
+        v.title
+      ) &&
+      v.location === vergunning.location &&
+      v.dateStart &&
+      vergunning.dateStart &&
+      new Date(v.dateStart) >= new Date(vergunning.dateStart) &&
+      v.dateEnd &&
+      vergunning.dateEnd &&
+      new Date(v.dateEnd) <= new Date(vergunning.dateEnd)
+    ) {
+      return v;
+    }
+    return undefined;
+  };
+};
+
 const VakantieVerhuurList = ({
   vergunning,
 }: {
@@ -21,22 +46,12 @@ const VakantieVerhuurList = ({
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
 
-  const verhuur = (
-    content?.vergunningen?.map((v) => {
-      if (
-        !['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
-          v.title
-        ) &&
-        v.location === vergunning.location &&
-        new Date(v.dateStart || '') >= new Date(vergunning.dateStart || '') &&
-        new Date(v.dateEnd || '') <= new Date(vergunning.dateEnd || '')
-      ) {
-        return v;
-      }
-
-      return undefined;
-    }) || []
-  ).filter(Boolean) as ToeristischeVerhuur[];
+  const verhuur = addTitleLinkComponent(
+    (content?.vergunningen?.map(filterVerhuur(vergunning)) || []).filter(
+      Boolean
+    ) as ToeristischeVerhuur[],
+    'dateStart'
+  ) as ToeristischeVerhuur[];
 
   const cancelledVerhuur = verhuur.filter(
     (v) => v?.title === 'Geannuleerde verhuur'
