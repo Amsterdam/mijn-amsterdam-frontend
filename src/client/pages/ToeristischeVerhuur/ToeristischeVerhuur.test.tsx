@@ -151,9 +151,6 @@ describe('<ToeristischeVerhuur />', () => {
     ).toBeInTheDocument();
     expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
-    expect(screen.getByText('Geplande verhuur')).toBeInTheDocument();
-    expect(screen.getByText('Geannuleerde verhuur')).toBeInTheDocument();
-    expect(screen.getByText('Afgelopen verhuur')).toBeInTheDocument();
 
     expect(
       screen.getByText(

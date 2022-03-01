@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import type {
-  ToeristischeVerhuur,
   ToeristischeVerhuurBBVergunning,
   ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
-import { CaseType } from '../../../universal/types/vergunningen';
+
 import { PageContent, SectionCollapsible, Table } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
@@ -17,6 +16,8 @@ import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import { Location } from '../VergunningDetail/Location';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useAppStateGetter } from '../../hooks';
+import { CaseType } from '../../../universal/types/vergunningen';
+import VakantieVerhuurList from './VakantieVerhuurList';
 
 const DISPLAY_PROPS_VERHUUR = {
   dateStart: 'Start verhuur',
@@ -149,102 +150,13 @@ export default function VergunningVerhuur({
     | ToeristischeVerhuurBBVergunning;
 }) {
   const statusLineItems = useStatusLineItems(vergunning);
-  const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
-  const { content } = TOERISTISCHE_VERHUUR;
-
-  const verhuur = (
-    content?.vergunningen?.map((v) => {
-      if (
-        !['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
-          v.title
-        ) &&
-        v.location === vergunning.location &&
-        new Date(v.dateStart || '') >= new Date(vergunning.dateStart || '') &&
-        new Date(v.dateEnd || '') <= new Date(vergunning.dateEnd || '')
-      ) {
-        return v;
-      }
-
-      return undefined;
-    }) || []
-  ).filter(Boolean) as ToeristischeVerhuur[];
-
-  const cancelledVerhuur = verhuur.filter(
-    (v) => v?.title === 'Geannuleerde verhuur'
-  );
-
-  const plannedVerhuur = verhuur.filter((v) => v?.title === 'Geplande verhuur');
-
-  const previousVerhuur = verhuur.filter(
-    (v) => v?.title === 'Afgelopen verhuur'
-  );
 
   return (
     <>
       <PageContent className={styles.DetailPageContent}>
-        <SectionCollapsible
-          id="SectionCollapsible-planned-verhuur"
-          title="Geplande verhuur"
-          className={styles.SectionBorderTop}
-          startCollapsed={!plannedVerhuur.length && !!verhuur.length}
-          hasItems={!!plannedVerhuur.length}
-          noItemsMessage="Er is geen geplande verhuur gevonden"
-          track={{
-            category: 'Toeristische verhuur / Geplande Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={plannedVerhuur}
-          />
-        </SectionCollapsible>
-        <SectionCollapsible
-          id="SectionCollapsible-cancelled-verhuur"
-          title="Geannuleerde verhuur"
-          startCollapsed={
-            !!plannedVerhuur.length ||
-            (!plannedVerhuur.length && !!verhuur.length)
-          }
-          hasItems={!!cancelledVerhuur.length}
-          noItemsMessage="Er is geen geannuleerde verhuur gevonden"
-          track={{
-            category: 'Toeristische verhuur / afgemeld Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={cancelledVerhuur}
-          />
-        </SectionCollapsible>
-        <SectionCollapsible
-          id="SectionCollapsible-previous-verhuur"
-          title="Afgelopen verhuur"
-          noItemsMessage="Er is geen afgelopen verhuur gevonden."
-          className={styles.SectionNoBorderBottom}
-          startCollapsed={
-            !!plannedVerhuur.length ||
-            !!cancelledVerhuur.length ||
-            !verhuur.length
-          }
-          hasItems={!!previousVerhuur.length}
-          track={{
-            category: 'Toeristische verhuur / afgelopen Verhuur',
-            name: 'Datatabel',
-          }}
-        >
-          <Table
-            className={styles.Table}
-            titleKey="dateStart"
-            displayProps={DISPLAY_PROPS_VERHUUR}
-            items={previousVerhuur}
-          />
-        </SectionCollapsible>
+        {vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag && (
+          <VakantieVerhuurList vergunning={vergunning} />
+        )}
         <InfoDetail
           label="Gemeentelijk zaaknummer"
           value={vergunning?.identifier ?? '-'}
