@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isError } from '../../../universal/helpers';
@@ -19,13 +19,6 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
-
-const DISPLAY_PROPS_VERHUUR = {
-  dateStart: 'Start verhuur',
-  dateEnd: 'Einde verhuur',
-  dateRequest: 'Ontvangen op',
-  duration: 'Aantal nachten',
-};
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
   title: 'Soort vergunning',
@@ -59,6 +52,7 @@ export default function ToeristischeVerhuur() {
       (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
     );
   }, [content?.vergunningen]);
+
   const hasVergunningBBVerleend = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) =>
@@ -66,6 +60,7 @@ export default function ToeristischeVerhuur() {
         vergunning.decision === 'Verleend'
     );
   }, [content?.vergunningen]);
+
   const [verhuur, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
@@ -141,6 +136,7 @@ export default function ToeristischeVerhuur() {
         return false;
     }
   };
+
   const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
@@ -280,65 +276,7 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
-      {hasVergunningenVakantieVerhuur && (
-        <>
-          <SectionCollapsible
-            id="SectionCollapsible-planned-verhuur"
-            title="Geplande verhuur"
-            className={styles.SectionBorderTop}
-            startCollapsed={isCollapsed('gepland')}
-            hasItems={!!plannedVerhuur.length}
-            noItemsMessage="Er is geen geplande verhuur gevonden"
-            track={{
-              category: 'Toeristische verhuur / Geplande Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={plannedVerhuur}
-            />
-          </SectionCollapsible>
-          <SectionCollapsible
-            id="SectionCollapsible-cancelled-verhuur"
-            title="Geannuleerde verhuur"
-            startCollapsed={isCollapsed('geannuleerd')}
-            hasItems={!!cancelledVerhuur.length}
-            noItemsMessage="Er is geen geannuleerde verhuur gevonden"
-            track={{
-              category: 'Toeristische verhuur / afgemeld Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={cancelledVerhuur}
-            />
-          </SectionCollapsible>
-          <SectionCollapsible
-            id="SectionCollapsible-previous-verhuur"
-            title="Afgelopen verhuur"
-            noItemsMessage="Er is geen afgelopen verhuur gevonden."
-            startCollapsed={isCollapsed('previous')}
-            hasItems={!!previousVerhuur.length}
-            track={{
-              category: 'Toeristische verhuur / afgelopen Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={previousVerhuur}
-            />
-          </SectionCollapsible>
-        </>
-      )}
+
       <SectionCollapsible
         id="SectionCollapsible-vergunningen"
         className={styles.SectionNoBorderBottom}
