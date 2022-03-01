@@ -40,13 +40,13 @@ type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
   response: ApiSuccessResponse<R>
 ) => R;
 
-interface FetchConfig {
+export interface FetchConfig {
   apiConfigName: SourceApiKey;
   filterResponse: FilterResponse<any>;
   requestCacheKey: string;
 }
 
-function fetchRequestProcess<R extends WpiRequestProcess>(
+export async function fetchRequestProcess<R extends WpiRequestProcess>(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   getLabels: (
