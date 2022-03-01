@@ -19,6 +19,7 @@ import {
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
+  OUTGOING_REQUEST_HEADERS,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
@@ -87,6 +88,19 @@ export function clearSessionCache(sessionID: SessionID) {
   }
 }
 
+function filterOutgoingRequestHeaders(headers: Record<string, string> = {}) {
+  const headersFiltered: Record<string, string> = {};
+
+  // Remove particular headers for outgoing requests.
+  OUTGOING_REQUEST_HEADERS.forEach((key) => {
+    if (key in headers) {
+      headersFiltered[key] = headers[key];
+    }
+  });
+
+  return headersFiltered;
+}
+
 function getRequestConfigCacheKey(
   sessionID: string,
   requestConfig: DataRequestConfig
@@ -127,7 +141,9 @@ export async function requestData<T>(
     requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) &&
     passthroughRequestHeaders
   ) {
-    requestConfig.headers = passthroughRequestHeaders;
+    requestConfig.headers = filterOutgoingRequestHeaders(
+      passthroughRequestHeaders
+    );
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';

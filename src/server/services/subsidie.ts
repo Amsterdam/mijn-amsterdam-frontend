@@ -62,13 +62,11 @@ export async function fetchSource(
   passthroughRequestHeaders: Record<string, string>,
   includeGenerated: boolean = false
 ) {
+  const authType = getAuthTypeFromHeader(passthroughRequestHeaders);
   const response = await requestData<SubsidieData>(
     getApiConfig('SUBSIDIE', {
       transformResponse: (responseData) => {
-        return transformSubsidieData(
-          responseData,
-          getAuthTypeFromHeader(passthroughRequestHeaders)
-        );
+        return transformSubsidieData(responseData, authType);
       },
     }),
     sessionID,
