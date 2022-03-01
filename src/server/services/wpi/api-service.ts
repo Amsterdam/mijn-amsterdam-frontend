@@ -55,7 +55,7 @@ export async function fetchRequestProcess<R extends WpiRequestProcess>(
   fetchConfig: FetchConfig
 ) {
   const statusLineTransformer = (response: R[]) =>
-    response.flatMap((requestProcess) => {
+    response?.flatMap((requestProcess) => {
       const labels = getLabels(requestProcess);
       if (labels) {
         return [transformToStatusLine(requestProcess, labels)];
@@ -85,7 +85,9 @@ export async function fetchBijstandsuitkering(
 ) {
   const filterResponse: FilterResponse = (response) =>
     response.content
-      .filter((requestProcess) => requestProcess.about === 'Bijstandsuitkering')
+      ?.filter(
+        (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+      )
       .map((requestProcess) => addLink(requestProcess));
 
   const response = await fetchRequestProcess(
@@ -111,8 +113,8 @@ export async function fetchStadspas(
   >
 > {
   const filterResponse: FilterResponse = (response) => {
-    return response.content
-      .filter((requestProcess) => requestProcess.about === 'Stadspas')
+    return response?.content
+      ?.filter((requestProcess) => requestProcess?.about === 'Stadspas')
       .map((requestProcess) => addLink(requestProcess));
   };
 

@@ -1,7 +1,7 @@
 import { differenceInMonths, format } from 'date-fns';
 import { generatePath, LinkProps } from 'react-router-dom';
 import { API_BASE_PATH, AppRoutes, Chapter } from '../../../universal/config';
-import { GenericDocument, MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -37,7 +37,9 @@ export function transformToStatusLine(
   };
 }
 
-export function addApiBasePathToDocumentUrls(documents: GenericDocument[]) {
+export function addApiBasePathToDocumentUrls(
+  documents: Array<{ url: string }>
+) {
   return documents.map((document) => {
     return {
       ...document,
