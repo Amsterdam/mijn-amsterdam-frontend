@@ -54,23 +54,24 @@ export async function fetchRequestProcess<R extends WpiRequestProcess>(
   ) => WpiRequestProcessLabels | undefined,
   fetchConfig: FetchConfig
 ) {
+  const statusLineTransformer = (response: R[]) =>
+    response.flatMap((requestProcess) => {
+      const labels = getLabels(requestProcess);
+      if (labels) {
+        return [transformToStatusLine(requestProcess, labels)];
+      } else {
+        // Log Unknown Process
+      }
+      return [];
+    });
+
+  const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
+    cacheKey: fetchConfig.requestCacheKey,
+    transformResponse: [fetchConfig.filterResponse, statusLineTransformer],
+  });
+
   const response = requestData<WpiRequestProcess[]>(
-    getApiConfig(fetchConfig.apiConfigName, {
-      cacheKey: fetchConfig.requestCacheKey,
-      transformResponse: [
-        fetchConfig.filterResponse,
-        (response: R[]) =>
-          response.flatMap((requestProcess) => {
-            const labels = getLabels(requestProcess);
-            if (labels) {
-              return [transformToStatusLine(requestProcess, labels)];
-            } else {
-              // Log Unknown Process
-            }
-            return [];
-          }),
-      ],
-    }),
+    apiConfig,
     sessionID,
     passthroughRequestHeaders
   );

@@ -111,7 +111,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   let title = 'Bekijk uw aanvraag';
 
   const id = requestProcess.id;
-  let link: LinkProps;
+  let link: LinkProps | undefined = undefined;
 
   switch (requestProcess.about) {
     case 'TONK':
@@ -163,9 +163,13 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
   }
 
-  return Object.assign(requestProcess, {
-    link,
-  });
+  if (link) {
+    return Object.assign(requestProcess, {
+      link,
+    });
+  }
+
+  return requestProcess;
 }
 
 export function getEAanvraagRequestProcessLabels(

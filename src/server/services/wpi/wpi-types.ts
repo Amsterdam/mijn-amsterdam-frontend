@@ -33,7 +33,8 @@ export interface WpiRequestProcess {
     | 'Tozo 4'
     | 'Tozo 5'
     | 'TONK'
-    | 'Bbz';
+    | 'Bbz'
+    | string;
   dateStart: string;
   dateEnd: string | null;
   datePublished: string; // Date of latest step
