@@ -77,6 +77,14 @@ const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 // Possible refresh token call here?
 
+app.get(
+  BffEndpoints.PUBLIC_HEALTH,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.json({ status: 'OK' });
+    next();
+  }
+);
+
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
   if (req.oidc.isAuthenticated()) {
     // TODO: Extract validity from token
