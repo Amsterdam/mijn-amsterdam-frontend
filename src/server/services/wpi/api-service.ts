@@ -345,6 +345,7 @@ export async function fetchWpiNotifications(
     if (status === 'OK') {
       if (content) {
         const specificatieNotifications = getSpecificatieNotifications(content);
+
         if (specificatieNotifications) {
           notifications.push(...specificatieNotifications);
         }
