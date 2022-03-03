@@ -178,7 +178,7 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
-const PUBLIC_AUTH_BASE = '/bff/public/auth';
+const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';
 
 export const BffEndpoints = {
   SERVICES_TIPS: '/services/tips',
@@ -192,8 +192,15 @@ export const BffEndpoints = {
   // Public endpoints
   PUBLIC_AUTH_BASE,
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
-  PUBLIC_AUTH_LOGIN: `${PUBLIC_AUTH_BASE}/login`,
-  PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
+  PUBLIC_AUTH_LOGIN: `${
+    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_LOGIN || '/login')
+  }`,
+  PUBLIC_AUTH_LOGOUT: `${
+    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_LOGOUT || '/logout')
+  }`,
+  PUBLIC_AUTH_CALLBACK: `${
+    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_CALLBACK || '/callback')
+  }`,
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',

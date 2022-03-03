@@ -41,13 +41,14 @@ const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   secret: process.env.BFF_OIDC_SECRET,
-  baseURL: process.env.BFF_OIDC_BASE_URL,
+  baseURL:
+    (process.env.BFF_OIDC_BASE_URL || '') + BffEndpoints.PUBLIC_AUTH_BASE,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     login: BffEndpoints.PUBLIC_AUTH_LOGIN,
-    callback: process.env.BFF_OIDC_CALLBACK,
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
