@@ -99,6 +99,7 @@ export interface WpiStadspasBudget {
 export interface WpiStadspas {
   id: number;
   passNumber: string;
+  passType: 'kind' | 'ouder';
   owner: string;
   dateEnd: string;
   budgets: WpiStadspasBudget[];

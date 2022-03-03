@@ -84,6 +84,10 @@ export default function Stadspas() {
             Bekijk saldo
           </LinkdInline>
         ),
+        owner:
+          stadspas.passType === 'kind'
+            ? `${stadspas.owner} &nbsp;&nbsp;(${stadspas.passType})`
+            : stadspas.owner,
       };
     });
   }, [WPI_STADSPAS.content]);
