@@ -201,6 +201,7 @@ export const BffEndpoints = {
   PUBLIC_AUTH_CALLBACK: `${
     PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_CALLBACK || '/callback')
   }`,
+  PUBLIC_AUTH_USER: `${PUBLIC_AUTH_BASE}/user`,
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',

@@ -10,7 +10,7 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import { auth, ConfigParams } from 'express-openid-connect';
+import { auth, ConfigParams, requiresAuth } from 'express-openid-connect';
 import morgan from 'morgan';
 import { UserTpe } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
@@ -91,6 +91,10 @@ app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
   return res.redirect(
     process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
   );
+});
+
+app.get(BffEndpoints.PUBLIC_AUTH_USER, requiresAuth(), (req, res) => {
+  return res.send(req.oidc.user);
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
