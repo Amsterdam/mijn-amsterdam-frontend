@@ -15,7 +15,7 @@ import {
 } from './content/bijstandsuitkering';
 import {
   getNotifications as getSpecificatieNotifications,
-  transformIncomSpecificationItem,
+  transformIncomeSpecificationItem,
 } from './content/specificaties';
 import {
   getAanvraagNotifications as getStadspasAanvraagNotifications,
@@ -228,10 +228,10 @@ export function transformIncomSpecificationResponse(
 ) {
   return {
     jaaropgaven: response.content.jaaropgaven.map(
-      transformIncomSpecificationItem
+      transformIncomeSpecificationItem
     ),
     uitkeringsspecificaties: response.content.uitkeringsspecificaties.map(
-      transformIncomSpecificationItem
+      transformIncomeSpecificationItem
     ),
   };
 }

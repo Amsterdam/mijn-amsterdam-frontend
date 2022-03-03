@@ -193,6 +193,12 @@ describe('wpi/app-service', () => {
 
     const [statusLine] = response.content || [];
     expect(statusLine.status).toBe('Meer informatie');
+    expect(statusLine.link).toMatchInlineSnapshot(`
+      Object {
+        "title": "Bekijk uw aanvraag",
+        "to": "/inkomen/bijstandsuitkering/xxxxxxxfxaxkxex1xx",
+      }
+    `);
 
     const [step1, step2, step3] = statusLine.steps;
     expect(step1.status).toBe('Aanvraag');
@@ -259,6 +265,13 @@ describe('wpi/app-service', () => {
 
     expect(response.status).toBe('OK');
     expect(response.content?.aanvragen?.length).toBe(1);
+
+    expect(response.content?.aanvragen?.[0].link).toMatchInlineSnapshot(`
+      Object {
+        "title": "Bekijk uw aanvraag",
+        "to": "/stadspas/aanvraag/xxxxxxxfxaxkxex1xx",
+      }
+    `);
   });
 
   test('fetchStadspas-with-error', async () => {
@@ -279,7 +292,40 @@ describe('wpi/app-service', () => {
     );
   });
 
-  xtest('fetchWpiNotifications', () => {
-    const result = fetchWpiNotifications(sessionID, requestHeaders);
+  test('fetchWpiNotifications', async () => {
+    const eAanvragenContent = jsonCopy(content);
+
+    nock(`http://localhost:${BFF_PORT}`)
+      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .reply(200, {
+        content,
+      })
+      .get('/test-api/wpi/stadspas')
+      .reply(200, {
+        content: {
+          adminNumber: '123123123',
+          ownerType: 'hoofdpashouder',
+          stadspassen: [],
+        },
+      })
+      .get('/test-api/wpi/specificaties')
+      .reply(200, {
+        content: {
+          jaaropgaven: [],
+          uitkeringsspecificaties: [],
+        },
+      })
+      .get('/test-api/wpi/e-aanvragen')
+      .reply(200, {
+        content: eAanvragenContent,
+      });
+
+    const response = await fetchWpiNotifications(sessionID, requestHeaders);
+
+    expect(response.content).toMatchInlineSnapshot(`
+      Object {
+        "notifications": Array [],
+      }
+    `);
   });
 });

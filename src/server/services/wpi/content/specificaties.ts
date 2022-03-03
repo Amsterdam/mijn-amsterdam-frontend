@@ -114,12 +114,13 @@ export function getNotifications(
   return notifications;
 }
 
-export function transformIncomSpecificationItem(
+export function transformIncomeSpecificationItem(
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
   const categoryFromSource = item.variant;
+
   return {
     ...item,
     category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
