@@ -47,7 +47,7 @@ const oidcConfig: ConfigParams = {
   routes: {
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     login: BffEndpoints.PUBLIC_AUTH_LOGIN,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    callback: process.env.BFF_OIDC_CALLBACK,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };

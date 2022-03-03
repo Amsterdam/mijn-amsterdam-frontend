@@ -194,7 +194,6 @@ export const BffEndpoints = {
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
   PUBLIC_AUTH_LOGIN: `${PUBLIC_AUTH_BASE}/login`,
   PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
-  PUBLIC_AUTH_CALLBACK: `${PUBLIC_AUTH_BASE}/callback`,
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
