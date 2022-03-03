@@ -46,8 +46,6 @@ const oidcConfig: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
     callback: process.env.BFF_OIDC_CALLBACK,
-    login: BffEndpoints.PUBLIC_OIDC_LOGIN,
-    logout: BffEndpoints.PUBLIC_OIDC_LOGOUT,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -86,6 +84,12 @@ app.get(
   }
 );
 
+app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
+  return res.redirect(
+    process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
+  );
+});
+
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
   if (req.oidc.isAuthenticated()) {
     // TODO: Extract validity from token
@@ -102,12 +106,6 @@ app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
   } else {
     res.status(401).send(apiErrorResult('Not authenticated.', false));
   }
-});
-
-app.get('/', (req, res) => {
-  return res.redirect(
-    process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
-  );
 });
 
 // Development routing for mock data

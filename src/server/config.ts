@@ -186,9 +186,9 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   API_DIRECT: '/direct/:apiName',
   SEARCH_CONFIG: '/services/search-config',
+
   // Public endpoints
-  PUBLIC_OIDC_LOGIN: '/bff/public/auth/login',
-  PUBLIC_OIDC_LOGOUT: '/bff/public/auth/logout',
+  PUBLIC_AUTH_BASE: '/bff/public/auth',
   PUBLIC_AUTH_CHECK: '/bff/public/auth/check',
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
