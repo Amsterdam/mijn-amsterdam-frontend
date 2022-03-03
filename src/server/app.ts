@@ -15,10 +15,8 @@ import morgan from 'morgan';
 import { UserTpe } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
-import { BffEndpoints, BFF_BASE_PATH, BFF_PORT } from './config';
-import { clearSession, send404, sessionID } from './helpers/app';
-import { routerDevelopment } from './mock-data/router-development';
-import { router } from './router';
+import { BffEndpoints, BFF_PORT } from './config';
+import { send404 } from './helpers/app';
 
 dotenv.config({ path: `.env${!IS_AP ? '.local' : ''}` });
 
@@ -34,7 +32,7 @@ const sentryOptions: Sentry.NodeOptions = {
     }
     return event;
   },
-  release: 'mijnamsterdam-bff@' + process.env.npm_package_version,
+  release: `mijnamsterdam-bff@${process.env.npm_package_version}`,
 };
 
 Sentry.init(sentryOptions);
@@ -105,17 +103,17 @@ app.get('/', (req, res) => {
 
 // // Development routing for mock data
 if (!IS_AP) {
-  app.use(routerDevelopment);
+  // app.use(routerDevelopment);
 }
 
 // Generate session id
-app.use(sessionID);
+// app.use(sessionID);
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, router);
+// app.use(BFF_BASE_PATH, router);
 
 // Destroy the session as soon as the api requests are all processed
-app.use(clearSession);
+// app.use(clearSession);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 
