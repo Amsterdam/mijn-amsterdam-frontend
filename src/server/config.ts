@@ -194,7 +194,7 @@ export const BffEndpoints = {
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
   PUBLIC_CACHE_OVERVIEW: '/status/cache',
-  PUBLIC_HEALTH: '/status/health',
+  PUBLIC_HEALTH: '/bff/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
