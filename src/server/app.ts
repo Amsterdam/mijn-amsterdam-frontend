@@ -45,9 +45,9 @@ const oidcConfig: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
-    logout: '/logout',
-    login: '/login',
-    callback: process.env.BFF_OIDC_CALLBACK,
+    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
+    login: BffEndpoints.PUBLIC_AUTH_LOGIN,
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
