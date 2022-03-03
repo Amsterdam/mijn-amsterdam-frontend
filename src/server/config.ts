@@ -178,6 +178,8 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
+const PUBLIC_AUTH_BASE = '/bff/public/auth';
+
 export const BffEndpoints = {
   SERVICES_TIPS: '/services/tips',
   SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
@@ -188,8 +190,8 @@ export const BffEndpoints = {
   SEARCH_CONFIG: '/services/search-config',
 
   // Public endpoints
-  PUBLIC_AUTH_BASE: '/bff/public/auth',
-  PUBLIC_AUTH_CHECK: '/bff/public/auth/check',
+  PUBLIC_AUTH_BASE,
+  PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
