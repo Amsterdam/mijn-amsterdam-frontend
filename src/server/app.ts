@@ -48,7 +48,7 @@ const oidcConfig: ConfigParams = {
   routes: {
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     login: BffEndpoints.PUBLIC_AUTH_LOGIN,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -89,7 +89,8 @@ app.get(
 
 app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
   return res.redirect(
-    process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
+    BffEndpoints.PUBLIC_AUTH_USER
+    // process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
   );
 });
 
