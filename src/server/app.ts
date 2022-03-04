@@ -40,6 +40,7 @@ Sentry.init(sentryOptions);
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
+  idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
   baseURL:
     (process.env.BFF_OIDC_BASE_URL || '') + BffEndpoints.PUBLIC_AUTH_BASE,
@@ -48,7 +49,8 @@ const oidcConfig: ConfigParams = {
   routes: {
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     login: BffEndpoints.PUBLIC_AUTH_LOGIN,
-    callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    // callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -92,6 +94,10 @@ app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
     BffEndpoints.PUBLIC_AUTH_USER
     // process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
   );
+});
+
+app.get(BffEndpoints.PUBLIC_AUTH_CALLBACK, (req, res) => {
+  return res.send('the callback!');
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, requiresAuth(), (req, res) => {
