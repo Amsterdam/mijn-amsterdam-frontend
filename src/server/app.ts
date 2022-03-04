@@ -18,7 +18,7 @@ import express, {
 } from 'express';
 import { auth, ConfigParams, requiresAuth } from 'express-openid-connect';
 import morgan from 'morgan';
-import { UserTpe } from '../universal/config';
+import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
 import { BffEndpoints, BFF_PORT } from './config';
@@ -44,7 +44,7 @@ Sentry.init(sentryOptions);
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: true,
+  idpLogout: false,
   secret: process.env.BFF_OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
@@ -129,7 +129,7 @@ app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
     res.send(
       apiSuccesResult({
         isAuthenticated: true,
-        userType: UserTpe.BURGER, // TODO: get from req.oidc.user.type ???
+        userType: UserType.BURGER, // TODO: get from req.oidc.user.type ???
         validUntil,
       })
     );

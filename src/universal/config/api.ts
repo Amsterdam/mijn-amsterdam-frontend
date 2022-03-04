@@ -9,7 +9,7 @@ export enum AuthType {
   IRMA = 'I',
 }
 
-export enum UserTpe {
+export enum UserType {
   BURGER = 'BURGER',
   BEDRIJF = 'BEDRIJF',
 }
