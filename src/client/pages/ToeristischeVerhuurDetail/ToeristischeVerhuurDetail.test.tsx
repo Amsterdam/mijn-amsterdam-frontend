@@ -57,6 +57,7 @@ describe('<ToeristischVerhuurDetail />', () => {
         lower: true,
       }),
       id: verhuur?.id,
+      vergunningId: verhuur?.vergunningId || verhuur?.id,
     }
   );
 

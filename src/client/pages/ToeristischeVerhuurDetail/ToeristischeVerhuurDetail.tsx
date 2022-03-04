@@ -35,7 +35,7 @@ export default function ToeristischVerhuurDetail() {
           Vergunning?.caseType === CaseType.VakantieVerhuur
             ? {
                 to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
-                  id: Vergunning?.vergunningId,
+                  id: Vergunning?.vergunningId || Vergunning?.id,
                 }),
                 title: 'Vergunning vakantieverhuur',
               }

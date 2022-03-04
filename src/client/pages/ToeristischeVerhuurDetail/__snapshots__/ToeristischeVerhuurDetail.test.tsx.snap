@@ -25,7 +25,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
       >
         <a
           class="Button Button__plain Button__lean Linkd BackLink"
-          href="/toeristische-verhuur"
+          href="/toeristische-verhuur/vergunning/3712318642"
         >
           <svg
             aria-hidden="true"
@@ -36,7 +36,7 @@ exports[`<ToeristischVerhuurDetail /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Left.svg
           </svg>
-          Toeristische verhuur
+          Vergunning vakantieverhuur
         </a>
         <h2
           class="Heading Heading__large"

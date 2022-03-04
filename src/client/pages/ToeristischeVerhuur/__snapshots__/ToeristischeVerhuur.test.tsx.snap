@@ -124,7 +124,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         class="Heading Heading__mediumLarge Title TitleWithItems"
       >
         <button
-          aria-expanded="false"
+          aria-expanded="true"
           class="TitleToggle"
         >
           <svg
@@ -137,7 +137,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
         </button>
       </h3>
       <div
-        aria-hidden="true"
+        aria-hidden="false"
         class="Panel"
         style="height: 0px;"
       >
