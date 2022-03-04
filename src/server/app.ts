@@ -16,7 +16,7 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import { auth, ConfigParams, requiresAuth } from 'express-openid-connect';
+import { auth, ConfigParams } from 'express-openid-connect';
 import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
@@ -49,9 +49,10 @@ const oidcConfig: ConfigParams = {
   baseURL: process.env.BFF_OIDC_BASE_URL,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
+  attemptSilentLogin: false,
   routes: {
-    logout: false,
     login: false,
+    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
     // callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
@@ -110,14 +111,19 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN, (req, res) => {
   });
 });
 
-app.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, (req, res) => {
-  return res.oidc.logout({
-    returnTo: BffEndpoints.PUBLIC_AUTH_BASE,
-  });
-});
+// app.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, (req, res) => {
+//   return res.oidc.logout({
+//     returnTo: BffEndpoints.PUBLIC_AUTH_BASE,
+//   });
+// });
 
-app.get(BffEndpoints.PUBLIC_AUTH_USER, requiresAuth(), (req, res) => {
-  return res.send(req.oidc.user);
+app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(req.oidc.user);
+  }
+  return res.send(
+    `You are logged out. <a href="${BffEndpoints.PUBLIC_AUTH_LOGIN}">login</a>`
+  );
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
