@@ -41,20 +41,17 @@ const sentryOptions: Sentry.NodeOptions = {
 
 Sentry.init(sentryOptions);
 
-const baseURL =
-  (process.env.BFF_OIDC_BASE_URL || '') + BffEndpoints.PUBLIC_AUTH_BASE;
-
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
-  baseURL,
+  baseURL: process.env.BFF_OIDC_BASE_URL,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
-    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
-    login: BffEndpoints.PUBLIC_AUTH_LOGIN,
+    logout: false,
+    login: false,
     callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
     // callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
@@ -100,14 +97,25 @@ app.get(
 );
 
 app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
-  return res.redirect(
-    BffEndpoints.PUBLIC_AUTH_USER
-    // process.env.BFF_REDIRECT_TO_AFTER_LOGIN || BffEndpoints.PUBLIC_AUTH_CHECK
-  );
+  if (req.oidc.isAuthenticated()) {
+    return res.redirect(BffEndpoints.PUBLIC_AUTH_USER);
+  } else {
+    return res.send(
+      `You are logged out. <a href="${BffEndpoints.PUBLIC_AUTH_LOGIN}">login</a>`
+    );
+  }
 });
 
-app.get(BffEndpoints.PUBLIC_AUTH_CALLBACK, (req, res) => {
-  return res.send('the callback!');
+app.get(BffEndpoints.PUBLIC_AUTH_LOGIN, (req, res) => {
+  return res.oidc.login({
+    returnTo: BffEndpoints.PUBLIC_AUTH_USER,
+  });
+});
+
+app.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, (req, res) => {
+  return res.oidc.logout({
+    returnTo: BffEndpoints.PUBLIC_AUTH_BASE,
+  });
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, requiresAuth(), (req, res) => {
