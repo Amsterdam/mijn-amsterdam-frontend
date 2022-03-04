@@ -82,8 +82,6 @@ app.use(auth(oidcConfig));
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
-// Possible refresh token call here?
-
 app.get('/', (req, res) => {
   return res.send('waaah');
 });
