@@ -1,3 +1,10 @@
+/* eslint-disable import/first */
+
+import dotenv from 'dotenv';
+
+const ENV_LOCAL = '.env.local';
+dotenv.config({ path: ENV_LOCAL });
+
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
