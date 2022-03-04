@@ -2,7 +2,6 @@ import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -17,8 +16,6 @@ import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
 import { BffEndpoints, BFF_PORT } from './config';
 import { send404 } from './helpers/app';
-
-dotenv.config({ path: `.env${!IS_AP ? '.local' : ''}` });
 
 const isDebug = ENV === 'development';
 const sentryOptions: Sentry.NodeOptions = {
@@ -37,13 +34,15 @@ const sentryOptions: Sentry.NodeOptions = {
 
 Sentry.init(sentryOptions);
 
+const baseURL =
+  (process.env.BFF_OIDC_BASE_URL || '') + BffEndpoints.PUBLIC_AUTH_BASE;
+
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
-  baseURL:
-    (process.env.BFF_OIDC_BASE_URL || '') + BffEndpoints.PUBLIC_AUTH_BASE,
+  baseURL,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   routes: {
@@ -80,6 +79,10 @@ app.use(auth(oidcConfig));
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 // Possible refresh token call here?
+
+app.get('/', (req, res) => {
+  return res.send('waaah');
+});
 
 app.get(
   BffEndpoints.PUBLIC_HEALTH,

@@ -190,7 +190,7 @@ export const BffEndpoints = {
   SEARCH_CONFIG: '/services/search-config',
 
   // Public endpoints
-  PUBLIC_AUTH_BASE,
+  PUBLIC_AUTH_BASE: process.env.BFF_OIDC_BASE_PATH || '',
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
   PUBLIC_AUTH_LOGIN: `${
     PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_LOGIN || '/login')
