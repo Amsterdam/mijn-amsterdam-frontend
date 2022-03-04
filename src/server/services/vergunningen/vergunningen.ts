@@ -116,6 +116,7 @@ export interface Vakantieverhuur extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   location: string | null;
+  vergunningId?: string;
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
@@ -273,6 +274,7 @@ export async function fetchVergunningen(
                   lower: true,
                 }),
                 id: vergunning.id,
+                vergunningId: vergunning.id,
               })
             : '/',
           title: `Bekijk hoe het met uw aanvraag staat`,

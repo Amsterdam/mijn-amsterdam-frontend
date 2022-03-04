@@ -61,7 +61,7 @@ export default function ToeristischeVerhuur() {
     );
   }, [content?.vergunningen]);
 
-  const [verhuur, vergunningen] = useMemo(() => {
+  const [_, vergunningen] = useMemo(() => {
     if (!content?.vergunningen?.length) {
       return [[], []];
     }
@@ -93,46 +93,6 @@ export default function ToeristischeVerhuur() {
 
     return [verhuur, addTitleLinkComponent(vergunningen, 'title')];
   }, [content?.vergunningen]);
-
-  const cancelledVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (verhuur) => verhuur.title === 'Geannuleerde verhuur'
-    );
-  }, [verhuur]);
-
-  const plannedVerhuur = useMemo(() => {
-    return verhuur.filter((verhuur) => verhuur.title === 'Geplande verhuur');
-  }, [verhuur]);
-
-  const previousVerhuur = useMemo(() => {
-    return verhuur.filter((verhuur) => verhuur.title === 'Afgelopen verhuur');
-  }, [verhuur]);
-
-  const isCollapsed = (listTitle: string): boolean => {
-    switch (listTitle) {
-      case 'gepland':
-        return !plannedVerhuur.length && !!verhuur.length;
-      case 'geannuleerd':
-        return (
-          !!plannedVerhuur.length ||
-          (!plannedVerhuur.length && !!verhuur.length)
-        );
-      case 'previous':
-        return (
-          !!plannedVerhuur.length ||
-          !!cancelledVerhuur.length ||
-          !verhuur.length
-        );
-      case 'vergunningen':
-        return (
-          !!plannedVerhuur.length ||
-          !!cancelledVerhuur.length ||
-          !!previousVerhuur.length
-        );
-      default:
-        return false;
-    }
-  };
 
   const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
@@ -280,7 +240,7 @@ export default function ToeristischeVerhuur() {
         title="Vergunningen"
         hasItems={!!vergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
-        startCollapsed={isCollapsed('vergunningen')}
+        startCollapsed={false}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',

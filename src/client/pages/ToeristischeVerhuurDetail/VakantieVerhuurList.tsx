@@ -49,7 +49,7 @@ const VakantieVerhuurList = ({
   const verhuur = addTitleLinkComponent(
     (content?.vergunningen?.map(filterVerhuur(vergunning)) || []).filter(
       Boolean
-    ) as ToeristischeVerhuur[],
+    ),
     'dateStart'
   ) as ToeristischeVerhuur[];
 

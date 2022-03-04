@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
@@ -31,10 +31,19 @@ export default function ToeristischVerhuurDetail() {
     <DetailPage>
       <PageHeading
         icon={<ChapterIcon />}
-        backLink={{
-          to: AppRoutes.TOERISTISCHE_VERHUUR,
-          title: ChapterTitles.TOERISTISCHE_VERHUUR,
-        }}
+        backLink={
+          Vergunning?.caseType === CaseType.VakantieVerhuur
+            ? {
+                to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+                  id: Vergunning?.vergunningId,
+                }),
+                title: 'Vergunning vakantieverhuur',
+              }
+            : {
+                to: AppRoutes.TOERISTISCHE_VERHUUR,
+                title: ChapterTitles.TOERISTISCHE_VERHUUR,
+              }
+        }
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
         {Vergunning?.title || 'Onbekende toeristische verhuur'}

@@ -33,7 +33,7 @@ export const AppRoutes: Record<string, string> = {
   'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR':
-    '/toeristische-verhuur/vakantieverhuur/:title/:id',
+    '/toeristische-verhuur/vakantieverhuur/:vergunningId/:title/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
     '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',

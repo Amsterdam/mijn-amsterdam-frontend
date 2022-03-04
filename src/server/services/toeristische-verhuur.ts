@@ -91,6 +91,7 @@ function fetchRegistraties(
 interface ToeristischeVerhuurVergunningProps {
   isActual: boolean;
   duration: number;
+  vergunningId?: string;
 }
 
 // A union of the the source types that are retrieved from the Decos api
@@ -154,6 +155,7 @@ export function transformVergunningenToVerhuur(
   if (!Array.isArray(vergunningen)) {
     return [];
   }
+
   const vergunningenTransformed = vergunningen.map((vergunning) => {
     const isActual = vergunning.dateEnd
       ? !isDateInPast(vergunning.dateEnd, dateCompare)
@@ -170,6 +172,32 @@ export function transformVergunningenToVerhuur(
       vergunning.status === 'Afgehandeld'
     ) {
       status = vergunning.decision;
+    }
+
+    if (vergunning.caseType === CaseType.VakantieVerhuur) {
+      vergunning.vergunningId = vergunningen.find((v) => {
+        return (
+          v.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
+          v.location === vergunning.location &&
+          v.dateStart &&
+          vergunning.dateStart &&
+          new Date(vergunning.dateStart) >= new Date(v.dateStart) &&
+          v.dateEnd &&
+          vergunning.dateEnd &&
+          new Date(vergunning.dateEnd) <= new Date(v.dateEnd) &&
+          v.id !== vergunning.id
+        );
+      })?.id;
+      vergunning.link = {
+        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'], {
+          title: slug(vergunning.title, {
+            lower: true,
+          }),
+          id: vergunning.id,
+          vergunningId: vergunning?.vergunningId || vergunning.id,
+        }),
+        title: `Bekijk hoe het met uw aanvraag staat`,
+      };
     }
 
     return {
@@ -242,6 +270,7 @@ async function fetchAndTransformToeristischeVerhuur(
                   lower: true,
                 }),
                 id: vergunning.id,
+                vergunningId: vergunning.id,
               }
             );
           default:
@@ -395,6 +424,7 @@ export function createToeristischeVerhuurNotification(
           lower: true,
         }),
         id: item.id,
+        vergunningId: item?.vergunningId || item.id,
       }
     );
 
