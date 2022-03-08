@@ -47,7 +47,7 @@ describe('App', () => {
     (useSessionValue as jest.Mock).mockReturnValue(session);
     (useSessionApi as jest.Mock).mockReturnValue(session);
 
-    const { container } = render(<App />);
+    render(<App />);
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /actueel/i })).toHaveTextContent(
