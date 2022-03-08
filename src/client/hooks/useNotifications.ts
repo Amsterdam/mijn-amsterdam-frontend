@@ -1,3 +1,4 @@
+import { sessionAtom } from './api/useSessionApi';
 import { selectorFamily, useRecoilValue } from 'recoil';
 import { Chapters } from '../../universal/config';
 import { dateSort } from '../../universal/helpers';
@@ -15,6 +16,7 @@ const appStateNotificationsSelector = selectorFamily({
     (profileType: ProfileType) =>
     ({ get }) => {
       const appState = get(appStateAtom);
+      const isLoggedInAsCompany = get(sessionAtom).userType === 'BEDRIJF';
       let notifications = appState.NOTIFICATIONS.content || [];
 
       // Exclude meldingen for the private-commercial (ZZP) profile.
@@ -27,6 +29,13 @@ const appStateNotificationsSelector = selectorFamily({
             notification.chapter !== Chapters.BRP &&
             notification.chapter !== Chapters.BURGERZAKEN
         );
+
+        // If user is not logged in with EHK filter subsidie notifications.
+        if (!isLoggedInAsCompany) {
+          notifications.filter(
+            (notification) => notification.chapter !== Chapters.SUBSIDIE
+          );
+        }
       }
 
       let welcomeNotification = WelcomeNotification;
