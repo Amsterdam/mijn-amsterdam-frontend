@@ -2,7 +2,16 @@ import App from './App';
 import { render, screen } from '@testing-library/react';
 import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
 
-jest.mock('./hooks/api/useSessionApi');
+jest.mock('./hooks/api/useSessionApi', () => {
+  const module = jest.requireActual('./hooks/api/useSessionApi');
+
+  return {
+    __esModule: true,
+    ...module,
+    useSessionApi: jest.fn(),
+    useSessionValue: jest.fn(),
+  };
+});
 
 describe('App', () => {
   it('Renders pristine App', () => {
@@ -41,7 +50,11 @@ describe('App', () => {
     const { container } = render(<App />);
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
-    expect(container.querySelector('main h2')).toHaveTextContent('Actueel');
-    expect(container.querySelector('main')).toHaveTextContent(/Mijn thema's/gi);
+    expect(screen.getByRole('heading', { name: /actueel/i })).toHaveTextContent(
+      'Actueel'
+    );
+    expect(
+      screen.getByRole('heading', { name: /mijn thema's/i })
+    ).toHaveTextContent(/Mijn thema's/gi);
   });
 });
