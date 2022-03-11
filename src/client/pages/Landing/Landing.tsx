@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
-import DigiDLogo from '../../assets/images/digid-logo.svg';
-import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
+import DigiDLogo from '../../assets/images/LogoDigiD';
+import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
   Heading,
@@ -71,11 +71,7 @@ export default function Landing() {
               )}
             >
               <span className={styles.LoginLogoWrap}>
-                <img
-                  src={DigiDLogo}
-                  alt="DigiD logo"
-                  className={styles.LoginLogo}
-                />
+                <DigiDLogo />
               </span>
               <span className={styles.LoginButtonText}>
                 {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
@@ -165,11 +161,7 @@ export default function Landing() {
                 )}
               >
                 <span className={styles.LoginLogoWrap}>
-                  <img
-                    src={EherkenningLogo}
-                    alt="eHerkenning logo"
-                    className={styles.LoginLogo}
-                  />
+                  <LogoEherkenning />
                 </span>
                 <span className={styles.LoginButtonText}>
                   {isRedirectingEherkenning
