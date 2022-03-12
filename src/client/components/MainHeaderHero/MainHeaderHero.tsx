@@ -21,7 +21,7 @@ function imgUrl(
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
   return `/header${dir}/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
-  )}-${imageName}.jpg`;
+  )}-${imageName}.webp`;
 }
 
 function useHeroSrc() {
@@ -138,12 +138,17 @@ export default function MainHeaderHero() {
           srcSet={srcSet.LANDSCAPE_SMALL}
         />
         <source
-          media="(orientation: landscape) and (min-width: 1440px)"
-          srcSet={srcSet.LANDSCAPE_LARGE}
+          media="(orientation: landscape) and (min-width: 1024px)"
+          type="image/webp"
+          srcSet="/header/1366x342-algemeen.webp"
         />
         <source
-          media="(orientation: landscape) and (min-width: 1200px)"
+          media="(orientation: landscape) and (min-width: 1024px)"
           srcSet={srcSet.LANDSCAPE_MEDIUM}
+        />
+        <source
+          media="(orientation: landscape) and (min-width: 1440px)"
+          srcSet={srcSet.LANDSCAPE_LARGE}
         />
         <img src={srcSet.LANDSCAPE_MEDIUM} className={styles.Image} alt="" />
       </picture>

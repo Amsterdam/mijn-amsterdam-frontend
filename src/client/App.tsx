@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
+import { lazy, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -40,29 +41,29 @@ import {
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 import {
-  Accessibility,
-  Burgerzaken,
-  BurgerzakenIDKaart,
-  Dashboard,
-  GarbageInformation,
-  GeneralInfo,
-  Inkomen,
+  // Accessibility,
+  // Burgerzaken,
+  // BurgerzakenIDKaart,
+  // Dashboard,
+  // GarbageInformation,
+  // GeneralInfo,
+  // Inkomen,
   InkomenDetailBbz,
   InkomenDetailTonk,
   InkomenDetailTozo,
   InkomenDetailUitkering,
-  InkomenSpecificaties,
-  LandingPage,
-  MyNotifications,
-  MyTips,
-  NotFound,
-  Profile,
-  ToeristischeVerhuur,
-  ToeristischeVerhuurDetail,
-  VergunningDetail,
-  Vergunningen,
-  Zorg,
-  ZorgDetail,
+  // InkomenSpecificaties,
+  // LandingPage,
+  // MyNotifications,
+  // MyTips,
+  // NotFound,
+  // Profile,
+  // ToeristischeVerhuur,
+  // ToeristischeVerhuurDetail,
+  // VergunningDetail,
+  // Vergunningen,
+  // Zorg,
+  // ZorgDetail,
 } from './pages';
 import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
 import Krefia from './pages/Krefia/Krefia';
@@ -72,6 +73,41 @@ import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const MyNotifications = lazy(
+  () => import('./pages/MyNotifications/MyNotifications')
+);
+const Accessibility = lazy(() => import('./pages/Accessibility/Accessibility'));
+const Burgerzaken = lazy(() => import('./pages//Burgerzaken/Burgerzaken'));
+const BurgerzakenIDKaart = lazy(
+  () => import('./pages/BurgerzakenDetail/BurgerzakenIDKaart')
+);
+const GarbageInformation = lazy(
+  () => import('./pages/GarbageInformation/GarbageInformation')
+);
+const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
+const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
+
+const InkomenSpecificaties = lazy(
+  () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
+);
+const LandingPage = lazy(() => import('./pages/Landing/Landing'));
+const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
+const ToeristischeVerhuur = lazy(
+  () => import('./pages/ToeristischeVerhuur/ToeristischeVerhuur')
+);
+const ToeristischeVerhuurDetail = lazy(
+  () => import('./pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail')
+);
+const VergunningDetail = lazy(
+  () => import('./pages/VergunningDetail/VergunningDetail')
+);
+const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
+const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
+const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -119,113 +155,115 @@ function AppAuthenticated() {
     <>
       <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
-        <Switch>
-          <Redirect
-            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          {AppRoutesRedirect.map(({ from, to }) => (
-            <Redirect key={from + to} from={from} to={to} />
-          ))}
-          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
-          {profileType !== 'private' ? (
-            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
-          ) : (
-            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
-          )}
-          <Route path={AppRoutes.BRP} component={Profile} />
-          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          <Route path={AppRoutes.TIPS} component={MyTips} />
-          <Route
-            path={AppRoutes['STADSPAS/AANVRAAG']}
-            component={StadspasAanvraagDetail}
-          />
-          <Route
-            path={AppRoutes['STADSPAS/SALDO']}
-            component={StadspasDetail}
-          />
-          <Route
-            path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
-            component={InkomenDetailUitkering}
-          />
-          <Route
-            path={AppRoutes['INKOMEN/SPECIFICATIES']}
-            component={InkomenSpecificaties}
-          />
-          <Route
-            path={AppRoutes['INKOMEN/TOZO']}
-            component={InkomenDetailTozo}
-          />
-          <Route
-            path={AppRoutes['INKOMEN/TONK']}
-            component={InkomenDetailTonk}
-          />
-          {FeatureToggle.inkomenBBZActive && (
-            <Route
-              path={AppRoutes['INKOMEN/BBZ']}
-              component={InkomenDetailBbz}
+        <Suspense fallback={<div>Loading buurt bundle...</div>}>
+          <Switch>
+            <Redirect
+              from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
+              to={{ pathname, search }}
             />
-          )}
-          <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-          <Route path={AppRoutes.STADSPAS} component={Stadspas} />
-          <Route
-            path={AppRoutes['ZORG/VOORZIENINGEN']}
-            component={ZorgDetail}
-          />
-          <Route path={AppRoutes.ZORG} component={Zorg} />
-          <Route
-            path={AppRoutes['BURGERZAKEN/ID-KAART']}
-            component={BurgerzakenIDKaart}
-          />
-          <Route
-            path={AppRoutes['BURGERZAKEN/AKTE']}
-            component={BurgerzakenAkte}
-          />
-          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
-          {FeatureToggle.garbageInformationPage && (
-            <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
-          )}
-          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
-          <Route
-            path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={VergunningDetail}
-          />
-          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
-          {FeatureToggle.toeristischeVerhuurActive && (
-            <Route
-              path={[
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-              ]}
-              component={ToeristischeVerhuurDetail}
+            <Redirect
+              from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
+              to={{ pathname, search }}
             />
-          )}
-          {FeatureToggle.toeristischeVerhuurActive && (
-            <Route
-              path={AppRoutes.TOERISTISCHE_VERHUUR}
-              component={ToeristischeVerhuur}
+            <Redirect
+              from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
+              to={{ pathname, search }}
             />
-          )}
-          {FeatureToggle.krefiaActive && (
-            <Route path={AppRoutes.KREFIA} component={Krefia} />
-          )}
-          <Route path={AppRoutes.SEARCH} component={Search} />
-          <Route path={AppRoutes.PARKEREN} component={Parkeren} />
-          <Route component={NotFound} />
-        </Switch>
+            {AppRoutesRedirect.map(({ from, to }) => (
+              <Redirect key={from + to} from={from} to={to} />
+            ))}
+            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+            <Route exact path={AppRoutes.ROOT} component={Dashboard} />
+            <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+            {profileType !== 'private' ? (
+              <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
+            ) : (
+              <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
+            )}
+            <Route path={AppRoutes.BRP} component={Profile} />
+            <Route path={AppRoutes.KVK} component={ProfileCommercial} />
+            <Route path={AppRoutes.TIPS} component={MyTips} />
+            <Route
+              path={AppRoutes['STADSPAS/AANVRAAG']}
+              component={StadspasAanvraagDetail}
+            />
+            <Route
+              path={AppRoutes['STADSPAS/SALDO']}
+              component={StadspasDetail}
+            />
+            <Route
+              path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
+              component={InkomenDetailUitkering}
+            />
+            <Route
+              path={AppRoutes['INKOMEN/SPECIFICATIES']}
+              component={InkomenSpecificaties}
+            />
+            <Route
+              path={AppRoutes['INKOMEN/TOZO']}
+              component={InkomenDetailTozo}
+            />
+            <Route
+              path={AppRoutes['INKOMEN/TONK']}
+              component={InkomenDetailTonk}
+            />
+            {FeatureToggle.inkomenBBZActive && (
+              <Route
+                path={AppRoutes['INKOMEN/BBZ']}
+                component={InkomenDetailBbz}
+              />
+            )}
+            <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+            <Route path={AppRoutes.STADSPAS} component={Stadspas} />
+            <Route
+              path={AppRoutes['ZORG/VOORZIENINGEN']}
+              component={ZorgDetail}
+            />
+            <Route path={AppRoutes.ZORG} component={Zorg} />
+            <Route
+              path={AppRoutes['BURGERZAKEN/ID-KAART']}
+              component={BurgerzakenIDKaart}
+            />
+            <Route
+              path={AppRoutes['BURGERZAKEN/AKTE']}
+              component={BurgerzakenAkte}
+            />
+            <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
+            {FeatureToggle.garbageInformationPage && (
+              <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
+            )}
+            <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+            <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+            <Route
+              path={AppRoutes['VERGUNNINGEN/DETAIL']}
+              component={VergunningDetail}
+            />
+            <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+            {FeatureToggle.toeristischeVerhuurActive && (
+              <Route
+                path={[
+                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
+                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
+                  AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
+                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+                ]}
+                component={ToeristischeVerhuurDetail}
+              />
+            )}
+            {FeatureToggle.toeristischeVerhuurActive && (
+              <Route
+                path={AppRoutes.TOERISTISCHE_VERHUUR}
+                component={ToeristischeVerhuur}
+              />
+            )}
+            {FeatureToggle.krefiaActive && (
+              <Route path={AppRoutes.KREFIA} component={Krefia} />
+            )}
+            <Route path={AppRoutes.SEARCH} component={Search} />
+            <Route path={AppRoutes.PARKEREN} component={Parkeren} />
+            <Route component={NotFound} />
+          </Switch>
+        </Suspense>
       </div>
       <MainFooter isAuthenticated={true} />
     </>
