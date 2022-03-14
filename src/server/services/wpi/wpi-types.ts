@@ -97,7 +97,7 @@ export interface WpiStadspasBudget {
 }
 
 export interface WpiStadspas {
-  id: number;
+  id: string;
   passNumber: string;
   passType: 'kind' | 'ouder';
   owner: string;
@@ -107,7 +107,7 @@ export interface WpiStadspas {
 }
 
 export interface WpiStadspasTransaction {
-  id: number;
+  id: string;
   title: string;
   amount: number;
   datePublished: string;

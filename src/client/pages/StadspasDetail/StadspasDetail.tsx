@@ -5,7 +5,11 @@ import {
   WpiStadspasBudget,
   WpiStadspasTransaction,
 } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  API_BASE_PATH,
+  AppRoutes,
+  ChapterTitles,
+} from '../../../universal/config';
 import {
   apiPristineResult,
   ApiResponse,
@@ -122,20 +126,15 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
 interface StadspasBudgetProps {
   urlTransactions: string;
   budget: WpiStadspasBudget;
-  dateEnd: string;
 }
 
-function StadspasBudget({
-  urlTransactions,
-  budget,
-  dateEnd,
-}: StadspasBudgetProps) {
+function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
   const [isTransactionOverviewActive, toggleTransactionOverview] =
     useState(false);
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
-      url: directApiUrl(urlTransactions),
+      url: directApiUrl(`${API_BASE_PATH + urlTransactions}`),
     },
     apiPristineResult([])
   );
@@ -203,9 +202,7 @@ export default function StadspasDetail() {
   const { WPI_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? WPI_STADSPAS?.content?.stadspassen?.find(
-        (pass) => pass.id === parseInt(id, 10)
-      )
+    ? WPI_STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
     : null;
   const isErrorStadspas = isError(WPI_STADSPAS);
   const isLoadingStadspas = isLoading(WPI_STADSPAS);
@@ -252,7 +249,6 @@ export default function StadspasDetail() {
           urlTransactions={budget.urlTransactions}
           key={budget.code}
           budget={budget}
-          dateEnd={stadspasItem.dateEnd}
         />
       ))}
     </DetailPage>

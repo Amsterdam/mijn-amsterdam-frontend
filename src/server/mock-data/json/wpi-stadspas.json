@@ -4,7 +4,7 @@
     "ownerType": "hoofdpashouder",
     "stadspassen": [
       {
-        "id": 200773,
+        "id": "200773",
         "passNumber": "6064366011012608282",
         "owner": "I Kumari",
         "passType": "ouder",
@@ -12,7 +12,7 @@
         "budgets": []
       },
       {
-        "id": 200767,
+        "id": "200767",
         "passNumber": "6064366011012603622",
         "owner": "Z Kumari",
         "passType": "ouder",
@@ -20,7 +20,7 @@
         "budgets": []
       },
       {
-        "id": 200771,
+        "id": "200771",
         "passNumber": "6064366011012605999",
         "owner": "A Kumari",
         "passType": "kind",
@@ -45,7 +45,7 @@
         ]
       },
       {
-        "id": 200774,
+        "id": "200774",
         "passNumber": "6064366011012608795",
         "owner": "H Grupstal",
         "passType": "kind",

@@ -26,7 +26,7 @@ routerDevelopment.get(
 );
 
 routerDevelopment.get(
-  '/wpi/stadspastransacties/:id',
+  '/wpi/stadspas/transacties/:id',
   (req: Request, res: Response, next: NextFunction) => {
     res
       .json(

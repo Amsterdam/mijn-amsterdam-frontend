@@ -158,7 +158,7 @@ export function getBudgetNotifications(
 
   const createNotificationBudget = (
     description: string,
-    stadspasId?: number
+    stadspasId?: string
   ) => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),

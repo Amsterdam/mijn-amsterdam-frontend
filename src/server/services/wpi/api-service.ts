@@ -131,8 +131,11 @@ export async function fetchStadspas(
 
   const stadspasRequest = requestData<WpiStadspasResponseData>(
     getApiConfig('WPI_STADSPAS', {
-      transformResponse: (response: ApiSuccessResponse<any>) =>
-        response.content,
+      transformResponse: (
+        response: ApiSuccessResponse<WpiStadspasResponseData>
+      ) => {
+        return response.content;
+      },
     }),
     sessionID,
     passthroughRequestHeaders
