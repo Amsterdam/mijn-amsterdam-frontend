@@ -16,7 +16,7 @@ const appStateNotificationsSelector = selectorFamily({
     (profileType: ProfileType) =>
     ({ get }) => {
       const appState = get(appStateAtom);
-      const isLoggedInAsCompany = get(sessionAtom).userType === 'BEDRIJF';
+      const isLoggedInAsCompany = profileType === 'commercial';
       let notifications = appState.NOTIFICATIONS.content || [];
 
       // Exclude meldingen for the private-commercial (ZZP) profile.
