@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
@@ -8,7 +7,7 @@ import MockApp from '../MockApp';
 import StadspasDetail from './StadspasDetail';
 
 const testState: any = {
-  FOCUS_STADSPAS: {
+  WPI_STADSPAS: {
     content: {
       type: 'hoofdpashouder',
       stadspassen: [
@@ -27,7 +26,7 @@ const testState: any = {
               code: 'AMSTEST_0-9',
               description: 'Kindbudget test MijnAmsterdam',
               urlTransactions:
-                '/api/focus/stadspastransacties/gAAAAABfs6wSk83lMv3MAtPe391EqxgHHao5z7PXh1ZSihPf2BHaAJbpfxuRA-8UeEPg72nUbTMrPfhQ2I2OtTDmeBKOPABi5OB-NdL2Q14eUjV6bO3e5-r_G2OPuqMw2Luw35AenP9E',
+                '/wpi/stadspastransacties/gAAAAABfs6wSk83lMv3MAtPe391EqxgHHao5z7PXh1ZSihPf2BHaAJbpfxuRA-8UeEPg72nUbTMrPfhQ2I2OtTDmeBKOPABi5OB-NdL2Q14eUjV6bO3e5-r_G2OPuqMw2Luw35AenP9E',
             },
           ],
           datumAfloop: '2021-08-31T21:59:59.000Z',
@@ -50,7 +49,7 @@ const testState: any = {
               code: 'AMSTEST_10-14',
               description: 'Kindbudget ',
               urlTransactions:
-                '/api/focus/stadspastransacties/gAAAAABfs6wT4Dljs4eKjKN9JbCP_tTkePB1sD30c1m0SKqYlFUNyZ3WYEovImWgXQuTkKqb0mf2Nb7iHqR21wU8vn-t2Jdnq-F23lr78cFz8WWybnh6DgLrnNhoASxK_9_Ltrj9j35R',
+                '/wpi/stadspastransacties/gAAAAABfs6wT4Dljs4eKjKN9JbCP_tTkePB1sD30c1m0SKqYlFUNyZ3WYEovImWgXQuTkKqb0mf2Nb7iHqR21wU8vn-t2Jdnq-F23lr78cFz8WWybnh6DgLrnNhoASxK_9_Ltrj9j35R',
             },
           ],
           datumAfloop: '2021-08-31T21:59:59.000Z',
@@ -70,7 +69,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<StadspasDetail />', () => {
   const routeEntry = generatePath(AppRoutes['STADSPAS/SALDO'], {
-    id: testState.FOCUS_STADSPAS.content.stadspassen[0].id,
+    id: testState.WPI_STADSPAS.content.stadspassen[0].id,
   });
   const routePath = AppRoutes['STADSPAS/SALDO'];
 

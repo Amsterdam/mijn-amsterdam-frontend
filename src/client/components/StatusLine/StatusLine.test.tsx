@@ -12,7 +12,6 @@ const items: StatusLineItem[] = [
     documents: [
       {
         title: 'Document title',
-        type: 'pdf',
         id: 'document-1',
         url: 'https://foo.bar/document.pdf',
         datePublished: '2020-01-10',

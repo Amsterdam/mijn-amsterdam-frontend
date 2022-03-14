@@ -1,21 +1,21 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -52,47 +52,39 @@ const decisionsDisplayProps = {
 };
 
 export default function Inkomen() {
-  const {
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    FOCUS_TONK,
-    FOCUS_BBZ,
-  } = useAppStateGetter();
+  const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
+    useAppStateGetter();
 
-  const focusSpecificatiesWithDocumentLinks =
-    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
-  const aanvragen = FOCUS_AANVRAGEN.content;
-  const tozoItems = FOCUS_TOZO.content;
-  const tonkItems = FOCUS_TONK.content;
-  const bbzItems = FOCUS_BBZ.content;
+  const wpiSpecificatiesWithDocumentLinks =
+    useAddDocumentLinkComponents(WPI_SPECIFICATIES);
+  const aanvragen = WPI_AANVRAGEN.content;
+  const tozoItems = WPI_TOZO.content;
+  const tonkItems = WPI_TONK.content;
+  const bbzItems = WPI_BBZ.content;
   const uitkeringsspecificaties =
-    focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
-  const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
-  const items: FocusItem[] = useMemo(() => {
+    wpiSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
+  const jaaropgaven = wpiSpecificatiesWithDocumentLinks.content?.jaaropgaven;
+  const items: StatusLine[] = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
     }
 
-    return addTitleLinkComponent(
-      [
-        ...(aanvragen || []),
-        ...(tozoItems || []),
-        ...(tonkItems || []),
-        ...(bbzItems || []),
-      ]
-        .filter((item) => item.productTitle !== 'Stadspas')
-        .map((item) => {
-          return Object.assign({}, item, {
-            displayDateEnd: defaultDateFormat(
-              item.dateEnd || item.datePublished
-            ),
-            displayDateStart: defaultDateFormat(item.dateStart),
-            status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
-          });
-        })
-        .sort(dateSort('datePublished', 'desc'))
-    );
+    const items = [
+      ...(aanvragen || []),
+      ...(tozoItems || []),
+      ...(tonkItems || []),
+      ...(bbzItems || []),
+    ]
+      .map((item) => {
+        return Object.assign({}, item, {
+          displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
+          displayDateStart: defaultDateFormat(item.dateStart),
+          status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
+        });
+      })
+      .sort(dateSort('datePublished', 'desc'));
+
+    return addTitleLinkComponent(items);
   }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');
@@ -103,12 +95,13 @@ export default function Inkomen() {
   const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
   const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
 
-  const isLoadingFocus =
-    isLoading(FOCUS_AANVRAGEN) ||
-    isLoading(FOCUS_TOZO) ||
-    isLoading(FOCUS_TONK) ||
-    isLoading(FOCUS_BBZ);
-  const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
+  const isLoadingWpi =
+    isLoading(WPI_AANVRAGEN) ||
+    isLoading(WPI_TOZO) ||
+    isLoading(WPI_TONK) ||
+    isLoading(WPI_BBZ);
+
+  const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
@@ -136,10 +129,10 @@ export default function Inkomen() {
           </Linkd>
         </p>
         <MaintenanceNotifications page="inkomen" />
-        {(isError(FOCUS_AANVRAGEN) ||
-          isError(FOCUS_SPECIFICATIES) ||
-          isError(FOCUS_TOZO) ||
-          isError(FOCUS_TONK)) && (
+        {(isError(WPI_AANVRAGEN) ||
+          isError(WPI_SPECIFICATIES) ||
+          isError(WPI_TOZO) ||
+          isError(WPI_TONK)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -150,7 +143,7 @@ export default function Inkomen() {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen overzicht / Lopende aanvragen',
@@ -169,7 +162,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={true}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
         track={{
@@ -188,7 +181,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-specifications-monthly"
         startCollapsed={true}
-        isLoading={isLoadingFocusSpecificaties}
+        isLoading={isLoadingWpiSpecificaties}
         title="Uitkeringsspecificaties"
         hasItems={!!uitkeringsspecificaties?.length}
         track={{
@@ -214,7 +207,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-specifications-yearly"
         startCollapsed={true}
-        isLoading={isLoadingFocus}
+        isLoading={isLoadingWpi}
         title="Jaaropgaven"
         hasItems={!!jaaropgaven?.length}
         track={{

@@ -7,7 +7,7 @@ import MockApp from '../MockApp';
 import Stadspas from './Stadspas';
 
 const testState: any = {
-  FOCUS_STADSPAS: {
+  WPI_STADSPAS: {
     content: {
       type: 'hoofdpashouder',
       stadspassen: [
@@ -18,7 +18,7 @@ const testState: any = {
               assigned: 220,
               balance: 80,
               urlTransactions:
-                '/focus/stadspastransacties/gAAAAABfmojHaIr3lIb5ATsZ98is4S8x3HqxdbVACw8562VCtv3ygKtkD5h7rGCUZhoebm0jFAvLjzibxcgKqpbWELopLBT5Ywf1FzDjzvNVQOij_3hYLks=',
+                '/wpi/stadspastransacties/gAAAAABfmojHaIr3lIb5ATsZ98is4S8x3HqxdbVACw8562VCtv3ygKtkD5h7rGCUZhoebm0jFAvLjzibxcgKqpbWELopLBT5Ywf1FzDjzvNVQOij_3hYLks=',
             },
           ],
           datumAfloop: '2021-08-31T21:59:59.000Z',
@@ -30,7 +30,7 @@ const testState: any = {
     },
     status: 'OK',
   },
-  FOCUS_AANVRAGEN: {
+  WPI_AANVRAGEN: {
     status: 'OK',
     content: [
       {
