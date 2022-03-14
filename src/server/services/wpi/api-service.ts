@@ -35,6 +35,7 @@ import {
   WpiRequestProcessLabels,
   WpiStadspasResponseData,
 } from './wpi-types';
+import * as Sentry from '@sentry/react';
 
 type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
   response: ApiSuccessResponse<R>
@@ -60,7 +61,13 @@ export async function fetchRequestProcess<R extends WpiRequestProcess>(
       if (labels) {
         return [transformToStatusLine(requestProcess, labels)];
       } else {
-        // Log Unknown Process
+        Sentry.captureMessage('Unknown request process labels', {
+          extra: {
+            about: requestProcess.about,
+            title: requestProcess.title,
+            status: requestProcess.status,
+          },
+        });
       }
       return [];
     });
