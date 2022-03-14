@@ -153,10 +153,10 @@ export default function VergunningVerhuur({
 
   return (
     <>
+      {vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag && (
+        <VakantieVerhuurList vergunning={vergunning} />
+      )}
       <PageContent className={styles.DetailPageContent}>
-        {vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag && (
-          <VakantieVerhuurList vergunning={vergunning} />
-        )}
         <InfoDetail
           label="Gemeentelijk zaaknummer"
           value={vergunning?.identifier ?? '-'}
