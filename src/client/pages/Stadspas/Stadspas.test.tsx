@@ -9,7 +9,8 @@ import Stadspas from './Stadspas';
 const testState: any = {
   WPI_STADSPAS: {
     content: {
-      type: 'hoofdpashouder',
+      adminNumber: '123123123',
+      ownerType: 'hoofdpashouder',
       stadspassen: [
         {
           budgets: [
@@ -21,33 +22,31 @@ const testState: any = {
                 '/wpi/stadspastransacties/gAAAAABfmojHaIr3lIb5ATsZ98is4S8x3HqxdbVACw8562VCtv3ygKtkD5h7rGCUZhoebm0jFAvLjzibxcgKqpbWELopLBT5Ywf1FzDjzvNVQOij_3hYLks=',
             },
           ],
-          datumAfloop: '2021-08-31T21:59:59.000Z',
-          id: 200769,
-          naam: 'G Braber',
-          pasnummer: 6011012604273,
+          dateEnd: '2021-08-31T21:59:59.000Z',
+          id: '200769',
+          owner: 'G Braber',
+          passType: 'kind',
+          passNumber: '6011012604273',
+        },
+      ],
+      aanvragen: [
+        {
+          title: 'Aanvraag stadspas',
+          datePublished: '2020-07-24',
+          dateStart: '2020-07-14',
+          status: 'Besluit',
+          steps: [],
+        },
+        {
+          title: 'Aanvraag stadspas 2',
+          datePublished: '2020-07-24',
+          dateStart: '2020-07-14',
+          status: 'Informatie nodig',
+          steps: [],
         },
       ],
     },
     status: 'OK',
-  },
-  WPI_AANVRAGEN: {
-    status: 'OK',
-    content: [
-      {
-        title: 'Aanvraag stadspas',
-        datePublished: '2020-07-24',
-        dateStart: '2020-07-14',
-        status: 'Besluit',
-        steps: [],
-      },
-      {
-        title: 'Aanvraag stadspas 2',
-        datePublished: '2020-07-24',
-        dateStart: '2020-07-14',
-        status: 'Meer informatie',
-        steps: [],
-      },
-    ],
   },
 };
 
