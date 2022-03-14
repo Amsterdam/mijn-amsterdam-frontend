@@ -155,115 +155,113 @@ function AppAuthenticated() {
     <>
       <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
-        <Suspense fallback={<div>Loading buurt bundle...</div>}>
-          <Switch>
-            <Redirect
-              from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-              to={{ pathname, search }}
-            />
-            <Redirect
-              from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-              to={{ pathname, search }}
-            />
-            <Redirect
-              from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
-              to={{ pathname, search }}
-            />
-            {AppRoutesRedirect.map(({ from, to }) => (
-              <Redirect key={from + to} from={from} to={to} />
-            ))}
-            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-            <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-            <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
-            {profileType !== 'private' ? (
-              <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
-            ) : (
-              <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
-            )}
-            <Route path={AppRoutes.BRP} component={Profile} />
-            <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-            <Route path={AppRoutes.TIPS} component={MyTips} />
+        <Switch>
+          <Redirect
+            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
+            to={{ pathname, search }}
+          />
+          <Redirect
+            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
+            to={{ pathname, search }}
+          />
+          <Redirect
+            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
+            to={{ pathname, search }}
+          />
+          {AppRoutesRedirect.map(({ from, to }) => (
+            <Redirect key={from + to} from={from} to={to} />
+          ))}
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          <Route exact path={AppRoutes.ROOT} component={Dashboard} />
+          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          {profileType !== 'private' ? (
+            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
+          ) : (
+            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
+          )}
+          <Route path={AppRoutes.BRP} component={Profile} />
+          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
+          <Route path={AppRoutes.TIPS} component={MyTips} />
+          <Route
+            path={AppRoutes['STADSPAS/AANVRAAG']}
+            component={StadspasAanvraagDetail}
+          />
+          <Route
+            path={AppRoutes['STADSPAS/SALDO']}
+            component={StadspasDetail}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
+            component={InkomenDetailUitkering}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/SPECIFICATIES']}
+            component={InkomenSpecificaties}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/TOZO']}
+            component={InkomenDetailTozo}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/TONK']}
+            component={InkomenDetailTonk}
+          />
+          {FeatureToggle.inkomenBBZActive && (
             <Route
-              path={AppRoutes['STADSPAS/AANVRAAG']}
-              component={StadspasAanvraagDetail}
+              path={AppRoutes['INKOMEN/BBZ']}
+              component={InkomenDetailBbz}
             />
+          )}
+          <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={AppRoutes.STADSPAS} component={Stadspas} />
+          <Route
+            path={AppRoutes['ZORG/VOORZIENINGEN']}
+            component={ZorgDetail}
+          />
+          <Route path={AppRoutes.ZORG} component={Zorg} />
+          <Route
+            path={AppRoutes['BURGERZAKEN/ID-KAART']}
+            component={BurgerzakenIDKaart}
+          />
+          <Route
+            path={AppRoutes['BURGERZAKEN/AKTE']}
+            component={BurgerzakenAkte}
+          />
+          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
+          {FeatureToggle.garbageInformationPage && (
+            <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
+          )}
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+          <Route
+            path={AppRoutes['VERGUNNINGEN/DETAIL']}
+            component={VergunningDetail}
+          />
+          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          {FeatureToggle.toeristischeVerhuurActive && (
             <Route
-              path={AppRoutes['STADSPAS/SALDO']}
-              component={StadspasDetail}
+              path={[
+                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
+                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
+                AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
+                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+              ]}
+              component={ToeristischeVerhuurDetail}
             />
+          )}
+          {FeatureToggle.toeristischeVerhuurActive && (
             <Route
-              path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
-              component={InkomenDetailUitkering}
+              path={AppRoutes.TOERISTISCHE_VERHUUR}
+              component={ToeristischeVerhuur}
             />
-            <Route
-              path={AppRoutes['INKOMEN/SPECIFICATIES']}
-              component={InkomenSpecificaties}
-            />
-            <Route
-              path={AppRoutes['INKOMEN/TOZO']}
-              component={InkomenDetailTozo}
-            />
-            <Route
-              path={AppRoutes['INKOMEN/TONK']}
-              component={InkomenDetailTonk}
-            />
-            {FeatureToggle.inkomenBBZActive && (
-              <Route
-                path={AppRoutes['INKOMEN/BBZ']}
-                component={InkomenDetailBbz}
-              />
-            )}
-            <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-            <Route path={AppRoutes.STADSPAS} component={Stadspas} />
-            <Route
-              path={AppRoutes['ZORG/VOORZIENINGEN']}
-              component={ZorgDetail}
-            />
-            <Route path={AppRoutes.ZORG} component={Zorg} />
-            <Route
-              path={AppRoutes['BURGERZAKEN/ID-KAART']}
-              component={BurgerzakenIDKaart}
-            />
-            <Route
-              path={AppRoutes['BURGERZAKEN/AKTE']}
-              component={BurgerzakenAkte}
-            />
-            <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
-            {FeatureToggle.garbageInformationPage && (
-              <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
-            )}
-            <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-            <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
-            <Route
-              path={AppRoutes['VERGUNNINGEN/DETAIL']}
-              component={VergunningDetail}
-            />
-            <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
-            {FeatureToggle.toeristischeVerhuurActive && (
-              <Route
-                path={[
-                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
-                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                  AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
-                  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-                ]}
-                component={ToeristischeVerhuurDetail}
-              />
-            )}
-            {FeatureToggle.toeristischeVerhuurActive && (
-              <Route
-                path={AppRoutes.TOERISTISCHE_VERHUUR}
-                component={ToeristischeVerhuur}
-              />
-            )}
-            {FeatureToggle.krefiaActive && (
-              <Route path={AppRoutes.KREFIA} component={Krefia} />
-            )}
-            <Route path={AppRoutes.SEARCH} component={Search} />
-            <Route path={AppRoutes.PARKEREN} component={Parkeren} />
-            <Route component={NotFound} />
-          </Switch>
-        </Suspense>
+          )}
+          {FeatureToggle.krefiaActive && (
+            <Route path={AppRoutes.KREFIA} component={Krefia} />
+          )}
+          <Route path={AppRoutes.SEARCH} component={Search} />
+          <Route path={AppRoutes.PARKEREN} component={Parkeren} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
       <MainFooter isAuthenticated={true} />
     </>
@@ -325,7 +323,9 @@ export default function App() {
           onError={sendToSentry}
           FallbackComponent={ApplicationError}
         >
-          <AppLanding />
+          <Suspense fallback={<div>Loading Mijn Amsterdam bundle...</div>}>
+            <AppLanding />
+          </Suspense>
         </ErrorBoundary>
       </BrowserRouter>
     </RecoilRoot>
