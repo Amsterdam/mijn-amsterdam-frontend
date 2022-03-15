@@ -181,7 +181,7 @@ export function transformVergunningenToVerhuur(
             lower: true,
           }),
           id: vergunning.id,
-          vergunningId: vergunning?.vergunningId || vergunning.id,
+          vergunningId: vergunning?.parentId || vergunning.id,
         }),
         title: `Bekijk hoe het met uw aanvraag staat`,
       };
@@ -257,7 +257,7 @@ async function fetchAndTransformToeristischeVerhuur(
                   lower: true,
                 }),
                 id: vergunning.id,
-                vergunningId: vergunning.id,
+                vergunningId: vergunning?.vergunningId || vergunning.id,
               }
             );
           default:

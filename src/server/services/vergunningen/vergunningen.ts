@@ -117,6 +117,7 @@ export interface Vakantieverhuur extends VergunningBase {
   dateEnd: string | null;
   location: string | null;
   vergunningId?: string;
+  parentId?: string;
 }
 
 export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
@@ -261,10 +262,19 @@ export async function fetchVergunningen(
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
     vergunningen = vergunningen.map((vergunning) => {
+      if (vergunning.caseType === CaseType.VakantieVerhuur) {
+        vergunning.parentId = vergunningen.find(
+          (v) =>
+            v.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
+            v.identifier === vergunning.vergunningId
+        )?.id;
+      }
+
       const appRoute =
         typeof options.appRoute === 'function'
           ? options.appRoute(vergunning)
           : options.appRoute;
+
       return {
         ...vergunning,
         link: {
