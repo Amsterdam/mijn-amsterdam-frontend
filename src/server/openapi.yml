@@ -212,17 +212,17 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         KREFIA:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_AANVRAGEN:
+        WPI_AANVRAGEN:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_SPECIFICATIES:
+        WPI_SPECIFICATIES:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_TOZO:
+        WPI_TOZO:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_TONK:
+        WPI_TONK:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_BBZ:
+        WPI_BBZ:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        FOCUS_STADSPAS:
+        WPI_STADSPAS:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         WMO:
           $ref: '#/components/schemas/ApiSearchConfigResult'
@@ -280,17 +280,17 @@ components:
           type: object
         KREFIA:
           type: object
-        FOCUS_AANVRAGEN:
+        WPI_AANVRAGEN:
           type: object
-        FOCUS_SPECIFICATIES:
+        WPI_SPECIFICATIES:
           type: object
-        FOCUS_TOZO:
+        WPI_TOZO:
           type: object
-        FOCUS_TONK:
+        WPI_TONK:
           type: object
-        FOCUS_BBZ:
+        WPI_BBZ:
           type: object
-        FOCUS_STADSPAS:
+        WPI_STADSPAS:
           type: object
         NOTIFICATIONS:
           type: object

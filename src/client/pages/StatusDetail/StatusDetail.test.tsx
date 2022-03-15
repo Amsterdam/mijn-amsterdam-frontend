@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import StatusDetail, { StatusSourceItem } from './StatusDetail';
-import userEvent from '@testing-library/user-event';
 
 const testState: any = {
-  FOCUS_TOZO: {
+  WPI_TOZO: {
     status: 'OK',
     content: [
       {
@@ -15,7 +15,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         status: 'Besluit',
-        productTitle: 'Test item',
+        about: 'Test item',
         link: {
           to: 'http://some.page/with/path/segments/aanvraag-1',
           title: 'Aanvraag Test item',
@@ -77,12 +77,12 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={false}
           pageContent={pageContent}
           maxStepCount={() => -1}
           highlightKey={false}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }
@@ -107,10 +107,10 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }
@@ -137,10 +137,10 @@ describe('<StatusDetail />', () => {
       return (
         <StatusDetail
           chapter="INKOMEN"
-          stateKey="FOCUS_TOZO"
+          stateKey="WPI_TOZO"
           showToggleMore={true}
           maxStepCount={() => 3}
-          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
     }

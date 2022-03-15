@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { GenericDocument } from '../../../universal/types/App.types';
@@ -16,15 +15,13 @@ const ITEMS: GenericDocument[] = [
     datePublished: '2019-03-23T00:00:00+01:00',
     id: '24078091',
     title: 'Uitkeringsspecificatie',
-    type: 'pdf',
-    url: '/api/focus/document?id=24078091&isBulk=false&isDms=false',
+    url: '/wpi/document?id=24078091&isBulk=false&isDms=false',
   },
   {
     datePublished: '2014-01-24T00:00:00+01:00',
     id: '30364921',
     title: 'Uitkeringsspecificatie',
-    type: 'pdf',
-    url: '/api/focus/document?id=30364921&isBulk=false&isDms=false',
+    url: '/wpi/document?id=30364921&isBulk=false&isDms=false',
   },
 ];
 

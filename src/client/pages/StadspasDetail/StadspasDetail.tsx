@@ -1,9 +1,15 @@
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
-import type { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  WpiStadspasBudget,
+  WpiStadspasTransaction,
+} from '../../../server/services/wpi/wpi-types';
+import {
+  API_BASE_PATH,
+  AppRoutes,
+  ChapterTitles,
+} from '../../../universal/config';
 import {
   apiPristineResult,
   ApiResponse,
@@ -12,6 +18,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
   Alert,
@@ -29,7 +36,6 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
-import displayAmount from '../../../universal/helpers/text';
 
 interface TransactionProps {
   value: number;
@@ -53,7 +59,7 @@ function Transaction({ value, title, date }: TransactionProps) {
 }
 
 interface TransactionOverviewProps {
-  transactions?: FocusStadspasTransaction[] | null;
+  transactions?: WpiStadspasTransaction[] | null;
 }
 
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
@@ -69,7 +75,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
             key={transaction.id}
             value={transaction.amount}
             title={transaction.title}
-            date={transaction.date}
+            date={transaction.datePublished}
           />
         ))}
       </ul>
@@ -78,7 +84,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
 }
 
 interface BudgetBalanceProps {
-  budget: FocusStadspasBudget;
+  budget: WpiStadspasBudget;
 }
 
 function BudgetBalance({ budget }: BudgetBalanceProps) {
@@ -88,25 +94,29 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
       <li
         className={styles.AmountSpent}
         style={{
-          width: `${100 - (100 / budget.assigned) * budget.balance}%`,
+          width: `${
+            100 - (100 / budget.budgetAssigned) * budget.budgetBalance
+          }%`,
         }}
       >
         <span className={styles.Label}>
-          Uitgegeven &euro; {displayAmount(budget.assigned - budget.balance)}
+          Uitgegeven &euro;{' '}
+          {displayAmount(budget.budgetAssigned - budget.budgetBalance)}
         </span>
       </li>
       <li
         className={styles.AmountLeft}
         style={{
-          width: budget.assigned === budget.balance ? '100%' : 'auto',
+          width:
+            budget.budgetAssigned === budget.budgetBalance ? '100%' : 'auto',
         }}
       >
         <span className={styles.Label}>
           {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
-          <time dateTime={budget.datumAfloop}>
-            {defaultDateFormat(budget.datumAfloop)}
+          <time dateTime={budget.dateEnd}>
+            {defaultDateFormat(budget.dateEnd)}
           </time>
-          &nbsp;&euro; {displayAmount(budget.balance)}
+          &nbsp;&euro; {displayAmount(budget.budgetBalance)}
         </span>
       </li>
     </ul>
@@ -115,21 +125,16 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
 
 interface StadspasBudgetProps {
   urlTransactions: string;
-  budget: FocusStadspasBudget;
-  dateEnd: string;
+  budget: WpiStadspasBudget;
 }
 
-function StadspasBudget({
-  urlTransactions,
-  budget,
-  dateEnd,
-}: StadspasBudgetProps) {
+function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
   const [isTransactionOverviewActive, toggleTransactionOverview] =
     useState(false);
 
-  const [api] = useDataApi<ApiResponse<FocusStadspasTransaction[]>>(
+  const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
-      url: directApiUrl(urlTransactions),
+      url: directApiUrl(`${API_BASE_PATH + urlTransactions}`),
     },
     apiPristineResult([])
   );
@@ -194,15 +199,13 @@ function StadspasBudget({
 }
 
 export default function StadspasDetail() {
-  const { FOCUS_STADSPAS } = useAppStateGetter();
+  const { WPI_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.stadspassen.find(
-        (pass) => pass.id === parseInt(id, 10)
-      )
+    ? WPI_STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
     : null;
-  const isErrorStadspas = isError(FOCUS_STADSPAS);
-  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
+  const isErrorStadspas = isError(WPI_STADSPAS);
+  const isLoadingStadspas = isLoading(WPI_STADSPAS);
   const noContent = !stadspasItem;
 
   return (
@@ -221,7 +224,7 @@ export default function StadspasDetail() {
             Meer informatie over het Kindtegoed
           </Linkd>
         </p>
-        {(isErrorStadspas || (!isLoading(FOCUS_STADSPAS) && noContent)) && (
+        {(isErrorStadspas || (!isLoading(WPI_STADSPAS) && noContent)) && (
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen.{' '}
@@ -235,9 +238,9 @@ export default function StadspasDetail() {
       </PageContent>
       {!!stadspasItem && (
         <PageContent className={styles.PageContentStadspasInfo}>
-          <Heading size="large">{stadspasItem?.naam}</Heading>
+          <Heading size="large">{stadspasItem?.owner}</Heading>
           <p className={styles.StadspasNummer}>
-            Stadspasnummer: {stadspasItem.pasnummer}
+            Stadspasnummer: {stadspasItem.passNumber}
           </p>
         </PageContent>
       )}
@@ -246,7 +249,6 @@ export default function StadspasDetail() {
           urlTransactions={budget.urlTransactions}
           key={budget.code}
           budget={budget}
-          dateEnd={stadspasItem.datumAfloop}
         />
       ))}
     </DetailPage>

@@ -1,13 +1,12 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
+import { Chapters } from '../../../universal/config/chapter';
+import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
-import { Chapters } from '../../../universal/config/chapter';
-import { AppState } from '../../AppState';
 
 // TIPS, NOTIFICATIONS, CASES, BUURT, MY_LOCATION
 
@@ -102,7 +101,7 @@ const testState: any = {
       isKnown: true,
     },
   },
-  FOCUS_TOZO: {
+  WPI_TOZO: {
     content: [{}],
   },
 };

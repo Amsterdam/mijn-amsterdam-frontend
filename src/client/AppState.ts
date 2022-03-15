@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-
 import type {
   ServiceID,
   ServicesTips,
@@ -23,16 +22,16 @@ export const PRISTINE_APPSTATE: AppState = {
   CASES: apiPristineResult([]),
 
   // Direct
-  FOCUS_SPECIFICATIES: apiPristineResult({
+  WPI_SPECIFICATIES: apiPristineResult({
     jaaropgaven: [],
     uitkeringsspecificaties: [],
   }),
   KREFIA: apiPristineResult(null, FeatureToggle.krefiaActive),
-  FOCUS_AANVRAGEN: apiPristineResult([]),
-  FOCUS_TOZO: apiPristineResult([]),
-  FOCUS_TONK: apiPristineResult([]),
-  FOCUS_BBZ: apiPristineResult([]),
-  FOCUS_STADSPAS: apiPristineResult(null),
+  WPI_AANVRAGEN: apiPristineResult([]),
+  WPI_TOZO: apiPristineResult([]),
+  WPI_TONK: apiPristineResult([]),
+  WPI_BBZ: apiPristineResult([]),
+  WPI_STADSPAS: apiPristineResult(null),
   WMO: apiPristineResult([]),
   ERFPACHT: apiPristineResult({ isKnown: false }),
   SUBSIDIE: apiPristineResult(

@@ -3,7 +3,7 @@ import { parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   Button,
@@ -39,23 +39,23 @@ function Caret() {
 }
 
 export default function InkomenSpecificaties() {
-  const { FOCUS_SPECIFICATIES } = useAppStateGetter();
-  const focusSpecificatiesWithDocumentLinks =
-    useAddDocumentLinkComponents(FOCUS_SPECIFICATIES);
-  const { type = 'uitkering', page = '1' } = useParams<{
-    type: 'jaaropgave' | 'uitkering';
+  const { WPI_SPECIFICATIES } = useAppStateGetter();
+  const wpiSpecificatiesWithDocumentLinks =
+    useAddDocumentLinkComponents(WPI_SPECIFICATIES);
+  const { variant = 'uitkering', page = '1' } = useParams<{
+    variant: 'jaaropgave' | 'uitkering';
     page?: string;
   }>();
-  const isAnnualStatementOverviewPage = type === 'jaaropgave';
+  const isAnnualStatementOverviewPage = variant === 'jaaropgave';
   const history = useHistory();
   const items = useMemo(() => {
     return (
       (isAnnualStatementOverviewPage
-        ? focusSpecificatiesWithDocumentLinks.content?.jaaropgaven
-        : focusSpecificatiesWithDocumentLinks.content
-            ?.uitkeringsspecificaties) || []
-    );
-  }, [isAnnualStatementOverviewPage, focusSpecificatiesWithDocumentLinks]);
+        ? wpiSpecificatiesWithDocumentLinks.content?.jaaropgaven
+        : wpiSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties) ||
+      []
+    ).sort(dateSort('datePublished', 'desc'));
+  }, [isAnnualStatementOverviewPage, wpiSpecificatiesWithDocumentLinks]);
 
   const maxDate = useMemo(() => {
     if (items.length) {
@@ -141,11 +141,11 @@ export default function InkomenSpecificaties() {
       history.replace(
         generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
           page: '1',
-          type,
+          variant,
         })
       );
     },
-    [type, history]
+    [variant, history]
   );
 
   function resetSearch() {
@@ -172,12 +172,12 @@ export default function InkomenSpecificaties() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
-        isLoading={isLoading(FOCUS_SPECIFICATIES)}
+        isLoading={isLoading(WPI_SPECIFICATIES)}
       >
         Bijstandsuitkering
       </PageHeading>
       <PageContent>
-        {isError(FOCUS_SPECIFICATIES) && (
+        {isError(WPI_SPECIFICATIES) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -190,7 +190,7 @@ export default function InkomenSpecificaties() {
             ? 'Jaaropgaven'
             : 'Uitkeringsspecificaties'
         }
-        isLoading={isLoading(FOCUS_SPECIFICATIES)}
+        isLoading={isLoading(WPI_SPECIFICATIES)}
         hasItems={!!items.length}
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >
@@ -334,7 +334,7 @@ export default function InkomenSpecificaties() {
               history.replace(
                 generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
                   page,
-                  type,
+                  variant,
                 })
               );
             }}

@@ -12,7 +12,7 @@ export const AppRoutes: Record<string, string> = {
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
   'STADSPAS/SALDO': '/stadspas/saldo/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:type/:page?',
+  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
@@ -64,25 +64,25 @@ export const AppRoutesRedirect = [
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      type: 'jaaropgave',
+      variant: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      type: 'jaaropgave',
+      variant: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      type: 'uitkering',
+      variant: 'uitkering',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      type: 'uitkering',
+      variant: 'uitkering',
     }),
   },
   {

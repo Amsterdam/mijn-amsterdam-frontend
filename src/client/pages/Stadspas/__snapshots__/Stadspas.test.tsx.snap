@@ -135,7 +135,7 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                   class="DisplayProp"
                 >
                   <span>
-                    G Braber
+                    G Braber   (kind)
                   </span>
                 </td>
                 <td
@@ -210,11 +210,64 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
         <div
           class="PanelInner"
         >
-          <p
-            class="NoItemsMessage"
+          <table
+            class="Table Table"
           >
-            U hebt op dit moment geen lopende aanvragen.
-          </p>
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                />
+                <th
+                  class="DisplayProp"
+                >
+                  Datum aanvraag
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Aanvraag stadspas 2
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum aanvraag:
+                  </span>
+                  <span>
+                    14 juli 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Informatie nodig
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -245,11 +298,64 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
         <div
           class="PanelInner"
         >
-          <p
-            class="NoItemsMessage"
+          <table
+            class="Table Table"
           >
-            U hebt op dit moment geen eerdere aanvragen.
-          </p>
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                />
+                <th
+                  class="DisplayProp"
+                >
+                  Datum aanvraag
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Datum besluit
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Aanvraag stadspas
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum aanvraag:
+                  </span>
+                  <span>
+                    14 juli 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum besluit:
+                  </span>
+                  <span>
+                    24 juli 2020
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

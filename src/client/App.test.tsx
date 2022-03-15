@@ -1,5 +1,7 @@
-import App from './App';
+/* eslint-disable testing-library/no-node-access */
+/* eslint-disable testing-library/no-container */
 import { render, screen } from '@testing-library/react';
+import App from './App';
 import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
 
 jest.mock('./hooks/api/useSessionApi', () => {

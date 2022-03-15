@@ -6,10 +6,8 @@ export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
-  focusDocumentDownload: true,
   belastingApiActive: true,
   milieuzoneApiActive: true,
-  focusUitkeringsspecificatiesActive: true,
   identiteitsbewijzenActive: true,
   tonkActive: true,
   eherkenningActive: true,

@@ -1,3 +1,5 @@
+import { marked } from 'marked';
+import memoize from 'memoizee';
 import { apiSuccesResult } from '../../universal/helpers';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -8,21 +10,13 @@ import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
-import { fetchSubsidieGenerated } from './subsidie';
 import { fetchKrefiaGenerated } from './krefia';
-import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
-import { fetchFOCUSBbzGenerated } from './focus/focus-bbz';
-import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
-import { fetchStadspasSaldoGenerated } from './focus/focus-stadspas';
-import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
-import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
+import { fetchSubsidieGenerated } from './subsidie';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
-
-import { marked } from 'marked';
-import memoize from 'memoizee';
 import { fetchWiorGenerated } from './wior';
+import { fetchWpiNotifications } from './wpi';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -118,51 +112,31 @@ async function fetchServicesGenerated(
 
   const [
     brpGeneratedResult,
-    focusAanvragenGeneratedResult,
-    focusSpecificatiesGeneratedResult,
-    focusTozoGeneratedResult,
-    focusTonkGeneratedResult,
-    focusBbzGeneratedResult,
     belastingGeneratedResult,
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
     erfpachtGeneratedResult,
     subsidieGeneratedResult,
     maintenanceNotifications,
-    stadspasSaldoGeneratedResult,
     toeristischeVerhuurGeneratedResult,
     fetchKrefiaGeneratedResult,
     fetchWiorGeneratedResult,
+    fetchWpiNotificationsResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
-    fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
-    fetchFOCUSSpecificationsGenerated(sessionID, passthroughRequestHeaders),
-    fetchFOCUSTozoGenerated(sessionID, passthroughRequestHeaders),
-    fetchFOCUSTonkGenerated(sessionID, passthroughRequestHeaders),
-    fetchFOCUSBbzGenerated(sessionID, passthroughRequestHeaders),
     fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
-
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
     fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
     fetchMaintenanceNotificationsDashboard(sessionID),
-    fetchStadspasSaldoGenerated(sessionID, passthroughRequestHeaders),
     fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
     fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
     fetchWiorGenerated(sessionID, passthroughRequestHeaders, profileType),
+    fetchWpiNotifications(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
-  const focusAanvragenGenerated = getSettledResult(
-    focusAanvragenGeneratedResult
-  );
-  const focusSpecificatiesGenerated = getSettledResult(
-    focusSpecificatiesGeneratedResult
-  );
-  const focusTozoGenerated = getSettledResult(focusTozoGeneratedResult);
-  const focusTonkGenerated = getSettledResult(focusTonkGeneratedResult);
-  const focusBbzGenerated = getSettledResult(focusBbzGeneratedResult);
   const belastingGenerated = getSettledResult(belastingGeneratedResult);
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
@@ -174,17 +148,12 @@ async function fetchServicesGenerated(
   const toeristischeVerhuurGenerated = getSettledResult(
     toeristischeVerhuurGeneratedResult
   );
-  const stadspasGenerated = getSettledResult(stadspasSaldoGeneratedResult);
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
   const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
+  const wpiGenerated = getSettledResult(fetchWpiNotificationsResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
-    focusAanvragenGenerated,
-    focusSpecificatiesGenerated,
-    focusTozoGenerated,
-    focusTonkGenerated,
-    focusBbzGenerated,
     belastingGenerated,
     milieuzoneGenerated,
     vergunningenGenerated,
@@ -192,9 +161,9 @@ async function fetchServicesGenerated(
     subsidieGenerated,
     maintenanceNotificationsResult,
     toeristischeVerhuurGenerated,
-    stadspasGenerated,
     krefiaGenerated,
     wiorGenerated,
+    wpiGenerated,
   ]);
 }
 

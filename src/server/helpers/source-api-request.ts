@@ -149,7 +149,9 @@ export async function requestData<T>(
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey = getRequestConfigCacheKey(sessionID, requestConfig);
+  const cacheKey =
+    requestConfig.cacheKey ||
+    getRequestConfigCacheKey(sessionID, requestConfig);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
