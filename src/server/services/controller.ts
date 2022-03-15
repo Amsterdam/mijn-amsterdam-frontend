@@ -16,22 +16,24 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchERFPACHT } from './erfpacht';
-import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
-import { fetchSubsidie } from './subsidie';
-import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
-import { fetchStadspasSaldo } from './focus/focus-stadspas';
-import { fetchFOCUSTonk } from './focus/focus-tonk';
-import { fetchFOCUSTozo } from './focus/focus-tozo';
-import { fetchFOCUSBbz } from './focus/focus-bbz';
-import { fetchKrefia } from './krefia';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
+import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
+import { fetchSubsidie } from './subsidie';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo';
+import {
+  fetchBbz,
+  fetchBijstandsuitkering,
+  fetchSpecificaties,
+  fetchStadspas,
+  fetchTonk,
+  fetchTozo,
+} from './wpi';
 
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -64,12 +66,12 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callService(
 );
 const KVK = callService(fetchKVK);
 const KREFIA = callService(fetchKrefia);
-const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
-const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
-const FOCUS_TOZO = callService(fetchFOCUSTozo);
-const FOCUS_TONK = callService(fetchFOCUSTonk);
-const FOCUS_BBZ = callService(fetchFOCUSBbz);
-const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
+const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
+const WPI_SPECIFICATIES = callService(fetchSpecificaties);
+const WPI_TOZO = callService(fetchTozo);
+const WPI_TONK = callService(fetchTonk);
+const WPI_BBZ = callService(fetchBbz);
+const WPI_STADSPAS = callService(fetchStadspas);
 
 const WMO = callService(fetchWmo);
 
@@ -135,12 +137,12 @@ const SERVICES_INDEX = {
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
   KREFIA,
-  FOCUS_AANVRAGEN,
-  FOCUS_SPECIFICATIES,
-  FOCUS_TOZO,
-  FOCUS_TONK,
-  FOCUS_BBZ,
-  FOCUS_STADSPAS,
+  WPI_AANVRAGEN,
+  WPI_SPECIFICATIES,
+  WPI_TOZO,
+  WPI_TONK,
+  WPI_BBZ,
+  WPI_STADSPAS,
   WMO,
   VERGUNNINGEN,
   MY_LOCATION,
@@ -196,12 +198,12 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     KREFIA,
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    FOCUS_BBZ,
-    FOCUS_TONK,
-    FOCUS_STADSPAS,
+    WPI_AANVRAGEN,
+    WPI_SPECIFICATIES,
+    WPI_TOZO,
+    WPI_BBZ,
+    WPI_TONK,
+    WPI_STADSPAS,
     NOTIFICATIONS,
     CASES,
     MY_LOCATION,
@@ -221,12 +223,12 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     KREFIA,
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    FOCUS_TONK,
-    FOCUS_BBZ,
-    FOCUS_STADSPAS,
+    WPI_AANVRAGEN,
+    WPI_SPECIFICATIES,
+    WPI_TOZO,
+    WPI_TONK,
+    WPI_BBZ,
+    WPI_STADSPAS,
     NOTIFICATIONS,
     CASES,
     MY_LOCATION,

@@ -112,7 +112,7 @@ describe('Search hooks and helpers', () => {
       displayTitle,
       keywordsGeneratedFromProps: ['somePropName'],
       keywords: ['jup'],
-      url: (item: ApiBaseItem) => item.link.to,
+      url: (item: ApiBaseItem) => item.link?.to || '/',
       description: (item: ApiBaseItem) => {
         return `Bekijk ${item.title}`;
       },

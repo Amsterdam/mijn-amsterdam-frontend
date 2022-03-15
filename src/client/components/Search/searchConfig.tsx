@@ -1,21 +1,19 @@
 import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
-import { generatePath } from 'react-router-dom';
 import type {
   Krefia,
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
 import type {
-  FocusStadspas,
-  FocusStadspasSaldo,
-} from '../../../server/services/focus/focus-combined';
-import type { FocusItem } from '../../../server/services/focus/focus-types';
-import type {
   ToeristischeVerhuurRegistratie,
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
+import {
+  WpiRequestProcess,
+  WpiStadspasResponseData,
+} from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -25,8 +23,12 @@ import {
 } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types';
-import { BRPData, Identiteitsbewijs } from '../../../universal/types/brp';
+import {
+  BRPData,
+  Identiteitsbewijs,
+  LinkProps,
+  StatusLine,
+} from '../../../universal/types';
 import { AppState } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
@@ -78,7 +80,7 @@ export interface ApiSearchConfig {
 
 export interface ApiBaseItem {
   title: string;
-  link: LinkProps;
+  link?: LinkProps;
   [key: string]: any;
 }
 
@@ -101,7 +103,7 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
     },
     displayTitle: (item: any) => (term: string) =>
       displayPath(term, [item.title]),
-    url: (item: any) => item.link.to,
+    url: (item: any) => item.link?.to || '/',
     description: (item: any) => {
       return `Bekijk ${item.title}`;
     },
@@ -146,20 +148,20 @@ export function displayPath(
   );
 }
 
-const getFocusConfig = (
+const getWpiConfig = (
   stateKey: keyof AppState
 ): Pick<
   ApiSearchConfig,
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
 > => ({
   stateKey,
-  generateKeywords: (aanvraag: FocusItem) =>
+  generateKeywords: (aanvraag: StatusLine) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
-  displayTitle: (aanvraag: FocusItem) => {
+  displayTitle: (aanvraag: StatusLine) => {
     return (term: string) => {
-      const segments = [`Aanvraag ${aanvraag.productTitle}`];
+      const segments = [`Aanvraag ${aanvraag.about}`];
       if (aanvraag.status === 'Besluit') {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
@@ -167,7 +169,7 @@ const getFocusConfig = (
     };
   },
   profileTypes:
-    stateKey === 'FOCUS_AANVRAGEN'
+    stateKey === 'WPI_AANVRAGEN'
       ? ['private']
       : ['private', 'private-commercial', 'commercial'],
 });
@@ -268,31 +270,41 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'FOCUS_STADSPAS' as keyof AppState,
-    getApiBaseItems: (apiContent: FocusStadspasSaldo) => {
-      const stadspassen = apiContent?.stadspassen?.map((stadspas) => {
-        return {
-          ...stadspas,
-          title: `Stadspas van ${stadspas.naam}`,
-          link: {
-            to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
-            title: 'Stadspas',
-          },
-        };
-      });
-      return stadspassen || [];
+    stateKey: 'WPI_STADSPAS' as keyof AppState,
+    getApiBaseItems: (
+      apiContent: WpiStadspasResponseData & {
+        aanvragen?: WpiRequestProcess[];
+      }
+    ) => {
+      const stadspassen =
+        apiContent?.stadspassen?.map((stadspas) => {
+          return {
+            ...stadspas,
+            title: `Stadspas van ${stadspas.owner}`,
+          };
+        }) || [];
+      const aanvragen = apiContent?.aanvragen || [];
+      return [...stadspassen, ...aanvragen];
     },
-    displayTitle: (stadspas: FocusStadspas) => {
+    displayTitle: (item: {
+      title: string;
+      about?: string;
+      datePublished: string;
+      status?: string;
+    }) => {
       return (term: string) => {
-        const segments = [`Stadspas van ${stadspas.naam}`];
+        const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
+        if (item.status === 'Besluit') {
+          segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
+        }
         return displayPath(term, segments);
       };
     },
   },
-  getFocusConfig('FOCUS_TOZO'),
-  getFocusConfig('FOCUS_TONK'),
-  getFocusConfig('FOCUS_BBZ'),
-  getFocusConfig('FOCUS_AANVRAGEN'),
+  getWpiConfig('WPI_TOZO'),
+  getWpiConfig('WPI_TONK'),
+  getWpiConfig('WPI_BBZ'),
+  getWpiConfig('WPI_AANVRAGEN'),
   {
     stateKey: 'BRP' as keyof AppState,
     getApiBaseItems: (apiContent: BRPData) => {

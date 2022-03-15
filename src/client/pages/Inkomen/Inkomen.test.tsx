@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
@@ -8,7 +7,7 @@ import MockApp from '../MockApp';
 import Inkomen from './Inkomen';
 
 const testState: any = {
-  FOCUS_AANVRAGEN: {
+  WPI_AANVRAGEN: {
     status: 'OK',
     content: [
       {
@@ -27,7 +26,7 @@ const testState: any = {
       },
     ],
   },
-  FOCUS_TOZO: {
+  WPI_TOZO: {
     status: 'OK',
     content: [
       {
@@ -46,7 +45,7 @@ const testState: any = {
       },
     ],
   },
-  FOCUS_TONK: {
+  WPI_TONK: {
     status: 'OK',
     content: [
       {
@@ -65,8 +64,8 @@ const testState: any = {
       },
     ],
   },
-  FOCUS_BBZ: [],
-  FOCUS_SPECIFICATIES: {
+  WPI_BBZ: [],
+  WPI_SPECIFICATIES: {
     status: 'OK',
     content: {
       jaaropgaven: [

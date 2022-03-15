@@ -15,6 +15,7 @@ const appStateNotificationsSelector = selectorFamily({
     (profileType: ProfileType) =>
     ({ get }) => {
       const appState = get(appStateAtom);
+      const isLoggedInAsCompany = profileType === 'commercial';
       let notifications = appState.NOTIFICATIONS.content || [];
 
       // Exclude meldingen for the private-commercial (ZZP) profile.
@@ -27,6 +28,13 @@ const appStateNotificationsSelector = selectorFamily({
             notification.chapter !== Chapters.BRP &&
             notification.chapter !== Chapters.BURGERZAKEN
         );
+
+        // If user is not logged in with EHK filter subsidie notifications.
+        if (!isLoggedInAsCompany) {
+          notifications.filter(
+            (notification) => notification.chapter !== Chapters.SUBSIDIE
+          );
+        }
       }
 
       let welcomeNotification = WelcomeNotification;

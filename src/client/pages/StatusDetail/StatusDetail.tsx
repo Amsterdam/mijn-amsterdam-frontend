@@ -3,7 +3,10 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { LinkProps, GenericDocument } from '../../../universal/types/App.types';
+import {
+  GenericDocument,
+  StatusLine,
+} from '../../../universal/types/App.types';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -13,25 +16,20 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
-  StatusLine,
+  StatusLine as StatusLineComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
-import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StatusDetail.module.scss';
 
-export interface StatusSourceItem {
-  id: string;
-  title: string;
-  productTitle?: string;
-  link: LinkProps;
-  steps: StatusLineItem[];
-  [key: string]: any;
-}
+export type StatusSourceItem = StatusLine;
 
 interface StatusDetailProps {
   chapter: Chapter;
   stateKey: keyof AppState;
+  getItems?: (
+    content: AppState[keyof AppState]['content']
+  ) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   maxStepCount?: (hasDecision: boolean) => number | undefined;
   showToggleMore?: boolean;
@@ -42,6 +40,7 @@ interface StatusDetailProps {
 
 export default function StatusDetail({
   stateKey,
+  getItems,
   pageContent,
   maxStepCount,
   showToggleMore = true,
@@ -54,8 +53,8 @@ export default function StatusDetail({
   const STATE = appState[stateKey];
   const isStateLoading = isLoading(STATE);
   const statusItems: StatusSourceItem[] = useMemo(
-    () => STATE.content || [],
-    [STATE.content]
+    () => (getItems ? getItems(STATE.content) : STATE.content || []),
+    [STATE.content, getItems]
   );
 
   const { id } = useParams<{ id: string }>();
@@ -90,7 +89,7 @@ export default function StatusDetail({
         backLink={{ to: appRoute, title: ChapterTitles[chapter] }}
         isLoading={isStateLoading}
       >
-        {statusItem?.productTitle || title}
+        {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
@@ -129,8 +128,8 @@ export default function StatusDetail({
         {isStateLoading && <LoadingContent />}
       </PageContent>
       {!!(statusItem?.steps && statusItem.steps.length) && (
-        <StatusLine
-          trackCategory={`${chapter} / ${statusItem?.productTitle} status`}
+        <StatusLineComponent
+          trackCategory={`${chapter} / ${statusItem?.about} status`}
           statusLabel={
             typeof statusLabel === 'function'
               ? statusLabel(statusItem)

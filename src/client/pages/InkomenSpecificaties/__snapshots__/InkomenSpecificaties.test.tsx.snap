@@ -134,7 +134,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=20021871&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=20021871&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -185,7 +185,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=20021871&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=20021871&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -236,7 +236,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=95330222&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=95330222&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -287,7 +287,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=95330222&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=95330222&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -452,7 +452,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=31569261&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=31569261&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -515,7 +515,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=31569291&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=31569291&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -578,7 +578,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=24267671&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=24267671&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -641,7 +641,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=24267681&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=24267681&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -704,7 +704,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=24078481&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=24078481&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -767,7 +767,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=24078491&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=24078491&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -830,7 +830,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=30032581&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=30032581&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -893,7 +893,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=31569261&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=31569261&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -956,7 +956,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=31569291&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=31569291&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -1019,7 +1019,7 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
                 </span>
                 <a
                   class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/test-api/focus/document?id=24267671&isBulk=false&isDms=false"
+                  href="/test-api/wpi/document?id=24267671&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
