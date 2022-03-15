@@ -42,11 +42,11 @@ export default function InkomenSpecificaties() {
   const { WPI_SPECIFICATIES } = useAppStateGetter();
   const wpiSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(WPI_SPECIFICATIES);
-  const { type = 'uitkering', page = '1' } = useParams<{
-    type: 'jaaropgave' | 'uitkering';
+  const { variant = 'uitkering', page = '1' } = useParams<{
+    variant: 'jaaropgave' | 'uitkering';
     page?: string;
   }>();
-  const isAnnualStatementOverviewPage = type === 'jaaropgave';
+  const isAnnualStatementOverviewPage = variant === 'jaaropgave';
   const history = useHistory();
   const items = useMemo(() => {
     return (
@@ -141,11 +141,11 @@ export default function InkomenSpecificaties() {
       history.replace(
         generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
           page: '1',
-          type,
+          variant,
         })
       );
     },
-    [type, history]
+    [variant, history]
   );
 
   function resetSearch() {
@@ -334,7 +334,7 @@ export default function InkomenSpecificaties() {
               history.replace(
                 generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
                   page,
-                  type,
+                  variant,
                 })
               );
             }}

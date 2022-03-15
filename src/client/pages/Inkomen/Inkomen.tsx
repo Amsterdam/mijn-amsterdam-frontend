@@ -30,14 +30,14 @@ import styles from './Inkomen.module.scss';
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
   {
-    type: 'uitkering',
+    variant: 'uitkering',
   }
 );
 
 export const incomSpecificationsRouteYearly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
   {
-    type: 'jaaropgave',
+    variant: 'jaaropgave',
   }
 );
 
