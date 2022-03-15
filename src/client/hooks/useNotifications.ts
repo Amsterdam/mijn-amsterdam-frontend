@@ -1,4 +1,3 @@
-import { sessionAtom } from './api/useSessionApi';
 import { selectorFamily, useRecoilValue } from 'recoil';
 import { Chapters } from '../../universal/config';
 import { dateSort } from '../../universal/helpers';
