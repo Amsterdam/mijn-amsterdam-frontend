@@ -106,6 +106,7 @@ const VakantieVerhuurList = ({
           !!plannedVerhuur.length ||
           (!plannedVerhuur.length && !!verhuur.length)
         }
+        className={styles.SectionBorderTop}
         hasItems={!!cancelledVerhuur.length}
         noItemsMessage="Er is geen geannuleerde verhuur gevonden"
         track={{
@@ -124,7 +125,7 @@ const VakantieVerhuurList = ({
         id="SectionCollapsible-previous-verhuur"
         title="Afgelopen verhuur"
         noItemsMessage="Er is geen afgelopen verhuur gevonden."
-        className={styles.SectionNoBorderBottom}
+        className={`${styles.SectionNoBorderBottom} ${styles.SectionExtraMarginBottom}`}
         startCollapsed={
           !!plannedVerhuur.length ||
           !!cancelledVerhuur.length ||
