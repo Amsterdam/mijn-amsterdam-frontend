@@ -123,10 +123,7 @@ export default function InkomenSpecificaties() {
   const itemsFilteredPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
     const start = startIndex * PAGE_SIZE;
-    const end =
-      start + PAGE_SIZE > itemsFiltered.length
-        ? itemsFiltered.length
-        : start + PAGE_SIZE;
+    const end = start + PAGE_SIZE;
     return itemsFiltered.slice(start, end);
   }, [currentPage, itemsFiltered]);
 
