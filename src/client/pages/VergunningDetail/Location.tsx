@@ -35,6 +35,7 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
     if (isLocationModalOpen) {
       const address = extractAddress(location);
       const isWeesp = isLocatedInWeesp(location);
+
       fetchBag({
         url: `${getOtapEnvItem('bagUrl')}${address}`,
         transformResponse: (response) =>
