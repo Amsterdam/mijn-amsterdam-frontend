@@ -1,7 +1,7 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 import { marked } from 'marked';
 import { Chapters, IS_AP } from '../../universal/config';
-import { ApiResponse, apiSuccesResult } from '../../universal/helpers';
+import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import FileCache from '../helpers/file-cache';
@@ -165,7 +165,7 @@ async function fetchCMSMaintenanceNotifications(
         });
     });
 
-  const eventItemsResponse = apiSuccesResult(
+  const eventItemsResponse = apiSuccessResult(
     eventItems.filter(
       (eventItem): eventItem is CMSMaintenanceNotification => eventItem !== null
     )
@@ -193,7 +193,7 @@ export async function fetchMaintenanceNotificationsActual(
     return maintenanceNotifications;
   }
 
-  return apiSuccesResult(
+  return apiSuccessResult(
     maintenanceNotifications.content
       .filter((notification) =>
         queryParams?.page ? notification.path === `/${queryParams.page}` : true
@@ -243,5 +243,5 @@ export async function fetchMaintenanceNotificationsDashboard(
     item.link = notification.link;
   }
 
-  return apiSuccesResult({ notifications: [notification] });
+  return apiSuccessResult({ notifications: [notification] });
 }
