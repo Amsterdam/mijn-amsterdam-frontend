@@ -168,7 +168,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 1",
-      "dateWorkflowActive": "2020-05-10"
+      "dateWorkflowActive": "2020-05-10",
+      "vergunningId": "Z/XXX/000007"
     },
     {
       "caseType": "Vakantieverhuur",
@@ -183,7 +184,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 1",
-      "dateWorkflowActive": "2020-04-23"
+      "dateWorkflowActive": "2020-04-23",
+      "vergunningId": "Z/XXX/000007"
     },
     {
       "caseType": "Vakantieverhuur",
@@ -198,7 +200,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 2",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "vergunningId": "Z/XXX/000007"
     },
     {
       "caseType": "Vakantieverhuur",
@@ -213,7 +216,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 3",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "vergunningId": null
     },
     {
       "caseType": "Vakantieverhuur",
@@ -228,7 +232,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur afmelding",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "vergunningId": "Z/XXX/000007"
     },
     {
       "caseType": "Vakantieverhuur",
@@ -243,7 +248,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur afmelding",
-      "dateWorkflowActive": "2021-05-22"
+      "dateWorkflowActive": "2021-05-22",
+      "vergunningId": "Z/XXX/000007"
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",

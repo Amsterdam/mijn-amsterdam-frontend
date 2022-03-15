@@ -175,19 +175,6 @@ export function transformVergunningenToVerhuur(
     }
 
     if (vergunning.caseType === CaseType.VakantieVerhuur) {
-      vergunning.vergunningId = vergunningen.find((v) => {
-        return (
-          v.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
-          v.location === vergunning.location &&
-          v.dateStart &&
-          vergunning.dateStart &&
-          new Date(vergunning.dateStart) >= new Date(v.dateStart) &&
-          v.dateEnd &&
-          vergunning.dateEnd &&
-          new Date(vergunning.dateEnd) <= new Date(v.dateEnd) &&
-          v.id !== vergunning.id
-        );
-      })?.id;
       vergunning.link = {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'], {
           title: slug(vergunning.title, {
