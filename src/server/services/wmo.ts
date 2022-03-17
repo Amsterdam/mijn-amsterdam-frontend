@@ -51,7 +51,7 @@ export interface WmoItem {
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
   steps: WmoItemStep[];
-  voorzieningsoortcode: WmoApiItem['itemTypeCode'];
+  itemTypeCode: WmoApiItem['itemTypeCode'];
 }
 
 export function hasFutureDate(
@@ -682,7 +682,7 @@ export function transformWmoResponse(
         },
         steps,
         // This field is added specifically for the Tips api.
-        voorzieningsoortcode: wmoItem.itemTypeCode,
+        itemTypeCode: wmoItem.itemTypeCode,
       };
     });
 

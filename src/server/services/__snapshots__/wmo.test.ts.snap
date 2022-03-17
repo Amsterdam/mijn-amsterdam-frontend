@@ -7,6 +7,7 @@ Array [
     "dateStart": "15 januari 2022",
     "id": "102996420",
     "isActual": true,
+    "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/102996420",
@@ -72,13 +73,13 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (nog niet geleverd)",
-    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "3917854581",
     "isActual": true,
+    "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3917854581",
@@ -144,13 +145,13 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (geleverd)",
-    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "879359140",
     "isActual": true,
+    "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/879359140",
@@ -216,13 +217,13 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (tijdelijk gestopt)",
-    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateEnd": "22 januari 2022",
     "dateStart": "15 december 2021",
     "id": "8927959",
     "isActual": false,
+    "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/8927959",
@@ -287,13 +288,13 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (gestopt)",
-    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "2314189731",
     "isActual": true,
+    "itemTypeCode": "WRA",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/2314189731",
@@ -359,13 +360,13 @@ Array [
     ],
     "supplier": "Aanpassing Thuiszorg",
     "title": "Woonruimte aanpassing (opdracht gegeven)",
-    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateEnd": "23 november 2018",
     "dateStart": "24 november 2017",
     "id": "1890986540",
     "isActual": false,
+    "itemTypeCode": "AO5",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/1890986540",
@@ -411,13 +412,13 @@ Array [
     ],
     "supplier": "PGB Ring",
     "title": "PGB item 1",
-    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateEnd": "",
     "dateStart": "28 april 2016",
     "id": "762205280",
     "isActual": true,
+    "itemTypeCode": "MVV",
     "link": Object {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/762205280",
@@ -462,7 +463,6 @@ Array [
     ],
     "supplier": null,
     "title": "Financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen",
-    "voorzieningsoortcode": "MVV",
   },
 ]
 `;
