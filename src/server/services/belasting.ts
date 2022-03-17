@@ -4,7 +4,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { omit } from '../../universal/helpers';
 import {
-  apiSuccesResult,
+  apiSuccessResult,
   apiDependencyError,
 } from '../../universal/helpers/api';
 
@@ -95,7 +95,7 @@ export async function fetchBELASTINGGenerated(
   );
   if (BELASTING.status === 'OK') {
     if (BELASTING.content.notifications) {
-      return apiSuccesResult({
+      return apiSuccessResult({
         notifications: BELASTING.content.notifications,
       });
     }

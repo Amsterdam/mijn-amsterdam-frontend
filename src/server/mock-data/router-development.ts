@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
-import { apiSuccesResult } from '../../universal/helpers/api';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import VergunningenDocuments from './json/vergunningen-documenten.json';
 
 export const routerDevelopment = express.Router();
@@ -30,7 +30,7 @@ routerDevelopment.get(
   (req: Request, res: Response, next: NextFunction) => {
     res
       .json(
-        apiSuccesResult([
+        apiSuccessResult([
           {
             id: 'xx1',
             title: 'Hema',

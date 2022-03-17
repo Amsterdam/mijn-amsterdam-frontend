@@ -8,7 +8,7 @@ import { AppRoutes } from '../../universal/config/routes';
 import { isRecentCase } from '../../universal/helpers';
 import {
   apiDependencyError,
-  apiSuccesResult,
+  apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../universal/helpers/api';
@@ -213,7 +213,7 @@ async function fetchAndTransformToeristischeVerhuur(
   profileType: ProfileType = 'private'
 ) {
   if (!FeatureToggle.toeristischeVerhuurActive) {
-    return apiSuccesResult({
+    return apiSuccessResult({
       vergunningen: [],
       registraties: [],
       daysLeft: MAXIMUM_DAYS_RENT_ALLOWED,
@@ -221,7 +221,7 @@ async function fetchAndTransformToeristischeVerhuur(
   }
   const registratiesRequest =
     profileType === 'commercial'
-      ? Promise.resolve(apiSuccesResult([]))
+      ? Promise.resolve(apiSuccessResult([]))
       : fetchRegistraties(sessionID, passthroughRequestHeaders);
 
   const vergunningenRequest = fetchVergunningen(
@@ -275,7 +275,7 @@ async function fetchAndTransformToeristischeVerhuur(
     vergunningen,
   });
 
-  return apiSuccesResult(
+  return apiSuccessResult(
     {
       registraties: registraties.content || [],
       vergunningen: toeristischeVerhuurVergunningen,
@@ -528,7 +528,7 @@ export async function fetchToeristischeVerhuurGenerated(
           .map(createToeristischeVerhuurRecentCase)
       : [];
 
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications: actualNotifications,
       cases,
     });

@@ -1,7 +1,7 @@
 import { differenceInMonths, format } from 'date-fns';
 import { generatePath, LinkProps } from 'react-router-dom';
 import { API_BASE_PATH, AppRoutes, Chapter } from '../../../universal/config';
-import { MyNotification } from '../../../universal/types';
+import { GenericDocument, MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -11,7 +11,7 @@ import { WpiRequestProcess, WpiRequestProcessLabels } from './wpi-types';
 export function transformToStatusLine(
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels
-) {
+): WpiRequestProcess {
   const steps = requestProcess.steps.map((statusStep) => {
     const description = labels[statusStep.id].description(
       requestProcess,
@@ -32,14 +32,13 @@ export function transformToStatusLine(
 
   return {
     ...requestProcess,
-    status: activeStep?.status || requestProcess.status,
     steps,
   };
 }
 
 export function addApiBasePathToDocumentUrls(
-  documents: Array<{ url: string }>
-) {
+  documents: GenericDocument[]
+): GenericDocument[] {
   return documents.map((document) => {
     return {
       ...document,
@@ -54,7 +53,7 @@ export function createProcessNotification(
   chapter: Chapter
 ): MyNotification {
   const requestStatus = requestProcess.steps.find(
-    (requestStatus) => requestStatus.status === requestProcess.status
+    (requestStatusStep) => requestStatusStep.id === requestProcess.statusId
   )!; // Should always exist.
 
   const notificationLabels = labels[requestStatus.id].notification;

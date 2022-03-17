@@ -1,8 +1,10 @@
+import * as Sentry from '@sentry/react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
-  apiSuccesResult,
+  ApiResponse,
   ApiSuccessResponse,
+  apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers';
@@ -35,53 +37,74 @@ import {
   WpiRequestProcessLabels,
   WpiStadspasResponseData,
 } from './wpi-types';
-import * as Sentry from '@sentry/react';
 
-type FilterResponse<R extends WpiRequestProcess[] = WpiRequestProcess[]> = (
-  response: ApiSuccessResponse<R>
-) => R;
+type FilterResponse = (
+  response: ApiSuccessResponse<WpiRequestProcess[]>
+) => WpiRequestProcess[];
 
 export interface FetchConfig {
   apiConfigName: SourceApiKey;
-  filterResponse: FilterResponse<any>;
+  filterResponse: FilterResponse;
   requestCacheKey: string;
 }
 
-export async function fetchRequestProcess<R extends WpiRequestProcess>(
+function statusLineTransformer(
+  response: WpiRequestProcess[],
+  getLabels: (
+    requestProcess: WpiRequestProcess
+  ) => WpiRequestProcessLabels | undefined
+): WpiRequestProcess[] {
+  const statusLineRequestProcesses = response?.flatMap((requestProcess) => {
+    const labels = getLabels(requestProcess);
+    if (labels) {
+      return [transformToStatusLine(requestProcess, labels)];
+    } else {
+      Sentry.captureMessage('Unknown request process labels', {
+        extra: {
+          about: requestProcess.about,
+          title: requestProcess.title,
+          status: requestProcess.statusId,
+        },
+      });
+    }
+    return [];
+  });
+  return statusLineRequestProcesses;
+}
+
+export async function fetchRequestProcess(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   getLabels: (
     requestProcess: WpiRequestProcess
   ) => WpiRequestProcessLabels | undefined,
   fetchConfig: FetchConfig
-) {
-  const statusLineTransformer = (response: R[]) =>
-    response?.flatMap((requestProcess) => {
-      const labels = getLabels(requestProcess);
-      if (labels) {
-        return [transformToStatusLine(requestProcess, labels)];
-      } else {
-        Sentry.captureMessage('Unknown request process labels', {
-          extra: {
-            about: requestProcess.about,
-            title: requestProcess.title,
-            status: requestProcess.status,
-          },
-        });
-      }
-      return [];
-    });
-
+): Promise<ApiResponse<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     cacheKey: fetchConfig.requestCacheKey,
-    transformResponse: [fetchConfig.filterResponse, statusLineTransformer],
+    transformResponse: [
+      (response: ApiSuccessResponse<WpiRequestProcess[]>) => response.content,
+    ],
   });
 
-  const response = requestData<WpiRequestProcess[]>(
+  const response = await requestData<WpiRequestProcess[]>(
     apiConfig,
     sessionID,
     passthroughRequestHeaders
   );
+
+  if (response.status === 'OK') {
+    // Filter the response at the end, this way we can use the requestData caching. For example Stadspas and Bijstandsuitkering aanvragen are combined in one api response.
+    // In the BFF we want to organize this data into 2 streams (stadspas/aanvraag and bijstand/aanvraag) beloning to 2 separate themse in the front-end.
+    // Filtering at this point we don't have to call the api 2 separate times because the local memory cache is utilized.
+    const responseFiltered = fetchConfig.filterResponse(response);
+    const responseTransformed = statusLineTransformer(
+      responseFiltered,
+      getLabels
+    );
+
+    return apiSuccessResult(responseTransformed);
+  }
 
   return response;
 }
@@ -104,21 +127,21 @@ export async function fetchBijstandsuitkering(
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-bijstandsuitkering-' + sessionID,
+      requestCacheKey: 'fetch-aanvragen-' + sessionID,
     }
   );
 
   return response;
 }
 
+type StadspasResponseDataTransformed = Partial<WpiStadspasResponseData> & {
+  aanvragen: WpiRequestProcess[];
+};
+
 export async function fetchStadspas(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
-): Promise<
-  ApiSuccessResponse<
-    Partial<WpiStadspasResponseData> & { aanvragen?: WpiRequestProcess[] }
-  >
-> {
+): Promise<ApiSuccessResponse<StadspasResponseDataTransformed>> {
   const filterResponse: FilterResponse = (response) => {
     return response?.content
       ?.filter((requestProcess) => requestProcess?.about === 'Stadspas')
@@ -132,7 +155,7 @@ export async function fetchStadspas(
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-stadspas-' + sessionID,
+      requestCacheKey: 'fetch-aanvragen-' + sessionID,
     }
   );
 
@@ -153,25 +176,33 @@ export async function fetchStadspas(
     stadspasRequest,
   ]);
 
-  const stadspas = getSettledResult(stadspasResponse);
-  const aanvragen = getSettledResult(aanvragenResponse);
+  const stadspasResult = getSettledResult(stadspasResponse);
+  const aanvragenResult = getSettledResult(aanvragenResponse);
 
-  return apiSuccesResult(
+  const aanvragen = aanvragenResult.content || [];
+  const stadspassen = (stadspasResult.content?.stadspassen || []).map(
+    (stadspas) => {
+      return {
+        ...stadspas,
+        link: {
+          to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
+          title: `Stadspas van ${stadspas.owner}`,
+        },
+      };
+    }
+  );
+
+  return apiSuccessResult(
     {
-      aanvragen: aanvragen.content || [],
-      stadspassen: (stadspas.content?.stadspassen || []).map((stadspas) => {
-        return {
-          ...stadspas,
-          link: {
-            to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
-            title: `Stadspas van ${stadspas.owner}`,
-          },
-        };
-      }),
-      ownerType: stadspas.content?.ownerType,
-      adminNumber: stadspas.content?.adminNumber,
+      aanvragen,
+      stadspassen,
+      ownerType: stadspasResult.content?.ownerType,
+      adminNumber: stadspasResult.content?.adminNumber,
     },
-    getFailedDependencies({ aanvragen, stadspas })
+    getFailedDependencies({
+      aanvragen: aanvragenResult,
+      stadspas: stadspasResult,
+    })
   );
 }
 
@@ -195,10 +226,10 @@ export async function fetchEAanvragen(
     }
   );
 
-  if (about && response.status === 'OK') {
-    return apiSuccesResult(
+  if (about && response.status === 'OK' && response.content) {
+    return apiSuccessResult(
       response.content.filter((requestProcess) =>
-        about.includes(requestProcess.about)
+        about.includes(requestProcess.about as string)
       )
     );
   }
@@ -362,5 +393,5 @@ export async function fetchWpiNotifications(
       }
     }
   }
-  return apiSuccesResult({ notifications });
+  return apiSuccessResult({ notifications });
 }

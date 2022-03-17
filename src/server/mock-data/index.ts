@@ -1,4 +1,4 @@
-import { apiSuccesResult } from '../../universal/helpers';
+import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
 import { ApiUrls, X_AUTH_TYPE_HEADER } from '../config';
 // Import JSON files because they get included in the bundle this way.
@@ -190,7 +190,7 @@ export const mockDataConfig: MockDataConfig = {
           }
         );
         return await loadMockApiResponseJson(
-          apiSuccesResult(vergunningenCommercial)
+          apiSuccessResult(vergunningenCommercial)
         );
       }
       return await loadMockApiResponseJson(VERGUNNINGEN);

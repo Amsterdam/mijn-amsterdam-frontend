@@ -4,7 +4,7 @@ import {
   DatasetId,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
-import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
+import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -69,7 +69,7 @@ export async function fetchDataset(
           apiData.filters = filters;
         }
 
-        return Promise.resolve(apiSuccesResult(apiData));
+        return Promise.resolve(apiSuccessResult(apiData));
       }
     }
   }
@@ -131,7 +131,7 @@ export async function fetchDataset(
       apiResponse.filters = filters;
     }
 
-    return apiSuccesResult(apiResponse);
+    return apiSuccessResult(apiResponse);
   }
 
   return response;
@@ -253,7 +253,7 @@ export async function loadFeatureDetail(
       item.id = encodeURIComponent(item[config.idKeyDetail]);
     }
     if (item) {
-      return apiSuccesResult(item);
+      return apiSuccessResult(item);
     }
   }
 

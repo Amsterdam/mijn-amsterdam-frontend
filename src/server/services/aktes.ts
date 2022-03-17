@@ -1,4 +1,4 @@
-import { apiDependencyError, apiSuccesResult } from '../../universal/helpers';
+import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { dateSort } from '../../universal/helpers/date';
@@ -83,7 +83,7 @@ export async function fetchAKTESGenerated(
   const AKTES = await fetchAKTES(sessionID, passthroughRequestHeaders);
 
   if (AKTES.status === 'OK') {
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications: transformAKTESNotifications(AKTES.content, new Date()),
     });
   }

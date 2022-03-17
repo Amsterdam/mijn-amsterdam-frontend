@@ -4,7 +4,7 @@ import {
 } from '../../../universal/config';
 import {
   apiErrorResult,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../../universal/helpers/api';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
@@ -23,19 +23,19 @@ import {
   getDynamicDatasetFilters,
 } from './helpers';
 
-const DUMMY_DATA_RESPONSE = apiSuccesResult([
+const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },
   { properties: { foo: 'hop', bar: true } },
 ]);
 
-const DUMMY_DATA_RESPONSE2 = apiSuccesResult([
+const DUMMY_DATA_RESPONSE2 = apiSuccessResult([
   { properties: { hello: 'world', world: 'peace' } },
   { properties: { hello: 'you', world: 'equality' } },
 ]);
 
 const DUMMY_DATA_RESPONSE_ERROR = apiErrorResult('not-found', null);
 
-const DUMMY_DATA_DETAIL_RESPONSE = apiSuccesResult({
+const DUMMY_DATA_DETAIL_RESPONSE = apiSuccessResult({
   id: 'test',
   foo: 'bar',
 });
@@ -87,12 +87,12 @@ const DATASET_FILTERS_MOCK = {
   },
 };
 
-const SERVICE_RESULT = apiSuccesResult({
+const SERVICE_RESULT = apiSuccessResult({
   features: DUMMY_DATA_RESPONSE.content,
   filters: DATASET_FILTERS_MOCK,
 });
 
-const SERVICE_RESULT2 = apiSuccesResult({
+const SERVICE_RESULT2 = apiSuccessResult({
   features: DUMMY_DATA_RESPONSE2.content,
 });
 
