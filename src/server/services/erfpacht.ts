@@ -5,7 +5,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
   apiDependencyError,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 
 export interface ERFPACHTData {
@@ -95,7 +95,7 @@ export async function fetchERFPACHTGenerated(
   );
   if (ERFPACHT.status === 'OK' && ERFPACHT.content.notifications) {
     if (ERFPACHT.content.notifications) {
-      return apiSuccesResult({
+      return apiSuccessResult({
         notifications: ERFPACHT.content.notifications,
       });
     }

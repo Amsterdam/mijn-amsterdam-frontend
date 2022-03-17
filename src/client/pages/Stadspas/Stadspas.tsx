@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
+import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -49,22 +50,30 @@ export default function Stadspas() {
     return addTitleLinkComponent(
       aanvragen
         .map((item) => {
+          const activeStatusStep = item.steps.find(
+            (step) => step.id === item.statusId
+          );
           return Object.assign({}, item, {
             displayDateEnd: defaultDateFormat(
               item.dateEnd || item.datePublished
             ),
             displayDateStart: defaultDateFormat(item.dateStart),
+            status: activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
           });
         })
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen]);
 
-  const itemsRequested = items.filter((item) => item.status !== 'Besluit');
-  const itemsDecided = items.filter((item) => item.status === 'Besluit');
+  const itemsRequested = items.filter(
+    (item) => !REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
+  );
+  const itemsCompleted = items.filter((item) =>
+    REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
+  );
 
   const hasActiveRequests = !!itemsRequested.length;
-  const hasActiveDescisions = !!itemsDecided.length;
+  const hasActiveDescisions = !!itemsCompleted.length;
   const hasStadspas = !!WPI_STADSPAS?.content?.stadspassen?.length;
 
   const stadspasItems = useMemo(() => {
@@ -182,7 +191,7 @@ export default function Stadspas() {
         noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
       >
         <Table
-          items={itemsDecided}
+          items={itemsCompleted}
           displayProps={decisionsDisplayProps}
           className={styles.Table}
         />

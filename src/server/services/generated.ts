@@ -1,6 +1,6 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
-import { apiSuccesResult } from '../../universal/helpers';
+import { apiSuccessResult } from '../../universal/helpers';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
@@ -57,8 +57,8 @@ export function getGeneratedItemsFromApiResults(
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
   return {
-    CASES: apiSuccesResult(cases.sort(dateSort('datePublished', 'desc'))),
-    NOTIFICATIONS: apiSuccesResult(notificationsResult),
+    CASES: apiSuccessResult(cases.sort(dateSort('datePublished', 'desc'))),
+    NOTIFICATIONS: apiSuccessResult(notificationsResult),
   };
 }
 

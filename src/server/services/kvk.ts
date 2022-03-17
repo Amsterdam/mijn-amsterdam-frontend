@@ -1,5 +1,5 @@
 import { FeatureToggle } from '../../universal/config/app';
-import { apiSuccesResult } from '../../universal/helpers/api';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -187,5 +187,5 @@ export async function fetchKVK(
       passthroughRequestHeaders
     );
   }
-  return apiSuccesResult(null);
+  return apiSuccessResult(null);
 }

@@ -10,7 +10,7 @@ import {
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import {
-  apiSuccesResult,
+  apiSuccessResult,
   apiDependencyError,
 } from '../../universal/helpers/api';
 
@@ -199,7 +199,7 @@ export async function fetchBRPGenerated(
   const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
 
   if (BRP.status === 'OK') {
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications: transformBRPNotifications(BRP.content, new Date()),
     });
   }

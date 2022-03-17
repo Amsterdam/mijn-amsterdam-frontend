@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import type {
   Vergunning,
   VergunningDocument,
@@ -7,7 +6,7 @@ import type {
 import {
   apiPristineResult,
   ApiResponse,
-  apiSuccesResult,
+  apiSuccessResult,
   directApiUrlByProfileType,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
@@ -47,7 +46,7 @@ export function DocumentDetails({
         if (!content) {
           return [];
         }
-        return apiSuccesResult(
+        return apiSuccessResult(
           content.map((document: VergunningDocument) =>
             // Some documents don't have titles, assign a default title.
             Object.assign(document, { title: document.title || 'Document' })

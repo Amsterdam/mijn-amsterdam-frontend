@@ -1,5 +1,7 @@
 import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
+import { AppRoutes } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   apiPristineResult,
   ApiResponse,
@@ -7,6 +9,7 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
@@ -20,19 +23,16 @@ import {
   InfoPanelCollapsible,
   LinkdInline,
   LoadingContent,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
-  MaintenanceNotifications,
 } from '../../components';
 import { BRP_RESIDENTS_API_URL } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
-import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
 import styles from './Profile.module.scss';
-import { apiSuccesResult } from '../../../universal/helpers/api';
-import { FeatureToggle } from '../../../universal/config/app';
-import { AppRoutes } from '../../../universal/config';
+import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -54,7 +54,7 @@ export default function Profile() {
       url: BRP_RESIDENTS_API_URL,
       postpone: true,
       method: 'post',
-      transformResponse: (responseContent) => apiSuccesResult(responseContent),
+      transformResponse: (responseContent) => apiSuccessResult(responseContent),
     },
     apiPristineResult({ residentCount: -1 })
   );

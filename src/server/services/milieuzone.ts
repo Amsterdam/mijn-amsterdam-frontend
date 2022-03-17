@@ -7,7 +7,7 @@ import { MyCase } from '../../universal/types/App.types';
 import { FeatureToggle, ExternalUrls } from '../../universal/config/app';
 import {
   apiDependencyError,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 
 export interface MILIEUZONEData {
@@ -117,7 +117,7 @@ export async function fetchMILIEUZONEGenerated(
   );
 
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications: MILIEUZONE.content.notifications,
       cases: FeatureToggle.milieuzoneRecentCasesActive
         ? extractRecentCases(MILIEUZONE.content.notifications)

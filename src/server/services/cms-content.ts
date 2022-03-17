@@ -4,7 +4,7 @@ import sanitizeHtml, { IOptions } from 'sanitize-html';
 import { IS_AP } from '../../universal/config';
 import {
   ApiResponse,
-  apiSuccesResult,
+  apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
@@ -274,7 +274,7 @@ export async function fetchCMSCONTENT(
     footer: footerContent as CMSFooterContent | null,
   };
 
-  return apiSuccesResult(cmsContent);
+  return apiSuccessResult(cmsContent);
 }
 
 const searchFileCache = new FileCache({
@@ -306,7 +306,7 @@ export async function fetchSearchConfig(
           if (err) {
             reject(err);
           }
-          resolve(apiSuccesResult(JSON.parse(content.toString())));
+          resolve(apiSuccessResult(JSON.parse(content.toString())));
         }
       );
     });

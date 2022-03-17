@@ -3,7 +3,7 @@ import { Chapters } from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import {
   apiDependencyError,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
@@ -89,7 +89,7 @@ export async function fetchKrefia(
 ) {
   const response = await fetchSource(sessionID, passthroughRequestHeaders);
   if (response.status === 'OK' && response.content) {
-    return apiSuccesResult(omit(response.content, ['notificationTriggers']));
+    return apiSuccessResult(omit(response.content, ['notificationTriggers']));
   }
   return response;
 }
@@ -115,7 +115,7 @@ export async function fetchKrefiaGenerated(
       }
     }
 
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications,
     });
   }
