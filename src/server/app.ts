@@ -20,7 +20,7 @@ import { auth, ConfigParams } from 'express-openid-connect';
 import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
-import { apiErrorResult, apiSuccesResult } from '../universal/helpers';
+import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
 import { BffEndpoints, BFF_PORT } from './config';
 import { send404 } from './helpers/app';
 
@@ -44,7 +44,7 @@ Sentry.init(sentryOptions);
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: false,
+  idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   clientID: process.env.BFF_OIDC_CLIENT_ID,
