@@ -175,7 +175,7 @@ describe('wpi/app-service', () => {
     const contentBijstandsuitkering = jsonCopy(content[0]);
 
     contentBijstandsuitkering.about = 'Bijstandsuitkering';
-    contentBijstandsuitkering.status = 'herstelTermijn';
+    contentBijstandsuitkering.statusId = 'herstelTermijn';
     contentBijstandsuitkering.decision = null;
 
     delete contentBijstandsuitkering.steps[2].decision;
@@ -249,6 +249,7 @@ describe('wpi/app-service', () => {
 
     const contentStadspas = jsonCopy(content[0]);
     contentStadspas.about = 'Stadspas';
+    contentStadspas.statusId = 'besluit';
 
     contentStadspas.steps[0].id = 'aanvraag';
     contentStadspas.steps[0].status = 'Aanvraag';
@@ -318,7 +319,7 @@ describe('wpi/app-service', () => {
             id: '51918e8b948742c8b25e97889b2f07b1',
             title: 'Stadspas',
             about: 'Stadspas',
-            status: 'besluit',
+            statusId: 'besluit',
             decision: 'afwijzing',
             datePublished: '2022-04-28T00:00:00+02:00',
             dateStart: '2022-04-08T15:05:52+02:00',
@@ -350,7 +351,7 @@ describe('wpi/app-service', () => {
             id: '966d872b686bbf363f5ac78f8bad9fc6',
             title: 'Bijstandsuitkering',
             about: 'Bijstandsuitkering',
-            status: 'besluit',
+            statusId: 'besluit',
             decision: 'afwijzing',
             datePublished: '2017-08-21T15:05:52+02:00',
             dateStart: '2017-08-17T15:05:52+02:00',
@@ -371,7 +372,7 @@ describe('wpi/app-service', () => {
               },
               {
                 id: 'herstelTermijn',
-                status: 'Informatie nodig',
+                status: 'Meer informatie',
                 documents: [],
                 datePublished: '2017-08-18T15:05:52+02:00',
                 dateDecisionExpected: '2017-10-15T15:05:52+02:00',
@@ -452,7 +453,7 @@ describe('wpi/app-service', () => {
             datePublished: '2022-02-23T16:26:14.175972',
             dateEnd: '2022-02-23T16:26:14.175972',
             decision: 'afwijzing',
-            status: 'besluit',
+            statusId: 'besluit',
             steps: [
               {
                 id: 'aanvraag',
