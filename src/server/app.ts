@@ -50,6 +50,7 @@ const oidcConfig: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
+  authorizationParams: { prompt: 'login' },
   routes: {
     login: false,
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
@@ -133,7 +134,7 @@ app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
     const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
 
     res.send(
-      apiSuccesResult({
+      apiSuccessResult({
         isAuthenticated: true,
         userType: UserType.BURGER, // TODO: get from req.oidc.user.type ???
         validUntil,
