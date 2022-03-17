@@ -3,7 +3,7 @@ import memoryCache from 'memory-cache';
 import scrapeIt from 'scrape-it';
 import { IS_AP } from '../../../universal/config';
 import {
-  apiSuccesResult,
+  apiSuccessResult,
   ApiSuccessResponse,
   getApproximateDistance,
 } from '../../../universal/helpers';
@@ -181,7 +181,7 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
       ...cachedFileContents,
       centers: addApproximateDistance(latlng, cachedFileContents.centers),
     };
-    return apiSuccesResult(responseData);
+    return apiSuccessResult(responseData);
   }
 
   const afvalpuntGeoLocations = await scrapeAfvalpuntGeoLocations();
@@ -208,7 +208,7 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
       fileCache.setKey('responseData', responseData);
       fileCache.save();
 
-      resolve(apiSuccesResult(responseData));
+      resolve(apiSuccessResult(responseData));
     });
 
   return afvalResult;

@@ -71,6 +71,7 @@ export interface GenericDocument {
   url: string;
   download?: string;
   datePublished: string;
+  [key: string]: any;
 }
 
 export type AltDocumentContent = string | JSX.Element;
@@ -91,7 +92,7 @@ export interface StatusLine {
   id: string;
   title: string;
   about?: string;
-  link: LinkProps;
+  link?: LinkProps;
   steps: StatusLineItem[];
   [key: string]: any;
 }

@@ -3,7 +3,7 @@ import slug from 'slugme';
 import { Chapters } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
-import { apiSuccesResult } from '../../../universal/helpers/api';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import { hash, isRecentCase } from '../../../universal/helpers/utils';
 import {
@@ -284,7 +284,7 @@ export async function fetchVergunningen(
       vergunningen = vergunningen.filter(options.filter);
     }
 
-    return apiSuccesResult(vergunningen);
+    return apiSuccessResult(vergunningen);
   }
 
   return response;
@@ -401,7 +401,7 @@ export async function fetchVergunningenGenerated(
           )
       : [];
 
-    return apiSuccesResult({
+    return apiSuccessResult({
       cases,
       notifications,
     });

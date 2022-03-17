@@ -3,7 +3,7 @@ import {
   DEFAULT_LNG,
 } from '../../universal/config/myarea-datasets';
 import { apiDependencyError, isMokum } from '../../universal/helpers';
-import { apiErrorResult, apiSuccesResult } from '../../universal/helpers/api';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import { fetchBAG, fetchBRP } from './index';
 import { fetchKVK, getKvkAddress } from './kvk';
 
@@ -23,7 +23,7 @@ async function fetchPrivate(
     );
 
     if (!MY_LOCATION.content?.latlng) {
-      MY_LOCATION = apiSuccesResult({
+      MY_LOCATION = apiSuccessResult({
         latlng: {
           lat: DEFAULT_LAT,
           lng: DEFAULT_LNG,
@@ -32,7 +32,7 @@ async function fetchPrivate(
       });
     }
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
-    MY_LOCATION = apiSuccesResult({
+    MY_LOCATION = apiSuccessResult({
       latlng: null,
       address: null,
     });
@@ -61,7 +61,7 @@ async function fetchCommercial(
       );
 
       if (!MY_LOCATION.content?.latlng) {
-        MY_LOCATION = apiSuccesResult({
+        MY_LOCATION = apiSuccessResult({
           latlng: {
             lat: DEFAULT_LAT,
             lng: DEFAULT_LNG,

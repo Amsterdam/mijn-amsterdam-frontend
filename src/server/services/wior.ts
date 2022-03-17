@@ -1,6 +1,6 @@
 import { LatLngBoundsLiteral } from 'leaflet';
 import { Chapters, FeatureToggle } from '../../universal/config';
-import { apiDependencyError, apiSuccesResult } from '../../universal/helpers';
+import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';
 import {
@@ -81,7 +81,7 @@ export async function fetchWiorGenerated(
       MY_LOCATION.content?.latlng
     );
     const notification = getNotification(bbox);
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications:
         FeatureToggle.wiorMeldingen && filteredFeatures.length >= 2
           ? [notification]

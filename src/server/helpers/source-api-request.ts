@@ -5,7 +5,7 @@ import { IS_AP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
-  apiSuccesResult,
+  apiSuccessResult,
   capitalizeFirstLetter,
   entries,
 } from '../../universal/helpers';
@@ -185,7 +185,7 @@ export async function requestData<T>(
 
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
-    const responseData = apiSuccesResult<T>(response.data);
+    const responseData = apiSuccessResult<T>(response.data);
 
     // Clears the timeout after the above request promise is settled
     clearTimeout(cancelTimeout);

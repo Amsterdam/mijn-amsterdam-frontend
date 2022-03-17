@@ -3,7 +3,7 @@ import { Chapters } from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import {
   apiDependencyError,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
@@ -118,7 +118,7 @@ export async function fetchSubsidieGenerated(
   );
   if (subsidie.status === 'OK' && subsidie.content.notifications) {
     if (subsidie.content.notifications) {
-      return apiSuccesResult({
+      return apiSuccessResult({
         notifications: transformSubsidieNotifications(
           subsidie.content.notifications
         ),

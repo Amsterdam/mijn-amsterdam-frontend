@@ -61,9 +61,9 @@ export default function StatusDetail({
   const statusItem = statusItems.find((item) => item.id === id);
   const noContent = !isStateLoading && !statusItem;
   const appRoute = AppRoutes[chapter];
-  const hasDecision = !!statusItem?.steps.some(
-    (step) => step.title === 'besluit'
-  );
+  const hasDecision =
+    !!statusItem?.decision ||
+    !!statusItem?.steps.some((step) => !!step.decision);
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {

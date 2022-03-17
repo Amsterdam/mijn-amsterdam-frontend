@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {
   apiErrorResult,
   apiPostponeResult,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 import {
   BFF_MS_API_BASE_URL,
@@ -59,7 +59,7 @@ describe('requestData.ts', () => {
       HEADERS
     );
 
-    expect(rs).toStrictEqual(apiSuccesResult(DUMMY_RESPONSE));
+    expect(rs).toStrictEqual(apiSuccessResult(DUMMY_RESPONSE));
   });
 
   it('Should make request with passthrough headers', async () => {
@@ -110,11 +110,11 @@ describe('requestData.ts', () => {
     );
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(
-      apiSuccesResult(DUMMY_RESPONSE)
+      apiSuccessResult(DUMMY_RESPONSE)
     );
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
     expect(await cache.get(CACHE_KEY_2).promise).toStrictEqual(
-      apiSuccesResult(DUMMY_RESPONSE_2)
+      apiSuccessResult(DUMMY_RESPONSE_2)
     );
     expect(await cache.get(CACHE_KEY_2).promise).toStrictEqual(rs2);
 

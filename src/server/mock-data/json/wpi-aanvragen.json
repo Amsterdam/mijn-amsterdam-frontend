@@ -5,7 +5,7 @@
       "id": "966d872b686bbf363f5ac78f8bad9fc6",
       "title": "Bijstandsuitkering",
       "about": "Bijstandsuitkering",
-      "status": "besluit",
+      "statusId": "besluit",
       "decision": "afwijzing",
       "datePublished": "2017-08-21T15:05:52+02:00",
       "dateStart": "2017-08-17T15:05:52+02:00",
@@ -26,7 +26,7 @@
         },
         {
           "id": "herstelTermijn",
-          "status": "Informatie nodig",
+          "status": "Meer informatie",
           "documents": [
             {
               "id": "4400000007",
@@ -64,7 +64,7 @@
       "id": "312e470327f8fd195d3869c45ffd041e",
       "title": "Bijstandsuitkering",
       "about": "Bijstandsuitkering",
-      "status": "besluit",
+      "statusId": "besluit",
       "decision": "toekenning",
       "datePublished": "2018-04-25T15:05:52+02:00",
       "dateStart": "2018-03-25T15:05:52+02:00",
@@ -85,7 +85,7 @@
         },
         {
           "id": "herstelTermijn",
-          "status": "Informatie nodig",
+          "status": "Meer informatie",
           "documents": [
             {
               "id": "4400000011",
@@ -111,7 +111,7 @@
       "id": "d14956153a92128ae7feceabe0775537",
       "title": "Bijstandsuitkering",
       "about": "Bijstandsuitkering",
-      "status": "aanvraag",
+      "statusId": "aanvraag",
       "decision": null,
       "datePublished": "2019-05-31T15:05:52+02:00",
       "dateStart": "2019-05-31T15:05:52+02:00",
@@ -129,7 +129,7 @@
       "id": "51918e8b948742c8b25e97889b2f07b1",
       "title": "Stadspas",
       "about": "Stadspas",
-      "status": "besluit",
+      "statusId": "besluit",
       "decision": "afwijzing",
       "datePublished": "2019-04-28T00:00:00+02:00",
       "dateStart": "2019-04-08T15:05:52+02:00",
@@ -161,7 +161,7 @@
       "id": "a66eb50acbe6cb38283cf4fcb5c8af21",
       "title": "Stadspas",
       "about": "Stadspas",
-      "status": "besluit",
+      "statusId": "besluit",
       "decision": "toekenning",
       "datePublished": "2019-06-07T15:05:52+02:00",
       "dateStart": "2019-05-08T15:05:52+02:00",
@@ -189,7 +189,7 @@
         },
         {
           "id": "herstelTermijn",
-          "status": "Informatie nodig",
+          "status": "Meer informatie",
           "documents": [],
           "datePublished": "2019-05-17T15:05:52+02:00",
           "dateDecisionExpected": "2019-07-23T15:05:52+02:00",
@@ -208,7 +208,7 @@
       "id": "92a210e56af0124f32296c3d4e33112e",
       "title": "Stadspas",
       "about": "Stadspas",
-      "status": "Informatie nodig",
+      "status": "Meer informatie",
       "decision": null,
       "datePublished": "2022-06-23T15:05:53+02:00",
       "dateStart": "2022-06-08T15:05:53+02:00",
@@ -236,7 +236,7 @@
         },
         {
           "id": "herstelTermijn",
-          "status": "Informatie nodig",
+          "status": "Meer informatie",
           "documents": [],
           "datePublished": "2022-06-13T15:05:53+02:00",
           "dateDecisionExpected": "2022-08-18T15:05:53+02:00",

@@ -5,7 +5,7 @@ import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../../universal/config';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
-  apiSuccesResult,
+  apiSuccessResult,
 } from '../../../universal/helpers/api';
 import {
   AUTH_API_URL,
@@ -50,6 +50,8 @@ export const INITIAL_SESSION_STATE: SessionState = {
 
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
+  responseType: 'text',
+  transformResponse: (data: SessionData) => apiSuccesResult<SessionData>(data),
 };
 
 type SessionResponseData =
@@ -96,7 +98,7 @@ export const sessionAtom = atom<SessionState>({
 export function useSessionApi() {
   const [sessionResponse, refetch] = useDataApi<SessionResponseData>(
     requestOptions,
-    apiSuccesResult(INITIAL_SESSION_CONTENT)
+    apiSuccessResult(INITIAL_SESSION_CONTENT)
   );
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
   const sessionData = data?.content;

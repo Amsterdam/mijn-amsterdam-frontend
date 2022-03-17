@@ -99,7 +99,7 @@ export function apiErrorResult<T>(
   return errorResponse;
 }
 
-export function apiSuccesResult<T>(
+export function apiSuccessResult<T>(
   content: T,
   failedDependencies?: FailedDependencies
 ): ApiSuccessResponse<T> {

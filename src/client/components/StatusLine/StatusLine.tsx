@@ -9,7 +9,6 @@ import { useSessionStorage } from '../../hooks/storage.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
-
 import Heading from '../Heading/Heading';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
@@ -315,7 +314,7 @@ export default function StatusLine({
           <ul className={styles.List}>
             {items.map((item, index) => (
               <LineItem
-                key={`step-${item.status}-${index}`}
+                key={`step-${item.id}-${index}`}
                 highlight={highlightKey ? !!item[highlightKey] : false}
                 style={{
                   display: showToggleMore

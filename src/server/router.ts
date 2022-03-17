@@ -3,7 +3,7 @@ import {
   DATASETS,
   getDatasetCategoryId,
 } from '../universal/config/myarea-datasets';
-import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
+import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
@@ -111,7 +111,7 @@ router.post(
         },
       };
 
-      res.json(apiSuccesResult(responseContent));
+      res.json(apiSuccessResult(responseContent));
       next();
     } catch (error) {
       next(error);
