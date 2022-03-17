@@ -63,7 +63,7 @@ function statusLineTransformer(
         extra: {
           about: requestProcess.about,
           title: requestProcess.title,
-          status: requestProcess.status,
+          status: requestProcess.statusId,
         },
       });
     }

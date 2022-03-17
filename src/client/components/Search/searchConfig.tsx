@@ -162,7 +162,7 @@ const getWpiConfig = (
   displayTitle: (aanvraag: StatusLine) => {
     return (term: string) => {
       const segments = [`Aanvraag ${aanvraag.about}`];
-      if (aanvraag.status === 'Besluit') {
+      if (aanvraag.statusId === 'besluit') {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
       return displayPath(term, segments);
@@ -290,11 +290,11 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       title: string;
       about?: string;
       datePublished: string;
-      status?: string;
+      statusId?: string;
     }) => {
       return (term: string) => {
         const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
-        if (item.status === 'Besluit') {
+        if (item.statusId === 'besluit') {
           segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
         return displayPath(term, segments);

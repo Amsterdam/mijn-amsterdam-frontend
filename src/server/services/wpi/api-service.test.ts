@@ -50,7 +50,7 @@ describe('wpi/app-service', () => {
       dateEnd: '2022-03-01T09:49',
       datePublished: '2022-03-01T09:49',
       dateStart: '2022-01-09T13:22',
-      status: 'finish',
+      statusId: 'finish',
       decision: 'toekenning',
       steps: [
         {
@@ -128,7 +128,7 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.status).toBe('Einde van aanvraagproces');
+    expect(statusLine.statusId).toBe('finish');
 
     const [step1, step2, step3] = statusLine.steps;
     expect(step1.status).toBe('Begin van aanvraagproces');
@@ -206,7 +206,7 @@ describe('wpi/app-service', () => {
     expect(response.content?.length).toBe(1);
 
     const [statusLine] = response.content || [];
-    expect(statusLine.status).toBe('Meer informatie');
+    expect(statusLine.statusId).toBe('herstelTermijn');
     expect(statusLine.link).toMatchInlineSnapshot(`
       Object {
         "title": "Bekijk uw aanvraag",

@@ -39,7 +39,7 @@ export interface WpiRequestProcess {
   dateEnd: string | null;
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
-  status: WpiRequestStatus['id'];
+  statusId: WpiRequestStatus['id'];
   decision: string | null;
   link?: LinkProps;
 }

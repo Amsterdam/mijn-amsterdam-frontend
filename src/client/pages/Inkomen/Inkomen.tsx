@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
+import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -76,10 +77,13 @@ export default function Inkomen() {
       ...(bbzItems || []),
     ]
       .map((item) => {
+        const activeStatusStep = item.steps.find(
+          (step) => step.id === item.statusId
+        );
         return Object.assign({}, item, {
           displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
           displayDateStart: defaultDateFormat(item.dateStart),
-          status: item.status.replace(/-\s/g, ''), // Compensate for pre-broken words like Terugvorderings- besluit.
+          status: activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });
       })
       .sort(dateSort('datePublished', 'desc'));
@@ -87,10 +91,14 @@ export default function Inkomen() {
     return addTitleLinkComponent(items);
   }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
-  const itemsRequested = items.filter((item) => item.status !== 'Besluit');
-  const itemsDecided = items.filter((item) => item.status === 'Besluit');
+  const itemsRequested = items.filter(
+    (item) => !REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
+  );
+  const itemsCompleted = items.filter((item) =>
+    REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
+  );
   const hasActiveRequests = !!itemsRequested.length;
-  const hasActiveDescisions = !!itemsDecided.length;
+  const hasActiveDescisions = !!itemsCompleted.length;
 
   const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
   const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
@@ -172,7 +180,7 @@ export default function Inkomen() {
         noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
       >
         <Table
-          items={itemsDecided}
+          items={itemsCompleted}
           displayProps={decisionsDisplayProps}
           className={styles.Table}
         />

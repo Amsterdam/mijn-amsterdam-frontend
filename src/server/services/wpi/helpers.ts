@@ -32,7 +32,6 @@ export function transformToStatusLine(
 
   return {
     ...requestProcess,
-    status: activeStep?.status || requestProcess.status,
     steps,
   };
 }
@@ -54,7 +53,7 @@ export function createProcessNotification(
   chapter: Chapter
 ): MyNotification {
   const requestStatus = requestProcess.steps.find(
-    (requestStatus) => requestStatus.status === requestProcess.status
+    (requestStatusStep) => requestStatusStep.id === requestProcess.statusId
   )!; // Should always exist.
 
   const notificationLabels = labels[requestStatus.id].notification;

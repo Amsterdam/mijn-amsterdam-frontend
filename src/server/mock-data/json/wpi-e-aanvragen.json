@@ -2,6 +2,79 @@
   "status": "OK",
   "content": [
     {
+      "about": "TONK",
+      "dateEnd": "2021-01-10T17:20:04+01:00",
+      "datePublished": "2021-08-11T17:20:04+02:00",
+      "dateStart": "2021-01-09T17:20:04+01:00",
+      "decision": "afwijzing",
+      "id": "1181627390107affd89908b4838e0b3d",
+      "statusId": "briefWeigering",
+      "steps": [
+        {
+          "datePublished": "2021-01-09T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-09T17:20:04+01:00",
+              "dcteId": "802",
+              "id": "4400000099",
+              "title": "Aanvraag TONK\n09 januari 2021 17:20",
+              "url": "/wpi/document?id=4400000099&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "productSpecific": "uitkering",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-01-10T17:20:04+01:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2021-01-10T17:20:04+01:00",
+              "dcteId": "176155",
+              "id": "660000000000508",
+              "title": "Besluit afwijzing",
+              "url": "/wpi/document?id=660000000000508&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2021-01-11T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-11T17:20:04+01:00",
+              "dcteId": "176138",
+              "id": "660000000000509",
+              "title": "Brief intrekking TONK aanvraag",
+              "url": "/wpi/document?id=660000000000509&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "intrekking",
+          "productSpecific": "uitkering",
+          "status": "Brief"
+        },
+        {
+          "datePublished": "2021-08-11T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-08-11T17:20:04+02:00",
+              "dcteId": "1726182",
+              "id": "660000000010188",
+              "title": "Brief bevestiging weigering",
+              "url": "/wpi/document?id=660000000010188&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "briefWeigering",
+          "productSpecific": "uitkering",
+          "status": "Brief"
+        }
+      ],
+      "title": "TONK"
+    },
+    {
       "id": "7827bafbbd75d88a90376ea6e0f618df",
       "title": "Tozo 1 (aangevraagd voor 1 juni 2020)",
       "about": "Tozo 1",
@@ -9,7 +82,7 @@
       "datePublished": "2022-02-23T16:26:14.175972",
       "dateEnd": "2022-02-23T16:26:14.175972",
       "decision": "afwijzing",
-      "status": "besluit",
+      "statusId": "besluit",
       "steps": [
         {
           "id": "aanvraag",
@@ -235,7 +308,7 @@
       "datePublished": "2022-02-23T16:26:14.176088",
       "dateEnd": "2022-02-23T16:26:14.176068",
       "decision": "afwijzing",
-      "status": "terugvorderingsbesluit",
+      "statusId": "terugvorderingsbesluit",
       "steps": [
         {
           "id": "aanvraag",
@@ -483,7 +556,7 @@
       "datePublished": "2022-02-23T16:26:14.176204",
       "dateEnd": "2022-02-23T16:26:14.176176",
       "decision": "afwijzing",
-      "status": "terugvorderingsbesluit",
+      "statusId": "terugvorderingsbesluit",
       "steps": [
         {
           "id": "aanvraag",
@@ -731,7 +804,7 @@
       "datePublished": "2022-02-23T16:26:14.176417",
       "dateEnd": "2022-02-23T16:26:14.176392",
       "decision": "toekenning",
-      "status": "terugvorderingsbesluit",
+      "statusId": "terugvorderingsbesluit",
       "steps": [
         {
           "id": "aanvraag",
@@ -950,7 +1023,7 @@
       "datePublished": "2022-02-23T16:26:14.176515",
       "dateEnd": "2022-02-23T16:26:14.176483",
       "decision": "toekenning",
-      "status": "inkomstenwijziging",
+      "statusId": "inkomstenwijziging",
       "steps": [
         {
           "id": "aanvraag",
@@ -1169,7 +1242,7 @@
       "datePublished": "2022-02-23T16:26:14.176598",
       "dateEnd": "2022-02-23T16:26:14.176584",
       "decision": "mogelijkeVerlenging",
-      "status": "correctiemail",
+      "statusId": "correctiemail",
       "steps": [
         {
           "id": "aanvraag",
@@ -1368,7 +1441,7 @@
       "datePublished": "2022-02-23T16:26:14.176752",
       "dateEnd": "2022-02-23T16:26:14.176733",
       "decision": "afwijzing",
-      "status": "terugvorderingsbesluit",
+      "statusId": "terugvorderingsbesluit",
       "steps": [
         {
           "id": "aanvraag",
