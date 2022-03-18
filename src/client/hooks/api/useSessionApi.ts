@@ -51,7 +51,7 @@ export const INITIAL_SESSION_STATE: SessionState = {
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
   responseType: 'text',
-  transformResponse: (data: SessionData) => apiSuccesResult<SessionData>(data),
+  transformResponse: (data: SessionData) => apiSuccessResult<SessionData>(data),
 };
 
 type SessionResponseData =
