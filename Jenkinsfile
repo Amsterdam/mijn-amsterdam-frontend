@@ -79,12 +79,13 @@ pipeline {
 
     // ACCEPTANCE
 
-    stage('Build ACC') {
+    stage('Build BFF') {
       when {
         not {
           anyOf {
             branch 'production-release-v*';
             branch 'test';
+            branch 'test-acc-frontend';
           }
         }
       }
@@ -92,15 +93,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
-        script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER}" }
-        // build the Front-end/nginx image
-        sh "docker build -t ${IMAGE_ACCEPTANCE} " +
-           "--build-arg REACT_APP_ENV=acceptance " +
-           "--target=deploy-acceptance-frontend " +
-           "--shm-size 1G " +
-           "."
-        sh "docker push ${IMAGE_ACCEPTANCE}"
-
+        script { currentBuild.displayName = "ACC Build BFF #${BUILD_NUMBER}" }
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
            "--target=deploy-ap-bff " +
@@ -110,11 +103,59 @@ pipeline {
       }
     }
 
-    stage('Deploy ACC') {
+    stage('Deploy BFF') {
       when {
         anyOf {
           branch 'main';
           branch 'test-acc';
+          branch 'test-acc-bff';
+        }
+      }
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "ACC Deploy BFF #${BUILD_NUMBER}" }
+        // Build the BFF
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
+        ]
+      }
+    }
+
+    stage('Build Front-end') {
+      when {
+        not {
+          anyOf {
+            branch 'production-release-v*';
+            branch 'test';
+            branch 'test-acc-bff';
+          }
+        }
+      }
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "ACC Build Front-end #${BUILD_NUMBER}" }
+        // build the Front-end/nginx image
+        sh "docker build -t ${IMAGE_ACCEPTANCE} " +
+           "--build-arg REACT_APP_ENV=acceptance " +
+           "--target=deploy-acceptance-frontend " +
+           "--shm-size 1G " +
+           "."
+        sh "docker push ${IMAGE_ACCEPTANCE}"
+      }
+    }
+
+    stage('Deploy Front-end') {
+      when {
+        anyOf {
+          branch 'main';
+          branch 'test-acc';
+          branch 'test-acc-frontend';
         }
       }
       options {
@@ -127,12 +168,7 @@ pipeline {
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
           [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam"]
         ]
-        // Build the BFF
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
-        ]
+       
       }
     }
 
