@@ -24,6 +24,8 @@ pipeline {
           anyOf {
             branch 'test';
             branch 'test-acc';
+            branch 'test-acc-bff';
+            branch 'test-acc-frontend';
           }
         }
       }
