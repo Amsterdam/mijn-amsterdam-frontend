@@ -50,6 +50,7 @@ const oidcConfig: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
   routes: {
     login: false,
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
