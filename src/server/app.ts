@@ -47,7 +47,6 @@ const oidcConfig: ConfigParams = {
   idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
-  clientID: process.env.BFF_OIDC_CLIENT_ID,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
@@ -55,7 +54,6 @@ const oidcConfig: ConfigParams = {
     login: false,
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
     callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
-    // callback: process.env.BFF_OIDC_CALLBACK, // Callback url is relative to baseUrl
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -107,8 +105,15 @@ app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_LOGIN, (req, res) => {
+  let clientId = process.env.BFF_OIDC_CLIENT_ID_DIGID;
+  if (req.query.authMethod === 'eherkenning') {
+    clientId = process.env.BFF_OIDC_CLIENT_ID_EHERKENNING;
+  }
   return res.oidc.login({
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
+    authorizationParams: {
+      client_id: clientId,
+    },
   });
 });
 
