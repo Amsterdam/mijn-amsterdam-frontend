@@ -58,7 +58,7 @@ const oidcConfigDigid: ConfigParams = {
   routes: {
     login: false,
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK_DIGID,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -69,7 +69,7 @@ const oidcConfigEherkenning: ConfigParams = {
   routes: {
     login: false,
     logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK_EHERKENNING,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
