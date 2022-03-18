@@ -44,7 +44,7 @@ Sentry.init(sentryOptions);
 const oidcConfig: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: true,
+  idpLogout: false, // Not implemented on TMA
   secret: process.env.BFF_OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
