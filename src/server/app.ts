@@ -126,7 +126,10 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
     authorizationParams: {
-      redirect_uri: BffEndpoints.PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_CALLBACK,
+      redirect_uri:
+        process.env.BFF_OIDC_BASE_URL +
+        BffEndpoints.PUBLIC_AUTH_BASE_DIGID +
+        PUBLIC_AUTH_CALLBACK,
     },
   });
 });
@@ -136,7 +139,9 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
     authorizationParams: {
       redirect_uri:
-        BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_CALLBACK,
+        process.env.BFF_OIDC_BASE_URL +
+        BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING +
+        PUBLIC_AUTH_CALLBACK,
     },
   });
 });
