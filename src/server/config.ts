@@ -187,7 +187,12 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
-const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';
+export const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';
+export const PUBLIC_AUTH_BASE_DIGID = `${PUBLIC_AUTH_BASE}/digid`;
+export const PUBLIC_AUTH_BASE_EHERKENNING = `${PUBLIC_AUTH_BASE}/eherkenning`;
+export const PUBLIC_AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
+export const PUBLIC_AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
+export const PUBLIC_AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BffEndpoints = {
   SERVICES_TIPS: '/services/tips',
@@ -200,16 +205,18 @@ export const BffEndpoints = {
 
   // start: OIDC config
   PUBLIC_AUTH_BASE,
+  PUBLIC_AUTH_BASE_DIGID,
+  PUBLIC_AUTH_BASE_EHERKENNING,
+  // Relative urls
+  PUBLIC_AUTH_LOGIN: `${process.env.BFF_OIDC_LOGIN}`,
+  PUBLIC_AUTH_LOGOUT: `${process.env.BFF_OIDC_LOGOUT}`,
+  PUBLIC_AUTH_CALLBACK: `${process.env.BFF_OIDC_CALLBACK}`,
+
+  PUBLIC_AUTH_LOGIN_DIGID: PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_LOGIN,
+  PUBLIC_AUTH_LOGIN_EHERKENNING:
+    PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_LOGIN,
+  // Application specific urls
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
-  PUBLIC_AUTH_LOGIN: `${
-    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_LOGIN || '/login')
-  }`,
-  PUBLIC_AUTH_LOGOUT: `${
-    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_LOGOUT || '/logout')
-  }`,
-  PUBLIC_AUTH_CALLBACK: `${
-    PUBLIC_AUTH_BASE + (process.env.BFF_OIDC_CALLBACK || '/callback')
-  }`,
   PUBLIC_AUTH_USER: `${PUBLIC_AUTH_BASE}/user`,
   // end: OIDC config
 

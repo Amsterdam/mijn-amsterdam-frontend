@@ -21,7 +21,7 @@ import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
-import { BffEndpoints, BFF_PORT } from './config';
+import { BffEndpoints, BFF_PORT, PUBLIC_AUTH_BASE } from './config';
 import { send404 } from './helpers/app';
 
 const isDebug = ENV === 'development';
@@ -41,15 +41,19 @@ const sentryOptions: Sentry.NodeOptions = {
 
 Sentry.init(sentryOptions);
 
-const oidcConfig: ConfigParams = {
+const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: false, // Not implemented on TMA
+  idpLogout: true,
   secret: process.env.BFF_OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+};
+
+const oidcConfigDigid: ConfigParams = {
+  ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
   routes: {
     login: false,
@@ -59,12 +63,18 @@ const oidcConfig: ConfigParams = {
   },
 };
 
-const app = express();
+const oidcConfigEherkenning: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+  routes: {
+    login: false,
+    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
+    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK,
+    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
+  },
+};
 
-app.use((req, res, next) => {
-  console.log('before:', req.url);
-  next();
-});
+const app = express();
 
 app.use(morgan('combined'));
 app.use(express.json());
@@ -79,7 +89,8 @@ app.use(compression());
 // app.use(exitEarly);
 
 // Enable OIDC
-app.use(auth(oidcConfig));
+app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
+app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
@@ -105,16 +116,15 @@ app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
   }
 });
 
-app.get(BffEndpoints.PUBLIC_AUTH_LOGIN, (req, res) => {
-  let clientId = process.env.BFF_OIDC_CLIENT_ID_DIGID;
-  if (req.query.authMethod === 'eherkenning') {
-    clientId = process.env.BFF_OIDC_CLIENT_ID_EHERKENNING;
-  }
+app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
-    authorizationParams: {
-      client_id: clientId,
-    },
+  });
+});
+
+app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
+  return res.oidc.login({
+    returnTo: BffEndpoints.PUBLIC_AUTH_USER,
   });
 });
 
