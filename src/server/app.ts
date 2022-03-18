@@ -21,7 +21,13 @@ import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
-import { BffEndpoints, BFF_PORT, PUBLIC_AUTH_BASE } from './config';
+import {
+  BffEndpoints,
+  BFF_PORT,
+  PUBLIC_AUTH_BASE,
+  PUBLIC_AUTH_CALLBACK,
+  PUBLIC_AUTH_LOGOUT,
+} from './config';
 import { send404 } from './helpers/app';
 
 const isDebug = ENV === 'development';
@@ -57,8 +63,8 @@ const oidcConfigDigid: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
   routes: {
     login: false,
-    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK_DIGID,
+    logout: PUBLIC_AUTH_LOGOUT,
+    callback: PUBLIC_AUTH_CALLBACK,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
@@ -68,8 +74,8 @@ const oidcConfigEherkenning: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
   routes: {
     login: false,
-    logout: BffEndpoints.PUBLIC_AUTH_LOGOUT,
-    callback: BffEndpoints.PUBLIC_AUTH_CALLBACK_EHERKENNING,
+    logout: PUBLIC_AUTH_LOGOUT,
+    callback: PUBLIC_AUTH_CALLBACK,
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
 };
