@@ -47,6 +47,20 @@ const sentryOptions: Sentry.NodeOptions = {
 
 Sentry.init(sentryOptions);
 
+const app = express();
+
+app.use(morgan('combined'));
+app.use(express.json());
+app.set('trust proxy', true);
+app.use(Sentry.Handlers.requestHandler() as RequestHandler);
+
+app.use(cors());
+app.use(cookieParser());
+app.use(compression());
+
+// Basic security measure
+// app.use(exitEarly);
+
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
@@ -80,20 +94,6 @@ const oidcConfigEherkenning: ConfigParams = {
   },
 };
 
-const app = express();
-
-app.use(morgan('combined'));
-app.use(express.json());
-app.set('trust proxy', true);
-app.use(Sentry.Handlers.requestHandler() as RequestHandler);
-
-app.use(cors());
-app.use(cookieParser());
-app.use(compression());
-
-// Basic security measure
-// app.use(exitEarly);
-
 // Enable OIDC
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
@@ -125,12 +125,19 @@ app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
 app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
+    authorizationParams: {
+      redirect_uri: BffEndpoints.PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_CALLBACK,
+    },
   });
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
   return res.oidc.login({
     returnTo: BffEndpoints.PUBLIC_AUTH_USER,
+    authorizationParams: {
+      redirect_uri:
+        BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_CALLBACK,
+    },
   });
 });
 
