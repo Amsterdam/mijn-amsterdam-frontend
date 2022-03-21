@@ -26,10 +26,11 @@ const API_BASE_PATH_MODDED =
 export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
+export const BFF_PORT = process.env.REACT_APP_BFF_PORT || 5000;
 
 export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoners`;
 export const BFF_API_PUBLIC_BASE_URL = !IS_AP
-  ? `http://localhost:5000/bff/public`
+  ? `http://localhost:${BFF_PORT}/bff/public`
   : `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/bff/public`;
 
 export const BFFApiUrls = {
@@ -45,8 +46,8 @@ export const BFFApiUrls = {
 
 // Urls directly used from front-end
 // export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
-export const TMA_LOGIN_URL_DIGID = `${BFF_API_PUBLIC_BASE_URL}/auth/login`;
-export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
+export const TMA_LOGIN_URL_DIGID = `${BFF_API_PUBLIC_BASE_URL}/auth/digid/login`;
+export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}/auth/eherkenning/login`;
 export const TMA_LOGIN_URL_IRMA = `${API_BASE_PATH}2/login`;
 
 export const TMA_LOGIN_URL_DIGID_AFTER_REDIRECT = IS_AP
