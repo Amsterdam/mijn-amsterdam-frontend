@@ -29,6 +29,9 @@ import {
 } from './config';
 import { send404 } from './helpers/app';
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
+const {
+  decodeState,
+} = require('express-openid-connect/lib/hooks/getLoginState');
 
 const isDebug = ENV === 'development';
 const sentryOptions: Sentry.NodeOptions = {
@@ -107,7 +110,7 @@ function getAppSessionData(jwe: string) {
     keyManagementAlgorithms: [encryptOpts.alg],
   });
 
-  return cleartext;
+  return JSON.parse(cleartext.toString());
 }
 
 // Enable OIDC
@@ -156,7 +159,8 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
   const sessionData = getAppSessionData(req.cookies.appSession);
-  return res.send(sessionData);
+  const stateDecoded = decodeState(sessionData.state);
+  return res.send(stateDecoded);
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
