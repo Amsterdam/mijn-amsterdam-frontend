@@ -31,7 +31,7 @@ const appStateNotificationsSelector = selectorFamily({
 
         // If user is not logged in with EHK filter subsidie notifications.
         if (!isLoggedInAsCompany) {
-          notifications.filter(
+          notifications = notifications.filter(
             (notification) => notification.chapter !== Chapters.SUBSIDIE
           );
         }
