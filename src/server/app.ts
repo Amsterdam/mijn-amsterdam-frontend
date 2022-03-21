@@ -1,7 +1,5 @@
 /* eslint-disable import/first */
-
 import dotenv from 'dotenv';
-
 const ENV_LOCAL = '.env.local';
 dotenv.config({ path: ENV_LOCAL });
 
@@ -17,6 +15,7 @@ import express, {
   Response,
 } from 'express';
 import { auth, ConfigParams } from 'express-openid-connect';
+import { JWE, JWK } from 'jose';
 import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
@@ -29,6 +28,7 @@ import {
   PUBLIC_AUTH_LOGOUT,
 } from './config';
 import { send404 } from './helpers/app';
+const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 
 const isDebug = ENV === 'development';
 const sentryOptions: Sentry.NodeOptions = {
@@ -94,6 +94,22 @@ const oidcConfigEherkenning: ConfigParams = {
   },
 };
 
+function getAppSessionData(jwe: string) {
+  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
+
+  const encryptOpts = {
+    alg: 'dir',
+    enc: 'A256GCM',
+  };
+  const { cleartext } = JWE.decrypt(jwe, key, {
+    complete: true,
+    contentEncryptionAlgorithms: [encryptOpts.enc],
+    keyManagementAlgorithms: [encryptOpts.alg],
+  });
+
+  return cleartext;
+}
+
 // Enable OIDC
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
@@ -111,16 +127,6 @@ app.get(
     next();
   }
 );
-
-app.get(BffEndpoints.PUBLIC_AUTH_BASE, (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    return res.redirect(BffEndpoints.PUBLIC_AUTH_USER);
-  } else {
-    return res.send(
-      `You are logged out. <a href="${BffEndpoints.PUBLIC_AUTH_LOGIN}">login</a>`
-    );
-  }
-});
 
 app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
@@ -149,12 +155,8 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
 // });
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    return res.send(req.oidc.user);
-  }
-  return res.send(
-    `You are logged out. <a href="${BffEndpoints.PUBLIC_AUTH_LOGIN}">login</a>`
-  );
+  const sessionData = getAppSessionData(req.cookies.appSession);
+  return res.send(sessionData);
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
