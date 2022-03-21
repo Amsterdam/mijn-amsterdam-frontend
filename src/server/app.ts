@@ -136,31 +136,32 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
 // });
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
-  if (req.cookies.appSession) {
-    try {
-      const tokenData = getTokenData(req.cookies.appSession);
-      let authMethod = '';
-      let profileType = '';
+  try {
+    const tokenData = getTokenData(req.cookies.appSession);
+    let authMethod = '';
+    let profileType = '';
 
-      switch (tokenData.aud) {
-        case oidcConfigDigid.clientID:
-          authMethod = 'digid';
-          profileType = 'private';
-          break;
-        case oidcConfigEherkenning.clientID:
-          authMethod = 'eherkenning';
-          profileType = 'commercial';
-          break;
-      }
+    switch (tokenData.aud) {
+      case oidcConfigDigid.clientID:
+        authMethod = 'digid';
+        profileType = 'private';
+        break;
+      case oidcConfigEherkenning.clientID:
+        authMethod = 'eherkenning';
+        profileType = 'commercial';
+        break;
+    }
 
-      return apiSuccessResult({
+    return res.send(
+      apiSuccessResult({
         authMethod,
         profileType,
-      });
-    } catch (error) {}
+      })
+    );
+  } catch (error) {
+    res.status(401);
+    return res.send(apiErrorResult('Not authorized', null));
   }
-  res.status(401);
-  return apiErrorResult('Not authorized', null);
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
