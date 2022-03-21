@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
+import { JWE, JWK } from 'jose';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../universal/config';
@@ -12,6 +13,10 @@ import {
   X_AUTH_TYPE_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
+const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
+const {
+  decodeState,
+} = require('express-openid-connect/lib/hooks/getLoginState');
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {
@@ -133,4 +138,23 @@ export function queryParams(req: Request) {
 
 export function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
+}
+
+export function getTokenData(jwe: string) {
+  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
+
+  const encryptOpts = {
+    alg: 'dir',
+    enc: 'A256GCM',
+  };
+  const { cleartext } = JWE.decrypt(jwe, key, {
+    complete: true,
+    contentEncryptionAlgorithms: [encryptOpts.enc],
+    keyManagementAlgorithms: [encryptOpts.alg],
+  });
+
+  const payload = JSON.parse(cleartext.toString());
+  const [, tokenData] = payload.id_token.split('.');
+
+  return decodeState(tokenData);
 }

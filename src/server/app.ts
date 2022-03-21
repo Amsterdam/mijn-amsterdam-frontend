@@ -15,7 +15,6 @@ import express, {
   Response,
 } from 'express';
 import { auth, ConfigParams } from 'express-openid-connect';
-import { JWE, JWK } from 'jose';
 import morgan from 'morgan';
 import { UserType } from '../universal/config';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
@@ -23,15 +22,10 @@ import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
   BFF_PORT,
-  PUBLIC_AUTH_BASE,
   PUBLIC_AUTH_CALLBACK,
   PUBLIC_AUTH_LOGOUT,
 } from './config';
-import { send404 } from './helpers/app';
-const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
-const {
-  decodeState,
-} = require('express-openid-connect/lib/hooks/getLoginState');
+import { getTokenData, send404 } from './helpers/app';
 
 const isDebug = ENV === 'development';
 const sentryOptions: Sentry.NodeOptions = {
@@ -97,22 +91,6 @@ const oidcConfigEherkenning: ConfigParams = {
   },
 };
 
-function getAppSessionData(jwe: string) {
-  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
-
-  const encryptOpts = {
-    alg: 'dir',
-    enc: 'A256GCM',
-  };
-  const { cleartext } = JWE.decrypt(jwe, key, {
-    complete: true,
-    contentEncryptionAlgorithms: [encryptOpts.enc],
-    keyManagementAlgorithms: [encryptOpts.alg],
-  });
-
-  return JSON.parse(cleartext.toString());
-}
-
 // Enable OIDC
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
@@ -158,9 +136,30 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
 // });
 
 app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
-  const sessionData = getAppSessionData(req.cookies.appSession);
-  const stateDecoded = decodeState(sessionData.state);
-  return res.send(stateDecoded);
+  try {
+    const tokenData = getTokenData(req.cookies.appSession);
+    let authMethod = '';
+    let profileType = '';
+
+    switch (tokenData.aud) {
+      case oidcConfigDigid.clientID:
+        authMethod = 'digid';
+        profileType = 'private';
+        break;
+      case oidcConfigEherkenning.clientID:
+        authMethod = 'eherkenning';
+        profileType = 'commercial';
+        break;
+    }
+
+    return apiSuccessResult({
+      authMethod,
+      profileType,
+    });
+  } catch (error) {
+    res.status(401);
+    return apiErrorResult('Not authorized', null);
+  }
 });
 
 app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
