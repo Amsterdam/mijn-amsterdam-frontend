@@ -58,6 +58,8 @@ app.use(compression());
 // Basic security measure
 // app.use(exitEarly);
 
+const SESSION_MAX_AGE_SECONDS = 15 * 60;
+
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
@@ -67,6 +69,11 @@ const oidcConfigBase: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+  session: {
+    rolling: false,
+    rollingDuration: SESSION_MAX_AGE_SECONDS,
+    absoluteDuration: SESSION_MAX_AGE_SECONDS,
+  },
 };
 
 const oidcConfigDigid: ConfigParams = {
@@ -94,8 +101,6 @@ const oidcConfigEherkenning: ConfigParams = {
 // Enable OIDC
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
-
-const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 app.get('/', (req, res) => {
   return res.send('waaah');
