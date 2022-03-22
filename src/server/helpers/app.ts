@@ -13,6 +13,7 @@ import {
   X_AUTH_TYPE_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
+import jose from 'jose';
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 const {
   decodeState,
@@ -140,7 +141,13 @@ export function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
 }
 
-export function getTokenData(jwe: string) {
+interface TokenData {
+  sub: string;
+  aud: string;
+  [key: string]: any;
+}
+
+export function getTokenData(jwe: string): TokenData {
   const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
 
   const encryptOpts = {
@@ -153,8 +160,9 @@ export function getTokenData(jwe: string) {
     keyManagementAlgorithms: [encryptOpts.alg],
   });
 
-  const payload = JSON.parse(cleartext.toString());
-  const [, tokenData] = payload.id_token.split('.');
+  const session = JSON.parse(cleartext.toString());
+  const claims = jose.JWT.decode(session.id_token) as TokenData;
+  // const [, tokenData] = payload.id_token.split('.');
 
-  return decodeState(tokenData);
+  return claims;
 }

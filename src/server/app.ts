@@ -156,6 +156,7 @@ app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
       apiSuccessResult({
         authMethod,
         profileType,
+        ...tokenData,
       })
     );
   } catch (error) {
