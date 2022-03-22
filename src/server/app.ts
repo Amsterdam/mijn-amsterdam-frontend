@@ -170,24 +170,6 @@ app.get(BffEndpoints.PUBLIC_AUTH_USER, (req, res) => {
   }
 });
 
-app.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    // TODO: Extract validity from token
-    const now = new Date().getTime();
-    const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
-
-    res.send(
-      apiSuccessResult({
-        isAuthenticated: true,
-        userType: UserType.BURGER, // TODO: get from req.oidc.user.type ???
-        validUntil,
-      })
-    );
-  } else {
-    res.status(401).send(apiErrorResult('Not authenticated.', false));
-  }
-});
-
 // Development routing for mock data
 if (!IS_AP) {
   // app.use(routerDevelopment);
