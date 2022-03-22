@@ -74,7 +74,7 @@ const oidcConfigDigid: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
   routes: {
     login: false,
-    logout: false,
+    logout: PUBLIC_AUTH_LOGOUT,
     callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_DIGID
     postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
   },
@@ -116,12 +116,6 @@ app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
       // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
       redirect_uri: BffEndpoints.PUBLIC_AUTH_CALLBACK_DIGID,
     },
-  });
-});
-
-app.get(BffEndpoints.PUBLIC_AUTH_LOGOUT_DIGID, (req, res) => {
-  return res.oidc.logout({
-    returnTo: BffEndpoints.PUBLIC_AUTH_USER,
   });
 });
 
