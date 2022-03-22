@@ -121,6 +121,7 @@ const Labels: {
       description: TextPartContents;
       isChecked: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
       isActive: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
+      showItem?: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
     }>;
   };
 } = {
@@ -386,7 +387,7 @@ const Labels: {
         isChecked: (stepIndex, sourceData: WmoApiItem, today: Date) =>
           isServiceDeliveryStarted(sourceData, today),
         isActive: (stepIndex, sourceData: WmoApiItem, today: Date) =>
-          isServiceDeliveryActive(sourceData, today),
+          sourceData.isActual && isServiceDeliveryActive(sourceData, today),
         description: (data) =>
           `<p>
             ${data.supplier} is gestart met het leveren van ${data.title}.
@@ -411,6 +412,13 @@ const Labels: {
             meer krijgt.`
             }
           </p>`,
+        showItem: (stepIndex, sourceData, today) => {
+          return !(
+            sourceData.isActual === false &&
+            !isServiceDeliveryStarted(sourceData, today) &&
+            !isServiceDeliveryActive(sourceData, today)
+          );
+        },
       },
       {
         status: 'Einde recht',
@@ -471,6 +479,7 @@ const Labels: {
         isChecked: (stepIndex, sourceData, today: Date) =>
           hasHistoricDate(sourceData.serviceOrderDate, today),
         isActive: (stepIndex, sourceData, today) =>
+          sourceData.isActual &&
           hasHistoricDate(sourceData.serviceOrderDate, today) &&
           !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
@@ -489,6 +498,13 @@ const Labels: {
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
           </p>`,
+        showItem: (stepIndex, sourceData, today) => {
+          return !(
+            sourceData.isActual === false &&
+            !isServiceDeliveryStarted(sourceData, today) &&
+            !isServiceDeliveryActive(sourceData, today)
+          );
+        },
       },
       {
         status: 'Einde recht',
@@ -543,6 +559,7 @@ const Labels: {
         isChecked: (stepIndex, sourceData, today: Date) =>
           hasHistoricDate(sourceData.serviceOrderDate, today),
         isActive: (stepIndex, sourceData, today) =>
+          sourceData.isActual &&
           hasHistoricDate(sourceData.serviceOrderDate, today) &&
           !isServiceDeliveryStarted(sourceData, today),
         description: (data) =>
@@ -558,6 +575,13 @@ const Labels: {
           isServiceDeliveryStarted(sourceData, today),
         isActive: (stepIndex, sourceData, today) =>
           isServiceDeliveryActive(sourceData, today),
+        showItem: (stepIndex, sourceData, today) => {
+          return !(
+            sourceData.isActual === false &&
+            !isServiceDeliveryStarted(sourceData, today) &&
+            !isServiceDeliveryActive(sourceData, today)
+          );
+        },
         description: (data) =>
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat de
@@ -612,8 +636,8 @@ function formatWmoStatusLineItems(
   });
 
   if (labelData) {
-    const steps: WmoItemStep[] = labelData.statusItems.map(
-      (statusItem, index) => {
+    const steps: WmoItemStep[] = labelData.statusItems
+      .map((statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
           wmoItem,
@@ -631,6 +655,9 @@ function formatWmoStatusLineItems(
           datePublished,
           isActive: statusItem.isActive(index, wmoItem, today),
           isChecked: statusItem.isChecked(index, wmoItem, today),
+          showItem: statusItem.showItem
+            ? statusItem?.showItem(index, wmoItem, today)
+            : true,
           documents: [], // NOTE: To be implemented
         };
 
@@ -646,9 +673,9 @@ function formatWmoStatusLineItems(
           </p>`;
         }
 
-        return stepData;
-      }
-    );
+        return stepData.showItem ? stepData : null;
+      })
+      .filter(Boolean) as WmoItemStep[];
 
     return steps;
   }

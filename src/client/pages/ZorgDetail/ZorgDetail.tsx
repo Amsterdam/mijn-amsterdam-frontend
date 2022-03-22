@@ -1,4 +1,3 @@
-import React from 'react';
 import { InfoDetail } from '../../components';
 import StatusDetail from '../StatusDetail/StatusDetail';
 
