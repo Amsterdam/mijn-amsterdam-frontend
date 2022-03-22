@@ -900,7 +900,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Verleend",
     "title": "Geannuleerde verhuur",
-    "vergunningId": "Z/XXX/000007",
+    "vergunningId": "4181277242",
   },
   Object {
     "caseType": "Vakantieverhuur",
@@ -917,7 +917,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Verleend",
     "title": "Geplande verhuur",
-    "vergunningId": "Z/XXX/000007",
+    "vergunningId": "4181277242",
   },
   Object {
     "caseType": "Vakantieverhuur",
@@ -951,7 +951,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Verleend",
     "title": "Geannuleerde verhuur",
-    "vergunningId": "Z/XXX/000007",
+    "vergunningId": "4181277242",
   },
   Object {
     "caseType": "Vakantieverhuur vergunningsaanvraag",
@@ -1268,7 +1268,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Verleend",
     "title": "Afgelopen verhuur",
-    "vergunningId": "Z/XXX/000007",
+    "vergunningId": "4181277242",
   },
   Object {
     "caseType": "Vakantieverhuur vergunningsaanvraag",
@@ -1355,7 +1355,7 @@ Array [
     "location": "Amstel 1 1017AB Amsterdam",
     "status": "Verleend",
     "title": "Afgelopen verhuur",
-    "vergunningId": "Z/XXX/000007",
+    "vergunningId": "4181277242",
   },
   Object {
     "caseType": "TVM - RVV - Object",

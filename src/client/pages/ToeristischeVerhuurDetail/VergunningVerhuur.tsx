@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import type {
+  ToeristischeVerhuur,
   ToeristischeVerhuurBBVergunning,
+  ToeristischeVerhuurVergunning,
   ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
-import { PageContent } from '../../components';
+import { addTitleLinkComponent, PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -16,6 +18,7 @@ import { Location } from '../VergunningDetail/Location';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { CaseType } from '../../../universal/types/vergunningen';
 import VakantieVerhuurList from './VakantieVerhuurList';
+import { useAppStateGetter } from '../../hooks';
 
 function useStatusLineItems(
   vergunning?:
@@ -133,6 +136,26 @@ function useStatusLineItems(
   return statusLineItems;
 }
 
+const filterVerhuur = (vergunning: ToeristischeVerhuurVergunningaanvraag) => {
+  return (v: ToeristischeVerhuurVergunning) => {
+    if (
+      !['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
+        v.title
+      ) &&
+      v.location === vergunning.location &&
+      v.dateStart &&
+      vergunning.dateStart &&
+      new Date(v.dateStart) >= new Date(vergunning.dateStart) &&
+      v.dateEnd &&
+      vergunning.dateEnd &&
+      new Date(v.dateEnd) <= new Date(vergunning.dateEnd)
+    ) {
+      return v;
+    }
+    return undefined;
+  };
+};
+
 export default function VergunningVerhuur({
   vergunning,
 }: {
@@ -141,12 +164,39 @@ export default function VergunningVerhuur({
     | ToeristischeVerhuurBBVergunning;
 }) {
   const statusLineItems = useStatusLineItems(vergunning);
+  const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
+  const { content } = TOERISTISCHE_VERHUUR;
+
+  const verhuur =
+    (vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
+      (addTitleLinkComponent(
+        (content?.vergunningen?.map(filterVerhuur(vergunning)) || []).filter(
+          Boolean
+        ),
+        'dateStart'
+      ) as ToeristischeVerhuur[])) ||
+    [];
+
+  const cancelledVerhuur = verhuur.filter(
+    (v) => v?.title === 'Geannuleerde verhuur'
+  );
+
+  const plannedVerhuur = verhuur.filter((v) => v?.title === 'Geplande verhuur');
+
+  const previousVerhuur = verhuur.filter(
+    (v) => v?.title === 'Afgelopen verhuur'
+  );
 
   return (
     <>
-      {vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag && (
-        <VakantieVerhuurList vergunning={vergunning} />
-      )}
+      {vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
+        vergunning.status !== 'Geweigerd' && (
+          <VakantieVerhuurList
+            cancelledVerhuur={cancelledVerhuur}
+            plannedVerhuur={plannedVerhuur}
+            previousVerhuur={previousVerhuur}
+          />
+        )}
       <PageContent className={styles.DetailPageContent}>
         <InfoDetail
           label="Gemeentelijk zaaknummer"

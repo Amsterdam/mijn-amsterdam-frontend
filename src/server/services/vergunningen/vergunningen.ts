@@ -264,9 +264,7 @@ export async function fetchVergunningen(
     vergunningen = vergunningen.map((vergunning) => {
       if (vergunning.caseType === CaseType.VakantieVerhuur) {
         vergunning.parentId = vergunningen.find(
-          (v) =>
-            v.caseType === CaseType.VakantieverhuurVergunningaanvraag &&
-            v.identifier === vergunning.vergunningId
+          (v) => v.identifier === vergunning.vergunningId
         )?.id;
       }
 
