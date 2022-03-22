@@ -71,7 +71,7 @@ const oidcConfigBase: ConfigParams = {
   authorizationParams: { prompt: 'login' },
   session: {
     rolling: false,
-    rollingDuration: SESSION_MAX_AGE_SECONDS,
+    rollingDuration: undefined,
     absoluteDuration: SESSION_MAX_AGE_SECONDS,
   },
 };
