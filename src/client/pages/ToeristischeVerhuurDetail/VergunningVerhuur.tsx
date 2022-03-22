@@ -4,8 +4,7 @@ import type {
   ToeristischeVerhuurVergunningaanvraag,
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
-
-import { PageContent, SectionCollapsible, Table } from '../../components';
+import { PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -15,16 +14,8 @@ import StatusLine, {
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import { Location } from '../VergunningDetail/Location';
 import styles from './ToeristischeVerhuurDetail.module.scss';
-import { useAppStateGetter } from '../../hooks';
 import { CaseType } from '../../../universal/types/vergunningen';
 import VakantieVerhuurList from './VakantieVerhuurList';
-
-const DISPLAY_PROPS_VERHUUR = {
-  dateStart: 'Start verhuur',
-  dateEnd: 'Einde verhuur',
-  dateRequest: 'Ontvangen op',
-  duration: 'Aantal nachten',
-};
 
 function useStatusLineItems(
   vergunning?:
