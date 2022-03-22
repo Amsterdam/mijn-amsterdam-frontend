@@ -23,7 +23,7 @@ const VakantieVerhuurList = ({
       <SectionCollapsible
         id="SectionCollapsible-planned-verhuur"
         title="Geplande verhuur"
-        className={styles.SectionBorderTop}
+        className={styles.SectionNoBorderBottomNoMarginBottom}
         startCollapsed={!plannedVerhuur.length}
         hasItems={!!plannedVerhuur.length}
         noItemsMessage="Er is geen geplande verhuur gevonden"
