@@ -25,7 +25,7 @@ import {
   PUBLIC_AUTH_CALLBACK,
   PUBLIC_AUTH_LOGOUT,
 } from './config';
-import { getTokenData, send404 } from './helpers/app';
+import { exitEarly, getTokenData, send404 } from './helpers/app';
 
 const isDebug = ENV === 'development';
 const sentryOptions: Sentry.NodeOptions = {
@@ -56,7 +56,15 @@ app.use(cookieParser());
 app.use(compression());
 
 // Basic security measure
-// app.use(exitEarly);
+app.use(exitEarly);
+
+app.get(
+  BffEndpoints.PUBLIC_HEALTH,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.json({ status: 'OK' });
+    next();
+  }
+);
 
 const SESSION_MAX_AGE_SECONDS = 15 * 60;
 
@@ -101,18 +109,6 @@ const oidcConfigEherkenning: ConfigParams = {
 // Enable OIDC
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
 app.use(BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
-
-app.get('/', (req, res) => {
-  return res.send('waaah');
-});
-
-app.get(
-  BffEndpoints.PUBLIC_HEALTH,
-  (req: Request, res: Response, next: NextFunction) => {
-    res.json({ status: 'OK' });
-    next();
-  }
-);
 
 app.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({

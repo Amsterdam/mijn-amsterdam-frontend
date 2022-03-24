@@ -11,7 +11,6 @@ import {
   isBffPublicEndpoint,
   isValidRequestPath,
   queryParams,
-  secureValidation,
   send404,
   sendMessage,
   sessionID,
@@ -175,52 +174,6 @@ describe('server/helpers/app', () => {
 
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.end).toHaveBeenCalledWith('not found');
-  });
-
-  describe('secureValidation', () => {
-    const mockRes = {
-      status: jest.fn(),
-      end: jest.fn(),
-    };
-    const mockNext = jest.fn();
-    const req = {
-      path: '/test-api/bff/services/all',
-      url: 'http://localhost/test-api/bff/services/all',
-      headers: {
-        From: 'webmaster@example.org',
-        'x-something-hack': 'hax0r',
-        'x-saml-attribute-token1': 'xxx111xxxddd',
-      },
-      cookies: {
-        authType: 'E',
-      },
-    } as unknown as typeof express.request;
-
-    test('Valid', () => {
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toBeCalledTimes(1);
-    });
-
-    mockNext.mockReset();
-
-    test('NotValid', () => {
-      req.path = '/bff/services/all';
-      // Remove the headers
-      req.headers = {};
-
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(
-        new Error('Saml token required for secure endpoint.')
-      );
-    });
-
-    mockNext.mockReset();
-
-    test('Valid public', () => {
-      req.path = '/test-api/bff/public/services/cms';
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toHaveBeenCalled();
-    });
   });
 
   test('clearSession', () => {

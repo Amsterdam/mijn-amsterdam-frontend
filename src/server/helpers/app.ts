@@ -84,26 +84,6 @@ export function send404(res: Response) {
   return res.end('not found');
 }
 
-export function secureValidation(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
-
-  // Check if this is a request to a public endpoint
-  if (isBffPublicEndpoint(req.path)) {
-    next();
-  } else {
-    // We expect saml token header to be present for non-public endpoint.
-    if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
-      next();
-    } else {
-      next(new Error('Saml token required for secure endpoint.'));
-    }
-  }
-}
-
 export function clearSession(req: Request, res: Response, next: NextFunction) {
   const sessionID = res.locals.sessionID!;
   clearSessionCache(sessionID);
