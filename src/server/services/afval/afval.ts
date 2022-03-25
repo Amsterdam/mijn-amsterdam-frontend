@@ -5,29 +5,29 @@ import { fetchAfvalmomenten } from './afvalmomenten';
 import { fetchAfvalpunten } from './afvalpunten';
 
 export async function fetchAFVAL(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
+    requestID,
     authProfileAndToken,
     profileType
   );
 
   if (MY_LOCATION.status === 'OK') {
-    return await fetchAfvalmomenten(sessionID, MY_LOCATION.content?.latlng);
+    return await fetchAfvalmomenten(requestID, MY_LOCATION.content?.latlng);
   }
   return apiDependencyError({ MY_LOCATION });
 }
 
 export async function fetchAFVALPUNTEN(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
+    requestID,
     authProfileAndToken,
     profileType
   );

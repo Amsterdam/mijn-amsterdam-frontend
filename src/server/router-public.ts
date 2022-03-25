@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { getAuth, queryParams } from './helpers/app';
+import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
@@ -33,13 +33,9 @@ router.get(
 );
 
 router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
-  const sessionID = res.locals.sessionID;
+  const requestID = res.locals.requestID;
   try {
-    const response = await fetchCMSCONTENT(
-      sessionID,
-      getAuth(req),
-      queryParams(req)
-    );
+    const response = await fetchCMSCONTENT(requestID, queryParams(req));
     res.json(response);
     next();
   } catch (error) {
@@ -50,11 +46,10 @@ router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
 router.get(
   BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
-    const sessionID = res.locals.sessionID;
+    const requestID = res.locals.requestID;
     try {
       const response = await fetchMaintenanceNotificationsActual(
-        sessionID,
-        getAuth(req),
+        requestID,
         queryParams(req)
       );
       res.json(response);

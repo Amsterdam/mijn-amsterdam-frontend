@@ -9,16 +9,16 @@ import { fetchBAG, fetchBRP } from './index';
 import { fetchKVK, getKvkAddress } from './kvk';
 
 async function fetchPrivate(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(sessionID, authProfileAndToken);
+  const BRP = await fetchBRP(requestID, authProfileAndToken);
 
   let MY_LOCATION;
 
   if (BRP.status === 'OK' && isMokum(BRP.content)) {
     MY_LOCATION = await fetchBAG(
-      sessionID,
+      requestID,
       authProfileAndToken,
       BRP.content.adres
     );
@@ -45,17 +45,17 @@ async function fetchPrivate(
 }
 
 async function fetchCommercial(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const KVK = await fetchKVK(sessionID, authProfileAndToken);
+  const KVK = await fetchKVK(requestID, authProfileAndToken);
 
   let MY_LOCATION;
 
   if (KVK.status === 'OK') {
     const address = KVK.content ? getKvkAddress(KVK.content) : null;
     if (address) {
-      MY_LOCATION = await fetchBAG(sessionID, authProfileAndToken, address);
+      MY_LOCATION = await fetchBAG(requestID, authProfileAndToken, address);
 
       if (!MY_LOCATION.content?.latlng) {
         MY_LOCATION = apiSuccessResult({
@@ -80,17 +80,17 @@ async function fetchCommercial(
 }
 
 export async function fetchMyLocation(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   switch (profileType) {
     case 'private-commercial':
     case 'commercial':
-      return fetchCommercial(sessionID, authProfileAndToken);
+      return fetchCommercial(requestID, authProfileAndToken);
 
     case 'private':
     default:
-      return fetchPrivate(sessionID, authProfileAndToken);
+      return fetchPrivate(requestID, authProfileAndToken);
   }
 }

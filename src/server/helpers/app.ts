@@ -2,10 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import jose, { JWE, JWK } from 'jose';
 import uid from 'uid-safe';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
+import { apiErrorResult } from '../../universal/helpers';
 import {
   oidcConfigDigid,
   oidcConfigEherkenning,
+  OIDC_SECRET,
   OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
 
@@ -54,19 +57,26 @@ export function getAuth(req: Request): AuthProfileAndToken {
   };
 }
 
-export function sessionID(req: Request, res: Response, next: NextFunction) {
-  res.locals.sessionID = uid.sync(18);
+export function requestID(req: Request, res: Response, next: NextFunction) {
+  res.locals.requestID = uid.sync(18);
   next();
 }
 
 export function send404(res: Response) {
-  res.status(404);
-  return res.end('not found');
+  return res.status(404).send(apiErrorResult('Not Found', null));
 }
 
-export function clearSession(req: Request, res: Response, next: NextFunction) {
-  const sessionID = res.locals.sessionID!;
-  clearSessionCache(sessionID);
+export function sendUnauthorized(res: Response) {
+  return res.status(401).send(apiErrorResult('Unauthorized', null));
+}
+
+export function clearRequestCache(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const requestID = res.locals.requestID!;
+  clearSessionCache(requestID);
   next();
 }
 
@@ -123,6 +133,30 @@ interface TokenData {
 }
 
 export function decodeOIDCToken(token: string): TokenData {
-  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
-  return jose.JWT.verify(token, key) as TokenData;
+  return jose.JWT.verify(token, OIDC_SECRET) as TokenData;
+}
+
+interface DevSessionData {
+  sub: number | string;
+  aud: string;
+}
+
+function encrypt(payload: string, headers: object) {
+  const alg = 'dir';
+  const enc = 'A256GCM';
+  const key = JWK.asKey(deriveKey(OIDC_SECRET));
+  return JWE.encrypt(payload, key, { alg, enc, ...headers });
+}
+
+export function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
+  const uat = (Date.now() / 1000) | 0;
+  const iat = uat;
+  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
+  const idToken = jose.JWT.sign({ sub, aud }, OIDC_SECRET);
+  const value = encrypt(JSON.stringify({ id_token: idToken }), {
+    iat,
+    uat,
+    exp,
+  });
+  return value;
 }

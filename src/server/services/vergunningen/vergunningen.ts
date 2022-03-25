@@ -230,14 +230,14 @@ export function transformVergunningenData(
 }
 
 export function fetchAllVergunningen(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<VergunningenData>(
     getApiConfig('VERGUNNINGEN', {
       transformResponse: transformVergunningenData,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }
@@ -249,11 +249,11 @@ const vergunningOptionsDefault: VergunningOptions = {
 };
 
 export async function fetchVergunningen(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
 ) {
-  const response = await fetchAllVergunningen(sessionID, authProfileAndToken);
+  const response = await fetchAllVergunningen(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
@@ -363,11 +363,11 @@ export function createVergunningNotification(
 }
 
 export async function fetchVergunningenGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {
-  const VERGUNNINGEN = await fetchVergunningen(sessionID, authProfileAndToken);
+  const VERGUNNINGEN = await fetchVergunningen(requestID, authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
     const compareToDate = compareDate || new Date();

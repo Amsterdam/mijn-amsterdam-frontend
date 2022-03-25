@@ -77,7 +77,7 @@ function transformMILIEUZONEData(
 }
 
 async function fetchSource(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
@@ -85,7 +85,7 @@ async function fetchSource(
     getApiConfig('MILIEUZONE', {
       transformResponse: transformMILIEUZONEData,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -101,17 +101,17 @@ async function fetchSource(
 }
 
 export async function fetchMILIEUZONE(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, authProfileAndToken);
+  return fetchSource(requestID, authProfileAndToken);
 }
 
 export async function fetchMILIEUZONEGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const MILIEUZONE = await fetchSource(sessionID, authProfileAndToken, true);
+  const MILIEUZONE = await fetchSource(requestID, authProfileAndToken, true);
 
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
     return apiSuccessResult({

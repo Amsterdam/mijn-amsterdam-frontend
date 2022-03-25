@@ -33,7 +33,7 @@ export function formatBAGData(
 }
 
 export async function fetchBAG(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   address: Adres | null
 ) {
@@ -49,7 +49,7 @@ export async function fetchBAG(
       params,
       transformResponse: (responseData) => formatBAGData(responseData, address),
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }

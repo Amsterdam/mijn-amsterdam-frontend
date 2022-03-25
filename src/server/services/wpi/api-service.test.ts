@@ -34,7 +34,7 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 }
 
 describe('wpi/app-service', () => {
-  let sessionID = '';
+  let requestID = '';
   let authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private' },
     token: 'xxxxx',
@@ -122,7 +122,7 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      sessionID,
+      requestID,
       authProfileAndToken,
       getLabelsMock,
       fetchConfig
@@ -163,7 +163,7 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      sessionID,
+      requestID,
       authProfileAndToken,
       getLabelsMock,
       fetchConfig
@@ -204,7 +204,7 @@ describe('wpi/app-service', () => {
         content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
       });
 
-    const response = await fetchBijstandsuitkering(sessionID, {
+    const response = await fetchBijstandsuitkering(requestID, {
       profile: { authMethod: 'digid', profileType: 'private' },
       token: 'xxxxx',
     });
@@ -285,7 +285,7 @@ describe('wpi/app-service', () => {
         },
       });
 
-    const response = await fetchStadspas(sessionID, {
+    const response = await fetchStadspas(requestID, {
       profile: { authMethod: 'digid', profileType: 'private' },
       token: 'xxxxx',
     });
@@ -308,7 +308,7 @@ describe('wpi/app-service', () => {
         content: null,
       });
 
-    const response = await fetchStadspas(sessionID, {
+    const response = await fetchStadspas(requestID, {
       profile: { authMethod: 'digid', profileType: 'private' },
       token: 'xxxxx',
     });
@@ -502,7 +502,7 @@ describe('wpi/app-service', () => {
         ],
       });
 
-    const response = await fetchWpiNotifications(sessionID, {
+    const response = await fetchWpiNotifications(requestID, {
       profile: { authMethod: 'digid', profileType: 'private' },
       token: 'xxxxx',
     });

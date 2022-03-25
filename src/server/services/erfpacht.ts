@@ -55,7 +55,7 @@ function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
 }
 
 async function fetchSource(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
@@ -63,7 +63,7 @@ async function fetchSource(
     getApiConfig('ERFPACHT', {
       transformResponse: transformERFPACHTData,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -79,17 +79,17 @@ async function fetchSource(
 }
 
 export async function fetchERFPACHT(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, authProfileAndToken);
+  return fetchSource(requestID, authProfileAndToken);
 }
 
 export async function fetchERFPACHTGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const ERFPACHT = await fetchSource(sessionID, authProfileAndToken, true);
+  const ERFPACHT = await fetchSource(requestID, authProfileAndToken, true);
   if (ERFPACHT.status === 'OK' && ERFPACHT.content.notifications) {
     if (ERFPACHT.content.notifications) {
       return apiSuccessResult({

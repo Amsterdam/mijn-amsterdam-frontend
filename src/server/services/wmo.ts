@@ -691,7 +691,7 @@ export function transformWmoResponse(
 }
 
 export function fetchWmo(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<WmoItem[]>(
@@ -700,7 +700,7 @@ export function fetchWmo(
         return transformWmoResponse(responseData.content || [], new Date());
       },
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }

@@ -74,7 +74,7 @@ function statusLineTransformer(
 }
 
 export async function fetchRequestProcess(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -90,7 +90,7 @@ export async function fetchRequestProcess(
 
   const response = await requestData<WpiRequestProcess[]>(
     apiConfig,
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -111,7 +111,7 @@ export async function fetchRequestProcess(
 }
 
 export async function fetchBijstandsuitkering(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const filterResponse: FilterResponse = (response) =>
@@ -122,13 +122,13 @@ export async function fetchBijstandsuitkering(
       .map((requestProcess) => addLink(requestProcess));
 
   const response = await fetchRequestProcess(
-    sessionID,
+    requestID,
     authProfileAndToken,
     () => bijstandsuitkeringRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + sessionID,
+      requestCacheKey: 'fetch-aanvragen-' + requestID,
     }
   );
 
@@ -140,7 +140,7 @@ type StadspasResponseDataTransformed = Partial<WpiStadspasResponseData> & {
 };
 
 export async function fetchStadspas(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<StadspasResponseDataTransformed>> {
   const filterResponse: FilterResponse = (response) => {
@@ -150,13 +150,13 @@ export async function fetchStadspas(
   };
 
   const aanvragenRequest = fetchRequestProcess(
-    sessionID,
+    requestID,
     authProfileAndToken,
     () => stadspasRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + sessionID,
+      requestCacheKey: 'fetch-aanvragen-' + requestID,
     }
   );
 
@@ -168,7 +168,7 @@ export async function fetchStadspas(
         return response.content;
       },
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -208,7 +208,7 @@ export async function fetchStadspas(
 }
 
 export async function fetchEAanvragen(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   about?: string[]
 ) {
@@ -217,13 +217,13 @@ export async function fetchEAanvragen(
   };
 
   const response = await fetchRequestProcess(
-    sessionID,
+    requestID,
     authProfileAndToken,
     getEAanvraagRequestProcessLabels,
     {
       apiConfigName: 'WPI_E_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-e-aanvragen-' + sessionID,
+      requestCacheKey: 'fetch-e-aanvragen-' + requestID,
     }
   );
 
@@ -239,10 +239,10 @@ export async function fetchEAanvragen(
 }
 
 export async function fetchTozo(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchEAanvragen(sessionID, authProfileAndToken, [
+  return fetchEAanvragen(requestID, authProfileAndToken, [
     'Tozo 1',
     'Tozo 2',
     'Tozo 3',
@@ -252,17 +252,17 @@ export async function fetchTozo(
 }
 
 export async function fetchBbz(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchEAanvragen(sessionID, authProfileAndToken, ['Bbz']);
+  return fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
 }
 
 export async function fetchTonk(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchEAanvragen(sessionID, authProfileAndToken, ['TONK']);
+  return fetchEAanvragen(requestID, authProfileAndToken, ['TONK']);
 }
 
 export function transformIncomSpecificationResponse(
@@ -279,14 +279,14 @@ export function transformIncomSpecificationResponse(
 }
 
 export function fetchSpecificaties(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
     getApiConfig('WPI_SPECIFICATIES', {
       transformResponse: transformIncomSpecificationResponse,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -294,7 +294,7 @@ export function fetchSpecificaties(
 }
 
 export async function fetchWpiNotifications(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let notifications: MyNotification[] = [];
@@ -302,7 +302,7 @@ export async function fetchWpiNotifications(
   // Stadspas
   {
     const { status, content } = await fetchStadspas(
-      sessionID,
+      requestID,
       authProfileAndToken
     );
 
@@ -331,7 +331,7 @@ export async function fetchWpiNotifications(
   // Bijstandsuitkeringen
   {
     const { status, content } = await fetchBijstandsuitkering(
-      sessionID,
+      requestID,
       authProfileAndToken
     );
 
@@ -349,7 +349,7 @@ export async function fetchWpiNotifications(
   // E-Aanvragen
   {
     const { status, content } = await fetchEAanvragen(
-      sessionID,
+      requestID,
       authProfileAndToken
     );
 
@@ -380,7 +380,7 @@ export async function fetchWpiNotifications(
   // Specificaties
   {
     const { status, content } = await fetchSpecificaties(
-      sessionID,
+      requestID,
       authProfileAndToken
     );
 

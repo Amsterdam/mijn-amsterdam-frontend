@@ -1,14 +1,13 @@
-import * as Sentry from '@sentry/node';
 import express from 'express';
 import {
   addServiceResultHandler,
-  clearSession,
+  clearRequestCache,
   getAuth,
   getProfileType,
   queryParams,
   send404,
   sendMessage,
-  sessionID,
+  requestID,
 } from './app';
 import { cache } from './source-api-request';
 
@@ -33,7 +32,7 @@ describe('server/helpers/app', () => {
     });
   });
 
-  test('sessionID', () => {
+  test('requestID', () => {
     const mockNext = jest.fn();
 
     const req = {} as any;
@@ -41,9 +40,9 @@ describe('server/helpers/app', () => {
       locals: {},
     } as any;
 
-    sessionID(req, res, mockNext);
-    expect(res.locals.sessionID).toBeDefined();
-    expect(typeof res.locals.sessionID).toBe('string');
+    requestID(req, res, mockNext);
+    expect(res.locals.requestID).toBeDefined();
+    expect(typeof res.locals.requestID).toBe('string');
     expect(mockNext).toHaveBeenCalled();
   });
 
@@ -59,16 +58,16 @@ describe('server/helpers/app', () => {
     expect(mockRes.end).toHaveBeenCalledWith('not found');
   });
 
-  test('clearSession', () => {
-    const sessionID = '11223300xx';
+  test('clearRequestCache', () => {
+    const requestID = '11223300xx';
     const nextMock = jest.fn();
-    cache.put(sessionID, { foo: 'bar' });
+    cache.put(requestID, { foo: 'bar' });
 
-    expect(cache.get(sessionID)).toEqual({ foo: 'bar' });
+    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
 
-    clearSession({} as any, { locals: { sessionID } } as any, nextMock);
+    clearRequestCache({} as any, { locals: { requestID } } as any, nextMock);
 
-    expect(cache.get(sessionID)).toBe(null);
+    expect(cache.get(requestID)).toBe(null);
     expect(cache.keys()).toEqual([]);
     expect(nextMock).toBeCalledTimes(1);
   });

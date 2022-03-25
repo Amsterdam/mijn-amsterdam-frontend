@@ -26,7 +26,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
 }
 
 export async function fetchWiorGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
@@ -47,7 +47,7 @@ export async function fetchWiorGenerated(
     },
   };
   const wiorMeldingen = await fetchDataset(
-    sessionID,
+    requestID,
     datasetId,
     config,
     {}
@@ -58,7 +58,7 @@ export async function fetchWiorGenerated(
     };
   });
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
+    requestID,
     authProfileAndToken,
     profileType
   );

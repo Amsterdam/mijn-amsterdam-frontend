@@ -66,7 +66,7 @@ export function getGeneratedItemsFromApiResults(
 }
 
 async function fetchServicesGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
@@ -79,13 +79,13 @@ async function fetchServicesGenerated(
       subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
-      fetchMILIEUZONEGenerated(sessionID, authProfileAndToken),
-      fetchVergunningenGenerated(sessionID, authProfileAndToken),
-      fetchERFPACHTGenerated(sessionID, authProfileAndToken),
-      fetchSubsidieGenerated(sessionID, authProfileAndToken),
-      fetchMaintenanceNotificationsDashboard(sessionID),
+      fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+      fetchVergunningenGenerated(requestID, authProfileAndToken),
+      fetchERFPACHTGenerated(requestID, authProfileAndToken),
+      fetchSubsidieGenerated(requestID, authProfileAndToken),
+      fetchMaintenanceNotificationsDashboard(requestID),
       fetchToeristischeVerhuurGenerated(
-        sessionID,
+        requestID,
         authProfileAndToken,
         new Date(),
         'commercial'
@@ -126,17 +126,17 @@ async function fetchServicesGenerated(
     fetchWiorGeneratedResult,
     fetchWpiNotificationsResult,
   ] = await Promise.allSettled([
-    fetchBRPGenerated(sessionID, authProfileAndToken),
-    fetchBELASTINGGenerated(sessionID, authProfileAndToken),
-    fetchMILIEUZONEGenerated(sessionID, authProfileAndToken),
-    fetchVergunningenGenerated(sessionID, authProfileAndToken),
-    fetchERFPACHTGenerated(sessionID, authProfileAndToken),
-    fetchSubsidieGenerated(sessionID, authProfileAndToken),
-    fetchMaintenanceNotificationsDashboard(sessionID),
-    fetchToeristischeVerhuurGenerated(sessionID, authProfileAndToken),
-    fetchKrefiaGenerated(sessionID, authProfileAndToken),
-    fetchWiorGenerated(sessionID, authProfileAndToken, profileType),
-    fetchWpiNotifications(sessionID, authProfileAndToken),
+    fetchBRPGenerated(requestID, authProfileAndToken),
+    fetchBELASTINGGenerated(requestID, authProfileAndToken),
+    fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+    fetchVergunningenGenerated(requestID, authProfileAndToken),
+    fetchERFPACHTGenerated(requestID, authProfileAndToken),
+    fetchSubsidieGenerated(requestID, authProfileAndToken),
+    fetchMaintenanceNotificationsDashboard(requestID),
+    fetchToeristischeVerhuurGenerated(requestID, authProfileAndToken),
+    fetchKrefiaGenerated(requestID, authProfileAndToken),
+    fetchWiorGenerated(requestID, authProfileAndToken, profileType),
+    fetchWpiNotifications(requestID, authProfileAndToken),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);

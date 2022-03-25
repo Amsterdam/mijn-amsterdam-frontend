@@ -26,10 +26,10 @@ export const router = express.Router();
 router.get(
   BffEndpoints.SEARCH_CONFIG,
   async (req: Request, res: Response, next: NextFunction) => {
-    const sessionID = res.locals.sessionID;
+    const requestID = res.locals.requestID;
     try {
       const response = await fetchSearchConfig(
-        sessionID,
+        requestID,
         getAuth(req),
         queryParams(req)
       );
@@ -87,13 +87,13 @@ router.post(
         clusters,
         errors: clusterErrors,
         filters: clusterFilters,
-      } = await loadClusterDatasets(res.locals.sessionID, req.body);
+      } = await loadClusterDatasets(res.locals.requestID, req.body);
 
       const {
         features: polylines,
         errors: polylineErrors,
         filters: polylineFilters,
-      } = await loadPolylineFeatures(res.locals.sessionID, req.body);
+      } = await loadPolylineFeatures(res.locals.requestID, req.body);
 
       const responseContent = {
         clusters: clusters || [],
@@ -124,7 +124,7 @@ router.get(
 
     try {
       if (datasetCategoryId && datasetId && id) {
-        response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
+        response = await loadFeatureDetail(res.locals.requestID, datasetId, id);
       } else if (
         datasetCategoryId &&
         datasetId &&
@@ -132,7 +132,7 @@ router.get(
       ) {
         const [[, datasetConfig]] = getDatasetEndpointConfig([datasetId]);
         response = await fetchDataset(
-          res.locals.sessionID,
+          res.locals.requestID,
           datasetId,
           datasetConfig,
           {},

@@ -4,51 +4,18 @@ import express, {
   Request,
   Response,
 } from 'express';
-import jose, { JWE, JWK } from 'jose';
 import path from 'path';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from '../config';
+import { generateDevSessionCookieValue } from '../helpers/app';
 import VergunningenDocuments from './json/vergunningen-documenten.json';
 
-const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
+export const authRouterDevelopment = express.Router();
 
-export const routerDevelopment = express.Router();
-
-const secretString = `${process.env.BFF_OIDC_SECRET}`;
-
-interface DevSessionData {
-  sub: number | string;
-  aud: string;
-}
-
-function encrypt(payload: string, headers: object) {
-  const alg = 'dir';
-  const enc = 'A256GCM';
-  const key = JWK.asKey(deriveKey(secretString));
-  return JWE.encrypt(payload, key, { alg, enc, ...headers });
-}
-
-function calculateExp(iat: number) {
-  return iat + OIDC_SESSION_MAX_AGE_SECONDS;
-}
-
-function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = calculateExp(iat);
-  const idToken = jose.JWT.sign({ sub, aud }, secretString);
-  const value = encrypt(JSON.stringify({ id_token: idToken }), {
-    iat,
-    uat,
-    exp,
-  });
-  return value;
-}
-
-routerDevelopment.get(
+authRouterDevelopment.get(
   '/bff/dev/auth/:authMethod/login',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
@@ -88,10 +55,12 @@ routerDevelopment.get(
   }
 );
 
-routerDevelopment.get('/bff/dev/auth/logout', (req, res) => {
+authRouterDevelopment.get('/bff/dev/auth/logout', (req, res) => {
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
 });
+
+export const routerDevelopment = express.Router();
 
 routerDevelopment.get(
   '/decosjoin/listdocuments/:key',

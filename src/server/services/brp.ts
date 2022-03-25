@@ -183,21 +183,21 @@ export function transformBRPData(responseData: BRPDataFromSource) {
 }
 
 export async function fetchBRP(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
 
-  return requestData<BRPData>(options, sessionID, authProfileAndToken);
+  return requestData<BRPData>(options, requestID, authProfileAndToken);
 }
 
 export async function fetchBRPGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(sessionID, authProfileAndToken);
+  const BRP = await fetchBRP(requestID, authProfileAndToken);
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({

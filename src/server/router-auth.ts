@@ -7,9 +7,24 @@ import {
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
-import { getAuth } from './helpers/app';
+import { getAuth, sendUnauthorized } from './helpers/app';
+import * as Sentry from '@sentry/node';
 
 export const router = express.Router();
+
+export const isAuthenticated =
+  () =>
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+      try {
+        const a = getAuth(req);
+        return next();
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    }
+    return sendUnauthorized(res);
+  };
 
 // Enable OIDC
 router.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
@@ -50,14 +65,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
     }
   }
 
-  return res.status(401).send(
-    apiErrorResult('Not authorized', {
-      profileType: null,
-      authMethod: null,
-      isAuthenticated: false,
-      validUntil: -1,
-    })
-  );
+  return sendUnauthorized(res);
 });
 
 router.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, (req, res) => {

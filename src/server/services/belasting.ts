@@ -55,7 +55,7 @@ function transformBELASTINGENData(
 }
 
 async function fetchSource(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
@@ -63,7 +63,7 @@ async function fetchSource(
     getApiConfig('BELASTINGEN', {
       transformResponse: transformBELASTINGENData,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -79,17 +79,17 @@ async function fetchSource(
 }
 
 export async function fetchBELASTING(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, authProfileAndToken);
+  return fetchSource(requestID, authProfileAndToken);
 }
 
 export async function fetchBELASTINGGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BELASTING = await fetchSource(sessionID, authProfileAndToken, true);
+  const BELASTING = await fetchSource(requestID, authProfileAndToken, true);
   if (BELASTING.status === 'OK') {
     if (BELASTING.content.notifications) {
       return apiSuccessResult({

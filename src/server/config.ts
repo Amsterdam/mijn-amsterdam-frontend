@@ -230,7 +230,7 @@ export const BffEndpoints = {
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
   PUBLIC_CACHE_OVERVIEW: '/status/cache',
-  PUBLIC_HEALTH: '/bff/status/health',
+  PUBLIC_HEALTH: '/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
@@ -242,12 +242,13 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60;
 export const OIDC_SESSION_COOKIE_NAME = 'appSession';
+export const OIDC_SECRET = `${process.env.BFF_OIDC_SECRET}`;
 
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
-  secret: process.env.BFF_OIDC_SECRET,
+  secret: OIDC_SECRET,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -267,7 +268,7 @@ export const oidcConfigDigid: ConfigParams = {
     login: false,
     logout: PUBLIC_AUTH_LOGOUT,
     callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_DIGID
-    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
+    postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
 
@@ -278,11 +279,11 @@ export const oidcConfigEherkenning: ConfigParams = {
     login: false,
     logout: PUBLIC_AUTH_LOGOUT,
     callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_EHERKENNING
-    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
+    postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
 
 export const corsOptions: CorsOptions = {
-  origin: process.env.BFF_FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.BFF_FRONTEND_URL,
   credentials: true,
 };

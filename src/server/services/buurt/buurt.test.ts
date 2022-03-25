@@ -40,7 +40,7 @@ const DUMMY_DATA_DETAIL_RESPONSE = apiSuccessResult({
   foo: 'bar',
 });
 
-const sessionID = 'xxxx';
+const requestID = 'xxxx';
 const datasetId = 'test-dataset';
 const datasetId2 = 'test-dataset2';
 const datasetId3 = 'test-dataset-error';
@@ -152,7 +152,7 @@ describe('Buurt services', () => {
 
     // First call fetches data from source api
     const result = await service.fetchDataset(
-      sessionID,
+      requestID,
       datasetId,
       datasetConfig,
       params
@@ -187,7 +187,7 @@ describe('Buurt services', () => {
       .mockReturnValueOnce(SERVICE_RESULT.content.filters);
 
     const result2 = await service.fetchDataset(
-      sessionID,
+      requestID,
       datasetId,
       datasetConfig,
       params
@@ -219,7 +219,7 @@ describe('Buurt services', () => {
       DATASET_FILTERS_MOCK
     );
 
-    const result = await service.loadDatasetFeatures(sessionID, [
+    const result = await service.loadDatasetFeatures(requestID, [
       [datasetId, datasetConfig],
       [datasetId2, datasetConfig2],
       [datasetId3, datasetConfig3],
@@ -273,7 +273,7 @@ describe('Buurt services', () => {
       filters: filterSelection,
     };
 
-    const result = await service.loadPolylineFeatures(sessionID, requestParams);
+    const result = await service.loadPolylineFeatures(requestID, requestParams);
 
     expect(getDatasetEndpointConfig).toHaveBeenCalledWith(
       [datasetId, datasetId2],
@@ -315,7 +315,7 @@ describe('Buurt services', () => {
 
     const detailItemId = 'x';
     const result = await service.loadFeatureDetail(
-      sessionID,
+      requestID,
       datasetId,
       detailItemId
     );
@@ -324,7 +324,7 @@ describe('Buurt services', () => {
       cacheTimeout: 0,
       headers: ACCEPT_CRS_4326,
     };
-    expect(requestData).toHaveBeenCalledWith(requestConfig, sessionID, {});
+    expect(requestData).toHaveBeenCalledWith(requestConfig, requestID, {});
     expect(result).toEqual(DUMMY_DATA_DETAIL_RESPONSE);
   });
 
@@ -332,7 +332,7 @@ describe('Buurt services', () => {
     (getDatasetEndpointConfig as jest.Mock).mockReturnValueOnce([]);
     const detailItemId = 'x';
     const result = await service.loadFeatureDetail(
-      sessionID,
+      requestID,
       datasetId,
       detailItemId
     );

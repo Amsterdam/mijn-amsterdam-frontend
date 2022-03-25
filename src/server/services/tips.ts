@@ -87,7 +87,7 @@ export function createTipsRequestData(
 }
 
 export async function fetchTIPS(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   queryParams: Record<string, string>,
   serviceResults: ServiceResults | null
@@ -101,7 +101,7 @@ export async function fetchTIPS(
       data: tipsRequestData,
       params,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }

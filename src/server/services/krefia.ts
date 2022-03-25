@@ -60,7 +60,7 @@ function createNotification(
 }
 
 async function fetchAndTransformKrefia(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await requestData<Krefia>(
@@ -70,7 +70,7 @@ async function fetchAndTransformKrefia(
         status: 'OK';
       }) => responseData.content,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -85,10 +85,10 @@ export const fetchSource = memoize(fetchAndTransformKrefia, {
 });
 
 export async function fetchKrefia(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(sessionID, authProfileAndToken);
+  const response = await fetchSource(requestID, authProfileAndToken);
   if (response.status === 'OK' && response.content) {
     return apiSuccessResult(omit(response.content, ['notificationTriggers']));
   }
@@ -96,10 +96,10 @@ export async function fetchKrefia(
 }
 
 export async function fetchKrefiaGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(sessionID, authProfileAndToken);
+  const response = await fetchSource(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];

@@ -114,7 +114,7 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  sessionID: SessionID,
+  requestID: requestID,
   useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
@@ -130,13 +130,13 @@ async function fetchCMSMaintenanceNotifications(
         transformResponse: transformCMSEventResponse,
         cacheTimeout: 0,
       },
-      sessionID
+      requestID
     );
   }
 
   const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, sessionID)
+  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, requestID)
     .then((apiData) => {
       if (Array.isArray(apiData.content)) {
         return Promise.all(
@@ -181,12 +181,11 @@ async function fetchCMSMaintenanceNotifications(
 }
 
 export async function fetchMaintenanceNotificationsActual(
-  sessionID: SessionID,
-  authProfileAndToken?: AuthProfileAndToken,
+  requestID: requestID,
   queryParams?: Record<string, string>
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    sessionID,
+    requestID,
     queryParams?.cache !== 'false'
   );
 
@@ -212,11 +211,10 @@ export async function fetchMaintenanceNotificationsActual(
 }
 
 export async function fetchMaintenanceNotificationsDashboard(
-  sessionID: SessionID
+  requestID: requestID
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
-    sessionID,
-    undefined,
+    requestID,
     { page: 'dashboard' }
   );
 

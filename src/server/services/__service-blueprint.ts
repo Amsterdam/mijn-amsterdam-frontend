@@ -32,14 +32,14 @@ export function transformServiceNameData(
 const SERVICE_NAME = 'BRP'; // Change to your service name
 
 export function fetchServiceName(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<ServiceNameData>(
     getApiConfig(SERVICE_NAME, {
       transformResponse: transformServiceNameData,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }

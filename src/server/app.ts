@@ -1,9 +1,17 @@
 /* eslint-disable import/first */
+import dotenv from 'dotenv';
+import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
+
+const isDevelopment = ENV === 'development';
+const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
+
+dotenv.config({ path: ENV_FILE });
+
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
+
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -12,19 +20,17 @@ import express, {
   Response,
 } from 'express';
 import morgan from 'morgan';
-import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
+
 import { apiErrorResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
-import { clearSession, send404, sessionID } from './helpers/app';
-import { routerDevelopment } from './mock-data/router-development';
-import { router as authRouter } from './router-auth';
+import { clearRequestCache, send404, requestID } from './helpers/app';
+import {
+  routerDevelopment,
+  authRouterDevelopment,
+} from './mock-data/router-development';
+import { isAuthenticated, router as authRouter } from './router-auth';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
-
-const isDevelopment = ENV === 'development';
-const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
-
-dotenv.config({ path: ENV_FILE });
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
@@ -58,22 +64,29 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(compression());
 
-app.use(publicRouter);
+// Generate session id
+app.use(requestID);
+
+// Public routes
+app.use(BFF_BASE_PATH, publicRouter);
 app.use(authRouter);
 
 // Development routing for mock data
 if (!IS_AP) {
-  app.use(routerDevelopment);
+  app.use(authRouterDevelopment);
+  app.use(isAuthenticated(), routerDevelopment);
 }
 
-// Generate session id
-app.use(sessionID);
-
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, protectedRouter);
+app.use(BFF_BASE_PATH, isAuthenticated(), protectedRouter);
+
+app.use((req, res, next) => {
+  console.log('nexterS?S?S');
+  next();
+});
 
 // Destroy the session as soon as the api requests are all processed
-app.use(clearSession);
+app.use(clearRequestCache);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 

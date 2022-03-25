@@ -168,7 +168,7 @@ const fileCache = new FileCache({
 });
 
 async function getGeneralPage(
-  sessionID: SessionID,
+  requestID: requestID,
   profileType: ProfileType = 'private'
 ) {
   const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
@@ -191,7 +191,7 @@ async function getGeneralPage(
     url: requestConfig.urls![profileType],
   };
 
-  return requestData<CMSPageContent>(requestConfigFinal, sessionID)
+  return requestData<CMSPageContent>(requestConfigFinal, requestID)
     .then((apiData) => {
       if (apiData.content?.content && apiData.content?.title) {
         fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
@@ -214,10 +214,7 @@ async function getGeneralPage(
     });
 }
 
-async function getFooter(
-  sessionID: SessionID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function getFooter(requestID: requestID) {
   const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
   if (apiData) {
     return Promise.resolve(apiData);
@@ -226,8 +223,7 @@ async function getFooter(
     getApiConfig('CMS_CONTENT_FOOTER', {
       transformResponse: transformFooterResponse,
     }),
-    sessionID,
-    authProfileAndToken
+    requestID
   )
     .then((apiData) => {
       if (apiData.content?.blocks.length) {
@@ -250,16 +246,15 @@ async function getFooter(
 }
 
 export async function fetchCMSCONTENT(
-  sessionID: SessionID,
-  authProfileAndToken: AuthProfileAndToken,
+  requestID: requestID,
   query?: Record<string, string>
 ) {
   const generalInfoPageRequest = getGeneralPage(
-    sessionID,
+    requestID,
     query?.profileType as ProfileType
   );
 
-  const footerInfoPageRequest = getFooter(sessionID, authProfileAndToken);
+  const footerInfoPageRequest = getFooter(requestID);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>
@@ -284,7 +279,7 @@ const searchFileCache = new FileCache({
 });
 
 export async function fetchSearchConfig(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   query?: Record<string, string>
 ) {
@@ -314,7 +309,7 @@ export async function fetchSearchConfig(
   } else {
     dataRequest = requestData<any>(
       getApiConfig('SEARCH_CONFIG'),
-      sessionID,
+      requestID,
       authProfileAndToken
     );
   }

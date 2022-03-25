@@ -63,14 +63,14 @@ export function transformAKTESData(
 }
 
 export async function fetchAKTES(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('AKTES', {
     transformResponse: transformAKTESData,
   });
 
-  return requestData<AKTESData>(options, sessionID, authProfileAndToken);
+  return requestData<AKTESData>(options, requestID, authProfileAndToken);
 }
 
 function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
@@ -78,10 +78,10 @@ function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
 }
 
 export async function fetchAKTESGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const AKTES = await fetchAKTES(sessionID, authProfileAndToken);
+  const AKTES = await fetchAKTES(requestID, authProfileAndToken);
 
   if (AKTES.status === 'OK') {
     return apiSuccessResult({

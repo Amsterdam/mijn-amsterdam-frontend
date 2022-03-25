@@ -58,7 +58,7 @@ function transformSubsidieData(
 }
 
 export async function fetchSource(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
@@ -71,7 +71,7 @@ export async function fetchSource(
         );
       },
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 
@@ -87,10 +87,10 @@ export async function fetchSource(
 }
 
 export async function fetchSubsidie(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, authProfileAndToken);
+  return fetchSource(requestID, authProfileAndToken);
 }
 
 function transformSubsidieNotifications(notifications: MyNotification[]) {
@@ -110,10 +110,10 @@ function transformSubsidieNotifications(notifications: MyNotification[]) {
 }
 
 export async function fetchSubsidieGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const subsidie = await fetchSource(sessionID, authProfileAndToken, true);
+  const subsidie = await fetchSource(requestID, authProfileAndToken, true);
   if (subsidie.status === 'OK' && subsidie.content.notifications) {
     if (subsidie.content.notifications) {
       return apiSuccessResult({

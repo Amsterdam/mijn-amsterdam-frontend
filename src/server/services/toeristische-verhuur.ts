@@ -76,14 +76,14 @@ export function transformToeristischeVerhuurRegistraties(
 }
 
 function fetchRegistraties(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<ToeristischeVerhuurRegistratie[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
       transformResponse: transformToeristischeVerhuurRegistraties,
     }),
-    sessionID,
+    requestID,
     authProfileAndToken
   );
 }
@@ -209,7 +209,7 @@ export function transformVergunningenToVerhuur(
 }
 
 async function fetchAndTransformToeristischeVerhuur(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType = 'private'
 ) {
@@ -223,10 +223,10 @@ async function fetchAndTransformToeristischeVerhuur(
   const registratiesRequest =
     profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))
-      : fetchRegistraties(sessionID, authProfileAndToken);
+      : fetchRegistraties(requestID, authProfileAndToken);
 
   const vergunningenRequest = fetchVergunningen(
-    sessionID,
+    requestID,
     authProfileAndToken,
     {
       appRoute: (vergunning: Vergunning) => {
@@ -471,13 +471,13 @@ function createToeristischeVerhuurRecentCase(
 }
 
 export async function fetchToeristischeVerhuurGenerated(
-  sessionID: SessionID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date,
   profileType?: ProfileType
 ) {
   const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
-    sessionID,
+    requestID,
     authProfileAndToken,
     profileType
   );
