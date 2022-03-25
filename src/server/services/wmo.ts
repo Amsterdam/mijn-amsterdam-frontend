@@ -415,8 +415,7 @@ const Labels: {
         isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
-            !isServiceDeliveryStarted(sourceData, today) &&
-            !isServiceDeliveryActive(sourceData, today)
+            sourceData.serviceDateStart === null
           );
         },
       },
@@ -501,8 +500,7 @@ const Labels: {
         isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
-            !isServiceDeliveryStarted(sourceData, today) &&
-            !isServiceDeliveryActive(sourceData, today)
+            sourceData.serviceDateStart === null
           );
         },
       },
@@ -578,8 +576,7 @@ const Labels: {
         isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
-            !isServiceDeliveryStarted(sourceData, today) &&
-            !isServiceDeliveryActive(sourceData, today)
+            sourceData.serviceDateStart === null
           );
         },
         description: (data) =>
