@@ -35,7 +35,7 @@ Array [
         "id": "status-step-0",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -47,7 +47,7 @@ Array [
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestart",
       },
       Object {
@@ -59,7 +59,7 @@ Array [
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestopt",
       },
       Object {
@@ -71,7 +71,7 @@ Array [
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -79,14 +79,77 @@ Array [
     "title": "Hulp bij het huishouden (nog niet geleverd)",
   },
   Object {
+    "dateEnd": "10 maart 2022",
+    "dateStart": "03 januari 2022",
+    "id": "3519644845",
+    "isActual": false,
+    "itemTypeCode": "WRA",
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3519644845",
+    },
+    "steps": Array [
+      Object {
+        "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+        "datePublished": "2022-01-03",
+        "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing per 03 januari 2022.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActive": false,
+        "isChecked": true,
+        "isVisible": true,
+        "status": "Besluit",
+      },
+      Object {
+        "datePublished": "",
+        "description": "<p>
+            De gemeente heeft opdracht gegeven aan JTWD - Zorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActive": false,
+        "isChecked": true,
+        "isVisible": true,
+        "status": "Opdracht gegeven",
+      },
+      Object {
+        "datePublished": "2022-03-10",
+        "description": "<p>
+            Uw recht op woonruimteaanpassing is beëindigd per 10 maart 2022
+          </p>",
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActive": true,
+        "isChecked": true,
+        "isVisible": true,
+        "status": "Einde recht",
+      },
+    ],
+    "supplier": "JTWD - Zorg",
+    "title": "Woonruimteaanpassing",
+  },
+  Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
-    "id": "3917854581",
+    "id": "3957012630",
     "isActual": true,
     "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/3917854581",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3957012630",
     },
     "steps": Array [
       Object {
@@ -111,7 +174,7 @@ Array [
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -123,7 +186,7 @@ Array [
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestart",
       },
       Object {
@@ -135,7 +198,7 @@ Array [
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestopt",
       },
       Object {
@@ -147,7 +210,7 @@ Array [
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -157,12 +220,12 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
-    "id": "879359140",
+    "id": "4155084517",
     "isActual": true,
     "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/879359140",
+      "to": "/zorg-en-ondersteuning/voorzieningen/4155084517",
     },
     "steps": Array [
       Object {
@@ -187,7 +250,7 @@ Array [
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -199,7 +262,7 @@ Array [
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestart",
       },
       Object {
@@ -211,7 +274,7 @@ Array [
         "id": "status-step-2",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestopt",
       },
       Object {
@@ -223,7 +286,7 @@ Array [
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -233,12 +296,12 @@ Array [
   Object {
     "dateEnd": "22 januari 2022",
     "dateStart": "15 december 2021",
-    "id": "8927959",
+    "id": "3454563024",
     "isActual": false,
     "itemTypeCode": "WMH",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/8927959",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3454563024",
     },
     "steps": Array [
       Object {
@@ -261,7 +324,7 @@ Array [
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -273,7 +336,7 @@ Array [
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestart",
       },
       Object {
@@ -286,7 +349,7 @@ Array [
         "id": "status-step-2",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Levering gestopt",
       },
       Object {
@@ -298,7 +361,7 @@ Array [
         "id": "status-step-3",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -308,12 +371,12 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "15 december 2021",
-    "id": "2314189731",
+    "id": "747844866",
     "isActual": true,
     "itemTypeCode": "WRA",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/2314189731",
+      "to": "/zorg-en-ondersteuning/voorzieningen/747844866",
     },
     "steps": Array [
       Object {
@@ -336,7 +399,7 @@ Array [
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -349,7 +412,7 @@ Array [
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Opdracht gegeven",
       },
       Object {
@@ -362,7 +425,7 @@ Array [
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Aanpassing uitgevoerd",
       },
       Object {
@@ -374,7 +437,7 @@ Array [
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -384,12 +447,12 @@ Array [
   Object {
     "dateEnd": "23 november 2018",
     "dateStart": "24 november 2017",
-    "id": "1890986540",
+    "id": "3995408655",
     "isActual": false,
     "itemTypeCode": "AO5",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/1890986540",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3995408655",
     },
     "steps": Array [
       Object {
@@ -412,7 +475,7 @@ Array [
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -428,7 +491,7 @@ Array [
         "id": "status-step-1",
         "isActive": true,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
@@ -438,12 +501,12 @@ Array [
   Object {
     "dateEnd": "",
     "dateStart": "28 april 2016",
-    "id": "762205280",
+    "id": "3551611681",
     "isActual": true,
     "itemTypeCode": "MVV",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/762205280",
+      "to": "/zorg-en-ondersteuning/voorzieningen/3551611681",
     },
     "steps": Array [
       Object {
@@ -466,7 +529,7 @@ Array [
         "id": "status-step-0",
         "isActive": true,
         "isChecked": true,
-        "showItem": true,
+        "isVisible": true,
         "status": "Besluit",
       },
       Object {
@@ -481,7 +544,7 @@ Array [
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
-        "showItem": true,
+        "isVisible": true,
         "status": "Einde recht",
       },
     ],
