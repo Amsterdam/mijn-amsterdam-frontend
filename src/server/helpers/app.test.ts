@@ -3,12 +3,8 @@ import express from 'express';
 import {
   addServiceResultHandler,
   clearSession,
-  exitEarly,
   getAuth,
   getProfileType,
-  isBffEndpoint,
-  isBffPublicEndpoint,
-  isValidRequestPath,
   queryParams,
   send404,
   sendMessage,
@@ -17,49 +13,6 @@ import {
 import { cache } from './source-api-request';
 
 describe('server/helpers/app', () => {
-  test('isValidRequestPath', () => {
-    {
-      const result = isValidRequestPath(
-        '/test-api/bff/test/blap/bla',
-        '/test/blap/bla'
-      );
-      expect(result).toBe(true);
-    }
-    {
-      const result = isValidRequestPath(
-        '/test-api/bff/test/blap/bla',
-        '/blap/test/blip'
-      );
-      expect(result).toBe(false);
-    }
-    {
-      const result = isValidRequestPath('/bff/test/blap/bla', '/test/blap/bla');
-      expect(result).toBe(false);
-    }
-  });
-
-  test('isBffEndpoint', () => {
-    {
-      const result = isBffEndpoint('/test-api/bff/services/all');
-      expect(result).toBe(true);
-    }
-    {
-      const result = isBffEndpoint('/services/all');
-      expect(result).toBe(false);
-    }
-  });
-
-  test('isBffPublicEndpoint', () => {
-    {
-      const result = isBffPublicEndpoint('/test-api/bff/services/all');
-      expect(result).toBe(false);
-    }
-    {
-      const result = isBffPublicEndpoint('/test-api/bff/public/services/cms');
-      expect(result).toBe(true);
-    }
-  });
-
   test('getAuth', () => {
     const req = {
       headers: {
@@ -77,54 +30,6 @@ describe('server/helpers/app', () => {
     expect(result).toEqual({
       'x-auth-type': 'E',
       'x-saml-attribute-token1': 'xxx111xxxddd',
-    });
-  });
-
-  describe('exitEarly', () => {
-    const req = {
-      path: '/none',
-      url: 'http://localhost/none',
-      headers: {
-        From: 'webmaster@example.org',
-        'x-something-hack': 'hax0r',
-        'x-saml-attribute-token1': 'xxx111xxxddd',
-      },
-      cookies: {
-        authType: 'E',
-      },
-    } as unknown as typeof express.request;
-
-    const mockRes = {
-      status: jest.fn(),
-      end: jest.fn(),
-    };
-
-    const mockNext = jest.fn();
-    const captureMessageSpy = jest.spyOn(Sentry, 'captureMessage');
-
-    test('Exits', () => {
-      exitEarly(req, mockRes as unknown as typeof express.response, mockNext);
-
-      expect(captureMessageSpy).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(404);
-      expect(mockRes.end).toHaveBeenCalledWith('not found');
-    });
-
-    mockRes.status.mockReset();
-    mockRes.end.mockReset();
-    captureMessageSpy.mockReset();
-
-    test('Passes', () => {
-      req.path = '/test-api/bff/services/all';
-      req.url = 'http://localhost/test-api/bff/services/all';
-
-      exitEarly(req, mockRes as unknown as typeof express.response, mockNext);
-
-      expect(captureMessageSpy).not.toHaveBeenCalled();
-      expect(mockRes.status).not.toHaveBeenCalled();
-      expect(mockRes.end).not.toHaveBeenCalled();
-
-      expect(mockNext).toHaveBeenCalled();
     });
   });
 

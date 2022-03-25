@@ -1,40 +1,15 @@
-import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
 import jose, { JWE, JWK } from 'jose';
-import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import {
-  BffEndpoints,
-  BFF_BASE_PATH,
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
-  PUBLIC_BFF_ENDPOINTS,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
-
-export function isValidRequestPath(requestPath: string, path: string) {
-  const isRouteMatch = !!matchPath(requestPath, {
-    path: !path.includes(BFF_BASE_PATH) ? BFF_BASE_PATH + path : path,
-    exact: true,
-  });
-  return isRouteMatch;
-}
-
-export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some((path) =>
-    isValidRequestPath(requestPath, path)
-  );
-}
-
-export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some((path) =>
-    isValidRequestPath(requestPath, path)
-  );
-}
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
@@ -44,7 +19,7 @@ export interface AuthProfile {
 export function getAuthProfile(tokenData: TokenData): AuthProfile {
   let authMethod: AuthProfile['authMethod'];
   let profileType: AuthProfile['profileType'];
-  console.log('tokenData.', tokenData);
+
   switch (tokenData.aud) {
     case oidcConfigEherkenning.clientID:
       authMethod = 'eherkenning';
@@ -77,19 +52,6 @@ export function getAuth(req: Request): AuthProfileAndToken {
     token,
     profile,
   };
-}
-
-export function exitEarly(req: Request, res: Response, next: NextFunction) {
-  // Exit early if request is not made to a bff endpoint.
-  if (!isBffEndpoint(req.path)) {
-    Sentry.captureMessage('Exit early on non-existent endpoint.', {
-      extra: {
-        url: req.url,
-      },
-    });
-    return send404(res);
-  }
-  next();
 }
 
 export function sessionID(req: Request, res: Response, next: NextFunction) {
@@ -161,5 +123,6 @@ interface TokenData {
 }
 
 export function decodeOIDCToken(token: string): TokenData {
-  return jose.JWT.decode(token) as TokenData;
+  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
+  return jose.JWT.verify(token, key) as TokenData;
 }

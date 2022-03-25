@@ -1,12 +1,9 @@
 /* eslint-disable import/first */
-import dotenv from 'dotenv';
-
-const ENV_LOCAL = '.env.local';
-dotenv.config({ path: ENV_LOCAL });
-
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -14,38 +11,27 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import { auth } from 'express-openid-connect';
 import morgan from 'morgan';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
-import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
-import {
-  BffEndpoints,
-  BFF_BASE_PATH,
-  BFF_PORT,
-  corsOptions,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-  OIDC_SESSION_COOKIE_NAME,
-} from './config';
-import {
-  clearSession,
-  exitEarly,
-  getAuth,
-  send404,
-  sessionID,
-} from './helpers/app';
+import { apiErrorResult } from '../universal/helpers';
+import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
+import { clearSession, send404, sessionID } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
-import cookieParser from 'cookie-parser';
-import { router } from './router';
 import { router as authRouter } from './router-auth';
+import { router as protectedRouter } from './router-protected';
+import { router as publicRouter } from './router-public';
 
-const isDebug = ENV === 'development';
+const isDevelopment = ENV === 'development';
+const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
+
+dotenv.config({ path: ENV_FILE });
+
 const sentryOptions: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
-  debug: isDebug,
+  debug: isDevelopment,
   beforeSend(event, hint) {
-    if (isDebug) {
+    if (isDevelopment) {
       console.log(hint);
       return null;
     }
@@ -72,17 +58,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(compression());
 
-// Basic security measure
-// app.use(exitEarly);
-
-app.get(
-  BffEndpoints.PUBLIC_HEALTH,
-  (req: Request, res: Response, next: NextFunction) => {
-    res.json({ status: 'OK' });
-    next();
-  }
-);
-
+app.use(publicRouter);
 app.use(authRouter);
 
 // Development routing for mock data
@@ -94,7 +70,7 @@ if (!IS_AP) {
 app.use(sessionID);
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, router);
+app.use(BFF_BASE_PATH, protectedRouter);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearSession);
@@ -124,7 +100,7 @@ app.use((req: Request, res: Response) => {
 
 const server = app.listen(BFF_PORT, () => {
   console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDebug}]`
+    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDevelopment}]`
   );
 });
 
