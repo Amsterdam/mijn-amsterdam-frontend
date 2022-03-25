@@ -121,7 +121,7 @@ const Labels: {
       description: TextPartContents;
       isChecked: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
       isActive: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
-      showItem?: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
+      isVisible?: (stepIndex: number, data: WmoApiItem, today: Date) => boolean;
     }>;
   };
 } = {
@@ -412,7 +412,7 @@ const Labels: {
             meer krijgt.`
             }
           </p>`,
-        showItem: (stepIndex, sourceData, today) => {
+        isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
             !isServiceDeliveryStarted(sourceData, today) &&
@@ -498,7 +498,7 @@ const Labels: {
           `<p>
             ${data.supplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
           </p>`,
-        showItem: (stepIndex, sourceData, today) => {
+        isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
             !isServiceDeliveryStarted(sourceData, today) &&
@@ -575,7 +575,7 @@ const Labels: {
           isServiceDeliveryStarted(sourceData, today),
         isActive: (stepIndex, sourceData, today) =>
           isServiceDeliveryActive(sourceData, today),
-        showItem: (stepIndex, sourceData, today) => {
+        isVisible: (stepIndex, sourceData, today) => {
           return !(
             sourceData.isActual === false &&
             !isServiceDeliveryStarted(sourceData, today) &&
@@ -655,8 +655,8 @@ function formatWmoStatusLineItems(
           datePublished,
           isActive: statusItem.isActive(index, wmoItem, today),
           isChecked: statusItem.isChecked(index, wmoItem, today),
-          showItem: statusItem.showItem
-            ? statusItem?.showItem(index, wmoItem, today)
+          isVisible: statusItem.isVisible
+            ? statusItem?.isVisible(index, wmoItem, today)
             : true,
           documents: [], // NOTE: To be implemented
         };
@@ -673,7 +673,7 @@ function formatWmoStatusLineItems(
           </p>`;
         }
 
-        return stepData.showItem ? stepData : null;
+        return stepData.isVisible ? stepData : null;
       })
       .filter(Boolean) as WmoItemStep[];
 
