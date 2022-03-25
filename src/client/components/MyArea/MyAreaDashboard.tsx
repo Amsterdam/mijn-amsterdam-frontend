@@ -11,8 +11,6 @@ import Heading from '../Heading/Heading';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoader from './MyAreaLoader';
 
-import 'leaflet/dist/leaflet.css';
-
 export default function MyAreaDashboard() {
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
