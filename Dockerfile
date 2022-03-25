@@ -56,6 +56,7 @@ ENV BFF_ENV=development
 
 COPY src/server/mock-data/json /app/build-bff/server/mock-data/json
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
+COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /app/build/robots.txt
 
 # Serving both front-end and back-end on th test environment
 ENTRYPOINT npm run serve-build
