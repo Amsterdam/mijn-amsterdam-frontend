@@ -5,6 +5,7 @@ import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config';
+import { AuthProfileAndToken } from '../helpers/app';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
@@ -39,6 +40,7 @@ export function getGeneratedItemsFromApiResults(
       cases.push(...(content['cases'] as MyCase[]));
     }
   }
+
   const notificationsResult = notifications
     .map((notification) => {
       if (notification.description) {
@@ -56,6 +58,7 @@ export function getGeneratedItemsFromApiResults(
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+
   return {
     CASES: apiSuccessResult(cases.sort(dateSort('datePublished', 'desc'))),
     NOTIFICATIONS: apiSuccessResult(notificationsResult),
@@ -64,7 +67,7 @@ export function getGeneratedItemsFromApiResults(
 
 async function fetchServicesGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   if (profileType === 'commercial') {
@@ -76,14 +79,14 @@ async function fetchServicesGenerated(
       subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
-      fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
-      fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
-      fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
-      fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
+      fetchMILIEUZONEGenerated(sessionID, authProfileAndToken),
+      fetchVergunningenGenerated(sessionID, authProfileAndToken),
+      fetchERFPACHTGenerated(sessionID, authProfileAndToken),
+      fetchSubsidieGenerated(sessionID, authProfileAndToken),
       fetchMaintenanceNotificationsDashboard(sessionID),
       fetchToeristischeVerhuurGenerated(
         sessionID,
-        passthroughRequestHeaders,
+        authProfileAndToken,
         new Date(),
         'commercial'
       ),
@@ -123,17 +126,17 @@ async function fetchServicesGenerated(
     fetchWiorGeneratedResult,
     fetchWpiNotificationsResult,
   ] = await Promise.allSettled([
-    fetchBRPGenerated(sessionID, passthroughRequestHeaders),
-    fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
-    fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
-    fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
-    fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
-    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
+    fetchBRPGenerated(sessionID, authProfileAndToken),
+    fetchBELASTINGGenerated(sessionID, authProfileAndToken),
+    fetchMILIEUZONEGenerated(sessionID, authProfileAndToken),
+    fetchVergunningenGenerated(sessionID, authProfileAndToken),
+    fetchERFPACHTGenerated(sessionID, authProfileAndToken),
+    fetchSubsidieGenerated(sessionID, authProfileAndToken),
     fetchMaintenanceNotificationsDashboard(sessionID),
-    fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
-    fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
-    fetchWiorGenerated(sessionID, passthroughRequestHeaders, profileType),
-    fetchWpiNotifications(sessionID, passthroughRequestHeaders),
+    fetchToeristischeVerhuurGenerated(sessionID, authProfileAndToken),
+    fetchKrefiaGenerated(sessionID, authProfileAndToken),
+    fetchWiorGenerated(sessionID, authProfileAndToken, profileType),
+    fetchWpiNotifications(sessionID, authProfileAndToken),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);

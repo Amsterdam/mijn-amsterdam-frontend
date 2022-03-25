@@ -7,6 +7,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface ERFPACHTData {
   isKnown: boolean;
@@ -55,7 +56,7 @@ function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
 
 async function fetchSource(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
   const response = await requestData<ERFPACHTData>(
@@ -63,7 +64,7 @@ async function fetchSource(
       transformResponse: transformERFPACHTData,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 
   if (!includeGenerated) {
@@ -79,20 +80,16 @@ async function fetchSource(
 
 export async function fetchERFPACHT(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, passthroughRequestHeaders);
+  return fetchSource(sessionID, authProfileAndToken);
 }
 
 export async function fetchERFPACHTGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const ERFPACHT = await fetchSource(
-    sessionID,
-    passthroughRequestHeaders,
-    true
-  );
+  const ERFPACHT = await fetchSource(sessionID, authProfileAndToken, true);
   if (ERFPACHT.status === 'OK' && ERFPACHT.content.notifications) {
     if (ERFPACHT.content.notifications) {
       return apiSuccessResult({

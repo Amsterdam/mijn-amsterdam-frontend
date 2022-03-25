@@ -13,6 +13,7 @@ import {
   apiSuccessResult,
   apiDependencyError,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
@@ -183,20 +184,20 @@ export function transformBRPData(responseData: BRPDataFromSource) {
 
 export async function fetchBRP(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
 
-  return requestData<BRPData>(options, sessionID, passthroughRequestHeaders);
+  return requestData<BRPData>(options, sessionID, authProfileAndToken);
 }
 
 export async function fetchBRPGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
+  const BRP = await fetchBRP(sessionID, authProfileAndToken);
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({

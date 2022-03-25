@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
-import { ApiUrls, X_AUTH_TYPE_HEADER } from '../config';
+import { ApiUrls } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import AFVAL from './json/afvalophaalgebieden.json';
@@ -37,7 +37,8 @@ async function loadMockApiResponseJson(data: any) {
 }
 
 function isCommercialUser(config: any) {
-  return config?.headers[X_AUTH_TYPE_HEADER] === 'eherkenning';
+  // TODO: Check profileType / authMethod in Token package here.
+  return config?.headers['xxxxxxxx???'] === 'eherkenning';
 }
 
 type MockDataConfig = Record<

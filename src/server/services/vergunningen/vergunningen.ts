@@ -23,6 +23,7 @@ import {
 import { CaseType } from '../../../universal/types/vergunningen';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 import {
   notificationContent,
   NotificationLabels,
@@ -230,14 +231,14 @@ export function transformVergunningenData(
 
 export function fetchAllVergunningen(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<VergunningenData>(
     getApiConfig('VERGUNNINGEN', {
       transformResponse: transformVergunningenData,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 }
 
@@ -249,13 +250,10 @@ const vergunningOptionsDefault: VergunningOptions = {
 
 export async function fetchVergunningen(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
 ) {
-  const response = await fetchAllVergunningen(
-    sessionID,
-    passthroughRequestHeaders
-  );
+  const response = await fetchAllVergunningen(sessionID, authProfileAndToken);
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
@@ -366,13 +364,10 @@ export function createVergunningNotification(
 
 export async function fetchVergunningenGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {
-  const VERGUNNINGEN = await fetchVergunningen(
-    sessionID,
-    passthroughRequestHeaders
-  );
+  const VERGUNNINGEN = await fetchVergunningen(sessionID, authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
     const compareToDate = compareDate || new Date();

@@ -11,6 +11,7 @@ import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 
 const TAGS_ALLOWED = [
@@ -215,7 +216,7 @@ async function getGeneralPage(
 
 async function getFooter(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
   if (apiData) {
@@ -226,7 +227,7 @@ async function getFooter(
       transformResponse: transformFooterResponse,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   )
     .then((apiData) => {
       if (apiData.content?.blocks.length) {
@@ -250,7 +251,7 @@ async function getFooter(
 
 export async function fetchCMSCONTENT(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   query?: Record<string, string>
 ) {
   const generalInfoPageRequest = getGeneralPage(
@@ -258,7 +259,7 @@ export async function fetchCMSCONTENT(
     query?.profileType as ProfileType
   );
 
-  const footerInfoPageRequest = getFooter(sessionID, passthroughRequestHeaders);
+  const footerInfoPageRequest = getFooter(sessionID, authProfileAndToken);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>
@@ -284,7 +285,7 @@ const searchFileCache = new FileCache({
 
 export async function fetchSearchConfig(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   query?: Record<string, string>
 ) {
   const config = searchFileCache.getKey('CONFIG');
@@ -314,7 +315,7 @@ export async function fetchSearchConfig(
     dataRequest = requestData<any>(
       getApiConfig('SEARCH_CONFIG'),
       sessionID,
-      passthroughRequestHeaders
+      authProfileAndToken
     );
   }
 

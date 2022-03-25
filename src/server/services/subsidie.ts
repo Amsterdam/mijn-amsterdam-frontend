@@ -8,7 +8,7 @@ import {
 import { MyNotification } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { getAuthTypeFromHeader } from '../helpers/app';
+import { AuthProfile, AuthProfileAndToken } from '../helpers/app';
 
 export interface SubsidieData {
   isKnown: boolean;
@@ -28,7 +28,7 @@ interface SubsidieSourceData {
 
 function transformSubsidieData(
   responseData: SubsidieSourceData,
-  authType: 'digid' | 'eherkenning'
+  authMethod: AuthProfile['authMethod']
 ): SubsidieData {
   const { isKnown, notifications = [] } = responseData?.content || {
     isKnown: false,
@@ -42,7 +42,7 @@ function transformSubsidieData(
       const params = new URLSearchParams(urlTo.search);
 
       if (!params.get('authMethod')) {
-        params.set('authMethod', authType);
+        params.set('authMethod', authMethod);
       }
 
       return Object.assign(notification, {
@@ -59,18 +59,20 @@ function transformSubsidieData(
 
 export async function fetchSource(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
-  const authType = getAuthTypeFromHeader(passthroughRequestHeaders);
   const response = await requestData<SubsidieData>(
     getApiConfig('SUBSIDIE', {
       transformResponse: (responseData) => {
-        return transformSubsidieData(responseData, authType);
+        return transformSubsidieData(
+          responseData,
+          authProfileAndToken.profile.authMethod
+        );
       },
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 
   if (!includeGenerated) {
@@ -86,9 +88,9 @@ export async function fetchSource(
 
 export async function fetchSubsidie(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, passthroughRequestHeaders);
+  return fetchSource(sessionID, authProfileAndToken);
 }
 
 function transformSubsidieNotifications(notifications: MyNotification[]) {
@@ -109,13 +111,9 @@ function transformSubsidieNotifications(notifications: MyNotification[]) {
 
 export async function fetchSubsidieGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const subsidie = await fetchSource(
-    sessionID,
-    passthroughRequestHeaders,
-    true
-  );
+  const subsidie = await fetchSource(sessionID, authProfileAndToken, true);
   if (subsidie.status === 'OK' && subsidie.content.notifications) {
     if (subsidie.content.notifications) {
       return apiSuccessResult({

@@ -1,8 +1,14 @@
 import nock from 'nock';
 import { BFF_PORT } from '../config';
+import { AuthProfileAndToken } from '../helpers/app';
 import { fetchSource } from './subsidie';
 
 describe('Subsidie', () => {
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'eherkenning', profileType: 'private' },
+    token: 'xxxxxx',
+  };
+
   afterAll(() => {
     // Enable http requests.
     nock.enableNetConnect();
@@ -38,13 +44,8 @@ describe('Subsidie', () => {
       .get('/test-api/subsidies/summary')
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
-    const headers = {
-      'x-auth-type': 'E',
-      'x-saml-attribute-token1': 'xxx111xxxddd',
-    };
-
     {
-      const result = await fetchSource('xx22xx', headers, true);
+      const result = await fetchSource('xx22xx', authProfileAndToken, true);
       expect(result.content).toEqual({
         isKnown: true,
         notifications: [
@@ -60,9 +61,14 @@ describe('Subsidie', () => {
     }
 
     {
-      headers['x-auth-type'] = 'D';
-
-      const result = await fetchSource('xx22xx', headers, true);
+      const result = await fetchSource(
+        'xx22xx',
+        {
+          ...authProfileAndToken,
+          profile: { ...authProfileAndToken.profile, authMethod: 'digid' },
+        },
+        true
+      );
       expect(result.content).toEqual({
         isKnown: true,
         notifications: [
@@ -78,7 +84,7 @@ describe('Subsidie', () => {
     }
 
     {
-      const result = await fetchSource('xx22xx', headers, true);
+      const result = await fetchSource('xx22xx', authProfileAndToken, true);
       expect(result.content).toEqual(null);
       expect(result.status).toBe('ERROR');
     }

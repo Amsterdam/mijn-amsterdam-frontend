@@ -1,10 +1,6 @@
 import { differenceInMonths } from 'date-fns';
 import { AppState } from '../../../../client/AppState';
-import {
-  API_BASE_PATH,
-  Chapters,
-  IS_PRODUCTION,
-} from '../../../../universal/config';
+import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { documentDownloadName } from '../helpers';
@@ -118,7 +114,7 @@ export function transformIncomeSpecificationItem(
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
-  const url = `${API_BASE_PATH + item.url}`;
+  const url = `${item.url}`;
   const categoryFromSource = item.variant;
 
   return {

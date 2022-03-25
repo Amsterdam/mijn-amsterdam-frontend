@@ -121,6 +121,7 @@ export function useDataApi<T>(
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
         cancelToken: source.token,
+        withCredentials: true,
       };
       if (requestOptions.transformResponse) {
         requestOptionsFinal.transformResponse = addAxiosResponseTransform(

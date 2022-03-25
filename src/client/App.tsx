@@ -10,7 +10,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
@@ -24,19 +23,11 @@ import {
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import {
-  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
-  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
-  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
-} from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
-import {
-  useDeeplinkEntry,
-  useDeeplinkRedirect,
-} from './hooks/useDeeplink.hook';
+import { useDeeplinkEntry } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 import {
@@ -107,9 +98,6 @@ function AppAuthenticated() {
 
   const location = useLocation();
   const profileType = useProfileTypeValue();
-  const redirectAfterLogin = useDeeplinkRedirect();
-
-  const [pathname, search] = redirectAfterLogin.split('?');
 
   const isNoHeroRoute = NoHeroRoutes.some((route) =>
     matchPath(location.pathname, { path: route })
@@ -120,18 +108,6 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
-          <Redirect
-            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}

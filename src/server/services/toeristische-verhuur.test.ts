@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import toeristischeVerhuurRegistratiesData from '../mock-data/json/registraties-toeristische-verhuur.json';
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
@@ -27,6 +28,11 @@ describe('Toeristische verhuur service', () => {
   const DUMMY_URL_NULL_CONTENT = '/null-content';
   const DUMMY_URL_ERROR = '/error-response';
 
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private' },
+    token: 'xxxxxx',
+  };
+
   jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
 
   afterAll(() => {
@@ -51,7 +57,7 @@ describe('Toeristische verhuur service', () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_VERGUNNINGEN;
     ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
 
-    const response = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     expect(response.content.registraties.length).toBeGreaterThan(0);
 
@@ -70,11 +76,11 @@ describe('Toeristische verhuur service', () => {
   });
 
   it('Should reply with memoized response based on function params', async () => {
-    const response = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
 
-    const response2 = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response2 = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     expect(response === response2).toBe(true);
   });
@@ -83,7 +89,7 @@ describe('Toeristische verhuur service', () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
     ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
 
-    const response = await fetchToeristischeVerhuur('x2', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
 
     expect(response.content.registraties.length).toBeGreaterThan(0);
     expect(response.content.vergunningen.length).toBe(0);
@@ -98,7 +104,7 @@ describe('Toeristische verhuur service', () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
     ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_ERROR;
 
-    const response = await fetchToeristischeVerhuur('x3', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
 
     expect(response.content.registraties.length).toBe(0);
     expect(response.content.vergunningen.length).toBe(0);
@@ -117,7 +123,7 @@ describe('Toeristische verhuur service', () => {
   it('Should return only vergunningen if commercial profiletype', async () => {
     const response = await fetchToeristischeVerhuur(
       'x4.b',
-      { x: 'saml' },
+      authProfileAndToken,
       'commercial'
     );
 

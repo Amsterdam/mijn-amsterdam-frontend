@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import { IS_COMMERCIAL_PATH_MATCH } from '../config/api';
 import { useSessionStorage } from './storage.hook';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 
-let initialProfileType = IS_COMMERCIAL_PATH_MATCH ? 'commercial' : 'private';
+let initialProfileType = 'private';
 
 try {
   const value = sessionStorage.getItem(PROFILE_TYPE_STORAGE_KEY);
   const storageValue = value !== null ? JSON.parse(value) : null;
+
   if (storageValue) {
     initialProfileType = storageValue;
   }

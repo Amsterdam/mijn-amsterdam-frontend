@@ -7,7 +7,6 @@ import { ComponentChildren } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import { useActivityThrottle } from '../../hooks/useThrottledFn.hook';
 import Linkd, { Button, ButtonStyles } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
@@ -21,7 +20,6 @@ import styles from './AutoLogoutDialog.module.scss';
  * interacts with that. In our case, if the `isAuthenticated` flag is `false`, the app will show the login screen. This logic can
  * be found in App.tsx.
  */
-const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
 export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
@@ -137,11 +135,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       refetch();
     }
   }, [refetch, isOpen, isDirty, isAuthenticated, resetAutoLogout]);
-
-  useActivityThrottle(
-    resetOrRefetch,
-    nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
-  );
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {

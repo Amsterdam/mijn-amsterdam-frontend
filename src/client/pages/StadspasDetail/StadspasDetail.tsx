@@ -5,11 +5,7 @@ import {
   WpiStadspasBudget,
   WpiStadspasTransaction,
 } from '../../../server/services/wpi/wpi-types';
-import {
-  API_BASE_PATH,
-  AppRoutes,
-  ChapterTitles,
-} from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   apiPristineResult,
   ApiResponse,
@@ -134,7 +130,7 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
-      url: directApiUrl(`${API_BASE_PATH + urlTransactions}`),
+      url: directApiUrl(`${urlTransactions}`),
     },
     apiPristineResult([])
   );

@@ -9,6 +9,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface MILIEUZONEData {
   isKnown: boolean;
@@ -77,7 +78,7 @@ function transformMILIEUZONEData(
 
 async function fetchSource(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
   const response = await requestData<MILIEUZONEData>(
@@ -85,7 +86,7 @@ async function fetchSource(
       transformResponse: transformMILIEUZONEData,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 
   if (!includeGenerated) {
@@ -101,20 +102,16 @@ async function fetchSource(
 
 export async function fetchMILIEUZONE(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, passthroughRequestHeaders);
+  return fetchSource(sessionID, authProfileAndToken);
 }
 
 export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const MILIEUZONE = await fetchSource(
-    sessionID,
-    passthroughRequestHeaders,
-    true
-  );
+  const MILIEUZONE = await fetchSource(sessionID, authProfileAndToken, true);
 
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
     return apiSuccessResult({

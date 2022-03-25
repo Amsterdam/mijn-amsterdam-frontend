@@ -1,27 +1,24 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
-import { JWE, JWK } from 'jose';
+import jose, { JWE, JWK } from 'jose';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
-import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import {
   BffEndpoints,
   BFF_BASE_PATH,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  OIDC_SESSION_COOKIE_NAME,
   PUBLIC_BFF_ENDPOINTS,
-  TMA_SAML_HEADER,
-  X_AUTH_TYPE_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
-import jose from 'jose';
+
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
-const {
-  decodeState,
-} = require('express-openid-connect/lib/hooks/getLoginState');
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {
-    path: BFF_BASE_PATH + path,
+    path: !path.includes(BFF_BASE_PATH) ? BFF_BASE_PATH + path : path,
     exact: true,
   });
   return isRouteMatch;
@@ -39,26 +36,47 @@ export function isBffPublicEndpoint(requestPath: string) {
   );
 }
 
-export function getAuthTypeFromHeader(
-  passthroughRequestHeaders: Record<string, string>
-) {
-  const type: AuthType = passthroughRequestHeaders[
-    X_AUTH_TYPE_HEADER
-  ] as AuthType;
-
-  if (type === AuthType.EHERKENNING) {
-    return 'eherkenning';
-  }
-
-  return 'digid';
+export interface AuthProfile {
+  authMethod: 'eherkenning' | 'digid';
+  profileType: 'private' | 'private-commercial' | 'commercial';
 }
 
-export function getPassthroughRequestHeaders(req: Request) {
-  const passthroughHeaders: Record<string, string> = {
-    [TMA_SAML_HEADER]: (req.headers[TMA_SAML_HEADER] || '') as string,
-    [X_AUTH_TYPE_HEADER]: (req.cookies[COOKIE_KEY_AUTH_TYPE] || '') as string,
+export function getAuthProfile(tokenData: TokenData): AuthProfile {
+  let authMethod: AuthProfile['authMethod'];
+  let profileType: AuthProfile['profileType'];
+  console.log('tokenData.', tokenData);
+  switch (tokenData.aud) {
+    case oidcConfigEherkenning.clientID:
+      authMethod = 'eherkenning';
+      profileType = 'commercial';
+      break;
+    case oidcConfigDigid.clientID:
+    default:
+      authMethod = 'digid';
+      profileType = 'private';
+      break;
+  }
+
+  return {
+    authMethod,
+    profileType,
   };
-  return passthroughHeaders;
+}
+
+export interface AuthProfileAndToken {
+  token: string;
+  profile: AuthProfile;
+}
+
+export function getAuth(req: Request): AuthProfileAndToken {
+  const token = getOIDCToken(req.cookies[OIDC_SESSION_COOKIE_NAME]);
+  const tokenData = decodeOIDCToken(token);
+  const profile = getAuthProfile(tokenData);
+
+  return {
+    token,
+    profile,
+  };
 }
 
 export function exitEarly(req: Request, res: Response, next: NextFunction) {
@@ -121,15 +139,8 @@ export function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
 }
 
-interface TokenData {
-  sub: string;
-  aud: string;
-  [key: string]: any;
-}
-
-export function getTokenData(jwe: string): TokenData {
+export function getOIDCToken(jwe: string): string {
   const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
-
   const encryptOpts = {
     alg: 'dir',
     enc: 'A256GCM',
@@ -140,9 +151,15 @@ export function getTokenData(jwe: string): TokenData {
     keyManagementAlgorithms: [encryptOpts.alg],
   });
 
-  const session = JSON.parse(cleartext.toString());
-  const claims = jose.JWT.decode(session.id_token) as TokenData;
-  // const [, tokenData] = payload.id_token.split('.');
+  return JSON.parse(cleartext.toString()).id_token;
+}
 
-  return claims;
+interface TokenData {
+  sub: string;
+  aud: string;
+  [key: string]: any;
+}
+
+export function decodeOIDCToken(token: string): TokenData {
+  return jose.JWT.decode(token) as TokenData;
 }

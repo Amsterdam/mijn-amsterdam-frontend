@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../../universal/helpers';
 import { ApiConfig } from '../../config';
 import { axiosRequest } from '../../helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   fetchAllVergunningen,
@@ -18,6 +19,11 @@ describe('Vergunningen service', () => {
   const DUMMY_URL_1 = '/x';
   const DUMMY_URL_2 = '/y';
   const DUMMY_URL_3 = '/z';
+
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private' },
+    token: 'xxxxxx',
+  };
 
   jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
 
@@ -38,7 +44,7 @@ describe('Vergunningen service', () => {
 
   it('FetchVergunningen: should respond with a success response', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
-    const response = await fetchAllVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', authProfileAndToken);
     const successResponse = {
       status: 'OK',
       content: transformVergunningenData(DUMMY_RESPONSE),
@@ -48,7 +54,7 @@ describe('Vergunningen service', () => {
 
   it('should should respond with an empty list', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_2;
-    const response = await fetchAllVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', authProfileAndToken);
     const successResponse = {
       status: 'OK',
       content: [],
@@ -58,7 +64,7 @@ describe('Vergunningen service', () => {
 
   it('should should respond with an empty list if api returns error', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_3;
-    const response = await fetchAllVergunningen('x', { x: 'saml' });
+    const response = await fetchAllVergunningen('x', authProfileAndToken);
     const errorResponse = {
       content: null,
       message: 'Error: Request failed with status code 500',
@@ -71,7 +77,7 @@ describe('Vergunningen service', () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
     const response = await fetchVergunningenGenerated(
       'x',
-      { x: 'saml' },
+      authProfileAndToken,
       new Date('2020-06-23')
     );
     expect(response).toMatchSnapshot();

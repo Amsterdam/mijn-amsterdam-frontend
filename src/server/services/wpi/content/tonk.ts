@@ -1,4 +1,3 @@
-import { API_BASE_PATH } from '../../../../universal/config/api';
 import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
@@ -25,7 +24,7 @@ const correctieMailLabels: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${API_BASE_PATH}/${document?.url}`,
+        to: `${document?.url}`,
         title: 'Bekijk de mail',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished, // '2021-07-15T00:00:00+01:00'

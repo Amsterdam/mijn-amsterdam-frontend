@@ -7,6 +7,7 @@ import {
   apiSuccessResult,
   apiDependencyError,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -55,7 +56,7 @@ function transformBELASTINGENData(
 
 async function fetchSource(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   includeGenerated: boolean = false
 ) {
   const response = await requestData<BELASTINGENData>(
@@ -63,7 +64,7 @@ async function fetchSource(
       transformResponse: transformBELASTINGENData,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 
   if (!includeGenerated) {
@@ -79,20 +80,16 @@ async function fetchSource(
 
 export async function fetchBELASTING(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(sessionID, passthroughRequestHeaders);
+  return fetchSource(sessionID, authProfileAndToken);
 }
 
 export async function fetchBELASTINGGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const BELASTING = await fetchSource(
-    sessionID,
-    passthroughRequestHeaders,
-    true
-  );
+  const BELASTING = await fetchSource(sessionID, authProfileAndToken, true);
   if (BELASTING.status === 'OK') {
     if (BELASTING.content.notifications) {
       return apiSuccessResult({

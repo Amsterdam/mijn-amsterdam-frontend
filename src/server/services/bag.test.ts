@@ -50,7 +50,14 @@ describe('BAG service', () => {
       woonplaatsNaam: 'Amsterdam',
     } as unknown as Adres;
 
-    const rs = await fetchBAG('x', { x: 'saml' }, address);
+    const rs = await fetchBAG(
+      'x',
+      {
+        token: 'xxxx',
+        profile: { authMethod: 'digid', profileType: 'private' },
+      },
+      address
+    );
 
     expect(rs).toStrictEqual({
       status: 'OK',
@@ -63,7 +70,14 @@ describe('BAG service', () => {
 
   it('Bag api should fail correct;y', async () => {
     // Request non-existing mock url
-    const rs = await fetchBAG('x', { x: 'saml' }, {} as any);
+    const rs = await fetchBAG(
+      'x',
+      {
+        token: 'xxxx',
+        profile: { authMethod: 'digid', profileType: 'private' },
+      },
+      {} as any
+    );
 
     expect(rs).toStrictEqual({
       status: 'ERROR',

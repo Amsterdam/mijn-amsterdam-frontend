@@ -3,6 +3,7 @@ import { apiSuccessResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 type Rechtsvorm = string;
 
@@ -176,7 +177,7 @@ const SERVICE_NAME = 'KVK';
 
 export async function fetchKVK(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   if (FeatureToggle.kvkActive) {
     return requestData<KVKData>(
@@ -184,7 +185,7 @@ export async function fetchKVK(
         transformResponse: transformKVKData,
       }),
       sessionID,
-      passthroughRequestHeaders
+      authProfileAndToken
     );
   }
   return apiSuccessResult(null);

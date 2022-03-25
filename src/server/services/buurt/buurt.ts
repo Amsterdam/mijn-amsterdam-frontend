@@ -105,11 +105,7 @@ export async function fetchDataset(
     };
   }
 
-  const response = await requestData<DatasetFeatures>(
-    requestConfig,
-    sessionID,
-    {}
-  );
+  const response = await requestData<DatasetFeatures>(requestConfig, sessionID);
 
   if (response.status === 'OK') {
     const filterConfig = getDynamicDatasetFilters(datasetId);
@@ -245,7 +241,7 @@ export async function loadFeatureDetail(
     );
   }
 
-  const response = await requestData(requestConfig, sessionID, {});
+  const response = await requestData(requestConfig, sessionID);
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);
     // Replace the value of the `idKeyDetail` property. E.g. idKeyDetail = someOtherId  item.id = item.someOtherId;

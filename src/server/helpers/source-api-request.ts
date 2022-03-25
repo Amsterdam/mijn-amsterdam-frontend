@@ -15,13 +15,12 @@ import {
 } from '../../universal/helpers/api';
 import {
   ApiUrls,
-  BFF_MS_API_BASE_URL,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
-  OUTGOING_REQUEST_HEADERS,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
+import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
 export const axiosRequest = axios.create({
@@ -88,19 +87,6 @@ export function clearSessionCache(sessionID: SessionID) {
   }
 }
 
-function filterOutgoingRequestHeaders(headers: Record<string, string> = {}) {
-  const headersFiltered: Record<string, string> = {};
-
-  // Remove particular headers for outgoing requests.
-  OUTGOING_REQUEST_HEADERS.forEach((key) => {
-    if (key in headers) {
-      headersFiltered[key] = headers[key];
-    }
-  });
-
-  return headersFiltered;
-}
-
 function getRequestConfigCacheKey(
   sessionID: string,
   requestConfig: DataRequestConfig
@@ -116,7 +102,7 @@ function getRequestConfigCacheKey(
 export async function requestData<T>(
   config: DataRequestConfig,
   sessionID: SessionID,
-  passthroughRequestHeaders?: Record<string, string>
+  authProfileAndToken?: AuthProfileAndToken
 ) {
   const source = axios.CancelToken.source();
 
@@ -137,14 +123,7 @@ export async function requestData<T>(
     );
   }
 
-  if (
-    requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) &&
-    passthroughRequestHeaders
-  ) {
-    requestConfig.headers = filterOutgoingRequestHeaders(
-      passthroughRequestHeaders
-    );
-  }
+  // TODO: Implement header token passing here. See https://datapunt.atlassian.net/browse/MIJN-4487
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 

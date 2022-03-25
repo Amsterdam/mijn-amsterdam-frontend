@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { ApiErrorResponse, jsonCopy } from '../../../universal/helpers';
 import { BFF_PORT } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
 import {
   fetchBijstandsuitkering,
   FetchConfig,
@@ -34,7 +35,10 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 
 describe('wpi/app-service', () => {
   let sessionID = '';
-  let requestHeaders = {};
+  let authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private' },
+    token: 'xxxxx',
+  };
 
   const FakeRequestProcessLabels: WpiRequestProcessLabels = {
     begin: fakeStepLabels(),
@@ -119,7 +123,7 @@ describe('wpi/app-service', () => {
 
     const response = await fetchRequestProcess(
       sessionID,
-      requestHeaders,
+      authProfileAndToken,
       getLabelsMock,
       fetchConfig
     );
@@ -160,7 +164,7 @@ describe('wpi/app-service', () => {
 
     const response = await fetchRequestProcess(
       sessionID,
-      requestHeaders,
+      authProfileAndToken,
       getLabelsMock,
       fetchConfig
     );
@@ -200,7 +204,10 @@ describe('wpi/app-service', () => {
         content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
       });
 
-    const response = await fetchBijstandsuitkering(sessionID, requestHeaders);
+    const response = await fetchBijstandsuitkering(sessionID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.length).toBe(1);
@@ -278,7 +285,10 @@ describe('wpi/app-service', () => {
         },
       });
 
-    const response = await fetchStadspas(sessionID, requestHeaders);
+    const response = await fetchStadspas(sessionID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.aanvragen?.length).toBe(1);
@@ -298,7 +308,10 @@ describe('wpi/app-service', () => {
         content: null,
       });
 
-    const response = await fetchStadspas(sessionID, requestHeaders);
+    const response = await fetchStadspas(sessionID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.aanvragen?.length).toBe(0);
@@ -489,7 +502,10 @@ describe('wpi/app-service', () => {
         ],
       });
 
-    const response = await fetchWpiNotifications(sessionID, requestHeaders);
+    const response = await fetchWpiNotifications(sessionID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.content).toMatchInlineSnapshot(`
       Object {

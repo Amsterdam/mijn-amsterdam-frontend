@@ -4,7 +4,7 @@ import { omit } from '../../universal/helpers';
 import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
-  getPassthroughRequestHeaders,
+  getAuth,
   getProfileType,
   queryParams,
   sendMessage,
@@ -38,11 +38,7 @@ import {
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
-    fetchService(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      queryParams(req)
-    );
+    fetchService(sessionID, getAuth(req), queryParams(req));
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -76,32 +72,20 @@ const WPI_STADSPAS = callService(fetchStadspas);
 const WMO = callService(fetchWmo);
 
 const TOERISTISCHE_VERHUUR = (sessionID: SessionID, req: Request) =>
-  fetchToeristischeVerhuur(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+  fetchToeristischeVerhuur(sessionID, getAuth(req), getProfileType(req));
 
 const VERGUNNINGEN = (sessionID: SessionID, req: Request) =>
-  fetchVergunningen(sessionID, getPassthroughRequestHeaders(req));
+  fetchVergunningen(sessionID, getAuth(req));
 
 // Location, address, based services
 const MY_LOCATION = (sessionID: SessionID, req: Request) =>
-  fetchMyLocation(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+  fetchMyLocation(sessionID, getAuth(req), getProfileType(req));
 
 const AFVAL = (sessionID: SessionID, req: Request) =>
-  fetchAFVAL(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
+  fetchAFVAL(sessionID, getAuth(req), getProfileType(req));
 
 const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
-  fetchAFVALPUNTEN(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+  fetchAFVALPUNTEN(sessionID, getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBELASTING);
@@ -111,23 +95,12 @@ const SUBSIDIE = callService(fetchSubsidie);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
 const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
-  (
-    await fetchGenerated(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      getProfileType(req)
-    )
-  ).NOTIFICATIONS;
+  (await fetchGenerated(sessionID, getAuth(req), getProfileType(req)))
+    .NOTIFICATIONS;
 
 // Recent cases
 const CASES = async (sessionID: SessionID, req: Request) =>
-  (
-    await fetchGenerated(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      getProfileType(req)
-    )
-  ).CASES;
+  (await fetchGenerated(sessionID, getAuth(req), getProfileType(req))).CASES;
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
@@ -401,7 +374,7 @@ async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
 
   return fetchTIPS(
     sessionID,
-    getPassthroughRequestHeaders(req),
+    getAuth(req),
     queryParams(req),
     serviceResults
   ).catch((error: Error) => {

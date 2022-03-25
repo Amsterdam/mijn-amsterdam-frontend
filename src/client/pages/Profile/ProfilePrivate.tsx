@@ -27,7 +27,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { BRP_RESIDENTS_API_URL } from '../../config/api';
+import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
@@ -51,7 +51,7 @@ export default function Profile() {
     ApiResponse<{ residentCount: number }>
   >(
     {
-      url: BRP_RESIDENTS_API_URL,
+      url: BFFApiUrls.BRP_RESIDENTS_API_URL,
       postpone: true,
       method: 'post',
       transformResponse: (responseContent) => apiSuccessResult(responseContent),

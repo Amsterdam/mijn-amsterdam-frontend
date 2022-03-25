@@ -1,18 +1,11 @@
-import Cookies from 'js-cookie';
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
-import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../../universal/config';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import {
-  AUTH_API_URL,
-  IS_COMMERCIAL_PATH_MATCH,
-  IS_IRMA_PATH_MATCH,
-  LOGOUT_URL,
-} from '../../config/api';
+import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
@@ -21,14 +14,14 @@ export type SessionData = {
   isAuthenticated: boolean;
   validUntil: number;
   validityInSeconds: number;
-  userType: 'BURGER' | 'BEDRIJF';
+  profileType: ProfileType;
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   validUntil: -1,
   validityInSeconds: -1,
-  userType: 'BURGER',
+  profileType: 'private',
 };
 
 export interface SessionState extends SessionData {
@@ -50,39 +43,11 @@ export const INITIAL_SESSION_STATE: SessionState = {
 
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
-  responseType: 'text',
-  transformResponse: (data: SessionData) => apiSuccessResult<SessionData>(data),
 };
 
 type SessionResponseData =
   | ApiSuccessResponse<SessionData>
   | ApiErrorResponse<SessionData>;
-
-function setExplicitLogout() {
-  Cookies.remove(COOKIE_KEY_AUTH_TYPE);
-  (window as any).isExplicitLogout = true;
-}
-
-function isExplicitLogout() {
-  return !!(window as any).isExplicitLogout;
-}
-
-function saveUserTypeForReloadingAndNewTabs(maxAge: number) {
-  if (!isExplicitLogout()) {
-    Cookies.set(
-      COOKIE_KEY_AUTH_TYPE,
-      IS_COMMERCIAL_PATH_MATCH
-        ? AuthType.EHERKENNING
-        : IS_IRMA_PATH_MATCH
-        ? AuthType.IRMA
-        : AuthType.DIGID,
-      {
-        'Max-age': '' + maxAge,
-        sameSite: 'Strict',
-      }
-    );
-  }
-}
 
 function getValidityInSeconds(validUntil: number) {
   return validUntil
@@ -109,15 +74,10 @@ export function useSessionApi() {
   );
 
   const logoutSession = useCallback(() => {
-    setExplicitLogout();
     clearSessionStorage();
     clearDeeplinkEntry();
     window.location.href = LOGOUT_URL;
   }, []);
-
-  useEffect(() => {
-    saveUserTypeForReloadingAndNewTabs(sessionValidMaxAge);
-  }, [sessionValidMaxAge]);
 
   useEffect(() => {
     setSession(() => ({

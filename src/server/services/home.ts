@@ -4,21 +4,22 @@ import {
 } from '../../universal/config/myarea-datasets';
 import { apiDependencyError, isMokum } from '../../universal/helpers';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 import { fetchBAG, fetchBRP } from './index';
 import { fetchKVK, getKvkAddress } from './kvk';
 
 async function fetchPrivate(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
+  const BRP = await fetchBRP(sessionID, authProfileAndToken);
 
   let MY_LOCATION;
 
   if (BRP.status === 'OK' && isMokum(BRP.content)) {
     MY_LOCATION = await fetchBAG(
       sessionID,
-      passthroughRequestHeaders,
+      authProfileAndToken,
       BRP.content.adres
     );
 
@@ -45,20 +46,16 @@ async function fetchPrivate(
 
 async function fetchCommercial(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const KVK = await fetchKVK(sessionID, passthroughRequestHeaders);
+  const KVK = await fetchKVK(sessionID, authProfileAndToken);
 
   let MY_LOCATION;
 
   if (KVK.status === 'OK') {
     const address = KVK.content ? getKvkAddress(KVK.content) : null;
     if (address) {
-      MY_LOCATION = await fetchBAG(
-        sessionID,
-        passthroughRequestHeaders,
-        address
-      );
+      MY_LOCATION = await fetchBAG(sessionID, authProfileAndToken, address);
 
       if (!MY_LOCATION.content?.latlng) {
         MY_LOCATION = apiSuccessResult({
@@ -84,16 +81,16 @@ async function fetchCommercial(
 
 export async function fetchMyLocation(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   switch (profileType) {
     case 'private-commercial':
     case 'commercial':
-      return fetchCommercial(sessionID, passthroughRequestHeaders);
+      return fetchCommercial(sessionID, authProfileAndToken);
 
     case 'private':
     default:
-      return fetchPrivate(sessionID, passthroughRequestHeaders);
+      return fetchPrivate(sessionID, authProfileAndToken);
   }
 }

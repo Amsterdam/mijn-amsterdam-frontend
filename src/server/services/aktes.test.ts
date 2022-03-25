@@ -5,7 +5,7 @@ import { axiosRequest } from '../helpers';
 import aktesSourceData from '../mock-data/json/aktes.json';
 import { AKTESDataFromSource, fetchAKTES, transformAKTESData } from './aktes';
 
-describe('Aktest service', () => {
+describe('Aktes service', () => {
   const axMock = new MockAdapter(axiosRequest);
   const DUMMY_RESPONSE = jsonCopy(aktesSourceData);
 
@@ -16,7 +16,10 @@ describe('Aktest service', () => {
   it('Should fetch the data', async () => {
     axMock.onGet(ApiUrls.AKTES).replyOnce(200, DUMMY_RESPONSE);
 
-    const rs = await fetchAKTES('x', { x: 'saml' });
+    const rs = await fetchAKTES('x', {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxx',
+    });
 
     expect(rs).toStrictEqual({
       status: 'OK',
@@ -27,7 +30,10 @@ describe('Aktest service', () => {
   it('Fetch fails', async () => {
     axMock.onGet(ApiUrls.AKTES).replyOnce(500, []);
 
-    const rs = await fetchAKTES('x', { x: 'saml' });
+    const rs = await fetchAKTES('x', {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxx',
+    });
 
     expect(rs).toStrictEqual({
       status: 'ERROR',

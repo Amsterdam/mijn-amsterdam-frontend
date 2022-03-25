@@ -5,7 +5,7 @@ import {
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
-import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
+import { getAuth, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { axiosRequest } from './helpers/source-api-request';
 import {
@@ -36,7 +36,7 @@ router.get(
     try {
       const response = await fetchSearchConfig(
         sessionID,
-        getPassthroughRequestHeaders(req),
+        getAuth(req),
         queryParams(req)
       );
       res.json(response);
@@ -180,7 +180,7 @@ router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
   try {
     const response = await fetchCMSCONTENT(
       sessionID,
-      getPassthroughRequestHeaders(req),
+      getAuth(req),
       queryParams(req)
     );
     res.json(response);
@@ -197,7 +197,7 @@ router.get(
     try {
       const response = await fetchMaintenanceNotificationsActual(
         sessionID,
-        getPassthroughRequestHeaders(req),
+        getAuth(req),
         queryParams(req)
       );
       res.json(response);
@@ -211,8 +211,11 @@ router.get(
 router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
   const apiName = req.params.apiName;
   if (apiName && apiName in ApiConfig) {
-    const headers = getPassthroughRequestHeaders(req);
-
+    const authProfileAndToken = getAuth(req);
+    // TODO: Which header key to use here?
+    const headers = {
+      token: authProfileAndToken.token,
+    };
     try {
       const rs = await axiosRequest.request(
         getApiConfig(apiName as SourceApiKey, {

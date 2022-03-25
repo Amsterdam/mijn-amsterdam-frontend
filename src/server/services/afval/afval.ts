@@ -1,16 +1,17 @@
+import { apiDependencyError } from '../../../universal/helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
 import { fetchAfvalmomenten } from './afvalmomenten';
 import { fetchAfvalpunten } from './afvalpunten';
-import { apiDependencyError } from '../../../universal/helpers';
 
 export async function fetchAFVAL(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
     sessionID,
-    passthroughRequestHeaders,
+    authProfileAndToken,
     profileType
   );
 
@@ -22,12 +23,12 @@ export async function fetchAFVAL(
 
 export async function fetchAFVALPUNTEN(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
     sessionID,
-    passthroughRequestHeaders,
+    authProfileAndToken,
     profileType
   );
 

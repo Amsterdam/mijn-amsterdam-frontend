@@ -8,6 +8,7 @@ import { Adres } from '../../universal/types';
 import { BAGSourceData } from '../../universal/types/bag';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;
@@ -33,7 +34,7 @@ export function formatBAGData(
 
 export async function fetchBAG(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   address: Adres | null
 ) {
   if (!address) {
@@ -49,6 +50,6 @@ export async function fetchBAG(
       transformResponse: (responseData) => formatBAGData(responseData, address),
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 }

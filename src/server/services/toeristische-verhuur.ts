@@ -32,6 +32,7 @@ import { LinkProps } from '../../universal/types/App.types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import {
   BBVergunning,
   fetchVergunningen,
@@ -76,14 +77,14 @@ export function transformToeristischeVerhuurRegistraties(
 
 function fetchRegistraties(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<ToeristischeVerhuurRegistratie[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
       transformResponse: transformToeristischeVerhuurRegistraties,
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 }
 
@@ -209,7 +210,7 @@ export function transformVergunningenToVerhuur(
 
 async function fetchAndTransformToeristischeVerhuur(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType = 'private'
 ) {
   if (!FeatureToggle.toeristischeVerhuurActive) {
@@ -222,11 +223,11 @@ async function fetchAndTransformToeristischeVerhuur(
   const registratiesRequest =
     profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))
-      : fetchRegistraties(sessionID, passthroughRequestHeaders);
+      : fetchRegistraties(sessionID, authProfileAndToken);
 
   const vergunningenRequest = fetchVergunningen(
     sessionID,
-    passthroughRequestHeaders,
+    authProfileAndToken,
     {
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
@@ -471,13 +472,13 @@ function createToeristischeVerhuurRecentCase(
 
 export async function fetchToeristischeVerhuurGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date,
   profileType?: ProfileType
 ) {
   const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
     sessionID,
-    passthroughRequestHeaders,
+    authProfileAndToken,
     profileType
   );
 

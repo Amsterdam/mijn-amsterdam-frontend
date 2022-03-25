@@ -4,8 +4,7 @@ import {
   addServiceResultHandler,
   clearSession,
   exitEarly,
-  getAuthTypeFromHeader,
-  getPassthroughRequestHeaders,
+  getAuth,
   getProfileType,
   isBffEndpoint,
   isBffPublicEndpoint,
@@ -61,28 +60,7 @@ describe('server/helpers/app', () => {
     }
   });
 
-  test('getAuthTypeFromHeader', () => {
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'D',
-      });
-      expect(result).toBe('digid');
-    }
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'E',
-      });
-      expect(result).toBe('eherkenning');
-    }
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'X',
-      });
-      expect(result).toBe('digid');
-    }
-  });
-
-  test('getPassthroughRequestHeaders', () => {
+  test('getAuth', () => {
     const req = {
       headers: {
         From: 'webmaster@example.org',
@@ -94,7 +72,7 @@ describe('server/helpers/app', () => {
       },
     } as unknown as typeof express.request;
 
-    const result = getPassthroughRequestHeaders(req);
+    const result = getAuth(req);
 
     expect(result).toEqual({
       'x-auth-type': 'E',

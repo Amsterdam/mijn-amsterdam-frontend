@@ -1,12 +1,9 @@
 import { AxiosRequestConfig } from 'axios';
+import { CorsOptions } from 'cors';
+import { ConfigParams } from 'express-openid-connect';
 import https from 'https';
-import { API_BASE_PATH, FeatureToggle } from '../universal/config';
+import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
-
-export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
-export const X_AUTH_TYPE_HEADER: string = 'x-auth-type';
-
-export const OUTGOING_REQUEST_HEADERS = [TMA_SAML_HEADER];
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
@@ -17,8 +14,7 @@ export const BFF_REQUEST_CACHE_ENABLED =
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-export const BFF_BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
-export const BFF_PUBLIC_BASE_PATH = IS_AP ? '/public' : '/test-api/public';
+export const BFF_BASE_PATH = '/bff';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -29,7 +25,7 @@ const BFF_MS_API_HOST = IS_PRODUCTION
 const BFF_MS_API_PORT = IS_AP ? '' : `:${BFF_PORT}`;
 const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 
-export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}${API_BASE_PATH}`;
+export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
@@ -204,12 +200,8 @@ export const BffEndpoints = {
   SEARCH_CONFIG: '/services/search-config',
 
   // start: OIDC config
-  PUBLIC_AUTH_BASE,
   PUBLIC_AUTH_BASE_DIGID,
   PUBLIC_AUTH_BASE_EHERKENNING,
-
-  PUBLIC_AUTH_LOGIN: `${PUBLIC_AUTH_BASE + PUBLIC_AUTH_LOGIN}`,
-  PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE + PUBLIC_AUTH_LOGOUT}`,
 
   // Digid
   PUBLIC_AUTH_CALLBACK_DIGID:
@@ -217,6 +209,7 @@ export const BffEndpoints = {
     PUBLIC_AUTH_BASE_DIGID +
     PUBLIC_AUTH_CALLBACK,
   PUBLIC_AUTH_LOGIN_DIGID: PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_LOGIN,
+  PUBLIC_AUTH_LOGOUT_DIGID: PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_LOGOUT,
 
   // EHerkenning
   PUBLIC_AUTH_CALLBACK_EHERKENNING:
@@ -225,10 +218,12 @@ export const BffEndpoints = {
     PUBLIC_AUTH_CALLBACK,
   PUBLIC_AUTH_LOGIN_EHERKENNING:
     PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_LOGIN,
+  PUBLIC_AUTH_LOGOUT_EHERKENNING:
+    PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_LOGOUT,
 
   // Application specific urls
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
-  PUBLIC_AUTH_USER: `${PUBLIC_AUTH_BASE}/user`,
+  PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
   // end: OIDC config
 
   PUBLIC_CMS_CONTENT: '/public/services/cms',
@@ -244,3 +239,50 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.PUBLIC_CACHE_OVERVIEW,
 ];
+
+export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60;
+export const OIDC_SESSION_COOKIE_NAME = 'appSession';
+
+const oidcConfigBase: ConfigParams = {
+  authRequired: false,
+  auth0Logout: false,
+  idpLogout: true,
+  secret: process.env.BFF_OIDC_SECRET,
+  baseURL: process.env.BFF_OIDC_BASE_URL,
+  issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
+  attemptSilentLogin: false,
+  authorizationParams: { prompt: 'login' },
+  session: {
+    rolling: false,
+    rollingDuration: undefined,
+    absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
+    name: OIDC_SESSION_COOKIE_NAME,
+  },
+};
+
+export const oidcConfigDigid: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
+  routes: {
+    login: false,
+    logout: PUBLIC_AUTH_LOGOUT,
+    callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_DIGID
+    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
+  },
+};
+
+export const oidcConfigEherkenning: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+  routes: {
+    login: false,
+    logout: PUBLIC_AUTH_LOGOUT,
+    callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_EHERKENNING
+    postLogoutRedirect: process.env.BFF_REDIRECT_TO_AFTER_LOGOUT,
+  },
+};
+
+export const corsOptions: CorsOptions = {
+  origin: process.env.BFF_FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+};

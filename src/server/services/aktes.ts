@@ -6,6 +6,7 @@ import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../universal/config/routes';
 import { LinkProps, GenericDocument } from '../../universal/types/App.types';
 import { hash } from '../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../helpers/app';
 
 interface AkteFromSource {
   aktenummer: string;
@@ -63,13 +64,13 @@ export function transformAKTESData(
 
 export async function fetchAKTES(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('AKTES', {
     transformResponse: transformAKTESData,
   });
 
-  return requestData<AKTESData>(options, sessionID, passthroughRequestHeaders);
+  return requestData<AKTESData>(options, sessionID, authProfileAndToken);
 }
 
 function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
@@ -78,9 +79,9 @@ function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
 
 export async function fetchAKTESGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const AKTES = await fetchAKTES(sessionID, passthroughRequestHeaders);
+  const AKTES = await fetchAKTES(sessionID, authProfileAndToken);
 
   if (AKTES.status === 'OK') {
     return apiSuccessResult({

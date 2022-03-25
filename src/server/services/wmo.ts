@@ -10,6 +10,7 @@ import { hash } from '../../universal/helpers/utils';
 import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 // From Mijn Amsterdam WMONed api
 export interface WmoApiItem {
@@ -691,7 +692,7 @@ export function transformWmoResponse(
 
 export function fetchWmo(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<WmoItem[]>(
     getApiConfig('WMO', {
@@ -700,6 +701,6 @@ export function fetchWmo(
       },
     }),
     sessionID,
-    passthroughRequestHeaders
+    authProfileAndToken
   );
 }

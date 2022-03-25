@@ -4,6 +4,7 @@ import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
+import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 
@@ -181,7 +182,7 @@ async function fetchCMSMaintenanceNotifications(
 
 export async function fetchMaintenanceNotificationsActual(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  authProfileAndToken?: AuthProfileAndToken,
   queryParams?: Record<string, string>
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
@@ -215,7 +216,7 @@ export async function fetchMaintenanceNotificationsDashboard(
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
     sessionID,
-    {},
+    undefined,
     { page: 'dashboard' }
   );
 
