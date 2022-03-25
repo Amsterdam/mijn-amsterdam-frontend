@@ -139,11 +139,6 @@ export default function MainHeaderHero() {
         />
         <source
           media="(orientation: landscape) and (min-width: 1024px)"
-          type="image/webp"
-          srcSet="/header/1366x342-algemeen.webp"
-        />
-        <source
-          media="(orientation: landscape) and (min-width: 1024px)"
           srcSet={srcSet.LANDSCAPE_MEDIUM}
         />
         <source
