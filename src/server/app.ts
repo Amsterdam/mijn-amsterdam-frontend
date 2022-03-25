@@ -64,7 +64,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(compression());
 
-// Generate session id
+// Generate request id
 app.use(requestID);
 
 // Public routes
@@ -79,11 +79,6 @@ if (!IS_AP) {
 
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, isAuthenticated(), protectedRouter);
-
-app.use((req, res, next) => {
-  console.log('nexterS?S?S');
-  next();
-});
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearRequestCache);
