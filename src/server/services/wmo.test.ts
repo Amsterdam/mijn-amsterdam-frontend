@@ -103,6 +103,19 @@ const apiTestItems: WmoApiItem[] = [
     serviceDateStart: null,
     serviceDateEnd: null,
   },
+  {
+    title: 'woonruimteaanpassing',
+    isActual: false,
+    deliveryType: 'ZIN',
+    supplier: 'JTWD - Zorg',
+    itemTypeCode: 'WRA',
+    dateDecision: '2022-01-03',
+    dateStart: '2022-01-03',
+    dateEnd: '2022-03-10',
+    serviceOrderDate: '2022-01-23T13:31:36',
+    serviceDateStart: null,
+    serviceDateEnd: null,
+  },
 ];
 
 describe('Transform api items', () => {
@@ -212,6 +225,21 @@ describe('Transform api items', () => {
 
     expect(transformed.steps[3].isActive).toBe(false);
     expect(transformed.steps[3].isChecked).toBe(false);
+  });
+
+  test('woonruimte aanpassing (geen levering voor einde recht)', () => {
+    const [transformed] = transformWmoResponse([apiTestItems[7]], compareDate);
+    expect(transformed.steps.length).toBe(3);
+    expect(transformed.isActual).toBe(false);
+
+    expect(transformed.steps[0].isActive).toBe(false);
+    expect(transformed.steps[0].isChecked).toBe(true);
+
+    expect(transformed.steps[1].isActive).toBe(false);
+    expect(transformed.steps[1].isChecked).toBe(true);
+
+    expect(transformed.steps[2].isActive).toBe(true);
+    expect(transformed.steps[2].isChecked).toBe(true);
   });
 
   test('All transformations', () => {
