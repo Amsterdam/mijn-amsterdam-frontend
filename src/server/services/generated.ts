@@ -28,7 +28,7 @@ export function getGeneratedItemsFromApiResults(
     if (content === null || typeof content !== 'object') {
       continue;
     }
-    // Collection notifications and cases
+    // Collection of notifications
     if ('notifications' in content) {
       notifications.push(...content.notifications);
     }

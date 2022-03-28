@@ -241,13 +241,7 @@ export const servicesByProfileType: ServicesByProfileType = {
   },
 };
 
-const tipsOmit = [
-  'AFVAL',
-  'AFVALPUNTEN',
-  'CMS_CONTENT',
-  'NOTIFICATIONS',
-  'CASES',
-];
+const tipsOmit = ['AFVAL', 'AFVALPUNTEN', 'CMS_CONTENT', 'NOTIFICATIONS'];
 
 export const servicesTipsByProfileType = {
   private: omit(

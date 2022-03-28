@@ -34,21 +34,6 @@ const testState: any = {
       },
     ],
   },
-  CASES: {
-    status: 'OK',
-    content: [
-      {
-        id: 'Case1',
-        title: 'Lopende zaak',
-        description: 'Tip over dingen',
-        datePublished: '2020-07-24',
-        link: {
-          to: '/lopende-zaak-1',
-          title: 'Linkje!',
-        },
-      },
-    ],
-  },
   MY_LOCATION: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
   NOTIFICATIONS: {
     status: 'OK',
