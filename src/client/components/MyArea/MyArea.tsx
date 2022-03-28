@@ -1,6 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
