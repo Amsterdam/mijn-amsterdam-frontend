@@ -5,7 +5,6 @@ import slug from 'slugme';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
-import { isRecentCase } from '../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccessResult,

@@ -5,7 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
-import { hash, isRecentCase } from '../../../universal/helpers/utils';
+import { hash } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
