@@ -109,7 +109,7 @@ const MILIEUZONE = callService(fetchMILIEUZONE);
 const ERFPACHT = callService(fetchERFPACHT);
 const SUBSIDIE = callService(fetchSubsidie);
 
-// Special services that aggeragates CASES and NOTIFICATIONS from various services
+// Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
   (
     await fetchGenerated(

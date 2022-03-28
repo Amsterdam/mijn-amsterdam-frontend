@@ -8,7 +8,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 
-// TIPS, NOTIFICATIONS, CASES, BUURT, MY_LOCATION
+// TIPS, NOTIFICATIONS, BUURT, MY_LOCATION
 
 const testState: any = {
   BRP: {
