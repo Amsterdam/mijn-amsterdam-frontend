@@ -363,36 +363,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MyCases"
-    >
-      <h3
-        class="Heading Heading__large"
-      >
-        Mijn lopende aanvragen
-      </h3>
-      <ul
-        class="List"
-      >
-        <li
-          class="CaseItem"
-        >
-          <a
-            class="Button Button__plain Button__lean Linkd"
-            href="/lopende-zaak-1"
-          >
-            <svg
-              aria-label="Home"
-              class="ChapterIcon"
-              fill="#EC0000"
-            >
-              burgerzaken.svg
-            </svg>
-            Lopende zaak
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div
       class="DashboardMapContainer"
     >
       <div
