@@ -46,10 +46,8 @@
 
   .TopContentContainer {
     @include centered-max;
-    margin-bottom: 2rem;
 
     @include media-q('>phone') {
-      margin-bottom: 10rem;
       display: flex;
       align-items: flex-start;
     }
