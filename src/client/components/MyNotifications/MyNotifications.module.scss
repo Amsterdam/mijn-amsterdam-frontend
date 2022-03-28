@@ -6,13 +6,18 @@
 
 .MyNotificationItem {
   border-top: 1px solid $color-neutral-grey2;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   padding-left: 5rem;
   position: relative;
 
   &:first-child {
     border-top: 0;
+  }
+
+  @include media-q('>=phone') {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   @include mq-tablet() {
