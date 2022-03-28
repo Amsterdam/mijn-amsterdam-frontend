@@ -44,14 +44,6 @@ export interface MyNotification {
   };
 }
 
-export interface MyCase {
-  id: string;
-  chapter: Chapter;
-  datePublished: string;
-  title: string;
-  link: LinkProps;
-}
-
 export interface MyTip {
   id: string;
   datePublished: string;

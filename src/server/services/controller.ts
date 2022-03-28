@@ -119,16 +119,6 @@ const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
     )
   ).NOTIFICATIONS;
 
-// Recent cases
-const CASES = async (sessionID: SessionID, req: Request) =>
-  (
-    await fetchGenerated(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      getProfileType(req)
-    )
-  ).CASES;
-
 // Store all services for type derivation
 const SERVICES_INDEX = {
   BRP,
@@ -154,7 +144,6 @@ const SERVICES_INDEX = {
   ERFPACHT,
   SUBSIDIE,
   NOTIFICATIONS,
-  CASES,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -173,7 +162,6 @@ type CommercialServices = Pick<
   | 'ERFPACHT'
   | 'SUBSIDIE'
   | 'NOTIFICATIONS'
-  | 'CASES'
   | 'MY_LOCATION'
   | 'KVK'
   | 'MILIEUZONE'
@@ -205,7 +193,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_TONK,
     WPI_STADSPAS,
     NOTIFICATIONS,
-    CASES,
     MY_LOCATION,
     KVK,
     MILIEUZONE,
@@ -230,7 +217,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_BBZ,
     WPI_STADSPAS,
     NOTIFICATIONS,
-    CASES,
     MY_LOCATION,
     KVK,
     MILIEUZONE,
@@ -246,7 +232,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     NOTIFICATIONS,
-    CASES,
     MY_LOCATION,
     KVK,
     MILIEUZONE,

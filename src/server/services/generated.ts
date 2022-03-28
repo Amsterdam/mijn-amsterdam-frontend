@@ -3,7 +3,7 @@ import memoize from 'memoizee';
 import { apiSuccessResult } from '../../universal/helpers';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
-import { MyCase, MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchBRPGenerated } from './brp';
@@ -22,7 +22,6 @@ export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
 ) {
   const notifications: MyNotification[] = [];
-  const cases: MyCase[] = [];
 
   // Collect the success response data from the service results and send to the tips Api.
   for (const { content } of responses) {
@@ -32,11 +31,6 @@ export function getGeneratedItemsFromApiResults(
     // Collection notifications and cases
     if ('notifications' in content) {
       notifications.push(...content.notifications);
-    }
-
-    if ('cases' in content) {
-      // NOTE: using bracket notation here to satisfy the compiler
-      cases.push(...(content['cases'] as MyCase[]));
     }
   }
   const notificationsResult = notifications
@@ -57,7 +51,6 @@ export function getGeneratedItemsFromApiResults(
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
   return {
-    CASES: apiSuccessResult(cases.sort(dateSort('datePublished', 'desc'))),
     NOTIFICATIONS: apiSuccessResult(notificationsResult),
   };
 }
