@@ -43,6 +43,8 @@
 }
 
 .MetaInfoSecondary {
+  width: calc(100% - 24px);
+
   @include mq-tablet() {
     display: inline-block;
     vertical-align: middle;
@@ -125,4 +127,32 @@
 
 .Body {
   max-width: 60rem;
+  overflow: hidden;
+  height: 0;
+  position: relative;
+}
+
+.TitleToggle {
+  margin: 0;
+  border: 0;
+  background: 0;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+
+  width: 100%;
+
+  @include media-q('>=phone') {
+    cursor: default;
+  }
+
+  &[aria-expanded='true'] .CaretIcon {
+    transform: translateY(calc(-50% + 10px)) rotate(-90deg);
+  }
+}
+
+.CaretIcon {
+  float: right;
+  transform: translateY(calc(-50% + 10px)) rotate(90deg);
+  transition: transform 200ms ease-out;
 }
