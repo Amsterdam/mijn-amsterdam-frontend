@@ -97,9 +97,9 @@ export default function Dashboard() {
           items={CASES.content!}
         />
         {!isPhoneScreen && <MyAreaDashboard />}
-        {!isPhoneScreen && (
-          <MyTips isLoading={isLoading(TIPS)} items={tipItems} />
-        )}
+
+        <MyTips isLoading={isLoading(TIPS)} items={tipItems} />
+
         <DirectLinks profileType={profileType} />
       </Page>
     </>
