@@ -3,8 +3,6 @@ import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { MyCase } from '../../universal/types/App.types';
-import { FeatureToggle, ExternalUrls } from '../../universal/config/app';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -25,28 +23,6 @@ interface MILIEUZONESourceData {
   status: 'OK' | 'ERROR';
   content?: MILIEUZONESourceDataContent;
   message?: string;
-}
-
-function extractRecentCases(notifications: MyNotification[]) {
-  const cases: MyCase[] = [];
-  for (const notification of notifications) {
-    if (notification.id.endsWith('-M1')) {
-      const recentCase: MyCase = {
-        ...notification,
-        id: `${notification.id}-case`,
-        title: 'Milieuzone aanvraag / ontheffing',
-        link: {
-          ...(notification.link || {
-            to: ExternalUrls.SSO_MILIEUZONE || '/',
-            title: 'Mileuzone ontheffingen en aanvragen',
-          }),
-          rel: 'external noopener noreferrer',
-        },
-      };
-      cases.push(recentCase);
-    }
-  }
-  return cases;
 }
 
 function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
@@ -119,9 +95,6 @@ export async function fetchMILIEUZONEGenerated(
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
     return apiSuccessResult({
       notifications: MILIEUZONE.content.notifications,
-      cases: FeatureToggle.milieuzoneRecentCasesActive
-        ? extractRecentCases(MILIEUZONE.content.notifications)
-        : [],
     });
   }
   return apiDependencyError({ MILIEUZONE });
