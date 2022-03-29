@@ -475,79 +475,81 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           Al mijn tips
         </a>
       </div>
-      <ul
-        class="TipsList"
+      <div
+        class="TipScrollContainer"
       >
-        <li
-          class="TipItem is-personalized"
+        <ul
+          class="TipsList"
+          style="width: 100%;"
         >
-          <article>
-            <div
-              class="ImageContainer"
-            >
-              <img
-                alt=""
-                class="Img"
-                src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-              />
-              <div>
-                <button
-                  aria-expanded="false"
-                  aria-label="Reden waarom u deze tip ziet"
-                  class="Button Button__plain Button__lean IconButton TipFlipButton"
-                  id="tip-flip-Tip1"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon"
-                    fill="#ffffff"
-                    height="32"
-                    width="32"
-                  >
-                    Info.svg
-                  </svg>
-                </button>
-                <p
-                  aria-labelledby="tip-flip-Tip1"
-                  class="TipFlip"
-                  hidden=""
-                >
-                  <span>
-                    U ziet deze tip omdat!
-                  </span>
-                </p>
-              </div>
-            </div>
-            <h4
-              class="Heading Heading__medium"
-            >
-              Tip!!
-            </h4>
-            <p>
-              Tip over dingen
-            </p>
-            <a
-              class="Button Button__plain Button__lean Linkd"
-              href="/lopende-zaak-1"
-              title="Meer informatie over de tip: Tip!!"
-            >
-              <svg
-                aria-hidden="true"
-                class="Icon Icon__left"
-                fill="#000"
-                height="14px"
-                width="14px"
+          <li
+            class="TipItem is-personalized"
+          >
+            <article>
+              <div
+                class="ImageContainer"
               >
-                Chevron-Right.svg
-              </svg>
-              Linkje!
-            </a>
-          </article>
-        </li>
-        <li
-          class="TipItem"
-        />
-      </ul>
+                <img
+                  alt=""
+                  class="Img"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                />
+                <div>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Reden waarom u deze tip ziet"
+                    class="Button Button__plain Button__lean IconButton TipFlipButton"
+                    id="tip-flip-Tip1"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon"
+                      fill="#ffffff"
+                      height="32"
+                      width="32"
+                    >
+                      Info.svg
+                    </svg>
+                  </button>
+                  <p
+                    aria-labelledby="tip-flip-Tip1"
+                    class="TipFlip"
+                    hidden=""
+                  >
+                    <span>
+                      U ziet deze tip omdat!
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <h4
+                class="Heading Heading__medium"
+              >
+                Tip!!
+              </h4>
+              <p>
+                Tip over dingen
+              </p>
+              <a
+                class="Button Button__plain Button__lean Linkd"
+                href="/lopende-zaak-1"
+                title="Meer informatie over de tip: Tip!!"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="Icon Icon__left"
+                  fill="#000"
+                  height="14px"
+                  width="14px"
+                >
+                  Chevron-Right.svg
+                </svg>
+                Linkje!
+              </a>
+            </article>
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       class="DirectLinks"
