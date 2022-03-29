@@ -73,47 +73,57 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             <div
               class="MetaInfoSecondary"
             >
-              <em
-                class="ChapterIndication"
+              <button
+                aria-expanded="true"
+                class="TitleToggle"
+                disabled=""
               >
-                Home
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
-              >
-                24 juli 2020
-              </time>
+                <em
+                  class="ChapterIndication"
+                >
+                  Home
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </button>
             </div>
           </aside>
           <div
+            aria-hidden="false"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie1
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-1"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie1
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-1"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
@@ -137,47 +147,57 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             <div
               class="MetaInfoSecondary"
             >
-              <em
-                class="ChapterIndication"
+              <button
+                aria-expanded="true"
+                class="TitleToggle"
+                disabled=""
               >
-                Mijn gegevens
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
-              >
-                24 juli 2020
-              </time>
+                <em
+                  class="ChapterIndication"
+                >
+                  Mijn gegevens
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </button>
             </div>
           </aside>
           <div
+            aria-hidden="false"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie2
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-2"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie2
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-2"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
@@ -201,47 +221,57 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             <div
               class="MetaInfoSecondary"
             >
-              <em
-                class="ChapterIndication"
+              <button
+                aria-expanded="true"
+                class="TitleToggle"
+                disabled=""
               >
-                Inkomen
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
-              >
-                24 juli 2020
-              </time>
+                <em
+                  class="ChapterIndication"
+                >
+                  Inkomen
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </button>
             </div>
           </aside>
           <div
+            aria-hidden="false"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie3
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-3"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie3
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-3"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
@@ -265,41 +295,51 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             <div
               class="MetaInfoSecondary"
             >
-              <em
-                class="ChapterIndication"
+              <button
+                aria-expanded="true"
+                class="TitleToggle"
+                disabled=""
               >
-                Actueel
-              </em>
+                <em
+                  class="ChapterIndication"
+                >
+                  Actueel
+                </em>
+              </button>
             </div>
           </aside>
           <div
+            aria-hidden="false"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/overzicht-updates"
-                title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/overzicht-updates"
+                  title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Laat ons weten wat u ervan vindt
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Laat ons weten wat u ervan vindt
+                </a>
+              </p>
+            </div>
           </div>
         </li>
       </ul>
