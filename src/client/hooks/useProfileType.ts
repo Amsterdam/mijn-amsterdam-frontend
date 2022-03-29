@@ -4,7 +4,7 @@ import { useSessionStorage } from './storage.hook';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 
-let initialProfileType = 'private';
+let initialProfileType: ProfileType = 'private';
 
 try {
   const value = sessionStorage.getItem(PROFILE_TYPE_STORAGE_KEY);
@@ -19,11 +19,11 @@ try {
 
 export const profileTypeState = atom<ProfileType>({
   key: PROFILE_TYPE_STORAGE_KEY,
-  default: initialProfileType as ProfileType,
+  default: initialProfileType,
 });
 
 export function useProfileType() {
-  const state = useRecoilState<ProfileType>(profileTypeState);
+  const state = useRecoilState(profileTypeState);
   const [stateValue, setState] = state;
   const [profileType, setSessionState] = useSessionStorage(
     PROFILE_TYPE_STORAGE_KEY,
@@ -32,7 +32,7 @@ export function useProfileType() {
 
   // If we encounter a profileType stored in the SessionStorage, transfer it to the recoil state on first load.
   useEffect(() => {
-    if (profileType !== stateValue) {
+    if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,20 +8,21 @@ import {
 import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
+import { useProfileType } from '../useProfileType';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
   validUntil: number;
   validityInSeconds: number;
-  profileType: ProfileType;
+  profileType: ProfileType | null;
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   validUntil: -1,
   validityInSeconds: -1,
-  profileType: 'private',
+  profileType: null,
 };
 
 export interface SessionState extends SessionData {
@@ -68,6 +69,13 @@ export function useSessionApi() {
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
   const sessionData = data?.content;
   const [session, setSession] = useSessionAtom();
+  const [, setProfileType] = useProfileType();
+
+  useEffect(() => {
+    if (sessionData.profileType) {
+      setProfileType(sessionData.profileType);
+    }
+  }, [setProfileType, sessionData.profileType]);
 
   const sessionValidMaxAge = getValidityInSeconds(
     sessionData?.validUntil || INITIAL_SESSION_CONTENT.validUntil
