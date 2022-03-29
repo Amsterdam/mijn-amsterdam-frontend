@@ -246,8 +246,6 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         NOTIFICATIONS:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        CASES:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
     ApiSearchConfigResult:
       type: object
       properties:
@@ -293,8 +291,6 @@ components:
         WPI_STADSPAS:
           type: object
         NOTIFICATIONS:
-          type: object
-        CASES:
           type: object
         MY_LOCATION:
           type: object

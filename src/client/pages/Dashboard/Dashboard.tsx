@@ -4,7 +4,6 @@ import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
   DirectLinks,
-  MyCases,
   MyChaptersPanel,
   MyNotifications,
   MyTips,
@@ -33,7 +32,7 @@ function sortAndFormatChapters(items: ChapterMenuItem[]) {
 
 export default function Dashboard() {
   const appState = useAppStateGetter();
-  const { TIPS, NOTIFICATIONS, CASES } = appState;
+  const { TIPS, NOTIFICATIONS } = appState;
   const notifications = useAppStateNotifications();
   const prevChapters = useRef<string>();
   const tipItems = useMemo(() => {
@@ -91,11 +90,6 @@ export default function Dashboard() {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-        <MyCases
-          isLoading={isLoading(CASES)}
-          title="Mijn lopende aanvragen"
-          items={CASES.content!}
-        />
         {!isPhoneScreen && <MyAreaDashboard />}
         {!isPhoneScreen && (
           <MyTips isLoading={isLoading(TIPS)} items={tipItems} />

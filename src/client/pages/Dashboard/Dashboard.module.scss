@@ -1,7 +1,6 @@
 @import '../../styles/_global.scss';
 
 .Dashboard {
-
   // Dashboard has a different design for the heading, to match the design easily and responsively
   // a pragmatic solution with help of :before is written below.
   @include select(PageHeading_PageHeading) {
@@ -47,10 +46,8 @@
 
   .TopContentContainer {
     @include centered-max;
-    margin-bottom: 2rem;
 
     @include media-q('>phone') {
-      margin-bottom: 10rem;
       display: flex;
       align-items: flex-start;
     }
@@ -77,14 +74,6 @@
     // Adjust some margins to match the design on mobile
     @include media-q('>phone') {
       flex: 0 0 calc(50% + 2rem);
-    }
-  }
-
-  @include select(MyCases_MyCases) {
-    @include centered-block;
-    margin-bottom: 2rem;
-    @include media-q('>phone') {
-      margin-bottom: 8rem;
     }
   }
 
