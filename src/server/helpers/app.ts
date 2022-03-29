@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jose, { JWE, JWK } from 'jose';
+import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult } from '../../universal/helpers';
@@ -9,6 +10,7 @@ import {
   OIDC_SECRET,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  RelayPathsAllowed,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
 
@@ -159,4 +161,14 @@ export function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
     exp,
   });
   return value;
+}
+
+export function isRelayAllowed(pathRequested: string) {
+  return Object.values(RelayPathsAllowed).some((pathAllowed) => {
+    return matchPath(pathRequested, {
+      path: pathAllowed,
+      exact: true,
+      strict: false,
+    });
+  });
 }

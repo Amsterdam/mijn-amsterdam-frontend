@@ -183,6 +183,13 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
+export const RelayPathsAllowed = {
+  VERGUNNINGEN_DOCUMENTS: '/decosjoin/listdocuments/:key',
+  WPI_DOCUMENT: '/wpi/document/:key',
+  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
+  BRP_BEWONERS: '/brp/aantal_bewoners',
+};
+
 export const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';
 export const PUBLIC_AUTH_BASE_DIGID = `${PUBLIC_AUTH_BASE}/digid`;
 export const PUBLIC_AUTH_BASE_EHERKENNING = `${PUBLIC_AUTH_BASE}/eherkenning`;

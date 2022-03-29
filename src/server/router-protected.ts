@@ -1,11 +1,19 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { matchPath } from 'react-router-dom';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
-import { ApiConfig, BffEndpoints, getApiConfig, SourceApiKey } from './config';
-import { getAuth, queryParams } from './helpers/app';
+import {
+  ApiConfig,
+  BffEndpoints,
+  BFF_MS_API_BASE_URL,
+  getApiConfig,
+  RelayPathsAllowed,
+  SourceApiKey,
+} from './config';
+import { getAuth, isRelayAllowed, queryParams } from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
 import { fetchSearchConfig, loadClusterDatasets } from './services';
 import {
@@ -166,6 +174,29 @@ router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
           headers,
         })
       );
+      res.json(rs.data);
+    } catch (error: any) {
+      res.status(error?.response?.status || 500);
+      res.json(error.message || 'Error requesting api data');
+    }
+  }
+
+  next();
+});
+
+router.use('/relay', async (req, res, next) => {
+  if (isRelayAllowed(req.path)) {
+    const authProfileAndToken = getAuth(req);
+    // TODO: Which header key to use here?
+    const headers = {
+      token: authProfileAndToken.token,
+    };
+    try {
+      const url = `${BFF_MS_API_BASE_URL + req.path}`;
+      const rs = await axiosRequest.request({
+        url,
+        headers,
+      });
       res.json(rs.data);
     } catch (error: any) {
       res.status(error?.response?.status || 500);

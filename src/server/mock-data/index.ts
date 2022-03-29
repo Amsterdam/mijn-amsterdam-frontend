@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
-import { ApiUrls } from '../config';
+import { ApiUrls, BFF_MS_API_BASE_URL, RelayPathsAllowed } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import AFVAL from './json/afvalophaalgebieden.json';
@@ -18,11 +18,13 @@ import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-
 import SUBSIDIE from './json/subsidie.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
+import VERGUNNINGEN_DOCUMENTS from './json/vergunningen-documenten.json';
 import WMO from './json/wmo.json';
 import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
+import path from 'path';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -74,6 +76,12 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BRP);
     },
   },
+  [BFF_MS_API_BASE_URL + RelayPathsAllowed.BRP_BEWONERS]: {
+    status: () => 200,
+    responseData: () => {
+      return loadMockApiResponseJson({ residentCount: 3 });
+    },
+  },
   [ApiUrls.AKTES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -121,6 +129,33 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_STADSPAS);
     },
   },
+  [BFF_MS_API_BASE_URL + RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES]: {
+    status: () => 200,
+    responseData: () => {
+      return loadMockApiResponseJson(
+        apiSuccessResult([
+          {
+            id: 'xx1',
+            title: 'Hema',
+            amount: -31.3,
+            date: '2020-01-04',
+          },
+          {
+            id: 'xx2',
+            title: 'Aktiesport',
+            amount: 21.3,
+            date: '2019-12-16',
+          },
+          {
+            id: 'xx3',
+            title: 'Hema',
+            amount: -0.99,
+            date: '2019-10-21',
+          },
+        ])
+      );
+    },
+  },
   [ApiUrls.WPI_SPECIFICATIES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
@@ -128,6 +163,13 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return await loadMockApiResponseJson(WPI_SPECIFICATIES);
+    },
+  },
+  [BFF_MS_API_BASE_URL + RelayPathsAllowed.WPI_DOCUMENT]: {
+    status: () => 200,
+    responseData: () => {
+      // TODO: Implement file sending...
+      return path.join(__dirname, 'document.pdf');
     },
   },
   [ApiUrls.ERFPACHT]: {
@@ -195,6 +237,13 @@ export const mockDataConfig: MockDataConfig = {
         );
       }
       return await loadMockApiResponseJson(VERGUNNINGEN);
+    },
+  },
+  [BFF_MS_API_BASE_URL + RelayPathsAllowed.VERGUNNINGEN_DOCUMENTS]: {
+    method: 'get',
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson(VERGUNNINGEN_DOCUMENTS);
     },
   },
   [ApiUrls.KVK]: {
