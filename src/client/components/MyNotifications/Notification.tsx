@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import {
 import { Colors } from '../../config/app';
 import {
   trackItemClick,
-  useComponentSize,
+  useContentDimensions,
   usePhoneScreen,
   useProfileTypeValue,
 } from '../../hooks';
@@ -39,35 +39,16 @@ const Notification = ({
   const [isCollapsed, toggleCollapsed] = useState(smallLayout ? false : true);
   const history = useHistory();
   const profileType = useProfileTypeValue();
-
-  const size = useComponentSize(contentRef.current);
-
-  const [{ height: contentHeight }, setDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
-
-  const contentDimensions = useMemo(() => {
-    return {
-      width: size.width,
-      height: size.height,
-    };
-  }, [size.height, size.width]);
-
-  useEffect(() => {
-    if (contentRef && contentRef.current) {
-      setDimensions(contentDimensions);
-    }
-  }, [contentDimensions]);
+  const contentDimensions = useContentDimensions(contentRef);
 
   const heightAnim = {
     immediate: false,
     reverse: !isCollapsed,
     from: {
-      height: smallLayout ? 0 : contentHeight,
+      height: smallLayout ? 0 : contentDimensions.height,
     },
     to: {
-      height: contentHeight,
+      height: contentDimensions.height,
     },
   };
 

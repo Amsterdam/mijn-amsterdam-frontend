@@ -13,3 +13,4 @@ export * from './useTermReplacement';
 export * from './useAppState';
 export * from './useComponentSize';
 export * from './useProfileType';
+export * from './useContentDimensions';

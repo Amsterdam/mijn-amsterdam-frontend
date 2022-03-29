@@ -1,12 +1,15 @@
 import classnames from 'classnames';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
-import { trackEventWithProfileType, useSessionStorage } from '../../hooks';
-import { useComponentSize } from '../../hooks/useComponentSize';
+import {
+  trackEventWithProfileType,
+  useContentDimensions,
+  useSessionStorage,
+} from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -82,6 +85,7 @@ export default function SectionCollapsible({
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
   const profileType = useProfileTypeValue();
+  const { height: contentHeight } = useContentDimensions(contentRef);
 
   const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
@@ -90,26 +94,6 @@ export default function SectionCollapsible({
   }, 50);
 
   setReadyForAnimatonDebounced();
-
-  const [{ height: contentHeight }, setDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
-
-  const size = useComponentSize(contentRef.current);
-
-  const contentDimensions = useMemo(() => {
-    return {
-      width: size.width,
-      height: size.height,
-    };
-  }, [size.height, size.width]);
-
-  useEffect(() => {
-    if (!isLoading && contentRef && contentRef.current) {
-      setDimensions(contentDimensions);
-    }
-  }, [isLoading, contentDimensions]);
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {
