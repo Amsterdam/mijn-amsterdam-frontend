@@ -65,11 +65,13 @@ export function requestID(req: Request, res: Response, next: NextFunction) {
 }
 
 export function send404(res: Response) {
-  return res.status(404).send(apiErrorResult('Not Found', null));
+  res.status(404);
+  return res.send(apiErrorResult('Not Found', null));
 }
 
 export function sendUnauthorized(res: Response) {
-  return res.status(401).send(apiErrorResult('Unauthorized', null));
+  res.status(401);
+  return res.send(apiErrorResult('Unauthorized', null));
 }
 
 export function clearRequestCache(
@@ -114,7 +116,7 @@ export function getProfileType(req: Request) {
 }
 
 export function getOIDCToken(jwe: string): string {
-  const key = JWK.asKey(deriveKey(process.env.BFF_OIDC_SECRET));
+  const key = JWK.asKey(deriveKey(OIDC_SECRET));
   const encryptOpts = {
     alg: 'dir',
     enc: 'A256GCM',

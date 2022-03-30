@@ -7,6 +7,7 @@ import express, {
 import path from 'path';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
+  oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from '../config';
@@ -32,14 +33,14 @@ authRouterDevelopment.get(
       case 'eherkenning':
         appSessionCookieValue = generateDevSessionCookieValue({
           sub: '123KVK456',
-          aud: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING || '',
+          aud: oidcConfigEherkenning.clientID ?? '',
         });
         break;
       default:
       case 'digid':
         appSessionCookieValue = generateDevSessionCookieValue({
           sub: '321BSN987',
-          aud: process.env.BFF_OIDC_CLIENT_ID_DIGID || '',
+          aud: oidcConfigEherkenning.clientID ?? '',
         });
         break;
     }
