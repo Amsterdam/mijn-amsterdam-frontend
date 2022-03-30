@@ -2,7 +2,7 @@ import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { AppState } from '../AppState';
 import { Error } from '../components/ErrorMessages/ErrorMessages';
 
-export const BFF_API_BASE_URL = process.env.REACT_APP_BFF_API_URL; // localhost:5000/bff
+export const BFF_API_BASE_URL = process.env.REACT_APP_BFF_API_URL || '/bff';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const BFF_API_PUBLIC_BASE_URL = `${BFF_API_BASE_URL}/public`;
 

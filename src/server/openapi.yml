@@ -6,7 +6,6 @@ info:
     name: Datapunt Support
     url: https://mijn.amsterdam.nl/
     email: datapunt@amsterdam.nl
-  version: 3.55.0
 paths:
   /status/health:
     get:
