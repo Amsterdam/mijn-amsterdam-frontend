@@ -78,6 +78,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [BFF_MS_API_BASE_URL + RelayPathsAllowed.BRP_BEWONERS]: {
     status: () => 200,
+    method: 'post',
     responseData: () => {
       return loadMockApiResponseJson({ residentCount: 3 });
     },
@@ -280,6 +281,13 @@ export const mockDataConfig: MockDataConfig = {
           });
         });
       return JSON.stringify(items);
+    },
+  },
+  [BFF_MS_API_BASE_URL + RelayPathsAllowed.TIP_IMAGES]: {
+    status: () => 200,
+    responseData: () => {
+      // Send mock tip image
+      return null;
     },
   },
   [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {

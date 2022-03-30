@@ -128,7 +128,7 @@ export function getOIDCToken(jwe: string): string {
   return JSON.parse(cleartext.toString()).id_token;
 }
 
-interface TokenData {
+export interface TokenData {
   sub: string;
   aud: string;
   [key: string]: any;

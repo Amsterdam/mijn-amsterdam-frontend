@@ -7,7 +7,7 @@ export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const BFF_API_PUBLIC_BASE_URL = `${BFF_API_BASE_URL}/public`;
 
 export const BFFApiUrls = {
-  BRP_RESIDENTS_API_URL: `${BFF_API_BASE_URL}/brp/aantal_bewoners`,
+  BRP_RESIDENTS_API_URL: `${BFF_API_BASE_URL}/relay/brp/aantal_bewoners`,
   MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
   SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,

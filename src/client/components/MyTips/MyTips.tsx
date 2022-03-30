@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { isExternalUrl } from '../../../universal/helpers';
-import { directApiUrlByProfileType } from '../../../universal/helpers/utils';
+import { relayApiUrl } from '../../../universal/helpers/utils';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
@@ -41,9 +41,7 @@ function tipTrackingCategory(category: string, isPersonalized: boolean) {
 const Tip = ({ tip, profileType }: TipProps) => {
   const [imgUrl, setImgUrl] = useState(PLACEHOLDER_IMAGE_URL);
 
-  const tipImgUrl = tip.imgUrl
-    ? directApiUrlByProfileType(tip.imgUrl, profileType)
-    : false;
+  const tipImgUrl = tip.imgUrl ? relayApiUrl(tip.imgUrl) : false;
 
   useEffect(() => {
     if (!tipImgUrl) {

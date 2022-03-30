@@ -1,4 +1,5 @@
 import express from 'express';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../config';
 import {
   addServiceResultHandler,
   clearRequestCache,
@@ -8,6 +9,8 @@ import {
   send404,
   sendMessage,
   requestID,
+  getAuthProfile,
+  TokenData,
 } from './app';
 import { cache } from './source-api-request';
 
@@ -30,6 +33,50 @@ describe('server/helpers/app', () => {
       'x-auth-type': 'E',
       'x-saml-attribute-token1': 'xxx111xxxddd',
     });
+  });
+
+  test('getAuthProfile', () => {
+    const digidClientId = oidcConfigDigid.clientID;
+    const eherkenningClientId = oidcConfigEherkenning.clientID;
+
+    oidcConfigEherkenning.clientID = 'test1';
+    oidcConfigDigid.clientID = 'test2';
+
+    {
+      const profile = getAuthProfile({
+        aud: 'test1',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        aud: 'test2',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'digid',
+        profileType: 'private',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        aud: 'test_x',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'digid',
+        profileType: 'private',
+      });
+    }
+
+    oidcConfigEherkenning.clientID = digidClientId;
+    oidcConfigDigid.clientID = eherkenningClientId;
   });
 
   test('requestID', () => {

@@ -9,9 +9,9 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   apiPristineResult,
   ApiResponse,
-  directApiUrl,
   isError,
   isLoading,
+  relayApiUrl,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
@@ -130,7 +130,7 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
-      url: directApiUrl(`${urlTransactions}`),
+      url: relayApiUrl(`${urlTransactions}`),
     },
     apiPristineResult([])
   );

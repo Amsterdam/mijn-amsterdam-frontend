@@ -188,6 +188,7 @@ export const RelayPathsAllowed = {
   WPI_DOCUMENT: '/wpi/document/:key',
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
+  TIP_IMAGES: '/tips/static/tip_images/:fileName',
 };
 
 export const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';

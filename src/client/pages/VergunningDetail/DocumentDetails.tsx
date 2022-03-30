@@ -7,14 +7,13 @@ import {
   apiPristineResult,
   ApiResponse,
   apiSuccessResult,
-  directApiUrlByProfileType,
+  relayApiUrl,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import DocumentList from '../../components/DocumentList/DocumentList';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 interface DocumentDetailsProps {
   vergunning: Vergunning;
@@ -27,9 +26,8 @@ export function DocumentDetails({
   opaque = true,
   trackPath,
 }: DocumentDetailsProps) {
-  const profileType = useProfileTypeValue();
   const documentsUrl = vergunning?.documentsUrl
-    ? directApiUrlByProfileType(vergunning?.documentsUrl, profileType)
+    ? relayApiUrl(vergunning?.documentsUrl)
     : false;
 
   // Set-up the documents api source

@@ -1,6 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
+import { BFF_API_BASE_URL } from '../../client/config/api';
 import { DAYS_KEEP_RECENT, IS_AP, PrivateRoutes } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -44,23 +45,8 @@ export function isExternalUrl(url: string) {
   return !isInteralUrl(url);
 }
 
-export function directApiUrl(
-  url: string,
-  pathSegment = !IS_AP ? 'test-api' : 'api'
-) {
-  return pathSegment !== 'api'
-    ? url.replace(/\/api\//, `/${pathSegment}/`)
-    : url;
-}
-
-export function directApiUrlByProfileType(
-  url: string,
-  profileType: ProfileType = 'private'
-) {
-  return directApiUrl(
-    url,
-    IS_AP && profileType === 'commercial' ? 'api1' : undefined
-  );
+export function relayApiUrl(path: string) {
+  return `${BFF_API_BASE_URL}/relay${path}`;
 }
 
 export function range(a: number, b: number) {

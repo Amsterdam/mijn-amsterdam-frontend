@@ -1,3 +1,4 @@
+import { Method } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import { matchPath } from 'react-router-dom';
 import {
@@ -194,6 +195,7 @@ router.use('/relay', async (req, res, next) => {
     try {
       const url = `${BFF_MS_API_BASE_URL + req.path}`;
       const rs = await axiosRequest.request({
+        method: req.method as Method,
         url,
         headers,
       });
