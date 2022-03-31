@@ -36,16 +36,17 @@ describe('Subsidie', () => {
     };
 
     nock('http://localhost:' + BFF_PORT)
-      .get('/test-api/subsidies/summary')
+      .get('/subsidies/summary')
       .times(2)
       .reply(200, { content });
 
     nock('http://localhost:' + BFF_PORT)
-      .get('/test-api/subsidies/summary')
+      .get('/subsidies/summary')
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
     {
       const result = await fetchSource('xx22xx', authProfileAndToken, true);
+
       expect(result.content).toEqual({
         isKnown: true,
         notifications: [
