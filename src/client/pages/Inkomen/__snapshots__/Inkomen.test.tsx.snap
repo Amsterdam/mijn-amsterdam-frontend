@@ -506,8 +506,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://example.org/document/id"
-                      rel="external noopener noreferrer"
+                      href="/bff/relay/wpi/document/id"
                     >
                       PDF
                     </a>
@@ -613,8 +612,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://example.org/document/id"
-                      rel="external noopener noreferrer"
+                      href="/bff/relay/wpi/document/id"
                     >
                       PDF
                     </a>

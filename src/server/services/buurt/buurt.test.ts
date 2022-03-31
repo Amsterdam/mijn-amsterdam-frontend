@@ -313,18 +313,21 @@ describe('Buurt services', () => {
       DUMMY_DATA_DETAIL_RESPONSE
     );
 
-    const detailItemId = 'x';
+    const detailItemId = 'x-detail';
+
     const result = await service.loadFeatureDetail(
       requestID,
       datasetId,
       detailItemId
     );
+
     const requestConfig = {
       url: datasetConfig.detailUrl + detailItemId,
       cacheTimeout: 0,
       headers: ACCEPT_CRS_4326,
     };
-    expect(requestData).toHaveBeenCalledWith(requestConfig, requestID, {});
+
+    expect(requestData).toHaveBeenCalledWith(requestConfig, requestID);
     expect(result).toEqual(DUMMY_DATA_DETAIL_RESPONSE);
   });
 
