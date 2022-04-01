@@ -44,21 +44,35 @@ function isCommercialUser(config: any) {
   // TODO: Check profileType / authMethod in Token package here.
   return config?.headers['xxxxxxxx???'] === 'eherkenning';
 }
+
+function promiseMockFile(fileName: string) {
+  return new Promise((resolve, reject) => {
+    const filePath = path.join(__dirname, fileName);
+    fs.readFile(filePath, (err, fileData) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(fileData);
+      }
+    });
+  });
+}
+
 function sendFilePDF() {
   return {
-    responseData: () =>
-      new Promise((resolve, reject) => {
-        const filePath = path.join(__dirname, 'document.pdf');
-        fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(fileData);
-          }
-        });
-      }),
+    responseData: () => promiseMockFile('document.pdf'),
     headers: {
       'Content-type': 'application/pdf',
+    },
+  };
+}
+
+function sendFileTipImage(type: 'jpg' | 'png' = 'jpg') {
+  return {
+    responseData: (config: any) =>
+      promiseMockFile('tip-image-mock.' + config.url.split('.').pop()),
+    headers: {
+      'Content-type': 'image/' + type,
     },
   };
 }
@@ -313,10 +327,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [BFF_MS_API_BASE_URL + RelayPathsAllowed.TIP_IMAGES]: {
     status: () => 200,
-    responseData: () => {
-      // Send mock tip image
-      return null;
-    },
+    ...sendFileTipImage(),
   },
   [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
