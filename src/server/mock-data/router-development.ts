@@ -7,6 +7,7 @@ import express, {
 import path from 'path';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
+  oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -40,7 +41,7 @@ authRouterDevelopment.get(
       case 'digid':
         appSessionCookieValue = generateDevSessionCookieValue({
           sub: '321BSN987',
-          aud: oidcConfigEherkenning.clientID ?? '',
+          aud: oidcConfigDigid.clientID ?? '',
         });
         break;
     }
