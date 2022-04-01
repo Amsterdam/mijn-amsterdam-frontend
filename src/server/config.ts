@@ -184,8 +184,9 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
 }
 
 export const RelayPathsAllowed = {
-  VERGUNNINGEN_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  WPI_DOCUMENT: '/wpi/document/:key',
+  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
+  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
+  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',

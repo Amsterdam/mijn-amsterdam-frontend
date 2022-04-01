@@ -1,6 +1,5 @@
 import { Method } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
-import { matchPath } from 'react-router-dom';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -11,7 +10,6 @@ import {
   BffEndpoints,
   BFF_MS_API_BASE_URL,
   getApiConfig,
-  RelayPathsAllowed,
   SourceApiKey,
 } from './config';
 import { getAuth, isRelayAllowed, queryParams } from './helpers/app';
@@ -198,8 +196,10 @@ router.use('/relay', async (req, res, next) => {
         method: req.method as Method,
         url,
         headers,
+        params: req.query,
       });
-      res.json(rs.data);
+      res.type(rs.headers?.['Content-type'] || 'application/json');
+      res.send(rs.data);
     } catch (error: any) {
       res.status(error?.response?.status || 500);
       res.json(error.message || 'Error requesting api data');

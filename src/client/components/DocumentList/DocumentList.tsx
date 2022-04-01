@@ -64,7 +64,7 @@ export function DocumentLink({
       }
 
       // First check to see if the request will succeed or not.
-      fetch(document.url)
+      fetch(document.url, { credentials: 'include' })
         .then((res) => {
           setLoading(false);
 

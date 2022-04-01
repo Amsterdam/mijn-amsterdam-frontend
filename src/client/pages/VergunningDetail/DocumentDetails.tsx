@@ -27,7 +27,7 @@ export function DocumentDetails({
   trackPath,
 }: DocumentDetailsProps) {
   const documentsUrl = vergunning?.documentsUrl
-    ? relayApiUrl(vergunning?.documentsUrl)
+    ? relayApiUrl(vergunning.documentsUrl)
     : false;
 
   // Set-up the documents api source
@@ -45,10 +45,13 @@ export function DocumentDetails({
           return [];
         }
         return apiSuccessResult(
-          content.map((document: VergunningDocument) =>
+          content.map((document: VergunningDocument) => {
             // Some documents don't have titles, assign a default title.
-            Object.assign(document, { title: document.title || 'Document' })
-          )
+            return Object.assign(document, {
+              title: document.title || 'Document',
+              url: relayApiUrl(document.url),
+            });
+          })
         );
       },
     },
