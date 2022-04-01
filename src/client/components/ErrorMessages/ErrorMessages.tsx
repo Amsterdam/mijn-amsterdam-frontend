@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import { ApiError } from '../../../universal/types';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
@@ -8,15 +9,9 @@ import { Button, IconButton, LinkdInline } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './ErrorMessages.module.scss';
 
-export interface Error {
-  name: string;
-  error: string;
-  stateKey: string;
-}
-
 interface ComponentProps {
   className?: string;
-  errors: Error[];
+  errors: ApiError[];
   title?: string;
 }
 

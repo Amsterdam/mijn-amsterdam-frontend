@@ -96,3 +96,9 @@ export interface StatusLine {
   steps: StatusLineItem[];
   [key: string]: any;
 }
+
+export interface ApiError {
+  name: string;
+  error: string;
+  stateKey: string;
+}

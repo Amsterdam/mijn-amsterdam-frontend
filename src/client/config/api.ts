@@ -1,6 +1,6 @@
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
+import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
-import { Error } from '../components/ErrorMessages/ErrorMessages';
 
 export const BFF_API_BASE_URL = process.env.REACT_APP_BFF_API_URL || '/bff';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -63,7 +63,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 export function createErrorDisplayData(
   stateKey: string,
   apiResponseData: ApiResponse<any> | null | string
-): Error {
+): ApiError {
   const name = ErrorNames[stateKey] || stateKey;
   let errorMessage =
     (typeof apiResponseData === 'object' &&
@@ -96,7 +96,7 @@ export function createFailedDependenciesError(
   return apiErrors;
 }
 
-export function getApiErrors(appState: AppState): Error[] {
+export function getApiErrors(appState: AppState): ApiError[] {
   if (!!appState) {
     const filteredResponses = Object.entries(appState).filter(
       ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
