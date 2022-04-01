@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
+import { useDebouncedCallback } from 'use-debounce';
 import { ChapterTitles } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
@@ -34,18 +35,27 @@ const Notification = ({
   notification: MyNotification;
   trackCategory: string;
 }) => {
+  const [isReadyForAnimation, setReadyForAnimation] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const smallLayout = usePhoneScreen();
-  const [isCollapsed, toggleCollapsed] = useState(smallLayout ? false : true);
+  const isPhoneScreen = usePhoneScreen();
+  const [isCollapsed, toggleCollapsed] = useState(isPhoneScreen ? false : true);
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const contentDimensions = useContentDimensions(contentRef);
 
+  const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
+    if (contentDimensions.height > 0 && contentDimensions.width > 0) {
+      setReadyForAnimation(true);
+    }
+  }, 50);
+
+  setReadyForAnimatonDebounced();
+
   const heightAnim = {
-    immediate: false,
+    immediate: !isReadyForAnimation,
     reverse: !isCollapsed,
     from: {
-      height: smallLayout ? 0 : contentDimensions.height,
+      height: isPhoneScreen ? 0 : contentDimensions.height,
     },
     to: {
       height: contentDimensions.height,
@@ -85,8 +95,10 @@ const Notification = ({
           <button
             aria-expanded={isCollapsed}
             className={styles.TitleToggle}
-            disabled={!smallLayout}
-            onClick={() => (smallLayout ? toggleCollapsed(!isCollapsed) : null)}
+            disabled={!isPhoneScreen}
+            onClick={() =>
+              isPhoneScreen ? toggleCollapsed(!isCollapsed) : null
+            }
           >
             <em className={styles.ChapterIndication}>
               {ChapterTitles[notification.chapter]}
@@ -99,7 +111,7 @@ const Notification = ({
                 {defaultDateFormat(notification.datePublished)}
               </time>
             )}
-            {smallLayout && (
+            {isPhoneScreen && (
               <IconChevronRight
                 aria-hidden="true"
                 className={styles.CaretIcon}

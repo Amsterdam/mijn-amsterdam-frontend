@@ -5,8 +5,8 @@ export function useContentDimensions(contentRef: React.RefObject<HTMLElement>) {
   const size = useComponentSize(contentRef.current);
 
   const [contentDimensions, setDimensions] = useState({
-    width: 0,
-    height: 0,
+    width: size.width,
+    height: size.height,
   });
 
   useEffect(() => {
