@@ -132,6 +132,11 @@ export async function requestData<T>(
   }
 
   // TODO: Implement header token passing here. See https://datapunt.atlassian.net/browse/MIJN-4487
+  if (requestConfig.hasBearerToken && authProfileAndToken?.token) {
+    requestConfig.headers = Object.assign(requestConfig?.headers ?? {}, {
+      Authorization: `Bearer ${authProfileAndToken.token}`,
+    });
+  }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 

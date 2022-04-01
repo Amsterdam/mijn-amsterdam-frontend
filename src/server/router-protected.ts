@@ -159,36 +159,11 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.API_DIRECT, async (req, res, next) => {
-  const apiName = req.params.apiName;
-  if (apiName && apiName in ApiConfig) {
-    const authProfileAndToken = getAuth(req);
-    // TODO: Which header key to use here?
-    const headers = {
-      token: authProfileAndToken.token,
-    };
-    try {
-      const rs = await axiosRequest.request(
-        getApiConfig(apiName as SourceApiKey, {
-          headers,
-        })
-      );
-      res.json(rs.data);
-    } catch (error: any) {
-      res.status(error?.response?.status || 500);
-      res.json(error.message || 'Error requesting api data');
-    }
-  }
-
-  next();
-});
-
 router.use('/relay', async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
     const authProfileAndToken = getAuth(req);
-    // TODO: Which header key to use here?
     const headers = {
-      token: authProfileAndToken.token,
+      Authorization: `Bearer ${authProfileAndToken.token}`,
     };
     try {
       const url = `${BFF_MS_API_BASE_URL + req.path}`;

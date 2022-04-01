@@ -37,6 +37,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   postponeFetch?: boolean;
   urls?: Record<string, string>;
   cacheKey?: string;
+  hasBearerToken?: boolean;
 }
 
 const ONE_SECOND_MS = 1000;
@@ -51,6 +52,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   method: 'get',
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
+  hasBearerToken: true,
 };
 
 export type SourceApiKey =

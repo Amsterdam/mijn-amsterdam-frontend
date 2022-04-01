@@ -1,6 +1,7 @@
+import * as Sentry from '@sentry/node';
 import express from 'express';
 import { auth } from 'express-openid-connect';
-import { apiErrorResult, apiSuccessResult } from '../universal/helpers';
+import { apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
   oidcConfigDigid,
@@ -8,7 +9,6 @@ import {
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
 import { getAuth, sendUnauthorized } from './helpers/app';
-import * as Sentry from '@sentry/node';
 
 export const router = express.Router();
 
