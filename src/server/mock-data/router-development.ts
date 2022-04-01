@@ -4,8 +4,6 @@ import express, {
   Request,
   Response,
 } from 'express';
-import path from 'path';
-import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   oidcConfigDigid,
   oidcConfigEherkenning,
