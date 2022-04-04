@@ -8,43 +8,50 @@
   border-top: 1px solid $color-neutral-grey2;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  padding-left: 5rem;
   position: relative;
 
   &:first-child {
     border-top: 0;
   }
 
-  @include media-q('>=phone') {
+  @include mq-gt-phone() {
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-
-  @include mq-tablet() {
-    padding-left: 0;
   }
 }
 
 .Icon {
   position: absolute;
   left: 0;
-  top: 2.3rem;
+  bottom: 0;
   fill: $color-primary-red;
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 2rem;
+  height: 2rem;
 
-  @include mq-tablet() {
-    position: static;
-    display: inline-block;
-    vertical-align: middle;
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.4rem;
+  @include mq-gt-phone() {
+    //   position: static;
+    //   display: inline-block;
+    //   vertical-align: middle;
+    width: 3.2rem;
+    height: 3.2rem;
+    top: 0;
+    bottom: unset;
+
+    //   margin-right: 0.4rem;
   }
 }
 
 .NotificationHeader {
   max-width: 80%;
+}
+
+.MetaInfo {
+  position: relative;
+  padding-left: 2rem;
+
+  @include mq-gt-phone() {
+    padding-left: 4rem;
+  }
 }
 
 .MetaInfoSecondary {
@@ -135,6 +142,11 @@
   overflow: hidden;
   height: 0;
   position: relative;
+  padding-left: 4rem;
+
+  @include mq-tablet() {
+    padding-left: 2rem;
+  }
 }
 
 .TitleToggle {
@@ -147,17 +159,15 @@
 
   width: 100%;
 
-  @include media-q('>=phone') {
-    cursor: default;
-  }
-
   &[aria-expanded='true'] .CaretIcon {
-    transform: translateY(calc(-50% + 10px)) rotate(-90deg);
+    transform: translateY(-50%) rotate(-90deg);
   }
 }
 
 .CaretIcon {
-  float: right;
-  transform: translateY(calc(-50% + 10px)) rotate(90deg);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%) rotate(90deg);
   transition: transform 200ms ease-out;
 }

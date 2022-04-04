@@ -13,7 +13,6 @@ import { Colors } from '../../config/app';
 import {
   trackItemClick,
   useContentDimensions,
-  usePhoneScreen,
   useProfileTypeValue,
 } from '../../hooks';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
@@ -37,8 +36,7 @@ const Notification = ({
 }) => {
   const [isReadyForAnimation, setReadyForAnimation] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const isPhoneScreen = usePhoneScreen();
-  const [isCollapsed, toggleCollapsed] = useState(isPhoneScreen ? false : true);
+  const [isCollapsed, toggleCollapsed] = useState(false);
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const contentDimensions = useContentDimensions(contentRef);
@@ -55,7 +53,7 @@ const Notification = ({
     immediate: !isReadyForAnimation,
     reverse: !isCollapsed,
     from: {
-      height: isPhoneScreen ? 0 : contentDimensions.height,
+      height: 0,
     },
     to: {
       height: contentDimensions.height,
@@ -74,32 +72,29 @@ const Notification = ({
 
   return (
     <>
-      <Heading
-        className={classNames(styles.Title, styles.NotificationHeader)}
-        el="h4"
-        size="small"
-      >
-        {notification.title}
-      </Heading>
       <aside className={styles.MetaInfo}>
-        {!notification.Icon ? (
-          <ChapterIcon
-            fill={Colors.primaryRed}
-            className={styles.Icon}
-            chapter={notification.isAlert ? 'ALERT' : notification.chapter}
-          />
-        ) : (
-          <notification.Icon className={styles.Icon} />
-        )}
-        <div className={styles.MetaInfoSecondary}>
-          <button
-            aria-expanded={isCollapsed}
-            className={styles.TitleToggle}
-            disabled={!isPhoneScreen}
-            onClick={() =>
-              isPhoneScreen ? toggleCollapsed(!isCollapsed) : null
-            }
+        <button
+          aria-expanded={isCollapsed}
+          className={styles.TitleToggle}
+          onClick={() => toggleCollapsed(!isCollapsed)}
+        >
+          <Heading
+            className={classNames(styles.Title, styles.NotificationHeader)}
+            el="h4"
+            size="small"
           >
+            {notification.title}
+          </Heading>
+          {!notification.Icon ? (
+            <ChapterIcon
+              fill={Colors.primaryRed}
+              className={styles.Icon}
+              chapter={notification.isAlert ? 'ALERT' : notification.chapter}
+            />
+          ) : (
+            <notification.Icon className={styles.Icon} />
+          )}
+          <div className={styles.MetaInfoSecondary}>
             <em className={styles.ChapterIndication}>
               {ChapterTitles[notification.chapter]}
             </em>
@@ -111,16 +106,14 @@ const Notification = ({
                 {defaultDateFormat(notification.datePublished)}
               </time>
             )}
-            {isPhoneScreen && (
-              <IconChevronRight
-                aria-hidden="true"
-                className={styles.CaretIcon}
-                width={16}
-                height={16}
-              />
-            )}
-          </button>
-        </div>
+          </div>
+          <IconChevronRight
+            aria-hidden="true"
+            className={styles.CaretIcon}
+            width={16}
+            height={16}
+          />
+        </button>
       </aside>
       <animated.div
         aria-hidden={!isCollapsed}
