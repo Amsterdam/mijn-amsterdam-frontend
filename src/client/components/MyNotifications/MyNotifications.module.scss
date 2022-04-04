@@ -14,6 +14,10 @@
     border-top: 0;
   }
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   @include mq-gt-phone() {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -29,15 +33,10 @@
   height: 2rem;
 
   @include mq-gt-phone() {
-    //   position: static;
-    //   display: inline-block;
-    //   vertical-align: middle;
     width: 3.2rem;
     height: 3.2rem;
     top: 0;
     bottom: unset;
-
-    //   margin-right: 0.4rem;
   }
 }
 
@@ -47,7 +46,7 @@
 
 .MetaInfo {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 2.8rem;
 
   @include mq-gt-phone() {
     padding-left: 4rem;
@@ -91,7 +90,6 @@
 .FooterLink {
   margin: 0;
   padding: 2rem 0;
-  border-top: 1px solid $color-neutral-grey2;
 }
 
 .ChapterIndication {
@@ -135,7 +133,7 @@
   overflow: hidden;
   height: 0;
   position: relative;
-  padding-left: 2rem;
+  padding-left: 2.8rem;
 
   @include mq-gt-phone() {
     padding-left: 4rem;
@@ -163,4 +161,11 @@
   right: 0;
   transform: translateY(-50%) rotate(90deg);
   transition: transform 200ms ease-out;
+  width: 1.6rem;
+  height: 1.6rem;
+
+  @include mq-gt-phone() {
+    width: 2rem;
+    height: 2rem;
+  }
 }

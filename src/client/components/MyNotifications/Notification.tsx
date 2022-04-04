@@ -107,12 +107,7 @@ const Notification = ({
               </time>
             )}
           </div>
-          <IconChevronRight
-            aria-hidden="true"
-            className={styles.CaretIcon}
-            width={16}
-            height={16}
-          />
+          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
         </button>
       </aside>
       <animated.div
