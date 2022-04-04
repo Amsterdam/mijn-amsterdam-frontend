@@ -80,10 +80,7 @@
 
 .Datum {
   font-size: 1.4rem;
-
-  @include mq-tablet() {
-    color: $color-neutral-grey4;
-  }
+  color: $color-neutral-grey4;
 }
 
 .Action {
@@ -99,14 +96,10 @@
 
 .ChapterIndication {
   font-style: normal;
-  display: none;
+  display: inline;
 
-  @include mq-tablet() {
-    display: inline;
-
-    &:after {
-      content: ' ';
-    }
+  &:after {
+    content: ' ';
   }
 }
 

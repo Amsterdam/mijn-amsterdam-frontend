@@ -23,12 +23,8 @@
     }
 
     @include select(PageHeading_HeadingInner) {
-      margin: 0 4rem;
+      margin: 0 2rem;
       z-index: 1;
-
-      @include mq-tablet() {
-        margin: 0 2rem;
-      }
 
       @include mq-phone() {
         margin: 0;
