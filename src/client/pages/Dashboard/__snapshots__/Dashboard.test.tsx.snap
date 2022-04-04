@@ -33,28 +33,27 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="Home"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                burgerzaken.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <button
-                  aria-expanded="true"
-                  class="TitleToggle"
-                  disabled=""
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
+                >
+                  Notification
+                </h4>
+                <svg
+                  aria-label="Home"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
+                >
+                  burgerzaken.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
                 >
                   <em
                     class="ChapterIndication"
@@ -67,11 +66,17 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                   >
                     24 juli 2020
                   </time>
-                </button>
-              </div>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
-              aria-hidden="false"
+              aria-hidden="true"
               class="Body"
               style="height: 0px;"
             >
@@ -107,28 +112,27 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="Home"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                burgerzaken.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <button
-                  aria-expanded="true"
-                  class="TitleToggle"
-                  disabled=""
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
+                >
+                  Notification
+                </h4>
+                <svg
+                  aria-label="Home"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
+                >
+                  burgerzaken.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
                 >
                   <em
                     class="ChapterIndication"
@@ -141,11 +145,17 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                   >
                     24 juli 2020
                   </time>
-                </button>
-              </div>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
-              aria-hidden="false"
+              aria-hidden="true"
               class="Body"
               style="height: 0px;"
             >
@@ -181,28 +191,27 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="ALERT"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                Alert.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <button
-                  aria-expanded="true"
-                  class="TitleToggle"
-                  disabled=""
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
+                >
+                  Notification
+                </h4>
+                <svg
+                  aria-label="ALERT"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
+                >
+                  Alert.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
                 >
                   <em
                     class="ChapterIndication"
@@ -215,11 +224,17 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                   >
                     24 juli 2020
                   </time>
-                </button>
-              </div>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
-              aria-hidden="false"
+              aria-hidden="true"
               class="Body"
               style="height: 0px;"
             >
