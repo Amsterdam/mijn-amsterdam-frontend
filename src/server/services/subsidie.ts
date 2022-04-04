@@ -45,12 +45,12 @@ function transformSubsidieData(
         params.set('authMethod', authMethod);
       }
 
+      const url = `${urlTo.origin}${urlTo.pathname}?${params.toString()}`;
+
       return Object.assign(notification, {
         link: {
           ...notification.link,
-          to: new URL(
-            `${urlTo.origin}${urlTo.pathname}?${params.toString()}`
-          ).toString(),
+          to: new URL(url).toString(),
         },
       });
     }),
