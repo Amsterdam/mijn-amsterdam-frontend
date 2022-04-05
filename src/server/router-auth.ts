@@ -61,7 +61,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
         apiSuccessResult({ ...auth.profile, isAuthenticated: true })
       );
     } catch (error) {
-      console.error(error);
+      Sentry.captureException(error);
     }
   }
 
@@ -74,7 +74,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, (req, res) => {
       const auth = getAuth(req);
       return res.send(apiSuccessResult(decodeOIDCToken(auth.token)));
     } catch (error) {
-      console.error(error);
+      Sentry.captureException(error);
     }
   }
 
