@@ -138,7 +138,10 @@ export interface TokenData {
 }
 
 export function decodeOIDCToken(token: string): TokenData {
-  return jose.JWT.verify(token, OIDC_SECRET) as TokenData;
+  return jose.JWT.verify(token, OIDC_SECRET, {
+    complete: true,
+    algorithms: ['HS256'],
+  }) as unknown as TokenData;
 }
 
 interface DevSessionData {
