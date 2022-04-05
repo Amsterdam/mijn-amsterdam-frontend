@@ -100,7 +100,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
-  const { isDirty, refetch, isAuthenticated } = session;
+  const { refetch } = session;
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -125,16 +125,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     reset();
     resume();
   }, [reset, resume]);
-
-  const resetOrRefetch = useCallback(() => {
-    if (isOpen !== true) {
-      if (isDirty && isAuthenticated) {
-        resetAutoLogout();
-      }
-
-      refetch();
-    }
-  }, [refetch, isOpen, isDirty, isAuthenticated, resetAutoLogout]);
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
