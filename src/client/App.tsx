@@ -40,41 +40,39 @@ import {
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
-import {
-  // Accessibility,
-  // Burgerzaken,
-  // BurgerzakenIDKaart,
-  // Dashboard,
-  // GarbageInformation,
-  // GeneralInfo,
-  // Inkomen,
-  InkomenDetailBbz,
-  InkomenDetailTonk,
-  InkomenDetailTozo,
-  InkomenDetailUitkering,
-  // InkomenSpecificaties,
-  // LandingPage,
-  // MyNotifications,
-  // MyTips,
-  // NotFound,
-  // Profile,
-  // ToeristischeVerhuur,
-  // ToeristischeVerhuurDetail,
-  // VergunningDetail,
-  // Vergunningen,
-  // Zorg,
-  // ZorgDetail,
-} from './pages';
-import BurgerzakenAkte from './pages/BurgerzakenDetail/BurgerzakenAkte';
-import Krefia from './pages/Krefia/Krefia';
-import Parkeren from './pages/Parkeren/Parkeren';
-import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import Search from './pages/Search/Search';
-import Stadspas from './pages/Stadspas/Stadspas';
-import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
-import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+
+const BurgerzakenAkte = lazy(
+  () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
+);
+const Krefia = lazy(() => import('./pages/Krefia/Krefia'));
+const Parkeren = lazy(() => import('./pages/Parkeren/Parkeren'));
+const ProfileCommercial = lazy(
+  () => import('./pages/Profile/ProfileCommercial')
+);
+const Search = lazy(() => import('./pages/Search/Search'));
+const Stadspas = lazy(() => import('./pages/Stadspas/Stadspas'));
+const StadspasAanvraagDetail = lazy(
+  () => import('./pages/StadspasDetail/StadspasAanvraagDetail')
+);
+const StadspasDetail = lazy(
+  () => import('./pages/StadspasDetail/StadspasDetail')
+);
+
+const InkomenDetailBbz = lazy(
+  () => import('./pages/InkomenDetail/InkomenDetailBbz')
+);
+const InkomenDetailTonk = lazy(
+  () => import('./pages/InkomenDetail/InkomenDetailTonk')
+);
+const InkomenDetailTozo = lazy(
+  () => import('./pages/InkomenDetail/InkomenDetailTozo')
+);
+const InkomenDetailUitkering = lazy(
+  () => import('./pages/InkomenDetail/InkomenDetailUitkering')
+);
 
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+
 const MyNotifications = lazy(
   () => import('./pages/MyNotifications/MyNotifications')
 );
@@ -106,7 +104,9 @@ const VergunningDetail = lazy(
   () => import('./pages/VergunningDetail/VergunningDetail')
 );
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
+
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
+
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 function AppNotAuthenticated() {
