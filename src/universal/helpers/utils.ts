@@ -2,7 +2,7 @@ import { differenceInCalendarDays } from 'date-fns';
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
 import { BFF_API_BASE_URL } from '../../client/config/api';
-import { DAYS_KEEP_RECENT, IS_AP, PrivateRoutes } from '../config';
+import { DAYS_KEEP_RECENT, PrivateRoutes } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
