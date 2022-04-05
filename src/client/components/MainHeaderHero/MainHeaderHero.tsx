@@ -138,7 +138,6 @@ export default function MainHeaderHero() {
         <source media="(max-width: 1024px)" srcSet={srcSet.LANDSCAPE_SMALL} />
         <source media="(min-width: 1024px)" srcSet={srcSet.LANDSCAPE_MEDIUM} />
         <source media="(min-width: 1440px)" srcSet={srcSet.LANDSCAPE_LARGE} />
-
         <img src={srcSet.FALLBACK} className={styles.Image} alt="" />
       </picture>
     </div>
