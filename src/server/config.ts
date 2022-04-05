@@ -234,6 +234,7 @@ export const BffEndpoints = {
 
   // Application specific urls
   PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
+  PUBLIC_AUTH_TOKEN_DATA: `${PUBLIC_AUTH_BASE}/token-data`,
   PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
   // end: OIDC config
 

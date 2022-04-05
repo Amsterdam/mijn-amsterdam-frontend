@@ -8,7 +8,7 @@ import {
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
-import { getAuth, sendUnauthorized } from './helpers/app';
+import { decodeOIDCToken, getAuth, sendUnauthorized } from './helpers/app';
 
 export const router = express.Router();
 
@@ -60,6 +60,19 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
       return res.send(
         apiSuccessResult({ ...auth.profile, isAuthenticated: true })
       );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return sendUnauthorized(res);
+});
+
+router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, (req, res) => {
+  if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+    try {
+      const auth = getAuth(req);
+      return res.send(apiSuccessResult(decodeOIDCToken(auth.token)));
     } catch (error) {
       console.error(error);
     }
