@@ -24,14 +24,6 @@ router.get(
   }
 );
 
-router.get(
-  BffEndpoints.PUBLIC_HEALTH,
-  (req: Request, res: Response, next: NextFunction) => {
-    res.json({ status: 'OK' });
-    next();
-  }
-);
-
 router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {

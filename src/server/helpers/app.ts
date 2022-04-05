@@ -10,6 +10,7 @@ import {
   OIDC_SECRET,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
@@ -149,6 +150,7 @@ function encrypt(payload: string, headers: object) {
   const alg = 'dir';
   const enc = 'A256GCM';
   const key = JWK.asKey(deriveKey(OIDC_SECRET));
+
   return JWE.encrypt(payload, key, { alg, enc, ...headers });
 }
 
@@ -162,6 +164,7 @@ export function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
     uat,
     exp,
   });
+
   return value;
 }
 
@@ -169,6 +172,17 @@ export function isRelayAllowed(pathRequested: string) {
   return Object.values(RelayPathsAllowed).some((pathAllowed) => {
     return matchPath(pathRequested, {
       path: pathAllowed,
+      exact: true,
+      strict: false,
+    });
+  });
+}
+
+export function isProtectedRoute(pathRequested: string) {
+  // NOT A PUBLIC ENDPOINT
+  return !PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
+    return matchPath(pathRequested, {
+      path: pathPublic,
       exact: true,
       strict: false,
     });

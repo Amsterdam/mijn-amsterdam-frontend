@@ -26,7 +26,6 @@ import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
 import path from 'path';
 import fs from 'fs';
-import { Blob } from 'buffer';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {

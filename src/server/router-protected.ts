@@ -5,15 +5,15 @@ import {
   getDatasetCategoryId,
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
+import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
 import {
-  ApiConfig,
-  BffEndpoints,
-  BFF_MS_API_BASE_URL,
-  getApiConfig,
-  SourceApiKey,
-} from './config';
-import { getAuth, isRelayAllowed, queryParams } from './helpers/app';
+  getAuth,
+  isProtectedRoute,
+  isRelayAllowed,
+  queryParams,
+} from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
+import { isAuthenticated } from './router-auth';
 import { fetchSearchConfig, loadClusterDatasets } from './services';
 import {
   fetchDataset,
@@ -29,6 +29,14 @@ import {
 } from './services/controller';
 
 export const router = express.Router();
+
+router.use((req: Request, res: Response, next: NextFunction) => {
+  // Skip router if we've entered a public route.
+  if (!isProtectedRoute(req.path)) {
+    return next('router');
+  }
+  return next();
+}, isAuthenticated());
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,

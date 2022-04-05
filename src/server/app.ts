@@ -25,7 +25,7 @@ import { apiErrorResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
 import { clearRequestCache, send404, requestID } from './helpers/app';
 import { authRouterDevelopment } from './mock-data/router-development';
-import { isAuthenticated, router as authRouter } from './router-auth';
+import { router as authRouter } from './router-auth';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 
@@ -33,6 +33,7 @@ const sentryOptions: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
   debug: isDevelopment,
+  autoSessionTracking: false,
   beforeSend(event, hint) {
     if (isDevelopment) {
       console.log(hint);
@@ -74,7 +75,7 @@ if (!IS_AP) {
 }
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, isAuthenticated(), protectedRouter);
+app.use(BFF_BASE_PATH, protectedRouter);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearRequestCache);
