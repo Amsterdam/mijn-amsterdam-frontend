@@ -79,6 +79,7 @@
 
   @include select(MyTips_MyTips) {
     @include centered-block;
-    margin-bottom: 10rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 }

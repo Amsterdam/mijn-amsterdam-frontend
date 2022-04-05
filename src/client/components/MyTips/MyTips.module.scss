@@ -4,36 +4,41 @@
   width: auto;
 }
 
+.MyTips.MyTipsEmbedded {
+  .TipsList {
+    flex-wrap: nowrap;
+  }
+
+  .TipScrollContainer {
+    overflow: auto;
+
+    @include mq-gt-phone() {
+      overflow: none;
+    }
+  }
+
+  .TipItem {
+    width: calc((100% / 3) - 1rem);
+
+    @include mq-gt-phone() {
+      width: calc((100% / 3) - 3%);
+    }
+  }
+}
+
 .TipsList {
   @include reset-list-style;
   display: flex;
   flex-wrap: wrap;
-
-  @include mq-gt-phone() {
-    justify-content: space-between;
-  }
-}
-
-.TipScrollContainer {
-  overflow: auto;
-
-  @include mq-gt-phone() {
-    overflow: none;
-  }
+  justify-content: space-between;
 }
 
 .TipItem {
-  width: calc((100% / 3) - 1%);
+  width: 100%;
   margin-bottom: 2rem;
-  margin-right: 1rem;
-
-  &:last-child {
-    margin-right: 0px;
-  }
 
   @include mq-gt-phone() {
-    width: calc((100% / 3) - 3%);
-    margin-right: 0px;
+    width: calc((100% / 3) - 2rem);
   }
 }
 

@@ -133,6 +133,7 @@ export interface MyTipsProps {
   isLoading: boolean;
   showHeader?: boolean;
   showOptIn?: boolean;
+  isEmbedded?: boolean;
 }
 
 function LoadingContentListItems() {
@@ -166,21 +167,20 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
     <>
       <div className={styles.HeaderBar}>
         <Heading size="large">Mijn tips</Heading>
-        <Button
-          lean={true}
-          variant="plain"
-          onClick={() => setModalIsOpen(true)}
-          className={styles.OptIn}
-          icon={isPhoneScreen ? null : IconChevronRight}
-          aria-expanded={modalIsOpen}
-        >
-          {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
-        </Button>
-        {showTipsPageLink && (
-          <Linkd
-            icon={isPhoneScreen ? null : IconChevronRight}
-            href={AppRoutes.TIPS}
+        {!isPhoneScreen && (
+          <Button
+            lean={true}
+            variant="plain"
+            onClick={() => setModalIsOpen(true)}
+            className={styles.OptIn}
+            icon={IconChevronRight}
+            aria-expanded={modalIsOpen}
           >
+            {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
+          </Button>
+        )}
+        {showTipsPageLink && (
+          <Linkd icon={IconChevronRight} href={AppRoutes.TIPS}>
             Al mijn tips
           </Linkd>
         )}
@@ -209,6 +209,7 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
+  isEmbedded = false,
   ...otherProps
 }: MyTipsProps) {
   const profileType = useProfileTypeValue();
@@ -227,7 +228,14 @@ export default function MyTips({
   }, [items, profileType]);
 
   return (
-    <div {...otherProps} className={classnames(styles.MyTips, className)}>
+    <div
+      {...otherProps}
+      className={classnames(
+        styles.MyTips,
+        { [styles.MyTipsEmbedded]: isEmbedded },
+        className
+      )}
+    >
       {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
       <div className={styles.TipScrollContainer}>
         <ul
@@ -237,7 +245,7 @@ export default function MyTips({
           )}
           style={{
             width:
-              isPhoneScreen && items.length > 1
+              isPhoneScreen && isEmbedded && items.length > 1
                 ? `${items.length * 75}%`
                 : '100%',
           }}
