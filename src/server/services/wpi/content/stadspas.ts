@@ -165,7 +165,7 @@ export function getBudgetNotifications(
     chapter: Chapters.STADSPAS,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
-    )}`,
+    )}!`,
     description,
     link: {
       to: stadspasId
