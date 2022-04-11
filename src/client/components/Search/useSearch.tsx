@@ -20,10 +20,7 @@ import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
-import {
-  trackEventWithCustomDimensions,
-  trackEventWithProfileType,
-} from '../../hooks';
+import { trackEventWithCustomDimensions } from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKey';

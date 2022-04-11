@@ -16,8 +16,10 @@ import {
   WelcomeNotification2,
   WelcomeNotification2Commercial,
 } from '../../config/staticData';
+import { trackItemPresentation } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
 import styles from './MyNotifications.module.scss';
 
@@ -30,6 +32,7 @@ export default function MyNotificationsPage() {
   const history = useHistory();
   const welcomNotificationShown = useRef<boolean>(false);
   const userCity = useUserCity();
+  const profileType = useProfileTypeValue();
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -59,6 +62,12 @@ export default function MyNotificationsPage() {
     // Send matomo event
     // Ony once though
     welcomNotificationShown.current = true;
+    trackItemPresentation(
+      'Actueel',
+      'Welkom weespers melding',
+      profileType,
+      userCity
+    );
     console.log('userCity', userCity);
   }
 

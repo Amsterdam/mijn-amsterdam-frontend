@@ -5,7 +5,7 @@ import * as analytics from '../../hooks/analytics.hook';
 import SectionCollapsible from './SectionCollapsible';
 
 describe('<SectionCollapsible />', () => {
-  const trackingSpy = jest.spyOn(analytics, 'trackEventWithProfileType');
+  const trackingSpy = jest.spyOn(analytics, 'trackEventWithCustomDimensions');
 
   it('should start uncollapsed', () => {
     const { container } = render(
@@ -89,7 +89,8 @@ describe('<SectionCollapsible />', () => {
         name: 'the content thing',
         action: 'Open klikken',
       },
-      'private'
+      'private',
+      'Onbekend'
     );
   });
 
