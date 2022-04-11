@@ -68,7 +68,6 @@ export default function MyNotificationsPage() {
       profileType,
       userCity
     );
-    console.log('userCity', userCity);
   }
 
   useEffect(() => {
