@@ -33,6 +33,7 @@ export default function MyNotificationsPage() {
   const welcomNotificationShown = useRef<boolean>(false);
   const userCity = useUserCity();
   const profileType = useProfileTypeValue();
+  const trackCategory = 'Actueel overzicht';
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -63,7 +64,7 @@ export default function MyNotificationsPage() {
     // Ony once though
     welcomNotificationShown.current = true;
     trackItemPresentation(
-      'Actueel',
+      trackCategory,
       'Welkom weespers melding',
       profileType,
       userCity
@@ -114,7 +115,7 @@ export default function MyNotificationsPage() {
         isLoading={isLoading(NOTIFICATIONS)}
         items={itemsPaginated}
         noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
-        trackCategory="Actueel overzicht"
+        trackCategory={trackCategory}
       />
       {total > PAGE_SIZE && (
         <PageContent>
