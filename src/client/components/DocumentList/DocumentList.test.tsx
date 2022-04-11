@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
-import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
+import { trackPageViewWithCustomDimensions } from '../../hooks/analytics.hook';
 import DocumentList from './DocumentList';
 
 jest.mock('../../hooks/analytics.hook');
@@ -41,7 +41,7 @@ describe('DocumentList', () => {
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
 
-    (trackPageViewWithProfileType as jest.Mock).mockReturnValue(null);
+    (trackPageViewWithCustomDimensions as jest.Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -56,11 +56,12 @@ describe('DocumentList', () => {
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
 
     await waitFor(() =>
-      expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
+      expect(trackPageViewWithCustomDimensions).toHaveBeenCalledWith(
         ITEMS[0].title,
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
-        'private'
+        'private',
+        'Onbekend'
       )
     );
 
@@ -75,7 +76,7 @@ describe('DocumentList', () => {
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null });
 
-    (trackPageViewWithProfileType as jest.Mock).mockReturnValue(null);
+    (trackPageViewWithCustomDimensions as jest.Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -93,11 +94,12 @@ describe('DocumentList', () => {
     userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
 
     await waitFor(() =>
-      expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
+      expect(trackPageViewWithCustomDimensions).toHaveBeenCalledWith(
         ITEMS[0].title,
         // The additional leading / is representing window.location.pathname
         '/compleet/ander/pad',
-        'private'
+        'private',
+        'Onbekend'
       )
     );
 
@@ -108,7 +110,8 @@ describe('DocumentList', () => {
     const fetch = ((global as any).fetch = jest
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-    const track = ((analytics as any).trackPageViewWithProfileType = jest.fn());
+    const track = ((analytics as any).trackPageViewWithCustomDimensions =
+      jest.fn());
     const captureException = ((Sentry as any).captureException = jest.fn());
 
     render(

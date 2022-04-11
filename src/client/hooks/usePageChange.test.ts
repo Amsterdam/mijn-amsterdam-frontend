@@ -1,9 +1,12 @@
+import * as rrd from 'react-router-dom';
 import { renderHook } from '@testing-library/react-hooks';
 import { usePageChange } from '.';
-import { trackPageViewWithProfileType } from './analytics.hook';
-import * as rrd from 'react-router-dom';
+import { trackPageViewWithCustomDimensions } from './analytics.hook';
 
 jest.mock('./useProfileType');
+jest.mock('./useUserCity', () => ({
+  useUserCity: () => 'Onbekend',
+}));
 jest.mock('./useTermReplacement', () => ({
   useTermReplacement: () => {
     return jest.fn();
@@ -32,7 +35,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/');
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimensions).toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 
@@ -41,7 +44,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/abcd');
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).not.toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimensions).not.toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 
@@ -51,7 +54,7 @@ describe('usePageChange', () => {
 
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).not.toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimensions).not.toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 });

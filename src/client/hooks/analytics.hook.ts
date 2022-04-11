@@ -93,12 +93,16 @@ export function trackPageView(
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
-export function trackPageViewWithProfileType(
+export function trackPageViewWithCustomDimensions(
   title: string,
   url: string,
-  profileType: ProfileType
+  profileType: ProfileType,
+  userCity: string
 ) {
-  return trackPageView(title, url, [profileTypeDimension(profileType)]);
+  return trackPageView(title, url, [
+    profileTypeDimension(profileType),
+    userCityDimension(userCity),
+  ]);
 }
 
 export function trackLink(url: string) {

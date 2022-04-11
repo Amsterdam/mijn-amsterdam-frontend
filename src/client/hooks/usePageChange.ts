@@ -8,9 +8,10 @@ import {
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
-import { trackPageViewWithProfileType } from './analytics.hook';
+import { trackPageViewWithCustomDimensions } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
+import { useUserCity } from './useUserCity';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -30,6 +31,7 @@ export function usePageChange() {
   const location = useLocation();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   useEffect(() => {
     // Scroll to top on route change
@@ -81,10 +83,11 @@ export function usePageChange() {
       }
 
       if (isPageFound) {
-        trackPageViewWithProfileType(
+        trackPageViewWithCustomDimensions(
           termReplace(title),
           CustomTrackingUrls[location.pathname] || location.pathname,
-          profileType
+          profileType,
+          userCity
         );
       }
     }
