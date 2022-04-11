@@ -19,6 +19,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
 import { ChapterMenuItem } from '../../config/menuItems';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
+import { useUserCity } from '../../hooks/useUserCity';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -50,6 +51,7 @@ export default function Dashboard() {
     useChapters();
 
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   useEffect(() => {
     if (myChapterItems.length && !isMyChaptersLoading) {
@@ -59,11 +61,12 @@ export default function Dashboard() {
         trackItemPresentation(
           'Tonen themas overzicht',
           chapterEventName,
-          profileType
+          profileType,
+          userCity
         );
       }
     }
-  }, [myChapterItems, profileType, isMyChaptersLoading]);
+  }, [myChapterItems, profileType, isMyChaptersLoading, userCity]);
 
   return (
     <>

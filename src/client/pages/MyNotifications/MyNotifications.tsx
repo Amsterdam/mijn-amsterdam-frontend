@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+import { MyNotification } from '../../../universal/types';
 import {
   Alert,
   ChapterIcon,
@@ -11,8 +12,13 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
+import {
+  WelcomeNotification2,
+  WelcomeNotification2Commercial,
+} from '../../config/staticData';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { useUserCity } from '../../hooks/useUserCity';
 import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
@@ -22,6 +28,8 @@ export default function MyNotificationsPage() {
   const notifications = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
   const history = useHistory();
+  const welcomNotificationShown = useRef<boolean>(false);
+  const userCity = useUserCity();
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -37,6 +45,22 @@ export default function MyNotificationsPage() {
     return notifications.slice(start, end);
   }, [currentPage, notifications]);
   const total = notifications.length;
+
+  useEffect(() => {}, [itemsPaginated]);
+
+  if (
+    itemsPaginated.some(
+      (n: MyNotification) =>
+        n.id === WelcomeNotification2.id ||
+        n.id === WelcomeNotification2Commercial.id
+    ) &&
+    !welcomNotificationShown.current
+  ) {
+    // Send matomo event
+    // Ony once though
+    welcomNotificationShown.current = true;
+    console.log('userCity', userCity);
+  }
 
   useEffect(() => {
     window.scrollBy({

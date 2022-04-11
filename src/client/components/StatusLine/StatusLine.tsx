@@ -4,9 +4,10 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
-import { trackEventWithProfileType } from '../../hooks/analytics.hook';
+import { trackEventWithCustomDimensions } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
@@ -283,16 +284,18 @@ export default function StatusLine({
     showToggleMore
   );
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   function toggleCollapsed() {
     if (isCollapsed) {
-      trackEventWithProfileType(
+      trackEventWithCustomDimensions(
         {
           category: trackCategory,
           name: 'Metrolijn',
           action: 'Alles tonen',
         },
-        profileType
+        profileType,
+        userCity
       );
     }
     setCollapsed(!isCollapsed);

@@ -7,7 +7,7 @@ import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
-  trackEventWithProfileType,
+  trackEventWithCustomDimensions,
   trackSearch,
 } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
@@ -15,6 +15,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
@@ -143,6 +144,7 @@ export function Search({
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
   const isPhoneScreen = usePhoneScreen();
   const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
@@ -160,13 +162,14 @@ export function Search({
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
-      trackEventWithProfileType(
+      trackEventWithCustomDimensions(
         {
           category: 'Zoeken',
           name: `${searchCategory} interactie`,
           action,
         },
-        profileType
+        profileType,
+        userCity
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [profileType]

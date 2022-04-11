@@ -14,6 +14,7 @@ import {
 } from '../../hooks/analytics.hook';
 import { useOptIn } from '../../hooks/useOptIn';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -23,6 +24,7 @@ import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 export interface TipProps {
   tip: MyTip;
   profileType: ProfileType;
+  userCity: string;
 }
 
 function tipTitle(title: string) {
@@ -39,7 +41,7 @@ function tipTrackingCategory(category: string, isPersonalized: boolean) {
     : `${category} generieke tips`;
 }
 
-const Tip = ({ tip, profileType }: TipProps) => {
+const Tip = ({ tip, profileType, userCity }: TipProps) => {
   const [imgUrl, setImgUrl] = useState(PLACEHOLDER_IMAGE_URL);
 
   const tipImgUrl = tip.imgUrl
@@ -86,7 +88,8 @@ const Tip = ({ tip, profileType }: TipProps) => {
                     trackItemClick(
                       clickCategory,
                       tipFlipTitle(tip.title),
-                      profileType
+                      profileType,
+                      userCity
                     );
                   }
                 }}
@@ -113,7 +116,12 @@ const Tip = ({ tip, profileType }: TipProps) => {
           href={tip.link.to}
           external={isExternal}
           onClick={() => {
-            trackItemClick(clickCategory, tipTitle(tip.title), profileType);
+            trackItemClick(
+              clickCategory,
+              tipTitle(tip.title),
+              profileType,
+              userCity
+            );
             if (isExternal) {
               trackLink(tip.link.to);
             }
@@ -214,6 +222,7 @@ export default function MyTips({
 }: MyTipsProps) {
   const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
+  const userCity = useUserCity();
 
   useEffect(() => {
     if (items.length) {
@@ -221,11 +230,12 @@ export default function MyTips({
         trackItemPresentation(
           tipTrackingCategory('Tonen', tip.isPersonalized),
           tipTitle(tip.title),
-          profileType
+          profileType,
+          userCity
         );
       });
     }
-  }, [items, profileType]);
+  }, [items, profileType, userCity]);
 
   return (
     <div
@@ -253,7 +263,12 @@ export default function MyTips({
           {isLoading && <LoadingContentListItems />}
           {!isLoading &&
             items.map((item, i) => (
-              <Tip key={item.title} profileType={profileType} tip={item} />
+              <Tip
+                key={item.title}
+                profileType={profileType}
+                tip={item}
+                userCity={userCity}
+              />
             ))}
           {!isLoading && items.length === 2 && (
             <li className={styles.TipItem} />

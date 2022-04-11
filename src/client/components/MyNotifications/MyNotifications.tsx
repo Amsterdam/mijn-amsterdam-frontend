@@ -6,6 +6,7 @@ import {
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
@@ -28,9 +29,15 @@ export default function MyNotifications({
   ...otherProps
 }: MyNotificationsProps) {
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   useSessionCallbackOnceDebounced(trackCategory, () =>
-    trackItemPresentation(trackCategory, 'Aantal updates', profileType)
+    trackItemPresentation(
+      trackCategory,
+      'Aantal updates',
+      profileType,
+      userCity
+    )
   );
 
   return (

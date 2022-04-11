@@ -32,11 +32,12 @@ import {
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import {
-  trackEventWithProfileType,
+  trackEventWithCustomDimensions,
   useAppStateGetter,
   useAppStateReady,
 } from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
 
@@ -212,6 +213,8 @@ export function useSelectedFeatureCSS(
 export function useOnMarkerClick() {
   const [, setLoadingFeature] = useLoadingFeature();
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
+
   return useCallback(
     (event: LeafletEvent) => {
       const isCluster =
@@ -224,13 +227,14 @@ export function useOnMarkerClick() {
           datasetId,
           id,
         });
-        trackEventWithProfileType(
+        trackEventWithCustomDimensions(
           {
             category: MY_AREA_TRACKING_CATEGORY,
             name: `${capitalizeFirstLetter(datasetId)} marker`,
             action: 'Klikken',
           },
-          profileType
+          profileType,
+          userCity
         );
       }
     },

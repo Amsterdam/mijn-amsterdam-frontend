@@ -22,10 +22,15 @@ const MatomoTrackerConfig: UserOptions = {
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
 enum CustomDimensionId {
   ProfileType = 2,
+  City = 3,
 }
 
 function profileTypeDimension(profileType: ProfileType) {
   return { id: CustomDimensionId.ProfileType, value: profileType };
+}
+
+function userCityDimension(userCity: string) {
+  return { id: CustomDimensionId.City, value: userCity };
 }
 
 // Initialize connection with analytics
@@ -44,15 +49,17 @@ export function trackSearch(keyword: string, category: string) {
   return MatomoInstance && MatomoInstance.trackSiteSearch(payload);
 }
 
-export function trackEventWithProfileType(
+export function trackEventWithCustomDimensions(
   payload: TrackEventParams,
-  profileType: ProfileType
+  profileType: ProfileType,
+  userCity: string
 ) {
   const payloadFinal = {
     ...payload,
     customDimensions: [
       ...((payload.customDimensions as CustomDimension[]) || []),
       profileTypeDimension(profileType),
+      userCityDimension(userCity),
     ],
   };
   return MatomoInstance && MatomoInstance.trackEvent(payloadFinal);
@@ -107,28 +114,31 @@ export function trackLink(url: string) {
 export function trackItemPresentation(
   category: string,
   name: string,
-  profileType: ProfileType
+  profileType: ProfileType,
+  userCity: string
 ) {
   const payload = {
     category,
     name,
     action: 'Tonen',
   };
-  return trackEventWithProfileType(payload, profileType);
+  return trackEventWithCustomDimensions(payload, profileType, userCity);
 }
 
 export function trackItemClick(
   category: string,
   name: string,
-  profileType: ProfileType
+  profileType: ProfileType,
+  userCity: string
 ) {
-  return trackEventWithProfileType(
+  return trackEventWithCustomDimensions(
     {
       category,
       name,
       action: 'Klikken',
     },
-    profileType
+    profileType,
+    userCity
   );
 }
 

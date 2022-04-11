@@ -8,8 +8,9 @@ import {
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config/myarea-datasets';
 import { sortAlpha } from '../../../../universal/helpers';
-import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
+import { trackEventWithCustomDimensions } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
+import { useUserCity } from '../../../hooks/useUserCity';
 import { getIcon, getIconChildIdFromValue } from '../datasets';
 import {
   DatasetControlCheckbox,
@@ -51,6 +52,7 @@ export function DatasetPropertyFilterPanel({
   onFilterControlItemChange,
 }: DatasetPropertyFilterPanelProps) {
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
   const valuesSorted = useMemo(
     () => {
       const valueEntries = Object.entries(values);
@@ -105,13 +107,14 @@ export function DatasetPropertyFilterPanel({
                 isIndeterminate={false}
                 onChange={() => {
                   onFilterControlItemChange(datasetId, propertyName, value);
-                  trackEventWithProfileType(
+                  trackEventWithCustomDimensions(
                     {
                       category: MY_AREA_TRACKING_CATEGORY,
                       name: `Filter: ${propertyName} ${value}`,
                       action: isChecked ? 'Uit' : 'Aan',
                     },
-                    profileType
+                    profileType,
+                    userCity
                   );
                 }}
               />

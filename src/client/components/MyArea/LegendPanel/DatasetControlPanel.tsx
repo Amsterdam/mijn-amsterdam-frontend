@@ -6,8 +6,9 @@ import {
   DatasetPropertyValue,
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config';
-import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
+import { trackEventWithCustomDimensions } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
+import { useUserCity } from '../../../hooks/useUserCity';
 import { getIcon } from '../datasets';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
@@ -37,6 +38,7 @@ export function DatasetControlPanel({
   activeDatasetIds,
 }: DatasetControlPanelProps) {
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
   const { isChecked, isIndeterminate } = categoryCheckboxState(
     category,
     activeDatasetIds
@@ -61,13 +63,14 @@ export function DatasetControlPanel({
       }
       onChange={() => {
         onControlItemChange('category', datasetIds);
-        trackEventWithProfileType(
+        trackEventWithCustomDimensions(
           {
             category: MY_AREA_TRACKING_CATEGORY,
             name: `Dataset categorie: ${category.title}`,
             action: isChecked ? 'Uit' : 'Aan',
           },
-          profileType
+          profileType,
+          userCity
         );
       }}
     />

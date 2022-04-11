@@ -20,7 +20,10 @@ import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
-import { trackEventWithProfileType } from '../../hooks';
+import {
+  trackEventWithCustomDimensions,
+  trackEventWithProfileType,
+} from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKey';
@@ -28,6 +31,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import { useUserCity } from '../../hooks/useUserCity';
 import styles from './Search.module.scss';
 import {
   ApiBaseItem,
@@ -418,6 +422,7 @@ export function useSearchOnPage(): {
   isDisplaySearch: boolean;
 } {
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
   const [isSearchActive, setSearchActive] = useState(false);
   const location = useLocation();
   const isDisplaySearch = !matchPath(location.pathname, {
@@ -426,15 +431,16 @@ export function useSearchOnPage(): {
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
-      trackEventWithProfileType(
+      trackEventWithCustomDimensions(
         {
           category: 'Zoeken',
           name: 'Zoekbalk open/dicht',
           action,
         },
-        profileType
+        profileType,
+        userCity
       ),
-    [profileType]
+    [profileType, userCity]
   );
 
   useEffect(() => {

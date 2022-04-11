@@ -15,6 +15,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
+import { useUserCity } from '../../hooks/useUserCity';
 import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
@@ -48,12 +49,18 @@ function SecondaryLinks() {
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   useEffect(() => {
     if (hasFirstName) {
-      trackItemPresentation('Mijn gegevens', 'Link naar Profiel', profileType);
+      trackItemPresentation(
+        'Mijn gegevens',
+        'Link naar Profiel',
+        profileType,
+        userCity
+      );
     }
-  }, [hasFirstName, profileType]);
+  }, [hasFirstName, profileType, userCity]);
 
   return (
     <div className={styles.secondaryLinks}>
