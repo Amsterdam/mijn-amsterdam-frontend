@@ -91,5 +91,5 @@ export function usePageChange() {
         );
       }
     }
-  }, [location.pathname, termReplace, profileType]);
+  }, [location.pathname, termReplace, profileType, userCity]);
 }

@@ -1,8 +1,7 @@
-import { useRecoilValue } from 'recoil';
-import { appStateAtom } from './useAppState';
+import { useAppStateGetter } from './useAppState';
 
 export function useUserCity() {
-  const state = useRecoilValue(appStateAtom);
+  const { BRP } = useAppStateGetter();
 
-  return state.BRP?.content?.adres?.woonplaatsNaam ?? 'Onbekend';
+  return BRP?.content?.adres?.woonplaatsNaam ?? 'Onbekend';
 }
