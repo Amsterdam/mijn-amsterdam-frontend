@@ -90,7 +90,12 @@ export async function fetchSubsidie(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchSource(requestID, authProfileAndToken);
+  const response = await requestData<SubsidieData>(
+    getApiConfig('SUBSIDIE'),
+    requestID,
+    authProfileAndToken
+  );
+  return response;
 }
 
 function transformSubsidieNotifications(notifications: MyNotification[]) {
