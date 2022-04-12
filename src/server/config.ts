@@ -241,8 +241,11 @@ export const BffEndpoints = {
   PUBLIC_CMS_CONTENT: '/public/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
-  PUBLIC_CACHE_OVERVIEW: '/status/cache',
-  PUBLIC_HEALTH: '/status/health',
+  PUBLIC_CACHE_OVERVIEW: '/public/status/cache',
+  PUBLIC_HEALTH: '/public/status/health',
+  PUBLIC_TEMP: '/public/test-temp',
+
+  STATUS_HEALTH: '/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
