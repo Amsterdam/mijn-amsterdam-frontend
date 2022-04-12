@@ -254,6 +254,7 @@ export default function MainNavBar({
       <div className={styles.InfoButtons}>
         {FeatureToggle.isSearchEnabled && isDisplaySearch && (
           <IconButton
+            aria-label="Zoeken in mijn amsterdam"
             className={styles.SearchButton}
             onClick={() => {
               setSearchActive(!isSearchActive);

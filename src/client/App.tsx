@@ -323,7 +323,13 @@ export default function App() {
           onError={sendToSentry}
           FallbackComponent={ApplicationError}
         >
-          <Suspense fallback={<div>Loading Mijn Amsterdam bundle...</div>}>
+          <Suspense
+            fallback={
+              <div className={styles.PreLoader}>
+                Loading Mijn Amsterdam bundle...
+              </div>
+            }
+          >
             <AppLanding />
           </Suspense>
         </ErrorBoundary>
