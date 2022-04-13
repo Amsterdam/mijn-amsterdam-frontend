@@ -116,19 +116,21 @@ export function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
 }
 
-export function getOIDCToken(jwe: string): string {
+export function getOIDCToken(jweCookieString: string): string {
   const key = JWK.asKey(deriveKey(OIDC_SECRET));
   const encryptOpts = {
     alg: 'dir',
     enc: 'A256GCM',
   };
-  const { cleartext } = JWE.decrypt(jwe, key, {
+  const { cleartext } = JWE.decrypt(jweCookieString, key, {
     complete: true,
     contentEncryptionAlgorithms: [encryptOpts.enc],
     keyManagementAlgorithms: [encryptOpts.alg],
   });
 
-  return JSON.parse(cleartext.toString()).id_token;
+  return (
+    JSON.parse(cleartext.toString()).id_token || 'no-token-found-in-cookie'
+  );
 }
 
 export interface TokenData {

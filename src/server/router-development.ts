@@ -9,8 +9,8 @@ import {
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../config';
-import { generateDevSessionCookieValue } from '../helpers/app';
+} from './config';
+import { generateDevSessionCookieValue } from './helpers/app';
 
 export const authRouterDevelopment = express.Router();
 
