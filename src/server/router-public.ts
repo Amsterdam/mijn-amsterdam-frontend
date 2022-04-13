@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { BffEndpoints, OIDC_SESSION_COOKIE_NAME } from './config';
-import { getOIDCCookieData, queryParams } from './helpers/app';
+import { BffEndpoints } from './config';
+import { getAuth, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
-import { fetchCMSCONTENT } from './services';
+import { fetchCMSCONTENT, fetchSubsidie } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 
 export const router = express.Router();
@@ -61,17 +61,11 @@ router.get(
 );
 
 router.get(BffEndpoints.PUBLIC_TEMP, async (req, res, next) => {
-  // const requestID = res.locals.requestID;
+  const requestID = res.locals.requestID;
   try {
-    const cookieData = getOIDCCookieData(req.cookies[OIDC_SESSION_COOKIE_NAME]);
-    // const authProfileAndToken = getAuth(req);
-    // Sentry.captureMessage('Token value', {
-    //   extra: {
-    //     ...authProfileAndToken,
-    //   },
-    // });
-    // const response = await fetchSubsidie(requestID, authProfileAndToken);
-    res.json(cookieData);
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchSubsidie(requestID, authProfileAndToken);
+    res.json(response);
     next();
   } catch (error) {
     next(error);

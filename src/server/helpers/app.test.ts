@@ -39,7 +39,7 @@ describe('server/helpers/app', () => {
     (config.OIDC_SECRET as any) = secret;
   });
 
-  test('getAuth.eherkenning', () => {
+  test('getAuth.eherkenning', async () => {
     const cookieValue =
       'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjQ4NjMxOTc2LCJ1YXQiOjE2NDg2MzE5NzYsImV4cCI6MTY0ODYzMjg3Nn0..jU0F-zWKDX9Q2xHK.41K_wP5MaRvcWIYExcx-tyRI6w9iLQWkbX9VOsjZ-9R02qVt0A4sONnjI1KIzLtIwkbaQnsst-qbx8xcEmYmvFGb8JmvKafRLZu1aoux0WhG5uQSeys1ZEcXpvGE66VkG8qMfFTzt_dL5Hc4StCrrX-K8_JDqCHQMNLqPH55CfM6RCLGTJApUftWKcEt1qYPdj9c.idKSQMRtqRlPepcZxY7yaw';
 
@@ -49,7 +49,7 @@ describe('server/helpers/app', () => {
       },
     } as unknown as typeof express.request;
 
-    const result = getAuth(req);
+    const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -62,7 +62,7 @@ describe('server/helpers/app', () => {
     `);
   });
 
-  test('getAuth.digid', () => {
+  test('getAuth.digid', async () => {
     const cookieValue =
       'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjQ4NjMyMjA1LCJ1YXQiOjE2NDg2MzIyMDUsImV4cCI6MTY0ODYzMzEwNX0..bZ-oiaEqylULXoTF.Z2Cvwe0Mrss_vZkwGnfPBWH96keDt8kkMPJDclLD7ZsE_tu__Muu98knSB-WkHnCBzv7eTQ92urPWH3G8FQrkgznfzTuEIdazWQTtO1XoNwojcJMVErFLLurNoV9CGhLShCoy4lWjhmsE2KQAFrIQkl83lLkK3Ed0Ki_7onyrvwzqUimYpIgqcdxX3YwuTyyfmeQ.bVeqiqk4GrQ8CuVjfyyCxg';
 
@@ -72,7 +72,7 @@ describe('server/helpers/app', () => {
       },
     } as unknown as typeof express.request;
 
-    const result = getAuth(req);
+    const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
       Object {

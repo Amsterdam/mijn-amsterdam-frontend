@@ -45,7 +45,7 @@ router.get(
     try {
       const response = await fetchSearchConfig(
         requestID,
-        getAuth(req),
+        await getAuth(req),
         queryParams(req)
       );
       res.json(response);
@@ -169,7 +169,7 @@ router.get(
 
 router.use('/relay', async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
-    const authProfileAndToken = getAuth(req);
+    const authProfileAndToken = await getAuth(req);
     const headers = {
       Authorization: `Bearer ${authProfileAndToken.token}`,
     };

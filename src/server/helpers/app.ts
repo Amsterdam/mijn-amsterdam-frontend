@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import jose, { JWE, JWK } from 'jose';
+import jose, { JWE, JWK, JWKS } from 'jose';
+
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult } from '../../universal/helpers';
 import {
+  DEV_JWK_PRIVATE,
+  DEV_JWK_PUBLIC,
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_SECRET,
@@ -49,9 +52,9 @@ export interface AuthProfileAndToken {
   profile: AuthProfile;
 }
 
-export function getAuth(req: Request): AuthProfileAndToken {
+export async function getAuth(req: Request): Promise<AuthProfileAndToken> {
   const token = getOIDCToken(req.cookies[OIDC_SESSION_COOKIE_NAME]);
-  const tokenData = decodeOIDCToken(token);
+  const tokenData = await decodeOIDCToken(token);
   const profile = getAuthProfile(tokenData);
 
   return {
@@ -145,8 +148,12 @@ export interface TokenData {
   [key: string]: any;
 }
 
-export function decodeOIDCToken(token: string): TokenData {
-  return jose.JWT.decode(token) as unknown as TokenData;
+async function getJWKSKey() {
+  return JWK.asKey(DEV_JWK_PUBLIC);
+}
+
+export async function decodeOIDCToken(token: string): Promise<TokenData> {
+  return jose.JWT.verify(token, await getJWKSKey()) as unknown as TokenData;
 }
 
 interface DevSessionData {
@@ -162,11 +169,23 @@ function encrypt(payload: string, headers: object) {
   return JWE.encrypt(payload, key, { alg, enc, ...headers });
 }
 
+function generatePrivateKeyForDevelopment() {
+  const key = JWK.asKey(DEV_JWK_PRIVATE);
+  return key;
+}
+
 export function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
   const uat = (Date.now() / 1000) | 0;
   const iat = uat;
   const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
-  const idToken = jose.JWT.sign({ sub, aud }, OIDC_SECRET);
+  const idToken = jose.JWT.sign(
+    { sub, aud },
+    generatePrivateKeyForDevelopment(),
+    {
+      algorithm: 'RS256',
+    }
+  );
+
   const value = encrypt(JSON.stringify({ id_token: idToken }), {
     iat,
     uat,

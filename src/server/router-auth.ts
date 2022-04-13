@@ -14,10 +14,14 @@ export const router = express.Router();
 
 export const isAuthenticated =
   () =>
-  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
     if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
       try {
-        const a = getAuth(req);
+        const a = await getAuth(req);
         return next();
       } catch (error) {
         Sentry.captureException(error);
@@ -53,10 +57,10 @@ router.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
   });
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
+router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
   if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
     try {
-      const auth = getAuth(req);
+      const auth = await getAuth(req);
       return res.send(
         apiSuccessResult({ ...auth.profile, isAuthenticated: true })
       );
@@ -68,11 +72,11 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, (req, res) => {
+router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, async (req, res) => {
   if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
     try {
-      const auth = getAuth(req);
-      return res.send(apiSuccessResult(decodeOIDCToken(auth.token)));
+      const auth = await getAuth(req);
+      return res.send(apiSuccessResult(await decodeOIDCToken(auth.token)));
     } catch (error) {
       Sentry.captureException(error);
     }
@@ -81,9 +85,9 @@ router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, (req, res) => {
+router.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, async (req, res) => {
   if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
-    const auth = getAuth(req);
+    const auth = await getAuth(req);
     const redirectToLogoutSpecific =
       auth.profile.authMethod === 'eherkenning'
         ? BffEndpoints.PUBLIC_AUTH_LOGOUT_EHERKENNING

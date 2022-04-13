@@ -37,8 +37,8 @@ import {
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
-  return (requestID: requestID, req: Request) =>
-    fetchService(requestID, getAuth(req), queryParams(req));
+  return async (requestID: requestID, req: Request) =>
+    fetchService(requestID, await getAuth(req), queryParams(req));
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -79,21 +79,21 @@ const WPI_STADSPAS = callService(fetchStadspas);
 
 const WMO = callService(fetchWmo);
 
-const TOERISTISCHE_VERHUUR = (requestID: requestID, req: Request) =>
-  fetchToeristischeVerhuur(requestID, getAuth(req), getProfileType(req));
+const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
+  fetchToeristischeVerhuur(requestID, await getAuth(req), getProfileType(req));
 
-const VERGUNNINGEN = (requestID: requestID, req: Request) =>
-  fetchVergunningen(requestID, getAuth(req));
+const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
+  fetchVergunningen(requestID, await getAuth(req));
 
 // Location, address, based services
-const MY_LOCATION = (requestID: requestID, req: Request) =>
-  fetchMyLocation(requestID, getAuth(req), getProfileType(req));
+const MY_LOCATION = async (requestID: requestID, req: Request) =>
+  fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
 
-const AFVAL = (requestID: requestID, req: Request) =>
-  fetchAFVAL(requestID, getAuth(req), getProfileType(req));
+const AFVAL = async (requestID: requestID, req: Request) =>
+  fetchAFVAL(requestID, await getAuth(req), getProfileType(req));
 
-const AFVALPUNTEN = (requestID: requestID, req: Request) =>
-  fetchAFVALPUNTEN(requestID, getAuth(req), getProfileType(req));
+const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
+  fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBELASTING);
@@ -103,12 +103,13 @@ const SUBSIDIE = callService(fetchSubsidie);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
-  (await fetchGenerated(requestID, getAuth(req), getProfileType(req)))
+  (await fetchGenerated(requestID, await getAuth(req), getProfileType(req)))
     .NOTIFICATIONS;
 
 // Recent cases
 const CASES = async (requestID: requestID, req: Request) =>
-  (await fetchGenerated(requestID, getAuth(req), getProfileType(req))).CASES;
+  (await fetchGenerated(requestID, await getAuth(req), getProfileType(req)))
+    .CASES;
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
@@ -382,7 +383,7 @@ async function loadServicesTipsRequestData(requestID: requestID, req: Request) {
 
   return fetchTIPS(
     requestID,
-    getAuth(req),
+    await getAuth(req),
     queryParams(req),
     serviceResults
   ).catch((error: Error) => {
