@@ -241,20 +241,20 @@ describe('server/helpers/app', () => {
   });
 
   test('getOIDCToken.success', () => {
-    const token =
+    const jweCookieString =
       'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjQ4NjMyMjA1LCJ1YXQiOjE2NDg2MzIyMDUsImV4cCI6MTY0ODYzMzEwNX0..bZ-oiaEqylULXoTF.Z2Cvwe0Mrss_vZkwGnfPBWH96keDt8kkMPJDclLD7ZsE_tu__Muu98knSB-WkHnCBzv7eTQ92urPWH3G8FQrkgznfzTuEIdazWQTtO1XoNwojcJMVErFLLurNoV9CGhLShCoy4lWjhmsE2KQAFrIQkl83lLkK3Ed0Ki_7onyrvwzqUimYpIgqcdxX3YwuTyyfmeQ.bVeqiqk4GrQ8CuVjfyyCxg';
 
-    expect(getOIDCToken(token)).toMatchInlineSnapshot(
+    expect(getOIDCToken(jweCookieString)).toMatchInlineSnapshot(
       `"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMjFCU045ODciLCJhdWQiOiJ0ZXN0MiIsImlhdCI6MTY0ODYzMjIwNX0._dE-fgIsEj7eOje55lfOBPZGio8h7TaPykfJpRoo_M4"`
     );
   });
 
   test('getOIDCToken.fail', () => {
-    const token =
+    const jweCookieString =
       'eyJhbGciOiJkaXIiLC..bZ-oiaEqylULXoTF.Z2Cvwe0Mrss_vZkwGnfPBWH96keDt8kkMPJDclLD7ZsE_tu__Muu98knSB-WkHnCBzv7eTQ92urPWH3G8FQrkgznfzTuEIdazWQTtO1XoNwojcJMVErFLLurNoV9CGhLShCoy4lWjhmsE2KQAFrIQkl83lLkK3Ed0Ki_7onyrvwzqUimYpIgqcdxX3YwuTyyfmeQ.bVeqiqk4GrQ8CuVjfyyCxg';
 
     try {
-      getOIDCToken(token);
+      getOIDCToken(jweCookieString);
     } catch (error: any) {
       // eslint-disable-next-line jest/no-conditional-expect
       expect(error.toString()).toBe(
