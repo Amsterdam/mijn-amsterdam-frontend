@@ -4,6 +4,7 @@ import { getAuth, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT, fetchSubsidie } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
+import * as Sentry from '@sentry/node';
 
 export const router = express.Router();
 
@@ -63,7 +64,13 @@ router.get(
 router.get(BffEndpoints.PUBLIC_TEMP, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
-    const response = await fetchSubsidie(requestID, getAuth(req));
+    const authProfileAndToken = getAuth(req);
+    Sentry.captureMessage('Token value', {
+      extra: {
+        ...authProfileAndToken,
+      },
+    });
+    const response = await fetchSubsidie(requestID, authProfileAndToken);
     res.json(response);
     next();
   } catch (error) {
