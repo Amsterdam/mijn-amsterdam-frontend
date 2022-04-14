@@ -1,8 +1,13 @@
+import { IS_ACCEPTANCE } from '../../universal/config';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
 
-export const BFF_API_BASE_URL = process.env.REACT_APP_BFF_API_URL || '/bff';
+const baseUrl = IS_ACCEPTANCE
+  ? process.env.REACT_APP_BFF_API_URL_ACC
+  : process.env.REACT_APP_BFF_API_URL;
+
+export const BFF_API_BASE_URL = baseUrl || '/bff';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const BFF_API_PUBLIC_BASE_URL = `${BFF_API_BASE_URL}/public`;
 
