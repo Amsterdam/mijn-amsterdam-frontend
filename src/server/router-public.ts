@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { getAuth, queryParams } from './helpers/app';
+import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
-import { fetchCMSCONTENT, fetchSubsidie } from './services';
+import { fetchCMSCONTENT } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 
 export const router = express.Router();
@@ -59,15 +59,3 @@ router.get(
     }
   }
 );
-
-router.get(BffEndpoints.PUBLIC_TEMP, async (req, res, next) => {
-  const requestID = res.locals.requestID;
-  try {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchSubsidie(requestID, authProfileAndToken);
-    res.json(response);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
