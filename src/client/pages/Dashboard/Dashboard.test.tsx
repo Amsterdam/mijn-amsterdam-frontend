@@ -8,7 +8,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 
-// TIPS, NOTIFICATIONS, CASES, BUURT, MY_LOCATION
+// TIPS, NOTIFICATIONS, BUURT, MY_LOCATION
 
 const testState: any = {
   BRP: {
@@ -27,21 +27,6 @@ const testState: any = {
         datePublished: '2020-07-24',
         isPersonalized: true,
         reason: ['U ziet deze tip omdat!'],
-        link: {
-          to: '/lopende-zaak-1',
-          title: 'Linkje!',
-        },
-      },
-    ],
-  },
-  CASES: {
-    status: 'OK',
-    content: [
-      {
-        id: 'Case1',
-        title: 'Lopende zaak',
-        description: 'Tip over dingen',
-        datePublished: '2020-07-24',
         link: {
           to: '/lopende-zaak-1',
           title: 'Linkje!',

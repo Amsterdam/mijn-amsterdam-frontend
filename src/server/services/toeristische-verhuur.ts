@@ -5,7 +5,6 @@ import slug from 'slugme';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
-import { isRecentCase } from '../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -27,7 +26,7 @@ import {
   isNearEndDate,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from '../../universal/helpers/vergunningen';
-import { MyCase, MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types';
 import { LinkProps } from '../../universal/types/App.types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
@@ -458,18 +457,6 @@ function createRegistratieNotification(
   };
 }
 
-function createToeristischeVerhuurRecentCase(
-  vergunning: ToeristischeVerhuurVergunning
-): MyCase {
-  return {
-    id: `vergunning-${vergunning.id}-case`,
-    title: vergunning.title,
-    link: vergunning.link,
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
-    datePublished: vergunning.dateRequest,
-  };
-}
-
 export async function fetchToeristischeVerhuurGenerated(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -508,30 +495,8 @@ export async function fetchToeristischeVerhuurGenerated(
         isActualNotification(notification.datePublished, compareToDate)
     );
 
-    const cases: MyCase[] = Array.isArray(vergunningen)
-      ? vergunningen
-          .filter((vergunning) => {
-            const isVergunning = [
-              'Vergunning bed & breakfast',
-              'Vergunning vakantieverhuur',
-            ].includes(vergunning.title);
-
-            const hasRecentDecision =
-              !!vergunning.dateDecision &&
-              isRecentCase(vergunning.dateDecision, compareToDate);
-
-            const isRecentRequest =
-              !!vergunning.dateRequest &&
-              isRecentCase(vergunning.dateRequest, compareToDate);
-
-            return isVergunning && (hasRecentDecision || isRecentRequest);
-          })
-          .map(createToeristischeVerhuurRecentCase)
-      : [];
-
     return apiSuccessResult({
       notifications: actualNotifications,
-      cases,
     });
   }
 

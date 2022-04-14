@@ -35,10 +35,7 @@ export const FeatureToggle = {
   parkerenActive: !IS_PRODUCTION,
 };
 
-export const DAYS_KEEP_RECENT = 28;
-
 export const MAXIMUM_DAYS_RENT_ALLOWED = 30;
-
 export const DEFAULT_PROFILE_TYPE = 'private';
 
 export const ExternalUrls = {

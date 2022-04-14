@@ -121,14 +121,6 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   return data;
 }
 
-/** Checks if an item returned from the api is considered recent */
-export function isRecentCase(datePublished: string, compareDate: Date) {
-  return (
-    differenceInCalendarDays(compareDate, new Date(datePublished)) <
-    DAYS_KEEP_RECENT
-  );
-}
-
 export function recLookup(obj: any, path: string): any {
   if (!obj) {
     return;

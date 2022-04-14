@@ -5,7 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
-import { hash, isRecentCase } from '../../../universal/helpers/utils';
+import { hash } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
@@ -17,7 +17,6 @@ import {
 import {
   GenericDocument,
   LinkProps,
-  MyCase,
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
@@ -288,16 +287,6 @@ export async function fetchVergunningen(
   return response;
 }
 
-export function createVergunningRecentCase(item: Vergunning): MyCase {
-  return {
-    id: `vergunning-${item.id}-case`,
-    title: `Vergunningsaanvraag ${item.caseType} ${item.identifier}`,
-    link: item.link,
-    chapter: Chapters.VERGUNNINGEN,
-    datePublished: item.dateRequest,
-  };
-}
-
 function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
   const allItems = items.filter(
     (caseItem: Vergunning) => caseItem.caseType === item.caseType
@@ -372,17 +361,6 @@ export async function fetchVergunningenGenerated(
   if (VERGUNNINGEN.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const cases: MyCase[] = Array.isArray(VERGUNNINGEN.content)
-      ? VERGUNNINGEN.content
-          .filter(
-            (vergunning) =>
-              vergunning.status !== 'Afgehandeld' ||
-              (vergunning.dateDecision &&
-                isRecentCase(vergunning.dateDecision, compareToDate))
-          )
-          .map(createVergunningRecentCase)
-      : [];
-
     const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
       ? VERGUNNINGEN.content
           .filter(
@@ -397,7 +375,6 @@ export async function fetchVergunningenGenerated(
       : [];
 
     return apiSuccessResult({
-      cases,
       notifications,
     });
   }

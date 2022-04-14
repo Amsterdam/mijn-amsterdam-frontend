@@ -19,7 +19,6 @@ export const PRISTINE_APPSTATE: AppState = {
   // Generated
   TIPS: apiPristineResult([]),
   NOTIFICATIONS: apiPristineResult([]),
-  CASES: apiPristineResult([]),
 
   // Direct
   WPI_SPECIFICATIES: apiPristineResult({
