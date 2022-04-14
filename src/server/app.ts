@@ -92,16 +92,15 @@ app.use(function onError(
 ) {
   // @ts-ignore
   const responseData = apiErrorResult(err.toString(), null, res.sentry);
-  res.status(500).json(responseData);
+  return res.status(500).json(responseData);
 });
 
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
     Sentry.captureMessage('404 not found', { extra: { url: req.url } });
-    send404(res);
-  } else {
-    res.end();
+    return send404(res);
   }
+  return res.end();
 });
 
 const server = app.listen(BFF_PORT, () => {

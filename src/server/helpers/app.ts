@@ -3,6 +3,7 @@ import jose, { JWE, JWK, JWKS } from 'jose';
 
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
+import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult } from '../../universal/helpers';
 import {
@@ -16,7 +17,8 @@ import {
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
 } from '../config';
-import { clearSessionCache } from './source-api-request';
+import { axiosRequest, clearSessionCache } from './source-api-request';
+import memoize from 'memoizee';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 
@@ -148,9 +150,16 @@ export interface TokenData {
   [key: string]: any;
 }
 
-async function getJWKSKey() {
-  return JWK.asKey(DEV_JWK_PUBLIC);
-}
+const getJWKSKey = memoize(async () => {
+  return IS_AP
+    ? axiosRequest
+        .request({
+          url: process.env.BFF_OIDC_JWKS_URL,
+          responseType: 'json',
+        })
+        .then((response) => JWKS.asKeyStore(response.data))
+    : JWK.asKey(DEV_JWK_PUBLIC);
+});
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
   return jose.JWT.verify(token, await getJWKSKey()) as unknown as TokenData;
