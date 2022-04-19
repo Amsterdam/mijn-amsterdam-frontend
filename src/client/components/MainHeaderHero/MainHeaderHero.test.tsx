@@ -15,7 +15,7 @@ describe('<MainHeaderHero />', () => {
     );
     expect(container.querySelector('picture')).toBeInTheDocument();
     expect(container.querySelector('img')?.getAttribute('src')).toBe(
-      '/header/1366x342-werk.webp'
+      '/header/1600x400-werk.jpg'
     );
   });
 });

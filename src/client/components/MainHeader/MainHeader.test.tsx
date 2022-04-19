@@ -33,7 +33,7 @@ describe('<MainHeader />', () => {
 
     expect(container.querySelector('picture')).toBeInTheDocument();
     expect(container.querySelector('img')?.getAttribute('src')).toBe(
-      '/header/1366x342-algemeen.webp'
+      '/header/1600x400-algemeen.jpg'
     );
 
     expect(screen.getByText(/Mijn tips/)).toBeInTheDocument();
