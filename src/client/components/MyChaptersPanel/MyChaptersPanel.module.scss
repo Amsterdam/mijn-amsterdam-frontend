@@ -29,10 +29,6 @@
   flex-wrap: wrap;
   padding-left: 2rem;
 
-  @include mq-tablet() {
-    display: block;
-  }
-
   @include mq-phone() {
     padding-left: 1rem;
   }
@@ -42,22 +38,37 @@
     margin-bottom: 1rem;
 
     &:nth-child(odd) {
-      margin-right: 0.5rem;
+      @include mq-gt-phone() {
+        margin-right: 0.5rem;
+      }
     }
 
     &:nth-child(even) {
-      margin-left: 0.5rem;
+      @include mq-gt-phone() {
+        margin-left: 0.5rem;
+      }
     }
 
     @include mq-tablet() {
       padding-left: 0;
-      width: auto;
-      min-width: 18.5rem;
       margin-bottom: 0;
+
+      @include mq-gt-phone() {
+        width: auto;
+        min-width: 18.5rem;
+      }
 
       &:nth-child(even) {
         margin-left: 0;
       }
+    }
+  }
+
+  @include select(MainNavSubmenu_SubmenuItemTitle) {
+    white-space: normal;
+
+    @include mq-gt-phone() {
+      white-space: nowrap;
     }
   }
 }

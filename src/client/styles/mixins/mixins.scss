@@ -72,7 +72,7 @@
 @mixin select($names...) {
   $selectors: ();
   @each $name in $names {
-    $selectors: append($selectors, ('[class*="#{$name}"]'), comma)
+    $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
   }
   #{$selectors} {
     @content;
@@ -82,7 +82,7 @@
 @mixin select-id($names...) {
   $selectors: ();
   @each $name in $names {
-    $selectors: append($selectors, ('[id="#{$name}"]'), comma)
+    $selectors: append($selectors, ('[id="#{$name}"]'), comma);
   }
   #{$selectors} {
     @content;
@@ -122,6 +122,12 @@
   }
 }
 
+@mixin mq-gt-phone() {
+  @include media-q('>=phone') {
+    @content;
+  }
+}
+
 @mixin mq-tablet() {
   @include media-q('<tablet') {
     @content;
@@ -137,7 +143,7 @@
 @mixin input() {
   display: block;
   color: $color-black;
-  padding: .6em 1.2em .5em .6em;
+  padding: 0.6em 1.2em 0.5em 0.6em;
   width: 100%;
   max-width: 100%;
   margin: 0;
@@ -154,16 +160,16 @@
   -webkit-appearance: none;
   appearance: none;
   background-color: $color-white;
-  background-image: url("../../assets/icons/Chevron-Down.svg");
+  background-image: url('../../assets/icons/Chevron-Down.svg');
   background-repeat: no-repeat, repeat;
-  background-position: right .7em top 50%, 0 0;
-  background-size: .85em auto, 100%;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.85em auto, 100%;
 
   &::-ms-expand {
     display: none;
   }
   option {
-    font-weight:normal;
+    font-weight: normal;
   }
 }
 
@@ -175,5 +181,5 @@
       str-split(str-slice($string, $i + str-length($separator)), $separator)
     );
   }
-  @return $string
+  @return $string;
 }
