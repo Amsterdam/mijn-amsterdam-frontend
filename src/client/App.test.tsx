@@ -25,7 +25,7 @@ describe('App', () => {
     expect(screen.getByText(/Welkom/gi)).toBeInTheDocument();
   });
 
-  it('Renders Landing Page', () => {
+  it('Renders Landing Page', async () => {
     (useSessionApi as jest.Mock).mockReturnValue({
       isPristine: false,
       isAuthenticated: false,
@@ -34,12 +34,13 @@ describe('App', () => {
     render(<App />);
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    await screen.findByText('Voor particulieren en eenmanszaken');
     expect(
       screen.getByText('Voor particulieren en eenmanszaken')
     ).toBeInTheDocument();
   });
 
-  it('Renders Dashboard', () => {
+  it('Renders Dashboard', async () => {
     (window as any).scrollTo = jest.fn();
     const session = {
       isPristine: false,
@@ -52,6 +53,9 @@ describe('App', () => {
     render(<App />);
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+
+    await screen.findByRole('heading', { name: /actueel/i });
+
     expect(screen.getByRole('heading', { name: /actueel/i })).toHaveTextContent(
       'Actueel'
     );
