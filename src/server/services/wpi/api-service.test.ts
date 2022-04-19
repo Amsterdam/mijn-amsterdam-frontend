@@ -510,19 +510,19 @@ describe('wpi/app-service', () => {
             "datePublished": "2022-04-28",
             "description": "
         Je hebt nog een saldo van €10 of meer voor het kindtegoed.
-        Het saldo vervalt op 31 augustus 2021.
+        Het saldo vervalt op 31 juli 2022.
         ",
             "id": "stadspas-budget-notification",
             "link": Object {
               "title": "Check het saldo",
               "to": "/stadspas/saldo/200771",
             },
-            "title": "Stadspas kindtegoed: maak het saldo op",
+            "title": "Stadspas kindtegoed: Maak je tegoed op voor 30 juli 2022!",
           },
           Object {
             "chapter": "INKOMEN",
             "datePublished": "2022-02-23T16:26:14.175972",
-            "description": "U hebt recht op de Tozo 1 uitkering (besluit: 22 februari 2022).",
+            "description": "U hebt recht op de Tozo 1 uitkering (besluit: 23 februari 2022).",
             "id": "7827bafbbd75d88a90376ea6e0f618df-notification",
             "link": Object {
               "title": "Bekijk hoe het met uw aanvraag staat",
