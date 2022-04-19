@@ -55,251 +55,311 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
         <li
           class="MyNotificationItem"
         >
-          <h4
-            class="Heading Heading__small Title NotificationHeader"
-          >
-            Notification
-          </h4>
           <aside
             class="MetaInfo"
           >
-            <svg
-              aria-label="Home"
-              class="ChapterIcon Icon"
-              fill="#EC0000"
+            <button
+              aria-expanded="false"
+              class="TitleToggle"
             >
-              burgerzaken.svg
-            </svg>
-            <div
-              class="MetaInfoSecondary"
-            >
-              <em
-                class="ChapterIndication"
+              <h4
+                class="Heading Heading__small Title NotificationHeader"
               >
-                Home
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
+                Notification
+              </h4>
+              <svg
+                aria-label="Home"
+                class="ChapterIcon Icon"
+                fill="#EC0000"
               >
-                24 juli 2020
-              </time>
-            </div>
+                burgerzaken.svg
+              </svg>
+              <div
+                class="MetaInfoSecondary"
+              >
+                <em
+                  class="ChapterIndication"
+                >
+                  Home
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </div>
+              <svg
+                aria-hidden="true"
+                class="CaretIcon"
+              >
+                Chevron-Right.svg
+              </svg>
+            </button>
           </aside>
           <div
+            aria-hidden="true"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie1
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-1"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie1
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-1"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
           class="MyNotificationItem"
         >
-          <h4
-            class="Heading Heading__small Title NotificationHeader"
-          >
-            Notification
-          </h4>
           <aside
             class="MetaInfo"
           >
-            <svg
-              aria-label="Mijn gegevens"
-              class="ChapterIcon Icon"
-              fill="#EC0000"
+            <button
+              aria-expanded="false"
+              class="TitleToggle"
             >
-              MijnGegevens.svg
-            </svg>
-            <div
-              class="MetaInfoSecondary"
-            >
-              <em
-                class="ChapterIndication"
+              <h4
+                class="Heading Heading__small Title NotificationHeader"
               >
-                Mijn gegevens
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
+                Notification
+              </h4>
+              <svg
+                aria-label="Mijn gegevens"
+                class="ChapterIcon Icon"
+                fill="#EC0000"
               >
-                24 juli 2020
-              </time>
-            </div>
+                MijnGegevens.svg
+              </svg>
+              <div
+                class="MetaInfoSecondary"
+              >
+                <em
+                  class="ChapterIndication"
+                >
+                  Mijn gegevens
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </div>
+              <svg
+                aria-hidden="true"
+                class="CaretIcon"
+              >
+                Chevron-Right.svg
+              </svg>
+            </button>
           </aside>
           <div
+            aria-hidden="true"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie2
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-2"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie2
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-2"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
           class="MyNotificationItem"
         >
-          <h4
-            class="Heading Heading__small Title NotificationHeader"
-          >
-            Notification
-          </h4>
           <aside
             class="MetaInfo"
           >
-            <svg
-              aria-label="ALERT"
-              class="ChapterIcon Icon"
-              fill="#EC0000"
+            <button
+              aria-expanded="false"
+              class="TitleToggle"
             >
-              Alert.svg
-            </svg>
-            <div
-              class="MetaInfoSecondary"
-            >
-              <em
-                class="ChapterIndication"
+              <h4
+                class="Heading Heading__small Title NotificationHeader"
               >
-                Inkomen
-              </em>
-              <time
-                class="Datum"
-                datetime="2020-07-24"
+                Notification
+              </h4>
+              <svg
+                aria-label="ALERT"
+                class="ChapterIcon Icon"
+                fill="#EC0000"
               >
-                24 juli 2020
-              </time>
-            </div>
+                Alert.svg
+              </svg>
+              <div
+                class="MetaInfoSecondary"
+              >
+                <em
+                  class="ChapterIndication"
+                >
+                  Inkomen
+                </em>
+                <time
+                  class="Datum"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
+              </div>
+              <svg
+                aria-hidden="true"
+                class="CaretIcon"
+              >
+                Chevron-Right.svg
+              </svg>
+            </button>
           </aside>
           <div
+            aria-hidden="true"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Notificatie3
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-3"
-                title="Meer informatie over de melding: Notification"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie3
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-3"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </div>
         </li>
         <li
           class="MyNotificationItem"
         >
-          <h4
-            class="Heading Heading__small Title NotificationHeader"
-          >
-            Welkom op Mijn Amsterdam!
-          </h4>
           <aside
             class="MetaInfo"
           >
-            <svg
-              aria-label="Actueel"
-              class="ChapterIcon Icon"
-              fill="#EC0000"
+            <button
+              aria-expanded="false"
+              class="TitleToggle"
             >
-              Bell.svg
-            </svg>
-            <div
-              class="MetaInfoSecondary"
-            >
-              <em
-                class="ChapterIndication"
+              <h4
+                class="Heading Heading__small Title NotificationHeader"
               >
-                Actueel
-              </em>
-            </div>
+                Welkom op Mijn Amsterdam!
+              </h4>
+              <svg
+                aria-label="Actueel"
+                class="ChapterIcon Icon"
+                fill="#EC0000"
+              >
+                Bell.svg
+              </svg>
+              <div
+                class="MetaInfoSecondary"
+              >
+                <em
+                  class="ChapterIndication"
+                >
+                  Actueel
+                </em>
+              </div>
+              <svg
+                aria-hidden="true"
+                class="CaretIcon"
+              >
+                Chevron-Right.svg
+              </svg>
+            </button>
           </aside>
           <div
+            aria-hidden="true"
             class="Body"
+            style="height: 0px;"
           >
-            <div
-              class="Description"
-            >
-              Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/overzicht-updates"
-                title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
+            <div>
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/overzicht-updates"
+                  title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Laat ons weten wat u ervan vindt
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Laat ons weten wat u ervan vindt
+                </a>
+              </p>
+            </div>
           </div>
         </li>
       </ul>

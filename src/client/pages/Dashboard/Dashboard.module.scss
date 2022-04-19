@@ -23,12 +23,8 @@
     }
 
     @include select(PageHeading_HeadingInner) {
-      margin: 0 4rem;
+      margin: 0 2rem;
       z-index: 1;
-
-      @include mq-tablet() {
-        margin: 0 2rem;
-      }
 
       @include mq-phone() {
         margin: 0;
@@ -61,12 +57,6 @@
     @include media-q('>phone') {
       flex-grow: 1;
       margin: 0 2rem;
-      margin-bottom: 8rem;
-    }
-
-    @include media-q('>tablet') {
-      margin: 0 4rem;
-      margin-bottom: 8rem;
     }
   }
 
@@ -89,6 +79,7 @@
 
   @include select(MyTips_MyTips) {
     @include centered-block;
-    margin-bottom: 10rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 }

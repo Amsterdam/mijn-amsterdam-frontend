@@ -6,6 +6,7 @@ import { directApiUrlByProfileType } from '../../../universal/helpers/utils';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
+import { usePhoneScreen } from '../../hooks';
 import {
   trackItemClick,
   trackItemPresentation,
@@ -132,6 +133,7 @@ export interface MyTipsProps {
   isLoading: boolean;
   showHeader?: boolean;
   showOptIn?: boolean;
+  isEmbedded?: boolean;
 }
 
 function LoadingContentListItems() {
@@ -159,21 +161,29 @@ interface TipsOptInHeaderProps {
 function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
   const { isOptIn } = useOptIn();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const isPhoneScreen = usePhoneScreen();
+
   return (
     <>
       <div className={styles.HeaderBar}>
         <Heading size="large">Mijn tips</Heading>
-        <Button
-          lean={true}
-          variant="plain"
-          onClick={() => setModalIsOpen(true)}
-          className={styles.OptIn}
-          icon={IconChevronRight}
-          aria-expanded={modalIsOpen}
-        >
-          {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
-        </Button>
-        {showTipsPageLink && <Linkd href={AppRoutes.TIPS}>Al mijn tips</Linkd>}
+        {!isPhoneScreen && (
+          <Button
+            lean={true}
+            variant="plain"
+            onClick={() => setModalIsOpen(true)}
+            className={styles.OptIn}
+            icon={IconChevronRight}
+            aria-expanded={modalIsOpen}
+          >
+            {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
+          </Button>
+        )}
+        {showTipsPageLink && (
+          <Linkd icon={IconChevronRight} href={AppRoutes.TIPS}>
+            Al mijn tips
+          </Linkd>
+        )}
       </div>
       <MyTipsOptInOutModal
         isOpen={modalIsOpen}
@@ -199,9 +209,12 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
+  isEmbedded = false,
   ...otherProps
 }: MyTipsProps) {
   const profileType = useProfileTypeValue();
+  const isPhoneScreen = usePhoneScreen();
+
   useEffect(() => {
     if (items.length) {
       items.forEach((tip) => {
@@ -215,23 +228,38 @@ export default function MyTips({
   }, [items, profileType]);
 
   return (
-    <div {...otherProps} className={classnames(styles.MyTips, className)}>
+    <div
+      {...otherProps}
+      className={classnames(
+        styles.MyTips,
+        { [styles.MyTipsEmbedded]: isEmbedded },
+        className
+      )}
+    >
       {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
-      <ul
-        className={classnames(
-          styles.TipsList,
-          isLoading && styles.TipsListLoading
-        )}
-      >
-        {isLoading && <LoadingContentListItems />}
-        {!isLoading &&
-          items.map((item, i) => (
-            <Tip key={item.title} profileType={profileType} tip={item} />
-          ))}
-        {!isLoading && items.length % 2 !== 0 && (
-          <li className={styles.TipItem} />
-        )}
-      </ul>
+      <div className={styles.TipScrollContainer}>
+        <ul
+          className={classnames(
+            styles.TipsList,
+            isLoading && styles.TipsListLoading
+          )}
+          style={{
+            width:
+              isPhoneScreen && isEmbedded && items.length > 1
+                ? `${items.length * 75}%`
+                : '100%',
+          }}
+        >
+          {isLoading && <LoadingContentListItems />}
+          {!isLoading &&
+            items.map((item, i) => (
+              <Tip key={item.title} profileType={profileType} tip={item} />
+            ))}
+          {!isLoading && items.length === 2 && (
+            <li className={styles.TipItem} />
+          )}
+        </ul>
+      </div>
       {!isLoading && !items.length && <MyTipsNoContentMessage />}
     </div>
   );
