@@ -18,7 +18,7 @@ export const BFFApiUrls = {
   SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
   SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
-  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
+  SERVICES_SAURON: `${BFF_API_PUBLIC_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
   SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
 };

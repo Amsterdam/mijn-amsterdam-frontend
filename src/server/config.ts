@@ -243,7 +243,7 @@ export const BffEndpoints = {
     '/public/services/cms/maintenance-notifications',
   PUBLIC_CACHE_OVERVIEW: '/public/status/cache',
   PUBLIC_HEALTH: '/public/status/health',
-  PUBLIC_TEMP: '/public/test-temp',
+  PUBLIC_SERVICES_ALL: '/public/services/all',
 
   STATUS_HEALTH: '/status/health',
 };

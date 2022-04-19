@@ -4,6 +4,7 @@ import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
+import { loadServicesAll } from './services/controller';
 
 export const router = express.Router();
 
@@ -52,6 +53,19 @@ router.get(
         requestID,
         queryParams(req)
       );
+      res.json(response);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  BffEndpoints.PUBLIC_SERVICES_ALL,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const response = await loadServicesAll(req, res);
       res.json(response);
       next();
     } catch (error) {
