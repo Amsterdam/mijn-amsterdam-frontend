@@ -57,12 +57,6 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<MyNotifications />', () => {
   beforeAll(() => {
     (window as any).scrollBy = jest.fn();
-    (window.matchMedia as any) = jest.fn(() => {
-      return {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      };
-    });
   });
 
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
