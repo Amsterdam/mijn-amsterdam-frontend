@@ -4,18 +4,41 @@
   width: auto;
 }
 
+.MyTips.MyTipsEmbedded {
+  .TipsList {
+    flex-wrap: nowrap;
+  }
+
+  .TipScrollContainer {
+    overflow: auto;
+
+    @include mq-gt-phone() {
+      overflow: none;
+    }
+  }
+
+  .TipItem {
+    width: calc((100% / 3) - 1rem);
+
+    @include mq-gt-phone() {
+      width: calc((100% / 3) - 3%);
+    }
+  }
+}
+
 .TipsList {
   @include reset-list-style;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .TipItem {
-  width: calc((100% / 3) - 3%);
+  width: 100%;
   margin-bottom: 2rem;
-  @include mq-phone() {
-    width: 100%;
+
+  @include mq-gt-phone() {
+    width: calc((100% / 3) - 2rem);
   }
 }
 
@@ -41,15 +64,33 @@
 .HeaderBar {
   display: flex;
   margin: 0 0 1.6rem 0;
-  align-items: flex-end;
+
+  @include mq-gt-phone() {
+    align-items: flex-end;
+  }
+
+  @include select(Heading_Heading) {
+    flex-grow: 1;
+  }
 
   @include select(Button_Button) {
+    margin-left: 1rem;
+    text-decoration: underline;
 
-    margin-left: auto;
+    @include mq-gt-phone() {
+      text-decoration: none;
+      margin-left: auto;
+    }
   }
 
   .OptIn {
-    margin-left: 2rem;
+    margin-left: 0rem;
+    text-decoration: underline;
+
+    @include mq-gt-phone() {
+      text-decoration: none;
+      margin-left: 2rem;
+    }
   }
 }
 
@@ -79,8 +120,8 @@
 
 .TipFlipButton {
   position: absolute;
-  right: .8rem;
-  bottom: .8rem;
+  right: 0.8rem;
+  bottom: 0.8rem;
   z-index: 2;
   width: 2.6rem;
   height: 2.6rem;
@@ -97,7 +138,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 1rem;
   color: $color-white;
   z-index: 1;

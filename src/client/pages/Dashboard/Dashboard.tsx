@@ -91,9 +91,13 @@ export default function Dashboard() {
           />
         </div>
         {!isPhoneScreen && <MyAreaDashboard />}
-        {!isPhoneScreen && (
-          <MyTips isLoading={isLoading(TIPS)} items={tipItems} />
-        )}
+
+        <MyTips
+          isLoading={isLoading(TIPS)}
+          items={tipItems}
+          isEmbedded={true}
+        />
+
         <DirectLinks profileType={profileType} />
       </Page>
     </>
