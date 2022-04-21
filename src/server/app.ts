@@ -67,8 +67,8 @@ app.use(compression());
 app.use(requestID);
 
 // Public routes
-app.use(BFF_BASE_PATH, publicRouter);
 app.use(authRouter);
+app.use(BFF_BASE_PATH, publicRouter);
 
 // Development routing for mock data
 if (!IS_AP) {
@@ -76,7 +76,7 @@ if (!IS_AP) {
 }
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, protectedRouter);
+// app.use(BFF_BASE_PATH, protectedRouter);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearRequestCache);

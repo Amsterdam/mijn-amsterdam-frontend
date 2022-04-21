@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import express from 'express';
-import { auth } from 'express-openid-connect';
+import { auth, requiresAuth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
@@ -57,6 +57,38 @@ router.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
   });
 });
 
+router.get(BffEndpoints.PUBLIC_AUTH_CHECK_EHERKENNING, async (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(apiSuccessResult({ isAuthenticated: true }));
+  }
+  return sendUnauthorized(res);
+});
+
+router.get(BffEndpoints.PUBLIC_AUTH_CHECK_DIGID, async (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(apiSuccessResult({ isAuthenticated: true }));
+  }
+  return sendUnauthorized(res);
+});
+
+router.get(
+  BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_EHERKENNING,
+  async (req, res) => {
+    if (req.oidc.isAuthenticated()) {
+      return res.send(await req.oidc.fetchUserInfo());
+    }
+    return sendUnauthorized(res);
+  }
+);
+
+router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_DIGID, async (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(await req.oidc.fetchUserInfo());
+  }
+  return sendUnauthorized(res);
+});
+
+// AuthMethod agnostic endpoints
 router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
   if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
     try {
