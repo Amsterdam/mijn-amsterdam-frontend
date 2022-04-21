@@ -19,6 +19,7 @@ import {
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 import memoize from 'memoizee';
+import assert from 'assert';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 
@@ -54,8 +55,8 @@ export interface AuthProfileAndToken {
   profile: AuthProfile;
 }
 
-export async function getAuth(req: Request): Promise<AuthProfileAndToken> {
-  const token = getOIDCToken(req.cookies[OIDC_SESSION_COOKIE_NAME]);
+async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
+  const token = getOIDCToken(combineChunks(req.cookies));
   const tokenData = await decodeOIDCToken(token);
   const profile = getAuthProfile(tokenData);
 
@@ -63,6 +64,35 @@ export async function getAuth(req: Request): Promise<AuthProfileAndToken> {
     token,
     profile,
   };
+}
+
+export const getAuth = memoize(getAuth_);
+
+export function combineChunks(cookies: Record<string, string>) {
+  let unchunked = '';
+  Object.entries(cookies)
+    .filter(([key]) => isSessionCookieName(key))
+    .forEach(([key, value]) => {
+      unchunked += value;
+    });
+
+  return unchunked;
+}
+
+export function isSessionCookieName(cookieName: string) {
+  return (
+    cookieName === OIDC_SESSION_COOKIE_NAME ||
+    !!cookieName.match(`^${OIDC_SESSION_COOKIE_NAME}\\.\\d$`)
+  );
+}
+
+export function hasSessionCookie(req: Request) {
+  for (const cookieName of Object.keys(req.cookies)) {
+    if (isSessionCookieName(cookieName)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function requestID(req: Request, res: Response, next: NextFunction) {

@@ -8,7 +8,12 @@ import {
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
-import { decodeOIDCToken, getAuth, sendUnauthorized } from './helpers/app';
+import {
+  decodeOIDCToken,
+  getAuth,
+  hasSessionCookie,
+  sendUnauthorized,
+} from './helpers/app';
 
 export const router = express.Router();
 
@@ -19,7 +24,7 @@ export const isAuthenticated =
     res: express.Response,
     next: express.NextFunction
   ) => {
-    if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+    if (hasSessionCookie(req)) {
       try {
         const a = await getAuth(req);
         return next();
@@ -90,7 +95,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_DIGID, async (req, res) => {
 
 // AuthMethod agnostic endpoints
 router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
-  if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+  if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
       return res.send(
@@ -105,7 +110,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
 });
 
 router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, async (req, res) => {
-  if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+  if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
       return res.send(apiSuccessResult(await decodeOIDCToken(auth.token)));
@@ -118,7 +123,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, async (req, res) => {
 });
 
 router.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, async (req, res) => {
-  if (OIDC_SESSION_COOKIE_NAME in req.cookies) {
+  if (hasSessionCookie(req)) {
     const auth = await getAuth(req);
     const redirectToLogoutSpecific =
       auth.profile.authMethod === 'eherkenning'
