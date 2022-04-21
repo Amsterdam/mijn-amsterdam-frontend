@@ -75,7 +75,7 @@ router.get(
   BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_EHERKENNING,
   async (req, res) => {
     if (req.oidc.isAuthenticated()) {
-      return res.send(await req.oidc.fetchUserInfo());
+      return res.send(req.oidc.user || null);
     }
     return sendUnauthorized(res);
   }
@@ -83,7 +83,7 @@ router.get(
 
 router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_DIGID, async (req, res) => {
   if (req.oidc.isAuthenticated()) {
-    return res.send(await req.oidc.fetchUserInfo());
+    return res.send(req.oidc.user || null);
   }
   return sendUnauthorized(res);
 });
