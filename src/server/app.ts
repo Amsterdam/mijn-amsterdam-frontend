@@ -76,7 +76,7 @@ if (!IS_AP) {
 }
 
 // Mount the routers at the base path
-// app.use(BFF_BASE_PATH, protectedRouter);
+app.use(BFF_BASE_PATH, protectedRouter);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearRequestCache);

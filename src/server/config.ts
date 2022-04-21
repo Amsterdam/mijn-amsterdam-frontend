@@ -202,6 +202,7 @@ export const PUBLIC_AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const PUBLIC_AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BffEndpoints = {
+  API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
   SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
   SERVICES_ALL: '/services/all',

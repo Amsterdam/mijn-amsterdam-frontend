@@ -347,6 +347,7 @@ export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
 async function createTipsServiceResults(requestID: requestID, req: Request) {
   let requestData = null;
+
   if (queryParams(req).optin === 'true') {
     const profileType = queryParams(req).profileType as ProfileType;
     const servicePromises = loadServices(
@@ -383,6 +384,7 @@ export async function loadServicesTips(
 ) {
   const requestID = res.locals.requestID;
   const result = await loadServicesTipsRequestData(requestID, req);
+
   res.json(result);
   next();
 }
@@ -394,7 +396,9 @@ export async function loadServicesTipsRequestDataOverview(
 ) {
   const requestID = res.locals.requestID;
   req.query.optin = 'true';
+
   const result = await createTipsServiceResults(requestID, req);
   res.json(createTipsRequestData(queryParams(req), result));
+
   next();
 }

@@ -167,12 +167,18 @@ router.get(
   }
 );
 
-router.use('/relay', async (req, res, next) => {
+router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
-    const authProfileAndToken = await getAuth(req);
-    const headers = {
-      Authorization: `Bearer ${authProfileAndToken.token}`,
-    };
+    let headers: Record<string, string> = {};
+
+    // TODO: Generalize endpoints that don't need auth
+    if (!req.path.includes('tip_images')) {
+      const { token } = await getAuth(req);
+      headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
+
     try {
       const url = `${BFF_MS_API_BASE_URL + req.path}`;
       const rs = await axiosRequest.request({

@@ -56,7 +56,7 @@ export interface AuthProfileAndToken {
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
-  const token = getOIDCToken(combineChunks(req.cookies));
+  const token = getOIDCToken(combineCookieChunks(req.cookies));
   const tokenData = await decodeOIDCToken(token);
   const profile = getAuthProfile(tokenData);
 
@@ -68,8 +68,9 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
 
 export const getAuth = memoize(getAuth_);
 
-export function combineChunks(cookies: Record<string, string>) {
+export function combineCookieChunks(cookies: Record<string, string>) {
   let unchunked = '';
+
   Object.entries(cookies)
     .filter(([key]) => isSessionCookieName(key))
     .forEach(([key, value]) => {

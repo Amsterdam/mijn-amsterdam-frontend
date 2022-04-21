@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { queryParams } from './helpers/app';
+import { isRelayAllowed, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT } from './services';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
