@@ -25,7 +25,7 @@ const BFF_MS_API_HOST = IS_PRODUCTION
 const BFF_MS_API_PORT = IS_AP ? '' : `:${BFF_PORT}`;
 const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 
-export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}/api`;
+export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
@@ -247,14 +247,13 @@ export const BffEndpoints = {
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
   PUBLIC_CACHE_OVERVIEW: '/public/status/cache',
-  PUBLIC_HEALTH: '/public/status/health',
   PUBLIC_SERVICES_ALL: '/public/services/all',
 
   STATUS_HEALTH: '/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
-  BffEndpoints.PUBLIC_HEALTH,
+  BffEndpoints.STATUS_HEALTH,
   BffEndpoints.PUBLIC_CMS_CONTENT,
   BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.PUBLIC_CACHE_OVERVIEW,
