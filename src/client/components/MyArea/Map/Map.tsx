@@ -2,6 +2,7 @@ import {
   Map as ReactMap,
   MapProps as ReactMapProps,
 } from '@amsterdam/react-maps';
+import 'leaflet/dist/leaflet.css';
 import styles from '../MyArea.module.scss';
 import classnames from 'classnames';
 

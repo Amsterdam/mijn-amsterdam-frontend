@@ -1,7 +1,6 @@
 import BaseLayer from './Map/BaseLayer';
 import Map from './Map/Map';
 import { LatLngLiteral } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';

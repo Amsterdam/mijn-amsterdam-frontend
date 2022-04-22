@@ -25,10 +25,14 @@ function FooterBlock({
   description,
   startOpen = false,
 }: FooterBlockProps) {
+  const containerRole = useDesktopScreen() ? 'row' : undefined;
   const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
   const [isOpen, toggleOpen] = useState(startOpen);
   return (
-    <div className={classnames(styles.Panel, isOpen && styles.PanelOpen)}>
+    <div
+      className={classnames(styles.Panel, isOpen && styles.PanelOpen)}
+      role={containerRole}
+    >
       <h3 role={titleRole} onClick={() => toggleOpen((isOpen) => !isOpen)}>
         {title}
       </h3>

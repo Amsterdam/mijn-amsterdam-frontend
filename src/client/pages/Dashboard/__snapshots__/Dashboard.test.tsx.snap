@@ -33,193 +33,238 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="Home"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                burgerzaken.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <em
-                  class="ChapterIndication"
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
                 >
-                  Home
-                </em>
-                <time
-                  class="Datum"
-                  datetime="2020-07-24"
+                  Notification
+                </h4>
+                <svg
+                  aria-label="Home"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
                 >
-                  24 juli 2020
-                </time>
-              </div>
+                  burgerzaken.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
+                >
+                  <em
+                    class="ChapterIndication"
+                  >
+                    Home
+                  </em>
+                  <time
+                    class="Datum"
+                    datetime="2020-07-24"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
+              aria-hidden="true"
               class="Body"
+              style="height: 0px;"
             >
-              <div
-                class="Description"
-              >
-                Notificatie1
-              </div>
-              <p
-                class="Action"
-              >
-                <a
-                  class="Button Button__plain Button__lean Linkd"
-                  href="/item-1"
-                  title="Meer informatie over de melding: Notification"
+              <div>
+                <div
+                  class="Description"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon Icon__left"
-                    fill="#000"
-                    height="14px"
-                    width="14px"
+                  Notificatie1
+                </div>
+                <p
+                  class="Action"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/item-1"
+                    title="Meer informatie over de melding: Notification"
                   >
-                    Chevron-Right.svg
-                  </svg>
-                  Linkje!
-                </a>
-              </p>
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Linkje!
+                  </a>
+                </p>
+              </div>
             </div>
           </li>
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="Home"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                burgerzaken.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <em
-                  class="ChapterIndication"
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
                 >
-                  Home
-                </em>
-                <time
-                  class="Datum"
-                  datetime="2020-07-24"
+                  Notification
+                </h4>
+                <svg
+                  aria-label="Home"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
                 >
-                  24 juli 2020
-                </time>
-              </div>
+                  burgerzaken.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
+                >
+                  <em
+                    class="ChapterIndication"
+                  >
+                    Home
+                  </em>
+                  <time
+                    class="Datum"
+                    datetime="2020-07-24"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
+              aria-hidden="true"
               class="Body"
+              style="height: 0px;"
             >
-              <div
-                class="Description"
-              >
-                Notificatie2
-              </div>
-              <p
-                class="Action"
-              >
-                <a
-                  class="Button Button__plain Button__lean Linkd"
-                  href="/item-2"
-                  title="Meer informatie over de melding: Notification"
+              <div>
+                <div
+                  class="Description"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon Icon__left"
-                    fill="#000"
-                    height="14px"
-                    width="14px"
+                  Notificatie2
+                </div>
+                <p
+                  class="Action"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/item-2"
+                    title="Meer informatie over de melding: Notification"
                   >
-                    Chevron-Right.svg
-                  </svg>
-                  Linkje!
-                </a>
-              </p>
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Linkje!
+                  </a>
+                </p>
+              </div>
             </div>
           </li>
           <li
             class="MyNotificationItem"
           >
-            <h4
-              class="Heading Heading__small Title NotificationHeader"
-            >
-              Notification
-            </h4>
             <aside
               class="MetaInfo"
             >
-              <svg
-                aria-label="ALERT"
-                class="ChapterIcon Icon"
-                fill="#EC0000"
+              <button
+                aria-expanded="false"
+                class="TitleToggle"
               >
-                Alert.svg
-              </svg>
-              <div
-                class="MetaInfoSecondary"
-              >
-                <em
-                  class="ChapterIndication"
+                <h4
+                  class="Heading Heading__small Title NotificationHeader"
                 >
-                  Home
-                </em>
-                <time
-                  class="Datum"
-                  datetime="2020-07-24"
+                  Notification
+                </h4>
+                <svg
+                  aria-label="ALERT"
+                  class="ChapterIcon Icon"
+                  fill="#EC0000"
                 >
-                  24 juli 2020
-                </time>
-              </div>
+                  Alert.svg
+                </svg>
+                <div
+                  class="MetaInfoSecondary"
+                >
+                  <em
+                    class="ChapterIndication"
+                  >
+                    Home
+                  </em>
+                  <time
+                    class="Datum"
+                    datetime="2020-07-24"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="CaretIcon"
+                >
+                  Chevron-Right.svg
+                </svg>
+              </button>
             </aside>
             <div
+              aria-hidden="true"
               class="Body"
+              style="height: 0px;"
             >
-              <div
-                class="Description"
-              >
-                Notificatie3
-              </div>
-              <p
-                class="Action"
-              >
-                <a
-                  class="Button Button__plain Button__lean Linkd"
-                  href="/item-3"
-                  title="Meer informatie over de melding: Notification"
+              <div>
+                <div
+                  class="Description"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon Icon__left"
-                    fill="#000"
-                    height="14px"
-                    width="14px"
+                  Notificatie3
+                </div>
+                <p
+                  class="Action"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/item-3"
+                    title="Meer informatie over de melding: Notification"
                   >
-                    Chevron-Right.svg
-                  </svg>
-                  Linkje!
-                </a>
-              </p>
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Linkje!
+                  </a>
+                </p>
+              </div>
             </div>
           </li>
         </ul>
@@ -389,7 +434,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       </a>
     </div>
     <div
-      class="MyTips"
+      class="MyTips MyTipsEmbedded"
     >
       <div
         class="HeaderBar"
@@ -430,79 +475,81 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           Al mijn tips
         </a>
       </div>
-      <ul
-        class="TipsList"
+      <div
+        class="TipScrollContainer"
       >
-        <li
-          class="TipItem is-personalized"
+        <ul
+          class="TipsList"
+          style="width: 100%;"
         >
-          <article>
-            <div
-              class="ImageContainer"
-            >
-              <img
-                alt=""
-                class="Img"
-                src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-              />
-              <div>
-                <button
-                  aria-expanded="false"
-                  aria-label="Reden waarom u deze tip ziet"
-                  class="Button Button__plain Button__lean IconButton TipFlipButton"
-                  id="tip-flip-Tip1"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="Icon"
-                    fill="#ffffff"
-                    height="32"
-                    width="32"
-                  >
-                    Info.svg
-                  </svg>
-                </button>
-                <p
-                  aria-labelledby="tip-flip-Tip1"
-                  class="TipFlip"
-                  hidden=""
-                >
-                  <span>
-                    U ziet deze tip omdat!
-                  </span>
-                </p>
-              </div>
-            </div>
-            <h4
-              class="Heading Heading__medium"
-            >
-              Tip!!
-            </h4>
-            <p>
-              Tip over dingen
-            </p>
-            <a
-              class="Button Button__plain Button__lean Linkd"
-              href="/lopende-zaak-1"
-              title="Meer informatie over de tip: Tip!!"
-            >
-              <svg
-                aria-hidden="true"
-                class="Icon Icon__left"
-                fill="#000"
-                height="14px"
-                width="14px"
+          <li
+            class="TipItem is-personalized"
+          >
+            <article>
+              <div
+                class="ImageContainer"
               >
-                Chevron-Right.svg
-              </svg>
-              Linkje!
-            </a>
-          </article>
-        </li>
-        <li
-          class="TipItem"
-        />
-      </ul>
+                <img
+                  alt=""
+                  class="Img"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                />
+                <div>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Reden waarom u deze tip ziet"
+                    class="Button Button__plain Button__lean IconButton TipFlipButton"
+                    id="tip-flip-Tip1"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon"
+                      fill="#ffffff"
+                      height="32"
+                      width="32"
+                    >
+                      Info.svg
+                    </svg>
+                  </button>
+                  <p
+                    aria-labelledby="tip-flip-Tip1"
+                    class="TipFlip"
+                    hidden=""
+                  >
+                    <span>
+                      U ziet deze tip omdat!
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <h4
+                class="Heading Heading__medium"
+              >
+                Tip!!
+              </h4>
+              <p>
+                Tip over dingen
+              </p>
+              <a
+                class="Button Button__plain Button__lean Linkd"
+                href="/lopende-zaak-1"
+                title="Meer informatie over de tip: Tip!!"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="Icon Icon__left"
+                  fill="#000"
+                  height="14px"
+                  width="14px"
+                >
+                  Chevron-Right.svg
+                </svg>
+                Linkje!
+              </a>
+            </article>
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       class="DirectLinks"

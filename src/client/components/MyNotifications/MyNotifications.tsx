@@ -1,26 +1,15 @@
 import classnames from 'classnames';
-import { generatePath, useHistory } from 'react-router-dom';
-import { InnerHtml } from '..';
+import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/chapter';
-import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
-  MyNotification as MyNotificationBase,
-  SVGComponent,
-} from '../../../universal/types';
-import { Colors } from '../../config/app';
-import {
-  trackItemClick,
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
-import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import { DocumentLink } from '../DocumentList/DocumentList';
-import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
+import Notification, { MyNotification } from './Notification';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -28,10 +17,6 @@ export interface MyNotificationsProps {
   isLoading?: boolean;
   trackCategory: string;
   noContentNotification?: string;
-}
-
-interface MyNotification extends MyNotificationBase {
-  Icon?: SVGComponent;
 }
 
 export default function MyNotifications({
@@ -42,12 +27,7 @@ export default function MyNotifications({
   noContentNotification = 'Er zijn op dit moment geen updates voor u.',
   ...otherProps
 }: MyNotificationsProps) {
-  const history = useHistory();
   const profileType = useProfileTypeValue();
-
-  function showNotification(id: string, to: string) {
-    history.push(to);
-  }
 
   useSessionCallbackOnceDebounced(trackCategory, () =>
     trackItemPresentation(trackCategory, 'Aantal updates', profileType)
@@ -71,100 +51,15 @@ export default function MyNotifications({
         )}
         {!isLoading &&
           items.map((item, index) => {
-            const isLinkExternal =
-              (!!item.link?.to && !isInteralUrl(item.link.to)) ||
-              !!item.link?.download;
             return (
               <li
                 key={`${item.chapter}-${item.id}-${index}`}
                 className={styles.MyNotificationItem}
               >
-                <Heading
-                  className={classnames(
-                    styles.Title,
-                    styles.NotificationHeader
-                  )}
-                  el="h4"
-                  size="small"
-                >
-                  {item.title}
-                </Heading>
-                <aside className={styles.MetaInfo}>
-                  {!item.Icon ? (
-                    <ChapterIcon
-                      fill={Colors.primaryRed}
-                      className={styles.Icon}
-                      chapter={item.isAlert ? 'ALERT' : item.chapter}
-                    />
-                  ) : (
-                    <item.Icon className={styles.Icon} />
-                  )}
-                  <div className={styles.MetaInfoSecondary}>
-                    <em className={styles.ChapterIndication}>
-                      {ChapterTitles[item.chapter]}
-                    </em>
-                    {!item.hideDatePublished && (
-                      <time
-                        className={styles.Datum}
-                        dateTime={item.datePublished}
-                      >
-                        {defaultDateFormat(item.datePublished)}
-                      </time>
-                    )}
-                  </div>
-                </aside>
-                <div className={styles.Body}>
-                  {!!item.description && (
-                    <InnerHtml className={styles.Description}>
-                      {item.description}
-                    </InnerHtml>
-                  )}
-                  {!!item.moreInformation && (
-                    <InnerHtml className={styles.MoreInformation}>
-                      {item.moreInformation}
-                    </InnerHtml>
-                  )}
-                  {(!!item.link || !!item.customLink) && (
-                    <p className={styles.Action}>
-                      {item.link?.download ? (
-                        <DocumentLink
-                          document={{
-                            id: item.id,
-                            title: item.title,
-                            datePublished: item.datePublished,
-                            url: item.link.to,
-                            download: item.link.download,
-                          }}
-                          label={item.link.title}
-                        />
-                      ) : (
-                        <Linkd
-                          title={`Meer informatie over de melding: ${item.title}`}
-                          href={item.customLink ? '#' : item.link?.to}
-                          external={isLinkExternal}
-                          onClick={() => {
-                            trackItemClick(
-                              trackCategory,
-                              item.title,
-                              profileType
-                            );
-                            if (item.customLink?.callback) {
-                              item.customLink.callback();
-                              return false;
-                            }
-                            if (item.link && !isLinkExternal) {
-                              showNotification(item.id, item.link.to);
-                              return false;
-                            }
-                          }}
-                        >
-                          {(item.link || item.customLink)?.title ||
-                            'Meer informatie over ' + item.title}
-                        </Linkd>
-                      )}
-                    </p>
-                  )}
-                </div>
+                <Notification
+                  notification={item}
+                  trackCategory={trackCategory}
+                />
               </li>
             );
           })}
