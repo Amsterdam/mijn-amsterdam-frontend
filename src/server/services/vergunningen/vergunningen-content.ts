@@ -199,6 +199,7 @@ export const notificationContent: NotificationContent = {
   [CaseType.AanbiedenDiensten]: {
     inProgress: {
       ...inProgress,
+      title: (item) => `${item.caseType} in behandeling`,
       description: (item) =>
         `Uw ontheffingsaanvraag ${item.title} is in behandeling genomen.`,
     },
