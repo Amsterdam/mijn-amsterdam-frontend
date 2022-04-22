@@ -21,6 +21,7 @@ import {
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 import memoize from 'memoizee';
+import addSeconds from 'date-fns/addSeconds';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 
@@ -54,6 +55,7 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
+  validUntil?: number;
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
@@ -64,6 +66,10 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   return {
     token: oidcToken,
     profile,
+    validUntil: addSeconds(
+      new Date(tokenData.iat * 1000),
+      OIDC_SESSION_MAX_AGE_SECONDS
+    ).getTime(),
   };
 }
 
@@ -194,7 +200,9 @@ const getJWKSKey = memoize(async () => {
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
-  return jose.JWT.verify(token, await getJWKSKey()) as unknown as TokenData;
+  return jose.JWT.verify(token, await getJWKSKey(), {
+    maxTokenAge: `${OIDC_SESSION_MAX_AGE_SECONDS} seconds`,
+  } as any) as unknown as TokenData;
 }
 
 export function isRelayAllowed(pathRequested: string) {

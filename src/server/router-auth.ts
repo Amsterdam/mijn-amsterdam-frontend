@@ -94,13 +94,16 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
     try {
       const auth = await getAuth(req);
       return res.send(
-        apiSuccessResult({ ...auth.profile, isAuthenticated: true })
+        apiSuccessResult({
+          ...auth.profile,
+          isAuthenticated: true,
+          validUntil: auth.validUntil,
+        })
       );
     } catch (error) {
       Sentry.captureException(error);
     }
   }
-
   return sendUnauthorized(res);
 });
 

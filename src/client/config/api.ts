@@ -32,6 +32,11 @@ export const LOGIN_URL_EHERKENNING = `${
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
 export const AUTH_API_URL = `${BFF_API_PUBLIC_BASE_URL}/auth/check`;
 
+export const loginUrlByAuthMethod = {
+  eherkenning: LOGIN_URL_EHERKENNING,
+  digid: LOGIN_URL_DIGID,
+};
+
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
   TIPS: 'Tips',

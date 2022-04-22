@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
+import { AuthProfile } from '../../../server/helpers/app';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
@@ -16,13 +17,15 @@ export type SessionData = {
   validUntil: number;
   validityInSeconds: number;
   profileType: ProfileType | null;
+  authMethod: AuthProfile['authMethod'] | null;
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   validUntil: -1,
-  validityInSeconds: -1,
+  validityInSeconds: 0,
   profileType: null,
+  authMethod: null,
 };
 
 export interface SessionState extends SessionData {

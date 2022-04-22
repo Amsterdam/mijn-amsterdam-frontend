@@ -1,9 +1,10 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
+import { loginUrlByAuthMethod, LOGOUT_URL } from '../../config/api';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
@@ -22,8 +23,8 @@ import styles from './AutoLogoutDialog.module.scss';
  */
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
-export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
-  2 * ONE_MINUTE_SECONDS;
+export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 10; //2 * ONE_MINUTE_SECONDS;
+
 const SESSION_RENEW_INTERVAL_SECONDS = 300;
 const TITLE = 'Wilt u doorgaan?';
 
@@ -89,7 +90,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const maxCount =
     nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
 
-  const { resume, reset } = useCounter({
+  useCounter({
     maxCount,
     onMaxCount: () => {
       setOpen(true);
@@ -100,17 +101,16 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
-  const { refetch } = session;
-
   function showLoginScreen() {
     setContinueButtonVisibility(false);
-    session.logout();
+    // session.logout();
+    window.location.reload();
   }
 
   function continueUsingApp() {
-    // Refetching the session will renew the session for another {nSettings.secondsBeforeDialogShow + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
-    refetch();
-    resetAutoLogout();
+    (window as any).location.href = session.authMethod
+      ? loginUrlByAuthMethod[session.authMethod]
+      : LOGOUT_URL;
     document.title = originalTitle;
   }
 
@@ -118,13 +118,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const onTick = (count: number) => {
     document.title = count % 2 === 0 ? TITLE : originalTitle;
   };
-
-  const resetAutoLogout = useCallback(() => {
-    setContinueButtonVisibility(true);
-    setOpen(false);
-    reset();
-    resume();
-  }, [reset, resume]);
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
