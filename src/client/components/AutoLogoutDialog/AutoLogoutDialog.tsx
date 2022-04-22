@@ -23,7 +23,8 @@ import styles from './AutoLogoutDialog.module.scss';
  */
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
-export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 10; //2 * ONE_MINUTE_SECONDS;
+export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
+  2 * ONE_MINUTE_SECONDS;
 
 const SESSION_RENEW_INTERVAL_SECONDS = 300;
 const TITLE = 'Wilt u doorgaan?';
@@ -103,8 +104,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
-    // session.logout();
-    window.location.reload();
+    session.logout();
   }
 
   function continueUsingApp() {
@@ -153,9 +153,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
-          U wordt binnen{' '}
-          {formattedTimeFromSeconds(nSettings.secondsBeforeAutoLogout)} minuten
-          automatisch uitgelogd.
+          Als u niets doet wordt u automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
         <p className={ButtonStyles.ButtonGroup}>
