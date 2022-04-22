@@ -52,6 +52,10 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
   };
 }
 
+export function isExpiredSession(validUntil: number) {
+  return new Date(validUntil) < new Date();
+}
+
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
@@ -63,13 +67,15 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
+  const validUntil = addSeconds(
+    new Date(tokenData.iat * 1000),
+    OIDC_SESSION_MAX_AGE_SECONDS
+  ).getTime();
+
   return {
     token: oidcToken,
     profile,
-    validUntil: addSeconds(
-      new Date(tokenData.iat * 1000),
-      OIDC_SESSION_MAX_AGE_SECONDS
-    ).getTime(),
+    validUntil,
   };
 }
 

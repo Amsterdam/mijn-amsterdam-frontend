@@ -2,11 +2,13 @@ import * as Sentry from '@sentry/node';
 import express from 'express';
 import { auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
+import { isExpired } from '../universal/helpers/vergunningen';
 import { BffEndpoints, oidcConfigDigid, oidcConfigEherkenning } from './config';
 import {
   decodeOIDCToken,
   getAuth,
   hasSessionCookie,
+  isExpiredSession,
   sendUnauthorized,
 } from './helpers/app';
 
@@ -93,13 +95,16 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          ...auth.profile,
-          isAuthenticated: true,
-          validUntil: auth.validUntil,
-        })
-      );
+      // Extra session validity check.
+      if (!!auth.validUntil && !isExpiredSession(auth.validUntil)) {
+        return res.send(
+          apiSuccessResult({
+            ...auth.profile,
+            isAuthenticated: true,
+            validUntil: auth.validUntil,
+          })
+        );
+      }
     } catch (error) {
       Sentry.captureException(error);
     }
