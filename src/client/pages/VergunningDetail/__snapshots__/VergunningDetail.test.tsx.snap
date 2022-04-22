@@ -77,6 +77,20 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
         </p>
       </div>
       <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="Value"
+        >
+          Verleend
+        </p>
+      </div>
+      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -355,6 +369,20 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
           class="Value"
         >
           Aanbieden van diensten
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="Value"
+        >
+          Verleend
         </p>
       </div>
       <div
