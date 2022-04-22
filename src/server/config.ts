@@ -261,13 +261,13 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60;
 export const OIDC_SESSION_COOKIE_NAME = 'appSession';
-export const OIDC_SECRET = `${process.env.BFF_OIDC_SECRET}`;
+export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_OIDC_COOKIE_ENCRYPTION_KEY}`;
 
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
-  secret: OIDC_SECRET,
+  secret: OIDC_COOKIE_ENCRYPTION_KEY,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -278,27 +278,35 @@ const oidcConfigBase: ConfigParams = {
     absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
   },
-};
-
-export const oidcConfigDigid: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
-  routes: {
-    login: false,
-    logout: PUBLIC_AUTH_LOGOUT,
-    callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_DIGID
-    postLogoutRedirect: process.env.BFF_FRONTEND_URL,
-  },
-};
-
-export const oidcConfigEherkenning: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
   routes: {
     login: false,
     logout: PUBLIC_AUTH_LOGOUT,
     callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_EHERKENNING
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
+  },
+};
+
+export const oidcConfigDigid: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
+};
+
+export const oidcConfigEherkenning: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+};
+
+export const OIDC_TOKEN_ID_ATTRIBUTE = {
+  eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
+  digid: 'sub',
+};
+
+export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
+  get eherkenning() {
+    return oidcConfigEherkenning.clientID;
+  },
+  get digid() {
+    return oidcConfigDigid.clientID;
   },
 };
 

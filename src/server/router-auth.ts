@@ -1,13 +1,8 @@
 import * as Sentry from '@sentry/node';
 import express from 'express';
-import { auth, requiresAuth } from 'express-openid-connect';
+import { auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
-import {
-  BffEndpoints,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-  OIDC_SESSION_COOKIE_NAME,
-} from './config';
+import { BffEndpoints, oidcConfigDigid, oidcConfigEherkenning } from './config';
 import {
   decodeOIDCToken,
   getAuth,

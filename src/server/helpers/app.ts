@@ -11,15 +11,16 @@ import {
   DEV_JWK_PUBLIC,
   oidcConfigDigid,
   oidcConfigEherkenning,
-  OIDC_SECRET,
+  OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
+  OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 import memoize from 'memoizee';
-import assert from 'assert';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 
@@ -56,12 +57,12 @@ export interface AuthProfileAndToken {
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
-  const token = getOIDCToken(combineCookieChunks(req.cookies));
-  const tokenData = await decodeOIDCToken(token);
+  const oidcToken = getOIDCToken(combineCookieChunks(req.cookies));
+  const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
   return {
-    token,
+    token: oidcToken,
     profile,
   };
 }
@@ -155,7 +156,7 @@ export function getProfileType(req: Request) {
 export function getOIDCCookieData(jweCookieString: string): {
   id_token: string;
 } {
-  const key = JWK.asKey(deriveKey(OIDC_SECRET));
+  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
 
   const encryptOpts = {
     alg: 'dir',
@@ -189,50 +190,11 @@ const getJWKSKey = memoize(async () => {
           responseType: 'json',
         })
         .then((response) => JWKS.asKeyStore(response.data))
-    : JWK.asKey(DEV_JWK_PUBLIC);
+    : getPublicKeyForDevelopment();
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
   return jose.JWT.verify(token, await getJWKSKey()) as unknown as TokenData;
-}
-
-interface DevSessionData {
-  sub: number | string;
-  aud: string;
-}
-
-function encrypt(payload: string, headers: object) {
-  const alg = 'dir';
-  const enc = 'A256GCM';
-  const key = JWK.asKey(deriveKey(OIDC_SECRET));
-
-  return JWE.encrypt(payload, key, { alg, enc, ...headers });
-}
-
-function generatePrivateKeyForDevelopment() {
-  const key = JWK.asKey(DEV_JWK_PRIVATE);
-  return key;
-}
-
-export function generateDevSessionCookieValue({ sub, aud }: DevSessionData) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
-  const idToken = jose.JWT.sign(
-    { sub, aud },
-    generatePrivateKeyForDevelopment(),
-    {
-      algorithm: 'RS256',
-    }
-  );
-
-  const value = encrypt(JSON.stringify({ id_token: idToken }), {
-    iat,
-    uat,
-    exp,
-  });
-
-  return value;
 }
 
 export function isRelayAllowed(pathRequested: string) {
@@ -254,4 +216,56 @@ export function isProtectedRoute(pathRequested: string) {
       strict: false,
     });
   });
+}
+
+/**
+ *
+ * Helpers for development
+ */
+
+function encryptDevSessionCookieValue(payload: string, headers: object) {
+  const alg = 'dir';
+  const enc = 'A256GCM';
+  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
+
+  return JWE.encrypt(payload, key, { alg, enc, ...headers });
+}
+
+function getPrivateKeyForDevelopment() {
+  const key = JWK.asKey(DEV_JWK_PRIVATE);
+  return key;
+}
+
+function getPublicKeyForDevelopment() {
+  return JWK.asKey(DEV_JWK_PUBLIC);
+}
+
+export function generateDevSessionCookieValue(
+  authMethod: AuthProfile['authMethod'],
+  userID: string
+) {
+  const uat = (Date.now() / 1000) | 0;
+  const iat = uat;
+  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
+  const idToken = jose.JWT.sign(
+    {
+      [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
+    },
+    getPrivateKeyForDevelopment(),
+    {
+      algorithm: 'RS256',
+    }
+  );
+
+  const value = encryptDevSessionCookieValue(
+    JSON.stringify({ id_token: idToken }),
+    {
+      iat,
+      uat,
+      exp,
+    }
+  );
+
+  return value;
 }

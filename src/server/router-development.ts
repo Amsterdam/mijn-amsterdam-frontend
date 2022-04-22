@@ -5,12 +5,10 @@ import express, {
   Response,
 } from 'express';
 import {
-  oidcConfigDigid,
-  oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from './config';
-import { generateDevSessionCookieValue } from './helpers/app';
+import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
 
 export const authRouterDevelopment = express.Router();
 
@@ -26,23 +24,12 @@ authRouterDevelopment.get(
       secure: false, // Not secure for local development
       sameSite: 'lax',
     };
-    let appSessionCookieValue = '';
-
-    switch (req.params.authMethod) {
-      case 'eherkenning':
-        appSessionCookieValue = generateDevSessionCookieValue({
-          sub: '123KVK456',
-          aud: oidcConfigEherkenning.clientID ?? '',
-        });
-        break;
-      default:
-      case 'digid':
-        appSessionCookieValue = generateDevSessionCookieValue({
-          sub: '321BSN987',
-          aud: oidcConfigDigid.clientID ?? '',
-        });
-        break;
-    }
+    const authMethod = req.params.authMethod as AuthProfile['authMethod'];
+    const userId = `xxx-${authMethod}-xxx`;
+    const appSessionCookieValue = generateDevSessionCookieValue(
+      authMethod,
+      userId
+    );
 
     res.cookie(
       OIDC_SESSION_COOKIE_NAME,
