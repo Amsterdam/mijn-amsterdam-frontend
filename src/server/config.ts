@@ -25,7 +25,9 @@ const BFF_MS_API_HOST = IS_PRODUCTION
 const BFF_MS_API_PORT = IS_AP ? '' : `:${BFF_PORT}`;
 const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 
-export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
+export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}${
+  IS_AP ? '/api' : ''
+}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
