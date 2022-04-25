@@ -14,6 +14,9 @@ export function AanbiedenDiensten({
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
+      {vergunning.decision && (
+        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      )}
       {!!vergunning.location && vergunning.decision === 'Verleend' && (
         <Location location={vergunning.location} />
       )}
