@@ -124,5 +124,5 @@ export const DocumentTitles = {
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.PARKEREN]: 'Parkeren en verkeer',
+  [AppRoutes.PARKEREN]: 'Parkeren',
 };
