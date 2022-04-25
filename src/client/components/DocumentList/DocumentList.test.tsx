@@ -60,7 +60,8 @@ describe('DocumentList', () => {
         ITEMS[0].title,
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
-        'private'
+        'private',
+        ''
       )
     );
 
@@ -97,7 +98,8 @@ describe('DocumentList', () => {
         ITEMS[0].title,
         // The additional leading / is representing window.location.pathname
         '/compleet/ander/pad',
-        'private'
+        'private',
+        ''
       )
     );
 

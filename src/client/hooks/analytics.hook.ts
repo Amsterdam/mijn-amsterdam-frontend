@@ -20,12 +20,34 @@ const MatomoTrackerConfig: UserOptions = {
 };
 
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
-enum CustomDimensionId {
+enum CustomVariableId {
   ProfileType = 2,
+  City = 3,
 }
 
-function profileTypeDimension(profileType: ProfileType) {
-  return { id: CustomDimensionId.ProfileType, value: profileType };
+type CustomVariable = {
+  id: CustomVariableId;
+  name: string;
+  value: string;
+  scope: 'page' | 'visit';
+};
+
+function profileTypeDimension(profileType: ProfileType): CustomVariable {
+  return {
+    id: CustomVariableId.ProfileType,
+    name: 'ProfileType',
+    value: profileType,
+    scope: 'page',
+  };
+}
+
+function userCityDimension(userCity: string): CustomVariable {
+  return {
+    id: CustomVariableId.City,
+    name: 'City',
+    value: userCity,
+    scope: 'page',
+  };
 }
 
 // Initialize connection with analytics
@@ -61,7 +83,7 @@ export function trackEventWithProfileType(
 export function trackPageView(
   title?: string,
   url?: string,
-  customDimensions?: CustomDimension[]
+  customVariables?: CustomVariable[]
 ) {
   let href = url || document.location.href;
 
@@ -72,7 +94,6 @@ export function trackPageView(
   const payload = {
     documentTitle: title || document.title,
     href,
-    customDimensions,
   };
 
   const payloadSZ = {
@@ -83,15 +104,26 @@ export function trackPageView(
   // The siteimprove tracking call
   (window as any)._sz?.push(['trackdynamic', payloadSZ]);
 
+  console.log('trackPageView', customVariables);
+
+  // Track custom variabels (if any)
+  customVariables?.forEach((v) => {
+    MatomoInstance?.pushInstruction('setCustomVariable', Object.values(v));
+  });
+
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
 export function trackPageViewWithProfileType(
   title: string,
   url: string,
-  profileType: ProfileType
+  profileType: ProfileType,
+  userCity: string
 ) {
-  return trackPageView(title, url, [profileTypeDimension(profileType)]);
+  return trackPageView(title, url, [
+    profileTypeDimension(profileType),
+    userCityDimension(userCity),
+  ]);
 }
 
 export function trackLink(url: string) {

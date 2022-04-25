@@ -9,6 +9,9 @@ jest.mock('./useTermReplacement', () => ({
     return jest.fn();
   },
 }));
+jest.mock('./useUserCity', () => ({
+  useUserCity: () => 'Amsterdam',
+}));
 jest.mock('./analytics.hook');
 jest.mock('react-router-dom', () => {
   let pathname = '/';
