@@ -59,8 +59,9 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             class="MetaInfo"
           >
             <button
-              aria-expanded="false"
+              aria-expanded="true"
               class="TitleToggle"
+              disabled=""
             >
               <h4
                 class="Heading Heading__small Title NotificationHeader"
@@ -89,16 +90,10 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
                   24 juli 2020
                 </time>
               </div>
-              <svg
-                aria-hidden="true"
-                class="CaretIcon"
-              >
-                Chevron-Right.svg
-              </svg>
             </button>
           </aside>
           <div
-            aria-hidden="true"
+            aria-hidden="false"
             class="Body"
             style="height: 0px;"
           >
@@ -138,8 +133,9 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             class="MetaInfo"
           >
             <button
-              aria-expanded="false"
+              aria-expanded="true"
               class="TitleToggle"
+              disabled=""
             >
               <h4
                 class="Heading Heading__small Title NotificationHeader"
@@ -168,16 +164,10 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
                   24 juli 2020
                 </time>
               </div>
-              <svg
-                aria-hidden="true"
-                class="CaretIcon"
-              >
-                Chevron-Right.svg
-              </svg>
             </button>
           </aside>
           <div
-            aria-hidden="true"
+            aria-hidden="false"
             class="Body"
             style="height: 0px;"
           >
@@ -217,8 +207,9 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             class="MetaInfo"
           >
             <button
-              aria-expanded="false"
+              aria-expanded="true"
               class="TitleToggle"
+              disabled=""
             >
               <h4
                 class="Heading Heading__small Title NotificationHeader"
@@ -247,16 +238,10 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
                   24 juli 2020
                 </time>
               </div>
-              <svg
-                aria-hidden="true"
-                class="CaretIcon"
-              >
-                Chevron-Right.svg
-              </svg>
             </button>
           </aside>
           <div
-            aria-hidden="true"
+            aria-hidden="false"
             class="Body"
             style="height: 0px;"
           >
@@ -296,8 +281,9 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
             class="MetaInfo"
           >
             <button
-              aria-expanded="false"
+              aria-expanded="true"
               class="TitleToggle"
+              disabled=""
             >
               <h4
                 class="Heading Heading__small Title NotificationHeader"
@@ -320,16 +306,10 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
                   Actueel
                 </em>
               </div>
-              <svg
-                aria-hidden="true"
-                class="CaretIcon"
-              >
-                Chevron-Right.svg
-              </svg>
             </button>
           </aside>
           <div
-            aria-hidden="true"
+            aria-hidden="false"
             class="Body"
             style="height: 0px;"
           >
