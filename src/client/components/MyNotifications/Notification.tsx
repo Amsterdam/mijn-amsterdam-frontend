@@ -30,13 +30,15 @@ export interface MyNotification extends MyNotificationBase {
 const Notification = ({
   notification,
   trackCategory,
+  smallVariant,
 }: {
   notification: MyNotification;
   trackCategory: string;
+  smallVariant: boolean;
 }) => {
   const [isReadyForAnimation, setReadyForAnimation] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [isCollapsed, toggleCollapsed] = useState(false);
+  const [isCollapsed, toggleCollapsed] = useState(!smallVariant);
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const contentDimensions = useContentDimensions(contentRef);
@@ -53,7 +55,7 @@ const Notification = ({
     immediate: !isReadyForAnimation,
     reverse: !isCollapsed,
     from: {
-      height: 0,
+      height: smallVariant ? 0 : contentDimensions.height,
     },
     to: {
       height: contentDimensions.height,
@@ -76,6 +78,7 @@ const Notification = ({
         <button
           aria-expanded={isCollapsed}
           className={styles.TitleToggle}
+          disabled={!smallVariant}
           onClick={() => toggleCollapsed(!isCollapsed)}
         >
           <Heading
@@ -107,7 +110,9 @@ const Notification = ({
               </time>
             )}
           </div>
-          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
+          {smallVariant && (
+            <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
+          )}
         </button>
       </aside>
       <animated.div
