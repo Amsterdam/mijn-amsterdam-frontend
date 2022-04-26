@@ -104,11 +104,9 @@ export function trackPageView(
   // The siteimprove tracking call
   (window as any)._sz?.push(['trackdynamic', payloadSZ]);
 
-  console.log('trackPageView', customVariables);
-
   // Track custom variabels (if any)
   customVariables?.forEach((v) => {
-    MatomoInstance?.pushInstruction('setCustomVariable', Object.values(v));
+    MatomoInstance?.pushInstruction('setCustomVariable', ...Object.values(v));
   });
 
   return MatomoInstance && MatomoInstance.trackPageView(payload);
