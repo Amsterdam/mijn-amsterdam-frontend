@@ -386,7 +386,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <a
             class="MainNavSubmenuLink"
             data-chapter-id="PARKEREN"
-            href="/parkeren-en-verkeer"
+            href="/parkeren"
           >
             <span
               class="SubmenuItemIcon"
@@ -401,7 +401,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             <span
               class="SubmenuItemTitle"
             >
-              Parkeren en verkeer
+              Parkeren
             </span>
           </a>
         </div>
