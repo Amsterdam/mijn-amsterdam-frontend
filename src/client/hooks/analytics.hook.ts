@@ -37,7 +37,7 @@ function profileTypeDimension(profileType: ProfileType): CustomVariable {
     id: CustomVariableId.ProfileType,
     name: 'ProfileType',
     value: profileType,
-    scope: 'visit',
+    scope: 'page',
   };
 }
 
