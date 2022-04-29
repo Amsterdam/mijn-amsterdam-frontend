@@ -37,7 +37,7 @@ function profileTypeDimension(profileType: ProfileType): CustomVariable {
     id: CustomVariableId.ProfileType,
     name: 'ProfileType',
     value: profileType,
-    scope: 'page',
+    scope: 'visit',
   };
 }
 
@@ -46,7 +46,7 @@ function userCityDimension(userCity: string): CustomVariable {
     id: CustomVariableId.City,
     name: 'City',
     value: userCity,
-    scope: 'page',
+    scope: 'visit',
   };
 }
 
