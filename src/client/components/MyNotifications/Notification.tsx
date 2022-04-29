@@ -55,7 +55,7 @@ const Notification = ({
     immediate: !isReadyForAnimation,
     reverse: !isCollapsed,
     from: {
-      height: smallVariant ? 0 : contentDimensions.height,
+      height: 0,
     },
     to: {
       height: contentDimensions.height,
@@ -118,7 +118,7 @@ const Notification = ({
       <animated.div
         aria-hidden={!isCollapsed}
         className={styles.Body}
-        style={heightAnimSpring}
+        style={smallVariant ? heightAnimSpring : { height: 'auto' }}
       >
         <div ref={contentRef}>
           {!!notification.description && (
