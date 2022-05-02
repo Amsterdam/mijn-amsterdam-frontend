@@ -196,6 +196,19 @@ export const notificationContent: NotificationContent = {
         `Uw vergunningsaanvraag ${item.title} is afgehandeld`,
     },
   },
+  [CaseType.AanbiedenDiensten]: {
+    inProgress: {
+      ...inProgress,
+      title: (item) => `${item.caseType} in behandeling`,
+      description: (item) =>
+        `Uw ontheffingsaanvraag ${item.title} is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      description: (item) =>
+        `Uw ontheffingsaanvraag ${item.title} is afgehandeld.`,
+    },
+  },
   //TODO: Add those eventually later
   // [CaseType.VakantieVerhuur]: {},
   // [CaseType.BBVergunning]: {},

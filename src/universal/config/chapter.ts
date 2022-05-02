@@ -67,7 +67,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
-  PARKEREN: 'Parkeren en verkeer',
+  PARKEREN: 'Parkeren',
 };
 
 export const DocumentTitleMain = 'Mijn Amsterdam';
@@ -124,5 +124,5 @@ export const DocumentTitles = {
   ]]: `Vergunning vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.PARKEREN]: 'Parkeren en verkeer',
+  [AppRoutes.PARKEREN]: 'Parkeren',
 };

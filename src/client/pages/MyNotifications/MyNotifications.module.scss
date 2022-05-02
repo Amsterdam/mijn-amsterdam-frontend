@@ -27,7 +27,7 @@
   @include select(MyNotifications_MetaInfoSecondary) {
     position: absolute;
     right: 0;
-    top: 2rem;
+    top: -0.4rem;
     width: 17.5rem;
 
     @include mq-tablet() {
@@ -45,11 +45,20 @@
     }
   }
 
+  @include select(MyNotifications_MetaInfo) {
+    padding-left: 0rem;
+  }
+
+  @include select(MyNotifications_Body) {
+    padding-left: 0px;
+  }
+
   @include select(MyNotifications_MyNotificationItem) {
     padding-left: 16rem;
 
     @include select(MyNotifications_Icon) {
-      left: 6.4rem;
+      top: -0.4rem;
+      left: -9.3rem;
     }
 
     aside {

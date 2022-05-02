@@ -32,13 +32,9 @@ describe('Parkeren', () => {
     render(<Component />);
 
     expect(
-      screen.getByText('Lees hier meer over parkeren')
+      screen.getByText('Lees hier meer over parkeervergunningen')
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByText(
-        'Lees hier meer over alle parkeervergunningen in Amsterdam'
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText('Log in op Mijn Parkeren')).toBeInTheDocument();
   });
 });
