@@ -169,12 +169,17 @@ router.get(
 
 router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
-    let headers: any = req.headers;
-
+    let headers: Record<string, string> = {};
+    let data: any = undefined;
     // TODO: Generalize endpoints that don't need auth
     if (!req.path.includes('tip_images')) {
       const { token } = await getAuth(req);
-      headers.Authorization = `Bearer ${token}`;
+      headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      if (req.body) {
+        data = req.body;
+      }
     }
 
     try {
@@ -184,15 +189,9 @@ router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
         url,
         headers,
         params: req.query,
+        data,
       });
-
-      if (rs.headers) {
-        for (const [key, val] of Object.entries(rs.headers)) {
-          res.setHeader(key, val);
-        }
-
-        res.type(rs.headers?.['Content-type'] || 'application/json');
-      }
+      res.type(rs.headers?.['Content-type'] || 'application/json');
       res.send(rs.data);
     } catch (error: any) {
       res.status(error?.response?.status || 500);
