@@ -12,6 +12,7 @@ import { requestData } from '../helpers';
 import {
   apiSuccessResult,
   apiDependencyError,
+  ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../helpers/app';
 
@@ -157,29 +158,33 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   return notifications;
 }
 
-export function transformBRPData(responseData: BRPDataFromSource) {
-  if (Array.isArray(responseData.identiteitsbewijzen)) {
+export function transformBRPData(
+  responseData: ApiSuccessResponse<BRPDataFromSource>
+) {
+  if (Array.isArray(responseData.content?.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
     Object.assign(responseData, {
-      identiteitsbewijzen: responseData.identiteitsbewijzen.map((document) => {
-        const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
-          id: document.id,
-        });
-        return Object.assign({}, document, {
-          title:
-            BrpDocumentTitles[document.documentType] || document.documentType,
-          datumAfloop: document.datumAfloop,
-          datumUitgifte: document.datumUitgifte,
-          link: {
-            to: route,
-            title: document.documentType,
-          },
-        });
-      }),
+      identiteitsbewijzen: responseData.content.identiteitsbewijzen.map(
+        (document) => {
+          const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
+            id: document.id,
+          });
+          return Object.assign({}, document, {
+            title:
+              BrpDocumentTitles[document.documentType] || document.documentType,
+            datumAfloop: document.datumAfloop,
+            datumUitgifte: document.datumUitgifte,
+            link: {
+              to: route,
+              title: document.documentType,
+            },
+          });
+        }
+      ),
     });
   }
 
-  return responseData as BRPData;
+  return responseData.content as BRPData;
 }
 
 export async function fetchBRP(
