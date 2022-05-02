@@ -169,14 +169,12 @@ router.get(
 
 router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
-    let headers: Record<string, string> = {};
+    let headers: any = req.headers;
 
     // TODO: Generalize endpoints that don't need auth
     if (!req.path.includes('tip_images')) {
       const { token } = await getAuth(req);
-      headers = {
-        Authorization: `Bearer ${token}`,
-      };
+      headers.Authorization = `Bearer ${token}`;
     }
 
     try {
