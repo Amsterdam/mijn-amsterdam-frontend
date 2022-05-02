@@ -11,6 +11,7 @@ import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageViewWithProfileType } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
+import { useUserCity } from './useUserCity';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -30,10 +31,15 @@ export function usePageChange() {
   const location = useLocation();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
+  const userCity = useUserCity();
 
   useEffect(() => {
     // Scroll to top on route change
     window.scrollTo(0, 0);
+
+    if (userCity === undefined) {
+      return;
+    }
 
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex((route) => {
@@ -84,9 +90,10 @@ export function usePageChange() {
         trackPageViewWithProfileType(
           termReplace(title),
           CustomTrackingUrls[location.pathname] || location.pathname,
-          profileType
+          profileType,
+          userCity
         );
       }
     }
-  }, [location.pathname, termReplace, profileType]);
+  }, [location.pathname, termReplace, profileType, userCity]);
 }

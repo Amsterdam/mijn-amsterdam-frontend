@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -11,6 +11,11 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
+import {
+  WelcomeNotification2,
+  WelcomeNotification2Commercial,
+} from '../../config/staticData';
+import { trackItemPresentation, useProfileTypeValue } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import styles from './MyNotifications.module.scss';
@@ -22,6 +27,9 @@ export default function MyNotificationsPage() {
   const notifications = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
   const history = useHistory();
+  const welcomNotificationShown = useRef<boolean>(false);
+  const profileType = useProfileTypeValue();
+  const trackCategory = 'Actueel overzicht';
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -45,6 +53,23 @@ export default function MyNotificationsPage() {
       behavior: 'smooth',
     });
   }, [currentPage]);
+
+  if (
+    itemsPaginated.some(
+      (n) =>
+        n.id === WelcomeNotification2.id ||
+        n.id === WelcomeNotification2Commercial.id
+    ) &&
+    !welcomNotificationShown.current
+  ) {
+    // Send matomo event indicating we've shown the notification
+    welcomNotificationShown.current = true;
+    trackItemPresentation(
+      trackCategory,
+      'Welkom weespers melding',
+      profileType
+    );
+  }
 
   return (
     <DetailPage className={styles.MyNotifications}>
