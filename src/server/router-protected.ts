@@ -185,7 +185,14 @@ router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
         headers,
         params: req.query,
       });
-      res.type(rs.headers?.['Content-type'] || 'application/json');
+
+      if (rs.headers) {
+        for (const [key, val] of Object.entries(rs.headers)) {
+          res.setHeader(key, val);
+        }
+
+        res.type(rs.headers?.['Content-type'] || 'application/json');
+      }
       res.send(rs.data);
     } catch (error: any) {
       res.status(error?.response?.status || 500);
