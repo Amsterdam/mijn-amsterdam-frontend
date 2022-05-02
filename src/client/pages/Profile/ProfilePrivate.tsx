@@ -9,7 +9,6 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
@@ -54,7 +53,6 @@ export default function Profile() {
       url: BFFApiUrls.BRP_RESIDENTS_API_URL,
       postpone: true,
       method: 'post',
-      transformResponse: (responseContent) => apiSuccessResult(responseContent),
     },
     apiPristineResult({ residentCount: -1 })
   );
