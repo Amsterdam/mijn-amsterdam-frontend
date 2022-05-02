@@ -82,6 +82,7 @@ export default function Dashboard() {
             showMoreLink={NOTIFICATIONSTotal > MAX_NOTIFICATIONS_VISIBLE}
             isLoading={isLoading(NOTIFICATIONS)}
             trackCategory="Dashboard / Actueel"
+            isEmbedded={true}
           />
           <MyChaptersPanel
             isLoading={isMyChaptersLoading}

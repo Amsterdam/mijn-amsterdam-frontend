@@ -17,6 +17,7 @@ export interface MyNotificationsProps {
   isLoading?: boolean;
   trackCategory: string;
   noContentNotification?: string;
+  isEmbedded?: boolean;
 }
 
 export default function MyNotifications({
@@ -25,6 +26,7 @@ export default function MyNotifications({
   isLoading = true,
   trackCategory,
   noContentNotification = 'Er zijn op dit moment geen updates voor u.',
+  isEmbedded = false,
   ...otherProps
 }: MyNotificationsProps) {
   const profileType = useProfileTypeValue();
@@ -59,6 +61,7 @@ export default function MyNotifications({
                 <Notification
                   notification={item}
                   trackCategory={trackCategory}
+                  smallVariant={isEmbedded}
                 />
               </li>
             );
