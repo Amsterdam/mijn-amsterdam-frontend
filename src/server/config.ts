@@ -204,14 +204,14 @@ export const PUBLIC_AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const PUBLIC_AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BffEndpoints = {
-  API_RELAY: '/relay',
-  SERVICES_TIPS: '/services/tips',
-  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
-  SERVICES_ALL: '/services/all',
-  SERVICES_STREAM: '/services/stream',
-  MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
-  API_DIRECT: '/direct/:apiName',
-  SEARCH_CONFIG: '/services/search-config',
+  API_RELAY: '/public/relay',
+  SERVICES_TIPS: '/public/services/tips',
+  SERVICES_TIPS_REQUEST_DATA_OVERVIEW:
+    '/public/services/tips/requestdataoverview',
+  SERVICES_ALL: '/public/services/all',
+  SERVICES_STREAM: '/public/services/stream',
+  MAP_DATASETS: '/public/map/datasets/:datasetId?/:id?',
+  SEARCH_CONFIG: '/public/services/search-config',
 
   // start: OIDC config
   PUBLIC_AUTH_BASE_DIGID,
@@ -249,7 +249,6 @@ export const BffEndpoints = {
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
     '/public/services/cms/maintenance-notifications',
   PUBLIC_CACHE_OVERVIEW: '/public/status/cache',
-  PUBLIC_SERVICES_ALL: '/public/services/all',
 
   STATUS_HEALTH: '/status/health',
 };
