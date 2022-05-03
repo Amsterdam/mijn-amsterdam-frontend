@@ -1437,16 +1437,16 @@
       "id": "a9fd4474bb9cba222aec117e313839e0",
       "title": "Bbz",
       "about": "Bbz",
-      "dateStart": "2022-02-23T16:26:14.176604",
-      "datePublished": "2022-02-23T16:26:14.176752",
-      "dateEnd": "2022-02-23T16:26:14.176733",
+      "dateStart": "2020-01-01T00:00:00.000Z",
+      "datePublished": "2020-06-09T23:00:00.000Z",
+      "dateEnd": "2020-06-09T16:26:14.176733",
       "decision": "afwijzing",
       "statusId": "terugvorderingsbesluit",
       "steps": [
         {
           "id": "aanvraag",
           "status": "Aanvraag",
-          "datePublished": "2022-02-23T16:26:14.176604",
+          "datePublished": "2020-01-01T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176605",
@@ -1460,7 +1460,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176615",
+          "datePublished": "2020-01-08T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176616",
@@ -1476,7 +1476,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176622",
+          "datePublished": "2020-01-15T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176623",
@@ -1492,7 +1492,7 @@
         {
           "id": "beslisTermijn",
           "status": "Tijd nodig",
-          "datePublished": "2022-02-23T16:26:14.176628",
+          "datePublished": "2020-01-22T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176629",
@@ -1506,7 +1506,7 @@
         {
           "id": "herstelTermijn",
           "status": "Meer informatie",
-          "datePublished": "2022-02-23T16:26:14.176635",
+          "datePublished": "2020-01-29T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176636",
@@ -1520,7 +1520,7 @@
         {
           "id": "briefAdviesRapport",
           "status": "Brief",
-          "datePublished": "2022-02-23T16:26:14.176641",
+          "datePublished": "2020-02-05T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176642",
@@ -1534,7 +1534,7 @@
         {
           "id": "intrekking",
           "status": "Brief",
-          "datePublished": "2022-02-23T16:26:14.176648",
+          "datePublished": "2020-02-12T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176649",
@@ -1548,7 +1548,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176654",
+          "datePublished": "2020-02-19T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176655",
@@ -1563,7 +1563,7 @@
         {
           "id": "briefAkteBedrijfskapitaal",
           "status": "Akte",
-          "datePublished": "2022-02-23T16:26:14.176661",
+          "datePublished": "2020-02-26T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176661",
@@ -1577,7 +1577,7 @@
         {
           "id": "voorschot",
           "status": "Voorschot",
-          "datePublished": "2022-02-23T16:26:14.176667",
+          "datePublished": "2020-03-04T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176668",
@@ -1591,7 +1591,7 @@
         {
           "id": "voorschot",
           "status": "Voorschot",
-          "datePublished": "2022-02-23T16:26:14.176674",
+          "datePublished": "2020-03-11T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176674",
@@ -1605,7 +1605,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176680",
+          "datePublished": "2020-03-18T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176681",
@@ -1620,7 +1620,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176686",
+          "datePublished": "2020-03-25T00:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176687",
@@ -1635,7 +1635,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176693",
+          "datePublished": "2020-03-31T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176694",
@@ -1651,7 +1651,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176700",
+          "datePublished": "2020-04-07T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.1767",
@@ -1667,7 +1667,7 @@
         {
           "id": "herstelTermijn",
           "status": "Meer informatie",
-          "datePublished": "2022-02-23T16:26:14.176706",
+          "datePublished": "2020-04-14T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176707",
@@ -1682,7 +1682,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176713",
+          "datePublished": "2020-04-21T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176714",
@@ -1698,7 +1698,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176719",
+          "datePublished": "2020-04-28T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.17672",
@@ -1714,7 +1714,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176727",
+          "datePublished": "2020-05-05T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176727",
@@ -1731,7 +1731,7 @@
         {
           "id": "besluit",
           "status": "Besluit",
-          "datePublished": "2022-02-23T16:26:14.176733",
+          "datePublished": "2020-05-12T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176734",
@@ -1748,7 +1748,7 @@
         {
           "id": "inkomstenwijziging",
           "status": "Wijziging inkomsten",
-          "datePublished": "2022-02-23T16:26:14.176739",
+          "datePublished": "2020-05-19T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.17674",
@@ -1762,7 +1762,7 @@
         {
           "id": "terugvorderingsbesluit",
           "status": "Terugvorderings- besluit",
-          "datePublished": "2022-02-23T16:26:14.176746",
+          "datePublished": "2020-05-26T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176746",
@@ -1777,7 +1777,7 @@
         {
           "id": "terugvorderingsbesluit",
           "status": "Terugvorderings- besluit",
-          "datePublished": "2022-02-23T16:26:14.176752",
+          "datePublished": "2020-06-02T23:00:00.000Z",
           "documents": [
             {
               "id": "1645629974.176753",

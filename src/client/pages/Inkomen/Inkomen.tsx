@@ -1,10 +1,13 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
-import { generatePath } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  calculateDaysBetweenDates,
+  defaultDateFormat,
+} from '../../../universal/helpers/date';
 import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
@@ -16,8 +19,10 @@ import {
   PageContent,
   PageHeading,
   SectionCollapsible,
+  SectionCollapsibleHeading,
   Table,
 } from '../../components';
+import { SectionCollapsibleBody } from '../../components/SectionCollapsible/SectionCollapsible';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -55,7 +60,7 @@ const decisionsDisplayProps = {
 export default function Inkomen() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
-
+  const history = useHistory();
   const wpiSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(WPI_SPECIFICATIES);
   const aanvragen = WPI_AANVRAGEN.content;
@@ -91,10 +96,22 @@ export default function Inkomen() {
     return addTitleLinkComponent(items);
   }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
-  const itemsRequested = items.filter(
+  const itemsBbz = items.filter((item) => item.about === 'Bbz');
+  const hasBbz = !!itemsBbz.length;
+  const hasRecentBbz = itemsBbz.some((item) => {
+    const daysdiff = calculateDaysBetweenDates(
+      new Date().toISOString(),
+      item.datePublished
+    );
+    return daysdiff <= 365;
+  });
+
+  const itemsNonBbz = items.filter((item) => item.about !== 'Bbz');
+
+  const itemsRequested = itemsNonBbz.filter(
     (item) => !REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
   );
-  const itemsCompleted = items.filter((item) =>
+  const itemsCompleted = itemsNonBbz.filter((item) =>
     REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
   );
   const hasActiveRequests = !!itemsRequested.length;
@@ -110,6 +127,7 @@ export default function Inkomen() {
     isLoading(WPI_BBZ);
 
   const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
+
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
@@ -146,6 +164,17 @@ export default function Inkomen() {
           </Alert>
         )}
       </PageContent>
+
+      {hasRecentBbz && (
+        <SectionCollapsibleBody>
+          <SectionCollapsibleHeading
+            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/BBZ'])}
+            isAriaExpanded={false}
+          >
+            Uw Bbz overzicht
+          </SectionCollapsibleHeading>
+        </SectionCollapsibleBody>
+      )}
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
@@ -240,6 +269,17 @@ export default function Inkomen() {
           </p>
         )}
       </SectionCollapsible>
+
+      {hasBbz && !hasRecentBbz && (
+        <SectionCollapsibleBody>
+          <SectionCollapsibleHeading
+            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/BBZ'])}
+            isAriaExpanded={false}
+          >
+            Uw Bbz overzicht
+          </SectionCollapsibleHeading>
+        </SectionCollapsibleBody>
+      )}
     </OverviewPage>
   );
 }
