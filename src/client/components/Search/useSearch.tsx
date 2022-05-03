@@ -356,7 +356,8 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
     // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
     const response: ApiResponse<SearchConfigRemote> = await fetch(
-      BFFApiUrls.SEARCH_CONFIGURATION
+      BFFApiUrls.SEARCH_CONFIGURATION,
+      { credentials: 'include' }
     ).then((response) => response.json());
 
     return response.content;

@@ -1,21 +1,9 @@
 import { Method } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
-import {
-  DATASETS,
-  getDatasetCategoryId,
-} from '../universal/config/myarea-datasets';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
 import { getAuth, isProtectedRoute, isRelayAllowed } from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
 import { isAuthenticated } from './router-auth';
-import { loadClusterDatasets } from './services';
-import {
-  fetchDataset,
-  loadFeatureDetail,
-  loadPolylineFeatures,
-} from './services/buurt/buurt';
-import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import {
   loadServicesAll,
   loadServicesSSE,
