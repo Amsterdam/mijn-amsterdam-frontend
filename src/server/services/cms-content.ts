@@ -280,7 +280,6 @@ const searchFileCache = new FileCache({
 
 export async function fetchSearchConfig(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
   query?: Record<string, string>
 ) {
   const config = searchFileCache.getKey('CONFIG');
@@ -307,11 +306,7 @@ export async function fetchSearchConfig(
       );
     });
   } else {
-    dataRequest = requestData<any>(
-      getApiConfig('SEARCH_CONFIG'),
-      requestID,
-      authProfileAndToken
-    );
+    dataRequest = requestData<any>(getApiConfig('SEARCH_CONFIG'), requestID);
   }
 
   return dataRequest

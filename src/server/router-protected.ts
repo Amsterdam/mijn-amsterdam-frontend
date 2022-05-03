@@ -6,15 +6,10 @@ import {
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
-import {
-  getAuth,
-  isProtectedRoute,
-  isRelayAllowed,
-  queryParams,
-} from './helpers/app';
+import { getAuth, isProtectedRoute, isRelayAllowed } from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
 import { isAuthenticated } from './router-auth';
-import { fetchSearchConfig, loadClusterDatasets } from './services';
+import { loadClusterDatasets } from './services';
 import {
   fetchDataset,
   loadFeatureDetail,
@@ -37,24 +32,6 @@ router.use((req: Request, res: Response, next: NextFunction) => {
   }
   return next();
 }, isAuthenticated());
-
-router.get(
-  BffEndpoints.SEARCH_CONFIG,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const requestID = res.locals.requestID;
-    try {
-      const response = await fetchSearchConfig(
-        requestID,
-        await getAuth(req),
-        queryParams(req)
-      );
-      res.json(response);
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 router.get(
   BffEndpoints.SERVICES_ALL,
@@ -92,79 +69,6 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 router.get(
   BffEndpoints.SERVICES_TIPS_REQUEST_DATA_OVERVIEW,
   loadServicesTipsRequestDataOverview
-);
-
-router.post(
-  BffEndpoints.MAP_DATASETS,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const {
-        clusters,
-        errors: clusterErrors,
-        filters: clusterFilters,
-      } = await loadClusterDatasets(res.locals.requestID, req.body);
-
-      const {
-        features: polylines,
-        errors: polylineErrors,
-        filters: polylineFilters,
-      } = await loadPolylineFeatures(res.locals.requestID, req.body);
-
-      const responseContent = {
-        clusters: clusters || [],
-        polylines: polylines || [],
-        errors: [...clusterErrors, ...polylineErrors],
-        filters: {
-          ...clusterFilters,
-          ...polylineFilters,
-        },
-      };
-
-      res.json(apiSuccessResult(responseContent));
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  BffEndpoints.MAP_DATASETS,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const datasetId = req.params.datasetId;
-    const id = req.params.id;
-    const datasetCategoryId = getDatasetCategoryId(datasetId);
-
-    let response: ApiResponse<any> | null = null;
-
-    try {
-      if (datasetCategoryId && datasetId && id) {
-        response = await loadFeatureDetail(res.locals.requestID, datasetId, id);
-      } else if (
-        datasetCategoryId &&
-        datasetId &&
-        DATASETS?.[datasetCategoryId].datasets?.[datasetId]
-      ) {
-        const [[, datasetConfig]] = getDatasetEndpointConfig([datasetId]);
-        response = await fetchDataset(
-          res.locals.requestID,
-          datasetId,
-          datasetConfig,
-          {},
-          !!req.query?.pruneCache
-        );
-      }
-
-      if (response?.status !== 'OK') {
-        res.status(500);
-      }
-
-      res.json(response);
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
 );
 
 router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
