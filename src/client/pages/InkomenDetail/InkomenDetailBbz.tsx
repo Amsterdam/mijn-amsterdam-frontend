@@ -42,10 +42,8 @@ export default function InkomenDetailBbz() {
         <p>
           Hieronder ziet u de status van uw aanvraag voor een uitkering of
           lening van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd
-          ziet u de status hieronder. Als u meerdere aanvragen voor het Bbz hebt
-          gedaan, dan krijgt u 1 besluit als antwoord op al uw aanvragen voor
-          het Bbz. Het duurt maximaal 3 werkdagen voordat uw documenten over het
-          Bbz in Mijn Amsterdam staan.
+          ziet u de status hieronder. Het duurt maximaal 3 werkdagen voordat uw
+          documenten over het Bbz in Mijn Amsterdam staan.
         </p>
         <p>
           Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
@@ -53,7 +51,7 @@ export default function InkomenDetailBbz() {
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_BBZ}>
-            Meer informatie over de Bbz
+            Meer informatie over het Bbz
           </Linkd>
         </p>
         {isError(appState.WPI_BBZ) ||
