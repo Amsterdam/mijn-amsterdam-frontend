@@ -1,5 +1,6 @@
 import { Method } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
+import { request, RequestOptions } from 'http';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
 import { getAuth, isProtectedRoute, isRelayAllowed } from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
@@ -62,29 +63,21 @@ router.get(
 router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
   if (isRelayAllowed(req.path)) {
     let headers: Record<string, string> = {};
-    let data: any = undefined;
+    // let data: any = undefined;
     // TODO: Generalize endpoints that don't need auth
     if (!req.path.includes('tip_images')) {
       const { token } = await getAuth(req);
       headers = {
         Authorization: `Bearer ${token}`,
       };
-      if (req.body) {
-        data = req.body;
-      }
+      // if (req.body) {
+      //   data = req.body;
+      // }
     }
 
     try {
-      const url = `${BFF_MS_API_BASE_URL + req.path}`;
-      const rs = await axiosRequest.request({
-        method: req.method as Method,
-        url,
-        headers,
-        params: req.query,
-        data,
-      });
-      res.type(rs.headers?.['Content-type'] || 'application/json');
-      res.send(rs.data);
+      const url = `${BFF_MS_API_BASE_URL + req.originalUrl}`;
+      req.pipe(request({ url, headers } as RequestOptions)).pipe(res);
     } catch (error: any) {
       res.status(error?.response?.status || 500);
       res.json(error.message || 'Error requesting api data');
