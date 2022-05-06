@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading, relayApiUrl } from '../../../universal/helpers';
 import {
   GenericDocument,
   StatusLine,
@@ -82,6 +82,17 @@ export default function StatusDetail({
     title = statusItem.title;
   }
 
+  const statusSteps =
+    statusItem?.steps.map((step) => {
+      return Object.assign({}, step, {
+        documents: step.documents.map((document) => {
+          return Object.assign({}, document, {
+            url: relayApiUrl(document.url),
+          });
+        }),
+      });
+    }) || [];
+
   return (
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
@@ -95,7 +106,7 @@ export default function StatusDetail({
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
 
         {isError(STATE) ||
-          (noContent && !statusItems.length && (
+          (noContent && !statusSteps.length && (
             <Alert type="warning">
               <p>
                 We kunnen op dit moment geen gegevens tonen.{' '}
@@ -105,7 +116,7 @@ export default function StatusDetail({
             </Alert>
           ))}
 
-        {!isStateLoading && !statusItem && !!statusItems.length && (
+        {!isStateLoading && !statusSteps.length && (
           <Alert type="warning">
             <p>
               Deze pagina is mogelijk verplaatst. Kies hieronder een van de
@@ -127,7 +138,7 @@ export default function StatusDetail({
 
         {isStateLoading && <LoadingContent />}
       </PageContent>
-      {!!(statusItem?.steps && statusItem.steps.length) && (
+      {!!statusSteps?.length && statusItem && (
         <StatusLineComponent
           trackCategory={`${chapter} / ${statusItem?.about} status`}
           statusLabel={
@@ -135,7 +146,7 @@ export default function StatusDetail({
               ? statusLabel(statusItem)
               : statusLabel
           }
-          items={statusItem.steps}
+          items={statusSteps}
           showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
