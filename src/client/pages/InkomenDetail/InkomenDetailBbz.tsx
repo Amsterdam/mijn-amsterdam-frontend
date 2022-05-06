@@ -1,5 +1,10 @@
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { dateSort, isError, isLoading } from '../../../universal/helpers';
+import {
+  dateSort,
+  isError,
+  isLoading,
+  relayApiUrl,
+} from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -23,7 +28,11 @@ export default function InkomenDetailBbz() {
         status: step.status,
         datePublished: step.datePublished,
         description: step.description,
-        documents: step.documents,
+        documents: step.documents.map((document) => {
+          return Object.assign({}, document, {
+            url: relayApiUrl(document.url),
+          });
+        }),
       };
     })
     .sort(dateSort('datePublished', 'desc'));
