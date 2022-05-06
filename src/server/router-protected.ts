@@ -76,7 +76,7 @@ router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
     }
 
     try {
-      const url = `${BFF_MS_API_BASE_URL + req.originalUrl}`;
+      const url = `${BFF_MS_API_BASE_URL + req.path}`;
       req.pipe(request({ url, headers } as RequestOptions)).pipe(res);
     } catch (error: any) {
       res.status(error?.response?.status || 500);
