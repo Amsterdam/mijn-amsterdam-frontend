@@ -43,13 +43,9 @@ export async function fetchBAG(
 
   const searchAddress = getBagSearchAddress(address);
   const params = { q: searchAddress, features: 2 }; // features=2 is een Feature flag zodat ook locaties in Weesp worden weergegeven.
-
-  return requestData<BAGData>(
-    getApiConfig('BAG', {
-      params,
-      transformResponse: (responseData) => formatBAGData(responseData, address),
-    }),
-    requestID,
-    authProfileAndToken
-  );
+  const config = getApiConfig('BAG', {
+    params,
+    transformResponse: (responseData) => formatBAGData(responseData, address),
+  });
+  return requestData<BAGData>(config, requestID);
 }
