@@ -1,6 +1,5 @@
 import { Method } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
-import { request, RequestOptions } from 'http';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
 import { getAuth, isProtectedRoute, isRelayAllowed } from './helpers/app';
 import { axiosRequest } from './helpers/source-api-request';
@@ -11,6 +10,7 @@ import {
   loadServicesTips,
   loadServicesTipsRequestDataOverview,
 } from './services/controller';
+import proxy from 'express-http-proxy';
 
 export const router = express.Router();
 
@@ -60,29 +60,15 @@ router.get(
   loadServicesTipsRequestDataOverview
 );
 
-router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
-  if (isRelayAllowed(req.path)) {
-    let headers: Record<string, string> = {};
-    // let data: any = undefined;
-    // TODO: Generalize endpoints that don't need auth
-    if (!req.path.includes('tip_images')) {
-      const { token } = await getAuth(req);
-      headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      // if (req.body) {
-      //   data = req.body;
-      // }
-    }
-
-    try {
-      const url = `${BFF_MS_API_BASE_URL + req.path}`;
-      req.pipe(request({ url, headers } as RequestOptions)).pipe(res);
-    } catch (error: any) {
-      res.status(error?.response?.status || 500);
-      res.json(error.message || 'Error requesting api data');
-    }
-  }
-
-  next();
-});
+router.use(
+  BffEndpoints.API_RELAY,
+  proxy(BFF_MS_API_BASE_URL, {
+    proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+      const { token } = await getAuth(srcReq);
+      // you can update headers
+      const headers = proxyReqOpts.headers || {};
+      headers['Authorization'] = `Bearer ${token}`;
+      return proxyReqOpts;
+    },
+  })
+);

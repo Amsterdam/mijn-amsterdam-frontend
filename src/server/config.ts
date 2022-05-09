@@ -274,9 +274,9 @@ const oidcConfigBase: ConfigParams = {
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
   session: {
-    rolling: false,
-    rollingDuration: undefined,
-    absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
+    rolling: true,
+    rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
+    // absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
   },
   routes: {

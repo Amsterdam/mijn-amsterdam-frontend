@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
-import { ApiUrls, BFF_MS_API_BASE_URL, RelayPathsAllowed } from '../config';
+import { ApiUrls } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import AFVAL from './json/afvalophaalgebieden.json';
@@ -18,14 +18,11 @@ import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-
 import SUBSIDIE from './json/subsidie.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
-import VERGUNNINGEN_LIST_DOCUMENTS from './json/vergunningen-documenten.json';
 import WMO from './json/wmo.json';
 import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
-import path from 'path';
-import fs from 'fs';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -42,38 +39,6 @@ async function loadMockApiResponseJson(data: any) {
 function isCommercialUser(config: any) {
   // TODO: Check profileType / authMethod in Token package here.
   return config?.headers['xxxxxxxx???'] === 'eherkenning';
-}
-
-function promiseMockFile(fileName: string) {
-  return new Promise((resolve, reject) => {
-    const filePath = path.join(__dirname, fileName);
-    fs.readFile(filePath, (err, fileData) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(fileData);
-      }
-    });
-  });
-}
-
-function sendFilePDF() {
-  return {
-    responseData: () => promiseMockFile('document.pdf'),
-    headers: {
-      'Content-type': 'application/pdf',
-    },
-  };
-}
-
-function sendFileTipImage(type: 'jpg' | 'png' = 'jpg') {
-  return {
-    responseData: (config: any) =>
-      promiseMockFile('tip-image-mock.' + config.url.split('.').pop()),
-    headers: {
-      'Content-type': 'image/' + type,
-    },
-  };
 }
 
 type MockDataConfig = Record<
@@ -109,13 +74,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BRP);
     },
   },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.BRP_BEWONERS]: {
-    status: () => 200,
-    method: 'post',
-    responseData: () => {
-      return loadMockApiResponseJson({ residentCount: 3 });
-    },
-  },
+
   [ApiUrls.AKTES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -163,33 +122,6 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_STADSPAS);
     },
   },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES]: {
-    status: () => 200,
-    responseData: () => {
-      return loadMockApiResponseJson(
-        apiSuccessResult([
-          {
-            id: 'xx1',
-            title: 'Hema',
-            amount: -31.3,
-            date: '2020-01-04',
-          },
-          {
-            id: 'xx2',
-            title: 'Aktiesport',
-            amount: 21.3,
-            date: '2019-12-16',
-          },
-          {
-            id: 'xx3',
-            title: 'Hema',
-            amount: -0.99,
-            date: '2019-10-21',
-          },
-        ])
-      );
-    },
-  },
   [ApiUrls.WPI_SPECIFICATIES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
@@ -198,10 +130,6 @@ export const mockDataConfig: MockDataConfig = {
       }
       return await loadMockApiResponseJson(WPI_SPECIFICATIES);
     },
-  },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD]: {
-    status: () => 200,
-    ...sendFilePDF(),
   },
   [ApiUrls.ERFPACHT]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
@@ -270,24 +198,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(VERGUNNINGEN);
     },
   },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS]: {
-    status: () => 200,
-    responseData: async (config: any) => {
-      return await loadMockApiResponseJson(VERGUNNINGEN_LIST_DOCUMENTS);
-    },
-  },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD]: {
-    method: 'get',
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    ...sendFilePDF(),
-    headers: {
-      'Content-type': 'application/pdf',
-    },
-  },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD]: {
-    status: () => 200,
-    ...sendFilePDF(),
-  },
+
   [ApiUrls.KVK]: {
     // delay: 12000,
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
@@ -324,10 +235,7 @@ export const mockDataConfig: MockDataConfig = {
       return JSON.stringify(items);
     },
   },
-  [BFF_MS_API_BASE_URL + RelayPathsAllowed.TIP_IMAGES]: {
-    status: () => 200,
-    ...sendFileTipImage(),
-  },
+
   [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {

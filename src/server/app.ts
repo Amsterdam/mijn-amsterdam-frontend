@@ -25,7 +25,7 @@ import morgan from 'morgan';
 import { apiErrorResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
 import { clearRequestCache, send404, requestID } from './helpers/app';
-import { authRouterDevelopment } from './router-development';
+import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as authRouter } from './router-auth';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
@@ -73,6 +73,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 // Development routing for mock data
 if (!IS_AP) {
   app.use(authRouterDevelopment);
+  app.use(relayDevRouter);
 }
 
 // Mount the routers at the base path
