@@ -4,7 +4,6 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
-import { loginUrlByAuthMethod, LOGOUT_URL } from '../../config/api';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
@@ -23,8 +22,7 @@ import styles from './AutoLogoutDialog.module.scss';
  */
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
-export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
-  2 * ONE_MINUTE_SECONDS;
+const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 
 const SESSION_RENEW_INTERVAL_SECONDS = 300;
 const TITLE = 'Wilt u doorgaan?';
@@ -91,7 +89,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const maxCount =
     nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
 
-  useCounter({
+  // Count before dialog will show
+  const counter = useCounter({
     maxCount,
     onMaxCount: () => {
       setOpen(true);
@@ -108,10 +107,11 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   }
 
   function continueUsingApp() {
-    (window as any).location.href = session.authMethod
-      ? loginUrlByAuthMethod[session.authMethod]
-      : LOGOUT_URL;
+    session.refetch();
     document.title = originalTitle;
+    counter.reset();
+    counter.resume();
+    setOpen(false);
   }
 
   // On every tick the document title is changed trying to catch the users attention.

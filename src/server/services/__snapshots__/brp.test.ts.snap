@@ -51,11 +51,6 @@ Object {
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
-      "link": Object {
-        "title": "paspoort",
-        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-1",
-      },
-      "title": "paspoort",
     },
     Object {
       "datumAfloop": "2020-09-11",
@@ -63,11 +58,6 @@ Object {
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
-      "link": Object {
-        "title": "europese identiteitskaart",
-        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-2",
-      },
-      "title": "ID-kaart",
     },
   ],
   "kinderen": Array [

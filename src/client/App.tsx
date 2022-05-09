@@ -22,7 +22,6 @@ import {
   MainFooter,
   MainHeader,
 } from './components';
-import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -253,16 +252,10 @@ function AppLanding() {
     return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
   }
 
-  const dialogTimeoutSettings = {
-    secondsBeforeDialogShow:
-      validityInSeconds ||
-      DefaultAutologoutDialogSettings.secondsBeforeDialogShow,
-  };
-
   return isAuthenticated ? (
     <>
       <AppAuthenticated />
-      <AutoLogoutDialog settings={dialogTimeoutSettings} />
+      <AutoLogoutDialog />
     </>
   ) : (
     <AppNotAuthenticated />

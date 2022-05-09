@@ -32,13 +32,19 @@ describe('server/helpers/app', () => {
   const eherkenningClientId = oidcConfigEherkenning.clientID;
   const secret = config.OIDC_COOKIE_ENCRYPTION_KEY;
 
+  let isOidcTokenVerificationEnabled =
+    config.OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED;
+
   beforeAll(() => {
+    (config as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = false;
     oidcConfigEherkenning.clientID = 'test1';
     oidcConfigDigid.clientID = 'test2';
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = '123123123kjhkjhsdkjfhsd';
   });
 
   afterAll(() => {
+    (config as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED =
+      isOidcTokenVerificationEnabled;
     oidcConfigEherkenning.clientID = digidClientId;
     oidcConfigDigid.clientID = eherkenningClientId;
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = secret;

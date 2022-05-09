@@ -27,7 +27,7 @@ const testState: any = {
               {
                 id: 'doc1',
                 title: 'Documentje',
-                url: 'http://example.org/kappie',
+                url: '/mijnamsterdamapi/kappie',
               },
             ],
             title: 'aanvraag',

@@ -12,6 +12,8 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_COOKIE_ENCRYPTION_KEY,
+  OIDC_ID_TOKEN_EXP,
+  OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
@@ -52,14 +54,9 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
   };
 }
 
-export function isExpiredSession(validUntil: number) {
-  return new Date(validUntil) < new Date();
-}
-
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
-  validUntil?: number;
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
@@ -67,15 +64,9 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
-  const validUntil = addSeconds(
-    new Date(tokenData.iat * 1000),
-    OIDC_SESSION_MAX_AGE_SECONDS
-  ).getTime();
-
   return {
     token: oidcToken,
     profile,
-    validUntil,
   };
 }
 
@@ -206,9 +197,18 @@ const getJWKSKey = memoize(async () => {
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
-  return jose.JWT.verify(token, await getJWKSKey(), {
-    maxTokenAge: `${OIDC_SESSION_MAX_AGE_SECONDS} seconds`,
-  } as any) as unknown as TokenData;
+  const verificationOptions = {} as any;
+
+  if (OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED) {
+    // NOTE: Use this for added security
+    verificationOptions.maxTokenAge = OIDC_ID_TOKEN_EXP;
+  }
+
+  return jose.JWT.verify(
+    token,
+    await getJWKSKey(),
+    verificationOptions
+  ) as unknown as TokenData;
 }
 
 export function isRelayAllowed(pathRequested: string) {
@@ -282,4 +282,11 @@ export function generateDevSessionCookieValue(
   );
 
   return value;
+}
+
+export function nocache(req: Request, res: Response, next: NextFunction) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
 }

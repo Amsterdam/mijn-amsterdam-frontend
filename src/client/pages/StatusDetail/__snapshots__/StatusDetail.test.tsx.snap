@@ -141,8 +141,7 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://example.org/kappie"
-                      rel="external noopener noreferrer"
+                      href="/bff/public/relay/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>
@@ -362,8 +361,7 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://example.org/kappie"
-                      rel="external noopener noreferrer"
+                      href="/bff/public/relay/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>
@@ -569,8 +567,7 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="http://example.org/kappie"
-                      rel="external noopener noreferrer"
+                      href="/bff/public/relay/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>

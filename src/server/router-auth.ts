@@ -2,13 +2,17 @@ import * as Sentry from '@sentry/node';
 import express from 'express';
 import { auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
-import { isExpired } from '../universal/helpers/vergunningen';
-import { BffEndpoints, oidcConfigDigid, oidcConfigEherkenning } from './config';
+import {
+  BffEndpoints,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  OIDC_SESSION_COOKIE_NAME,
+} from './config';
 import {
   decodeOIDCToken,
   getAuth,
   hasSessionCookie,
-  isExpiredSession,
+  nocache,
   sendUnauthorized,
 } from './helpers/app';
 
@@ -33,9 +37,10 @@ export const isAuthenticated =
   };
 
 // Enable OIDC
-router.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, auth(oidcConfigDigid));
+router.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, nocache, auth(oidcConfigDigid));
 router.use(
   BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING,
+  nocache,
   auth(oidcConfigEherkenning)
 );
 
@@ -73,42 +78,23 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK_DIGID, async (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(
-  BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_EHERKENNING,
-  async (req, res) => {
-    if (req.oidc.isAuthenticated()) {
-      return res.send(req.oidc.user || null);
-    }
-    return sendUnauthorized(res);
-  }
-);
-
-router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA_DIGID, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    return res.send(req.oidc.user || null);
-  }
-  return sendUnauthorized(res);
-});
-
 // AuthMethod agnostic endpoints
 router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
-      // Extra session validity check.
-      if (!!auth.validUntil && !isExpiredSession(auth.validUntil)) {
-        return res.send(
-          apiSuccessResult({
-            ...auth.profile,
-            isAuthenticated: true,
-            validUntil: auth.validUntil,
-          })
-        );
-      }
+
+      return res.redirect(
+        auth.profile.authMethod === 'eherkenning'
+          ? BffEndpoints.PUBLIC_AUTH_CHECK_EHERKENNING
+          : BffEndpoints.PUBLIC_AUTH_CHECK_DIGID
+      );
     } catch (error) {
       Sentry.captureException(error);
     }
   }
+
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return sendUnauthorized(res);
 });
 

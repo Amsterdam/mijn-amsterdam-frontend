@@ -14,7 +14,6 @@ import { ApiRequestOptions, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
-  validUntil: number;
   validityInSeconds: number;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
@@ -22,7 +21,6 @@ export type SessionData = {
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
-  validUntil: -1,
   validityInSeconds: 0,
   profileType: null,
   authMethod: null,
@@ -53,12 +51,6 @@ type SessionResponseData =
   | ApiSuccessResponse<SessionData>
   | ApiErrorResponse<SessionData>;
 
-function getValidityInSeconds(validUntil: number) {
-  return validUntil
-    ? Math.max(Math.round((validUntil - new Date().getTime()) / 1000), 0)
-    : 0;
-}
-
 export const sessionAtom = atom<SessionState>({
   key: 'sessionState',
   default: INITIAL_SESSION_STATE,
@@ -80,10 +72,6 @@ export function useSessionApi() {
     }
   }, [setProfileType, sessionData.profileType]);
 
-  const sessionValidMaxAge = getValidityInSeconds(
-    sessionData?.validUntil || INITIAL_SESSION_CONTENT.validUntil
-  );
-
   const logoutSession = useCallback(() => {
     clearSessionStorage();
     clearDeeplinkEntry();
@@ -93,7 +81,6 @@ export function useSessionApi() {
   useEffect(() => {
     setSession(() => ({
       ...sessionData,
-      validityInSeconds: sessionValidMaxAge,
       isLoading,
       isDirty,
       isPristine,
@@ -102,7 +89,6 @@ export function useSessionApi() {
     }));
   }, [
     sessionData,
-    sessionValidMaxAge,
     isLoading,
     isDirty,
     isPristine,
