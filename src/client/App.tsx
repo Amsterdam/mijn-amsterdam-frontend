@@ -245,7 +245,7 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useSessionApi();
-  const { isPristine, isAuthenticated, validityInSeconds } = session;
+  const { isPristine, isAuthenticated } = session;
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {

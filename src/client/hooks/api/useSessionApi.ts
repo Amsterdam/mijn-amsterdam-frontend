@@ -14,14 +14,12 @@ import { ApiRequestOptions, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
-  validityInSeconds: number;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
-  validityInSeconds: 0,
   profileType: null,
   authMethod: null,
 };
