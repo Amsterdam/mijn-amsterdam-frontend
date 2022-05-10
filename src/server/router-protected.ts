@@ -84,9 +84,14 @@ router.get(
 // );
 
 router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
-  const headers = req.headers as AxiosRequestHeaders;
+  const headers = {} as AxiosRequestHeaders;
   const auth = await getAuth(req);
   headers['Authorization'] = `Bearer ${auth.token}`;
+  Sentry.captureMessage('debug-url', {
+    extra: {
+      url: BFF_MS_API_BASE_URL + req.path,
+    },
+  });
   axiosRequest
     .get(BFF_MS_API_BASE_URL + req.path, { headers })
     .then(({ data }) => {
