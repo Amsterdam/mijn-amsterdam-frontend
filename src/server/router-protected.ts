@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
+import { axiosRequest } from './helpers';
 import { getAuth, isProtectedRoute } from './helpers/app';
 import { isAuthenticated } from './router-auth';
 import {
@@ -59,24 +60,32 @@ router.get(
   loadServicesTipsRequestDataOverview
 );
 
-router.use(
-  BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE_URL, {
-    proxyReqPathResolver: function (req) {
-      Sentry.captureMessage('proxied url', {
-        extra: {
-          url: req.url,
-          to: BFF_MS_API_BASE_URL + req.url,
-        },
-      });
-      return req.url;
-    },
-    proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-      const { token } = await getAuth(srcReq);
-      // you can update headers
-      const headers = proxyReqOpts.headers || {};
-      headers['Authorization'] = `Bearer ${token}`;
-      return proxyReqOpts;
-    },
-  })
-);
+// router.use(
+//   BffEndpoints.API_RELAY,
+//   proxy(BFF_MS_API_BASE_URL, {
+//     proxyReqPathResolver: function (req) {
+//       Sentry.captureMessage('proxied url', {
+//         extra: {
+//           url: req.url,
+//           to: BFF_MS_API_BASE_URL + req.url,
+//         },
+//       });
+//       return req.url;
+//     },
+//     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+//       const { token } = await getAuth(srcReq);
+//       // you can update headers
+//       const headers = proxyReqOpts.headers || {};
+//       headers['Authorization'] = `Bearer ${token}`;
+//       return proxyReqOpts;
+//     },
+//   })
+// );
+
+router.use(BffEndpoints.API_RELAY, (req, res, next) => {
+  axiosRequest.get(BFF_MS_API_BASE_URL + req.path).then(({ data }) => {
+    console.log('data', data);
+    res.send(data);
+    next();
+  });
+});
