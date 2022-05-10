@@ -72,7 +72,7 @@ relayDevRouter.get(
 );
 
 relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
-  return res.send({ residentCount: 3 });
+  return res.send(apiSuccessResult({ residentCount: 3 }));
 });
 
 relayDevRouter.get(RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES, (req, res) => {
