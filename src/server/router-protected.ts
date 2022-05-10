@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node';
+import { AxiosRequestHeaders } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
@@ -82,10 +83,15 @@ router.get(
 //   })
 // );
 
-router.use(BffEndpoints.API_RELAY, (req, res, next) => {
-  axiosRequest.get(BFF_MS_API_BASE_URL + req.path).then(({ data }) => {
-    console.log('data', data);
-    res.send(data);
-    next();
-  });
+router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
+  const headers = req.headers as AxiosRequestHeaders;
+  const auth = await getAuth(req);
+  headers['Authorization'] = `Bearer ${auth.token}`;
+  axiosRequest
+    .get(BFF_MS_API_BASE_URL + req.path, { headers })
+    .then(({ data }) => {
+      console.log('data', data);
+      res.send(data);
+      next();
+    });
 });
