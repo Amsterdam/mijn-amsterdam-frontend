@@ -66,6 +66,7 @@ router.use(
       Sentry.captureMessage('proxied url', {
         extra: {
           url: req.url,
+          to: BFF_MS_API_BASE_URL + req.url,
         },
       });
       return req.url;
