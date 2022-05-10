@@ -260,8 +260,7 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.PUBLIC_CACHE_OVERVIEW,
 ];
 
-// export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
-export const OIDC_SESSION_MAX_AGE_SECONDS = 30; // 15 minutes
+export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = 'appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_OIDC_COOKIE_ENCRYPTION_KEY}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
@@ -279,7 +278,6 @@ const oidcConfigBase: ConfigParams = {
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
-    // absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
   },
   routes: {
