@@ -161,7 +161,10 @@ const getWpiConfig = (
     ),
   displayTitle: (aanvraag: StatusLine) => {
     return (term: string) => {
-      const segments = [`Aanvraag ${aanvraag.about}`];
+      const segments =
+        aanvraag.about === 'Bbz'
+          ? ['Uw Bbz overzicht']
+          : [`Aanvraag ${aanvraag.about}`];
       if (aanvraag.statusId === 'besluit') {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
