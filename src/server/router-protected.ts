@@ -2,7 +2,12 @@ import * as Sentry from '@sentry/node';
 import { AxiosRequestHeaders } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
+import {
+  BffEndpoints,
+  BFF_MS_API_BASE,
+  BFF_MS_API_BASE_PATH,
+  BFF_MS_API_BASE_URL,
+} from './config';
 import { axiosRequest } from './helpers';
 import { getAuth, isProtectedRoute } from './helpers/app';
 import { isAuthenticated } from './router-auth';
@@ -63,51 +68,16 @@ router.get(
 
 router.use(
   BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE_URL, {
-    preserveHostHdr: false,
-
+  proxy(BFF_MS_API_BASE, {
     proxyReqPathResolver: function (req) {
-      Sentry.captureMessage('proxied url', {
-        extra: {
-          url: req.url,
-          to: BFF_MS_API_BASE_URL + req.url,
-        },
-      });
-      return req.url;
+      return BFF_MS_API_BASE_PATH + req.url;
     },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
       const { token } = await getAuth(srcReq);
-      // you can update headers
       const headers = proxyReqOpts.headers || {};
       headers['Authorization'] = `Bearer ${token}`;
-      Sentry.captureMessage('proxied opts', {
-        extra: {
-          host: proxyReqOpts.host,
-          hostname: proxyReqOpts.hostname,
-          port: proxyReqOpts.port,
-          path: proxyReqOpts.path,
-        },
-      });
       proxyReqOpts.headers = headers;
       return proxyReqOpts;
     },
   })
 );
-
-// router.use(BffEndpoints.API_RELAY, async (req, res, next) => {
-//   const headers = {} as AxiosRequestHeaders;
-//   const auth = await getAuth(req);
-//   headers['Authorization'] = `Bearer ${auth.token}`;
-//   Sentry.captureMessage('debug-url', {
-//     extra: {
-//       url: BFF_MS_API_BASE_URL + req.path,
-//     },
-//   });
-//   axiosRequest
-//     .get(BFF_MS_API_BASE_URL + req.path, { headers })
-//     .then(({ data }) => {
-//       console.log('data', data);
-//       res.send(data);
-//       next();
-//     });
-// });
