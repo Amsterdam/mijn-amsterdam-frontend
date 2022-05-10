@@ -1,8 +1,8 @@
-import { Method } from 'axios';
+import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
+import proxy from 'express-http-proxy';
 import { BffEndpoints, BFF_MS_API_BASE_URL } from './config';
-import { getAuth, isProtectedRoute, isRelayAllowed } from './helpers/app';
-import { axiosRequest } from './helpers/source-api-request';
+import { getAuth, isProtectedRoute } from './helpers/app';
 import { isAuthenticated } from './router-auth';
 import {
   loadServicesAll,
@@ -10,7 +10,6 @@ import {
   loadServicesTips,
   loadServicesTipsRequestDataOverview,
 } from './services/controller';
-import proxy from 'express-http-proxy';
 
 export const router = express.Router();
 
@@ -63,6 +62,14 @@ router.get(
 router.use(
   BffEndpoints.API_RELAY,
   proxy(BFF_MS_API_BASE_URL, {
+    proxyReqPathResolver: function (req) {
+      Sentry.captureMessage('proxied url', {
+        extra: {
+          url: req.url,
+        },
+      });
+      return req.url;
+    },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
       const { token } = await getAuth(srcReq);
       // you can update headers
