@@ -254,7 +254,22 @@ export async function fetchBbz(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return fetchEAanvragen(sessionID, passthroughRequestHeaders, ['Bbz']);
+  const bbz = await fetchEAanvragen(sessionID, passthroughRequestHeaders, [
+    'Bbz',
+  ]);
+
+  /**
+   * BBZ Is een uitzondering in de sortering vanwege een "Business besluit / onbekende rationale".
+   * Mogelijk omdat bij BBZ meerdere aanvragen door elkaar lopen en er geen onderscheid gemaakt kan worden
+   * tussen de vershchillende aanvragen en welke stappen daarbij horen.
+   */
+  if (bbz.status === 'OK') {
+    bbz.content?.forEach((bbz) => {
+      bbz.steps.reverse();
+    });
+  }
+
+  return bbz;
 }
 
 export async function fetchTonk(
