@@ -266,9 +266,16 @@ export async function fetchBbz(
    * tussen de vershchillende aanvragen en welke stappen daarbij horen.
    */
   if (bbz.status === 'OK') {
+    const bbzRequests: WpiRequestProcess[] = [];
     bbz.content?.forEach((bbz) => {
-      bbz.steps.reverse();
+      const requestProcessUpdated = {
+        ...bbz,
+        steps: [...bbz.steps],
+      };
+      requestProcessUpdated.steps.reverse();
+      bbzRequests.push(requestProcessUpdated);
     });
+    return apiSuccessResult<WpiRequestProcess[]>(bbzRequests);
   }
 
   return bbz;

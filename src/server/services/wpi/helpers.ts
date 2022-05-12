@@ -63,7 +63,7 @@ export function createProcessNotification(
 
   return {
     id: `${requestProcess.id}-notification`,
-    datePublished: requestProcess.datePublished,
+    datePublished: statusStep.datePublished,
     chapter,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
