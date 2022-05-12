@@ -105,6 +105,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   bekendmakingen: {
+    isDisabled: !FeatureToggle.bekendmakingenDatasetActive,
     title: 'Vergunningen',
     datasets: {
       bekendmakingen: {
@@ -123,6 +124,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   evenementen: {
+    isDisabled: !FeatureToggle.evenementenDatasetActive,
     title: 'Evenementen',
     datasets: { evenementen: { title: 'Evenementen' } },
   },
