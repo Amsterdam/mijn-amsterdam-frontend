@@ -364,7 +364,7 @@ export async function fetchWpiNotifications(
               Chapters.INKOMEN
             );
 
-            return [notification];
+            return notification ? [notification] : [];
           }
           return [];
         });

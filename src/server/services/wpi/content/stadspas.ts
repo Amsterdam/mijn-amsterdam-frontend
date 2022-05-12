@@ -145,6 +145,10 @@ export function getAanvraagNotifications(
     })
     .map((aanvraag) =>
       createProcessNotification(aanvraag, requestProcess, Chapters.STADSPAS)
+    )
+    .filter(
+      (notification: MyNotification | null): notification is MyNotification =>
+        notification !== null
     );
 
   return aanvraagNotifications || [];

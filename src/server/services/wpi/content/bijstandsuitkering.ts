@@ -1,5 +1,6 @@
 import { Chapters } from '../../../../universal/config';
 import { defaultDateFormat } from '../../../../universal/helpers';
+import { MyNotification } from '../../../../universal/types';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 
@@ -167,6 +168,10 @@ export function getNotifications(
     })
     .map((aanvraag) =>
       createProcessNotification(aanvraag, requestProcess, Chapters.INKOMEN)
+    )
+    .filter(
+      (notification: MyNotification | null): notification is MyNotification =>
+        notification !== null
     );
 
   return aanvraagNotifications || [];

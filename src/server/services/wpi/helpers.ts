@@ -7,6 +7,7 @@ import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
 import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
 import { WpiRequestProcess, WpiRequestProcessLabels } from './wpi-types';
+import * as Sentry from '@sentry/node';
 
 export function transformToStatusLine(
   requestProcess: WpiRequestProcess,
@@ -51,31 +52,43 @@ export function createProcessNotification(
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels,
   chapter: Chapter
-): MyNotification {
-  const requestStatus = requestProcess.steps.find(
-    (requestStatusStep) => requestStatusStep.id === requestProcess.statusId
-  )!; // Should always exist.
+): MyNotification | null {
+  const requestStatus = requestProcess.steps[requestProcess.steps.length - 1];
 
-  const notificationLabels = labels[requestStatus.id].notification;
-  const titleTransform = notificationLabels.title;
-  const descriptionTransform = notificationLabels.description;
+  if (requestStatus) {
+    const notificationLabels = labels[requestStatus.id].notification;
+    const titleTransform = notificationLabels.title;
+    const descriptionTransform = notificationLabels.description;
 
-  return {
-    id: `${requestProcess.id}-notification`,
-    datePublished: requestProcess.datePublished,
-    chapter,
-    title: titleTransform
-      ? titleTransform(requestProcess, requestStatus)
-      : `Update: ${requestProcess.about} aanvraag.`,
-    description: descriptionTransform
-      ? descriptionTransform(requestProcess, requestStatus)
-      : `U hebt updates over uw ${requestProcess.about}-aanvraag.`,
+    return {
+      id: `${requestProcess.id}-notification`,
+      datePublished: requestProcess.datePublished,
+      chapter,
+      title: titleTransform
+        ? titleTransform(requestProcess, requestStatus)
+        : `Update: ${requestProcess.about} aanvraag.`,
+      description: descriptionTransform
+        ? descriptionTransform(requestProcess, requestStatus)
+        : `U hebt updates over uw ${requestProcess.about}-aanvraag.`,
 
-    link: {
-      to: requestProcess.link?.to || '/',
-      title: 'Bekijk hoe het met uw aanvraag staat',
-    },
-  };
+      link: {
+        to: requestProcess.link?.to || '/',
+        title: 'Bekijk hoe het met uw aanvraag staat',
+      },
+    };
+  } else {
+    Sentry.captureMessage(
+      'Could not create process notification, WPI request status step not found',
+      {
+        extra: {
+          chapter,
+          about: requestProcess?.about || 'unknown',
+          keys: Object.keys(requestProcess || {}),
+        },
+      }
+    );
+  }
+  return null;
 }
 
 // This applies to Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
