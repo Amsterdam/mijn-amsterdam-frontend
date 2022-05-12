@@ -5,6 +5,7 @@ import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
+  dateSort,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers';
@@ -284,12 +285,12 @@ export function transformIncomSpecificationResponse(
   response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
-    jaaropgaven: response.content.jaaropgaven.map(
-      transformIncomeSpecificationItem
-    ),
-    uitkeringsspecificaties: response.content.uitkeringsspecificaties.map(
-      transformIncomeSpecificationItem
-    ),
+    jaaropgaven: response.content.jaaropgaven
+      .map(transformIncomeSpecificationItem)
+      .sort(dateSort('datePublished', 'desc')),
+    uitkeringsspecificaties: response.content.uitkeringsspecificaties
+      .map(transformIncomeSpecificationItem)
+      .sort(dateSort('datePublished', 'desc')),
   };
 }
 
