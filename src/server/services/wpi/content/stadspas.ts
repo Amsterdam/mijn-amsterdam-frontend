@@ -14,23 +14,23 @@ export const requestProcess: WpiRequestProcessLabels = {
     notification: {
       title: (requestProcess) =>
         `${requestProcess.title}: Wij hebben uw aanvraag ontvangen`,
-      description: (requestProcess) =>
+      description: (requestProcess, statusStep) =>
         `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${defaultDateFormat(
           requestProcess.dateStart
         )}.`,
     },
-    description: (requestProcess) =>
+    description: (requestProcess, statusStep) =>
       `U hebt op ${defaultDateFormat(
-        requestProcess.datePublished
+        statusStep.datePublished
       )} een Stadspas aangevraagd.`,
   },
   inBehandeling: {
     notification: {
       title: (requestProcess) =>
         `${requestProcess.title}: Wij behandelen uw aanvraag`,
-      description: (requestProcess) =>
+      description: (requestProcess, statusStep) =>
         `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${defaultDateFormat(
-          requestProcess.datePublished
+          statusStep.datePublished
         )}.`,
     },
     description: (product, statusStep) =>
@@ -91,15 +91,15 @@ export const requestProcess: WpiRequestProcessLabels = {
         }
         return `${requestProcess.title}: Besluit aanvraag`;
       },
-      description: (requestProcess) => {
+      description: (requestProcess, statusStep) => {
         switch (requestProcess.decision) {
           case 'afwijzing':
             return `U hebt geen recht op een Stadspas (besluit ${defaultDateFormat(
-              requestProcess.datePublished
+              statusStep.datePublished
             )}).`;
           case 'toekenning':
             return `U hebt recht op een Stadspas (besluit ${defaultDateFormat(
-              requestProcess.datePublished
+              statusStep.datePublished
             )}).`;
           case 'buitenBehandeling':
             return `${requestProcess.title}: Wij behandelen uw aanvraag niet meer`;

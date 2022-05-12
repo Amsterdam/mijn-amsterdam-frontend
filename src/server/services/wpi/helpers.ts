@@ -70,7 +70,9 @@ export function createProcessNotification(
       : `Update: ${requestProcess.about} aanvraag.`,
     description: descriptionTransform
       ? descriptionTransform(requestProcess, statusStep)
-      : `U hebt updates over uw ${requestProcess.about}-aanvraag.`,
+      : `U hebt updates over uw ${
+          statusStep.about || requestProcess.about
+        }-aanvraag.`,
 
     link: {
       to: requestProcess.link?.to || '/',
