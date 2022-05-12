@@ -35,6 +35,7 @@ export default function InkomenDetailBbz() {
       maxStepCount={() => -1}
       highlightKey={false}
       statusLabel={() => `Bbz-aanvraag`}
+      showStatusLineConnection={false}
       documentPathForTracking={(document) =>
         `/downloads/inkomen/bbz/${document.title.split(/\n/)[0]}`
       }

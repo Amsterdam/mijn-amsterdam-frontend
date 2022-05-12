@@ -496,6 +496,28 @@ describe('wpi/app-service', () => {
         "notifications": Array [
           Object {
             "chapter": "STADSPAS",
+            "datePublished": "2022-04-08T15:05:52+02:00",
+            "description": "Wij hebben uw aanvraag voor een Stadspas ontvangen op 08 april 2022.",
+            "id": "51918e8b948742c8b25e97889b2f07b1-notification",
+            "link": Object {
+              "title": "Bekijk hoe het met uw aanvraag staat",
+              "to": "/stadspas/aanvraag/51918e8b948742c8b25e97889b2f07b1",
+            },
+            "title": "Stadspas: Wij hebben uw aanvraag ontvangen",
+          },
+          Object {
+            "chapter": "STADSPAS",
+            "datePublished": "2022-04-10T15:05:52+02:00",
+            "description": "Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op 10 april 2022.",
+            "id": "51918e8b948742c8b25e97889b2f07b1-notification",
+            "link": Object {
+              "title": "Bekijk hoe het met uw aanvraag staat",
+              "to": "/stadspas/aanvraag/51918e8b948742c8b25e97889b2f07b1",
+            },
+            "title": "Stadspas: Wij behandelen uw aanvraag",
+          },
+          Object {
+            "chapter": "STADSPAS",
             "datePublished": "2022-04-28T00:00:00+02:00",
             "description": "U hebt geen recht op een Stadspas (besluit 28 april 2022).",
             "id": "51918e8b948742c8b25e97889b2f07b1-notification",
@@ -521,7 +543,29 @@ describe('wpi/app-service', () => {
           },
           Object {
             "chapter": "INKOMEN",
-            "datePublished": "2022-02-23T16:26:14.175972",
+            "datePublished": "2022-02-23T16:26:14.174591",
+            "description": "Wij hebben uw aanvraag Tozo 1 (aangevraagd voor 1 juni 2020) ontvangen op 23 februari om 21.41 uur",
+            "id": "7827bafbbd75d88a90376ea6e0f618df-notification",
+            "link": Object {
+              "title": "Bekijk hoe het met uw aanvraag staat",
+              "to": "/inkomen/tozo/1/7827bafbbd75d88a90376ea6e0f618df",
+            },
+            "title": "Wij hebben uw aanvraag Tozo 1 ontvangen",
+          },
+          Object {
+            "chapter": "INKOMEN",
+            "datePublished": "2022-02-23T16:26:14.175881",
+            "description": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+            "id": "7827bafbbd75d88a90376ea6e0f618df-notification",
+            "link": Object {
+              "title": "Bekijk hoe het met uw aanvraag staat",
+              "to": "/inkomen/tozo/1/7827bafbbd75d88a90376ea6e0f618df",
+            },
+            "title": "Tozo 1: Wij hebben een voorschot betaald",
+          },
+          Object {
+            "chapter": "INKOMEN",
+            "datePublished": "2022-02-23T16:26:14.175898",
             "description": "U hebt recht op de Tozo 1 uitkering (besluit: 23 februari 2022).",
             "id": "7827bafbbd75d88a90376ea6e0f618df-notification",
             "link": Object {

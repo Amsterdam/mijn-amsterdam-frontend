@@ -135,6 +135,10 @@ export function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
   );
 }
 
+function StatusLineConnectionPlaceholder() {
+  return <div className={styles.StatusConnection} />;
+}
+
 interface StatusLineConnectionProps {
   index: number;
   total: number;
@@ -261,6 +265,7 @@ interface StatusLineProps {
   id?: string;
   showToggleMore?: boolean;
   statusLabel?: string;
+  showStatusLineConnection?: boolean;
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
   highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class.
@@ -276,6 +281,7 @@ export default function StatusLine({
   id,
   maxStepCount,
   highlightKey = 'isActive',
+  showStatusLineConnection = true,
   documentPathForTracking,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
@@ -324,13 +330,18 @@ export default function StatusLine({
                     : 'block',
                 }}
               >
-                <StatusLineConnection
-                  index={index}
-                  total={items.length}
-                  max={maxStepCount}
-                  isActive={Boolean(item.isActive)}
-                  isChecked={Boolean(item.isChecked)}
-                />
+                {!!showStatusLineConnection ? (
+                  <StatusLineConnection
+                    index={index}
+                    total={items.length}
+                    max={maxStepCount}
+                    isActive={Boolean(item.isActive)}
+                    isChecked={Boolean(item.isChecked)}
+                  />
+                ) : (
+                  <StatusLineConnectionPlaceholder />
+                )}
+
                 <StatusLinePanelStatus
                   datePublished={item.datePublished}
                   status={item.status}

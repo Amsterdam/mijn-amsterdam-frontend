@@ -15,6 +15,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'besluit',
+        id: 'aanvraag-1',
         steps: [
           {
             id: 'besluit',
@@ -28,6 +29,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'herstelTermijn',
+        id: 'aanvraag-2',
         steps: [
           {
             id: 'herstelTermijn',
@@ -46,6 +48,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'besluit',
+        id: 'aanvraag-3',
         steps: [
           {
             id: 'besluit',
@@ -59,6 +62,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'herstelTermijn',
+        id: 'aanvraag-4',
         steps: [
           {
             id: 'herstelTermijn',
@@ -77,6 +81,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'besluit',
+        id: 'aanvraag-5',
         steps: [
           {
             id: 'besluit',
@@ -90,6 +95,7 @@ const testState: any = {
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         statusId: 'herstelTermijn',
+        id: 'aanvraag-6',
         steps: [
           {
             id: 'herstelTermijn',
@@ -100,7 +106,22 @@ const testState: any = {
       },
     ],
   },
-  WPI_BBZ: [],
+  WPI_BBZ: [
+    {
+      title: 'Bbz item',
+      datePublished: '2022-07-24',
+      dateStart: '2022-07-14',
+      statusId: 'besluit',
+      id: 'aanvraag-7',
+      steps: [
+        {
+          id: 'besluit',
+          status: 'Besluit',
+          datePublished: '2022-07-24',
+        },
+      ],
+    },
+  ],
   WPI_SPECIFICATIES: {
     status: 'OK',
     content: {
