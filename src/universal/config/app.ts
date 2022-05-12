@@ -33,6 +33,8 @@ export const FeatureToggle = {
   subsidieActive: !IS_PRODUCTION,
   wiorMeldingen: !IS_PRODUCTION,
   parkerenActive: !IS_PRODUCTION,
+  bekendmakingenDatasetActive: false,
+  evenementenDatasetActive: false,
 };
 
 export const MAXIMUM_DAYS_RENT_ALLOWED = 30;
