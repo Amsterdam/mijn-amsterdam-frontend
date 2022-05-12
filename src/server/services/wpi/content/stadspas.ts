@@ -143,12 +143,15 @@ export function getAanvraagNotifications(
     ?.filter((aanvraag) => {
       return isRequestProcessActual(aanvraag.datePublished, today);
     })
-    .map((aanvraag) =>
-      createProcessNotification(aanvraag, requestProcess, Chapters.STADSPAS)
-    )
-    .filter(
-      (notification: MyNotification | null): notification is MyNotification =>
-        notification !== null
+    .flatMap((aanvraag) =>
+      aanvraag.steps.map((step) =>
+        createProcessNotification(
+          aanvraag,
+          step,
+          requestProcess,
+          Chapters.STADSPAS
+        )
+      )
     );
 
   return aanvraagNotifications || [];

@@ -28,6 +28,7 @@ import {
   addLink,
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
+  isRequestProcessActual,
   transformToStatusLine,
 } from './helpers';
 import {
@@ -311,6 +312,8 @@ export async function fetchWpiNotifications(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  const today = new Date();
+
   let notifications: MyNotification[] = [];
 
   // Stadspas
@@ -369,20 +372,26 @@ export async function fetchWpiNotifications(
 
     if (status === 'OK') {
       if (content?.length) {
-        const eAanvraagNotifications = content.flatMap((requestProcess) => {
-          const labels = getEAanvraagRequestProcessLabels(requestProcess);
+        const eAanvraagNotifications = content
+          ?.filter((requestProcess) => {
+            return isRequestProcessActual(requestProcess.datePublished, today);
+          })
+          .flatMap((requestProcess) => {
+            const labels = getEAanvraagRequestProcessLabels(requestProcess);
 
-          if (labels) {
-            const notification = createProcessNotification(
-              requestProcess,
-              labels,
-              Chapters.INKOMEN
-            );
-
-            return notification ? [notification] : [];
-          }
-          return [];
-        });
+            if (labels) {
+              const notifications = requestProcess.steps.map((step) =>
+                createProcessNotification(
+                  requestProcess,
+                  step,
+                  labels,
+                  Chapters.INKOMEN
+                )
+              );
+              return notifications;
+            }
+            return [];
+          });
 
         if (eAanvraagNotifications) {
           notifications.push(...eAanvraagNotifications);
