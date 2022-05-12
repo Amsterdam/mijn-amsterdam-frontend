@@ -6,7 +6,11 @@ import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
 import { requestProcess as tozoRequestProcessLabels } from './content/tozo';
-import { WpiRequestProcess, WpiRequestProcessLabels } from './wpi-types';
+import {
+  WpiRequestProcess,
+  WpiRequestProcessLabels,
+  WpiRequestStatus,
+} from './wpi-types';
 
 export function transformToStatusLine(
   requestProcess: WpiRequestProcess,
@@ -49,27 +53,26 @@ export function addApiBasePathToDocumentUrls(
 
 export function createProcessNotification(
   requestProcess: WpiRequestProcess,
+  statusStep: WpiRequestStatus,
   labels: WpiRequestProcessLabels,
   chapter: Chapter
 ): MyNotification {
-  const requestStatus = requestProcess.steps.find(
-    (requestStatusStep) => requestStatusStep.id === requestProcess.statusId
-  )!; // Should always exist.
-
-  const notificationLabels = labels[requestStatus.id].notification;
+  const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;
   const descriptionTransform = notificationLabels.description;
 
   return {
     id: `${requestProcess.id}-notification`,
-    datePublished: requestProcess.datePublished,
+    datePublished: statusStep.datePublished,
     chapter,
     title: titleTransform
-      ? titleTransform(requestProcess, requestStatus)
+      ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,
     description: descriptionTransform
-      ? descriptionTransform(requestProcess, requestStatus)
-      : `U hebt updates over uw ${requestProcess.about}-aanvraag.`,
+      ? descriptionTransform(requestProcess, statusStep)
+      : `U hebt updates over uw ${
+          statusStep.about || requestProcess.about
+        }-aanvraag.`,
 
     link: {
       to: requestProcess.link?.to || '/',

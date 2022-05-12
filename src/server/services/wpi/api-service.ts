@@ -30,6 +30,7 @@ import {
   addLink,
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
+  isRequestProcessActual,
   transformToStatusLine,
 } from './helpers';
 import {
@@ -256,7 +257,27 @@ export async function fetchBbz(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
+  const bbz = await fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
+
+  /**
+   * BBZ Is een uitzondering in de sortering vanwege een "Business besluit / onbekende rationale".
+   * Mogelijk omdat bij BBZ meerdere aanvragen door elkaar lopen en er geen onderscheid gemaakt kan worden
+   * tussen de vershchillende aanvragen en welke stappen daarbij horen.
+   */
+  if (bbz.status === 'OK') {
+    const bbzRequests: WpiRequestProcess[] = [];
+    bbz.content?.forEach((bbz) => {
+      const requestProcessUpdated = {
+        ...bbz,
+        steps: [...bbz.steps],
+      };
+      requestProcessUpdated.steps.reverse();
+      bbzRequests.push(requestProcessUpdated);
+    });
+    return apiSuccessResult<WpiRequestProcess[]>(bbzRequests);
+  }
+
+  return bbz;
 }
 
 export async function fetchTonk(
@@ -298,6 +319,8 @@ export async function fetchWpiNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const today = new Date();
+
   let notifications: MyNotification[] = [];
 
   // Stadspas
@@ -356,20 +379,26 @@ export async function fetchWpiNotifications(
 
     if (status === 'OK') {
       if (content?.length) {
-        const eAanvraagNotifications = content.flatMap((requestProcess) => {
-          const labels = getEAanvraagRequestProcessLabels(requestProcess);
+        const eAanvraagNotifications = content
+          ?.filter((requestProcess) => {
+            return isRequestProcessActual(requestProcess.datePublished, today);
+          })
+          .flatMap((requestProcess) => {
+            const labels = getEAanvraagRequestProcessLabels(requestProcess);
 
-          if (labels) {
-            const notification = createProcessNotification(
-              requestProcess,
-              labels,
-              Chapters.INKOMEN
-            );
-
-            return [notification];
-          }
-          return [];
-        });
+            if (labels) {
+              const notifications = requestProcess.steps.map((step) =>
+                createProcessNotification(
+                  requestProcess,
+                  step,
+                  labels,
+                  Chapters.INKOMEN
+                )
+              );
+              return notifications;
+            }
+            return [];
+          });
 
         if (eAanvraagNotifications) {
           notifications.push(...eAanvraagNotifications);

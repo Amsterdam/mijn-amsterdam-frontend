@@ -4,7 +4,8 @@ import { requestProcess as tozoRequestProcess } from './tozo';
 
 const weigeringVerlengingLabels: WpiRequestStatusLabels = {
   notification: {
-    title: (requestProcess) => `${requestProcess.about}: Verlenging geweigerd`,
+    title: (requestProcess, statusStep) =>
+      `${statusStep.about || requestProcess.about}: Verlenging geweigerd`,
     description: (requestProcess, statusStep) =>
       `U hebt de verlenging van uw ${productName(
         requestProcess,
@@ -12,8 +13,10 @@ const weigeringVerlengingLabels: WpiRequestStatusLabels = {
         false
       )} geweigerd.`,
   },
-  description: (requestProcess) =>
-    `<p> U hebt uw ${requestProcess.about} verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+  description: (requestProcess, statusStep) =>
+    `<p> U hebt uw ${
+      statusStep.about || requestProcess.about
+    } verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const correctieMailLabels: WpiRequestStatusLabels = {
@@ -42,10 +45,14 @@ const besluitLabels: WpiRequestStatusLabels = {
     title: (requestProcess, statusStep) => {
       switch (statusStep?.decision) {
         case 'mogelijkeVerlenging':
-          return `${requestProcess.about}: Er is een besluit over het wel of niet verlengen`;
+          return `${
+            statusStep.about || requestProcess.about
+          }: Er is een besluit over het wel of niet verlengen`;
 
         case 'verlenging':
-          return `${requestProcess.about}: Uw uitkering is verlengd`;
+          return `${
+            statusStep.about || requestProcess.about
+          }: Uw uitkering is verlengd`;
 
         default:
           return tozoRequestProcess.besluit.notification.title(

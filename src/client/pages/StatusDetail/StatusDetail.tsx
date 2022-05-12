@@ -34,6 +34,7 @@ interface StatusDetailProps {
   maxStepCount?: (hasDecision: boolean) => number | undefined;
   showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
+  showStatusLineConnection?: boolean;
   highlightKey?: string | false;
   documentPathForTracking?: (document: GenericDocument) => string;
 }
@@ -46,6 +47,7 @@ export default function StatusDetail({
   showToggleMore = true,
   chapter,
   statusLabel = 'Status',
+  showStatusLineConnection = true,
   highlightKey,
   documentPathForTracking,
 }: StatusDetailProps) {
@@ -146,6 +148,7 @@ export default function StatusDetail({
               ? statusLabel(statusItem)
               : statusLabel
           }
+          showStatusLineConnection={showStatusLineConnection}
           items={statusSteps}
           showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}

@@ -1,13 +1,11 @@
 import classnames from 'classnames';
+import { differenceInDays } from 'date-fns';
 import { useMemo } from 'react';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import {
-  calculateDaysBetweenDates,
-  defaultDateFormat,
-} from '../../../universal/helpers/date';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
@@ -19,10 +17,8 @@ import {
   PageContent,
   PageHeading,
   SectionCollapsible,
-  SectionCollapsibleHeading,
   Table,
 } from '../../components';
-import { SectionCollapsibleBody } from '../../components/SectionCollapsible/SectionCollapsible';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -32,6 +28,8 @@ import {
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
 import styles from './Inkomen.module.scss';
+
+const DAYS_PASSED_TO_CONSIDER_BBZ_REQUESTS_AS_COMPLETED = 365;
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
@@ -60,7 +58,7 @@ const decisionsDisplayProps = {
 export default function Inkomen() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
-  const history = useHistory();
+
   const wpiSpecificatiesWithDocumentLinks =
     useAddDocumentLinkComponents(WPI_SPECIFICATIES);
   const aanvragen = WPI_AANVRAGEN.content;
@@ -82,13 +80,18 @@ export default function Inkomen() {
       ...(bbzItems || []),
     ]
       .map((item) => {
-        const activeStatusStep = item.steps.find(
-          (step) => step.id === item.statusId
-        );
+        const isBbz = item.about === 'Bbz';
+        const activeStatusStep =
+          // Bbz steps are sorted in reverse becasue of a Business decision, unknown rationale
+          isBbz ? item.steps[0] : item.steps[item.steps.length - 1];
         return Object.assign({}, item, {
-          displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
-          displayDateStart: defaultDateFormat(item.dateStart),
-          status: activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
+          displayDateEnd: isBbz
+            ? '-'
+            : defaultDateFormat(item.dateEnd || item.datePublished),
+          displayDateStart: isBbz ? '-' : defaultDateFormat(item.dateStart),
+          status: isBbz
+            ? '-'
+            : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });
       })
       .sort(dateSort('datePublished', 'desc'));
@@ -96,23 +99,22 @@ export default function Inkomen() {
     return addTitleLinkComponent(items);
   }, [aanvragen, tozoItems, tonkItems, bbzItems]);
 
-  const itemsBbz = items.filter((item) => item.about === 'Bbz');
-  const hasBbz = !!itemsBbz.length;
-  const hasRecentBbz = itemsBbz.some((item) => {
-    const daysdiff = calculateDaysBetweenDates(
-      new Date().toISOString(),
-      item.datePublished
+  // Determine the completed requests
+  const itemsCompleted = items.filter((item) => {
+    const lastUpdateDaysAgo = differenceInDays(
+      new Date(),
+      new Date(item.datePublished)
     );
-    return daysdiff <= 365;
+    return item.about === 'Bbz'
+      ? // BBZ has different logic to determine completed status because we cannot reliably determine if the request process is completed or not.
+        lastUpdateDaysAgo >= DAYS_PASSED_TO_CONSIDER_BBZ_REQUESTS_AS_COMPLETED
+      : // The rest is probably, mostly completed if a decision is made
+        REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId);
   });
-
-  const itemsNonBbz = items.filter((item) => item.about !== 'Bbz');
-
-  const itemsRequested = itemsNonBbz.filter(
-    (item) => !REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
-  );
-  const itemsCompleted = itemsNonBbz.filter((item) =>
-    REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
+  // Active requests are not present in completed requests
+  const itemsRequested = items.filter(
+    (item) =>
+      !itemsCompleted.some((itemCompleted) => item.id === itemCompleted.id)
   );
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsCompleted.length;
@@ -127,7 +129,6 @@ export default function Inkomen() {
     isLoading(WPI_BBZ);
 
   const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
-
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
@@ -164,17 +165,6 @@ export default function Inkomen() {
           </Alert>
         )}
       </PageContent>
-
-      {hasRecentBbz && (
-        <SectionCollapsibleBody>
-          <SectionCollapsibleHeading
-            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/BBZ'])}
-            isAriaExpanded={false}
-          >
-            Uw Bbz overzicht
-          </SectionCollapsibleHeading>
-        </SectionCollapsibleBody>
-      )}
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
@@ -269,17 +259,6 @@ export default function Inkomen() {
           </p>
         )}
       </SectionCollapsible>
-
-      {hasBbz && !hasRecentBbz && (
-        <SectionCollapsibleBody>
-          <SectionCollapsibleHeading
-            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/BBZ'])}
-            isAriaExpanded={false}
-          >
-            Uw Bbz overzicht
-          </SectionCollapsibleHeading>
-        </SectionCollapsibleBody>
-      )}
     </OverviewPage>
   );
 }

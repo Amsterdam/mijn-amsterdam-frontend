@@ -105,6 +105,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   bekendmakingen: {
+    isDisabled: !FeatureToggle.bekendmakingenDatasetActive,
     title: 'Vergunningen',
     datasets: {
       bekendmakingen: {
@@ -123,6 +124,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   evenementen: {
+    isDisabled: !FeatureToggle.evenementenDatasetActive,
     title: 'Evenementen',
     datasets: { evenementen: { title: 'Evenementen' } },
   },
@@ -348,8 +350,15 @@ export function getDatasetCategoryId(datasetId: DatasetId) {
 // TODO: add all dataset id's we want to load initially
 export const ACTIVE_DATASET_IDS_INITIAL = [
   'afvalcontainers',
-  'bekendmakingen',
-  'evenementen',
+  'sportaanbieder',
+  'zwembad',
+  'sporthal',
+  'gymzaal',
+  'sportzaal',
+  'openbaresportplek',
+  'hardlooproute',
+  'sportpark',
+  'sportveld',
 ];
 
 export const POLYLINE_GEOMETRY_TYPES: FeatureType[] = [
