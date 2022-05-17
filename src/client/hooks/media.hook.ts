@@ -42,16 +42,28 @@ export function useMediaLayout(query: MediaQueryObject): boolean {
   });
 
   useLayoutEffect(() => {
-    const media = window.matchMedia(queryString);
-    if (media.matches !== matches) {
-      setMatches(!!media.matches);
+    const mediaQuery = window.matchMedia(queryString);
+
+    if (mediaQuery.matches !== matches) {
+      setMatches(!!mediaQuery.matches);
     }
-    const listener = () => {
-      setMatches(!!media.matches);
+
+    const handler = () => {
+      setMatches(!!mediaQuery.matches);
     };
 
-    (media.addEventListener || media.addListener)('change', listener);
-    return () => media.removeEventListener('change', listener);
+    try {
+      mediaQuery.addEventListener('change', handler);
+    } catch (e) {
+      mediaQuery.addListener?.(handler);
+    }
+    return () => {
+      try {
+        mediaQuery.removeEventListener('change', handler);
+      } catch (e) {
+        mediaQuery.removeListener?.(handler);
+      }
+    };
   }, [matches, queryString]);
 
   return matches;
