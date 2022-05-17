@@ -7,6 +7,7 @@ import {
   BFF_MS_API_BASE,
   BFF_MS_API_BASE_PATH,
   BFF_MS_API_BASE_URL,
+  RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { axiosRequest } from './helpers';
 import { getAuth, isProtectedRoute } from './helpers/app';
@@ -73,6 +74,15 @@ router.use(
       return BFF_MS_API_BASE_PATH + req.url;
     },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+      // NOTE: Temporary
+      if (
+        RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
+          srcReq.url.includes(path)
+        )
+      ) {
+        return proxyReqOpts;
+      }
+
       const { token } = await getAuth(srcReq);
       const headers = proxyReqOpts.headers || {};
       headers['Authorization'] = `Bearer ${token}`;

@@ -260,6 +260,10 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.PUBLIC_CACHE_OVERVIEW,
 ];
 
+export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
+  '/tips/static/tip_images',
+];
+
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = 'appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_OIDC_COOKIE_ENCRYPTION_KEY}`;
