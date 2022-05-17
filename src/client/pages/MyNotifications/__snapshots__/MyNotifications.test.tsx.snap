@@ -49,7 +49,7 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
       class="PageContent"
     />
     <div
-      class="MyNotifications isLoading"
+      class="MyNotifications isLoading MarginBottom"
     >
       <ul>
         <li
