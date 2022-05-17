@@ -4,8 +4,10 @@
   @include reset-list-style;
 }
 
-.MarginBottom {
-  margin-bottom: 3rem !important;
+.MarginBottomMobile {
+  @include mq-phone() {
+    margin-bottom: 3rem !important;
+  }
 }
 
 .MyNotificationItem {
