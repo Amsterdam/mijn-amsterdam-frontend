@@ -27,7 +27,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
       class="TopContentContainer"
     >
       <div
-        class="MyNotifications isLoading MarginBottomMobile"
+        class="MyNotifications isLoading"
       >
         <ul>
           <li
