@@ -8,9 +8,11 @@ import 'core-js/features/array/flat-map';
 import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
 import App from './client/App';
+import ApplicationError from './client/components/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
 import { ENV, getOtapEnvItem } from './universal/config/env';
+import { ErrorBoundary } from 'react-error-boundary';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -38,4 +40,17 @@ Sentry.init({
   autoSessionTracking: false,
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const sendToSentry = (error: Error, info: { componentStack: string }) => {
+  Sentry.captureException(error, {
+    extra: {
+      componentStack: info.componentStack,
+    },
+  });
+};
+
+ReactDOM.render(
+  <ErrorBoundary onError={sendToSentry} FallbackComponent={ApplicationError}>
+    <App />
+  </ErrorBoundary>,
+  document.getElementById('root')
+);

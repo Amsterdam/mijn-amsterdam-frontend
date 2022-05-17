@@ -1,7 +1,5 @@
-import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { lazy, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
   matchPath,
@@ -17,12 +15,7 @@ import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
-import {
-  ApplicationError,
-  AutoLogoutDialog,
-  MainFooter,
-  MainHeader,
-} from './components';
+import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
@@ -308,31 +301,18 @@ export default function App() {
 
   useUsabilla();
 
-  const sendToSentry = (error: Error, info: { componentStack: string }) => {
-    Sentry.captureException(error, {
-      extra: {
-        componentStack: info.componentStack,
-      },
-    });
-  };
-
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <ErrorBoundary
-          onError={sendToSentry}
-          FallbackComponent={ApplicationError}
+        <Suspense
+          fallback={
+            <div className={styles.PreLoader}>
+              Loading Mijn Amsterdam bundle...
+            </div>
+          }
         >
-          <Suspense
-            fallback={
-              <div className={styles.PreLoader}>
-                Loading Mijn Amsterdam bundle...
-              </div>
-            }
-          >
-            <AppLanding />
-          </Suspense>
-        </ErrorBoundary>
+          <AppLanding />
+        </Suspense>
       </BrowserRouter>
     </RecoilRoot>
   );
