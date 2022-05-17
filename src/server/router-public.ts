@@ -18,14 +18,6 @@ import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-
 export const router = express.Router();
 
 router.get(
-  BffEndpoints.STATUS_HEALTH,
-  (req: Request, res: Response, next: NextFunction) => {
-    res.json({ status: 'OK' });
-    next();
-  }
-);
-
-router.get(
   BffEndpoints.PUBLIC_CACHE_OVERVIEW,
   async (req: Request, res: Response, next: NextFunction) => {
     const overview = await cacheOverview();

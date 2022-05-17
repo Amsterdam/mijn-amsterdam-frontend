@@ -23,7 +23,7 @@ import express, {
 import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
+import { BffEndpoints, BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
 import { clearRequestCache, send404, requestID } from './helpers/app';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as authRouter } from './router-auth';
@@ -65,6 +65,14 @@ app.use(compression());
 
 // Generate request id
 app.use(requestID);
+
+app.get(
+  BffEndpoints.STATUS_HEALTH,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.json({ status: 'OK' });
+    next();
+  }
+);
 
 // Public routes
 app.use(authRouter);
