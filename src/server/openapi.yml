@@ -114,7 +114,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CacheResponse'
-  /public/services/cms:
+  /services/cms:
     get:
       description: Endpoint used to retrieve data from the CMS.
       responses:
@@ -124,7 +124,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CmsResponse'
-  /public/services/cms/maintenance-notifications:
+  /services/cms/maintenance-notifications:
     get:
       description: Endpoint used to retrieve maintenance notifications.
       responses:

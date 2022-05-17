@@ -17,7 +17,7 @@ import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documente
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/bff/dev/auth/:authMethod/login',
+  '/api/v1/dev/auth/:authMethod/login',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -45,7 +45,7 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get('/bff/dev/auth/logout', (req, res) => {
+authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
 });

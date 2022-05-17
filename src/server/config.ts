@@ -14,7 +14,7 @@ export const BFF_REQUEST_CACHE_ENABLED =
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-export const BFF_BASE_PATH = '/bff';
+export const BFF_BASE_PATH = '/api/v1';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -204,14 +204,13 @@ export const PUBLIC_AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const PUBLIC_AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BffEndpoints = {
-  API_RELAY: '/public/relay',
-  SERVICES_TIPS: '/public/services/tips',
-  SERVICES_TIPS_REQUEST_DATA_OVERVIEW:
-    '/public/services/tips/requestdataoverview',
-  SERVICES_ALL: '/public/services/all',
-  SERVICES_STREAM: '/public/services/stream',
-  MAP_DATASETS: '/public/map/datasets/:datasetId?/:id?',
-  SEARCH_CONFIG: '/public/services/search-config',
+  API_RELAY: '/relay',
+  SERVICES_TIPS: '/services/tips',
+  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
+  SERVICES_ALL: '/services/all',
+  SERVICES_STREAM: '/services/stream',
+  MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
+  SEARCH_CONFIG: '/services/search-config',
 
   // start: OIDC config
   PUBLIC_AUTH_BASE_DIGID,
@@ -245,10 +244,10 @@ export const BffEndpoints = {
   PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
   // end: OIDC config
 
-  PUBLIC_CMS_CONTENT: '/public/services/cms',
+  PUBLIC_CMS_CONTENT: '/services/cms',
   PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
-    '/public/services/cms/maintenance-notifications',
-  PUBLIC_CACHE_OVERVIEW: '/public/status/cache',
+    '/services/cms/maintenance-notifications',
+  PUBLIC_CACHE_OVERVIEW: '/status/cache',
 
   STATUS_HEALTH: '/status/health',
 };

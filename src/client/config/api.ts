@@ -7,30 +7,29 @@ const baseUrl = IS_ACCEPTANCE
   ? process.env.REACT_APP_BFF_API_URL_ACC
   : process.env.REACT_APP_BFF_API_URL;
 
-export const BFF_API_BASE_URL = baseUrl || '/bff';
+export const BFF_API_BASE_URL = baseUrl || '/api/v1';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
-export const BFF_API_PUBLIC_BASE_URL = `${BFF_API_BASE_URL}/public`;
 
 export const BFFApiUrls = {
-  BRP_RESIDENTS_API_URL: `${BFF_API_PUBLIC_BASE_URL}/relay/brp/aantal_bewoners`,
-  MAP_DATASETS_WMS: `${BFF_API_PUBLIC_BASE_URL}/map/datasets/wms`,
-  MAP_DATASETS: `${BFF_API_PUBLIC_BASE_URL}/map/datasets`,
-  SEARCH_CONFIGURATION: `${BFF_API_PUBLIC_BASE_URL}/services/search-config`,
-  SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
-  SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
-  SERVICES_SAURON: `${BFF_API_PUBLIC_BASE_URL}/services/all`,
-  SERVICES_SSE: `${BFF_API_PUBLIC_BASE_URL}/services/stream`,
-  SERVICES_TIPS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/tips`,
+  BRP_RESIDENTS_API_URL: `${BFF_API_BASE_URL}/relay/brp/aantal_bewoners`,
+  MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
+  MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
+  SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
+  SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_BASE_URL}/services/cms/maintenance-notifications`,
+  SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
+  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
+  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
 };
 
 // Urls directly used from front-end
-export const AUTH_PATH = process.env.REACT_APP_BFF_AUTH_PATH || '/public/auth';
+export const AUTH_PATH = process.env.REACT_APP_BFF_AUTH_PATH || '/auth';
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
 }/eherkenning/login`;
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
-export const AUTH_API_URL = `${BFF_API_PUBLIC_BASE_URL}/auth/check`;
+export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
 
 export const loginUrlByAuthMethod = {
   eherkenning: LOGIN_URL_EHERKENNING,
