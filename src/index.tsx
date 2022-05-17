@@ -7,12 +7,12 @@ import 'core-js/features/object/from-entries';
 import 'core-js/features/array/flat-map';
 import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/components/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
 import { ENV, getOtapEnvItem } from './universal/config/env';
-import { ErrorBoundary } from 'react-error-boundary';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
