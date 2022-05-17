@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jose, { JWE, JWK, JWKS } from 'jose';
-
+import memoize from 'memoizee';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
@@ -22,8 +22,6 @@ import {
   RelayPathsAllowed,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import memoize from 'memoizee';
-import addSeconds from 'date-fns/addSeconds';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 

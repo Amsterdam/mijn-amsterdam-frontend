@@ -37,41 +37,41 @@ export const isAuthenticated =
   };
 
 // Enable OIDC
-router.use(BffEndpoints.PUBLIC_AUTH_BASE_DIGID, nocache, auth(oidcConfigDigid));
+router.use(BffEndpoints.AUTH_BASE_DIGID, nocache, auth(oidcConfigDigid));
 router.use(
-  BffEndpoints.PUBLIC_AUTH_BASE_EHERKENNING,
+  BffEndpoints.AUTH_BASE_EHERKENNING,
   nocache,
   auth(oidcConfigEherkenning)
 );
 
-router.get(BffEndpoints.PUBLIC_AUTH_LOGIN_DIGID, (req, res) => {
+router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
     returnTo: process.env.BFF_FRONTEND_URL,
     authorizationParams: {
       // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
-      redirect_uri: BffEndpoints.PUBLIC_AUTH_CALLBACK_DIGID,
+      redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
     },
   });
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_LOGIN_EHERKENNING, (req, res) => {
+router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
   return res.oidc.login({
     returnTo: process.env.BFF_FRONTEND_URL,
     authorizationParams: {
       // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
-      redirect_uri: BffEndpoints.PUBLIC_AUTH_CALLBACK_EHERKENNING,
+      redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
     },
   });
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_CHECK_EHERKENNING, async (req, res) => {
+router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
   if (req.oidc.isAuthenticated()) {
     return res.send(apiSuccessResult({ isAuthenticated: true }));
   }
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_CHECK_DIGID, async (req, res) => {
+router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
   if (req.oidc.isAuthenticated()) {
     return res.send(apiSuccessResult({ isAuthenticated: true }));
   }
@@ -79,15 +79,15 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK_DIGID, async (req, res) => {
 });
 
 // AuthMethod agnostic endpoints
-router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
+router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
 
       return res.redirect(
         auth.profile.authMethod === 'eherkenning'
-          ? BffEndpoints.PUBLIC_AUTH_CHECK_EHERKENNING
-          : BffEndpoints.PUBLIC_AUTH_CHECK_DIGID
+          ? BffEndpoints.AUTH_CHECK_EHERKENNING
+          : BffEndpoints.AUTH_CHECK_DIGID
       );
     } catch (error) {
       Sentry.captureException(error);
@@ -98,7 +98,7 @@ router.get(BffEndpoints.PUBLIC_AUTH_CHECK, async (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, async (req, res) => {
+router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
@@ -111,13 +111,13 @@ router.get(BffEndpoints.PUBLIC_AUTH_TOKEN_DATA, async (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.PUBLIC_AUTH_LOGOUT, async (req, res) => {
+router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
   if (hasSessionCookie(req)) {
     const auth = await getAuth(req);
     const redirectToLogoutSpecific =
       auth.profile.authMethod === 'eherkenning'
-        ? BffEndpoints.PUBLIC_AUTH_LOGOUT_EHERKENNING
-        : BffEndpoints.PUBLIC_AUTH_LOGOUT_DIGID;
+        ? BffEndpoints.AUTH_LOGOUT_EHERKENNING
+        : BffEndpoints.AUTH_LOGOUT_DIGID;
     return res.redirect(redirectToLogoutSpecific);
   }
 

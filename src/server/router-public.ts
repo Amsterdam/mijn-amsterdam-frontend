@@ -18,7 +18,7 @@ import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-
 export const router = express.Router();
 
 router.get(
-  BffEndpoints.PUBLIC_CACHE_OVERVIEW,
+  BffEndpoints.CACHE_OVERVIEW,
   async (req: Request, res: Response, next: NextFunction) => {
     const overview = await cacheOverview();
     res.json(overview);
@@ -26,7 +26,7 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
+router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
     const response = await fetchCMSCONTENT(requestID, queryParams(req));
@@ -38,7 +38,7 @@ router.get(BffEndpoints.PUBLIC_CMS_CONTENT, async (req, res, next) => {
 });
 
 router.get(
-  BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
+  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
     const requestID = res.locals.requestID;
     try {

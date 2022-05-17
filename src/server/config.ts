@@ -196,12 +196,12 @@ export const RelayPathsAllowed = {
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
 };
 
-export const PUBLIC_AUTH_BASE = process.env.BFF_OIDC_BASE_PATH || '';
-export const PUBLIC_AUTH_BASE_DIGID = `${PUBLIC_AUTH_BASE}/digid`;
-export const PUBLIC_AUTH_BASE_EHERKENNING = `${PUBLIC_AUTH_BASE}/eherkenning`;
-export const PUBLIC_AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
-export const PUBLIC_AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
-export const PUBLIC_AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
+export const AUTH_BASE = '/api/v1/auth';
+export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
+export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
+export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
+export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
+export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BffEndpoints = {
   API_RELAY: '/relay',
@@ -213,50 +213,43 @@ export const BffEndpoints = {
   SEARCH_CONFIG: '/services/search-config',
 
   // start: OIDC config
-  PUBLIC_AUTH_BASE_DIGID,
-  PUBLIC_AUTH_BASE_EHERKENNING,
+  AUTH_BASE_DIGID,
+  AUTH_BASE_EHERKENNING,
 
   // Digid
-  PUBLIC_AUTH_CALLBACK_DIGID:
-    process.env.BFF_OIDC_BASE_URL +
-    PUBLIC_AUTH_BASE_DIGID +
-    PUBLIC_AUTH_CALLBACK,
-  PUBLIC_AUTH_LOGIN_DIGID: PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_LOGIN,
-  PUBLIC_AUTH_LOGOUT_DIGID: PUBLIC_AUTH_BASE_DIGID + PUBLIC_AUTH_LOGOUT,
+  AUTH_CALLBACK_DIGID:
+    process.env.BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
+  AUTH_LOGIN_DIGID: AUTH_BASE_DIGID + AUTH_LOGIN,
+  AUTH_LOGOUT_DIGID: AUTH_BASE_DIGID + AUTH_LOGOUT,
 
   // EHerkenning
-  PUBLIC_AUTH_CALLBACK_EHERKENNING:
-    process.env.BFF_OIDC_BASE_URL +
-    PUBLIC_AUTH_BASE_EHERKENNING +
-    PUBLIC_AUTH_CALLBACK,
-  PUBLIC_AUTH_LOGIN_EHERKENNING:
-    PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_LOGIN,
-  PUBLIC_AUTH_LOGOUT_EHERKENNING:
-    PUBLIC_AUTH_BASE_EHERKENNING + PUBLIC_AUTH_LOGOUT,
+  AUTH_CALLBACK_EHERKENNING:
+    process.env.BFF_OIDC_BASE_URL + AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+  AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
+  AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
 
   // Application specific urls
-  PUBLIC_AUTH_CHECK: `${PUBLIC_AUTH_BASE}/check`,
-  PUBLIC_AUTH_CHECK_EHERKENNING: `${PUBLIC_AUTH_BASE_EHERKENNING}/check`,
-  PUBLIC_AUTH_CHECK_DIGID: `${PUBLIC_AUTH_BASE_DIGID}/check`,
-  PUBLIC_AUTH_TOKEN_DATA: `${PUBLIC_AUTH_BASE}/token-data`,
-  PUBLIC_AUTH_TOKEN_DATA_EHERKENNING: `${PUBLIC_AUTH_BASE_EHERKENNING}/token-data`,
-  PUBLIC_AUTH_TOKEN_DATA_DIGID: `${PUBLIC_AUTH_BASE_DIGID}/token-data`,
-  PUBLIC_AUTH_LOGOUT: `${PUBLIC_AUTH_BASE}/logout`,
+  AUTH_CHECK: `${AUTH_BASE}/check`,
+  AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
+  AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
+  AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
+  AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
+  AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
+  AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
 
-  PUBLIC_CMS_CONTENT: '/services/cms',
-  PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS:
-    '/services/cms/maintenance-notifications',
-  PUBLIC_CACHE_OVERVIEW: '/status/cache',
+  CMS_CONTENT: '/services/cms',
+  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
+  CACHE_OVERVIEW: '/status/cache',
 
   STATUS_HEALTH: '/bff/status/health',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.PUBLIC_CMS_CONTENT,
-  BffEndpoints.PUBLIC_CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.PUBLIC_CACHE_OVERVIEW,
+  BffEndpoints.CMS_CONTENT,
+  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
+  BffEndpoints.CACHE_OVERVIEW,
 ];
 
 export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
@@ -285,8 +278,8 @@ const oidcConfigBase: ConfigParams = {
   },
   routes: {
     login: false,
-    logout: PUBLIC_AUTH_LOGOUT,
-    callback: PUBLIC_AUTH_CALLBACK, // Relative to the Router path PUBLIC_AUTH_BASE_EHERKENNING
+    logout: AUTH_LOGOUT,
+    callback: AUTH_CALLBACK, // Relative to the Router path AUTH_BASE_EHERKENNING
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
