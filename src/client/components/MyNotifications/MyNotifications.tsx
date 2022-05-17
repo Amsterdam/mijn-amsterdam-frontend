@@ -38,7 +38,9 @@ export default function MyNotifications({
   return (
     <div
       {...otherProps}
-      className={classnames(styles.MyNotifications, styles.isLoading)}
+      className={classnames(styles.MyNotifications, styles.isLoading, {
+        [styles.MarginBottom]: !showMoreLink,
+      })}
     >
       <ul>
         {isLoading && (
