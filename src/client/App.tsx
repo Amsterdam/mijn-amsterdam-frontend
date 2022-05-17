@@ -1,7 +1,5 @@
-import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { lazy, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
   matchPath,
@@ -277,31 +275,18 @@ export default function App() {
 
   useUsabilla();
 
-  const sendToSentry = (error: Error, info: { componentStack: string }) => {
-    Sentry.captureException(error, {
-      extra: {
-        componentStack: info.componentStack,
-      },
-    });
-  };
-
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <ErrorBoundary
-          onError={sendToSentry}
-          FallbackComponent={ApplicationError}
+        <Suspense
+          fallback={
+            <div className={styles.PreLoader}>
+              Loading Mijn Amsterdam bundle...
+            </div>
+          }
         >
-          <Suspense
-            fallback={
-              <div className={styles.PreLoader}>
-                Loading Mijn Amsterdam bundle...
-              </div>
-            }
-          >
-            <AppLanding />
-          </Suspense>
-        </ErrorBoundary>
+          <AppLanding />
+        </Suspense>
       </BrowserRouter>
     </RecoilRoot>
   );
