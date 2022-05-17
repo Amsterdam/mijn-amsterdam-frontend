@@ -52,6 +52,7 @@ export function useMediaLayout(query: MediaQueryObject): boolean {
       setMatches(!!mediaQuery.matches);
     };
 
+    // Inspired by https://github.com/kazzkiq/darkmode/pull/4/files
     try {
       mediaQuery.addEventListener('change', handler);
     } catch (e) {
