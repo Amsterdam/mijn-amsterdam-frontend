@@ -49,7 +49,9 @@ export function useMediaLayout(query: MediaQueryObject): boolean {
     const listener = () => {
       setMatches(!!media.matches);
     };
-    media.addEventListener('change', listener);
+    const addListener = media.addEventListener || media.addListener;
+
+    addListener('change', listener);
     return () => media.removeEventListener('change', listener);
   }, [matches, queryString]);
 
