@@ -40,7 +40,6 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
 import * as Sentry from '@sentry/react';
-import { km } from 'date-fns/locale';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
