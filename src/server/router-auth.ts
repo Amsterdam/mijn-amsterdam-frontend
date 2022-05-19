@@ -66,14 +66,26 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
 
 router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
   if (req.oidc.isAuthenticated()) {
-    return res.send(apiSuccessResult({ isAuthenticated: true }));
+    return res.send(
+      apiSuccessResult({
+        isAuthenticated: true,
+        profileType: 'commercial',
+        authMethod: 'eherkenning',
+      })
+    );
   }
   return sendUnauthorized(res);
 });
 
 router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
   if (req.oidc.isAuthenticated()) {
-    return res.send(apiSuccessResult({ isAuthenticated: true }));
+    return res.send(
+      apiSuccessResult({
+        isAuthenticated: true,
+        profileType: 'private',
+        authMethod: 'digid',
+      })
+    );
   }
   return sendUnauthorized(res);
 });
