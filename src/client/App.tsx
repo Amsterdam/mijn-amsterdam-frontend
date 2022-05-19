@@ -15,7 +15,6 @@ import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
-  ApplicationError,
   AutoLogoutDialog,
   MainFooter,
   MainHeader,
