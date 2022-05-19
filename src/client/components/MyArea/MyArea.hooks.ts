@@ -39,6 +39,8 @@ import {
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
+import * as Sentry from '@sentry/react';
+import { km } from 'date-fns/locale';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -471,7 +473,18 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
   return Object.fromEntries(
     Array.from(new URLSearchParams(searchEntry).entries())
       .map(([k, v]) => {
-        return [k, v ? JSON.parse(v) : undefined];
+        let value = undefined;
+        try {
+          value = v ? JSON.parse(v) : undefined;
+        } catch (error) {
+          Sentry.captureMessage('Could not parse Queryparams', {
+            extra: {
+              key: k,
+              value: v,
+            },
+          });
+        }
+        return [k, value];
       })
       .filter(([, v]) => !!v)
   );
