@@ -30,7 +30,7 @@ export const FeatureToggle = {
   meldingenBuurtActive: !IS_PRODUCTION,
   inkomenBBZActive: true,
   erfpachtV2EndpointActive: true,
-  subsidieActive: !IS_PRODUCTION,
+  subsidieActive: true,
   wiorMeldingen: !IS_PRODUCTION,
   parkerenActive: !IS_PRODUCTION,
   bekendmakingenDatasetActive: false,
