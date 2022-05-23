@@ -6,7 +6,7 @@ import {
   Redirect,
   Route,
   Switch,
-  useLocation,
+  useLocation
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -14,6 +14,11 @@ import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
+import {
+  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
+  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
+  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
+} from './config/api';
 import {
   AutoLogoutDialog,
   MainFooter,
@@ -24,9 +29,14 @@ import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
-import { useDeeplinkEntry } from './hooks/useDeeplink.hook';
+import {
+  useDeeplinkEntry,
+  useDeeplinkRedirect,
+} from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
+import { default as LandingPage } from './pages/Landing/Landing';
+
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -77,7 +87,6 @@ const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
 const InkomenSpecificaties = lazy(
   () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
 );
-const LandingPage = lazy(() => import('./pages/Landing/Landing'));
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
@@ -104,6 +113,9 @@ function AppNotAuthenticated() {
       <MainHeader isAuthenticated={false} />
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <Switch>
+          {AppRoutesRedirect.map(({ from, to }) => (
+            <Redirect key={from + to} from={from} to={to} />
+          ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
