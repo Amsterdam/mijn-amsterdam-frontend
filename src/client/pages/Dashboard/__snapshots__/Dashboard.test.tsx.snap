@@ -585,24 +585,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
         <li>
           <a
             class="Button Button__plain Button__lean Linkd"
-            href="https://mijnsubsidies.amsterdam.nl/loket/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              class="Icon Icon__left"
-              fill="#000"
-              height="14px"
-              width="14px"
-            >
-              External-Link.svg
-            </svg>
-            Mijn Subsidies
-          </a>
-        </li>
-        <li>
-          <a
-            class="Button Button__plain Button__lean Linkd"
             href="https://www.amsterdam.nl/sbl/"
             rel="external noopener noreferrer"
           >
