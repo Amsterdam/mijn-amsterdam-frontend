@@ -15,14 +15,9 @@ import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
-  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
-  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
-  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
-} from './config/api';
-import {
   AutoLogoutDialog,
   MainFooter,
-  MainHeader,
+  MainHeader
 } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useAnalytics, usePageChange, useScript } from './hooks';
@@ -30,8 +25,7 @@ import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry,
-  useDeeplinkRedirect,
+  useDeeplinkEntry
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';

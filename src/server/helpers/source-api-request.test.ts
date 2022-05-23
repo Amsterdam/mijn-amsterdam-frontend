@@ -19,7 +19,7 @@ describe('requestData.ts', () => {
   const SESS_ID_2 = 'y2';
 
   const AUTH_PROFILE_AND_TOKEN: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxxx' },
     token: 'xxxxx',
   };
 
