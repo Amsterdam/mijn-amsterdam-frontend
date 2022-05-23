@@ -36,7 +36,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           <a
             class="LoginBtn"
-            href="/bff/public/auth/digid/login"
+            href="/api/v1/auth/digid/login"
             rel="noopener noreferrer"
             role="button"
           >
@@ -143,7 +143,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           <a
             class="LoginBtn LoginBtn--eherkenning"
-            href="/bff/public/auth/eherkenning/login"
+            href="/api/v1/auth/eherkenning/login"
             rel="noopener noreferrer"
             role="button"
           >

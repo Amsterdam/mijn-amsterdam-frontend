@@ -51,7 +51,7 @@ const BrpDocumentCallToAction: Record<
 };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
-  const inOnderzoek = data?.adres?.inOnderzoek || false;
+  const inOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
     ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
@@ -132,7 +132,9 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
-        'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
+        inOnderzoek === '080000'
+          ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
+          : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
         to: AppRoutes.BRP,
         title: 'Meer informatie',

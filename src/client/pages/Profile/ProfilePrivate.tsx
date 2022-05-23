@@ -171,11 +171,13 @@ export default function Profile() {
           </Alert>
         )}
 
-        {BRP.content?.adres?.inOnderzoek && (
+        {BRP.content?.persoon?.adresInOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
-              Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat.{' '}
+              {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
+                waar u ingeschreven staat.</> : <>
+              Op dit moment onderzoeken wij op welk adres u nu woont.</>}
+              {' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"

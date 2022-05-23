@@ -3,7 +3,6 @@
     "kvkNummer": "123123123",
     "adres": {
       "_adresSleutel": "xxxcasdasfada",
-      "inOnderzoek": true,
       "huisletter": null,
       "huisnummer": "1",
       "huisnummertoevoeging": null,
@@ -22,7 +21,6 @@
         "huisletter": null,
         "huisnummer": "9",
         "huisnummertoevoeging": "H",
-        "inOnderzoek": false,
         "postcode": "1098 NK",
         "straatnaam": "Ampèrestraat",
         "woonplaatsNaam": "Amsterdam",
@@ -35,7 +33,6 @@
         "huisletter": null,
         "huisnummer": "9",
         "huisnummertoevoeging": "3",
-        "inOnderzoek": false,
         "postcode": "1098 AA",
         "straatnaam": "Middenweg",
         "woonplaatsNaam": "Amsterdam",
@@ -69,7 +66,8 @@
       "voornamen": "Wesley",
       "voorvoegselGeslachtsnaam": null,
       "mokum": true,
-      "indicatieGeheim": true
+      "indicatieGeheim": true,
+      "adresInOnderzoek": "089999"
     },
     "ouders": [
       {
