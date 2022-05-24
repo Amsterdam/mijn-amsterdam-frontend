@@ -97,7 +97,7 @@ export default class FileCache {
   }
   save() {
     this.cache.save(true);
-    console.log('Saved ' + this.name);
+
     const hash = createHash('sha256');
 
     // generate a new hash using the data field of all cached items and store the hash
@@ -108,7 +108,7 @@ export default class FileCache {
         .join()
     );
     const generatedHash = hash.digest('hex');
-    console.log(`${this.name} gave hash ${generatedHash}`);
+
     this.hashes.push(generatedHash);
   }
   remove() {
