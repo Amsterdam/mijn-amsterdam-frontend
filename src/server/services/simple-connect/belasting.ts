@@ -3,11 +3,12 @@ import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchGenerated, fetchService } from './api-service';
 
-const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS;
+const translationsJson = JSON.parse(
+  process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS || ''
+);
 
 function getBsnTranslation(bsnOrKvk: string): string {
-  console.log('translationsJson', translationsJson);
-  return bsnOrKvk;
+  return translationsJson?.[bsnOrKvk] ?? bsnOrKvk;
 }
 
 function getConfig(bsnOrKvk: string = ''): DataRequestConfig {
