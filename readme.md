@@ -1,6 +1,6 @@
 # Mijn-Amsterdam Front-end
 
-Hi and welcome to the **Mijn-Amsterdam** front-end repository!
+Hi and welcome to the **Mijn-Amsterdam** front-end + bff repository!
 
 This repo is the main codebase for the web application found at [mijn.amsterdam.nl](https://mijn.amsterdam.nl) which
 is a portal for official communication with the municipality of Amsterdam. The application consists of 2 main parts:
@@ -28,12 +28,12 @@ $ npm start
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring).
-Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/main/package.json#L26).
+Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/main/package.json#L34).
 
 ## React application
 
 - The language used is `Typescript`
-- The application is built and tested via [create react app](https://create-react-app.dev/).
+- The application is built and tested with [create react app](https://create-react-app.dev/).
 - Only functional components are used in combination with the hooks api.
 - For styling we use [scss](https://create-react-app.dev/docs/adding-a-sass-stylesheet) and [scss modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
 
