@@ -85,10 +85,6 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
-const httpsAgent = new https.Agent({
-  ca: IS_AP ? fs.readFileSync('/etc/ssl/certs/ca-certificates.crt') : [],
-});
-
 export const ApiConfig: ApiDataRequestConfig = {
   AUTH: {
     url: `${BFF_MS_API_BASE_URL}/auth/check`,
@@ -111,7 +107,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
-    httpsAgent,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? fs.readFileSync('/etc/ssl/certs/ca-certificates.crt') : [],
+    }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
@@ -172,6 +170,13 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   SUBSIDIE: {
     url: `${BFF_MS_API_BASE_URL}`,
+    httpsAgent: new https.Agent({
+      ca: IS_AP
+        ? fs.readFileSync(
+            '/usr/local/share/ca-certificates/extras/Private_G1_chain.pem'
+          )
+        : [],
+    }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {
