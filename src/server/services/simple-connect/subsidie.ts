@@ -37,7 +37,7 @@ function getJWT() {
       iss: process.env.SISA_CLIENT_ID,
       iat: Date.now(),
     },
-    process.env.SISA_CLIENT_SECRET || '',
+    jose.JWK.asKey(process.env.SISA_CLIENT_SECRET || ''),
     {
       algorithm: 'HS256',
     }
