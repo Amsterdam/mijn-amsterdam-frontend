@@ -52,11 +52,9 @@
   @include select(MyNotifications_MyNotifications) {
     overflow: hidden;
     border-top: 1px solid $color-neutral-grey2;
-    margin: 0 1rem;
-
-    @include mq-phone() {
-      margin-bottom: 3rem !important;
-    }
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
 
     @include mq-gt-phone() {
       flex-grow: 1;
