@@ -52,7 +52,7 @@ export async function fetchDataset(
 ) {
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
-    : 1;
+    : CACHE_VALUE_NO_EXPIRE;
 
   let dataCache: FileCache | null = null;
 
