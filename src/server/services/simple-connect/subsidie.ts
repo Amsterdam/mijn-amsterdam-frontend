@@ -34,10 +34,10 @@ export function encrypt(plainText: string, encryptionKey: string) {
 function getJWT() {
   return jose.JWT.sign(
     {
-      iss: process.env.SISA_CLIENT_ID,
+      iss: process.env.BFF_SISA_CLIENT_ID,
       iat: Date.now(),
     },
-    jose.JWK.asKey(process.env.SISA_CLIENT_SECRET || ''),
+    jose.JWK.asKey(process.env.BFF_SISA_CLIENT_SECRET || ''),
     {
       algorithm: 'HS256',
     }
