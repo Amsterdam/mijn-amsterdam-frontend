@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { IS_AP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
@@ -51,7 +52,7 @@ export async function fetchDataset(
 ) {
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
-    : CACHE_VALUE_NO_EXPIRE;
+    : 1;
 
   let dataCache: FileCache | null = null;
 
@@ -123,6 +124,21 @@ export async function fetchDataset(
         dataCache.setKey('filters', filters);
       }
       dataCache.save();
+    }
+    // If cache is stale we throw an error to sentry.
+    if (dataCache && dataCache.isStale()) {
+      Sentry.captureException(
+        `MyArea dataset ${datasetId} is returning stale data`,
+        {
+          tags: {
+            url: requestConfig.url,
+          },
+          extra: {
+            datasetId,
+            url,
+          },
+        }
+      );
     }
 
     const apiResponse: DatasetResponse = { features: response.content };
