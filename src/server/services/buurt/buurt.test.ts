@@ -130,12 +130,14 @@ jest.mock('../../../universal/config/myarea-datasets');
 const cacheGetKey = jest.fn();
 const cacheSetKey = jest.fn();
 const cacheSave = jest.fn();
+const cacheIsStale = jest.fn();
 
 function mockFileCache() {
   return {
     getKey: cacheGetKey,
     setKey: cacheSetKey,
     save: cacheSave,
+    isStale: cacheIsStale,
   };
 }
 
