@@ -1,15 +1,11 @@
-import * as Sentry from '@sentry/node';
-import { AxiosRequestHeaders } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import {
   BffEndpoints,
   BFF_MS_API_BASE,
   BFF_MS_API_BASE_PATH,
-  BFF_MS_API_BASE_URL,
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
-import { axiosRequest } from './helpers';
 import { getAuth, isProtectedRoute } from './helpers/app';
 import { isAuthenticated } from './router-auth';
 import {
