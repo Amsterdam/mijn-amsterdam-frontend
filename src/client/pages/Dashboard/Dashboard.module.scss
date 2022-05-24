@@ -43,7 +43,7 @@
   .TopContentContainer {
     @include centered-max;
 
-    @include media-q('>phone') {
+    @include mq-gt-phone() {
       display: flex;
       align-items: flex-start;
     }
@@ -52,9 +52,11 @@
   @include select(MyNotifications_MyNotifications) {
     overflow: hidden;
     border-top: 1px solid $color-neutral-grey2;
-    margin: 0 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
 
-    @include media-q('>phone') {
+    @include mq-gt-phone() {
       flex-grow: 1;
       margin: 0 2rem;
     }
@@ -62,7 +64,7 @@
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
     // Adjust some margins to match the design on mobile
-    @include media-q('>phone') {
+    @include mq-gt-phone() {
       flex: 0 0 calc(50% + 2rem);
     }
   }
