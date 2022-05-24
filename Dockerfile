@@ -131,8 +131,9 @@ COPY --from=build-app /app/build-bff /app/build-bff
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
 
-COPY /cert /app/cert
-ENV NODE_EXTRA_CA_CERTS=/app/cert
+COPY cert/* /usr/local/share/ca-certificates/extras/
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build
