@@ -36,11 +36,13 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
   const notifications: MyNotification[] = [];
   const tips: MyTip[] = [];
 
+  console.log('transformer', response);
+
   for (const message of response.data) {
     switch (message.categorie) {
       // Thema bericht
-      case 'F2':
-        continue;
+      // case 'F2':
+      //   break;
       // Melding / Notification
       case 'M1':
         notifications.push({
@@ -74,11 +76,11 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
     }
   }
 
-  return apiSuccessResult({
+  return {
     isKnown,
     notifications,
     tips,
-  });
+  };
 }
 
 function getConfig(bsnOrKvk: string = ''): DataRequestConfig {
