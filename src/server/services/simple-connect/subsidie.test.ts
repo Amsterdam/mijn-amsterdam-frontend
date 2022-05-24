@@ -1,7 +1,7 @@
 import nock from 'nock';
-import { BFF_PORT } from '../config';
-import { AuthProfileAndToken } from '../helpers/app';
-import { fetchSource } from './subsidie';
+import { BFF_PORT } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
+import { fetchSubsidieGenerated } from './subsidie';
 
 describe('Subsidie', () => {
   const authProfileAndToken: AuthProfileAndToken = {
@@ -21,7 +21,7 @@ describe('Subsidie', () => {
     nock.disableNetConnect();
   });
 
-  test('fetchSubsidie', async () => {
+  test('fetchSubsidieGenerated', async () => {
     const content = {
       isKnown: true,
       notifications: [
@@ -45,7 +45,10 @@ describe('Subsidie', () => {
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
     {
-      const result = await fetchSource('xx22xx', authProfileAndToken, true);
+      const result = await fetchSubsidieGenerated(
+        'xx22xx',
+        authProfileAndToken
+      );
 
       expect(result.content).toEqual({
         isKnown: true,
@@ -62,14 +65,10 @@ describe('Subsidie', () => {
     }
 
     {
-      const result = await fetchSource(
-        'xx22xx',
-        {
-          ...authProfileAndToken,
-          profile: { ...authProfileAndToken.profile, authMethod: 'digid' },
-        },
-        true
-      );
+      const result = await fetchSubsidieGenerated('xx22xx', {
+        ...authProfileAndToken,
+        profile: { ...authProfileAndToken.profile, authMethod: 'digid' },
+      });
       expect(result.content).toEqual({
         isKnown: true,
         notifications: [
@@ -85,7 +84,10 @@ describe('Subsidie', () => {
     }
 
     {
-      const result = await fetchSource('xx22xx', authProfileAndToken, true);
+      const result = await fetchSubsidieGenerated(
+        'xx22xx',
+        authProfileAndToken
+      );
       expect(result.content).toEqual(null);
       expect(result.status).toBe('ERROR');
     }

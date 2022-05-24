@@ -11,7 +11,6 @@ import {
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchAKTES } from './aktes';
-import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
@@ -21,7 +20,7 @@ import { fetchMyLocation } from './home';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
-import { fetchSubsidie } from './subsidie';
+import { fetchBelasting, fetchSubsidie } from './simple-connect';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -96,7 +95,7 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
   fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
-const BELASTINGEN = callService(fetchBELASTING);
+const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMILIEUZONE);
 const ERFPACHT = callService(fetchERFPACHT);
 const SUBSIDIE = callService(fetchSubsidie);

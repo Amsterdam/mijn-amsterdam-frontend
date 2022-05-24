@@ -1,7 +1,6 @@
 export * from './afval/afval';
 export * from './afval/afvalpunten';
 export * from './bag';
-export * from './belasting';
 export * from './brp';
 export * from './buurt/buurt';
 export * from './buurt/supercluster';
@@ -16,7 +15,7 @@ export type {
   KrefiaDetail,
 } from './krefia';
 export * from './milieuzone';
-export * from './subsidie';
+export * from './simple-connect';
 export * from './tips';
 export * from './toeristische-verhuur';
 export * from './vergunningen/vergunningen';

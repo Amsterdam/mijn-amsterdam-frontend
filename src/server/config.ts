@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
+import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
@@ -84,6 +85,10 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
+const httpsAgent = new https.Agent({
+  ca: IS_AP ? fs.readFileSync('/etc/ssl/certs/ca-certificates.crt') : [],
+});
+
 export const ApiConfig: ApiDataRequestConfig = {
   AUTH: {
     url: `${BFF_MS_API_BASE_URL}/auth/check`,
@@ -105,7 +110,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
   },
   BELASTINGEN: {
-    url: `${BFF_MS_API_BASE_URL}/belastingen/get`,
+    url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
+    httpsAgent,
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
@@ -165,7 +171,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
-    url: `${BFF_MS_API_BASE_URL}/subsidies/summary`,
+    url: `${BFF_MS_API_BASE_URL}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {

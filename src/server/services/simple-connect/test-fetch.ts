@@ -1,9 +1,9 @@
-import { fetchBelastingen } from './belastingen';
+import { fetchBelasting } from './belasting';
 import uid from 'uid-safe';
 
 const [id] = process.argv.slice(2);
 
-fetchBelastingen(uid.sync(18), {
+fetchBelasting(uid.sync(18), {
   token: 'xxxx',
   profile: {
     authMethod: 'digid',

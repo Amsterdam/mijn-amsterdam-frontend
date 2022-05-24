@@ -6,14 +6,16 @@ import { dateSort } from '../../universal/helpers/date';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config';
 import { AuthProfileAndToken } from '../helpers/app';
-import { fetchBELASTINGGenerated } from './belasting';
+import {
+  fetchBelastingGenerated,
+  fetchSubsidieGenerated,
+} from './simple-connect';
 import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchKrefiaGenerated } from './krefia';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
-import { fetchSubsidieGenerated } from './subsidie';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
@@ -120,7 +122,7 @@ async function fetchServicesGenerated(
     fetchWpiNotificationsResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(requestID, authProfileAndToken),
-    fetchBELASTINGGenerated(requestID, authProfileAndToken),
+    fetchBelastingGenerated(requestID, authProfileAndToken),
     fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
     fetchVergunningenGenerated(requestID, authProfileAndToken),
     fetchERFPACHTGenerated(requestID, authProfileAndToken),
