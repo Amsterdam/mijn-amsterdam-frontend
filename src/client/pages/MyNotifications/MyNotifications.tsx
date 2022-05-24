@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
