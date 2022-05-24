@@ -1,13 +1,12 @@
 import { Chapters } from '../../../universal/config';
-import { apiSuccessResult } from '../../../universal/helpers';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchGenerated, fetchService } from './api-service';
 
-const translationsJson = JSON.parse(
-  process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS || ''
-);
+const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
+  ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)
+  : {};
 
 interface BelastingMessage {
   thema: 'Belastingen';
