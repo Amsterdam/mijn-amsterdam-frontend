@@ -62,6 +62,11 @@ export default function Krefia() {
   const deepLinks = useDeepLinks(KREFIA.content?.deepLinks);
   const isKredietbank = !!deepLinks?.schuldhulp || !!deepLinks?.lening;
   const isFIBU = !!deepLinks?.budgetbeheer;
+  let showText = false;
+
+  if (!isKredietbank && !isFIBU) {
+    showText = true;
+  }
   return (
     <OverviewPage className={styles.Krefia}>
       <PageHeading
@@ -75,7 +80,7 @@ export default function Krefia() {
       </PageHeading>
       <PageContent>
         {isLoading(KREFIA) && <LoadingContent />}
-        {isKredietbank && isFIBU && (
+        {((isKredietbank && isFIBU) || showText) && (
           <p>
             Een online plek waar u alle informatie over uw geldzaken kunt vinden
             als klant van Budgetbeheer (FIBU) en/of Kredietbank Amsterdam.
@@ -95,7 +100,7 @@ export default function Krefia() {
         )}
 
         <p>
-          {isKredietbank && (
+          {(isKredietbank || showText) && (
             <>
               <Linkd
                 external={true}
@@ -107,7 +112,7 @@ export default function Krefia() {
             </>
           )}
 
-          {isFIBU && (
+          {(isFIBU || showText) && (
             <Linkd
               external={true}
               href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
