@@ -120,7 +120,7 @@ export default class FileCache {
   }
   isStale() {
     if (this.hashes.length >= 5) {
-      // check if the latest 5 hashed are the same, if so we consider this stale
+      // check if the latest 5 hashes are the same, if so we consider this stale
       return (
         new Set(
           this.hashes.slice(this.hashes.length - 5, this.hashes.length - 1)
