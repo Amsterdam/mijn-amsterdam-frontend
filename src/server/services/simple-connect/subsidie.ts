@@ -2,11 +2,15 @@ import crypto from 'crypto';
 import jose from 'jose';
 import { URL, URLSearchParams } from 'url';
 import { Chapters } from '../../../universal/config';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
-import { fetchGenerated, fetchService } from './api-service';
+import {
+  ApiPatternResponseA,
+  fetchGenerated,
+  fetchService,
+} from './api-service';
 import { Buffer } from 'buffer';
 
 export function decrypt(encryptedValue: string, encryptionKey: string) {
@@ -67,6 +71,10 @@ function addAuthMethodToNotificationLinks(
   });
 }
 
+function transformSubsidieResponse(response: ApiResponse<ApiPatternResponseA>) {
+  return response.content;
+}
+
 function getConfig(authProfileAndToken: AuthProfileAndToken) {
   const apiEndpointUrl =
     authProfileAndToken.profile.authMethod === 'digid'
@@ -85,6 +93,7 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
     headers: {
       Authorization: `Bearer ${getJWT()}`,
     },
+    transformResponse: transformSubsidieResponse,
   });
 }
 
