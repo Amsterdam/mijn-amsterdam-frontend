@@ -4,7 +4,11 @@ const [id] = process.argv.slice(2);
 
 const payload = 'test 1 2 3';
 
-console.log('result payload', encryptPayload(payload));
+try {
+  console.log('result payload', encryptPayload(payload));
+} catch (err) {
+  console.log('errrrr', err);
+}
 
 fetchMilieuzone('xxxx111', {
   profile: { id, authMethod: 'digid', profileType: 'private' },
