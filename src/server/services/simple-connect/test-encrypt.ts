@@ -1,3 +1,4 @@
+import { fetchErfpacht } from './erfpacht';
 import { encryptPayload, fetchMilieuzone } from './milieuzone';
 const [id] = process.argv.slice(2);
 
@@ -11,3 +12,10 @@ fetchMilieuzone('xxxx111', {
 })
   .then((r) => console.log('mzone', r))
   .catch((error) => console.log('mzoneerrr', error));
+
+fetchErfpacht('xxxx111', {
+  profile: { id, authMethod: 'digid', profileType: 'private' },
+  token: '',
+})
+  .then((r) => console.log('erff', r))
+  .catch((error) => console.log('erfferrr', error));
