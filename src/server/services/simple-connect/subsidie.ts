@@ -71,10 +71,6 @@ function addAuthMethodToNotificationLinks(
   });
 }
 
-function transformSubsidieResponse(response: ApiResponse<ApiPatternResponseA>) {
-  return response.content;
-}
-
 function getConfig(authProfileAndToken: AuthProfileAndToken) {
   const apiEndpointUrl =
     authProfileAndToken.profile.authMethod === 'digid'
@@ -93,7 +89,6 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
     headers: {
       Authorization: `Bearer ${getJWT()}`,
     },
-    transformResponse: transformSubsidieResponse,
   });
 }
 

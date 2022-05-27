@@ -16,12 +16,27 @@ export interface ApiPatternResponseA {
   notifications?: MyNotification[];
 }
 
+function transformApiResponseDefault(
+  response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
+) {
+  if ('content' in response && 'status' in response) {
+    return response.content;
+  }
+  return response;
+}
+
 export async function fetchService<T extends ApiPatternResponseA>(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
   includeGenerated: boolean = false
 ): Promise<ApiResponse<ApiPatternResponseA | null>> {
-  const response = await requestData<T>(apiConfig, requestID);
+  const apiConfigMerged: DataRequestConfig = {
+    ...apiConfig,
+    transformResponse: [transformApiResponseDefault].concat(
+      apiConfig.transformResponse || []
+    ),
+  };
+  const response = await requestData<T>(apiConfigMerged, requestID);
 
   if (response.status === 'OK' && !includeGenerated) {
     return Object.assign({}, response, {
