@@ -42,21 +42,16 @@ interface MilieuzoneMessage {
   informatie: string;
 }
 
-interface MilieuzoneSourceContent {
-  status: 'BSN known' | 'BSN unknown'; // ??????
-  data: MilieuzoneMessage[];
-}
-
 type MilieuzoneRequestPayload = { kvk: string } | { bsn: string };
 type MilieuzoneRequestPayloadString = string;
 
-function transformMilieuzoneResponse(response: MilieuzoneSourceContent) {
+function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
   const notifications: MyNotification[] = [];
   let isKnown: boolean = false;
 
   console.log('transformer', response);
 
-  for (const message of response.data) {
+  for (const message of response) {
     switch (message.categorie) {
       case 'F2':
         isKnown = true;

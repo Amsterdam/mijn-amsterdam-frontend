@@ -108,7 +108,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? fs.readFileSync(process.env.BFF_BELASTINGEN_CA + '') : [],
+      ca: IS_AP ? fs.readFileSync(process.env.BFF_BELASTINGEN_CA + '') : [], // TODO: Maybe just add adp_root?
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
