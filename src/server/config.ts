@@ -6,6 +6,18 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
+export function getCertificateSync(path?: string) {
+  if (!path) {
+    throw new Error('Certificate path not supplied');
+  }
+  let fileContents: string = '';
+  try {
+    fileContents = fs.readFileSync(path).toString();
+  } catch (error) {}
+
+  return fileContents;
+}
+
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
     ? process.env.BFF_REQUEST_CACHE_ENABLED === 'true'
@@ -108,7 +120,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? fs.readFileSync(process.env.BFF_BELASTINGEN_CA + '') : [], // TODO: Maybe just add adp_root?
+      ca: IS_AP ? getCertificateSync(process.env.BFF_BELASTINGEN_CA) : [], // TODO: Maybe just add adp_root?
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
@@ -117,10 +129,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
-      cert: IS_AP
-        ? fs.readFileSync(process.env.BFF_SERVER_CLIENT_CERT + '')
-        : [],
-      key: IS_AP ? fs.readFileSync(process.env.BFF_SERVER_CLIENT_KEY + '') : [],
+      cert: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
+      key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
     }),
   },
   VERGUNNINGEN: {
@@ -155,11 +165,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
   },
-  ERFPACHT: {
-    url: `${BFF_MS_API_BASE_URL}/erfpacht${
-      FeatureToggle.erfpachtV2EndpointActive ? '/v2' : ''
-    }/check-erfpacht`,
-  },
+  ERFPACHT: {},
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
@@ -178,7 +184,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SUBSIDIE: {
     url: `${BFF_MS_API_BASE_URL}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? fs.readFileSync(process.env.BFF_SISA_CA + '') : [],
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
     }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
