@@ -14,7 +14,6 @@ import { fetchAKTES } from './aktes';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchERFPACHT } from './erfpacht';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
 import { fetchKrefia } from './krefia';
@@ -23,6 +22,7 @@ import {
   fetchBelasting,
   fetchSubsidie,
   fetchMilieuzone,
+  fetchErfpacht,
 } from './simple-connect';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
@@ -100,7 +100,7 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
-const ERFPACHT = callService(fetchERFPACHT);
+const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 
 // Special services that aggeragates NOTIFICATIONS from various services
