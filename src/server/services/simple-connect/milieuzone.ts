@@ -25,8 +25,10 @@ export function encryptPayload(payload: MilieuzoneRequestPayloadString) {
   const protectedHeader = {
     alg: 'RSA-OAEP-256',
     enc: 'A256CBC-HS512',
+    typ: 'JWE',
     kid: x509PubKey.kid,
   };
+
   return jose.JWE.encrypt(payload, x509PubKey, protectedHeader);
 }
 
