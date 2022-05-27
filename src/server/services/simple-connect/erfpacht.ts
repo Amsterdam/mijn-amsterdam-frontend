@@ -22,7 +22,7 @@ function getConfigMain(
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
   const [payload, iv] = encryptPayload(profile.id + '');
-  const type = profile.profileType === 'commercial' ? 'company' : 'private';
+  const type = profile.profileType === 'commercial' ? 'company' : 'user';
 
   return getApiConfig('ERFPACHT', {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/groundlease/${type}/${payload}`,
