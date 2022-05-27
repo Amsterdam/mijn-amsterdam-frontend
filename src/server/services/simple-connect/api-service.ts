@@ -19,7 +19,11 @@ export interface ApiPatternResponseA {
 function transformApiResponseDefault(
   response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
 ) {
-  if ('content' in response && 'status' in response) {
+  if (
+    typeof response === 'object' &&
+    'content' in response &&
+    'status' in response
+  ) {
     return response.content;
   }
   return response;
