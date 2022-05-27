@@ -39,7 +39,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
 
   for (const message of response.data) {
     switch (message.categorie) {
-      // Thema bericht
+      // Thema bericht wordt niet gebruikt omdat we "isKnown" bepalen aan de hand van de doorgegeven "status" (response.status !== 'BSN unknown')
       // case 'F2':
       //   break;
       // Melding / Notification
