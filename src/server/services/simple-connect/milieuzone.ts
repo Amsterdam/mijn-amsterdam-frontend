@@ -19,8 +19,9 @@ function getJSONRequestPayload(
   return JSON.stringify(payload);
 }
 
-function encryptPayload(payload: MilieuzoneRequestPayloadString) {
+export function encryptPayload(payload: MilieuzoneRequestPayloadString) {
   const x509PubKey = jose.JWK.asKey(process.env.BFF_CLEOPATRA_PUB_KEY + '');
+  console.log(x509PubKey);
   const protectedHeader = {
     alg: 'RSA-OAEP-256',
     enc: 'A256CBC-HS512',
