@@ -108,7 +108,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? fs.readFileSync('/etc/ssl/certs/ca-certificates.crt') : [],
+      ca: IS_AP ? fs.readFileSync(process.env.BFF_BELASTINGEN_CA + '') : [],
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
@@ -178,11 +178,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SUBSIDIE: {
     url: `${BFF_MS_API_BASE_URL}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP
-        ? fs.readFileSync(
-            '/usr/local/share/ca-certificates/extras/Private_G1_chain.pem'
-          )
-        : [],
+      ca: IS_AP ? fs.readFileSync(process.env.BFF_SISA_CA + '') : [],
     }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
