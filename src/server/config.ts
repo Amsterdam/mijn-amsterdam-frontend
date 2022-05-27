@@ -113,8 +113,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
-    url: `${BFF_MS_API_BASE_URL}/milieu/get`,
+    url: `${BFF_MS_API_BASE_URL}`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
+    method: 'POST',
+    httpsAgent: new https.Agent({
+      cert: IS_AP
+        ? fs.readFileSync(process.env.BFF_SERVER_CLIENT_CERT + '')
+        : [],
+      key: IS_AP ? fs.readFileSync(process.env.BFF_SERVER_CLIENT_KEY + '') : [],
+    }),
   },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,

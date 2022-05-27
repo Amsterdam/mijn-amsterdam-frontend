@@ -14,7 +14,6 @@ export type {
   KrefiaDeepLinks,
   KrefiaDetail,
 } from './krefia';
-export * from './milieuzone';
 export * from './simple-connect';
 export * from './tips';
 export * from './toeristische-verhuur';

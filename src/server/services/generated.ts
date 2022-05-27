@@ -9,13 +9,13 @@ import { AuthProfileAndToken } from '../helpers/app';
 import {
   fetchBelastingGenerated,
   fetchSubsidieGenerated,
+  fetchMilieuzoneGenerated,
 } from './simple-connect';
 import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchKrefiaGenerated } from './krefia';
-import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
@@ -74,7 +74,7 @@ async function fetchServicesGenerated(
       subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
-      fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+      fetchMilieuzoneGenerated(requestID, authProfileAndToken),
       fetchVergunningenGenerated(requestID, authProfileAndToken),
       fetchERFPACHTGenerated(requestID, authProfileAndToken),
       fetchSubsidieGenerated(requestID, authProfileAndToken),
@@ -123,7 +123,7 @@ async function fetchServicesGenerated(
   ] = await Promise.allSettled([
     fetchBRPGenerated(requestID, authProfileAndToken),
     fetchBelastingGenerated(requestID, authProfileAndToken),
-    fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+    fetchMilieuzoneGenerated(requestID, authProfileAndToken),
     fetchVergunningenGenerated(requestID, authProfileAndToken),
     fetchERFPACHTGenerated(requestID, authProfileAndToken),
     fetchSubsidieGenerated(requestID, authProfileAndToken),
