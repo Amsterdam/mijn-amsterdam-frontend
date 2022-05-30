@@ -13,6 +13,7 @@ import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
+  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -167,6 +168,7 @@ describe('Buurt services', () => {
     expect(FileCache).toHaveBeenCalledWith({
       name: datasetId,
       cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+      triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     });
     expect(requestData).toHaveBeenCalled();
     expect(getDynamicDatasetFilters).toHaveBeenCalledWith(datasetId);
