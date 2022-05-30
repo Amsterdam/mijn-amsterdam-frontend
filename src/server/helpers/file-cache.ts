@@ -75,6 +75,7 @@ export default class FileCache {
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
     this.hashes = [];
   }
+
   getKey(key: string) {
     const now = new Date().getTime();
     const value = this.cache.getKey(key);
@@ -85,6 +86,7 @@ export default class FileCache {
       return value.data;
     }
   }
+
   setKey(key: string, value: any) {
     const now = new Date().getTime();
     this.cache.setKey(key, {
@@ -92,9 +94,11 @@ export default class FileCache {
       data: value,
     });
   }
+
   removeKey(key: string) {
     this.cache.removeKey(key);
   }
+
   save() {
     this.cache.save(true);
 
@@ -111,13 +115,17 @@ export default class FileCache {
 
     this.hashes.push(generatedHash);
   }
+
   remove() {
     flatCache.clearCacheById(this.name, this.path);
+    this.hashes = [];
   }
+
   getKeyStale(key: string, isProd: boolean = IS_AP) {
     return flatCache.load(fileName(this.name_, isProd), this.path).getKey(key)
       ?.data;
   }
+
   isStale() {
     if (this.hashes.length >= 5) {
       // check if the latest 5 hashes are the same, if so we consider this stale
