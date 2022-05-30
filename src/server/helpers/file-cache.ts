@@ -8,6 +8,7 @@ interface FileCacheProps {
   name: string;
   path?: string;
   cacheTimeMinutes?: number;
+  triesUntilConsiderdStale?: number;
 }
 
 const ONE_MINUTE_MS = 1000 * 60;
@@ -61,11 +62,13 @@ export default class FileCache {
   cache: flatCache.Cache;
   expire: number | false;
   hashes: string[];
+  triesUntilConsiderdStale: number;
 
   constructor({
     name,
     path = DEFAULT_CACHE_DIR,
     cacheTimeMinutes = 0,
+    triesUntilConsiderdStale = 5,
   }: FileCacheProps) {
     this.name = fileName(name);
     this.path = path;
@@ -74,6 +77,7 @@ export default class FileCache {
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
     this.hashes = [];
+    this.triesUntilConsiderdStale = triesUntilConsiderdStale;
   }
 
   getKey(key: string) {
@@ -127,11 +131,14 @@ export default class FileCache {
   }
 
   isStale() {
-    if (this.hashes.length >= 5) {
-      // check if the latest 5 hashes are the same, if so we consider this stale
+    if (this.hashes.length >= this.triesUntilConsiderdStale) {
+      // check if the latest n hashes are the same, if so we consider this stale
       return (
         new Set(
-          this.hashes.slice(this.hashes.length - 5, this.hashes.length - 1)
+          this.hashes.slice(
+            this.hashes.length - this.triesUntilConsiderdStale,
+            this.hashes.length - 1
+          )
         ).size === 1
       );
     }

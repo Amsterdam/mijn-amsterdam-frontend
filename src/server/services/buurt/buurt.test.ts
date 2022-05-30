@@ -51,6 +51,7 @@ const datasetConfig: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const datasetConfig2: DatasetConfig = {
@@ -59,6 +60,7 @@ const datasetConfig2: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const datasetConfig3: DatasetConfig = {
@@ -67,6 +69,7 @@ const datasetConfig3: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const params = {};
