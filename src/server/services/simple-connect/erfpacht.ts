@@ -48,7 +48,7 @@ function getConfigNotifications(
   const type = profile.profileType === 'commercial' ? 'kvk' : 'bsn';
 
   return getApiConfig('ERFPACHT', {
-    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/notifications/${type}/${payload}`,
+    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/notifications/${type}/${payload}`,
     headers: {
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
