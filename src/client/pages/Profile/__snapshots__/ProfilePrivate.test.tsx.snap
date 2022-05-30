@@ -90,7 +90,7 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
         </svg>
          
         <p>
-          Op dit moment onderzoeken wij op welk adres u nu woont. 
+          U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
           <a
             class="Button Button__inline Button__lean Linkd LinkedInline"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"

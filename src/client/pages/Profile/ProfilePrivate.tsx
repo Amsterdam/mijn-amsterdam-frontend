@@ -176,7 +176,7 @@ export default function Profile() {
             <p>
               {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
                 waar u ingeschreven staat.</> : <>
-              Op dit moment onderzoeken wij op welk adres u nu woont.</>}
+              U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont.</>}
               {' '}
               <LinkdInline
                 external={true}
