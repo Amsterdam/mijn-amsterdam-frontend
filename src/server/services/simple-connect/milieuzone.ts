@@ -1,9 +1,17 @@
-import jose from 'jose';
 import { Chapters } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchGenerated, fetchService } from './api-service';
+import jose from 'node-jose';
+import fs from 'fs';
+
+const keystore = jose.JWK.createKeyStore();
+const certContent = fs
+  .readFileSync(process.env.BFF_CLEOPATRA_PUB_KEY + '')
+  .toString();
+
+const pemPubKey = keystore.add(certContent, 'pem');
 
 function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
@@ -19,20 +27,10 @@ function getJSONRequestPayload(
   return JSON.stringify(payload);
 }
 
-export function encryptPayload(payload: MilieuzoneRequestPayloadString) {
-  const x509PubKey = jose.JWK.asKey(process.env.BFF_CLEOPATRA_PUB_KEY + '', {
-    alg: 'HS512',
-    use: 'enc', // sig?
-  });
-  console.log(x509PubKey);
-  const protectedHeader = {
-    alg: 'RSA-OAEP-256',
-    enc: 'A256CBC-HS512',
-    typ: 'JWE',
-    kid: x509PubKey.kid,
-  };
+export async function encryptPayload(payload: MilieuzoneRequestPayloadString) {
+  const key = await pemPubKey;
 
-  return jose.JWE.encrypt(payload, x509PubKey, protectedHeader);
+  return jose.JWE.createEncrypt(key).update(payload).final();
 }
 
 interface MilieuzoneMessage {
@@ -54,8 +52,6 @@ type MilieuzoneRequestPayloadString = string;
 function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
   const notifications: MyNotification[] = [];
   let isKnown: boolean = false;
-
-  console.log('transformer', response);
 
   for (const message of response) {
     switch (message.categorie) {
@@ -86,10 +82,10 @@ function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
   };
 }
 
-function getConfig(
+async function getConfig(
   authProfileAndToken: AuthProfileAndToken
-): DataRequestConfig {
-  const postData = encryptPayload(
+): Promise<DataRequestConfig> {
+  const postData = await encryptPayload(
     getJSONRequestPayload(authProfileAndToken.profile)
   );
 
@@ -103,7 +99,7 @@ export async function fetchMilieuzone(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getConfig(authProfileAndToken), false);
+  return fetchService(requestID, await getConfig(authProfileAndToken), false);
 }
 
 export async function fetchMilieuzoneGenerated(
@@ -112,7 +108,7 @@ export async function fetchMilieuzoneGenerated(
 ) {
   const response = await fetchGenerated(
     requestID,
-    getConfig(authProfileAndToken),
+    await getConfig(authProfileAndToken),
     Chapters.MILIEUZONE
   );
 

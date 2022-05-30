@@ -35,8 +35,6 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
   const notifications: MyNotification[] = [];
   const tips: MyTip[] = [];
 
-  console.log('transformer', response);
-
   for (const message of response.data) {
     switch (message.categorie) {
       // Thema bericht wordt niet gebruikt omdat we "isKnown" bepalen aan de hand van de doorgegeven "status" (response.status !== 'BSN unknown')

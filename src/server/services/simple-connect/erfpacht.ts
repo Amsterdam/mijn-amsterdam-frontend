@@ -11,7 +11,6 @@ function encryptPayload(payload: string) {
 type ErfpachtSourceResponse = 'true' | 'false';
 
 function transformErfpachtResponse(response: ErfpachtSourceResponse) {
-  console.log('erfpacht response', response);
   return {
     isKnown: response === 'true',
   };
