@@ -30,3 +30,13 @@ fetchMilieuzone(uid.sync(18), authProfileAndToken)
   .catch((error) => {
     console.log('Milieuzone', error);
   });
+
+fetchMilieuzone(uid.sync(18), authProfileAndToken, {
+  format: 'general',
+})
+  .then((response) => {
+    console.log('Milieuzone', response);
+  })
+  .catch((error) => {
+    console.log('Milieuzone', error);
+  });
