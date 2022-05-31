@@ -125,7 +125,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
-    url: `${BFF_MS_API_BASE_URL}`,
+    url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
