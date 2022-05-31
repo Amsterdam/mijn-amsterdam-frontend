@@ -70,6 +70,7 @@ describe('Custom dataset tranformations', () => {
 
     const config: DatasetConfig = {
       featureType: 'Point',
+      triesUntilConsiderdStale: 5,
     };
 
     const result = transformHardlooproutesResponse(

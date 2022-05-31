@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { IS_AP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
@@ -32,11 +33,16 @@ const fileCaches: Record<string, FileCache> = {};
 // This values means that the file-cache will never expire. Update the cache by deleting the file.
 const CACHE_VALUE_NO_EXPIRE = -1;
 
-export function fileCache(name: string, cacheTimeMinutes: number) {
+export function fileCache(
+  name: string,
+  cacheTimeMinutes: number,
+  triesUntilConsiderdStale: number
+) {
   if (!fileCaches[name]) {
     fileCaches[name] = new FileCache({
       name,
       cacheTimeMinutes,
+      triesUntilConsiderdStale,
     });
   }
   return fileCaches[name];
@@ -56,7 +62,11 @@ export async function fetchDataset(
   let dataCache: FileCache | null = null;
 
   if (datasetConfig.cache !== false && !pruneCache) {
-    dataCache = fileCache(datasetId, cacheTimeMinutes);
+    dataCache = fileCache(
+      datasetId,
+      cacheTimeMinutes,
+      datasetConfig.triesUntilConsiderdStale
+    );
 
     if (dataCache) {
       const features = dataCache.getKey('features');
@@ -123,6 +133,21 @@ export async function fetchDataset(
         dataCache.setKey('filters', filters);
       }
       dataCache.save();
+    }
+    // If cache is stale we throw an error to sentry.
+    if (dataCache && dataCache.isStale()) {
+      Sentry.captureException(
+        `MyArea dataset ${datasetId} is returning stale data`,
+        {
+          tags: {
+            url: requestConfig.url,
+          },
+          extra: {
+            datasetId,
+            url,
+          },
+        }
+      );
     }
 
     const apiResponse: DatasetResponse = { features: response.content };

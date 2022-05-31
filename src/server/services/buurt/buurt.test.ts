@@ -13,6 +13,7 @@ import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
+  DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -51,6 +52,7 @@ const datasetConfig: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const datasetConfig2: DatasetConfig = {
@@ -59,6 +61,7 @@ const datasetConfig2: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const datasetConfig3: DatasetConfig = {
@@ -67,6 +70,7 @@ const datasetConfig3: DatasetConfig = {
   transformList: (r: any) => r,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  triesUntilConsiderdStale: 5,
 };
 
 const params = {};
@@ -130,12 +134,14 @@ jest.mock('../../../universal/config/myarea-datasets');
 const cacheGetKey = jest.fn();
 const cacheSetKey = jest.fn();
 const cacheSave = jest.fn();
+const cacheIsStale = jest.fn();
 
 function mockFileCache() {
   return {
     getKey: cacheGetKey,
     setKey: cacheSetKey,
     save: cacheSave,
+    isStale: cacheIsStale,
   };
 }
 
@@ -162,6 +168,7 @@ describe('Buurt services', () => {
     expect(FileCache).toHaveBeenCalledWith({
       name: datasetId,
       cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+      triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     });
     expect(requestData).toHaveBeenCalled();
     expect(getDynamicDatasetFilters).toHaveBeenCalledWith(datasetId);
