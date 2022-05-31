@@ -135,10 +135,7 @@ export default class FileCache {
       // check if the latest n hashes are the same, if so we consider this stale
       return (
         new Set(
-          this.hashes.slice(
-            this.hashes.length - this.triesUntilConsiderdStale,
-            this.hashes.length - 1
-          )
+          this.hashes.slice(this.hashes.length - this.triesUntilConsiderdStale)
         ).size === 1
       );
     }
