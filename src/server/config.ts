@@ -178,6 +178,9 @@ export const ApiConfig: ApiDataRequestConfig = {
       'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SERVER_ADP_ROOT_CA) : [],
+    }),
   },
   KREFIA: {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
