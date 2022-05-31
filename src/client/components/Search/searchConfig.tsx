@@ -6,7 +6,7 @@ import type {
   Vergunning,
 } from '../../../server/services';
 import type {
-  ToeristischeVerhuurRegistratie,
+  ToeristischeVerhuurRegistratieDetail,
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
@@ -207,7 +207,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'TOERISTISCHE_VERHUUR' as keyof AppState,
     getApiBaseItems: (apiContent: {
-      registraties: ToeristischeVerhuurRegistratie[];
+      registraties: ToeristischeVerhuurRegistratieDetail[];
       vergunningen: ToeristischeVerhuurVergunning[];
     }): ToeristischRegistratieItem[] => {
       const registratienummers = apiContent.registraties?.map((registratie) => {

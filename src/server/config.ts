@@ -174,7 +174,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
-    url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
+    headers: {
+      'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
+    },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
   },
   KREFIA: {
