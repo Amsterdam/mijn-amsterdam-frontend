@@ -112,7 +112,10 @@ async function fetchRegistraties(
   return apiSuccessResult(
     registrationDetailResponses
       .map((response) => response.content)
-      .filter((r): r is ToeristischeVerhuurRegistratieDetail => r !== null)
+      .filter(
+        (r): r is ToeristischeVerhuurRegistratieDetail =>
+          r !== null && ['amsterdam', 'weesp'].includes(r.city?.toLowerCase())
+      )
   );
 }
 
