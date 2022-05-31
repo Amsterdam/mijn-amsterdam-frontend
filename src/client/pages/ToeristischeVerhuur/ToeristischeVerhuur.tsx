@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isError } from '../../../universal/helpers';
@@ -371,7 +371,7 @@ export default function ToeristischeVerhuur() {
           <InfoDetail
             label="Registratienummer toeristische verhuur"
             valueWrapperElement="div"
-            value=ntent?.registraties?.map(
+            value={content?.registraties?.map(
               (registrationItem: ToeristischeVerhuurRegistratieDetail) => (
                 <article
                   key={registrationItem.registrationNumber}
