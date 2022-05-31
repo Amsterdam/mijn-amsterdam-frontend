@@ -98,8 +98,6 @@ CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/ng
 ########################################################################################################################
 FROM deploy-ap-frontend as deploy-acceptance-frontend
 COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/nginx/html/robots.txt
-RUN apt-get update \
-  && apt-get install nano
 
 
 ########################################################################################################################
@@ -132,6 +130,9 @@ COPY --from=build-app /app/build-bff /app/build-bff
 # Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
+
+RUN apt-get update \
+  && apt-get install nano
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build
