@@ -40,6 +40,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
       apiConfig.transformResponse || []
     ),
   };
+  console.debug(apiConfigMerged);
   const response = await requestData<T>(apiConfigMerged, requestID);
 
   if (response.status === 'OK' && !includeGenerated) {

@@ -27,10 +27,13 @@ function getJSONRequestPayload(
   return JSON.stringify(payload);
 }
 
-export async function encryptPayload(payload: MilieuzoneRequestPayloadString) {
+export async function encryptPayload(
+  payload: MilieuzoneRequestPayloadString,
+  options: any = {}
+) {
   const key = await pemPubKey;
 
-  return jose.JWE.createEncrypt(key).update(payload).final();
+  return jose.JWE.createEncrypt(options, key).update(payload).final();
 }
 
 interface MilieuzoneMessage {
@@ -83,10 +86,12 @@ function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
 }
 
 async function getConfig(
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  options: any = {}
 ): Promise<DataRequestConfig> {
   const postData = await encryptPayload(
-    getJSONRequestPayload(authProfileAndToken.profile)
+    getJSONRequestPayload(authProfileAndToken.profile),
+    options
   );
 
   return getApiConfig('MILIEUZONE', {
@@ -97,9 +102,14 @@ async function getConfig(
 
 export async function fetchMilieuzone(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  options: any = {}
 ) {
-  return fetchService(requestID, await getConfig(authProfileAndToken), false);
+  return fetchService(
+    requestID,
+    await getConfig(authProfileAndToken, options),
+    false
+  );
 }
 
 export async function fetchMilieuzoneGenerated(
