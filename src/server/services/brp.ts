@@ -163,10 +163,11 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 export function transformBRPData(
   responseData: ApiSuccessResponse<BRPDataFromSource>
 ) {
-  if (Array.isArray(responseData.content?.identiteitsbewijzen)) {
+  const responseContent = responseData.content;
+  if (Array.isArray(responseContent?.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
-    Object.assign(responseData, {
-      identiteitsbewijzen: responseData.content.identiteitsbewijzen.map(
+    Object.assign(responseContent, {
+      identiteitsbewijzen: responseContent.identiteitsbewijzen.map(
         (document) => {
           const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
             id: document.id,
@@ -186,7 +187,7 @@ export function transformBRPData(
     });
   }
 
-  return responseData.content as BRPData;
+  return responseContent as BRPData;
 }
 
 export async function fetchBRP(
