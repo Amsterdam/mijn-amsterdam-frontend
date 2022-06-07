@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { ENV } from '../../../universal/config/env';
+import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -158,10 +158,12 @@ export const datasetEndpoints: Record<
     // idKeyDetail: 'url',
   },
   bekendmakingen: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl:
-      'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
+    listUrl: `https://${
+      !IS_PRODUCTION ? 'acc.' : ''
+    }api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+    detailUrl: `https://${
+      !IS_PRODUCTION ? 'acc.' : ''
+    }api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/`,
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
