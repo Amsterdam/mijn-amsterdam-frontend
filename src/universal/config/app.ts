@@ -82,7 +82,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
 
   AFVAL_AFSPRAAK_MAKEN:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx',
   AMSTERDAM_COMPLAINTS_FROM:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
