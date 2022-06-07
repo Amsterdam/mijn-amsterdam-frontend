@@ -262,7 +262,10 @@ export const mockDataConfig: MockDataConfig = {
       // if (isCommercialUser(config)) {
       //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
       // }
-      return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIE);
+      return await loadMockApiResponseJson({
+        ...TOERISTISCHE_VERHUUR_REGISTRATIE,
+        registrationNumber: config.url.split('/').pop(),
+      });
     },
   },
   [ApiUrls.KREFIA]: {

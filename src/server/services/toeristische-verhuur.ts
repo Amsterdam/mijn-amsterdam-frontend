@@ -101,7 +101,7 @@ async function fetchRegistraties(
   const registrationDetailResponses = await Promise.all(
     registrationNumbersResponse.content?.map((num) => {
       const url = `${process.env.BFF_LVV_API_URL}${num}`;
-      return requestData<ToeristischeVerhuurRegistratieDetail>(
+      return requestData<ToeristischeVerhuurRegistratieDetailSource>(
         getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
           method: 'get',
           url,
@@ -115,12 +115,22 @@ async function fetchRegistraties(
     return apiErrorResult('Could not retrieve all registration details', null);
   }
 
-  const registrations = registrationDetailResponses
-    .map((response) => response.content)
-    .filter(
-      (r): r is ToeristischeVerhuurRegistratieDetail =>
-        r !== null && ['amsterdam', 'weesp'].includes(r.city?.toLowerCase())
-    );
+  const registrations: ToeristischeVerhuurRegistratieDetail[] =
+    registrationDetailResponses
+      .map((response) => response.content)
+      .filter(
+        (r): r is ToeristischeVerhuurRegistratieDetailSource =>
+          r !== null &&
+          ['amsterdam', 'weesp'].includes(r?.rentalHouse.city?.toLowerCase())
+      )
+      .map((r) => {
+        const rUpdated: ToeristischeVerhuurRegistratieDetail = {
+          ...r.rentalHouse,
+          registrationNumber: r.registrationNumber,
+          agreementDate: r.agreementDate,
+        };
+        return rUpdated as ToeristischeVerhuurRegistratieDetail;
+      });
 
   return apiSuccessResult(registrations);
 }
