@@ -82,10 +82,14 @@ async function fetchRegistraties(
       url: `${process.env.BFF_LVV_API_URL}registrations/bsn`,
       method: 'POST',
       data: JSON.stringify(authProfileAndToken.profile.id),
-      transformResponse: (response) =>
-        response.map((r: ToeristischeVerhuurRegistratieNumberSource) =>
+      transformResponse: (response) => {
+        if (!Array.isArray(response)) {
+          return [];
+        }
+        return response.map((r: ToeristischeVerhuurRegistratieNumberSource) =>
           r.registrationNumber.replaceAll(' ', '')
-        ),
+        );
+      },
     }),
     requestID
   );
