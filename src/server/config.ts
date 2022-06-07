@@ -165,7 +165,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
   },
-  ERFPACHT: {},
+  ERFPACHT: {
+    url: process.env.BFF_MIJN_ERFPACHT_API_URL,
+  },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
@@ -174,6 +176,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
+    url: process.env.BFF_LVV_API_URL,
     headers: {
       'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
     },
@@ -187,7 +190,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
-    url: `${BFF_MS_API_BASE_URL}`,
+    url: `${process.env.BFF_SISA_API_ENDPOINT}`,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
     }),
@@ -209,7 +212,7 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 );
 
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
-  return Object.assign(ApiConfig[name] || {}, config || {});
+  return Object.assign({}, ApiConfig[name] || {}, config || {});
 }
 
 export const RelayPathsAllowed = {

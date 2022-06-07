@@ -47,12 +47,14 @@ function enableMockAdapter() {
         delay,
         headers,
         params,
+        pathReg,
       },
     ]) => {
       const onMethod = `on${capitalizeFirstLetter(method)}`;
 
-      let matchUrl: string | RegExp = url;
-      if (url.includes('/:')) {
+      let matchUrl: string | RegExp = pathReg || url;
+
+      if (typeof url === 'string' && url.includes('/:')) {
         const [basePath] = url.split('/:');
         matchUrl = new RegExp(`${basePath}/*`);
       }
@@ -137,8 +139,6 @@ export async function requestData<T>(
       Authorization: `Bearer ${authProfileAndToken.token}`,
     });
   }
-
-  console.log('requestconfig final', requestConfig);
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 

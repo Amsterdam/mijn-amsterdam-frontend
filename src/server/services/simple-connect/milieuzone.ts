@@ -1,17 +1,27 @@
-import { Chapters } from '../../../universal/config';
+import fs from 'fs';
+import jose from 'node-jose';
+import { Chapters, IS_AP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchGenerated, fetchService } from './api-service';
-import jose from 'node-jose';
-import fs from 'fs';
+
+const DEV_KEY = {
+  kty: 'RSA',
+  kid: 'xxx',
+  x5t: '8zMcftkkR9RYIvhvu4UrfAo0IaM',
+  n: 'uTBrbjUH8Ry0A-dt9v0NJon3HPfo-b1ZKrW1eLUUChOUVop1qhlRck_IMx1o3zVETqe_nOmwHp4yC6NQNUfYWnHQfu858Zr-zfDpI1h1cjlgv5pdorJDxTDydNMwvYQIbbeblKWavGWaz7Pq3SK_AwACxIlcoJ09wNPKi2E3zSQBI0RpVQcYs38mtCa4iOT5DEbn7gibBVbtXxOC3NeWvhMXEJVeqAXWA0M2Df1qHGLo1gLund1hDR4rTQf4h62PSpVp8G3Hoo1zGpZlJJJo1RB2JNKqCIZkjs3f80ZhEP9_IIC0CgZdsyqpltf4ygsG_TycxgEuiAy1bVrDSy82xaZleV1hvjHrnlIAHNTfnNebmCMPzahrcExDjSMQbXWHWd00r5cs2E1YAv9iYox-MFflaUN0tto76GhsASnDC_V40mWLaRFEymIfanIgLZFtViW2kCBQJOEUtWrC3weLx_iTQQtvbSPhx-ayQQCpfKU_vShfkxUeqAcf5yoZDae3uqGoo-biCZMFDFo5i74biwvz-AQ5lRtsMRgQCpGDaHjQJ6P7pJeQlhrQhMwxvePGaUW0XcJ0l3C4YuNtLLHFtbxw3DieQRMbAkmpSzideOg9tIesCbAca8EvNipB3PowQ4TpZXPkK9HxsWL681_YRcu-QxCT79hhQJ9FDPbqbes',
+  e: 'AQAB',
+};
 
 const keystore = jose.JWK.createKeyStore();
-const certContent = fs
-  .readFileSync(process.env.BFF_CLEOPATRA_PUB_KEY + '')
-  .toString();
+const certContent = IS_AP
+  ? fs.readFileSync(process.env.BFF_CLEOPATRA_PUB_KEY + '').toString()
+  : '';
 
-const pemPubKey = keystore.add(certContent, 'pem');
+const pemPubKey = !IS_AP
+  ? keystore.add(DEV_KEY, 'json')
+  : keystore.add(certContent, 'pem');
 
 function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']

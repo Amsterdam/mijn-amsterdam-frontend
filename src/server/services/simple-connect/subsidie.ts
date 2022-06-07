@@ -69,9 +69,10 @@ function addAuthMethodToNotificationLinks(
 
 function getConfig(authProfileAndToken: AuthProfileAndToken) {
   const apiEndpointUrl =
-    authProfileAndToken.profile.authMethod === 'digid'
-      ? process.env.BFF_SISA_API_BSN_ENDPOINT
-      : process.env.BFF_SISA_API_KVK_ENDPOINT;
+    process.env.BFF_SISA_API_ENDPOINT +
+    (authProfileAndToken.profile.authMethod === 'digid'
+      ? 'citizen/'
+      : 'company/');
 
   const url =
     apiEndpointUrl +

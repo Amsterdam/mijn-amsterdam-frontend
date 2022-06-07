@@ -79,7 +79,7 @@ async function fetchRegistraties(
 ) {
   const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-      url: `${process.env.BFF_LVV_API_URL}registrations/bsn`,
+      url: `${process.env.BFF_LVV_API_URL}bsn`,
       method: 'POST',
       data: JSON.stringify(authProfileAndToken.profile.id),
       transformResponse: (response) => {
@@ -100,9 +100,11 @@ async function fetchRegistraties(
 
   const registrationDetailResponses = await Promise.all(
     registrationNumbersResponse.content?.map((num) => {
+      const url = `${process.env.BFF_LVV_API_URL}${num}`;
       return requestData<ToeristischeVerhuurRegistratieDetail>(
         getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-          url: `${process.env.BFF_LVV_API_URL}registrations/${num}`,
+          method: 'get',
+          url,
         }),
         requestID
       );
@@ -113,14 +115,14 @@ async function fetchRegistraties(
     return apiErrorResult('Could not retrieve all registration details', null);
   }
 
-  return apiSuccessResult(
-    registrationDetailResponses
-      .map((response) => response.content)
-      .filter(
-        (r): r is ToeristischeVerhuurRegistratieDetail =>
-          r !== null && ['amsterdam', 'weesp'].includes(r.city?.toLowerCase())
-      )
-  );
+  const registrations = registrationDetailResponses
+    .map((response) => response.content)
+    .filter(
+      (r): r is ToeristischeVerhuurRegistratieDetail =>
+        r !== null && ['amsterdam', 'weesp'].includes(r.city?.toLowerCase())
+    );
+
+  return apiSuccessResult(registrations);
 }
 
 /** Code to transform and type Decos vergunningen to Toeristische verhuur */

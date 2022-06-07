@@ -53,6 +53,9 @@ function getConfigNotifications(
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
     },
+    transformResponse: (response) => {
+      return { notifications: Array.isArray(response) ? response : [] };
+    },
   });
 }
 

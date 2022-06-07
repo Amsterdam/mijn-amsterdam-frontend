@@ -10,11 +10,13 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
+import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
-import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-verhuur.json';
+import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
+import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
@@ -51,6 +53,7 @@ type MockDataConfig = Record<
     networkError?: boolean;
     headers?: Record<string, string>;
     params?: Record<string, string>;
+    pathReg?: RegExp;
   }
 >;
 
@@ -132,8 +135,12 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.ERFPACHT]: {
+    pathReg: new RegExp('/remote/erfpacht/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
+      if (config.url.includes('/notifications/')) {
+        return await loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
+      }
       // if (isCommercialUser(config)) {
       //   return 'no-content';
       // }
@@ -141,6 +148,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.SUBSIDIE]: {
+    pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -171,6 +179,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.MILIEUZONE]: {
+    method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -235,22 +244,33 @@ export const mockDataConfig: MockDataConfig = {
       return JSON.stringify(items);
     },
   },
-
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + 'bsn']: {
+    method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
-      }
-      return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // }
+      return await loadMockApiResponseJson(
+        TOERISTISCHE_VERHUUR_REGISTRATIES_BSN
+      );
+    },
+  },
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + ':number']: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // }
+      return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIE);
     },
   },
   [ApiUrls.KREFIA]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(KREFIA);
-      }
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(KREFIA);
+      // }
       return await loadMockApiResponseJson(KREFIA);
     },
   },
