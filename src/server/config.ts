@@ -8,7 +8,7 @@ import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
 export function getCertificateSync(path?: string) {
   if (!path) {
-    throw new Error('Certificate path not supplied');
+    return '';
   }
   let fileContents: string = '';
   try {
