@@ -179,6 +179,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: process.env.BFF_LVV_API_URL,
     headers: {
       'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
+      'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
     httpsAgent: new https.Agent({
