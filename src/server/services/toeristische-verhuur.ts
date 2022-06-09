@@ -73,7 +73,7 @@ export interface ToeristischeVerhuurRegistratieDetailsSourceData {
   content: ToeristischeVerhuurRegistratieDetail[];
 }
 
-async function fetchRegistraties(
+export async function fetchRegistraties(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
