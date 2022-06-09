@@ -1,21 +1,30 @@
 import nock from 'nock';
-import { BFF_PORT } from '../../config';
+import { Chapters } from '../../../universal/config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchSubsidieGenerated } from './subsidie';
 
 describe('Subsidie', () => {
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'eherkenning', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private' },
     token: 'xxxxxx',
   };
+
+  const penv = process.env;
 
   afterAll(() => {
     // Enable http requests.
     nock.enableNetConnect();
     nock.restore();
+    process.env = penv;
   });
 
   beforeAll(() => {
+    process.env = {
+      ...penv,
+      BFF_SISA_ENCRYPTION_KEY: 'xxxxxxxxxxxxxxxx',
+      BFF_SISA_CLIENT_SECRET: 'xxxxxxxxxxxxxxxx',
+      BFF_SISA_API_ENDPOINT: 'http://localhost/remote/subsidies/api/',
+    };
     // Disable real http requests.
     // All requests should be mocked.
     nock.disableNetConnect();
@@ -35,13 +44,13 @@ describe('Subsidie', () => {
       ],
     };
 
-    nock('http://localhost:' + BFF_PORT)
-      .get('/subsidies/summary')
+    nock('http://localhost')
+      .get(/\/remote\/subsidies\/api\/*\/*/)
       .times(2)
-      .reply(200, { content });
+      .reply(200, { content, status: 'OK' });
 
-    nock('http://localhost:' + BFF_PORT)
-      .get('/subsidies/summary')
+    nock('http://localhost')
+      .get(/\/remote\/subsidies\/api\/citizen\/*/)
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
     {
@@ -55,8 +64,9 @@ describe('Subsidie', () => {
         notifications: [
           {
             title: 'Test title',
+            chapter: Chapters.SUBSIDIE,
             link: {
-              to: 'http://localhost/to/subsidies?authMethod=eherkenning',
+              to: 'http://localhost/to/subsidies?authMethod=digid',
               title: 'More about this',
             },
           },
@@ -67,15 +77,17 @@ describe('Subsidie', () => {
     {
       const result = await fetchSubsidieGenerated('xx22xx', {
         ...authProfileAndToken,
-        profile: { ...authProfileAndToken.profile, authMethod: 'digid' },
+        profile: { ...authProfileAndToken.profile, authMethod: 'eherkenning' },
       });
+
       expect(result.content).toEqual({
         isKnown: true,
         notifications: [
           {
             title: 'Test title',
+            chapter: Chapters.SUBSIDIE,
             link: {
-              to: 'http://localhost/to/subsidies?authMethod=digid',
+              to: 'http://localhost/to/subsidies?authMethod=eherkenning',
               title: 'More about this',
             },
           },
@@ -88,6 +100,7 @@ describe('Subsidie', () => {
         'xx22xx',
         authProfileAndToken
       );
+
       expect(result.content).toEqual(null);
       expect(result.status).toBe('ERROR');
     }
