@@ -60,7 +60,6 @@ describe('Subsidie', () => {
       );
 
       expect(result.content).toEqual({
-        isKnown: true,
         notifications: [
           {
             title: 'Test title',
@@ -81,7 +80,6 @@ describe('Subsidie', () => {
       });
 
       expect(result.content).toEqual({
-        isKnown: true,
         notifications: [
           {
             title: 'Test title',

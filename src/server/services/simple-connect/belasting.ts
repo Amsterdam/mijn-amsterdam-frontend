@@ -31,45 +31,48 @@ function getBsnTranslation(bsnOrKvk: string): string {
 }
 
 function transformBelastingResponse(response: BelastingenSourceContent) {
-  const isKnown: boolean = response.status !== 'BSN unknown';
+  const isKnown: boolean =
+    !!response?.status && response.status !== 'BSN unknown';
   const notifications: MyNotification[] = [];
   const tips: MyTip[] = [];
 
-  for (const message of response.data) {
-    switch (message.categorie) {
-      // Thema bericht wordt niet gebruikt omdat we "isKnown" bepalen aan de hand van de doorgegeven "status" (response.status !== 'BSN unknown')
-      // case 'F2':
-      //   break;
-      // Melding / Notification
-      case 'M1':
-        notifications.push({
-          id: `belasting-${message.nummer}`,
-          chapter: Chapters.BELASTINGEN,
-          title: message.titel,
-          datePublished: message.datum,
-          description: message.omschrijving,
-          link: {
-            title: message.url_naam,
-            to: message.url,
-          },
-        });
-        break;
-      // Tip
-      case 'M2':
-        tips.push({
-          id: `belasting-${message.nummer}`,
-          priority: message.prioriteit,
-          datePublished: message.datum,
-          title: message.titel,
-          description: message.omschrijving,
-          reason: message.informatie ? [message.informatie] : [],
-          isPersonalized: true,
-          link: {
-            title: message.url_naam,
-            to: message.url,
-          },
-        });
-        break;
+  if (Array.isArray(response?.data)) {
+    for (const message of response.data) {
+      switch (message.categorie) {
+        // Thema bericht wordt niet gebruikt omdat we "isKnown" bepalen aan de hand van de doorgegeven "status" (response.status !== 'BSN unknown')
+        // case 'F2':
+        //   break;
+        // Melding / Notification
+        case 'M1':
+          notifications.push({
+            id: `belasting-${message.nummer}`,
+            chapter: Chapters.BELASTINGEN,
+            title: message.titel,
+            datePublished: message.datum,
+            description: message.omschrijving,
+            link: {
+              title: message.url_naam,
+              to: message.url,
+            },
+          });
+          break;
+        // Tip
+        case 'M2':
+          tips.push({
+            id: `belasting-${message.nummer}`,
+            priority: message.prioriteit,
+            datePublished: message.datum,
+            title: message.titel,
+            description: message.omschrijving,
+            reason: message.informatie ? [message.informatie] : [],
+            isPersonalized: true,
+            link: {
+              title: message.url_naam,
+              to: message.url,
+            },
+          });
+          break;
+      }
     }
   }
 

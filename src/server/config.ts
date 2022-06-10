@@ -78,7 +78,7 @@ export type SourceApiKey =
   | 'WPI_SPECIFICATIES'
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
-  | 'MILIEUZONE'
+  | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
@@ -124,7 +124,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
-  MILIEUZONE: {
+  CLEOPATRA: {
     url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',

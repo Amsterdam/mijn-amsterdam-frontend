@@ -23,7 +23,7 @@ const pemPubKey = !IS_AP
   ? keystore.add(DEV_KEY, 'json')
   : keystore.add(certContent, 'pem');
 
-function getJSONRequestPayload(
+export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
 ): string {
   const payload: MilieuzoneRequestPayload =
@@ -76,26 +76,28 @@ function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
   const notifications: MyNotification[] = [];
   let isKnown: boolean = false;
 
-  for (const message of response) {
-    switch (message.categorie) {
-      case 'F2':
-        isKnown = true;
-        break;
-      // Melding / Notification
-      case 'M1':
-      case 'F3':
-        notifications.push({
-          id: `milieuzone-${message.categorie}`,
-          chapter: Chapters.MILIEUZONE,
-          title: message.titel,
-          datePublished: message.datum,
-          description: message.omschrijving,
-          link: {
-            title: message.urlNaam,
-            to: message.url,
-          },
-        });
-        break;
+  if (Array.isArray(response)) {
+    for (const message of response) {
+      switch (message.categorie) {
+        case 'F2':
+          isKnown = true;
+          break;
+        // Melding / Notification
+        case 'M1':
+        case 'F3':
+          notifications.push({
+            id: `milieuzone-${message.categorie}`,
+            chapter: Chapters.MILIEUZONE,
+            title: message.titel,
+            datePublished: message.datum,
+            description: message.omschrijving,
+            link: {
+              title: message.urlNaam,
+              to: message.url,
+            },
+          });
+          break;
+      }
     }
   }
 
@@ -112,7 +114,7 @@ async function getConfig(
     getJSONRequestPayload(authProfileAndToken.profile)
   );
 
-  return getApiConfig('MILIEUZONE', {
+  return getApiConfig('CLEOPATRA', {
     transformResponse: transformMilieuzoneResponse,
     data: postData,
   });

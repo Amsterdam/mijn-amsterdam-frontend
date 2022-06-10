@@ -18,6 +18,7 @@ function transformApiResponseDefault(
   response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
 ) {
   if (
+    response !== null &&
     typeof response === 'object' &&
     'content' in response &&
     'status' in response
@@ -83,13 +84,22 @@ export async function fetchGenerated(
 > {
   const response = await fetchService(requestID, apiConfig, true);
 
-  if (response.status === 'OK' && response.content?.notifications) {
-    return apiSuccessResult({
-      notifications: transformNotificationsDefault(
+  if (response.status === 'OK') {
+    const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =
+      {};
+
+    if (response.content?.notifications) {
+      responseData.notifications = transformNotificationsDefault(
         response.content.notifications,
         chapter
-      ),
-    });
+      );
+    }
+
+    if (response.content?.tips) {
+      responseData.tips = response.content?.tips;
+    }
+
+    return apiSuccessResult(responseData);
   }
 
   return response;
