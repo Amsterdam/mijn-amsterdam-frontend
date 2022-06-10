@@ -1,7 +1,5 @@
-import { Chapter, Chapters } from '../../../universal/config';
+import { Chapter } from '../../../universal/config';
 import {
-  apiDependencyError,
-  apiErrorResult,
   ApiResponse,
   apiSuccessResult,
   omit,
@@ -45,9 +43,12 @@ export async function fetchService<T extends ApiPatternResponseA>(
 
   if (response.status === 'OK' && !includeGenerated) {
     return Object.assign({}, response, {
-      content: response.content
-        ? omit(response.content, ['notifications', 'tips'])
-        : null,
+      content:
+        response.content &&
+        typeof response.content === 'object' &&
+        ('notifications' in response.content || 'tips' in response.content)
+          ? omit(response.content, ['notifications', 'tips'])
+          : response.content,
     });
   }
 
@@ -77,12 +78,13 @@ export async function fetchGenerated(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
   chapter: Chapter
-): Promise<ApiResponse<ApiPatternResponseA | null>> {
+): Promise<
+  ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
+> {
   const response = await fetchService(requestID, apiConfig, true);
 
   if (response.status === 'OK' && response.content?.notifications) {
     return apiSuccessResult({
-      ...response.content,
       notifications: transformNotificationsDefault(
         response.content.notifications,
         chapter
