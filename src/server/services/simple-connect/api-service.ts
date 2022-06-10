@@ -32,7 +32,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
   includeGenerated: boolean = false
-): Promise<ApiResponse<ApiPatternResponseA | null>> {
+): Promise<ApiResponse<T | null>> {
   const apiConfigMerged: DataRequestConfig = {
     ...apiConfig,
     transformResponse: [transformApiResponseDefault].concat(
