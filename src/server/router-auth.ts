@@ -93,7 +93,6 @@ router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
-
       return res.redirect(
         auth.profile.authMethod === 'eherkenning'
           ? BffEndpoints.AUTH_CHECK_EHERKENNING
