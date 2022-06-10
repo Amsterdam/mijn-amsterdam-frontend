@@ -48,7 +48,6 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
     returnTo: process.env.BFF_FRONTEND_URL,
     authorizationParams: {
-      // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
       redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
     },
   });
@@ -58,7 +57,6 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
   return res.oidc.login({
     returnTo: process.env.BFF_FRONTEND_URL,
     authorizationParams: {
-      // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
       redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
     },
   });
