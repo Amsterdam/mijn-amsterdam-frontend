@@ -13,7 +13,9 @@
       "to": "https://wijamsterdam.nl/"
     },
     "priority": 70,
-    "reason": ["Omdat dit een toptip is."],
+    "reason": [
+      "Omdat dit een toptip is."
+    ],
     "title": "Amsterdammers helpen Amsterdammers"
   },
   {
@@ -30,7 +32,9 @@
       "to": "https://openresearch.amsterdam/"
     },
     "priority": 70,
-    "reason": ["Omdat dit een toptip is."],
+    "reason": [
+      "Omdat dit een toptip is."
+    ],
     "title": "Voor nieuwsgierige Amsterdammers"
   },
   {
@@ -44,10 +48,12 @@
     "isPersonalized": true,
     "link": {
       "title": "Adressen Afvalpunten",
-      "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
+      "to": "https://www.amsterdam.nl/afval-en-hergebruik/grofafval/spullen-wegbrengen-afvalpunt/"
     },
     "priority": 25,
-    "reason": ["Omdat dit een toptip is."],
+    "reason": [
+      "Omdat dit een toptip is."
+    ],
     "title": "Grofvuil"
   },
   {
@@ -64,7 +70,9 @@
       "to": "https://www.vca.nu/vacaturebank/"
     },
     "priority": 20,
-    "reason": ["Omdat dit een toptip is."],
+    "reason": [
+      "Omdat dit een toptip is."
+    ],
     "title": "Vrijwilliger worden?"
   },
   {
@@ -81,7 +89,9 @@
       "to": "https://www.amsterdam.nl/wonen-leefomgeving/medebeheer/geveltuin-aanvragen/"
     },
     "priority": 20,
-    "reason": ["Omdat dit een toptip is."],
+    "reason": [
+      "Omdat dit een toptip is."
+    ],
     "title": "Geveltuin"
   }
 ]
