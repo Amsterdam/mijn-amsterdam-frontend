@@ -77,9 +77,10 @@ export async function fetchRegistraties(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const url = `${process.env.BFF_LVV_API_URL}bsn`;
   const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-      url: `${process.env.BFF_LVV_API_URL}bsn`,
+      url,
       method: 'POST',
       data: JSON.stringify(authProfileAndToken.profile.id),
       transformResponse: (response) => {
@@ -95,7 +96,9 @@ export async function fetchRegistraties(
   );
 
   if (registrationNumbersResponse.status !== 'OK') {
-    return registrationNumbersResponse;
+    return apiDependencyError({
+      registrationNumbers: registrationNumbersResponse,
+    });
   }
 
   const registrationDetailResponses = await Promise.all(
