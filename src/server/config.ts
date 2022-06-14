@@ -199,6 +199,11 @@ export const RelayPathsAllowed = {
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
+
+export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
+export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
+export const AUTH_BASE_SSO_EHERKENNING = `${AUTH_BASE}/eherkenning/sso`;
+
 export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
 export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
@@ -215,6 +220,9 @@ export const BffEndpoints = {
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
+  AUTH_BASE_SSO,
+  AUTH_BASE_SSO_DIGID,
+  AUTH_BASE_SSO_EHERKENNING,
 
   // Digid
   AUTH_CALLBACK_DIGID:

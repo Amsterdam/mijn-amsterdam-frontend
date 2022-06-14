@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import express from 'express';
-import { auth } from 'express-openid-connect';
+import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
@@ -42,6 +42,29 @@ router.use(
   BffEndpoints.AUTH_BASE_EHERKENNING,
   nocache,
   auth(oidcConfigEherkenning)
+);
+
+router.use(BffEndpoints.AUTH_BASE_SSO, nocache, (req, res) => {
+  if (req.query.authMethod === 'eherkenning') {
+    return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+  }
+  return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+});
+
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_DIGID,
+  attemptSilentLogin(),
+  (req, res) => {
+    return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+  }
+);
+
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
+  attemptSilentLogin(),
+  (req, res) => {
+    return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+  }
 );
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
