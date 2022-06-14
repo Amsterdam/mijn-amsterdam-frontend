@@ -113,6 +113,7 @@ export async function useAuthCheckUrl(refetch: RefetchFunction) {
 export function useSessionApi() {
   const requestOptions: ApiRequestOptions = {
     postpone: true,
+    sentryEnabled: false, // Disable Sentry for auth check responses
   };
 
   const [sessionResponse, fetch] = useDataApi<SessionResponseData>(

@@ -37,7 +37,7 @@ const sentryOptions: Sentry.NodeOptions = {
   autoSessionTracking: false,
   beforeSend(event, hint) {
     if (isDevelopment) {
-      // console.log(hint);
+      console.log(hint);
       return null;
     }
     return event;
