@@ -120,6 +120,9 @@
     "uid-safe": "^2.1.5",
     "use-debounce": "^7.0.1"
   },
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
   "devDependencies": {
     "nock": "^13.2.2"
   }
