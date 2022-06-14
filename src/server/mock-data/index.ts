@@ -178,7 +178,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(AFVAL);
     },
   },
-  [ApiUrls.MILIEUZONE]: {
+  [ApiUrls.CLEOPATRA]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
