@@ -131,6 +131,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: AppRoutes.PARKEREN,
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
+  {
+    title: ChapterTitles.KLACHTEN,
+    id: Chapters.KLACHTEN,
+    to: AppRoutes.KLACHTEN,
+    profileTypes: ['private', 'private-commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {

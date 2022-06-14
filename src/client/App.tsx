@@ -6,7 +6,7 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory
+  useLocation
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -14,23 +14,19 @@ import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
-import {
-  AutoLogoutDialog,
-  MainFooter,
-  MainHeader
-} from './components';
+import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry, useDeeplinkRedirect
+  useDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
-import { default as LandingPage } from './pages/Landing/Landing';
 
+import { default as LandingPage } from './pages/Landing/Landing';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -76,6 +72,10 @@ const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
 const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
 const InkomenSpecificaties = lazy(
   () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
+);
+const Klachten = lazy(() => import('./pages/Klachten/Klachten'));
+const KlachtenDetail = lazy(
+  () => import('./pages/KlachtenDetail/KlachtenDetail')
 );
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -218,6 +218,11 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route
+            path={AppRoutes['KLACHTEN/KLACHT']}
+            component={KlachtenDetail}
+          />
+          <Route path={AppRoutes.KLACHTEN} component={Klachten} />
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={[

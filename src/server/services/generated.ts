@@ -20,6 +20,7 @@ import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { fetchKlachtenGenerated } from './klachten/klachten';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -120,6 +121,7 @@ async function fetchServicesGenerated(
     fetchKrefiaGeneratedResult,
     fetchWiorGeneratedResult,
     fetchWpiNotificationsResult,
+    klachtenGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(requestID, authProfileAndToken),
     fetchBelastingGenerated(requestID, authProfileAndToken),
@@ -132,6 +134,7 @@ async function fetchServicesGenerated(
     fetchKrefiaGenerated(requestID, authProfileAndToken),
     fetchWiorGenerated(requestID, authProfileAndToken, profileType),
     fetchWpiNotifications(requestID, authProfileAndToken),
+    fetchKlachtenGenerated(requestID, authProfileAndToken),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -149,6 +152,7 @@ async function fetchServicesGenerated(
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
   const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
   const wpiGenerated = getSettledResult(fetchWpiNotificationsResult);
+  const klachtenNotificationsResult = getSettledResult(klachtenGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -162,6 +166,7 @@ async function fetchServicesGenerated(
     krefiaGenerated,
     wiorGenerated,
     wpiGenerated,
+    klachtenNotificationsResult,
   ]);
 }
 

@@ -95,7 +95,8 @@ export type SourceApiKey =
   | 'KVK'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
-  | 'KREFIA';
+  | 'KREFIA'
+  | 'KLACHTEN';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -199,6 +200,13 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
+    }),
+  },
+  KLACHTEN: {
+    url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
+    method: 'POST',
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
     }),
   },
 };

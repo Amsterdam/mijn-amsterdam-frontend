@@ -16,6 +16,7 @@ import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
+import { fetchKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import {
@@ -102,6 +103,7 @@ const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
 const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
+const KLACHTEN = callService(fetchKlachten);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
@@ -132,6 +134,7 @@ const SERVICES_INDEX = {
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
   SUBSIDIE,
+  KLACHTEN,
   NOTIFICATIONS,
 };
 
@@ -189,6 +192,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   'private-commercial': {
     AFVAL,
@@ -213,6 +217,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   commercial: {
     AFVAL,

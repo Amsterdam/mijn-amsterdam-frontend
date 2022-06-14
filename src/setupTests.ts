@@ -14,3 +14,5 @@ global.matchMedia =
       removeEventListener: function () {},
     };
   };
+
+process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = 'http://localhost/smile';
