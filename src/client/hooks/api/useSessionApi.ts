@@ -8,14 +8,17 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import {
+  AUTH_API_URL,
   AUTH_API_URL_DIGID,
+  AUTH_API_URL_DIGID_SSO_CHECK,
   AUTH_API_URL_EHERKENNING,
+  AUTH_API_URL_EHERKENNING_SSO_CHECK,
   LOGOUT_URL,
 } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { useDataApi } from './useDataApi';
+import { ApiRequestOptions, RefetchFunction, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -55,19 +58,70 @@ export const sessionAtom = atom<SessionState>({
   default: INITIAL_SESSION_STATE,
 });
 
-export function useSessionApi() {
+export async function useAuthCheckUrl(refetch: RefetchFunction) {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const requestOptions = {
-    url:
-      params.get('authMethod') === 'eherkenning'
-        ? AUTH_API_URL_EHERKENNING
-        : AUTH_API_URL_DIGID,
+  const isSSO = !!params.get('sso');
+
+  let authMethod = params.get('authMethod') as 'digid' | 'eherkenning' | '';
+
+  const fetchInitial = useCallback(async () => {
+    let url = AUTH_API_URL;
+    if (['digid', 'eherkenning'].includes(authMethod)) {
+      if (authMethod === 'eherkenning') {
+        url = AUTH_API_URL_EHERKENNING;
+      } else {
+        url = AUTH_API_URL_DIGID;
+      }
+
+      if (isSSO) {
+        url = url + '?sso=1';
+      }
+    } else if (isSSO) {
+      {
+        const authCheckResponse = await fetch(AUTH_API_URL_DIGID_SSO_CHECK, {
+          credentials: 'include',
+        });
+        const responseData = await authCheckResponse.json();
+        if (responseData.content.isAuthenticated) {
+          url = AUTH_API_URL_DIGID;
+        }
+      }
+      {
+        const authCheckResponse = await fetch(
+          AUTH_API_URL_EHERKENNING_SSO_CHECK,
+          {
+            credentials: 'include',
+          }
+        );
+        const responseData = await authCheckResponse.json();
+        if (responseData.content.isAuthenticated) {
+          url = AUTH_API_URL_EHERKENNING;
+        }
+      }
+    }
+    return refetch({ url, postpone: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refetch]);
+
+  useEffect(() => {
+    fetchInitial();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
+export function useSessionApi() {
+  const requestOptions: ApiRequestOptions = {
+    postpone: true,
   };
-  const [sessionResponse, refetch] = useDataApi<SessionResponseData>(
+
+  const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)
   );
+
+  useAuthCheckUrl(fetch);
+
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
   const sessionData = data?.content;
   const [session, setSession] = useSessionAtom();
@@ -92,7 +146,7 @@ export function useSessionApi() {
       isDirty,
       isPristine,
       refetch: () =>
-        refetch({
+        fetch({
           url:
             sessionData.authMethod === 'eherkenning'
               ? AUTH_API_URL_EHERKENNING
@@ -106,7 +160,7 @@ export function useSessionApi() {
     isLoading,
     isDirty,
     isPristine,
-    refetch,
+    fetch,
     setSession,
     logoutSession,
   ]);
