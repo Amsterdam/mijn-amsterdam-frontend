@@ -106,13 +106,13 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-08",
-        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) (Röel) is in behandeling genomen.",
         "id": "vergunning-2331715774-notification",
         "link": Object {
           "title": "Bekijk details",
           "to": "/vergunningen/omzettingsvergunning/2331715774",
         },
-        "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) in behandeling",
+        "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -497,9 +497,9 @@ Array [
     "documentsUrl": "/decosjoin/listdocuments/no-documents",
     "id": "2331715774",
     "identifier": "Z/000/000001.b",
-    "location": "leerdamhof 2 1108BA Amsterdam ",
+    "location": "Burgemeester Röellstraat 1 1064 BH Amsterdam",
     "status": "In behandeling",
-    "title": "Vergunning voor kamerverhuur (omzettingsvergunning)",
+    "title": "Vergunning voor kamerverhuur (omzettingsvergunning) (Röel)",
   },
   Object {
     "caseType": "Omzettingsvergunning",
