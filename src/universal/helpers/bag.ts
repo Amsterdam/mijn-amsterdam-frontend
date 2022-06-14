@@ -1,10 +1,11 @@
 import { BAGSourceData } from '../types/bag';
 
+// Quick and dirty see also: https://stackoverflow.com/a/68401047
 export function extractAddress(rawAddress: string) {
   // Strip down to Street + Housenumber
   const address = rawAddress
     // Remove everything but alphanumeric, dash and space
-    .replace(/[^a-z0-9-\s]/gi, '')
+    .replace(/[^0-9-\s\p{Script=Latin}+]/giu, '')
     // Remove woonplaats
     .replace(/(Amsterdam|Weesp)/gi, '')
     // Remove postalcode

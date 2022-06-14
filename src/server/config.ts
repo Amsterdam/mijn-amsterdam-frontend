@@ -28,6 +28,9 @@ export const BFF_REQUEST_CACHE_ENABLED =
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_PUBLIC_URL = `${
+  process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
+}`;
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -71,7 +74,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'AUTH'
   | 'WMO'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
@@ -98,10 +100,6 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  AUTH: {
-    url: `${BFF_MS_API_BASE_URL}/auth/check`,
-    cacheTimeout: 0,
-  },
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   },
@@ -228,6 +226,11 @@ export const RelayPathsAllowed = {
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
+
+export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
+export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
+export const AUTH_BASE_SSO_EHERKENNING = `${AUTH_BASE}/eherkenning/sso`;
+
 export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
 export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
@@ -244,6 +247,9 @@ export const BffEndpoints = {
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
+  AUTH_BASE_SSO,
+  AUTH_BASE_SSO_DIGID,
+  AUTH_BASE_SSO_EHERKENNING,
 
   // Digid
   AUTH_CALLBACK_DIGID:

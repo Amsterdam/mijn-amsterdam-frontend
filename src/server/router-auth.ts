@@ -1,13 +1,15 @@
 import * as Sentry from '@sentry/node';
 import express from 'express';
-import { auth } from 'express-openid-connect';
+import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
+  BFF_PUBLIC_URL,
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
+import { axiosRequest } from './helpers';
 import {
   decodeOIDCToken,
   getAuth,
@@ -44,11 +46,53 @@ router.use(
   auth(oidcConfigEherkenning)
 );
 
+router.use(BffEndpoints.AUTH_BASE_SSO, nocache, async (req, res) => {
+  const authMethod = req.query.authMethod;
+
+  switch (authMethod) {
+    case 'digid':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+    case 'eherkenning':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+    default: {
+      // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
+      return res.redirect(`${process.env.BFF_FRONTEND_URL}?sso=1`);
+    }
+  }
+});
+
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_DIGID,
+  attemptSilentLogin(),
+  (req, res) => {
+    if (req.query.checkAuthenticated) {
+      return res.send(
+        apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() })
+      );
+    }
+    return res.redirect(`${process.env.BFF_FRONTEND_URL}?authMethod=digid`);
+  }
+);
+
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
+  attemptSilentLogin(),
+  (req, res) => {
+    if (req.query.checkAuthenticated) {
+      return res.send(
+        apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() })
+      );
+    }
+    return res.redirect(
+      `${process.env.BFF_FRONTEND_URL}?authMethod=eherkenning`
+    );
+  }
+);
+
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL,
+    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=digid',
     authorizationParams: {
-      // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
       redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
     },
   });
@@ -56,46 +100,56 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
 
 router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL,
+    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning',
     authorizationParams: {
-      // Specify full url here, the default redirect url is constructed of base_url and routes.callback which doesn't take the router base path into account whilst the auth() middleware does.
       redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
     },
   });
 });
 
-router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    return res.send(
-      apiSuccessResult({
-        isAuthenticated: true,
-        profileType: 'commercial',
-        authMethod: 'eherkenning',
-      })
-    );
+router.get(
+  BffEndpoints.AUTH_CHECK_EHERKENNING,
+  (req, res, next) =>
+    req.query.sso ? attemptSilentLogin()(req, res, next) : next(),
+  async (req, res) => {
+    if (req.oidc.isAuthenticated()) {
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType: 'commercial',
+          authMethod: 'eherkenning',
+        })
+      );
+    }
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
   }
-  return sendUnauthorized(res);
-});
+);
 
-router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    return res.send(
-      apiSuccessResult({
-        isAuthenticated: true,
-        profileType: 'private',
-        authMethod: 'digid',
-      })
-    );
+router.get(
+  BffEndpoints.AUTH_CHECK_DIGID,
+  (req, res, next) =>
+    req.query.sso ? attemptSilentLogin()(req, res, next) : next(),
+  async (req, res) => {
+    if (req.oidc.isAuthenticated()) {
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType: 'private',
+          authMethod: 'digid',
+        })
+      );
+    }
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
   }
-  return sendUnauthorized(res);
-});
+);
 
 // AuthMethod agnostic endpoints
 router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
-
       return res.redirect(
         auth.profile.authMethod === 'eherkenning'
           ? BffEndpoints.AUTH_CHECK_EHERKENNING

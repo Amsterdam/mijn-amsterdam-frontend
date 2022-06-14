@@ -63,6 +63,10 @@ describe('getLatLonByAddress', () => {
     expect(extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; . ,')).toBe(
       'Herengracht 23-1'
     );
+
+    expect(
+      extractAddress('Burgemeester Röellstraat 44, 1015BA, Amsterdam _ ; . ,')
+    ).toBe('Burgemeester Röellstraat 44');
   });
 
   test('isWeesp', () => {

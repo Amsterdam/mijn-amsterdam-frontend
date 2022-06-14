@@ -41,7 +41,9 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+    return res.redirect(
+      `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`
+    );
   }
 );
 

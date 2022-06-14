@@ -1,12 +1,14 @@
 import flatCache from 'flat-cache';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'node:crypto';
 import { IS_AP } from '../../universal/config';
 
 interface FileCacheProps {
   name: string;
   path?: string;
   cacheTimeMinutes?: number;
+  triesUntilConsiderdStale?: number;
 }
 
 const ONE_MINUTE_MS = 1000 * 60;
@@ -57,13 +59,16 @@ export default class FileCache {
   name: string;
   name_: string;
   path?: string;
-  cache: any;
+  cache: flatCache.Cache;
   expire: number | false;
+  hashes: string[];
+  triesUntilConsiderdStale: number;
 
   constructor({
     name,
     path = DEFAULT_CACHE_DIR,
     cacheTimeMinutes = 0,
+    triesUntilConsiderdStale = 5,
   }: FileCacheProps) {
     this.name = fileName(name);
     this.path = path;
@@ -71,7 +76,10 @@ export default class FileCache {
     this.cache = flatCache.load(this.name, path);
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
+    this.hashes = [];
+    this.triesUntilConsiderdStale = triesUntilConsiderdStale;
   }
+
   getKey(key: string) {
     const now = new Date().getTime();
     const value = this.cache.getKey(key);
@@ -82,6 +90,7 @@ export default class FileCache {
       return value.data;
     }
   }
+
   setKey(key: string, value: any) {
     const now = new Date().getTime();
     this.cache.setKey(key, {
@@ -89,17 +98,48 @@ export default class FileCache {
       data: value,
     });
   }
+
   removeKey(key: string) {
     this.cache.removeKey(key);
   }
+
   save() {
     this.cache.save(true);
+
+    const hash = createHash('sha256');
+
+    // generate a new hash using the data field of all cached items and store the hash
+    hash.update(
+      this.cache
+        .keys()
+        .map((k) => this.cache.getKey(k).data)
+        .join()
+    );
+    const generatedHash = hash.digest('hex');
+
+    this.hashes.push(generatedHash);
   }
+
   remove() {
     flatCache.clearCacheById(this.name, this.path);
+    this.hashes = [];
   }
+
   getKeyStale(key: string, isProd: boolean = IS_AP) {
     return flatCache.load(fileName(this.name_, isProd), this.path).getKey(key)
       ?.data;
+  }
+
+  isStale() {
+    if (this.hashes.length >= this.triesUntilConsiderdStale) {
+      // check if the latest n hashes are the same, if so we consider this stale
+      return (
+        new Set(
+          this.hashes.slice(this.hashes.length - this.triesUntilConsiderdStale)
+        ).size === 1
+      );
+    }
+
+    return false;
   }
 }
