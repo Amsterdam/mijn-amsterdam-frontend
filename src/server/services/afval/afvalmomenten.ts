@@ -5,7 +5,7 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers/source-api-request';
 
 const AFVAL_AFSPRAAK_MAKEN =
-  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';
+  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////

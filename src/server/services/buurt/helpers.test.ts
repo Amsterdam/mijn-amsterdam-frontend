@@ -716,6 +716,7 @@ describe('Buurt helpers', () => {
     const config: DatasetConfig = {
       featureType: 'Point',
       idKeyList: 'otherUniqueIdentifier',
+      triesUntilConsiderdStale: 1,
     };
 
     const sourceResponse: any = {

@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { ENV } from '../../../universal/config/env';
+import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -71,6 +71,7 @@ export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
 export const DEFAULT_API_REQUEST_TIMEOUT = 1000 * 60 * 3; // 3 mins
+export const DEFAULT_TRIES_UNTIL_CONSIDERED_STALE = 5;
 
 export interface DatasetConfig {
   datasetIds?: DatasetId[];
@@ -96,6 +97,7 @@ export interface DatasetConfig {
   idKeyList?: string;
   idKeyDetail?: string;
   geometryKey?: string;
+  triesUntilConsiderdStale: number;
 }
 
 function dsoApiListUrl(
@@ -141,6 +143,7 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'id_nummer',
     idKeyDetail: 'idNummer',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
@@ -148,21 +151,25 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     // NOTE: Tried URL as unique ID but various events point to the same URL.
     // additionalStaticFieldNames: ['url'],
     // idKeyList: 'url',
     // idKeyDetail: 'url',
   },
   bekendmakingen: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl:
-      'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
+    listUrl: `https://${
+      !IS_PRODUCTION ? 'acc.' : ''
+    }api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+    detailUrl: `https://${
+      !IS_PRODUCTION ? 'acc.' : ''
+    }api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/`,
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'officielebekendmakingen_id',
     idKeyDetail: 'officielebekendmakingenId',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -174,6 +181,7 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   parkeerzones_uitzondering: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
@@ -186,6 +194,7 @@ export const datasetEndpoints: Record<
     additionalStaticFieldNames: ['gebiedscode'],
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
@@ -193,6 +202,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   sportpark: {
     listUrl: dsoApiListUrl('sport/sportpark'),
@@ -201,6 +211,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   sportveld: {
     listUrl: dsoApiListUrl('sport/sportveld'),
@@ -209,6 +220,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   gymzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'gymzaal'),
@@ -217,6 +229,7 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     additionalStaticFieldNames: ['type'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   sportzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'sportzaal'),
@@ -224,6 +237,7 @@ export const datasetEndpoints: Record<
     transformList: transformSportzaalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   sporthal: {
     listUrl: dsoApiListUrl('sport/sporthal'),
@@ -231,6 +245,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   sportaanbieder: {
     listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
@@ -238,6 +253,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
@@ -245,6 +261,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   hardlooproute: {
     listUrl: dsoApiListUrl('sport/hardlooproute'),
@@ -253,6 +270,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   bedrijveninvesteringszones: {
     listUrl: dsoApiListUrl(
@@ -267,6 +285,7 @@ export const datasetEndpoints: Record<
     additionalStaticFieldNames: ['naam'],
     idKeyList: 'naam',
     idKeyDetail: 'naam',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   wior: {
     listUrl: () => {
@@ -282,6 +301,7 @@ export const datasetEndpoints: Record<
     zIndex: zIndexPane.WIOR,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometrie',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
   meldingenBuurt: {
     listUrl: () =>
@@ -296,6 +316,7 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometry',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
 };
 
