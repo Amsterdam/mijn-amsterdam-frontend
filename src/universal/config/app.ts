@@ -28,7 +28,7 @@ export const FeatureToggle = {
   inkomenBBZActive: true,
   erfpachtV2EndpointActive: true,
   subsidieActive: true,
-  wiorMeldingen: !IS_PRODUCTION,
+  wiorMeldingen: true,
   parkerenActive: !IS_PRODUCTION,
   bekendmakingenDatasetActive: true,
   evenementenDatasetActive: false,

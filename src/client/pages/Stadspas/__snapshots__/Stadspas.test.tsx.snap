@@ -48,8 +48,20 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
     <div
       class="PageContent"
     >
+      <h4>
+        Hoe weet ik of ik een geldige Stadspas heb?
+      </h4>
       <p>
-        Hieronder vindt u meer informatie over uw eigen Stadspas.
+        Hieronder staat het Stadspasnummer van uw actieve pas. Dit pasnummer staat ook op de achterkant van uw pas. Staat er op de achterkant van uw pas een ander nummer? Gooi deze Stadspas dan weg. Deze is niet meer actief.
+      </p>
+      <p>
+        Bel 
+        <a
+          href="tel:020 252 6000"
+        >
+          020 252 6000
+        </a>
+         om een nieuwe Stadspas aan te vragen.
       </p>
       <p>
         Hebt u kinderen of een partner met een Stadspas? Dan ziet u hieronder ook hun Stadspassen.

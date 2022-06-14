@@ -11,6 +11,8 @@ import {
 } from './buurt/helpers';
 import { fetchMyLocation } from './home';
 
+const WITHIN_RADIUS_KM = 1;
+
 function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
@@ -70,7 +72,7 @@ export async function fetchWiorGenerated(
     const featuresInRadius = filterFeaturesinRadius(
       MY_LOCATION.content?.latlng,
       wiorMeldingen.content.features,
-      1 // KM
+      WITHIN_RADIUS_KM
     );
     const filteredFeatures = filterDatasetFeatures(
       featuresInRadius,
