@@ -125,6 +125,11 @@ export default function Stadspas() {
             hieronder ook hun Stadspassen.
           </p>
         )}
+         <p>
+          <Linkd external={true} href={ExternalUrls.STADSPAS}>
+            Meer informatie over de Stadspas
+          </Linkd>
+        </p>
         <MaintenanceNotifications page="stadspas" />
         {isError(WPI_STADSPAS) && (
           <Alert type="warning">
