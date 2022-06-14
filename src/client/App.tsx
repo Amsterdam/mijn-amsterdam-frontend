@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import {
   BrowserRouter,
   matchPath,
   Redirect,
   Route,
   Switch,
-  useLocation
+  useHistory
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -25,7 +25,7 @@ import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry,
+  useDeeplinkEntry, useDeeplinkRedirect
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
@@ -48,7 +48,6 @@ const StadspasAanvraagDetail = lazy(
 const StadspasDetail = lazy(
   () => import('./pages/StadspasDetail/StadspasDetail')
 );
-
 const InkomenDetailBbz = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailBbz')
 );
@@ -61,9 +60,7 @@ const InkomenDetailTozo = lazy(
 const InkomenDetailUitkering = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailUitkering')
 );
-
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-
 const MyNotifications = lazy(
   () => import('./pages/MyNotifications/MyNotifications')
 );
@@ -77,7 +74,6 @@ const GarbageInformation = lazy(
 );
 const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
 const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
-
 const InkomenSpecificaties = lazy(
   () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
 );
@@ -94,9 +90,7 @@ const VergunningDetail = lazy(
   () => import('./pages/VergunningDetail/VergunningDetail')
 );
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
-
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
-
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 function AppNotAuthenticated() {
@@ -134,12 +128,20 @@ function AppAuthenticated() {
   useTipsApi();
   usePageChange();
 
-  const location = useLocation();
+  const history = useHistory();
   const profileType = useProfileTypeValue();
 
   const isNoHeroRoute = NoHeroRoutes.some((route) =>
-    matchPath(location.pathname, { path: route })
+    matchPath(history.location.pathname, { path: route })
   );
+
+  const redirectAfterLogin = useDeeplinkRedirect();
+
+  useEffect(() => {
+    if (redirectAfterLogin && redirectAfterLogin !== '/') {
+      history.push(redirectAfterLogin);
+    }
+  }, [redirectAfterLogin, history])
 
   return (
     <>
