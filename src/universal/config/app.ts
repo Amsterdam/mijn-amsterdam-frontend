@@ -32,7 +32,7 @@ export const FeatureToggle = {
   erfpachtV2EndpointActive: true,
   subsidieActive: true,
   wiorMeldingen: true,
-  parkerenActive: !IS_PRODUCTION,
+  parkerenActive: true,
   bekendmakingenDatasetActive: true,
   evenementenDatasetActive: false,
 };
