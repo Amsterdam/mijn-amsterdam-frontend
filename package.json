@@ -37,6 +37,9 @@
     "not ie > 0",
     "not op_mini all"
   ],
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
   "dependencies": {
     "@amsterdam/asc-assets": "^0.35.0",
     "@amsterdam/react-maps": "^0.12.0",
