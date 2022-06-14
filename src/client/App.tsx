@@ -6,7 +6,7 @@ import {
   Redirect,
   Route,
   Switch,
-  useLocation
+  useHistory
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -21,7 +21,7 @@ import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry,
+  useDeeplinkEntry, useDeeplinkRedirect
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
