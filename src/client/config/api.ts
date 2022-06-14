@@ -28,8 +28,13 @@ export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
 }/eherkenning/login`;
+
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
-export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
+
+export const AUTH_API_URL_EHERKENNING = `${
+  BFF_API_BASE_URL + AUTH_PATH
+}/eherkenning/check`;
+export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/check`;
 
 export const loginUrlByAuthMethod = {
   eherkenning: LOGIN_URL_EHERKENNING,

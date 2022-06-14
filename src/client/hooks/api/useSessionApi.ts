@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
 import { AuthProfile } from '../../../server/helpers/app';
 import { ApiSuccessResponse } from '../../../universal/helpers';
@@ -6,11 +7,15 @@ import {
   ApiErrorResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
+import {
+  AUTH_API_URL_DIGID,
+  AUTH_API_URL_EHERKENNING,
+  LOGOUT_URL,
+} from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { ApiRequestOptions, useDataApi } from './useDataApi';
+import { useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -41,10 +46,6 @@ export const INITIAL_SESSION_STATE: SessionState = {
   logout: () => void 0,
 };
 
-const requestOptions: ApiRequestOptions = {
-  url: AUTH_API_URL,
-};
-
 type SessionResponseData =
   | ApiSuccessResponse<SessionData>
   | ApiErrorResponse<SessionData>;
@@ -55,6 +56,14 @@ export const sessionAtom = atom<SessionState>({
 });
 
 export function useSessionApi() {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const requestOptions = {
+    url:
+      params.get('authMethod') === 'eherkenning'
+        ? AUTH_API_URL_EHERKENNING
+        : AUTH_API_URL_DIGID,
+  };
   const [sessionResponse, refetch] = useDataApi<SessionResponseData>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)
@@ -82,7 +91,14 @@ export function useSessionApi() {
       isLoading,
       isDirty,
       isPristine,
-      refetch: () => refetch({ ...requestOptions, postpone: false }),
+      refetch: () =>
+        refetch({
+          url:
+            sessionData.authMethod === 'eherkenning'
+              ? AUTH_API_URL_EHERKENNING
+              : AUTH_API_URL_DIGID,
+          postpone: false,
+        }),
       logout: () => logoutSession(),
     }));
   }, [

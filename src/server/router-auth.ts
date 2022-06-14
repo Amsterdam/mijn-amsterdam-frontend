@@ -8,6 +8,7 @@ import {
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
+import { axiosRequest } from './helpers';
 import {
   decodeOIDCToken,
   getAuth,
@@ -44,18 +45,46 @@ router.use(
   auth(oidcConfigEherkenning)
 );
 
-router.use(BffEndpoints.AUTH_BASE_SSO, nocache, (req, res) => {
-  if (req.query.authMethod === 'eherkenning') {
-    return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+router.use(BffEndpoints.AUTH_BASE_SSO, nocache, async (req, res) => {
+  const authMethod = req.query.authMethod;
+
+  switch (authMethod) {
+    case 'digid':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+    case 'eherkenning':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+    default: {
+      // First check if we have a Digid Session at the Identity provider
+      const ssoCheckDigid = await axiosRequest.get(
+        BffEndpoints.AUTH_BASE_SSO_DIGID + '?checkAuthenticated=1',
+        { responseType: 'json' }
+      );
+      if (ssoCheckDigid.data?.content?.isAuthenticated) {
+        return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+      }
+      // Secondly check if we have an Eherkenning Session at the Identity provider
+      const ssoCheckEherkenning = await axiosRequest.get(
+        BffEndpoints.AUTH_BASE_SSO_EHERKENNING + '?checkAuthenticated=1',
+        { responseType: 'json' }
+      );
+      if (ssoCheckEherkenning.data?.content?.isAuthenticated) {
+        return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+      }
+
+      // No sessions found at Identify provider, send user to the front-end
+      return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+    }
   }
-  return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
 });
 
 router.use(
   BffEndpoints.AUTH_BASE_SSO_DIGID,
   attemptSilentLogin(),
   (req, res) => {
-    return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+    if (req.query.checkAuthenticated) {
+      return apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() });
+    }
+    return res.redirect(`${process.env.BFF_FRONTEND_URL}?authMethod=digid`);
   }
 );
 
@@ -63,7 +92,12 @@ router.use(
   BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
   attemptSilentLogin(),
   (req, res) => {
-    return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+    if (req.query.checkAuthenticated) {
+      return apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() });
+    }
+    return res.redirect(
+      `${process.env.BFF_FRONTEND_URL}?authMethod=eherkenning`
+    );
   }
 );
 
@@ -95,6 +129,7 @@ router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
       })
     );
   }
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return sendUnauthorized(res);
 });
 
@@ -108,24 +143,6 @@ router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
       })
     );
   }
-  return sendUnauthorized(res);
-});
-
-// AuthMethod agnostic endpoints
-router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
-  if (hasSessionCookie(req)) {
-    try {
-      const auth = await getAuth(req);
-      return res.redirect(
-        auth.profile.authMethod === 'eherkenning'
-          ? BffEndpoints.AUTH_CHECK_EHERKENNING
-          : BffEndpoints.AUTH_CHECK_DIGID
-      );
-    } catch (error) {
-      Sentry.captureException(error);
-    }
-  }
-
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return sendUnauthorized(res);
 });

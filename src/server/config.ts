@@ -58,7 +58,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'AUTH'
   | 'WMO'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
@@ -85,10 +84,6 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  AUTH: {
-    url: `${BFF_MS_API_BASE_URL}/auth/check`,
-    cacheTimeout: 0,
-  },
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   },
