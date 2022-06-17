@@ -59,33 +59,8 @@ router.use(BffEndpoints.AUTH_BASE_SSO, nocache, async (req, res) => {
   }
 });
 
-router.use(
-  BffEndpoints.AUTH_BASE_SSO_DIGID,
-  attemptSilentLogin(),
-  (req, res) => {
-    if (req.query.checkAuthenticated) {
-      return res.send(
-        apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() })
-      );
-    }
-    return res.redirect(`${process.env.BFF_FRONTEND_URL}?authMethod=digid`);
-  }
-);
-
-router.use(
-  BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
-  attemptSilentLogin(),
-  (req, res) => {
-    if (req.query.checkAuthenticated) {
-      return res.send(
-        apiSuccessResult({ isAuthenticated: req.oidc.isAuthenticated() })
-      );
-    }
-    return res.redirect(
-      `${process.env.BFF_FRONTEND_URL}?authMethod=eherkenning`
-    );
-  }
-);
+router.use(BffEndpoints.AUTH_BASE_SSO_DIGID, attemptSilentLogin());
+router.use(BffEndpoints.AUTH_BASE_SSO_EHERKENNING, attemptSilentLogin());
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
