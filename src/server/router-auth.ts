@@ -127,7 +127,7 @@ router.get(
 router.get(
   BffEndpoints.AUTH_CHECK_DIGID,
   (req, res, next) =>
-    req.query.sso ? attemptSilentLogin()(req, res, next) : next(),
+    req.query.sso ? (res.oidc as any).silentLogin() : next(),
   async (req, res) => {
     if (req.oidc.isAuthenticated()) {
       return res.send(
