@@ -59,8 +59,20 @@ router.use(BffEndpoints.AUTH_BASE_SSO, nocache, async (req, res) => {
   }
 });
 
-router.use(BffEndpoints.AUTH_BASE_SSO_DIGID, attemptSilentLogin());
-router.use(BffEndpoints.AUTH_BASE_SSO_EHERKENNING, attemptSilentLogin());
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_DIGID,
+  attemptSilentLogin(),
+  (req, res, next) => {
+    return res.send(req.oidc.isAuthenticated());
+  }
+);
+router.use(
+  BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
+  attemptSilentLogin(),
+  (req, res, next) => {
+    return res.send(req.oidc.isAuthenticated());
+  }
+);
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({

@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
 import { AuthProfile } from '../../../server/helpers/app';
 import { ApiSuccessResponse } from '../../../universal/helpers';
@@ -8,17 +7,14 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import {
-  AUTH_API_URL,
   AUTH_API_URL_DIGID,
-  AUTH_API_URL_DIGID_SSO_CHECK,
   AUTH_API_URL_EHERKENNING,
-  AUTH_API_URL_EHERKENNING_SSO_CHECK,
   LOGOUT_URL,
 } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
-import { ApiRequestOptions, RefetchFunction, useDataApi } from './useDataApi';
+import { ApiRequestOptions, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
