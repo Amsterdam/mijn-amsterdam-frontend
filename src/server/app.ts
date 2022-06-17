@@ -19,7 +19,7 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-
+import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
@@ -48,6 +48,18 @@ const sentryOptions: Sentry.NodeOptions = {
 Sentry.init(sentryOptions);
 
 const app = express();
+
+// set up rate limiter: maximum of five requests per minute
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 // Logging
 app.use(morgan('combined'));

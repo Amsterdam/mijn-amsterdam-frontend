@@ -87,6 +87,7 @@
     "express": "^4.17.2",
     "express-http-proxy": "^1.6.3",
     "express-openid-connect": "^2.5.2",
+    "express-rate-limit": "^6.4.0",
     "flat-cache": "^3.0.4",
     "focus-trap-react": "^8.8.2",
     "fuse.js": "^6.4.6",
