@@ -254,13 +254,7 @@ function getPublicKeyForDevelopment() {
   return JWK.asKey(DEV_JWK_PUBLIC);
 }
 
-export function generateDevSessionCookieValue(
-  authMethod: AuthProfile['authMethod'],
-  userID: string
-) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
+function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   const idToken = jose.JWT.sign(
     {
       [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
@@ -271,9 +265,23 @@ export function generateDevSessionCookieValue(
       algorithm: 'RS256',
     }
   );
+  return idToken;
+}
+
+export function decodeToken(idToken: string) {
+  return jose.JWT.decode(idToken);
+}
+
+export function generateDevSessionCookieValue(
+  authMethod: AuthProfile['authMethod'],
+  userID: string
+) {
+  const uat = (Date.now() / 1000) | 0;
+  const iat = uat;
+  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
 
   const value = encryptDevSessionCookieValue(
-    JSON.stringify({ id_token: idToken }),
+    JSON.stringify({ id_token: signToken(authMethod, userID) }),
     {
       iat,
       uat,

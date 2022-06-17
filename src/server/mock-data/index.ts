@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
-import { ApiUrls } from '../config';
+import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import AFVAL from './json/afvalophaalgebieden.json';
@@ -26,6 +26,7 @@ import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
 import KLACHTEN from './json/klachten.json';
+import { AuthProfile, decodeToken } from '../helpers/app';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -40,8 +41,19 @@ async function loadMockApiResponseJson(data: any) {
 }
 
 function isCommercialUser(config: any) {
-  // TODO: Check profileType / authMethod in Token package here.
-  return config?.headers['xxxxxxxx???'] === 'eherkenning';
+  const authHeader = config?.headers.Authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    try {
+      const tokenData = decodeToken(authHeader.split('Bearer ').pop()) as {
+        aud: string;
+      };
+      return tokenData?.aud === oidcConfigEherkenning.clientID;
+    } catch (error) {
+      // Don't do anything here. For Dev purposes we just try-and-decode and see if we recognize the content of the token. Nothing fancy.
+    }
+  }
+
+  return false;
 }
 
 type MockDataConfig = Record<
