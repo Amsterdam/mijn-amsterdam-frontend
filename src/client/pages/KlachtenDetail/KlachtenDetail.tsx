@@ -44,7 +44,10 @@ export default function KlachtenDetail() {
           </Alert>
         ) : (
           <>
-            <InfoDetail label="Zaaknummer" value={klacht?.id || '-'} />
+            <InfoDetail
+              label="Nummer van uw klacht"
+              value={klacht?.id || '-'}
+            />
             <InfoDetail
               label="Ontvangen op"
               value={

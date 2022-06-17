@@ -54,7 +54,7 @@ exports[`KlachtenDetail No subject or location Matches the Full Page snapshot 1`
         <h3
           class="Heading Heading__tiny Label"
         >
-          Zaaknummer
+          Nummer van uw klacht
         </h3>
         <p
           class="Value"
@@ -149,7 +149,7 @@ exports[`KlachtenDetail Subject and location Matches the Full Page snapshot 1`] 
         <h3
           class="Heading Heading__tiny Label"
         >
-          Zaaknummer
+          Nummer van uw klacht
         </h3>
         <p
           class="Value"
@@ -272,7 +272,7 @@ exports[`KlachtenDetail Subject no location Matches the Full Page snapshot 1`] =
         <h3
           class="Heading Heading__tiny Label"
         >
-          Zaaknummer
+          Nummer van uw klacht
         </h3>
         <p
           class="Value"

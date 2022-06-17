@@ -54,7 +54,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when API gives no result 1`
       <p>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -66,7 +66,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when API gives no result 1`
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over het indienen van klachten
+          Meer informatie over de afhandeling van uw klacht
         </a>
       </p>
       <div
@@ -177,7 +177,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are complaints 1
       <p>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -189,7 +189,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are complaints 1
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over het indienen van klachten
+          Meer informatie over de afhandeling van uw klacht
         </a>
       </p>
     </div>
@@ -230,7 +230,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are complaints 1
                 <th
                   class="DisplayProp"
                 >
-                  Zaaknummer
+                  Nummer van uw klacht
                 </th>
                 <th
                   class="DisplayProp"
@@ -254,7 +254,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are complaints 1
                   <span
                     class="DisplayPropLabel"
                   >
-                    Zaaknummer:
+                    Nummer van uw klacht:
                   </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
@@ -306,7 +306,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are complaints 1
                   <span
                     class="DisplayPropLabel"
                   >
-                    Zaaknummer:
+                    Nummer van uw klacht:
                   </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
@@ -412,7 +412,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are no complaint
       <p>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -424,7 +424,7 @@ exports[`<Klachten /> Matches the Full Page snapshot when there are no complaint
           >
             Chevron-Right.svg
           </svg>
-          Meer informatie over het indienen van klachten
+          Meer informatie over de afhandeling van uw klacht
         </a>
       </p>
     </div>
