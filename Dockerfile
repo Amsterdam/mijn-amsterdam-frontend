@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.13.0 as build-deps
+FROM node:16.15.0 as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
@@ -130,6 +130,9 @@ COPY --from=build-app /app/build-bff /app/build-bff
 # Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
+
+RUN apt-get update \
+  && apt-get install nano
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build

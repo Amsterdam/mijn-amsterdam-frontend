@@ -6,18 +6,21 @@ import { dateSort } from '../../universal/helpers/date';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config';
 import { AuthProfileAndToken } from '../helpers/app';
-import { fetchBELASTINGGenerated } from './belasting';
+import {
+  fetchBelastingGenerated,
+  fetchSubsidieGenerated,
+  fetchMilieuzoneGenerated,
+  fetchErfpachtGenerated,
+} from './simple-connect';
 import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
-import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchKrefiaGenerated } from './krefia';
-import { fetchMILIEUZONEGenerated } from './milieuzone';
-import { fetchSubsidieGenerated } from './subsidie';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { fetchKlachtenGenerated } from './klachten/klachten';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -72,9 +75,9 @@ async function fetchServicesGenerated(
       subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
-      fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+      fetchMilieuzoneGenerated(requestID, authProfileAndToken),
       fetchVergunningenGenerated(requestID, authProfileAndToken),
-      fetchERFPACHTGenerated(requestID, authProfileAndToken),
+      fetchErfpachtGenerated(requestID, authProfileAndToken),
       fetchSubsidieGenerated(requestID, authProfileAndToken),
       fetchMaintenanceNotificationsDashboard(requestID),
       fetchToeristischeVerhuurGenerated(
@@ -118,18 +121,20 @@ async function fetchServicesGenerated(
     fetchKrefiaGeneratedResult,
     fetchWiorGeneratedResult,
     fetchWpiNotificationsResult,
+    klachtenGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(requestID, authProfileAndToken),
-    fetchBELASTINGGenerated(requestID, authProfileAndToken),
-    fetchMILIEUZONEGenerated(requestID, authProfileAndToken),
+    fetchBelastingGenerated(requestID, authProfileAndToken),
+    fetchMilieuzoneGenerated(requestID, authProfileAndToken),
     fetchVergunningenGenerated(requestID, authProfileAndToken),
-    fetchERFPACHTGenerated(requestID, authProfileAndToken),
+    fetchErfpachtGenerated(requestID, authProfileAndToken),
     fetchSubsidieGenerated(requestID, authProfileAndToken),
     fetchMaintenanceNotificationsDashboard(requestID),
     fetchToeristischeVerhuurGenerated(requestID, authProfileAndToken),
     fetchKrefiaGenerated(requestID, authProfileAndToken),
     fetchWiorGenerated(requestID, authProfileAndToken, profileType),
     fetchWpiNotifications(requestID, authProfileAndToken),
+    fetchKlachtenGenerated(requestID, authProfileAndToken),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -147,6 +152,7 @@ async function fetchServicesGenerated(
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
   const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
   const wpiGenerated = getSettledResult(fetchWpiNotificationsResult);
+  const klachtenNotificationsResult = getSettledResult(klachtenGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -160,6 +166,7 @@ async function fetchServicesGenerated(
     krefiaGenerated,
     wiorGenerated,
     wpiGenerated,
+    klachtenNotificationsResult,
   ]);
 }
 

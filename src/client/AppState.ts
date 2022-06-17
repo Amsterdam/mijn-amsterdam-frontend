@@ -65,6 +65,8 @@ export const PRISTINE_APPSTATE: AppState = {
     footer: null,
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
+
+  KLACHTEN: apiPristineResult([]),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

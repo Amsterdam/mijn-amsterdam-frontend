@@ -23,7 +23,7 @@ if (
 }
 
 const release = `mijnamsterdam-frontend@${
-  process.env.REACT_APP_VERSION || 'latest-unknown'
+  (process.env.REACT_APP_VERSION || 'latest-unknown')
 }`;
 console.info('App version: ' + release);
 
@@ -38,6 +38,13 @@ Sentry.init({
   release,
   tracesSampleRate: 0.5,
   autoSessionTracking: false,
+  beforeSend(event, hint) {
+    if (ENV === 'development') {
+      console.log(hint);
+      return null;
+    }
+    return event;
+  },
 });
 
 const sendToSentry = (error: Error, info: { componentStack: string }) => {

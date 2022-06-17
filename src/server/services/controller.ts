@@ -11,17 +11,20 @@ import {
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchAKTES } from './aktes';
-import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchERFPACHT } from './erfpacht';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
+import { fetchKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
-import { fetchMILIEUZONE } from './milieuzone';
-import { fetchSubsidie } from './subsidie';
+import {
+  fetchBelasting,
+  fetchSubsidie,
+  fetchMilieuzone,
+  fetchErfpacht,
+} from './simple-connect';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -96,10 +99,11 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
   fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
-const BELASTINGEN = callService(fetchBELASTING);
-const MILIEUZONE = callService(fetchMILIEUZONE);
-const ERFPACHT = callService(fetchERFPACHT);
+const BELASTINGEN = callService(fetchBelasting);
+const MILIEUZONE = callService(fetchMilieuzone);
+const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
+const KLACHTEN = callService(fetchKlachten);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
@@ -130,6 +134,7 @@ const SERVICES_INDEX = {
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
   SUBSIDIE,
+  KLACHTEN,
   NOTIFICATIONS,
 };
 
@@ -187,6 +192,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   'private-commercial': {
     AFVAL,
@@ -211,6 +217,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   commercial: {
     AFVAL,

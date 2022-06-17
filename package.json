@@ -37,6 +37,9 @@
     "not ie > 0",
     "not op_mini all"
   ],
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
   "dependencies": {
     "@amsterdam/asc-assets": "^0.35.0",
     "@amsterdam/react-maps": "^0.12.0",
@@ -63,6 +66,7 @@
     "@types/memory-cache": "^0.2.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.19",
+    "@types/node-jose": "^1.1.10",
     "@types/proj4": "^2.5.2",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
@@ -93,6 +97,7 @@
     "fuse.js": "^6.4.6",
     "http-proxy-middleware": "^2.0.1",
     "include-media": "^1.4.10",
+    "jose": "^2.0.5",
     "js-cookie": "^3.0.1",
     "jw-paginate": "^1.0.4",
     "leaflet": "^1.7.1",
@@ -102,6 +107,7 @@
     "memoizee": "^0.4.15",
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
+    "node-jose": "^2.1.1",
     "node-sass": "^7.0.1",
     "prettier": "^2.5.1",
     "proj4": "^2.7.5",
@@ -120,7 +126,7 @@
     "slugme": "^1.1.1",
     "supercluster": "^7.1.4",
     "throttle-debounce": "^3.0.1",
-    "typescript": "^4.5.4",
+    "typescript": "^4.7.3",
     "uid-safe": "^2.1.5",
     "use-debounce": "^7.0.1"
   },

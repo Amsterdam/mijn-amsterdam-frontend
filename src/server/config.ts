@@ -1,9 +1,22 @@
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
+import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+
+export function getCertificateSync(path?: string) {
+  if (!path) {
+    return '';
+  }
+  let fileContents: string = '';
+  try {
+    fileContents = fs.readFileSync(path).toString();
+  } catch (error) {}
+
+  return fileContents;
+}
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
@@ -67,7 +80,7 @@ export type SourceApiKey =
   | 'WPI_SPECIFICATIES'
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
-  | 'MILIEUZONE'
+  | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
@@ -82,7 +95,8 @@ export type SourceApiKey =
   | 'KVK'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
-  | 'KREFIA';
+  | 'KREFIA'
+  | 'KLACHTEN';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -103,12 +117,20 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
   },
   BELASTINGEN: {
-    url: `${BFF_MS_API_BASE_URL}/belastingen/get`,
+    url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SERVER_ADP_ROOT_CA) : [],
+    }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
-  MILIEUZONE: {
-    url: `${BFF_MS_API_BASE_URL}/milieu/get`,
+  CLEOPATRA: {
+    url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
+    method: 'POST',
+    httpsAgent: new https.Agent({
+      cert: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
+      key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
+    }),
   },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
@@ -143,9 +165,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.aktesActive,
   },
   ERFPACHT: {
-    url: `${BFF_MS_API_BASE_URL}/erfpacht${
-      FeatureToggle.erfpachtV2EndpointActive ? '/v2' : ''
-    }/check-erfpacht`,
+    url: process.env.BFF_MIJN_ERFPACHT_API_URL,
   },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
@@ -155,21 +175,38 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
-    url: `${BFF_MS_API_BASE_URL}/vakantie-verhuur/get`,
+    url: process.env.BFF_LVV_API_URL,
+    headers: {
+      'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
+      'Content-Type': 'application/json',
+    },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SERVER_ADP_ROOT_CA) : [],
+    }),
   },
   KREFIA: {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
-    url: `${BFF_MS_API_BASE_URL}/subsidies/summary`,
+    url: `${process.env.BFF_SISA_API_ENDPOINT}`,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
+    }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
+    }),
+  },
+  KLACHTEN: {
+    url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
+    method: 'POST',
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
     }),
   },
 };
@@ -182,7 +219,7 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 );
 
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
-  return Object.assign(ApiConfig[name] || {}, config || {});
+  return Object.assign({}, ApiConfig[name] || {}, config || {});
 }
 
 export const RelayPathsAllowed = {

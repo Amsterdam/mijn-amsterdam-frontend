@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KlachtenDetail No subject or location Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Klachten"
+          class="ChapterIcon"
+          fill="black"
+        >
+          IconKlachten.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/klachten"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Klachten
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Klacht
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Zaaknummer
+        </h3>
+        <p
+          class="Value"
+        >
+          36046
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Ontvangen op
+        </h3>
+        <p
+          class="Value"
+        >
+          05 mei 2022
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Wat is de klacht
+        </h3>
+        <p
+          class="Value"
+        >
+          Dear Amsterdam Municipality
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`KlachtenDetail Subject and location Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Klachten"
+          class="ChapterIcon"
+          fill="black"
+        >
+          IconKlachten.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/klachten"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Klachten
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Boosterprik
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Zaaknummer
+        </h3>
+        <p
+          class="Value"
+        >
+          34994
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Ontvangen op
+        </h3>
+        <p
+          class="Value"
+        >
+          13 april 2022
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Wat is de klacht
+        </h3>
+        <p
+          class="Value"
+        >
+          Een klacht.
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Wat is de locatie waar de klacht is ontstaan?
+        </h3>
+        <p
+          class="Value"
+        >
+          RAI
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Wat wilt u dat de gemeente gaat doen naar aanleiding van uw klacht?
+        </h3>
+        <p
+          class="Value"
+        >
+          Boosterprik
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`KlachtenDetail Subject no location Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Klachten"
+          class="ChapterIcon"
+          fill="black"
+        >
+          IconKlachten.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/klachten"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Klachten
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Test voor decentrale toewijzing
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Zaaknummer
+        </h3>
+        <p
+          class="Value"
+        >
+          36049
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Ontvangen op
+        </h3>
+        <p
+          class="Value"
+        >
+          30 mei 2022
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Wat is de klacht
+        </h3>
+        <p
+          class="Value"
+        >
+          Dit is de omschrijving van de klacht
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

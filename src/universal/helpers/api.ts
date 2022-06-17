@@ -115,8 +115,12 @@ export function apiSuccessResult<T>(
 
 export function getFailedDependencies<T>(results: T) {
   let failedDependencies: FailedDependencies | undefined = undefined;
+
   for (const [key, apiResult] of Object.entries(results)) {
-    if (apiResult.status === 'ERROR') {
+    if (
+      apiResult.status === 'ERROR' ||
+      apiResult.status === 'DEPENDENCY_ERROR'
+    ) {
       if (!failedDependencies) {
         failedDependencies = {};
       }
@@ -154,12 +158,11 @@ export function apiDependencyError(
         response.status === 'ERROR' ||
         response.status === 'DEPENDENCY_ERROR'
       ) {
-        acc += `[${key}] ${response.message} ${
-          response.sentry ? `\nsentry: ${response.sentry}` : ''
-        }\n`;
+        const error = response.sentry ? `\nsentry: ${response.sentry}` : '';
+        acc += `[${key}] ${response.message} ${error} `;
       }
       return acc;
-    }, ``),
+    }, ''),
     content: null,
     status: 'DEPENDENCY_ERROR',
   };

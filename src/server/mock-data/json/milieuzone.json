@@ -1,30 +1,32 @@
-{
-  "content": {
-    "isKnown": true,
-    "meldingen": [
-      {
-        "datePublished": "2020-02-14",
-        "description": "Vanaf 11-2020 wordt de Milieuzone voor personenauto's uitgebreid.",
-        "id": "-M2",
-        "priority": 1,
-        "title": "Uitbreiding milieuzones",
-        "link": {
-          "title": "Verleng uw ontheffing",
-          "to": "https://example.com/ontheffingen-milieuzone.php"
-        }
-      },
-      {
-        "datePublished": "2021-02-14",
-        "description": "Vanaf 11-2020 Is uw ontheffing geldig.",
-        "id": "-F3",
-        "priority": 1,
-        "title": "Aanvraag toegekend",
-        "link": {
-          "title": "Verleng uw ontheffing",
-          "to": "https://example.com/ontheffingen-milieuzone.php"
-        }
-      }
-    ]
+[
+  {
+    "thema": "Milieuzone",
+    "categorie": "M1",
+    "prioriteit": 0,
+    "datum": "2019-03-13",
+    "titel": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
+    "omschrijving": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
+    "url": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
+    "urlNaam": "Betaal direct"
   },
-  "status": "OK"
-}
+  {
+    "thema": "Milieuzone",
+    "categorie": "M1",
+    "prioriteit": 0,
+    "datum": "2019-03-13",
+    "titel": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
+    "omschrijving": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
+    "url": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2",
+    "urlNaam": "Betaal direct"
+  },
+  {
+    "thema": "Milieuzone",
+    "categorie": "F2",
+    "prioriteit": 50,
+    "datum": "2022-06-07",
+    "titel": "milieuzone.f2.aanvragen_en_ontheffingen.titel",
+    "omschrijving": "milieuzone.f2.aanvragen_en_ontheffingen.omschrijving",
+    "url": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen",
+    "urlNaam": "milieuzone.f2.aanvragen_en_ontheffingen.button"
+  }
+]

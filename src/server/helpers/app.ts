@@ -28,6 +28,7 @@ const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
   profileType: 'private' | 'private-commercial' | 'commercial';
+  id?: string;
 }
 
 export function getAuthProfile(tokenData: TokenData): AuthProfile {
@@ -47,6 +48,7 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
   }
 
   return {
+    id: tokenData[OIDC_TOKEN_ID_ATTRIBUTE[authMethod]],
     authMethod,
     profileType,
   };

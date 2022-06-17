@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import {
   BrowserRouter,
   matchPath,
   Redirect,
   Route,
   Switch,
-  useLocation
+  useHistory
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -14,23 +14,19 @@ import { getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
-import {
-  AutoLogoutDialog,
-  MainFooter,
-  MainHeader,
-} from './components';
+import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry,
+  useDeeplinkEntry, useDeeplinkRedirect
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
-import { default as LandingPage } from './pages/Landing/Landing';
 
+import { default as LandingPage } from './pages/Landing/Landing';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -48,7 +44,6 @@ const StadspasAanvraagDetail = lazy(
 const StadspasDetail = lazy(
   () => import('./pages/StadspasDetail/StadspasDetail')
 );
-
 const InkomenDetailBbz = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailBbz')
 );
@@ -61,9 +56,7 @@ const InkomenDetailTozo = lazy(
 const InkomenDetailUitkering = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailUitkering')
 );
-
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-
 const MyNotifications = lazy(
   () => import('./pages/MyNotifications/MyNotifications')
 );
@@ -77,9 +70,12 @@ const GarbageInformation = lazy(
 );
 const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
 const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
-
 const InkomenSpecificaties = lazy(
   () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
+);
+const Klachten = lazy(() => import('./pages/Klachten/Klachten'));
+const KlachtenDetail = lazy(
+  () => import('./pages/KlachtenDetail/KlachtenDetail')
 );
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -94,9 +90,7 @@ const VergunningDetail = lazy(
   () => import('./pages/VergunningDetail/VergunningDetail')
 );
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
-
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
-
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 function AppNotAuthenticated() {
@@ -134,12 +128,20 @@ function AppAuthenticated() {
   useTipsApi();
   usePageChange();
 
-  const location = useLocation();
+  const history = useHistory();
   const profileType = useProfileTypeValue();
 
   const isNoHeroRoute = NoHeroRoutes.some((route) =>
-    matchPath(location.pathname, { path: route })
+    matchPath(history.location.pathname, { path: route })
   );
+
+  const redirectAfterLogin = useDeeplinkRedirect();
+
+  useEffect(() => {
+    if (redirectAfterLogin && redirectAfterLogin !== '/') {
+      history.push(redirectAfterLogin);
+    }
+  }, [redirectAfterLogin, history])
 
   return (
     <>
@@ -216,6 +218,11 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route
+            path={AppRoutes['KLACHTEN/KLACHT']}
+            component={KlachtenDetail}
+          />
+          <Route path={AppRoutes.KLACHTEN} component={Klachten} />
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={[

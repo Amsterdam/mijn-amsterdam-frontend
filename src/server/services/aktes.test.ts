@@ -17,7 +17,7 @@ describe('Aktes service', () => {
     axMock.onGet(ApiUrls.AKTES).replyOnce(200, DUMMY_RESPONSE);
 
     const rs = await fetchAKTES('x', {
-      profile: { authMethod: 'digid', profileType: 'private' },
+      profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },
       token: 'xxxx',
     });
 
@@ -31,7 +31,7 @@ describe('Aktes service', () => {
     axMock.onGet(ApiUrls.AKTES).replyOnce(500, []);
 
     const rs = await fetchAKTES('x', {
-      profile: { authMethod: 'digid', profileType: 'private' },
+      profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },
       token: 'xxxx',
     });
 

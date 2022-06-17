@@ -4,25 +4,22 @@ import * as config from '../config';
 import {
   addServiceResultHandler,
   clearRequestCache,
+  combineCookieChunks,
+  decodeOIDCToken,
   getAuth,
+  getAuthProfile,
+  getOIDCToken,
   getProfileType,
+  isRelayAllowed,
+  isSessionCookieName,
   queryParams,
+  requestID,
   send404,
   sendMessage,
-  requestID,
-  getAuthProfile,
-  TokenData,
   sendUnauthorized,
-  getOIDCToken,
-  decodeOIDCToken,
-  isRelayAllowed,
-  generateDevSessionCookieValue,
-  combineCookieChunks,
-  isSessionCookieName,
+  TokenData,
 } from './app';
 import { cache } from './source-api-request';
-import nock from 'nock';
-import { BFF_PORT } from '../config';
 
 const { oidcConfigDigid, oidcConfigEherkenning, OIDC_SESSION_COOKIE_NAME } =
   config;
@@ -71,6 +68,7 @@ describe('server/helpers/app', () => {
       Object {
         "profile": Object {
           "authMethod": "eherkenning",
+          "id": "123-eherkenning-321",
           "profileType": "commercial",
         },
         "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJ1cm46ZXRvZWdhbmc6MS45OkVudGl0eUNvbmNlcm5lZElEOkt2S25yIjoiMTIzLWVoZXJrZW5uaW5nLTMyMSIsImF1ZCI6InRlc3QxIiwiaWF0IjoxNjUwNjIwMTMzfQ.qF2JLBflk_ajk11jiyrZqcLklB618aSVjnazeDAyljdRJMN_vUUqVZBNLgLI0CBZ_jTYQwbl2OQsizGIdp9_yUadu1FhU4xGHYFBXvtLmdUk049bLccJoFIFYrvJq9yMAUhhRrBLjUUPJN3M8KijF7JKG74QYwyKyL-MzvsvKOqQNLJKUgQ4wUbsY2n9SjPcWGtB6rvkHrbfGGZZmdozIKXWmsQMYP41cEL9E0S15iF78Zko8jaWiV9oUHNqy3CfyZJz-K0dCbPAhs73q_7NqZQF1UoRgw8cQCVpfami521KpS7U6PK6oYlrigF1sHhsN_MuCwVHeOtu_BvBo_IFMQ",
@@ -101,6 +99,7 @@ describe('server/helpers/app', () => {
       Object {
         "profile": Object {
           "authMethod": "digid",
+          "id": "000-digid-999",
           "profileType": "private",
         },
         "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJzdWIiOiIwMDAtZGlnaWQtOTk5IiwiYXVkIjoidGVzdDIiLCJpYXQiOjE2NTA2MTk4NDV9.QvPW0CYDnHiX77VZVAUmXahrQeJW1D0IrR4GBTyayH83nv3xe-nHnUMsXIchuYozmDwnF36CBsd1mm-C16x0PK1QD6-Fu-2PAekMxKaWpRWcI6ICOgliEVyV6a2B_KI3ZHshjlXxLyh59VL_2NegKZBQWEvTsFazn0fzbPmoKM3SVj19IiLug8Us4n-jYvzD8kplGzvWVujl4-1VYeNvn0vSfBrcSdLtGPJI7fcJafPxJs6gY2mrpwyeQ3Pan7DEEhXOqucjs81x9cwRRf4_JbRkehLKCwxb4u1USSusqTEqGhGQm7JGJlD4nZIdScNG7Xyx9LQcGm0EfnrjXOTGcw",
@@ -114,33 +113,39 @@ describe('server/helpers/app', () => {
     {
       const profile = getAuthProfile({
         aud: 'test1',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning]: 'EHERKENNING-KVK',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'eherkenning',
         profileType: 'commercial',
+        id: 'EHERKENNING-KVK',
       });
     }
 
     {
       const profile = getAuthProfile({
         aud: 'test2',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'digid',
         profileType: 'private',
+        id: 'DIGID-BSN',
       });
     }
 
     {
       const profile = getAuthProfile({
         aud: 'test_x',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'digid',
         profileType: 'private',
+        id: 'DIGID-BSN',
       });
     }
   });
