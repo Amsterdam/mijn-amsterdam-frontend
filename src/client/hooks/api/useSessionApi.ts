@@ -56,7 +56,6 @@ export const sessionAtom = atom<SessionState>({
 
 export function useSessionApi() {
   const requestOptions: ApiRequestOptions = {
-    postpone: true,
     sentryEnabled: false, // Disable Sentry for auth check responses
   };
 
