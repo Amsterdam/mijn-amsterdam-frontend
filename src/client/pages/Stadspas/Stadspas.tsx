@@ -116,14 +116,16 @@ export default function Stadspas() {
         {ChapterTitles.STADSPAS}
       </PageHeading>
       <PageContent>
-        <p>Hieronder vindt u meer informatie over uw eigen Stadspas.</p>
+        <h4>Hoe weet ik of ik een geldige Stadspas heb?</h4>
+        <p>Hieronder staat het Stadspasnummer van uw actieve pas. Dit pasnummer staat ook op de achterkant van uw pas. Staat er op de achterkant van uw pas een ander nummer? Gooi deze Stadspas dan weg. Deze is niet meer actief.</p>
+        <p>Bel <a href="tel:020 252 6000">020 252 6000</a> om een nieuwe Stadspas aan te vragen.</p>
         {!isLoadingStadspas && WPI_STADSPAS.content?.ownerType !== 'kind' && (
           <p>
             Hebt u kinderen of een partner met een Stadspas? Dan ziet u
             hieronder ook hun Stadspassen.
           </p>
         )}
-        <p>
+         <p>
           <Linkd external={true} href={ExternalUrls.STADSPAS}>
             Meer informatie over de Stadspas
           </Linkd>
