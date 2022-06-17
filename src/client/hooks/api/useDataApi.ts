@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
-import { AUTH_API_URL } from '../../config/api';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
@@ -69,7 +68,6 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   responseType: 'json',
   method: 'get',
   sentryEnabled: true,
-  url: AUTH_API_URL,
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {

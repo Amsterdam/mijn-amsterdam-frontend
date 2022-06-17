@@ -7,6 +7,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import {
+  AUTH_API_URL,
   AUTH_API_URL_DIGID,
   AUTH_API_URL_EHERKENNING,
   LOGOUT_URL,
@@ -57,6 +58,7 @@ export const sessionAtom = atom<SessionState>({
 export function useSessionApi() {
   const requestOptions: ApiRequestOptions = {
     sentryEnabled: false, // Disable Sentry for auth check responses
+    url: AUTH_API_URL,
   };
 
   const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
