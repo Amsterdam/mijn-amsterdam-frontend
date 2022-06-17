@@ -4,12 +4,10 @@ import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   BffEndpoints,
-  BFF_PUBLIC_URL,
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_SESSION_COOKIE_NAME,
 } from './config';
-import { axiosRequest } from './helpers';
 import {
   decodeOIDCToken,
   getAuth,

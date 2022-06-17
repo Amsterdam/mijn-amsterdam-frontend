@@ -312,8 +312,8 @@ const oidcConfigBase: ConfigParams = {
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   baseURL: process.env.BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
-  attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login' },
+  attemptSilentLogin: true,
+  authorizationParams: { prompt: 'none' },
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
