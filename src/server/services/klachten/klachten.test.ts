@@ -39,8 +39,8 @@ describe('Klachten', () => {
       expect(res.length).toEqual(apiResponse.List.length);
 
       expect(res[2]).toEqual({
-        inbehandelingSinds: '2022-05-18T00:00:00.000Z',
-        ontvangstDatum: '2022-05-06T00:00:00.000Z',
+        inbehandelingSinds: '2022-06-14T00:00:00.000Z',
+        ontvangstDatum: '2022-06-13T00:00:00.000Z',
         omschrijving: 'Geachte mevrouw, meneer,\r\nEen klacht.',
         gewensteOplossing: '',
         onderwerp: '',
@@ -69,7 +69,7 @@ describe('Klachten', () => {
             Object {
               "gewensteOplossing": "",
               "id": "23054",
-              "inbehandelingSinds": "2022-05-30T00:00:00.000Z",
+              "inbehandelingSinds": "2022-05-06T00:00:00.000Z",
               "link": Object {
                 "title": "Klacht 23054",
                 "to": "/klachten/klacht/23054",
@@ -77,7 +77,7 @@ describe('Klachten', () => {
               "locatie": "",
               "omschrijving": "Dit is de omschrijving van de klacht",
               "onderwerp": "Test voor decentrale toewijzing",
-              "ontvangstDatum": "2022-05-29T00:00:00.000Z",
+              "ontvangstDatum": "2022-04-05T00:00:00.000Z",
             },
             Object {
               "gewensteOplossing": "",
@@ -96,7 +96,7 @@ describe('Klachten', () => {
             Object {
               "gewensteOplossing": "",
               "id": "28032",
-              "inbehandelingSinds": "2022-05-18T00:00:00.000Z",
+              "inbehandelingSinds": "2022-06-14T00:00:00.000Z",
               "link": Object {
                 "title": "Klacht 28032",
                 "to": "/klachten/klacht/28032",
@@ -105,7 +105,7 @@ describe('Klachten', () => {
               "omschrijving": "Geachte mevrouw, meneer,
         Een klacht.",
               "onderwerp": "",
-              "ontvangstDatum": "2022-05-06T00:00:00.000Z",
+              "ontvangstDatum": "2022-06-13T00:00:00.000Z",
             },
             Object {
               "gewensteOplossing": "Boosterprik",
@@ -118,7 +118,7 @@ describe('Klachten', () => {
               "locatie": "RAI",
               "omschrijving": "Nog een klacht.",
               "onderwerp": "Boosterprik",
-              "ontvangstDatum": "2022-04-13T00:00:00.000Z",
+              "ontvangstDatum": "2022-02-13T00:00:00.000Z",
             },
             Object {
               "gewensteOplossing": "",
@@ -131,7 +131,7 @@ describe('Klachten', () => {
               "locatie": "Weesperplein",
               "omschrijving": "Nog een andere klacht.",
               "onderwerp": "",
-              "ontvangstDatum": "2022-04-12T00:00:00.000Z",
+              "ontvangstDatum": "2022-01-12T00:00:00.000Z",
             },
           ],
           "status": "OK",
