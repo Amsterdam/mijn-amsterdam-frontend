@@ -92,43 +92,33 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
   });
 });
 
-router.get(
-  BffEndpoints.AUTH_CHECK_EHERKENNING,
-  (req, res, next) =>
-    req.query.sso ? attemptSilentLogin()(req, res, next) : next(),
-  async (req, res) => {
-    if (req.oidc.isAuthenticated()) {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: 'commercial',
-          authMethod: 'eherkenning',
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
+router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(
+      apiSuccessResult({
+        isAuthenticated: true,
+        profileType: 'commercial',
+        authMethod: 'eherkenning',
+      })
+    );
   }
-);
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+  return sendUnauthorized(res);
+});
 
-router.get(
-  BffEndpoints.AUTH_CHECK_DIGID,
-  (req, res, next) =>
-    req.query.sso ? (res.oidc as any).silentLogin() : next(),
-  async (req, res) => {
-    if (req.oidc.isAuthenticated()) {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: 'private',
-          authMethod: 'digid',
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
+router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    return res.send(
+      apiSuccessResult({
+        isAuthenticated: true,
+        profileType: 'private',
+        authMethod: 'digid',
+      })
+    );
   }
-);
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+  return sendUnauthorized(res);
+});
 
 // AuthMethod agnostic endpoints
 router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
