@@ -56,7 +56,10 @@ export default function KlachtenDetail() {
                   : '-'
               }
             />
-            <InfoDetail label="Wat is de klacht" value={klacht?.omschrijving} />
+            <InfoDetail
+              label="Wat is de klacht?"
+              value={klacht?.omschrijving}
+            />
             {klacht?.locatie && (
               <InfoDetail
                 label="Wat is de locatie waar de klacht is ontstaan?"
