@@ -277,10 +277,11 @@ export async function fetchBbz(
       bbzRequests.push(requestProcessUpdated);
     });
 
-    // Check if we have  a 'lopende' aanvraag, sort all needed steps into a new request object
-    if (isBbzActive(bbzRequests[0])) {
+    // Check if we have  a 'lopende' aanvraag if so sort all needed steps into a new request object
+    const initialRequest = bbzRequests[0];
+    if (isBbzActive(initialRequest)) {
       const openBbzRequest = {
-        ...bbzRequests[0],
+        ...initialRequest,
         statusId: 'aanvraag',
         decision: null,
         dateEnd: null,
@@ -304,7 +305,7 @@ export async function fetchBbz(
       );
 
       // Do the same in reverse for the other request.
-      bbzRequests[0].steps = bbzRequests[0].steps.filter(
+      initialRequest.steps = initialRequest.steps.filter(
         (s) => new Date(s.datePublished) < requestDate
       );
 
