@@ -753,6 +753,20 @@
           ],
           "id": "besluit",
           "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-06-20T00:00:00.000Z",
+          "documents": [
+            {
+              "datePublished": "2022-06-20T17:20:04+02:00",
+              "dcteId": "12245844",
+              "id": "4400009865",
+              "title": "Aanvraag Bbz\n20 juni 2022 17:20",
+              "url": "/wpi/document?id=4400009865&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
         }
       ],
       "title": "Bbz"

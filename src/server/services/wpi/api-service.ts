@@ -29,6 +29,7 @@ import {
   addLink,
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
+  isBbzActive,
   isRequestProcessActual,
   transformToStatusLine,
 } from './helpers';
@@ -97,7 +98,7 @@ export async function fetchRequestProcess(
 
   if (response.status === 'OK') {
     // Filter the response at the end, this way we can use the requestData caching. For example Stadspas and Bijstandsuitkering aanvragen are combined in one api response.
-    // In the BFF we want to organize this data into 2 streams (stadspas/aanvraag and bijstand/aanvraag) beloning to 2 separate themse in the front-end.
+    // In the BFF we want to organize this data into 2 streams (stadspas/aanvraag and bijstand/aanvraag) belonging to 2 separate themes in the front-end.
     // Filtering at this point we don't have to call the api 2 separate times because the local memory cache is utilized.
     const responseFiltered = fetchConfig.filterResponse(response);
     const responseTransformed = statusLineTransformer(
@@ -263,7 +264,7 @@ export async function fetchBbz(
   /**
    * BBZ Is een uitzondering in de sortering vanwege een "Business besluit / onbekende rationale".
    * Mogelijk omdat bij BBZ meerdere aanvragen door elkaar lopen en er geen onderscheid gemaakt kan worden
-   * tussen de vershchillende aanvragen en welke stappen daarbij horen.
+   * tussen de verschillende aanvragen en welke stappen daarbij horen.
    */
   if (bbz.status === 'OK') {
     const bbzRequests: WpiRequestProcess[] = [];
@@ -275,6 +276,45 @@ export async function fetchBbz(
       requestProcessUpdated.steps.reverse();
       bbzRequests.push(requestProcessUpdated);
     });
+
+    // Check if we have  a 'lopende' aanvraag, sort all needed steps into a new request object
+    if (isBbzActive(bbzRequests[0])) {
+      const openBbzRequest = {
+        ...bbzRequests[0],
+        statusId: 'aanvraag',
+        decision: null,
+        dateEnd: null,
+        id: 'nieuw',
+        link: {
+          to: generatePath(AppRoutes['INKOMEN/BBZ'], {
+            version: 3,
+            id: 'nieuw',
+          }),
+          title: 'Bekijk uw aanvraag',
+        },
+      };
+      const requestDate = new Date(
+        openBbzRequest.steps.find((s) => s.status === 'Aanvraag')
+          ?.datePublished || ''
+      );
+
+      // Filter all steps with a date later than or equal to the request date.
+      openBbzRequest.steps = openBbzRequest.steps.filter(
+        (s) => new Date(s.datePublished) >= requestDate
+      );
+
+      // Do the same in reverse for the other request.
+      bbzRequests[0].steps = bbzRequests[0].steps.filter(
+        (s) => new Date(s.datePublished) < requestDate
+      );
+
+      openBbzRequest.dateStart = requestDate.toISOString();
+      openBbzRequest.datePublished =
+        openBbzRequest.steps[openBbzRequest.steps.length - 1].datePublished;
+
+      bbzRequests.push(openBbzRequest);
+    }
+
     return apiSuccessResult<WpiRequestProcess[]>(bbzRequests);
   }
 

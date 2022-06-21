@@ -197,3 +197,15 @@ export function getEAanvraagRequestProcessLabels(
   }
   return labels;
 }
+
+export function isBbzActive(item: WpiRequestProcess) {
+  const aanvraag = item.steps.find((i) => i.status === 'Aanvraag');
+  const besluit = item.steps.find((i) => i.status === 'Besluit');
+
+  if (besluit === undefined || aanvraag === undefined) {
+    return true;
+  }
+
+  //Een Bbz aanvraag beschouwen we als actief als er nog geen besluit is ontvangen na de aanvraag.
+  return new Date(aanvraag.datePublished) > new Date(besluit.datePublished);
+}
