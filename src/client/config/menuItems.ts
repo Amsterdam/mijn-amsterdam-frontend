@@ -1,3 +1,4 @@
+import { generatePath } from 'react-router-dom';
 import {
   AppRoutes,
   Chapter,
@@ -134,7 +135,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.KLACHTEN,
     id: Chapters.KLACHTEN,
-    to: AppRoutes.KLACHTEN,
+    to: generatePath(AppRoutes.KLACHTEN, { page: 1 }),
     profileTypes: ['private', 'private-commercial'],
   },
 ];

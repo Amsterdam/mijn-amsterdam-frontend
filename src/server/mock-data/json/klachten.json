@@ -30,7 +30,7 @@
         "value": "Geachte mevrouw, meneer,\r\nEen klacht."
       },
       "klacht_gewensteoplossing": { "value": "" },
-      "klacht_klachtonderwerp": { "value": "" },
+      "klacht_klachtonderwerp": { "value": "Belastingen" },
       "klacht_id": { "value": "28032" },
       "klacht_locatieadres": { "value": "" }
     },
@@ -52,7 +52,7 @@
         "value": "Nog een andere klacht."
       },
       "klacht_gewensteoplossing": { "value": "" },
-      "klacht_klachtonderwerp": { "value": "" },
+      "klacht_klachtonderwerp": { "value": "14 020" },
       "klacht_id": { "value": "43800" },
       "klacht_locatieadres": { "value": "Weesperplein" }
     },
@@ -74,7 +74,7 @@
         "value": "Dear Amsterdam Municipality,\r\nThank you and kind regards, Sven Carlin"
       },
       "klacht_gewensteoplossing": { "value": "" },
-      "klacht_klachtonderwerp": { "value": "" },
+      "klacht_klachtonderwerp": { "value": "GGD" },
       "klacht_id": { "value": "250566" },
       "klacht_locatieadres": { "value": "" }
     },

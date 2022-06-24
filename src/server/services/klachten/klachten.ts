@@ -52,6 +52,22 @@ function smileDateParser(smileDate: string): string {
   ).toISOString();
 }
 
+// Temporary translation table see MIJN-4781
+function smileSubjectParser(subject: string | null): string {
+  if (!subject) {
+    return '';
+  }
+
+  const translationTable: { [key: string]: string | undefined } = {
+    'Test voor decentrale toewijzing': 'Overlast, onderhoud en afval',
+    '14 020': 'Contact met een medewerker',
+    GGD: 'GGD en Veiligthuis',
+    Belastingen: 'Belastingen en heffingen',
+  };
+
+  return translationTable[subject] ?? subject;
+}
+
 export function transformKlachtenResponse(
   data: SmileSourceResponse
 ): KlachtenResponse {
@@ -75,7 +91,7 @@ export function transformKlachtenResponse(
       ),
       omschrijving: klacht?.klacht_omschrijving.value || '',
       gewensteOplossing: klacht?.klacht_gewensteoplossing.value,
-      onderwerp: klacht?.klacht_klachtonderwerp.value,
+      onderwerp: smileSubjectParser(klacht?.klacht_klachtonderwerp.value),
       locatie: klacht?.klacht_locatieadres.value,
       link: {
         to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
