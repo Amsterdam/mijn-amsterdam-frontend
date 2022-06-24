@@ -26,5 +26,11 @@ export type SmileKlacht = {
 };
 
 export interface SmileSourceResponse {
+  rowcount: number;
   List: SmileKlacht[];
+}
+
+export interface KlachtenResponse {
+  aantal: number;
+  klachten: Klacht[];
 }

@@ -5,7 +5,7 @@ import FormData from 'form-data';
 import { AuthProfileAndToken } from './../../helpers/app';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { Klacht, SmileSourceResponse } from './types';
+import { Klacht, KlachtenResponse, SmileSourceResponse } from './types';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -13,7 +13,9 @@ import {
 import { MyNotification } from '../../../universal/types';
 import { Chapters } from '../../../universal/config';
 
-function getDataForKlachten(bsn: string) {
+const DEFAULT_PAGE_SIZE = 20;
+
+function getDataForKlachten(bsn: string, page: number) {
   const data = new FormData();
   data.append('username', process.env.BFF_SMILE_USERNAME);
   data.append('password', process.env.BFF_SMILE_PASSWORD);
@@ -28,6 +30,8 @@ function getDataForKlachten(bsn: string) {
       bsn +
       "'  AND klacht.datumontvangstklacht > Session.NOW[-1,year]"
   );
+  data.append('pagesize', DEFAULT_PAGE_SIZE);
+  data.append('page', page);
   data.append('orderbys', 'klacht_id desc');
 
   return data;
@@ -48,12 +52,17 @@ function smileDateParser(smileDate: string): string {
   ).toISOString();
 }
 
-export function transformKlachtenResponse(data: SmileSourceResponse): Klacht[] {
+export function transformKlachtenResponse(
+  data: SmileSourceResponse
+): KlachtenResponse {
   if (!Array.isArray(data?.List)) {
-    return [];
+    return {
+      aantal: 0,
+      klachten: [],
+    };
   }
 
-  return data.List.map((klacht) => {
+  const klachten = data.List.map((klacht) => {
     const id = klacht.klacht_id.value || UID.sync(18);
 
     return {
@@ -76,6 +85,11 @@ export function transformKlachtenResponse(data: SmileSourceResponse): Klacht[] {
       },
     };
   });
+
+  return {
+    aantal: data.rowcount,
+    klachten,
+  };
 }
 
 function createKlachtNotification(klacht: Klacht): MyNotification {
@@ -94,13 +108,14 @@ function createKlachtNotification(klacht: Klacht): MyNotification {
   return notification;
 }
 
-export async function fetchKlachten(
+async function fetchKlachten(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  page: number = 1
 ) {
-  const data = getDataForKlachten(authProfileAndToken.profile.id!);
+  const data = getDataForKlachten(authProfileAndToken.profile.id!, page);
 
-  return requestData<Klacht[]>(
+  return requestData<KlachtenResponse>(
     getApiConfig('KLACHTEN', {
       transformResponse: transformKlachtenResponse,
       data,
@@ -110,11 +125,51 @@ export async function fetchKlachten(
   );
 }
 
+export async function fetchAllKlachten(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  let page = 1;
+  const result: KlachtenResponse = {
+    aantal: 0,
+    klachten: [],
+  };
+
+  const initalResponse = await fetchKlachten(
+    requestID,
+    authProfileAndToken,
+    page
+  );
+
+  if (initalResponse.status === 'OK') {
+    result.aantal = initalResponse.content.aantal;
+    result.klachten = initalResponse.content.klachten;
+
+    while (result.klachten.length < result.aantal) {
+      const response = await fetchKlachten(
+        requestID,
+        authProfileAndToken,
+        (page += 1)
+      );
+
+      if (response.status === 'OK') {
+        result.klachten = result.klachten.concat(response.content.klachten);
+      } else {
+        return apiDependencyError({ response });
+      }
+    }
+
+    return apiSuccessResult<KlachtenResponse>(result);
+  }
+
+  return apiDependencyError({ initalResponse });
+}
+
 export async function fetchKlachtenGenerated(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const KLACHTEN = await fetchKlachten(requestID, authProfileAndToken);
+  const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
 
   if (KLACHTEN.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(KLACHTEN.content)

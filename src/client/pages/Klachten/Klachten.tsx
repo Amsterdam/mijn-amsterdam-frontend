@@ -28,7 +28,7 @@ const DISPLAY_PROPS_KLACHTEN = {
 export default function Klachten() {
   const { KLACHTEN } = useAppStateGetter();
 
-  const items = KLACHTEN.content?.map((k) => ({
+  const items = KLACHTEN.content?.klachten.map((k) => ({
     ...k,
     idAsLink: k.id,
     ontvangstDatum: defaultDateFormat(k.ontvangstDatum),

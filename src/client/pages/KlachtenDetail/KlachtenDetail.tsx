@@ -20,7 +20,9 @@ export default function KlachtenDetail() {
   const { KLACHTEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const klacht = KLACHTEN.content?.find((klacht: Klacht) => klacht.id === id);
+  const klacht = KLACHTEN.content?.klachten.find(
+    (klacht: Klacht) => klacht.id === id
+  );
 
   const noContent = !isLoading(KLACHTEN) && !klacht;
 

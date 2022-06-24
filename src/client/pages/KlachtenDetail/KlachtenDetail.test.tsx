@@ -9,47 +9,50 @@ import KlachtenDetail from './KlachtenDetail';
 const testState: any = {
   KLACHTEN: {
     status: 'OK',
-    content: [
-      {
-        gewensteOplossing: null,
-        inbehandelingSinds: '2022-05-30T00:00:00.000Z',
-        locatie: null,
-        omschrijving: 'Dit is de omschrijving van de klacht',
-        onderwerp: 'Test voor decentrale toewijzing',
-        ontvangstDatum: '2022-05-30T00:00:00.000Z',
-        id: '36049',
-        link: {
-          title: 'Klacht 36049',
-          to: '/klachten/klacht/36049',
+    content: {
+      klachten: [
+        {
+          gewensteOplossing: null,
+          inbehandelingSinds: '2022-05-30T00:00:00.000Z',
+          locatie: null,
+          omschrijving: 'Dit is de omschrijving van de klacht',
+          onderwerp: 'Test voor decentrale toewijzing',
+          ontvangstDatum: '2022-05-30T00:00:00.000Z',
+          id: '36049',
+          link: {
+            title: 'Klacht 36049',
+            to: '/klachten/klacht/36049',
+          },
         },
-      },
-      {
-        gewensteOplossing: null,
-        inbehandelingSinds: '2022-05-18T00:00:00.000Z',
-        locatie: null,
-        omschrijving: 'Dear Amsterdam Municipality',
-        onderwerp: null,
-        ontvangstDatum: '2022-05-05T00:00:00.000Z',
-        id: '36046',
-        link: {
-          title: 'Klacht 36046',
-          to: '/klachten/klacht/36046',
+        {
+          gewensteOplossing: null,
+          inbehandelingSinds: '2022-05-18T00:00:00.000Z',
+          locatie: null,
+          omschrijving: 'Dear Amsterdam Municipality',
+          onderwerp: null,
+          ontvangstDatum: '2022-05-05T00:00:00.000Z',
+          id: '36046',
+          link: {
+            title: 'Klacht 36046',
+            to: '/klachten/klacht/36046',
+          },
         },
-      },
-      {
-        inbehandelingSinds: '2022-04-14T00:00:00.000Z',
-        ontvangstDatum: '2022-04-13T00:00:00.000Z',
-        omschrijving: 'Een klacht.',
-        gewensteOplossing: 'Boosterprik',
-        onderwerp: 'Boosterprik',
-        id: '34994',
-        locatie: 'RAI',
-        link: {
-          to: '/klachten/klacht/34994',
-          title: 'Klacht 34994',
+        {
+          inbehandelingSinds: '2022-04-14T00:00:00.000Z',
+          ontvangstDatum: '2022-04-13T00:00:00.000Z',
+          omschrijving: 'Een klacht.',
+          gewensteOplossing: 'Boosterprik',
+          onderwerp: 'Boosterprik',
+          id: '34994',
+          locatie: 'RAI',
+          link: {
+            to: '/klachten/klacht/34994',
+            title: 'Klacht 34994',
+          },
         },
-      },
-    ],
+      ],
+      aantal: 3,
+    },
   },
 };
 
