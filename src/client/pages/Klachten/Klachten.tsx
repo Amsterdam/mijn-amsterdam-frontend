@@ -1,3 +1,4 @@
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   addTitleLinkComponent,
@@ -7,6 +8,7 @@ import {
   OverviewPage,
   PageContent,
   PageHeading,
+  Pagination,
   SectionCollapsible,
   Table,
 } from '../../components';
@@ -25,10 +27,32 @@ const DISPLAY_PROPS_KLACHTEN = {
   onderwerp: 'Onderwerp',
 };
 
+export const KLACHTEN_PAGE_SIZE = 20;
+
 export default function Klachten() {
   const { KLACHTEN } = useAppStateGetter();
+  const history = useHistory();
+  const { page = '1' } = useParams<{
+    page?: string;
+  }>();
 
-  const items = KLACHTEN.content?.klachten.map((k) => ({
+  const currentPage = (() => {
+    if (!page) {
+      return 1;
+    }
+    return parseInt(page, 10);
+  })();
+
+  const totalCount = KLACHTEN.content?.aantal || 0;
+
+  const klachtenPaginated = (() => {
+    const startIndex = currentPage - 1;
+    const start = startIndex * KLACHTEN_PAGE_SIZE;
+    const end = start + KLACHTEN_PAGE_SIZE;
+    return KLACHTEN.content?.klachten.slice(start, end) || [];
+  })();
+
+  const items = klachtenPaginated.map((k) => ({
     ...k,
     idAsLink: k.id,
     ontvangstDatum: defaultDateFormat(k.ontvangstDatum),
@@ -83,6 +107,21 @@ export default function Klachten() {
         className={styles.SectionCollapsibleFirst}
       >
         <Table items={klachten} displayProps={DISPLAY_PROPS_KLACHTEN} />
+        {totalCount > KLACHTEN_PAGE_SIZE && (
+          <Pagination
+            className={styles.Pagination}
+            totalCount={KLACHTEN.content?.aantal || 0}
+            pageSize={KLACHTEN_PAGE_SIZE}
+            currentPage={currentPage}
+            onPageClick={(page) => {
+              history.replace(
+                generatePath(AppRoutes.KLACHTEN, {
+                  page,
+                })
+              );
+            }}
+          />
+        )}
       </SectionCollapsible>
     </OverviewPage>
   );

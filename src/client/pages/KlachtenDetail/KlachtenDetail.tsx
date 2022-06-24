@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -15,14 +15,17 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks';
+import { KLACHTEN_PAGE_SIZE } from '../Klachten/Klachten';
 
 export default function KlachtenDetail() {
   const { KLACHTEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const klacht = KLACHTEN.content?.klachten.find(
+  const klachtIndex = (KLACHTEN.content?.klachten || []).findIndex(
     (klacht: Klacht) => klacht.id === id
   );
+
+  const klacht = KLACHTEN.content?.klachten[klachtIndex];
 
   const noContent = !isLoading(KLACHTEN) && !klacht;
 
@@ -31,7 +34,10 @@ export default function KlachtenDetail() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: AppRoutes.KLACHTEN,
+          to: generatePath(AppRoutes.KLACHTEN, {
+            page:
+              klachtIndex > 0 ? Math.ceil(klachtIndex / KLACHTEN_PAGE_SIZE) : 1,
+          }),
           title: ChapterTitles.KLACHTEN,
         }}
         isLoading={isLoading(KLACHTEN)}
