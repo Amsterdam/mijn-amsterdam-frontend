@@ -161,7 +161,7 @@ export async function fetchAllKlachten(
     result.aantal = initalResponse.content.aantal;
     result.klachten = initalResponse.content.klachten;
 
-    while (result.klachten.length < result.aantal) {
+    while (result.klachten.length < result.aantal && page < 5) {
       const response = await fetchKlachten(
         requestID,
         authProfileAndToken,
