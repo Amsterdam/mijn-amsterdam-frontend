@@ -189,8 +189,12 @@ export async function fetchKlachtenGenerated(
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
 
   if (KLACHTEN.status === 'OK') {
-    const notifications: MyNotification[] = Array.isArray(KLACHTEN.content)
-      ? KLACHTEN.content.map((klacht) => createKlachtNotification(klacht))
+    const notifications: MyNotification[] = Array.isArray(
+      KLACHTEN.content.klachten
+    )
+      ? KLACHTEN.content.klachten.map((klacht) =>
+          createKlachtNotification(klacht)
+        )
       : [];
 
     return apiSuccessResult({
