@@ -129,4 +129,5 @@ export const DocumentTitles = {
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.PARKEREN]: 'Parkeren',
   [AppRoutes.KLACHTEN]: 'Klachten',
+  [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
 };

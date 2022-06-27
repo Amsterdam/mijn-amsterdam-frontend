@@ -36,7 +36,9 @@ export default function KlachtenDetail() {
         backLink={{
           to: generatePath(AppRoutes.KLACHTEN, {
             page:
-              klachtIndex > 0 ? Math.ceil(klachtIndex / KLACHTEN_PAGE_SIZE) : 1,
+              klachtIndex > 0
+                ? Math.ceil((klachtIndex + 1) / KLACHTEN_PAGE_SIZE)
+                : 1,
           }),
           title: ChapterTitles.KLACHTEN,
         }}
