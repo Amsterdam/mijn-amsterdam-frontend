@@ -61,6 +61,7 @@ function smileSubjectParser(subject: string | null): string {
   const translationTable: { [key: string]: string | undefined } = {
     'Test voor decentrale toewijzing': 'Overlast, onderhoud en afval',
     '14 020': 'Contact met een medewerker',
+    '14020': 'Contact met een medewerker',
     GGD: 'GGD en Veiligthuis',
     Belastingen: 'Belastingen en heffingen',
   };
