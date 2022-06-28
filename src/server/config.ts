@@ -325,6 +325,12 @@ const oidcConfigBase: ConfigParams = {
     callback: AUTH_CALLBACK, // Relative to the Router path AUTH_BASE_EHERKENNING
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
+  getLoginState(req, options) {
+    return {
+      returnTo: options.returnTo || req.originalUrl,
+      customState: 'foo',
+    };
+  },
 };
 
 export const oidcConfigDigid: ConfigParams = {
