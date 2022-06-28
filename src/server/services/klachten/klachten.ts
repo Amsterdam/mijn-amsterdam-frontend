@@ -172,14 +172,14 @@ export async function fetchAllKlachten(
       if (response.status === 'OK') {
         result.klachten = result.klachten.concat(response.content.klachten);
       } else {
-        return apiDependencyError({ response });
+        return response;
       }
     }
 
     return apiSuccessResult<KlachtenResponse>(result);
   }
 
-  return apiDependencyError({ initalResponse });
+  return initalResponse;
 }
 
 export async function fetchKlachtenGenerated(
