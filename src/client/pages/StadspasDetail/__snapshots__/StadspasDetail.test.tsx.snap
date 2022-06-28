@@ -49,7 +49,7 @@ exports[`<StadspasDetail /> Matches the Full Page snapshot 1`] = `
       class="PageContent DetailPageContent"
     >
       <p>
-        Hieronder ziet u hoeveel geld er nog op de Stadspas staat.
+        Hieronder ziet u hoeveel tegoed er nog op de Stadspas staat.
       </p>
       <p>
         <a
