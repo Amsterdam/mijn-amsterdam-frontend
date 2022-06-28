@@ -13,7 +13,7 @@ import {
 import { MyNotification } from '../../../universal/types';
 import { Chapters } from '../../../universal/config';
 
-const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 250;
 
 function getDataForKlachten(bsn: string, page: number) {
   const data = new FormData();
