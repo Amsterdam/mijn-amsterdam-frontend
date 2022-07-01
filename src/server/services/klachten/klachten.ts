@@ -146,7 +146,8 @@ export async function fetchAllKlachten(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  let page = 1;
+  let page = 0;
+  const MAX_KLACHTEN_COUNT = 5 * DEFAULT_PAGE_SIZE;
   const result: KlachtenResponse = {
     aantal: 0,
     klachten: [],
@@ -162,7 +163,10 @@ export async function fetchAllKlachten(
     result.aantal = initalResponse.content.aantal;
     result.klachten = initalResponse.content.klachten;
 
-    while (result.klachten.length < result.aantal && page < 5) {
+    while (
+      result.klachten.length < result.aantal &&
+      result.klachten.length < MAX_KLACHTEN_COUNT
+    ) {
       const response = await fetchKlachten(
         requestID,
         authProfileAndToken,
