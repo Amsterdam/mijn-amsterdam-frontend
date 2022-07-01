@@ -29,7 +29,6 @@ import {
   addLink,
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
-  isBbzActive,
   isRequestProcessActual,
   transformToStatusLine,
 } from './helpers';
@@ -276,45 +275,6 @@ export async function fetchBbz(
       requestProcessUpdated.steps.reverse();
       bbzRequests.push(requestProcessUpdated);
     });
-
-    // Check if we have  a 'lopende' aanvraag if so sort all needed steps into a new request object
-    const initialRequest = bbzRequests[0];
-    if (isBbzActive(initialRequest)) {
-      const openBbzRequest = {
-        ...initialRequest,
-        statusId: 'aanvraag',
-        decision: null,
-        dateEnd: null,
-        id: 'nieuw',
-        link: {
-          to: generatePath(AppRoutes['INKOMEN/BBZ'], {
-            version: 3,
-            id: 'nieuw',
-          }),
-          title: 'Bekijk uw aanvraag',
-        },
-      };
-      const requestDate = new Date(
-        openBbzRequest.steps.find((s) => s.status === 'Aanvraag')
-          ?.datePublished || ''
-      );
-
-      // Filter all steps with a date later than or equal to the request date.
-      openBbzRequest.steps = openBbzRequest.steps.filter(
-        (s) => new Date(s.datePublished) >= requestDate
-      );
-
-      // Do the same in reverse for the other request.
-      initialRequest.steps = initialRequest.steps.filter(
-        (s) => new Date(s.datePublished) < requestDate
-      );
-
-      openBbzRequest.dateStart = requestDate.toISOString();
-      openBbzRequest.datePublished =
-        openBbzRequest.steps[openBbzRequest.steps.length - 1].datePublished;
-
-      bbzRequests.push(openBbzRequest);
-    }
 
     return apiSuccessResult<WpiRequestProcess[]>(bbzRequests);
   }

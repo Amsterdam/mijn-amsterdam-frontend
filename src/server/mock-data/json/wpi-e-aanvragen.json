@@ -753,7 +753,18 @@
           ],
           "id": "besluit",
           "status": "Besluit"
-        },
+        }
+      ],
+      "title": "Bbz"
+    },
+    {
+      "title": "Bbz",
+      "about": "Bbz",
+      "id": "1bb40ca67b5ba2e2af43581b0db19a39",
+      "dateStart": "2022-06-20T17:20:04",
+      "datePublished": "2022-06-20T17:20:04",
+      "statusId": "aanvraag",
+      "steps": [
         {
           "datePublished": "2022-06-20T00:00:00.000Z",
           "documents": [
@@ -768,8 +779,7 @@
           "id": "aanvraag",
           "status": "Aanvraag"
         }
-      ],
-      "title": "Bbz"
+      ]
     }
   ],
   "status": "OK"
