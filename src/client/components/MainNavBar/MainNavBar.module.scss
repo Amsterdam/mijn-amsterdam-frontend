@@ -24,10 +24,12 @@
   @include mq-tablet() {
     display: -ms-grid;
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
+    grid-auto-rows: max-content;
     width: $main-header-navbar-width--phone;
     margin: 0;
     z-index: z-index(main-nav-bar-inner--tablet);
-    position: relative;
+    position: absolute;
+    height: 100%;
   }
 }
 
