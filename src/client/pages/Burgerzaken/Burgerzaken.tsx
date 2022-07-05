@@ -68,11 +68,7 @@ export default function Burgerzaken() {
         {ChapterTitles.BURGERZAKEN}
       </PageHeading>
       <PageContent>
-        <p>
-          Hieronder vindt u informatie over uw officiële documenten, zoals uw
-          paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan
-          ziet u hier de aankondiging.
-        </p>
+        <p>Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.</p>
         <p>
           <Linkd external={true} href="https://www.amsterdam.nl/burgerzaken">
             Overzicht en aanvragen bij burgerzaken
@@ -92,7 +88,7 @@ export default function Burgerzaken() {
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-offical-documents"
-        title="Mijn ID-kaarten"
+        title="Mijn reisdocumenten"
         className={styles.SectionCollapsibleIdKaarten}
         noItemsMessage="Wij kunnen nog geen ID-kaarten tonen."
         startCollapsed={false}
