@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { differenceInDays } from 'date-fns';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
@@ -28,8 +27,6 @@ import {
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
 import styles from './Inkomen.module.scss';
-
-const DAYS_PASSED_TO_CONSIDER_BBZ_REQUESTS_AS_COMPLETED = 365;
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
@@ -101,15 +98,7 @@ export default function Inkomen() {
 
   // Determine the completed requests
   const itemsCompleted = items.filter((item) => {
-    const lastUpdateDaysAgo = differenceInDays(
-      new Date(),
-      new Date(item.datePublished)
-    );
-    return item.about === 'Bbz'
-      ? // BBZ has different logic to determine completed status because we cannot reliably determine if the request process is completed or not.
-        lastUpdateDaysAgo >= DAYS_PASSED_TO_CONSIDER_BBZ_REQUESTS_AS_COMPLETED
-      : // The rest is probably, mostly completed if a decision is made
-        REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId);
+    return REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId);
   });
   // Active requests are not present in completed requests
   const itemsRequested = items.filter(
@@ -129,6 +118,7 @@ export default function Inkomen() {
     isLoading(WPI_BBZ);
 
   const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
+
   return (
     <OverviewPage className={styles.Inkomen}>
       <PageHeading
