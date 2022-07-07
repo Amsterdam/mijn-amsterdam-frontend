@@ -156,7 +156,7 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
         )}
       >
         <p>
-          Hieronder ziet u bij welke winkels u geld hebt uitgegeven. Deze
+          Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
           informatie kan een dag achterlopen. Maar het bedrag dat u nog over
           hebt klopt altijd.
         </p>
@@ -214,7 +214,7 @@ export default function StadspasDetail() {
         Saldo Stadspas
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>Hieronder ziet u hoeveel geld er nog op de Stadspas staat.</p>
+        <p>Hieronder ziet u hoeveel tegoed er nog op de Stadspas staat.</p>
         <p>
           <Linkd external={true} href="https://www.amsterdam.nl/kindtegoed">
             Meer informatie over het Kindtegoed
