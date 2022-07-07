@@ -42,7 +42,7 @@ export const AppRoutes: Record<string, string> = {
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   PARKEREN: '/parkeren',
-  KLACHTEN: '/klachten',
+  KLACHTEN: '/klachten/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
 };
 

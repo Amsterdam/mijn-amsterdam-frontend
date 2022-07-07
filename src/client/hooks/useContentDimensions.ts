@@ -13,8 +13,8 @@ export function useContentDimensions(contentRef: React.RefObject<HTMLElement>) {
     if (
       contentRef &&
       contentRef.current &&
-      size.width !== contentDimensions.width &&
-      size.height !== contentDimensions.height
+      (size.width !== contentDimensions.width ||
+        size.height !== contentDimensions.height)
     ) {
       setDimensions({
         width: size.width,

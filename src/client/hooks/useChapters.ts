@@ -138,7 +138,7 @@ export function isChapterActive(
     case Chapters.KLACHTEN:
       return (
         !isLoading(KLACHTEN) &&
-        !!KLACHTEN?.content?.length &&
+        !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
       );
   }

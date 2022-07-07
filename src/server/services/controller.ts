@@ -16,7 +16,7 @@ import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
-import { fetchKlachten } from './klachten/klachten';
+import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import {
@@ -103,7 +103,7 @@ const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
 const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
-const KLACHTEN = callService(fetchKlachten);
+const KLACHTEN = callService(fetchAllKlachten);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
