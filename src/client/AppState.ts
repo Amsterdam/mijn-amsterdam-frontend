@@ -66,7 +66,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
-  KLACHTEN: apiPristineResult([]),
+  KLACHTEN: apiPristineResult({ aantal: 0, klachten: [] }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -15,12 +15,17 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks';
+import { KLACHTEN_PAGE_SIZE } from '../Klachten/Klachten';
 
 export default function KlachtenDetail() {
   const { KLACHTEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const klacht = KLACHTEN.content?.find((klacht: Klacht) => klacht.id === id);
+  const klachtIndex = (KLACHTEN.content?.klachten || []).findIndex(
+    (klacht: Klacht) => klacht.id === id
+  );
+
+  const klacht = KLACHTEN.content?.klachten[klachtIndex];
 
   const noContent = !isLoading(KLACHTEN) && !klacht;
 
@@ -29,7 +34,12 @@ export default function KlachtenDetail() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: AppRoutes.KLACHTEN,
+          to: generatePath(AppRoutes.KLACHTEN, {
+            page:
+              klachtIndex > 0
+                ? Math.ceil((klachtIndex + 1) / KLACHTEN_PAGE_SIZE)
+                : 1,
+          }),
           title: ChapterTitles.KLACHTEN,
         }}
         isLoading={isLoading(KLACHTEN)}
@@ -56,7 +66,10 @@ export default function KlachtenDetail() {
                   : '-'
               }
             />
-            <InfoDetail label="Wat is de klacht" value={klacht?.omschrijving} />
+            <InfoDetail
+              label="Wat is de klacht?"
+              value={klacht?.omschrijving}
+            />
             {klacht?.locatie && (
               <InfoDetail
                 label="Wat is de locatie waar de klacht is ontstaan?"

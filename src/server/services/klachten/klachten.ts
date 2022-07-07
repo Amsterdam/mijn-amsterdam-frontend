@@ -5,7 +5,7 @@ import FormData from 'form-data';
 import { AuthProfileAndToken } from './../../helpers/app';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { Klacht, SmileSourceResponse } from './types';
+import { Klacht, KlachtenResponse, SmileSourceResponse } from './types';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -13,7 +13,9 @@ import {
 import { MyNotification } from '../../../universal/types';
 import { Chapters } from '../../../universal/config';
 
-function getDataForKlachten(bsn: string) {
+const DEFAULT_PAGE_SIZE = 250;
+
+function getDataForKlachten(bsn: string, page: number) {
   const data = new FormData();
   data.append('username', process.env.BFF_SMILE_USERNAME);
   data.append('password', process.env.BFF_SMILE_PASSWORD);
@@ -28,6 +30,8 @@ function getDataForKlachten(bsn: string) {
       bsn +
       "'  AND klacht.datumontvangstklacht > Session.NOW[-1,year]"
   );
+  data.append('pagesize', DEFAULT_PAGE_SIZE);
+  data.append('page', page);
   data.append('orderbys', 'klacht_id desc');
 
   return data;
@@ -48,12 +52,34 @@ function smileDateParser(smileDate: string): string {
   ).toISOString();
 }
 
-export function transformKlachtenResponse(data: SmileSourceResponse): Klacht[] {
-  if (!Array.isArray(data?.List)) {
-    return [];
+// Temporary translation table see MIJN-4781
+function smileSubjectParser(subject: string | null): string {
+  if (!subject) {
+    return '';
   }
 
-  return data.List.map((klacht) => {
+  const translationTable: { [key: string]: string | undefined } = {
+    'Test voor decentrale toewijzing': 'Overlast, onderhoud en afval',
+    '14 020': 'Contact met een medewerker',
+    '14020': 'Contact met een medewerker',
+    GGD: 'GGD en Veiligthuis',
+    Belastingen: 'Belastingen en heffingen',
+  };
+
+  return translationTable[subject] ?? subject;
+}
+
+export function transformKlachtenResponse(
+  data: SmileSourceResponse
+): KlachtenResponse {
+  if (!Array.isArray(data?.List)) {
+    return {
+      aantal: 0,
+      klachten: [],
+    };
+  }
+
+  const klachten = data.List.map((klacht) => {
     const id = klacht.klacht_id.value || UID.sync(18);
 
     return {
@@ -66,7 +92,7 @@ export function transformKlachtenResponse(data: SmileSourceResponse): Klacht[] {
       ),
       omschrijving: klacht?.klacht_omschrijving.value || '',
       gewensteOplossing: klacht?.klacht_gewensteoplossing.value,
-      onderwerp: klacht?.klacht_klachtonderwerp.value,
+      onderwerp: smileSubjectParser(klacht?.klacht_klachtonderwerp.value),
       locatie: klacht?.klacht_locatieadres.value,
       link: {
         to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
@@ -76,6 +102,11 @@ export function transformKlachtenResponse(data: SmileSourceResponse): Klacht[] {
       },
     };
   });
+
+  return {
+    aantal: data.rowcount,
+    klachten,
+  };
 }
 
 function createKlachtNotification(klacht: Klacht): MyNotification {
@@ -94,13 +125,14 @@ function createKlachtNotification(klacht: Klacht): MyNotification {
   return notification;
 }
 
-export async function fetchKlachten(
+async function fetchKlachten(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  page: number = 1
 ) {
-  const data = getDataForKlachten(authProfileAndToken.profile.id!);
+  const data = getDataForKlachten(authProfileAndToken.profile.id!, page);
 
-  return requestData<Klacht[]>(
+  return requestData<KlachtenResponse>(
     getApiConfig('KLACHTEN', {
       transformResponse: transformKlachtenResponse,
       data,
@@ -110,15 +142,63 @@ export async function fetchKlachten(
   );
 }
 
+export async function fetchAllKlachten(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  let page = 0;
+  const MAX_KLACHTEN_COUNT = 5 * DEFAULT_PAGE_SIZE;
+  const result: KlachtenResponse = {
+    aantal: 0,
+    klachten: [],
+  };
+
+  const initalResponse = await fetchKlachten(
+    requestID,
+    authProfileAndToken,
+    page
+  );
+
+  if (initalResponse.status === 'OK') {
+    result.aantal = initalResponse.content.aantal;
+    result.klachten = initalResponse.content.klachten;
+
+    while (
+      result.klachten.length < result.aantal &&
+      result.klachten.length < MAX_KLACHTEN_COUNT
+    ) {
+      const response = await fetchKlachten(
+        requestID,
+        authProfileAndToken,
+        (page += 1)
+      );
+
+      if (response.status === 'OK') {
+        result.klachten = result.klachten.concat(response.content.klachten);
+      } else {
+        return response;
+      }
+    }
+
+    return apiSuccessResult<KlachtenResponse>(result);
+  }
+
+  return initalResponse;
+}
+
 export async function fetchKlachtenGenerated(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const KLACHTEN = await fetchKlachten(requestID, authProfileAndToken);
+  const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
 
   if (KLACHTEN.status === 'OK') {
-    const notifications: MyNotification[] = Array.isArray(KLACHTEN.content)
-      ? KLACHTEN.content.map((klacht) => createKlachtNotification(klacht))
+    const notifications: MyNotification[] = Array.isArray(
+      KLACHTEN.content.klachten
+    )
+      ? KLACHTEN.content.klachten.map((klacht) =>
+          createKlachtNotification(klacht)
+        )
       : [];
 
     return apiSuccessResult({
