@@ -6,7 +6,7 @@ import {
   Redirect,
   Route,
   Switch,
-  useLocation
+  useHistory
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -16,11 +16,6 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import {
-  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
-  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
-  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT
-} from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
