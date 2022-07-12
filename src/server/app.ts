@@ -1,11 +1,13 @@
 /* eslint-disable import/first */
 import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 
 const isDevelopment = ENV === 'development';
 const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
 
-dotenv.config({ path: ENV_FILE });
+const envConfig = dotenv.config({ path: ENV_FILE });
+dotenvExpand.expand(envConfig);
 
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
