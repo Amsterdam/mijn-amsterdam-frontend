@@ -527,115 +527,261 @@
       "title": "TONK"
     },
     {
-      "id": "afd72d3b2f6c963b9a3c268565137642",
-      "title": "Bbz",
       "about": "Bbz",
-      "dateStart": "2021-09-15T17:20:04+02:00",
-      "datePublished": "2022-04-01T17:20:04+02:00",
-      "dateEnd": null,
-      "decision": null,
-      "statusId": "inkomstenwijziging",
-      "steps": [
-        {
-          "id": "aanvraag",
-          "status": "Aanvraag",
-          "datePublished": "2021-09-15T17:20:04+02:00",
-          "documents": [
-            {
-              "id": "4400000147",
-              "dcteId": "844",
-              "title": "Aanvraag Bbz\n15 september 2021 17:20",
-              "url": "/wpi/document?id=4400000147&isBulk=True&isDms=False",
-              "datePublished": "2021-09-15T17:20:04+02:00"
-            }
-          ]
-        },
-        {
-          "id": "herstelTermijn",
-          "status": "Informatie nodig",
-          "datePublished": "2021-09-16T17:20:04+02:00",
-          "documents": [
-            {
-              "id": "660000000010212",
-              "dcteId": "176322",
-              "title": "Brief verzoek om meer informatie",
-              "url": "/wpi/document?id=660000000010212&isBulk=False&isDms=False",
-              "datePublished": "2021-09-16T17:20:04+02:00"
-            }
-          ],
-          "about": "IOAZ"
-        },
-        {
-          "id": "inkomstenwijziging",
-          "status": "Wijziging inkomsten",
-          "datePublished": "2022-04-01T17:20:04+02:00",
-          "documents": [
-            {
-              "id": "4400000188",
-              "dcteId": "854",
-              "title": "Wijziging inkomsten Bbz",
-              "url": "/wpi/document?id=4400000188&isBulk=True&isDms=False",
-              "datePublished": "2022-04-01T17:20:04+02:00"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "9748588bbdf6491845c9b6c2b13c8f28",
-      "title": "Bbz",
-      "about": "Bbz",
-      "dateStart": "2021-09-01T17:20:04+02:00",
-      "datePublished": "2021-09-02T17:20:04+02:00",
-      "dateEnd": null,
-      "decision": null,
+      "dateEnd": "2022-04-08T18:20:04+02:00",
+      "datePublished": "2022-04-08T18:20:04+02:00",
+      "dateStart": "2022-04-01T18:20:04+02:00",
+      "decision": "buitenBehandeling",
+      "id": "f8d271f0a006d95217cc99a0d3b4db33",
       "statusId": "besluit",
       "steps": [
         {
+          "datePublished": "2022-04-01T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-01T18:20:04+02:00",
+              "dcteId": "853",
+              "id": "4400000174",
+              "title": "Bbz aanvraag\n01 april 2022 18:20",
+              "url": "/wpi/document?id=4400000174&isBulk=True&isDms=False"
+            }
+          ],
           "id": "aanvraag",
-          "status": "Aanvraag",
-          "datePublished": "2021-09-01T17:20:04+02:00",
-          "documents": [
-            {
-              "id": "4400000146",
-              "dcteId": "844",
-              "title": "Aanvraag Bbz\n01 september 2021 17:20",
-              "url": "/wpi/document?id=4400000146&isBulk=True&isDms=False",
-              "datePublished": "2021-09-01T17:20:04+02:00"
-            }
-          ]
+          "status": "Aanvraag"
         },
         {
-          "id": "beslisTermijn",
-          "status": "Tijd nodig",
-          "datePublished": "2021-09-02T17:20:04+02:00",
+          "datePublished": "2022-04-02T18:20:04+02:00",
           "documents": [
             {
-              "id": "660000000010211",
-              "dcteId": "175855",
-              "title": "Brief verlenging beslistermijn",
-              "url": "/wpi/document?id=660000000010211&isBulk=False&isDms=False",
-              "datePublished": "2021-09-02T17:20:04+02:00"
+              "datePublished": "2022-04-02T18:20:04+02:00",
+              "dcteId": "175885",
+              "id": "660000000010268",
+              "title": "Brief betaling voorschot",
+              "url": "/wpi/document?id=660000000010268&isBulk=False&isDms=False"
             }
-          ]
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
         },
         {
-          "datePublished": "2021-10-06T17:20:04+01:00",
-          "decision": "toekenning",
+          "datePublished": "2022-04-03T18:20:04+02:00",
           "documents": [
             {
-              "datePublished": "2021-10-06T17:20:04+01:00",
-              "dcteId": "176156",
-              "id": "660000000000493",
-              "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000493&isBulk=False&isDms=False"
+              "datePublished": "2022-04-03T18:20:04+02:00",
+              "dcteId": "175863",
+              "id": "660000000010269",
+              "title": "Brief aanvraag adviesrapport",
+              "url": "/wpi/document?id=660000000010269&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "briefAdviesRapport",
+          "status": "Brief"
+        },
+        {
+          "datePublished": "2022-04-04T18:20:04+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2022-04-04T18:20:04+02:00",
+              "dcteId": "1735802",
+              "id": "660000000010270",
+              "title": "Besluit afwijzing",
+              "url": "/wpi/document?id=660000000010270&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
           "productSpecific": "uitkering",
           "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-05T18:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2022-04-05T18:20:04+02:00",
+              "dcteId": "1735840",
+              "id": "660000000010271",
+              "title": "Besluit toekenning",
+              "url": "/wpi/document?id=660000000010271&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-06T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-06T18:20:04+02:00",
+              "dcteId": "175861",
+              "id": "660000000010272",
+              "title": "Brief intrekken Bbz aanvraag",
+              "url": "/wpi/document?id=660000000010272&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "intrekking",
+          "status": "Brief"
+        },
+        {
+          "datePublished": "2022-04-07T18:20:04+02:00",
+          "decision": "buitenBehandeling",
+          "documents": [
+            {
+              "datePublished": "2022-04-07T18:20:04+02:00",
+              "dcteId": "175866",
+              "id": "660000000010273",
+              "title": "Besluit buiten behandeling",
+              "url": "/wpi/document?id=660000000010273&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-08T18:20:04+02:00",
+          "decision": "buitenBehandeling",
+          "documents": [
+            {
+              "datePublished": "2022-04-08T18:20:04+02:00",
+              "dcteId": "1735866",
+              "id": "660000000010274",
+              "title": "Besluit buiten behandeling",
+              "url": "/wpi/document?id=660000000010274&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
         }
-      ]
+      ],
+      "title": "Bbz"
+    },
+    {
+      "about": "Bbz",
+      "dateEnd": "2021-09-18T17:20:04+02:00",
+      "datePublished": "2022-04-01T17:20:04+02:00",
+      "dateStart": "2021-09-01T17:20:04+02:00",
+      "decision": "toekenning",
+      "id": "9748588bbdf6491845c9b6c2b13c8f28",
+      "statusId": "inkomstenwijziging",
+      "steps": [
+        {
+          "datePublished": "2021-09-01T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-01T17:20:04+02:00",
+              "dcteId": "844",
+              "id": "4400000138",
+              "title": "Aanvraag Bbz\n01 september 2021 17:20",
+              "url": "/wpi/document?id=4400000138&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-09-05T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-05T17:20:04+02:00",
+              "dcteId": "175855",
+              "id": "660000000010196",
+              "title": "Brief verlenging beslistermijn",
+              "url": "/wpi/document?id=660000000010196&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "beslisTermijn",
+          "status": "Tijd nodig"
+        },
+        {
+          "datePublished": "2021-09-07T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-07T17:20:04+02:00",
+              "dcteId": "176351",
+              "id": "660000000010197",
+              "title": "Brief verzoek om meer informatie",
+              "url": "/wpi/document?id=660000000010197&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-09-15T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-15T17:20:04+02:00",
+              "dcteId": "844",
+              "id": "4400000139",
+              "title": "Aanvraag Bbz\n15 september 2021 17:20",
+              "url": "/wpi/document?id=4400000139&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-09-15T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-15T18:20:04+02:00",
+              "dcteId": "851",
+              "id": "4400000160",
+              "title": "Wijziging inkomsten Bbz",
+              "url": "/wpi/document?id=4400000160&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "inkomstenwijziging",
+          "status": "Wijziging inkomsten"
+        },
+        {
+          "about": "IOAZ",
+          "datePublished": "2021-09-16T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-16T17:20:04+02:00",
+              "dcteId": "176322",
+              "id": "660000000010198",
+              "title": "Brief verzoek om meer informatie",
+              "url": "/wpi/document?id=660000000010198&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-09-18T17:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2021-09-18T17:20:04+02:00",
+              "dcteId": "175843",
+              "id": "660000000010195",
+              "title": "Besluit toekenning lening",
+              "url": "/wpi/document?id=660000000010195&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "lening",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-01T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-01T17:20:04+02:00",
+              "dcteId": "854",
+              "id": "4400000184",
+              "title": "Wijziging inkomsten Bbz",
+              "url": "/wpi/document?id=4400000184&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "inkomstenwijziging",
+          "status": "Wijziging inkomsten"
+        }
+      ],
+      "title": "Bbz"
     }
   ],
   "status": "OK"

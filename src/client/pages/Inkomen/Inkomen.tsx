@@ -98,7 +98,7 @@ export default function Inkomen() {
 
   // Determine the completed requests
   const itemsCompleted = items.filter((item) => {
-    return REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId);
+    return item.steps.some(step => REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(step.id));
   });
   // Active requests are not present in completed requests
   const itemsRequested = items.filter(
