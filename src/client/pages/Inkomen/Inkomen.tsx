@@ -77,16 +77,16 @@ export default function Inkomen() {
       ...(bbzItems || []),
     ]
       .map((item) => {
-        const isBbz = item.about === 'Bbz';
+        const isBbzHistoric = item.about === 'Bbz' && item.steps.some(step => step.id === "besluit");
         const activeStatusStep =
-          // Bbz steps are sorted in reverse becasue of a Business decision, unknown rationale
-          isBbz ? item.steps[0] : item.steps[item.steps.length - 1];
+          // Bbz steps are sorted in reverse because of a Business decision, unknown rationale
+          isBbzHistoric ? item.steps[0] : item.steps[item.steps.length - 1];
         return Object.assign({}, item, {
-          displayDateEnd: isBbz
+          displayDateEnd: isBbzHistoric
             ? '-'
             : defaultDateFormat(item.dateEnd || item.datePublished),
-          displayDateStart: isBbz ? '-' : defaultDateFormat(item.dateStart),
-          status: isBbz
+          displayDateStart: isBbzHistoric ? '-' : defaultDateFormat(item.dateStart),
+          status: isBbzHistoric
             ? '-'
             : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });

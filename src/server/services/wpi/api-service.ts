@@ -260,25 +260,6 @@ export async function fetchBbz(
     'Bbz',
   ]);
 
-  /**
-   * BBZ Is een uitzondering in de sortering vanwege een "Business besluit / onbekende rationale".
-   * Mogelijk omdat bij BBZ meerdere aanvragen door elkaar lopen en er geen onderscheid gemaakt kan worden
-   * tussen de verschillende aanvragen en welke stappen daarbij horen.
-   */
-  if (bbz.status === 'OK') {
-    const bbzRequests: WpiRequestProcess[] = [];
-    bbz.content?.forEach((bbz) => {
-      const requestProcessUpdated = {
-        ...bbz,
-        steps: [...bbz.steps],
-      };
-      requestProcessUpdated.steps.reverse();
-      bbzRequests.push(requestProcessUpdated);
-    });
-
-    return apiSuccessResult<WpiRequestProcess[]>(bbzRequests);
-  }
-
   return bbz;
 }
 
