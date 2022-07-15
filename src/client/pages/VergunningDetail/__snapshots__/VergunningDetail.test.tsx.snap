@@ -68,20 +68,6 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
         <h3
           class="Heading Heading__tiny Label"
         >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          Aanbieden van diensten
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
           Resultaat
         </h3>
         <p
@@ -363,20 +349,6 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
         <h3
           class="Heading Heading__tiny Label"
         >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          Aanbieden van diensten
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
           Resultaat
         </h3>
         <p
@@ -630,20 +602,6 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
           Z/22/1597712
         </p>
       </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          Aanbieden van diensten
-        </p>
-      </div>
     </div>
     <div
       class="StatusLine VergunningStatus"
@@ -854,20 +812,6 @@ exports[`<VergunningDetail /> <EvenementMelding /> should match the full page sn
           class="Value"
         >
           Z/000/000003
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          Evenement melding
         </p>
       </div>
       <div
@@ -1341,20 +1285,6 @@ exports[`<VergunningDetail /> <GPP /> should match the full page snapshot 1`] = 
           class="Value"
         >
           Z/000/000009
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          GPP
         </p>
       </div>
       <div
