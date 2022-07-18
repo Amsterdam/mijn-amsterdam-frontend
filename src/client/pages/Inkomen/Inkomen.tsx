@@ -80,9 +80,7 @@ export default function Inkomen() {
         const isBbzHistoric =
           item.about === 'Bbz' &&
           item.steps.some((step) => step.id === 'besluit');
-        const activeStatusStep =
-          // Bbz steps are sorted in reverse because of a Business decision, unknown rationale
-          isBbzHistoric ? item.steps[0] : item.steps[item.steps.length - 1];
+        const activeStatusStep = item.steps[item.steps.length - 1];
         return Object.assign({}, item, {
           displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
           displayDateStart: isBbzHistoric
