@@ -751,22 +751,6 @@
           "status": "Informatie nodig"
         },
         {
-          "datePublished": "2021-09-18T17:20:04+02:00",
-          "decision": "toekenning",
-          "documents": [
-            {
-              "datePublished": "2021-09-18T17:20:04+02:00",
-              "dcteId": "175843",
-              "id": "660000000010195",
-              "title": "Besluit toekenning lening",
-              "url": "/wpi/document?id=660000000010195&isBulk=False&isDms=False"
-            }
-          ],
-          "id": "besluit",
-          "productSpecific": "lening",
-          "status": "Besluit"
-        },
-        {
           "datePublished": "2022-04-01T17:20:04+02:00",
           "documents": [
             {
