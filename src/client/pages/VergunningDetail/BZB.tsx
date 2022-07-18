@@ -9,7 +9,6 @@ export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
       <InfoDetailGroup>
         <InfoDetail

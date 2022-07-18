@@ -9,7 +9,6 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
         <InfoDetail
