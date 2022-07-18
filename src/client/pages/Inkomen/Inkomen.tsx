@@ -77,15 +77,20 @@ export default function Inkomen() {
       ...(bbzItems || []),
     ]
       .map((item) => {
-        const isBbzHistoric = item.about === 'Bbz' && item.steps.some(step => step.id === "besluit");
+        const isBbzHistoric =
+          item.about === 'Bbz' &&
+          item.steps.some((step) => step.id === 'besluit');
         const activeStatusStep =
           // Bbz steps are sorted in reverse because of a Business decision, unknown rationale
           isBbzHistoric ? item.steps[0] : item.steps[item.steps.length - 1];
         return Object.assign({}, item, {
-          displayDateEnd: isBbzHistoric
-            ? '-'
-            : defaultDateFormat(item.dateEnd || item.datePublished),
-          displayDateStart: isBbzHistoric ? '-' : defaultDateFormat(item.dateStart),
+          displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
+          displayDateStart: isBbzHistoric
+            ? defaultDateFormat(
+                [...item.steps].reverse().find((s) => s.id === 'aanvraag')!
+                  .datePublished
+              )
+            : defaultDateFormat(item.dateStart),
           status: isBbzHistoric
             ? '-'
             : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
@@ -98,7 +103,9 @@ export default function Inkomen() {
 
   // Determine the completed requests
   const itemsCompleted = items.filter((item) => {
-    return item.steps.some(step => REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(step.id));
+    return item.steps.some((step) =>
+      REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(step.id)
+    );
   });
   // Active requests are not present in completed requests
   const itemsRequested = items.filter(
