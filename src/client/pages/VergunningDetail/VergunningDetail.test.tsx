@@ -101,4 +101,13 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Nachtwerkontheffing', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1691001" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });
