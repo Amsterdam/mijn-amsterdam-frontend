@@ -32,6 +32,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
+import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -246,6 +247,19 @@ export default function MainNavBar({
             className={styles.LinkContainer}
             style={linkContainerAnimationProps}
           >
+            <div className={styles.LogoAndButtonWrapper}>
+              <AmsterdamLogo
+                role="img"
+                aria-label="Gemeente Amsterdam logo"
+                className={styles.logo}
+              />
+
+              <BurgerButton
+                isActive={!!isBurgerMenuVisible}
+                toggleBurgerMenu={toggleBurgerMenu}
+              />
+            </div>
+
             <SecondaryLinks />
             {menuItemsComposed}
           </animated.div>

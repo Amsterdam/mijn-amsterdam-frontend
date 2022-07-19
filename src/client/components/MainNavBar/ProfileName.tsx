@@ -29,6 +29,7 @@ function CommercialProfileName({
       icon={IconHomeCommercial}
       variant="plain"
       lean={true}
+      iconSize="24"
       className={classnames(
         styles.ProfileLink,
         styles['ProfileLink--commercial'],
@@ -62,6 +63,7 @@ function PrivateProfileName({
       icon={IconProfile}
       variant="plain"
       lean={true}
+      iconSize="24"
       className={classnames(
         styles.ProfileLink,
         styles['ProfileLink--private'],
