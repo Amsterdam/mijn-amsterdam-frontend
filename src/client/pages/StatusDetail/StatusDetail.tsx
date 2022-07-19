@@ -35,6 +35,7 @@ interface StatusDetailProps {
   showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   showStatusLineConnection?: boolean;
+  reverseSteps?: boolean;
   highlightKey?: string | false;
   documentPathForTracking?: (document: GenericDocument) => string;
 }
@@ -48,6 +49,7 @@ export default function StatusDetail({
   chapter,
   statusLabel = 'Status',
   showStatusLineConnection = true,
+  reverseSteps = false,
   highlightKey,
   documentPathForTracking,
 }: StatusDetailProps) {
@@ -84,6 +86,13 @@ export default function StatusDetail({
     title = statusItem.title;
   }
 
+  let statusItemSteps = statusItem?.steps ?? [];
+
+  if (reverseSteps && statusItemSteps.length) {
+    statusItemSteps = [...statusItemSteps]
+    statusItemSteps.reverse();
+  }
+  
   return (
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
@@ -129,7 +138,7 @@ export default function StatusDetail({
 
         {isStateLoading && <LoadingContent />}
       </PageContent>
-      {!!(statusItem?.steps && statusItem.steps.length) && (
+      {!!(statusItem?.steps && statusItemSteps.length) && (
         <StatusLineComponent
           trackCategory={`${chapter} / ${statusItem?.about} status`}
           statusLabel={
@@ -138,7 +147,7 @@ export default function StatusDetail({
               : statusLabel
           }
           showStatusLineConnection={showStatusLineConnection}
-          items={statusItem.steps}
+          items={statusItemSteps}
           showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
