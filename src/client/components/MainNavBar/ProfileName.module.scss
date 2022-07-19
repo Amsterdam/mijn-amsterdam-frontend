@@ -22,12 +22,15 @@
 }
 
 .ProfileLink {
-  // margin-left: 1.3rem;
   font-weight: normal;
   padding-bottom: 0.3rem;
   padding-left: 2.6rem;
   border-bottom: 0.2rem solid transparent;
   font-weight: 500;
+
+  @include mq-tablet() {
+    padding-left: 4rem;
+  }
 
   &:hover {
     color: $color-primary-red;
@@ -40,7 +43,6 @@
     width: 1.2em;
     height: 1.2em;
     left: 0;
-    // margin-left: -2.6rem;
     transform: translateY(-0.1rem);
   }
 }

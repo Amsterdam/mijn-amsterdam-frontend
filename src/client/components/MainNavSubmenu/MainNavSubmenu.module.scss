@@ -126,6 +126,10 @@
   justify-content: center;
   align-items: center;
   margin-right: 1rem;
+
+  @include mq-tablet() {
+    margin-right: 1.6rem;
+  }
 }
 
 .SubmenuItemTitle {
