@@ -55,7 +55,7 @@ Object {
         "id": "vergunning-1576394954-notification",
         "link": Object {
           "title": "Bekijk details",
-          "to": "/vergunningen/verspreiden-reclamemateriaal-sampling/1576394954",
+          "to": "/vergunningen/flyeren-sampling/1576394954",
         },
         "title": "Vergunningsaanvraag",
       },
@@ -408,7 +408,7 @@ Array [
     "title": "Aanbieden van diensten",
   },
   Object {
-    "caseType": "Verspreiden reclamemateriaal (sampling)",
+    "caseType": "Flyeren-Sampling",
     "dateDecision": "2022-01-31T00:00:00",
     "dateEnd": "2022-05-05T00:00:00",
     "dateRequest": "2022-01-13T00:00:00",
