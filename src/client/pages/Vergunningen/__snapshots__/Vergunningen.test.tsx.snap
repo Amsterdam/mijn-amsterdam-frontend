@@ -238,7 +238,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Vergunning voor kamerverhuur (omzettingsvergunning)
+                    Vergunning voor kamerverhuur (omzettingsvergunning) (Röel)
                   </span>
                 </td>
                 <td
@@ -707,6 +707,39 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Z/22/1691001
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
               <tr
                 class="TableRow"
               >

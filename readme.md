@@ -49,6 +49,11 @@ be used to duplicate any component and assign it a specific name.
 The BFF api is the goto part of the application where we do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
 The codebase is also written in typescript so a compilation step is required for it to work. For development purposes we use `ts-node` which takes care of compiling and running the BFF app.
 
+### Authentication
+
+We use an OIDC idp to authenticate the users via Digid or Eherkenning. The max session duration is 15 * 60 seconds = 15 minutes. Incoming tokens are verified and passed along with the requests to the microservices.
+In the microservices these tokens are verified once more for added security.
+
 ### BFF Development api
 
 The BFF also has a router that's intended for development purposes only. Not all api requests are targeted at the BFF api in production, some requests are made to the microservice api's directly.

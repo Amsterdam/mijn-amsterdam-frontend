@@ -8,6 +8,7 @@ import {
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 interface NotificationTrigger {
   datePublished: string;
@@ -59,8 +60,8 @@ function createNotification(
 }
 
 async function fetchAndTransformKrefia(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await requestData<Krefia>(
     getApiConfig('KREFIA', {
@@ -69,8 +70,8 @@ async function fetchAndTransformKrefia(
         status: 'OK';
       }) => responseData.content,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID,
+    authProfileAndToken
   );
 
   return response;
@@ -84,10 +85,10 @@ export const fetchSource = memoize(fetchAndTransformKrefia, {
 });
 
 export async function fetchKrefia(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(sessionID, passthroughRequestHeaders);
+  const response = await fetchSource(requestID, authProfileAndToken);
   if (response.status === 'OK' && response.content) {
     return apiSuccessResult(omit(response.content, ['notificationTriggers']));
   }
@@ -95,10 +96,10 @@ export async function fetchKrefia(
 }
 
 export async function fetchKrefiaGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(sessionID, passthroughRequestHeaders);
+  const response = await fetchSource(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];

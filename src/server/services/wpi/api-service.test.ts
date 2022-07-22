@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { ApiErrorResponse, jsonCopy } from '../../../universal/helpers';
 import { BFF_PORT } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
 import {
   fetchBijstandsuitkering,
   FetchConfig,
@@ -33,8 +34,11 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 }
 
 describe('wpi/app-service', () => {
-  let sessionID = '';
-  let requestHeaders = {};
+  let requestID = '';
+  let authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private' },
+    token: 'xxxxx',
+  };
 
   const FakeRequestProcessLabels: WpiRequestProcessLabels = {
     begin: fakeStepLabels(),
@@ -104,7 +108,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess', async () => {
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, { status: 'OK', content });
 
     const fetchConfig: FetchConfig = {
@@ -118,8 +122,8 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      sessionID,
-      requestHeaders,
+      requestID,
+      authProfileAndToken,
       getLabelsMock,
       fetchConfig
     );
@@ -145,7 +149,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess-with-error', async () => {
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(500, { content: null });
 
     const fetchConfig: FetchConfig = {
@@ -159,8 +163,8 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      sessionID,
-      requestHeaders,
+      requestID,
+      authProfileAndToken,
       getLabelsMock,
       fetchConfig
     );
@@ -194,13 +198,16 @@ describe('wpi/app-service', () => {
       '2022-04-27T15:05:52+02:00';
 
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',
         content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
       });
 
-    const response = await fetchBijstandsuitkering(sessionID, requestHeaders);
+    const response = await fetchBijstandsuitkering(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.length).toBe(1);
@@ -261,14 +268,14 @@ describe('wpi/app-service', () => {
     contentStadspas.steps[2].status = 'Besluit';
 
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',
         content: [contentBijstandsuitkering, contentStadspas],
       });
 
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/stadspas')
+      .get('/wpi/stadspas')
       .reply(200, {
         status: 'OK',
         content: {
@@ -278,7 +285,10 @@ describe('wpi/app-service', () => {
         },
       });
 
-    const response = await fetchStadspas(sessionID, requestHeaders);
+    const response = await fetchStadspas(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.aanvragen?.length).toBe(1);
@@ -293,12 +303,15 @@ describe('wpi/app-service', () => {
 
   test('fetchStadspas-with-error', async () => {
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(404, {
         content: null,
       });
 
-    const response = await fetchStadspas(sessionID, requestHeaders);
+    const response = await fetchStadspas(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.status).toBe('OK');
     expect(response.content?.aanvragen?.length).toBe(0);
@@ -311,7 +324,7 @@ describe('wpi/app-service', () => {
 
   test('fetchWpiNotifications', async () => {
     nock(`http://localhost:${BFF_PORT}`)
-      .get('/test-api/wpi/uitkering-en-stadspas/aanvragen')
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',
         content: [
@@ -389,7 +402,7 @@ describe('wpi/app-service', () => {
           },
         ],
       })
-      .get('/test-api/wpi/stadspas')
+      .get('/wpi/stadspas')
       .reply(200, {
         status: 'OK',
         content: {
@@ -417,7 +430,7 @@ describe('wpi/app-service', () => {
           ],
         },
       })
-      .get('/test-api/wpi/uitkering/specificaties-en-jaaropgaven')
+      .get('/wpi/uitkering/specificaties-en-jaaropgaven')
       .reply(200, {
         status: 'OK',
         content: {
@@ -441,7 +454,7 @@ describe('wpi/app-service', () => {
           ],
         },
       })
-      .get('/test-api/wpi/e-aanvragen')
+      .get('/wpi/e-aanvragen')
       .reply(200, {
         status: 'OK',
         content: [
@@ -489,7 +502,10 @@ describe('wpi/app-service', () => {
         ],
       });
 
-    const response = await fetchWpiNotifications(sessionID, requestHeaders);
+    const response = await fetchWpiNotifications(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
     expect(response.content).toMatchInlineSnapshot(`
       Object {
@@ -582,7 +598,7 @@ describe('wpi/app-service', () => {
             "link": Object {
               "download": "2022-01-05-Jaaropgave 2022",
               "title": "Bekijk jaaropgave",
-              "to": "/test-api/wpi/document?id=660000000010024&isBulk=False&isDms=False",
+              "to": "/wpi/document?id=660000000010024&isBulk=False&isDms=False",
             },
             "title": "Nieuwe jaaropgave",
           },
@@ -594,7 +610,7 @@ describe('wpi/app-service', () => {
             "link": Object {
               "download": "2022-08-01-Uitkeringsspecificatie Augustus-2022",
               "title": "Bekijk uitkeringsspecificatie",
-              "to": "/test-api/wpi/document?id=660000000010112&isBulk=False&isDms=False",
+              "to": "/wpi/document?id=660000000010112&isBulk=False&isDms=False",
             },
             "title": "Nieuwe uitkeringsspecificatie",
           },

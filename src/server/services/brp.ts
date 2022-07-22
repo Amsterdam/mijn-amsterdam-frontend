@@ -12,7 +12,9 @@ import { requestData } from '../helpers';
 import {
   apiSuccessResult,
   apiDependencyError,
+  ApiSuccessResponse,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../helpers/app';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
@@ -49,7 +51,7 @@ const BrpDocumentCallToAction: Record<
 };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
-  const inOnderzoek = data?.adres?.inOnderzoek || false;
+  const inOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
     ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
@@ -130,7 +132,9 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
-        'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
+        inOnderzoek === '080000'
+          ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
+          : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
         to: AppRoutes.BRP,
         title: 'Meer informatie',
@@ -156,47 +160,52 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   return notifications;
 }
 
-export function transformBRPData(responseData: BRPDataFromSource) {
-  if (Array.isArray(responseData.identiteitsbewijzen)) {
+export function transformBRPData(
+  responseData: ApiSuccessResponse<BRPDataFromSource>
+) {
+  const responseContent = responseData.content;
+  if (Array.isArray(responseContent?.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
-    Object.assign(responseData, {
-      identiteitsbewijzen: responseData.identiteitsbewijzen.map((document) => {
-        const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
-          id: document.id,
-        });
-        return Object.assign({}, document, {
-          title:
-            BrpDocumentTitles[document.documentType] || document.documentType,
-          datumAfloop: document.datumAfloop,
-          datumUitgifte: document.datumUitgifte,
-          link: {
-            to: route,
-            title: document.documentType,
-          },
-        });
-      }),
+    Object.assign(responseContent, {
+      identiteitsbewijzen: responseContent.identiteitsbewijzen.map(
+        (document) => {
+          const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
+            id: document.id,
+          });
+          return Object.assign({}, document, {
+            title:
+              BrpDocumentTitles[document.documentType] || document.documentType,
+            datumAfloop: document.datumAfloop,
+            datumUitgifte: document.datumUitgifte,
+            link: {
+              to: route,
+              title: document.documentType,
+            },
+          });
+        }
+      ),
     });
   }
 
-  return responseData as BRPData;
+  return responseContent as BRPData;
 }
 
 export async function fetchBRP(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
 
-  return requestData<BRPData>(options, sessionID, passthroughRequestHeaders);
+  return requestData<BRPData>(options, requestID, authProfileAndToken);
 }
 
 export async function fetchBRPGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
+  const BRP = await fetchBRP(requestID, authProfileAndToken);
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({

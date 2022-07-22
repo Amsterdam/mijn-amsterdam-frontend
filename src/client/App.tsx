@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import {
   BrowserRouter,
   matchPath,
   Redirect,
   Route,
   Switch,
-  useLocation,
+  useHistory
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -15,23 +15,18 @@ import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
-import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import {
-  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
-  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
-  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
-} from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkEntry,
-  useDeeplinkRedirect,
+  useDeeplinkRedirect
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
+
 import { default as LandingPage } from './pages/Landing/Landing';
 
 const BurgerzakenAkte = lazy(
@@ -50,7 +45,6 @@ const StadspasAanvraagDetail = lazy(
 const StadspasDetail = lazy(
   () => import('./pages/StadspasDetail/StadspasDetail')
 );
-
 const InkomenDetailBbz = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailBbz')
 );
@@ -63,9 +57,7 @@ const InkomenDetailTozo = lazy(
 const InkomenDetailUitkering = lazy(
   () => import('./pages/InkomenDetail/InkomenDetailUitkering')
 );
-
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-
 const MyNotifications = lazy(
   () => import('./pages/MyNotifications/MyNotifications')
 );
@@ -79,9 +71,12 @@ const GarbageInformation = lazy(
 );
 const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
 const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
-
 const InkomenSpecificaties = lazy(
   () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
+);
+const Klachten = lazy(() => import('./pages/Klachten/Klachten'));
+const KlachtenDetail = lazy(
+  () => import('./pages/KlachtenDetail/KlachtenDetail')
 );
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -96,9 +91,7 @@ const VergunningDetail = lazy(
   () => import('./pages/VergunningDetail/VergunningDetail')
 );
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
-
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
-
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 function AppNotAuthenticated() {
@@ -136,33 +129,26 @@ function AppAuthenticated() {
   useTipsApi();
   usePageChange();
 
-  const location = useLocation();
+  const history = useHistory();
   const profileType = useProfileTypeValue();
-  const redirectAfterLogin = useDeeplinkRedirect();
-
-  const [pathname, search] = redirectAfterLogin.split('?');
 
   const isNoHeroRoute = NoHeroRoutes.some((route) =>
-    matchPath(location.pathname, { path: route })
+    matchPath(history.location.pathname, { path: route })
   );
+
+  const redirectAfterLogin = useDeeplinkRedirect();
+
+  useEffect(() => {
+    if (redirectAfterLogin && redirectAfterLogin !== '/') {
+      history.push(redirectAfterLogin);
+    }
+  }, [redirectAfterLogin, history])
 
   return (
     <>
       <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
-          <Redirect
-            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
-          <Redirect
-            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
-            to={{ pathname, search }}
-          />
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
@@ -233,6 +219,11 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route
+            path={AppRoutes['KLACHTEN/KLACHT']}
+            component={KlachtenDetail}
+          />
+          <Route path={AppRoutes.KLACHTEN} component={Klachten} />
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={[
@@ -265,23 +256,17 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useSessionApi();
-  const { isPristine, isAuthenticated, validityInSeconds } = session;
+  const { isPristine, isAuthenticated } = session;
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
     return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
   }
 
-  const dialogTimeoutSettings = {
-    secondsBeforeDialogShow:
-      validityInSeconds ||
-      DefaultAutologoutDialogSettings.secondsBeforeDialogShow,
-  };
-
   return isAuthenticated ? (
     <>
       <AppAuthenticated />
-      <AutoLogoutDialog settings={dialogTimeoutSettings} />
+      <AutoLogoutDialog />
     </>
   ) : (
     <AppNotAuthenticated />

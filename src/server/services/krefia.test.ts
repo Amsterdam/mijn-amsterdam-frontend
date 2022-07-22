@@ -4,11 +4,16 @@ import { fetchKrefiaGenerated } from '.';
 import { jsonCopy, omit } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import KrefiaData from '../mock-data/json/krefia.json';
 import { fetchKrefia, fetchSource } from './krefia';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = jsonCopy(KrefiaData);
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private' },
+    token: 'xxxxxx',
+  };
 
   const DUMMY_URL_KREFIA = '/krefia';
 
@@ -30,10 +35,10 @@ describe('Kredietbank & FIBU service', () => {
   });
 
   it('Should respond correctly', async () => {
-    const response = await fetchSource('x1', { x: 'saml' });
+    const response = await fetchSource('x1', authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
 
-    const responseDerived = await fetchKrefia('x1', { x: 'saml' });
+    const responseDerived = await fetchKrefia('x1', authProfileAndToken);
     expect(axiosRequestSpy.mock.calls.length).toEqual(1); // Use cached version
 
     const contentExpected = {
@@ -43,12 +48,13 @@ describe('Kredietbank & FIBU service', () => {
 
     expect(responseDerived).toEqual(contentExpected);
 
-    await fetchKrefia('x2', { x: 'saml' });
+    await fetchKrefia('x2', authProfileAndToken);
     expect(axiosRequestSpy.mock.calls.length).toEqual(2);
 
-    const generatedResponse = await fetchKrefiaGenerated('x1', {
-      x: 'saml',
-    });
+    const generatedResponse = await fetchKrefiaGenerated(
+      'x1',
+      authProfileAndToken
+    );
 
     expect(generatedResponse).toEqual({
       content: {

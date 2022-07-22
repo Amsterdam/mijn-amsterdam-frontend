@@ -23,7 +23,8 @@ export function useSSE({
 
   const connect = useCallback((path, requestParams) => {
     const es = new window.EventSource(
-      path + (requestParams ? '?' + new URLSearchParams(requestParams) : '')
+      path + (requestParams ? '?' + new URLSearchParams(requestParams) : ''),
+      { withCredentials: true }
     );
     setEs(es);
   }, []);

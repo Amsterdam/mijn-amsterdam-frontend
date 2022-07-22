@@ -1,33 +1,34 @@
+import { apiDependencyError } from '../../../universal/helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
 import { fetchAfvalmomenten } from './afvalmomenten';
 import { fetchAfvalpunten } from './afvalpunten';
-import { apiDependencyError } from '../../../universal/helpers';
 
 export async function fetchAFVAL(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
-    passthroughRequestHeaders,
+    requestID,
+    authProfileAndToken,
     profileType
   );
 
   if (MY_LOCATION.status === 'OK') {
-    return await fetchAfvalmomenten(sessionID, MY_LOCATION.content?.latlng);
+    return await fetchAfvalmomenten(requestID, MY_LOCATION.content?.latlng);
   }
   return apiDependencyError({ MY_LOCATION });
 }
 
 export async function fetchAFVALPUNTEN(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
-    passthroughRequestHeaders,
+    requestID,
+    authProfileAndToken,
     profileType
   );
 

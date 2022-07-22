@@ -1,6 +1,6 @@
 import { differenceInMonths, format } from 'date-fns';
 import { generatePath, LinkProps } from 'react-router-dom';
-import { API_BASE_PATH, AppRoutes, Chapter } from '../../../universal/config';
+import { AppRoutes, Chapter } from '../../../universal/config';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
@@ -46,7 +46,7 @@ export function addApiBasePathToDocumentUrls(
   return documents.map((document) => {
     return {
       ...document,
-      url: API_BASE_PATH + document.url,
+      url: document.url,
     };
   });
 }

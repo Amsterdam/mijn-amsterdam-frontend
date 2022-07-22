@@ -9,11 +9,9 @@ export const FeatureToggle = {
   belastingApiActive: true,
   milieuzoneApiActive: true,
   identiteitsbewijzenActive: true,
-  tonkActive: true,
   eherkenningActive: true,
   vergunningenActive: true,
   cmsFooterActive: true,
-  KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
   profileToggleActive: true,
   kvkActive: true,
@@ -23,7 +21,6 @@ export const FeatureToggle = {
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
   aktesActive: !IS_AP,
-  milieuzoneRecentCasesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
@@ -35,6 +32,7 @@ export const FeatureToggle = {
   parkerenActive: true,
   bekendmakingenDatasetActive: true,
   evenementenDatasetActive: false,
+  klachtenActive: !IS_PRODUCTION,
 };
 
 export const MAXIMUM_DAYS_RENT_ALLOWED = 30;

@@ -13,7 +13,6 @@ export function AanbiedenDiensten({
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       {vergunning.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

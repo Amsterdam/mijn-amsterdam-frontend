@@ -1,6 +1,5 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { RecoilRoot } from 'recoil';
 import { sessionAtom } from '../../hooks/api/useSessionApi';
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
@@ -47,41 +46,6 @@ describe('AutoLogoutDialog', () => {
     // component = null;
   });
 
-  it('resets the autologout counter every x seconds whenever user activity is detected', async () => {
-    render(
-      <RecoilRoot
-        initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
-      >
-        <AutoLogoutDialog settings={settings} />
-      </RecoilRoot>
-    );
-
-    await waitFor(() =>
-      expect(listenerSpy.mock.calls.some((c) => c[0] === 'mousemove')).toBe(
-        true
-      )
-    );
-
-    act(() => {
-      map.mousemove();
-      jest.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
-      );
-    });
-
-    await waitFor(() => expect(refetch).toHaveBeenCalled());
-
-    act(() => {
-      map.mousemove();
-
-      jest.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
-      );
-    });
-
-    expect(refetch).toHaveBeenCalledTimes(2);
-  });
-
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
     render(
       <RecoilRoot
@@ -100,16 +64,6 @@ describe('AutoLogoutDialog', () => {
     expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
 
     act(() => {
-      map.mousemove();
-
-      jest.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
-      );
-    });
-
-    expect(refetch).not.toHaveBeenCalled();
-
-    act(() => {
       jest.advanceTimersByTime(
         ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
       );
@@ -118,7 +72,7 @@ describe('AutoLogoutDialog', () => {
     expect(logout).toHaveBeenCalled();
   });
 
-  it('fires callback when clicking continue button', () => {
+  it('fires callback when clicking continue button', async () => {
     render(
       <RecoilRoot
         initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
@@ -137,9 +91,7 @@ describe('AutoLogoutDialog', () => {
 
     expect(screen.getByText('Doorgaan')).toBeInTheDocument();
 
-    act(() => {
-      userEvent.click(screen.getByText('Doorgaan'));
-    });
+    await userEvent.click(screen.getByText('Doorgaan'));
 
     expect(refetch).toHaveBeenCalledTimes(1);
 

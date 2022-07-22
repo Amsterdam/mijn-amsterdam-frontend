@@ -20,11 +20,11 @@ function getBrowserEnv() {
 
 function isBrowser() {
   // @ts-ignore
-  return typeof window !== 'undefined' && window.document;
+  return typeof window !== 'undefined' && !!window.document;
 }
 
 export const ENV = `${
-  isBrowser() ? getBrowserEnv() : process.env.BFF_ENV || 'development'
+  isBrowser() ? getBrowserEnv() : process.env.BFF_ENV ?? 'development'
 }` as OtapEnvName;
 
 process.env.NODE_ENV !== 'test' && console.info(`App running in ${ENV} mode.`);

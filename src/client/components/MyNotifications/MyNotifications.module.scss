@@ -153,6 +153,10 @@
   &[aria-expanded='true'] .CaretIcon {
     transform: translateY(-50%) rotate(-90deg);
   }
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .CaretIcon {

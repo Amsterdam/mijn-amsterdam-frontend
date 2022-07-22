@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import type { ToeristischeVerhuurRegistratie } from '../../../server/services/toeristische-verhuur';
+import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isError } from '../../../universal/helpers';
 import {
@@ -372,7 +372,7 @@ export default function ToeristischeVerhuur() {
             label="Registratienummer toeristische verhuur"
             valueWrapperElement="div"
             value={content?.registraties?.map(
-              (registrationItem: ToeristischeVerhuurRegistratie) => (
+              (registrationItem: ToeristischeVerhuurRegistratieDetail) => (
                 <article
                   key={registrationItem.registrationNumber}
                   className={styles.RegistrationNumber}

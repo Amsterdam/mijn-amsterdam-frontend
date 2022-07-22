@@ -9,7 +9,6 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
@@ -27,7 +26,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { BRP_RESIDENTS_API_URL } from '../../config/api';
+import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
@@ -51,10 +50,9 @@ export default function Profile() {
     ApiResponse<{ residentCount: number }>
   >(
     {
-      url: BRP_RESIDENTS_API_URL,
+      url: BFFApiUrls.BRP_RESIDENTS_API_URL,
       postpone: true,
       method: 'post',
-      transformResponse: (responseContent) => apiSuccessResult(responseContent),
     },
     apiPristineResult({ residentCount: -1 })
   );
@@ -173,11 +171,13 @@ export default function Profile() {
           </Alert>
         )}
 
-        {BRP.content?.adres?.inOnderzoek && (
+        {BRP.content?.persoon?.adresInOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
-              Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat.{' '}
+              {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
+                waar u ingeschreven staat.</> : <>
+              U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont.</>}
+              {' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"

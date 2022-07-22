@@ -32,6 +32,7 @@ export function isChapterActive(
     MY_LOCATION,
     KVK,
     KREFIA,
+    KLACHTEN,
   }: AppState
 ) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -133,6 +134,13 @@ export function isChapterActive(
 
     case Chapters.PARKEREN:
       return isAmsterdam && FeatureToggle.parkerenActive;
+
+    case Chapters.KLACHTEN:
+      return (
+        !isLoading(KLACHTEN) &&
+        !!KLACHTEN?.content?.klachten.length &&
+        FeatureToggle.klachtenActive
+      );
   }
 
   return false;

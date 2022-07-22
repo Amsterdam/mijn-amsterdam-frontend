@@ -23,7 +23,6 @@ export interface Adres {
   huisletter: string | null;
   begindatumVerblijf: string | null;
   einddatumVerblijf: string | null;
-  inOnderzoek: boolean;
   adresType: 'correspondentie' | 'woon';
   aantalBewoners?: number;
   _adresSleutel?: string;
@@ -50,6 +49,7 @@ export interface Persoon {
   vertrokkenOnbekendWaarheen: boolean;
   datumVertrekUitNederland: string;
   indicatieGeheim?: boolean;
+  adresInOnderzoek: '080000' | '089999' | null;
 }
 
 export interface Verbintenis {

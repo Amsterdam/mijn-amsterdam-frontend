@@ -8,6 +8,7 @@ import { Adres } from '../../universal/types';
 import { BAGSourceData } from '../../universal/types/bag';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;
@@ -32,8 +33,8 @@ export function formatBAGData(
 }
 
 export async function fetchBAG(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   address: Adres | null
 ) {
   if (!address) {
@@ -42,13 +43,9 @@ export async function fetchBAG(
 
   const searchAddress = getBagSearchAddress(address);
   const params = { q: searchAddress, features: 2 }; // features=2 is een Feature flag zodat ook locaties in Weesp worden weergegeven.
-
-  return requestData<BAGData>(
-    getApiConfig('BAG', {
-      params,
-      transformResponse: (responseData) => formatBAGData(responseData, address),
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  );
+  const config = getApiConfig('BAG', {
+    params,
+    transformResponse: (responseData) => formatBAGData(responseData, address),
+  });
+  return requestData<BAGData>(config, requestID);
 }

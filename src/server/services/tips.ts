@@ -2,6 +2,7 @@ import { ApiResponse, deepOmitKeys } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export type TIPSData = MyTip[];
 
@@ -86,8 +87,8 @@ export function createTipsRequestData(
 }
 
 export async function fetchTIPS(
-  sessionID: string,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   queryParams: Record<string, string>,
   serviceResults: ServiceResults | null
 ) {
@@ -100,7 +101,7 @@ export async function fetchTIPS(
       data: tipsRequestData,
       params,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID,
+    authProfileAndToken
   );
 }

@@ -1,6 +1,7 @@
 import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
 import { GenericDocument } from '../../universal/types/App.types';
+import { AuthProfileAndToken } from '../helpers/app';
 
 /**
  * This is a blueprint of a service. Change `ServiceName and SERVICE_NAME` to your specific needs.
@@ -31,14 +32,14 @@ export function transformServiceNameData(
 const SERVICE_NAME = 'BRP'; // Change to your service name
 
 export function fetchServiceName(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<ServiceNameData>(
     getApiConfig(SERVICE_NAME, {
       transformResponse: transformServiceNameData,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID,
+    authProfileAndToken
   );
 }

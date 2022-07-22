@@ -22,6 +22,7 @@ export default function LogoutLink({ children }: LogoutLinkProps) {
       className={styles.LogoutLink}
       icon={IconLogout}
       href={LOGOUT_URL}
+      external={true}
     >
       {children}
     </Linkd>

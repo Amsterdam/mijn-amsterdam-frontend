@@ -4,6 +4,7 @@ import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
+import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 
@@ -113,7 +114,7 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  sessionID: SessionID,
+  requestID: requestID,
   useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
@@ -129,13 +130,13 @@ async function fetchCMSMaintenanceNotifications(
         transformResponse: transformCMSEventResponse,
         cacheTimeout: 0,
       },
-      sessionID
+      requestID
     );
   }
 
   const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, sessionID)
+  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, requestID)
     .then((apiData) => {
       if (Array.isArray(apiData.content)) {
         return Promise.all(
@@ -180,12 +181,11 @@ async function fetchCMSMaintenanceNotifications(
 }
 
 export async function fetchMaintenanceNotificationsActual(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
   queryParams?: Record<string, string>
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    sessionID,
+    requestID,
     queryParams?.cache !== 'false'
   );
 
@@ -211,11 +211,10 @@ export async function fetchMaintenanceNotificationsActual(
 }
 
 export async function fetchMaintenanceNotificationsDashboard(
-  sessionID: SessionID
+  requestID: requestID
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
-    sessionID,
-    {},
+    requestID,
     { page: 'dashboard' }
   );
 

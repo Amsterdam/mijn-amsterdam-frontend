@@ -49,7 +49,7 @@ export function fileCache(
 }
 
 export async function fetchDataset(
-  sessionID: SessionID,
+  requestID: requestID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
   params: { [key: string]: any } = {},
@@ -115,11 +115,7 @@ export async function fetchDataset(
     };
   }
 
-  const response = await requestData<DatasetFeatures>(
-    requestConfig,
-    sessionID,
-    {}
-  );
+  const response = await requestData<DatasetFeatures>(requestConfig, requestID);
 
   if (response.status === 'OK') {
     const filterConfig = getDynamicDatasetFilters(datasetId);
@@ -165,7 +161,7 @@ export async function fetchDataset(
 type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
 
 export async function loadDatasetFeatures(
-  sessionID: SessionID,
+  requestID: requestID,
   configs: Array<[string, DatasetConfig]>
 ) {
   const requests: Array<Promise<ApiDatasetResponse>> = [];
@@ -174,7 +170,7 @@ export async function loadDatasetFeatures(
     const [id, config] = datasetConfig;
 
     requests.push(
-      fetchDataset(sessionID, id, config).then((result) => {
+      fetchDataset(requestID, id, config).then((result) => {
         return {
           ...result,
           id,
@@ -189,7 +185,7 @@ export async function loadDatasetFeatures(
 }
 
 export async function loadPolylineFeatures(
-  sessionID: SessionID,
+  requestID: requestID,
   {
     datasetIds,
     bbox,
@@ -207,7 +203,7 @@ export async function loadPolylineFeatures(
     const [datasetId, config] = datasetConfig;
 
     requests.push(
-      fetchDataset(sessionID, datasetId, config, {}).then((result) => {
+      fetchDataset(requestID, datasetId, config, {}).then((result) => {
         return {
           ...result,
           id: datasetId,
@@ -235,7 +231,7 @@ export async function loadPolylineFeatures(
 }
 
 export async function loadFeatureDetail(
-  sessionID: SessionID,
+  requestID: requestID,
   datasetId: string,
   id: string
 ) {
@@ -270,7 +266,8 @@ export async function loadFeatureDetail(
     );
   }
 
-  const response = await requestData(requestConfig, sessionID, {});
+  const response = await requestData(requestConfig, requestID);
+
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);
     // Replace the value of the `idKeyDetail` property. E.g. idKeyDetail = someOtherId  item.id = item.someOtherId;

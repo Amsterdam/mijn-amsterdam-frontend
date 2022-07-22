@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { relayApiUrl } from '../../../universal/helpers';
 import { AppState } from '../../AppState';
 import { DocumentLink } from '../../components/DocumentList/DocumentList';
 
@@ -15,7 +16,7 @@ export function useAddDocumentLinkComponents(
           wpiSpecificatiesContent.jaaropgaven.map((document) => {
             const documentUrl = (
               <DocumentLink
-                document={document}
+                document={{ ...document, url: relayApiUrl(document.url) }}
                 label="PDF"
                 trackPath={(document) =>
                   `/downloads/inkomen/jaaropgave/${document.title}`
@@ -30,7 +31,7 @@ export function useAddDocumentLinkComponents(
           wpiSpecificatiesContent.uitkeringsspecificaties.map((document) => {
             const documentUrl = (
               <DocumentLink
-                document={document}
+                document={{ ...document, url: relayApiUrl(document.url) }}
                 label="PDF"
                 trackPath={(document) =>
                   `/downloads/inkomen/uitkeringsspecificatie/${document.title}`

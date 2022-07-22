@@ -9,7 +9,6 @@ export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Soort vergunning" value={vergunning.caseType || '-'} />
       <InfoDetail label="Omschrijving" value={vergunning?.description || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetailGroup>

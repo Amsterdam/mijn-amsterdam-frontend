@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.13.0 as build-deps
+FROM node:16.15.0 as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
@@ -21,6 +21,7 @@ RUN npm ci
 
 COPY public /app/public
 COPY src /app/src
+
 
 ########################################################################################################################
 ########################################################################################################################
@@ -43,6 +44,7 @@ RUN npm run build
 # Build bff
 RUN npm run bff-api:build
 
+
 ########################################################################################################################
 ########################################################################################################################
 # Serving the application (test OT)
@@ -60,6 +62,7 @@ COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /app/build/r
 
 # Serving both front-end and back-end on th test environment
 ENTRYPOINT npm run serve-build
+
 
 ########################################################################################################################
 ########################################################################################################################
@@ -96,6 +99,7 @@ CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/ng
 FROM deploy-ap-frontend as deploy-acceptance-frontend
 COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/nginx/html/robots.txt
 
+
 ########################################################################################################################
 ########################################################################################################################
 # Front-end Web server image Production
@@ -103,7 +107,6 @@ COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/n
 ########################################################################################################################
 FROM deploy-ap-frontend as deploy-production-frontend
 COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/nginx/html/robots.txt
-
 
 
 ########################################################################################################################
@@ -127,6 +130,9 @@ COPY --from=build-app /app/build-bff /app/build-bff
 # Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
+
+RUN apt-get update \
+  && apt-get install nano
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build

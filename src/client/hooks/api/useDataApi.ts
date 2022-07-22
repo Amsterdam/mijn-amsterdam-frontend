@@ -6,6 +6,7 @@ import { Action } from '../../../universal/types';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
+  sentryEnabled?: boolean;
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
@@ -66,6 +67,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   postpone: false,
   responseType: 'json',
   method: 'get',
+  sentryEnabled: true,
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -121,6 +123,7 @@ export function useDataApi<T>(
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
         cancelToken: source.token,
+        withCredentials: true,
       };
       if (requestOptions.transformResponse) {
         requestOptionsFinal.transformResponse = addAxiosResponseTransform(
@@ -171,19 +174,21 @@ export function useDataApi<T>(
             payload,
           });
 
-          if (!(error instanceof Error)) {
-            Sentry.captureMessage(errorMessage, {
-              extra: {
-                url: requestOptions.url?.split('?')[0],
-              },
-            });
-          } else {
-            Sentry.captureException(error, {
-              extra: {
-                errorMessage,
-                url: requestOptions.url?.split('?')[0],
-              },
-            });
+          if (requestOptions.sentryEnabled) {
+            if (!(error instanceof Error)) {
+              Sentry.captureMessage(errorMessage, {
+                extra: {
+                  url: requestOptions.url?.split('?')[0],
+                },
+              });
+            } else {
+              Sentry.captureException(error, {
+                extra: {
+                  errorMessage,
+                  url: requestOptions.url?.split('?')[0],
+                },
+              });
+            }
           }
         }
       }

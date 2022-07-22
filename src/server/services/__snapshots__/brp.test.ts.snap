@@ -10,7 +10,6 @@ Object {
     "huisletter": null,
     "huisnummer": "1",
     "huisnummertoevoeging": null,
-    "inOnderzoek": true,
     "landnaam": "Nederland",
     "postcode": "1064 BH",
     "straatnaam": "Burgemeester Röellstraat",
@@ -24,7 +23,6 @@ Object {
       "huisletter": null,
       "huisnummer": "9",
       "huisnummertoevoeging": "H",
-      "inOnderzoek": false,
       "landnaam": "Nederland",
       "postcode": "1098 NK",
       "straatnaam": "Ampèrestraat",
@@ -37,7 +35,6 @@ Object {
       "huisletter": null,
       "huisnummer": "9",
       "huisnummertoevoeging": "3",
-      "inOnderzoek": false,
       "landnaam": "Nederland",
       "postcode": "1098 AA",
       "straatnaam": "Middenweg",
@@ -128,6 +125,7 @@ Object {
   ],
   "persoon": Object {
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
+    "adresInOnderzoek": "089999",
     "bsn": "129095205",
     "datumVertrekUitNederland": "1967-01-01",
     "geboortedatum": "1992-09-22",
@@ -234,7 +232,7 @@ Array [
   Object {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.",
+    "description": "Op dit moment onderzoeken wij op welk adres u nu woont.",
     "id": "brpAdresInOnderzoek",
     "isAlert": true,
     "link": Object {

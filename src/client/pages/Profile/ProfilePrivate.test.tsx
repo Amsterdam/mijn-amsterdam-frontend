@@ -9,7 +9,6 @@ import Profile from './ProfilePrivate';
 
 const responseData = {
   adres: {
-    inOnderzoek: true,
     huisletter: null,
     huisnummer: '1',
     huisnummertoevoeging: null,
@@ -66,6 +65,7 @@ const responseData = {
     voornamen: 'Wesley',
     voorvoegselGeslachtsnaam: null,
     mokum: true,
+    adresInOnderzoek: '080000'
   },
   ouders: [
     {
@@ -258,6 +258,26 @@ describe('<Profile />', () => {
             adres: {
               ...responseData.adres,
               landnaam: 'Nicaragua',
+            },
+          } as any)
+        )}
+      />
+    );
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
+  });
+
+  it('Matches the Full Page snapshot "Punt adres" in onderzoek', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            persoon: {
+              ...responseData.persoon,
+              adresInOnderzoek: '089999',
             },
           } as any)
         )}

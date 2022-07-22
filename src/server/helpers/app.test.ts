@@ -1,157 +1,156 @@
-import * as Sentry from '@sentry/node';
 import express from 'express';
+import { apiErrorResult } from '../../universal/helpers';
+import * as config from '../config';
 import {
   addServiceResultHandler,
-  clearSession,
-  exitEarly,
-  getAuthTypeFromHeader,
-  getPassthroughRequestHeaders,
+  clearRequestCache,
+  combineCookieChunks,
+  decodeOIDCToken,
+  getAuth,
+  getAuthProfile,
+  getOIDCToken,
   getProfileType,
-  isBffEndpoint,
-  isBffPublicEndpoint,
-  isValidRequestPath,
+  isRelayAllowed,
+  isSessionCookieName,
   queryParams,
-  secureValidation,
+  requestID,
   send404,
   sendMessage,
-  sessionID,
+  sendUnauthorized,
+  TokenData,
 } from './app';
 import { cache } from './source-api-request';
 
+const { oidcConfigDigid, oidcConfigEherkenning, OIDC_SESSION_COOKIE_NAME } =
+  config;
+
 describe('server/helpers/app', () => {
-  test('isValidRequestPath', () => {
-    {
-      const result = isValidRequestPath(
-        '/test-api/bff/test/blap/bla',
-        '/test/blap/bla'
-      );
-      expect(result).toBe(true);
-    }
-    {
-      const result = isValidRequestPath(
-        '/test-api/bff/test/blap/bla',
-        '/blap/test/blip'
-      );
-      expect(result).toBe(false);
-    }
-    {
-      const result = isValidRequestPath('/bff/test/blap/bla', '/test/blap/bla');
-      expect(result).toBe(false);
-    }
+  const digidClientId = oidcConfigDigid.clientID;
+  const eherkenningClientId = oidcConfigEherkenning.clientID;
+  const secret = config.OIDC_COOKIE_ENCRYPTION_KEY;
+
+  let isOidcTokenVerificationEnabled =
+    config.OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED;
+
+  beforeAll(() => {
+    (config as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = false;
+    oidcConfigEherkenning.clientID = 'test1';
+    oidcConfigDigid.clientID = 'test2';
+    (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = '123123123kjhkjhsdkjfhsd';
   });
 
-  test('isBffEndpoint', () => {
-    {
-      const result = isBffEndpoint('/test-api/bff/services/all');
-      expect(result).toBe(true);
-    }
-    {
-      const result = isBffEndpoint('/services/all');
-      expect(result).toBe(false);
-    }
+  afterAll(() => {
+    (config as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED =
+      isOidcTokenVerificationEnabled;
+    oidcConfigEherkenning.clientID = digidClientId;
+    oidcConfigDigid.clientID = eherkenningClientId;
+    (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = secret;
   });
 
-  test('isBffPublicEndpoint', () => {
-    {
-      const result = isBffPublicEndpoint('/test-api/bff/services/all');
-      expect(result).toBe(false);
-    }
-    {
-      const result = isBffPublicEndpoint('/test-api/bff/public/services/cms');
-      expect(result).toBe(true);
-    }
-  });
+  test('getAuth.eherkenning', async () => {
+    // const cookieValue = generateDevSessionCookieValue(
+    //   'eherkenning',
+    //   '123-eherkenning-321'
+    // );
 
-  test('getAuthTypeFromHeader', () => {
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'D',
-      });
-      expect(result).toBe('digid');
-    }
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'E',
-      });
-      expect(result).toBe('eherkenning');
-    }
-    {
-      const result = getAuthTypeFromHeader({
-        'x-auth-type': 'X',
-      });
-      expect(result).toBe('digid');
-    }
-  });
+    const cookieValue =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
 
-  test('getPassthroughRequestHeaders', () => {
     const req = {
-      headers: {
-        From: 'webmaster@example.org',
-        'x-something-hack': 'hax0r',
-        'x-saml-attribute-token1': 'xxx111xxxddd',
-      },
       cookies: {
-        authType: 'E',
+        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
       },
     } as unknown as typeof express.request;
 
-    const result = getPassthroughRequestHeaders(req);
+    const result = await getAuth(req);
 
-    expect(result).toEqual({
-      'x-auth-type': 'E',
-      'x-saml-attribute-token1': 'xxx111xxxddd',
-    });
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "profile": Object {
+          "authMethod": "eherkenning",
+          "id": "123-eherkenning-321",
+          "profileType": "commercial",
+        },
+        "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJ1cm46ZXRvZWdhbmc6MS45OkVudGl0eUNvbmNlcm5lZElEOkt2S25yIjoiMTIzLWVoZXJrZW5uaW5nLTMyMSIsImF1ZCI6InRlc3QxIiwiaWF0IjoxNjUwNjIwMTMzfQ.qF2JLBflk_ajk11jiyrZqcLklB618aSVjnazeDAyljdRJMN_vUUqVZBNLgLI0CBZ_jTYQwbl2OQsizGIdp9_yUadu1FhU4xGHYFBXvtLmdUk049bLccJoFIFYrvJq9yMAUhhRrBLjUUPJN3M8KijF7JKG74QYwyKyL-MzvsvKOqQNLJKUgQ4wUbsY2n9SjPcWGtB6rvkHrbfGGZZmdozIKXWmsQMYP41cEL9E0S15iF78Zko8jaWiV9oUHNqy3CfyZJz-K0dCbPAhs73q_7NqZQF1UoRgw8cQCVpfami521KpS7U6PK6oYlrigF1sHhsN_MuCwVHeOtu_BvBo_IFMQ",
+      }
+    `);
+
+    expect(
+      (await decodeOIDCToken(result.token))[
+        config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning
+      ]
+    ).toBe('123-eherkenning-321');
   });
 
-  describe('exitEarly', () => {
+  test('getAuth.digid', async () => {
+    // const cookieValue = generateDevSessionCookieValue('digid', '000-digid-999');
+    const cookieValue =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjE5ODQ1LCJ1YXQiOjE2NTA2MTk4NDUsImV4cCI6MTY1MDYyMDc0NX0..HUllPK31lXj_KBII.BqZ5b-8qiL8CYsV33qbiS2gBYJFvSOyshlKrWOQDNzXKAEf2Y3BtE-NOcJ8atUqIFSjmMaN-ZTUp7cXzpO3_i1RxBKUB99on7hVO3rinLk8gMbVGgNOE5PgTjzgQQ2gJTdJtssMR_uIKtytVOOF0tlQzaXh0bq-WydAyuHPV3xEDoyt3VrPR53qTjotM52u3jCDV39C4zKXNz9fS_eqHqiVMefxpgUtJNnKsIGiWRRYcIvAO3xFKBY_IA2Jv53gt0x7-sQ7lm5SRSe1WcsmwBBzAf3pYqqnwXtH1Y6RQZgtfWvTFypUFBCMoZ0i8j5JsTNRaCKuJxo3m5qbs8UfKL9oD7i41GkEI4GwFSQ6wnGqptlOwFNjIYt8IFHiTqJ6AIu3WAE_Z-WZ4MjEcLYZ_sTGHB_RfVx629U_fok9Uq0B7ZYFk_8btl3kPvQWDHbmhgxtXOddwHKBGlFEJJiNuPo7zYt3brKGJidZhhm8grwx_oy5Tpqtw_p1CBJyI-T6A-vo__iUuaxhhzLd_mcDa5Oq6kxYoTT-jkn1BK_N15rVE1FRsg3TU4fNZehKZ6CsdXjw7zxfhVUslidyesUP13T6WLAYwfDwM-4r4OAKtqj-ZOnYFffWFoDzJykZiieqeLvYnVJXw6INMqCFCUhBMFMu1uw8ly3onFwc8fqR6so2rhHt4P88ZWOc.m-3fNCjKs5A2seItvXarHQ';
+
     const req = {
-      path: '/none',
-      url: 'http://localhost/none',
-      headers: {
-        From: 'webmaster@example.org',
-        'x-something-hack': 'hax0r',
-        'x-saml-attribute-token1': 'xxx111xxxddd',
-      },
       cookies: {
-        authType: 'E',
+        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
       },
     } as unknown as typeof express.request;
 
-    const mockRes = {
-      status: jest.fn(),
-      end: jest.fn(),
-    };
+    const result = await getAuth(req);
 
-    const mockNext = jest.fn();
-    const captureMessageSpy = jest.spyOn(Sentry, 'captureMessage');
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "profile": Object {
+          "authMethod": "digid",
+          "id": "000-digid-999",
+          "profileType": "private",
+        },
+        "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJzdWIiOiIwMDAtZGlnaWQtOTk5IiwiYXVkIjoidGVzdDIiLCJpYXQiOjE2NTA2MTk4NDV9.QvPW0CYDnHiX77VZVAUmXahrQeJW1D0IrR4GBTyayH83nv3xe-nHnUMsXIchuYozmDwnF36CBsd1mm-C16x0PK1QD6-Fu-2PAekMxKaWpRWcI6ICOgliEVyV6a2B_KI3ZHshjlXxLyh59VL_2NegKZBQWEvTsFazn0fzbPmoKM3SVj19IiLug8Us4n-jYvzD8kplGzvWVujl4-1VYeNvn0vSfBrcSdLtGPJI7fcJafPxJs6gY2mrpwyeQ3Pan7DEEhXOqucjs81x9cwRRf4_JbRkehLKCwxb4u1USSusqTEqGhGQm7JGJlD4nZIdScNG7Xyx9LQcGm0EfnrjXOTGcw",
+      }
+    `);
 
-    test('Exits', () => {
-      exitEarly(req, mockRes as unknown as typeof express.response, mockNext);
-
-      expect(captureMessageSpy).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(404);
-      expect(mockRes.end).toHaveBeenCalledWith('not found');
-    });
-
-    mockRes.status.mockReset();
-    mockRes.end.mockReset();
-    captureMessageSpy.mockReset();
-
-    test('Passes', () => {
-      req.path = '/test-api/bff/services/all';
-      req.url = 'http://localhost/test-api/bff/services/all';
-
-      exitEarly(req, mockRes as unknown as typeof express.response, mockNext);
-
-      expect(captureMessageSpy).not.toHaveBeenCalled();
-      expect(mockRes.status).not.toHaveBeenCalled();
-      expect(mockRes.end).not.toHaveBeenCalled();
-
-      expect(mockNext).toHaveBeenCalled();
-    });
+    expect((await decodeOIDCToken(result.token)).sub).toBe('000-digid-999');
   });
 
-  test('sessionID', () => {
+  test('getAuthProfile', () => {
+    {
+      const profile = getAuthProfile({
+        aud: 'test1',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning]: 'EHERKENNING-KVK',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: 'EHERKENNING-KVK',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        aud: 'test2',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'digid',
+        profileType: 'private',
+        id: 'DIGID-BSN',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        aud: 'test_x',
+        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'digid',
+        profileType: 'private',
+        id: 'DIGID-BSN',
+      });
+    }
+  });
+
+  test('requestID', () => {
     const mockNext = jest.fn();
 
     const req = {} as any;
@@ -159,81 +158,69 @@ describe('server/helpers/app', () => {
       locals: {},
     } as any;
 
-    sessionID(req, res, mockNext);
-    expect(res.locals.sessionID).toBeDefined();
-    expect(typeof res.locals.sessionID).toBe('string');
+    requestID(req, res, mockNext);
+    expect(res.locals.requestID).toBeDefined();
+    expect(typeof res.locals.requestID).toBe('string');
     expect(mockNext).toHaveBeenCalled();
   });
 
   test('send404', () => {
     const mockRes = {
       status: jest.fn(),
-      end: jest.fn(),
+      send: jest.fn(),
     };
 
     send404(mockRes as any);
 
     expect(mockRes.status).toHaveBeenCalledWith(404);
-    expect(mockRes.end).toHaveBeenCalledWith('not found');
+    expect(mockRes.send).toHaveBeenCalledWith(
+      apiErrorResult('Not Found', null)
+    );
   });
 
-  describe('secureValidation', () => {
+  test('sendUnauthorized', () => {
     const mockRes = {
       status: jest.fn(),
-      end: jest.fn(),
+      send: jest.fn(),
     };
-    const mockNext = jest.fn();
-    const req = {
-      path: '/test-api/bff/services/all',
-      url: 'http://localhost/test-api/bff/services/all',
-      headers: {
-        From: 'webmaster@example.org',
-        'x-something-hack': 'hax0r',
-        'x-saml-attribute-token1': 'xxx111xxxddd',
-      },
-      cookies: {
-        authType: 'E',
-      },
-    } as unknown as typeof express.request;
 
-    test('Valid', () => {
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toBeCalledTimes(1);
-    });
+    sendUnauthorized(mockRes as any);
 
-    mockNext.mockReset();
-
-    test('NotValid', () => {
-      req.path = '/bff/services/all';
-      // Remove the headers
-      req.headers = {};
-
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(
-        new Error('Saml token required for secure endpoint.')
-      );
-    });
-
-    mockNext.mockReset();
-
-    test('Valid public', () => {
-      req.path = '/test-api/bff/public/services/cms';
-      secureValidation(req, mockRes as any, mockNext);
-      expect(mockNext).toHaveBeenCalled();
-    });
+    expect(mockRes.status).toHaveBeenCalledWith(401);
+    expect(mockRes.send).toHaveBeenCalledWith(
+      apiErrorResult('Unauthorized', null)
+    );
   });
 
-  test('clearSession', () => {
-    const sessionID = '11223300xx';
+  test('clearRequestCache', () => {
+    const requestID = '11223300xx';
     const nextMock = jest.fn();
-    cache.put(sessionID, { foo: 'bar' });
+    cache.put(requestID, { foo: 'bar' });
 
-    expect(cache.get(sessionID)).toEqual({ foo: 'bar' });
+    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
 
-    clearSession({} as any, { locals: { sessionID } } as any, nextMock);
+    clearRequestCache({} as any, { locals: { requestID } } as any, nextMock);
 
-    expect(cache.get(sessionID)).toBe(null);
+    expect(cache.get(requestID)).toBe(null);
     expect(cache.keys()).toEqual([]);
+    expect(nextMock).toBeCalledTimes(1);
+  });
+
+  test('clearRequestCache.unknown.key', () => {
+    const requestID = '11223300xx';
+    const nextMock = jest.fn();
+    cache.put(requestID, { foo: 'bar' });
+
+    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
+
+    clearRequestCache(
+      {} as any,
+      { locals: { requestID: 'some_other_key' } } as any,
+      nextMock
+    );
+
+    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
+    expect(cache.keys()).toEqual([requestID]);
     expect(nextMock).toBeCalledTimes(1);
   });
 
@@ -281,5 +268,67 @@ describe('server/helpers/app', () => {
       } as any);
       expect(result).toBe('commercial');
     }
+  });
+
+  test('getOIDCToken.success', () => {
+    const jweCookieString =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
+
+    expect(getOIDCToken(jweCookieString)).toMatchInlineSnapshot(
+      `"eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJ1cm46ZXRvZWdhbmc6MS45OkVudGl0eUNvbmNlcm5lZElEOkt2S25yIjoiMTIzLWVoZXJrZW5uaW5nLTMyMSIsImF1ZCI6InRlc3QxIiwiaWF0IjoxNjUwNjIwMTMzfQ.qF2JLBflk_ajk11jiyrZqcLklB618aSVjnazeDAyljdRJMN_vUUqVZBNLgLI0CBZ_jTYQwbl2OQsizGIdp9_yUadu1FhU4xGHYFBXvtLmdUk049bLccJoFIFYrvJq9yMAUhhRrBLjUUPJN3M8KijF7JKG74QYwyKyL-MzvsvKOqQNLJKUgQ4wUbsY2n9SjPcWGtB6rvkHrbfGGZZmdozIKXWmsQMYP41cEL9E0S15iF78Zko8jaWiV9oUHNqy3CfyZJz-K0dCbPAhs73q_7NqZQF1UoRgw8cQCVpfami521KpS7U6PK6oYlrigF1sHhsN_MuCwVHeOtu_BvBo_IFMQ"`
+    );
+  });
+
+  test('getOIDCToken.fail', () => {
+    const jweCookieString =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIyMTM2LCJ1YXQiOjE2NTA2MjIxMzYsImV4cCI6MTY1MDYyMzAzNn0..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
+
+    let err;
+    try {
+      getOIDCToken(jweCookieString);
+    } catch (error: any) {
+      err = error.toString();
+    }
+    expect(err).toBe('JWEDecryptionFailed: decryption operation failed');
+  });
+
+  test('decodeOIDCToken', async () => {
+    const jweCookieString =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
+    expect(await decodeOIDCToken(getOIDCToken(jweCookieString)))
+      .toMatchInlineSnapshot(`
+      Object {
+        "aud": "test1",
+        "iat": 1650620133,
+        "urn:etoegang:1.9:EntityConcernedID:KvKnr": "123-eherkenning-321",
+      }
+    `);
+  });
+
+  test('isRelayAllowed', () => {
+    expect(isRelayAllowed('/services/all')).toBe(false);
+    expect(isRelayAllowed('/brp/brp')).toBe(false);
+    expect(isRelayAllowed('')).toBe(false);
+    expect(isRelayAllowed('/')).toBe(false);
+    expect(isRelayAllowed('/brp/aantal_bewoners')).toBe(true);
+  });
+
+  test('combineCookieChunks', () => {
+    const cookies = {
+      'appSession.0': 'xxxx',
+      somethingelse: 'foobar',
+      'appSession.1': 'yyyy',
+      'appSession.2': 'zzzz',
+    };
+    expect(combineCookieChunks(cookies)).toBe('xxxxyyyyzzzz');
+  });
+
+  test('isSessionCookieName', () => {
+    let name = 'appSession.0';
+    expect(isSessionCookieName(name)).toBe(true);
+    name = 'appSession';
+    expect(isSessionCookieName(name)).toBe(true);
+    name = 'appsession';
+    expect(isSessionCookieName(name)).toBe(false);
   });
 });

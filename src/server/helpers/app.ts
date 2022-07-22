@@ -1,106 +1,127 @@
-import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
+import jose, { JWE, JWK, JWKS } from 'jose';
+import memoize from 'memoizee';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
-import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../universal/config';
+import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
+import { apiErrorResult } from '../../universal/helpers';
 import {
-  BffEndpoints,
-  BFF_BASE_PATH,
+  DEV_JWK_PRIVATE,
+  DEV_JWK_PUBLIC,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  OIDC_COOKIE_ENCRYPTION_KEY,
+  OIDC_ID_TOKEN_EXP,
+  OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+  OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
+  OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
-  TMA_SAML_HEADER,
-  X_AUTH_TYPE_HEADER,
+  RelayPathsAllowed,
 } from '../config';
-import { clearSessionCache } from './source-api-request';
+import { axiosRequest, clearSessionCache } from './source-api-request';
 
-export function isValidRequestPath(requestPath: string, path: string) {
-  const isRouteMatch = !!matchPath(requestPath, {
-    path: BFF_BASE_PATH + path,
-    exact: true,
-  });
-  return isRouteMatch;
+const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
+
+export interface AuthProfile {
+  authMethod: 'eherkenning' | 'digid';
+  profileType: 'private' | 'private-commercial' | 'commercial';
+  id?: string;
 }
 
-export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some((path) =>
-    isValidRequestPath(requestPath, path)
-  );
-}
+export function getAuthProfile(tokenData: TokenData): AuthProfile {
+  let authMethod: AuthProfile['authMethod'];
+  let profileType: AuthProfile['profileType'];
 
-export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some((path) =>
-    isValidRequestPath(requestPath, path)
-  );
-}
-
-export function getAuthTypeFromHeader(
-  passthroughRequestHeaders: Record<string, string>
-) {
-  const type: AuthType = passthroughRequestHeaders[
-    X_AUTH_TYPE_HEADER
-  ] as AuthType;
-
-  if (type === AuthType.EHERKENNING) {
-    return 'eherkenning';
+  switch (tokenData.aud) {
+    case oidcConfigEherkenning.clientID:
+      authMethod = 'eherkenning';
+      profileType = 'commercial';
+      break;
+    case oidcConfigDigid.clientID:
+    default:
+      authMethod = 'digid';
+      profileType = 'private';
+      break;
   }
 
-  return 'digid';
-}
-
-export function getPassthroughRequestHeaders(req: Request) {
-  const passthroughHeaders: Record<string, string> = {
-    [TMA_SAML_HEADER]: (req.headers[TMA_SAML_HEADER] || '') as string,
-    [X_AUTH_TYPE_HEADER]: (req.cookies[COOKIE_KEY_AUTH_TYPE] || '') as string,
+  return {
+    id: tokenData[OIDC_TOKEN_ID_ATTRIBUTE[authMethod]],
+    authMethod,
+    profileType,
   };
-  return passthroughHeaders;
 }
 
-export function exitEarly(req: Request, res: Response, next: NextFunction) {
-  // Exit early if request is not made to a bff endpoint.
-  if (!isBffEndpoint(req.path)) {
-    Sentry.captureMessage('Exit early on non-existent endpoint.', {
-      extra: {
-        url: req.url,
-      },
+export interface AuthProfileAndToken {
+  token: string;
+  profile: AuthProfile;
+}
+
+async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
+  const oidcToken = getOIDCToken(combineCookieChunks(req.cookies));
+  const tokenData = await decodeOIDCToken(oidcToken);
+  const profile = getAuthProfile(tokenData);
+
+  return {
+    token: oidcToken,
+    profile,
+  };
+}
+
+export const getAuth = memoize(getAuth_);
+
+export function combineCookieChunks(cookies: Record<string, string>) {
+  let unchunked = '';
+
+  Object.entries(cookies)
+    .filter(([key]) => isSessionCookieName(key))
+    .forEach(([key, value]) => {
+      unchunked += value;
     });
-    return send404(res);
-  }
-  next();
+
+  return unchunked;
 }
 
-export function sessionID(req: Request, res: Response, next: NextFunction) {
-  res.locals.sessionID = uid.sync(18);
+export function isSessionCookieName(cookieName: string) {
+  return (
+    cookieName === OIDC_SESSION_COOKIE_NAME ||
+    !!cookieName.match(`^${OIDC_SESSION_COOKIE_NAME}\\.\\d$`)
+  );
+}
+
+export function hasSessionCookie(req: Request) {
+  for (const cookieName of Object.keys(req.cookies)) {
+    if (isSessionCookieName(cookieName)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function requestID(req: Request, res: Response, next: NextFunction) {
+  res.locals.requestID = uid.sync(18);
   next();
 }
 
 export function send404(res: Response) {
   res.status(404);
-  return res.end('not found');
+  return res.send(apiErrorResult('Not Found', null));
 }
 
-export function secureValidation(
+export function sendUnauthorized(res: Response) {
+  res.status(401);
+  return res.send(apiErrorResult('Unauthorized', null));
+}
+
+export function clearRequestCache(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
-
-  // Check if this is a request to a public endpoint
-  if (isBffPublicEndpoint(req.path)) {
-    next();
-  } else {
-    // We expect saml token header to be present for non-public endpoint.
-    if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
-      next();
-    } else {
-      next(new Error('Saml token required for secure endpoint.'));
-    }
-  }
-}
-
-export function clearSession(req: Request, res: Response, next: NextFunction) {
-  const sessionID = res.locals.sessionID!;
-  clearSessionCache(sessionID);
+  const requestID = res.locals.requestID!;
+  clearSessionCache(requestID);
   next();
 }
 
@@ -133,4 +154,147 @@ export function queryParams(req: Request) {
 
 export function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
+}
+
+export function getOIDCCookieData(jweCookieString: string): {
+  id_token: string;
+} {
+  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
+
+  const encryptOpts = {
+    alg: 'dir',
+    enc: 'A256GCM',
+  };
+
+  const { cleartext } = JWE.decrypt(jweCookieString, key, {
+    complete: true,
+    contentEncryptionAlgorithms: [encryptOpts.enc],
+    keyManagementAlgorithms: [encryptOpts.alg],
+  });
+
+  return JSON.parse(cleartext.toString());
+}
+
+export function getOIDCToken(jweCookieString: string): string {
+  return getOIDCCookieData(jweCookieString).id_token;
+}
+
+export interface TokenData {
+  sub: string;
+  aud: string;
+  [key: string]: any;
+}
+
+const getJWKSKey = memoize(async () => {
+  return IS_AP
+    ? axiosRequest
+        .request({
+          url: process.env.BFF_OIDC_JWKS_URL,
+          responseType: 'json',
+        })
+        .then((response) => JWKS.asKeyStore(response.data))
+    : getPublicKeyForDevelopment();
+});
+
+export async function decodeOIDCToken(token: string): Promise<TokenData> {
+  const verificationOptions = {} as any;
+
+  if (OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED) {
+    // NOTE: Use this for added security
+    verificationOptions.maxTokenAge = OIDC_ID_TOKEN_EXP;
+  }
+
+  return jose.JWT.verify(
+    token,
+    await getJWKSKey(),
+    verificationOptions
+  ) as unknown as TokenData;
+}
+
+export function isRelayAllowed(pathRequested: string) {
+  return Object.values(RelayPathsAllowed).some((pathAllowed) => {
+    return matchPath(pathRequested, {
+      path: pathAllowed,
+      exact: true,
+      strict: false,
+    });
+  });
+}
+
+export function isProtectedRoute(pathRequested: string) {
+  // NOT A PUBLIC ENDPOINT
+  return !PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
+    return matchPath(pathRequested, {
+      path: pathPublic,
+      exact: true,
+      strict: false,
+    });
+  });
+}
+
+/**
+ *
+ * Helpers for development
+ */
+
+function encryptDevSessionCookieValue(payload: string, headers: object) {
+  const alg = 'dir';
+  const enc = 'A256GCM';
+  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
+
+  return JWE.encrypt(payload, key, { alg, enc, ...headers });
+}
+
+function getPrivateKeyForDevelopment() {
+  const key = JWK.asKey(DEV_JWK_PRIVATE);
+  return key;
+}
+
+function getPublicKeyForDevelopment() {
+  return JWK.asKey(DEV_JWK_PUBLIC);
+}
+
+function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
+  const idToken = jose.JWT.sign(
+    {
+      [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
+    },
+    getPrivateKeyForDevelopment(),
+    {
+      algorithm: 'RS256',
+    }
+  );
+  return idToken;
+}
+
+export function decodeToken(idToken: string) {
+  return jose.JWT.decode(idToken);
+}
+
+export function generateDevSessionCookieValue(
+  authMethod: AuthProfile['authMethod'],
+  userID: string
+) {
+  const uat = (Date.now() / 1000) | 0;
+  const iat = uat;
+  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
+
+  const value = encryptDevSessionCookieValue(
+    JSON.stringify({ id_token: signToken(authMethod, userID) }),
+    {
+      iat,
+      uat,
+      exp,
+    }
+  );
+
+  return value;
+}
+
+export function nocache(req: Request, res: Response, next: NextFunction) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
 }

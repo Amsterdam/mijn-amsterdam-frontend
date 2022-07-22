@@ -13,4 +13,5 @@ export enum CaseType {
   BZB = 'Parkeerontheffingen Blauwe zone bedrijven',
   Flyeren = 'Flyeren-Sampling',
   AanbiedenDiensten = 'Aanbieden van diensten',
+  NachtwerkOntheffing = 'Nachtwerkontheffing',
 }

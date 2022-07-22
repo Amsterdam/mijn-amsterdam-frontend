@@ -53,7 +53,9 @@ describe('DocumentList', () => {
 
     expect(screen.getAllByText(ITEMS[0].title).length).toBe(2);
     userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
-    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
+    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url, {
+      credentials: 'include',
+    });
 
     await waitFor(() =>
       expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
@@ -122,7 +124,10 @@ describe('DocumentList', () => {
     );
 
     userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
-    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
+
+    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url, {
+      credentials: 'include',
+    });
 
     await waitFor(() => expect(track).not.toHaveBeenCalled());
     await screen.findByText('Download mislukt');

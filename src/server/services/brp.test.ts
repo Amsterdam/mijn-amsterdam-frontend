@@ -1,11 +1,13 @@
-import { getFullAddress } from '../../universal/helpers';
+import { ApiSuccessResponse, getFullAddress } from '../../universal/helpers';
 import { getBagSearchAddress } from '../../universal/helpers/bag';
 import { BRPDataFromSource } from '../../universal/types/brp';
 import brpData from '../mock-data/json/brp.json';
 import { transformBRPData, transformBRPNotifications } from './brp';
 
-const brpDataTyped = brpData as BRPDataFromSource;
-const { adres } = brpDataTyped;
+const brpDataTyped = brpData as ApiSuccessResponse<BRPDataFromSource>;
+const {
+  content: { adres },
+} = brpDataTyped;
 
 describe('BRP data api + transformation', () => {
   it('should construct a bag search addresss', () => {

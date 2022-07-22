@@ -4,24 +4,27 @@ import { omit } from '../../universal/helpers';
 import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
-  getPassthroughRequestHeaders,
+  getAuth,
   getProfileType,
   queryParams,
   sendMessage,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchAKTES } from './aktes';
-import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchERFPACHT } from './erfpacht';
 import { fetchGenerated } from './generated';
 import { fetchMyLocation } from './home';
+import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
-import { fetchMILIEUZONE } from './milieuzone';
-import { fetchSubsidie } from './subsidie';
+import {
+  fetchBelasting,
+  fetchSubsidie,
+  fetchMilieuzone,
+  fetchErfpacht,
+} from './simple-connect';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -35,14 +38,15 @@ import {
   fetchTozo,
 } from './wpi';
 
-// Default service call just passing sessionID and request headers as arguments
+// Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
-  return (sessionID: SessionID, req: Request) =>
-    fetchService(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      queryParams(req)
-    );
+  return async (requestID: requestID, req: Request) =>
+    fetchService(requestID, await getAuth(req), queryParams(req));
+}
+
+function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
+  return (requestID: requestID, req: Request) =>
+    fetchService(requestID, queryParams(req));
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -58,12 +62,15 @@ function getServiceTipsMap(profileType: ProfileType) {
 /**
  * The service methods
  */
-const BRP = callService(fetchBRP);
-const AKTES = callService(fetchAKTES);
-const CMS_CONTENT = callService(fetchCMSCONTENT);
-const CMS_MAINTENANCE_NOTIFICATIONS = callService(
+// Public services
+const CMS_CONTENT = callPublicService(fetchCMSCONTENT);
+const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
+
+// Protected services
+const BRP = callService(fetchBRP);
+const AKTES = callService(fetchAKTES);
 const KVK = callService(fetchKVK);
 const KREFIA = callService(fetchKrefia);
 const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
@@ -75,49 +82,33 @@ const WPI_STADSPAS = callService(fetchStadspas);
 
 const WMO = callService(fetchWmo);
 
-const TOERISTISCHE_VERHUUR = (sessionID: SessionID, req: Request) =>
-  fetchToeristischeVerhuur(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
+  fetchToeristischeVerhuur(requestID, await getAuth(req), getProfileType(req));
 
-const VERGUNNINGEN = (sessionID: SessionID, req: Request) =>
-  fetchVergunningen(sessionID, getPassthroughRequestHeaders(req));
+const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
+  fetchVergunningen(requestID, await getAuth(req));
 
 // Location, address, based services
-const MY_LOCATION = (sessionID: SessionID, req: Request) =>
-  fetchMyLocation(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+const MY_LOCATION = async (requestID: requestID, req: Request) =>
+  fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
 
-const AFVAL = (sessionID: SessionID, req: Request) =>
-  fetchAFVAL(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
+const AFVAL = async (requestID: requestID, req: Request) =>
+  fetchAFVAL(requestID, await getAuth(req), getProfileType(req));
 
-const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
-  fetchAFVALPUNTEN(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    getProfileType(req)
-  );
+const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
+  fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
-const BELASTINGEN = callService(fetchBELASTING);
-const MILIEUZONE = callService(fetchMILIEUZONE);
-const ERFPACHT = callService(fetchERFPACHT);
+const BELASTINGEN = callService(fetchBelasting);
+const MILIEUZONE = callService(fetchMilieuzone);
+const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
+const KLACHTEN = callService(fetchAllKlachten);
 
 // Special services that aggeragates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
-  (
-    await fetchGenerated(
-      sessionID,
-      getPassthroughRequestHeaders(req),
-      getProfileType(req)
-    )
-  ).NOTIFICATIONS;
+const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
+  (await fetchGenerated(requestID, await getAuth(req), getProfileType(req)))
+    .NOTIFICATIONS;
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
@@ -143,6 +134,7 @@ const SERVICES_INDEX = {
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
   SUBSIDIE,
+  KLACHTEN,
   NOTIFICATIONS,
 };
 
@@ -200,6 +192,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   'private-commercial': {
     AFVAL,
@@ -224,6 +217,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     WMO,
+    KLACHTEN,
   },
   commercial: {
     AFVAL,
@@ -259,16 +253,16 @@ export const servicesTipsByProfileType = {
 };
 
 function loadServices(
-  sessionID: SessionID,
+  requestID: requestID,
   req: Request,
   serviceMap: PrivateServices | CommercialServices | PrivateCommercialServices,
-  filterIds: SessionID[] = []
+  filterIds: requestID[] = []
 ) {
   return Object.entries(serviceMap)
     .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
-      return (fetchService(sessionID, req) as Promise<any>)
+      return (fetchService(requestID, req) as Promise<any>)
         .then((result) => ({
           [serviceID]: result,
         }))
@@ -285,7 +279,7 @@ function loadServices(
 }
 
 export async function loadServicesSSE(req: Request, res: Response) {
-  const sessionID = res.locals.sessionID;
+  const requestID = res.locals.requestID;
   const profileType = getProfileType(req);
   const requestedServiceIds = (queryParams(req).serviceIds ||
     []) as ServiceID[];
@@ -294,7 +288,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   const serviceMap = getServiceMap(profileType);
   const serviceIds = Object.keys(serviceMap);
   const servicePromises = loadServices(
-    sessionID,
+    requestID,
     req,
     serviceMap,
     requestedServiceIds
@@ -306,7 +300,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   );
 
   // Send service results to tips api for personalized tips
-  const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
+  const tipsPromise = loadServicesTipsRequestData(requestID, req).then(
     (responseData) => {
       return { TIPS: responseData };
     }
@@ -321,19 +315,19 @@ export async function loadServicesSSE(req: Request, res: Response) {
 }
 
 export async function loadServicesAll(req: Request, res: Response) {
-  const sessionID = res.locals.sessionID;
+  const requestID = res.locals.requestID;
   const profileType = getProfileType(req);
   const requestedServiceIds = (queryParams(req).serviceIds ||
     []) as ServiceID[];
   const serviceMap = getServiceMap(profileType);
   const servicePromises = loadServices(
-    sessionID,
+    requestID,
     req,
     serviceMap,
     requestedServiceIds
   );
 
-  const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
+  const tipsPromise = loadServicesTipsRequestData(requestID, req).then(
     (responseData) => {
       return {
         TIPS: responseData,
@@ -358,12 +352,13 @@ export async function loadServicesAll(req: Request, res: Response) {
  */
 export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
-async function createTipsServiceResults(sessionID: SessionID, req: Request) {
+async function createTipsServiceResults(requestID: requestID, req: Request) {
   let requestData = null;
+
   if (queryParams(req).optin === 'true') {
     const profileType = queryParams(req).profileType as ProfileType;
     const servicePromises = loadServices(
-      sessionID,
+      requestID,
       req,
       getServiceTipsMap(profileType) as any
     );
@@ -375,12 +370,12 @@ async function createTipsServiceResults(sessionID: SessionID, req: Request) {
   return requestData;
 }
 
-async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
-  const serviceResults = await createTipsServiceResults(sessionID, req);
+async function loadServicesTipsRequestData(requestID: requestID, req: Request) {
+  const serviceResults = await createTipsServiceResults(requestID, req);
 
   return fetchTIPS(
-    sessionID,
-    getPassthroughRequestHeaders(req),
+    requestID,
+    await getAuth(req),
     queryParams(req),
     serviceResults
   ).catch((error: Error) => {
@@ -394,8 +389,9 @@ export async function loadServicesTips(
   res: Response,
   next: NextFunction
 ) {
-  const sessionID = res.locals.sessionID;
-  const result = await loadServicesTipsRequestData(sessionID, req);
+  const requestID = res.locals.requestID;
+  const result = await loadServicesTipsRequestData(requestID, req);
+
   res.json(result);
   next();
 }
@@ -405,9 +401,11 @@ export async function loadServicesTipsRequestDataOverview(
   res: Response,
   next: NextFunction
 ) {
-  const sessionID = res.locals.sessionID;
+  const requestID = res.locals.requestID;
   req.query.optin = 'true';
-  const result = await createTipsServiceResults(sessionID, req);
+
+  const result = await createTipsServiceResults(requestID, req);
   res.json(createTipsRequestData(queryParams(req), result));
+
   next();
 }

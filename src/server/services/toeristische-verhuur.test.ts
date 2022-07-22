@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
-import toeristischeVerhuurRegistratiesData from '../mock-data/json/registraties-toeristische-verhuur.json';
+import { AuthProfileAndToken } from '../helpers/app';
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,
@@ -14,44 +14,84 @@ import { toeristischeVerhuurVergunningTypes } from './vergunningen/vergunningen'
 describe('Toeristische verhuur service', () => {
   const axMock = new MockAdapter(axiosRequest);
   const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
-  const REGISTRATIES_DUMMY_RESPONSE = jsonCopy(
-    toeristischeVerhuurRegistratiesData
-  );
+  const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
+    {
+      registrationNumber: 'AAAAAAAAAAAAAAAAAAAA',
+    },
+    {
+      registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
+    },
+  ];
+  const REGISTRATIES_DUMMY_RESPONSE = {
+    registrationNumber: 'AAAA AAAA AAAA AAAA AAAA',
+    rentalHouse: {
+      street: 'Amstel',
+      houseNumber: '1',
+      houseLetter: null,
+      houseNumberExtension: null,
+      postalCode: '1012PN',
+      city: 'Amsterdam',
+      shortName: 'Amstel',
+      owner: null,
+    },
+    agreementDate: '2021-01-01T10:47:44.6107122',
+  };
 
-  const TOERISTISCHE_VERHUUR_REGISTRATIES_URL =
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url;
   const TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL = ApiConfig.VERGUNNINGEN.url;
 
-  const DUMMY_URL_REGISTRATIES = '/registraties';
   const DUMMY_URL_VERGUNNINGEN = '/vergunningen';
   const DUMMY_URL_NULL_CONTENT = '/null-content';
-  const DUMMY_URL_ERROR = '/error-response';
+  const DUMMY_URL_ERROR = '/error-response/';
+  const DUMMY_URL_ERROR_2 = '/another-error/';
+
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: { authMethod: 'digid', profileType: 'private', id: 'DIGID-BSN' },
+    token: 'xxxxxx',
+  };
+  const BFF_LVV_API_URL = '/remote/lvv/api/';
+  const penv = process.env;
+  process.env = {
+    ...penv,
+    BFF_LVV_API_URL,
+  };
 
   jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
 
   afterAll(() => {
     axMock.restore();
     ApiConfig.VERGUNNINGEN.url = TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url =
-      TOERISTISCHE_VERHUUR_REGISTRATIES_URL;
+    process.env = penv;
   });
 
-  afterEach(() => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_VERGUNNINGEN;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
-  });
+  axMock
+    .onPost(BFF_LVV_API_URL + 'bsn')
+    .reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
 
-  axMock.onGet(DUMMY_URL_REGISTRATIES).reply(200, REGISTRATIES_DUMMY_RESPONSE);
+  axMock
+    .onGet(new RegExp(`${BFF_LVV_API_URL}*`))
+    .reply(200, REGISTRATIES_DUMMY_RESPONSE);
+
   axMock.onGet(DUMMY_URL_VERGUNNINGEN).reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
-
   axMock.onGet(DUMMY_URL_NULL_CONTENT).reply(200, null);
-  axMock.onGet(DUMMY_URL_ERROR).reply(500, { message: 'fat chance!' });
+
+  axMock
+    .onGet(DUMMY_URL_ERROR)
+    .reply(500, { status: 'ERROR', message: 'fat chance!', content: null });
+
+  axMock
+    .onAny(new RegExp(`${DUMMY_URL_ERROR}*`))
+    .reply(500, { message: 'fat chance!', content: null });
+
+  axMock
+    .onPost(new RegExp(`${DUMMY_URL_ERROR_2}*`))
+    .reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
+
+  axMock.onGet(new RegExp(`${DUMMY_URL_ERROR_2}*`)).reply(500, null);
 
   it('Should respond with both vergunningen and registraties', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_VERGUNNINGEN;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
 
-    const response = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     expect(response.content.registraties.length).toBeGreaterThan(0);
 
@@ -70,20 +110,19 @@ describe('Toeristische verhuur service', () => {
   });
 
   it('Should reply with memoized response based on function params', async () => {
-    const response = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
 
-    const response2 = await fetchToeristischeVerhuur('x1', { x: 'saml' });
+    const response2 = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
     expect(response === response2).toBe(true);
   });
 
-  it('Should respond with 1 failed dependency', async () => {
+  it('Should respond with 1 failed dependency: vergunningen failed', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_REGISTRATIES;
 
-    const response = await fetchToeristischeVerhuur('x2', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
 
     expect(response.content.registraties.length).toBeGreaterThan(0);
     expect(response.content.vergunningen.length).toBe(0);
@@ -94,20 +133,31 @@ describe('Toeristische verhuur service', () => {
     });
   });
 
+  it('Should respond with 1 failed dependency: registrationNumbers failed', async () => {
+    process.env.BFF_LVV_API_URL = DUMMY_URL_ERROR;
+
+    const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
+
+    expect(response.failedDependencies?.registraties).toStrictEqual({
+      status: 'DEPENDENCY_ERROR',
+      content: null,
+      message: `[registrationNumbers] Error: Request failed with status code 500  `,
+    });
+  });
+
   it('Should respond with 2 failed dependencies', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
-    ApiConfig.TOERISTISCHE_VERHUUR_REGISTRATIES.url = DUMMY_URL_ERROR;
+    process.env.BFF_LVV_API_URL = DUMMY_URL_ERROR_2;
 
-    const response = await fetchToeristischeVerhuur('x3', { x: 'saml' });
+    const response = await fetchToeristischeVerhuur('x4', authProfileAndToken);
 
-    expect(response.content.registraties.length).toBe(0);
-    expect(response.content.vergunningen.length).toBe(0);
-    expect(response.failedDependencies?.vergunningen).toStrictEqual({
+    expect(response.failedDependencies?.registraties).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: Request failed with status code 500',
+      message: 'Could not retrieve all registration details',
     });
-    expect(response.failedDependencies?.registraties).toStrictEqual({
+
+    expect(response.failedDependencies?.vergunningen).toStrictEqual({
       status: 'ERROR',
       content: null,
       message: 'Error: Request failed with status code 500',
@@ -117,7 +167,7 @@ describe('Toeristische verhuur service', () => {
   it('Should return only vergunningen if commercial profiletype', async () => {
     const response = await fetchToeristischeVerhuur(
       'x4.b',
-      { x: 'saml' },
+      authProfileAndToken,
       'commercial'
     );
 

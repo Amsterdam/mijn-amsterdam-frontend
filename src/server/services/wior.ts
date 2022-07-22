@@ -1,6 +1,7 @@
 import { LatLngBoundsLiteral } from 'leaflet';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';
 import {
@@ -27,8 +28,8 @@ function getNotification(bbox: LatLngBoundsLiteral) {
 }
 
 export async function fetchWiorGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   const datasetId = 'wior';
@@ -48,7 +49,7 @@ export async function fetchWiorGenerated(
     },
   };
   const wiorMeldingen = await fetchDataset(
-    sessionID,
+    requestID,
     datasetId,
     config,
     {}
@@ -59,8 +60,8 @@ export async function fetchWiorGenerated(
     };
   });
   const MY_LOCATION = await fetchMyLocation(
-    sessionID,
-    passthroughRequestHeaders,
+    requestID,
+    authProfileAndToken,
     profileType
   );
   if (

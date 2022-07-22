@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
-import { ApiUrls, X_AUTH_TYPE_HEADER } from '../config';
+import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import AFVAL from './json/afvalophaalgebieden.json';
@@ -10,11 +10,13 @@ import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
+import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
-import TOERISTISCHE_VERHUUR_REGISTRATIES from './json/registraties-toeristische-verhuur.json';
+import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
+import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
@@ -23,6 +25,8 @@ import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
+import KLACHTEN from './json/klachten.json';
+import { AuthProfile, decodeToken } from '../helpers/app';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -37,7 +41,19 @@ async function loadMockApiResponseJson(data: any) {
 }
 
 function isCommercialUser(config: any) {
-  return config?.headers[X_AUTH_TYPE_HEADER] === 'eherkenning';
+  const authHeader = config?.headers.Authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    try {
+      const tokenData = decodeToken(authHeader.split('Bearer ').pop()) as {
+        aud: string;
+      };
+      return tokenData?.aud === oidcConfigEherkenning.clientID;
+    } catch (error) {
+      // Don't do anything here. For Dev purposes we just try-and-decode and see if we recognize the content of the token. Nothing fancy.
+    }
+  }
+
+  return false;
 }
 
 type MockDataConfig = Record<
@@ -50,6 +66,7 @@ type MockDataConfig = Record<
     networkError?: boolean;
     headers?: Record<string, string>;
     params?: Record<string, string>;
+    pathReg?: RegExp;
   }
 >;
 
@@ -73,6 +90,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BRP);
     },
   },
+
   [ApiUrls.AKTES]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -130,8 +148,12 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.ERFPACHT]: {
+    pathReg: new RegExp('/remote/erfpacht/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
+      if (config.url.includes('/notifications/')) {
+        return await loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
+      }
       // if (isCommercialUser(config)) {
       //   return 'no-content';
       // }
@@ -139,6 +161,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.SUBSIDIE]: {
+    pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -168,7 +191,8 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(AFVAL);
     },
   },
-  [ApiUrls.MILIEUZONE]: {
+  [ApiUrls.CLEOPATRA]: {
+    method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -196,6 +220,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(VERGUNNINGEN);
     },
   },
+
   [ApiUrls.KVK]: {
     // delay: 12000,
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
@@ -232,22 +257,44 @@ export const mockDataConfig: MockDataConfig = {
       return JSON.stringify(items);
     },
   },
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES]: {
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + 'bsn']: {
+    method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
-      }
-      return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // }
+      return await loadMockApiResponseJson(
+        TOERISTISCHE_VERHUUR_REGISTRATIES_BSN
+      );
+    },
+  },
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + ':number']: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      // }
+      return await loadMockApiResponseJson({
+        ...TOERISTISCHE_VERHUUR_REGISTRATIE,
+        registrationNumber: config.url.split('/').pop(),
+      });
     },
   },
   [ApiUrls.KREFIA]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(KREFIA);
-      }
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(KREFIA);
+      // }
       return await loadMockApiResponseJson(KREFIA);
+    },
+  },
+  [ApiUrls.KLACHTEN]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    method: 'post',
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson(KLACHTEN);
     },
   },
 };

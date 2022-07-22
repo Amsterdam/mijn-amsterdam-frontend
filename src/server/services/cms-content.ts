@@ -11,6 +11,7 @@ import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 
 const TAGS_ALLOWED = [
@@ -167,7 +168,7 @@ const fileCache = new FileCache({
 });
 
 async function getGeneralPage(
-  sessionID: SessionID,
+  requestID: requestID,
   profileType: ProfileType = 'private'
 ) {
   const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
@@ -190,7 +191,7 @@ async function getGeneralPage(
     url: requestConfig.urls![profileType],
   };
 
-  return requestData<CMSPageContent>(requestConfigFinal, sessionID)
+  return requestData<CMSPageContent>(requestConfigFinal, requestID)
     .then((apiData) => {
       if (apiData.content?.content && apiData.content?.title) {
         fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
@@ -213,10 +214,7 @@ async function getGeneralPage(
     });
 }
 
-async function getFooter(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
-) {
+async function getFooter(requestID: requestID) {
   const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
   if (apiData) {
     return Promise.resolve(apiData);
@@ -225,8 +223,7 @@ async function getFooter(
     getApiConfig('CMS_CONTENT_FOOTER', {
       transformResponse: transformFooterResponse,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID
   )
     .then((apiData) => {
       if (apiData.content?.blocks.length) {
@@ -249,16 +246,15 @@ async function getFooter(
 }
 
 export async function fetchCMSCONTENT(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
   query?: Record<string, string>
 ) {
   const generalInfoPageRequest = getGeneralPage(
-    sessionID,
+    requestID,
     query?.profileType as ProfileType
   );
 
-  const footerInfoPageRequest = getFooter(sessionID, passthroughRequestHeaders);
+  const footerInfoPageRequest = getFooter(requestID);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>
@@ -283,8 +279,7 @@ const searchFileCache = new FileCache({
 });
 
 export async function fetchSearchConfig(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
   query?: Record<string, string>
 ) {
   const config = searchFileCache.getKey('CONFIG');
@@ -311,11 +306,7 @@ export async function fetchSearchConfig(
       );
     });
   } else {
-    dataRequest = requestData<any>(
-      getApiConfig('SEARCH_CONFIG'),
-      sessionID,
-      passthroughRequestHeaders
-    );
+    dataRequest = requestData<any>(getApiConfig('SEARCH_CONFIG'), requestID);
   }
 
   return dataRequest

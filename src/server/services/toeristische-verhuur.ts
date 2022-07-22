@@ -7,6 +7,7 @@ import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiDependencyError,
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -27,10 +28,10 @@ import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from '../../universal/helpers/vergunningen';
 import { MyNotification } from '../../universal/types';
-import { LinkProps } from '../../universal/types/App.types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 import {
   BBVergunning,
   fetchVergunningen,
@@ -40,50 +41,101 @@ import {
   Vergunning,
 } from './vergunningen/vergunningen';
 
-export interface ToeristischeVerhuurRegistratieSource {
+export interface ToeristischeVerhuurRegistratieNumberSource {
+  registrationNumber: string;
+}
+
+export interface ToeristischeVerhuurRegistratieDetailSource {
+  rentalHouse: {
+    city: string;
+    houseLetter: string | null;
+    houseNumber: string | null;
+    houseNumberExtension: string | null;
+    postalCode: string | null;
+    street: string | null;
+  };
+  registrationNumber: string;
+  agreementDate: string | null;
+}
+
+export interface ToeristischeVerhuurRegistratieDetail {
   city: string;
   houseLetter: string | null;
   houseNumber: string | null;
   houseNumberExtension: string | null;
   postalCode: string | null;
   registrationNumber: string;
-  shortName: string | null;
   street: string | null;
   agreementDate: string | null;
 }
 
-export type ToeristischeVerhuurRegistratie =
-  ToeristischeVerhuurRegistratieSource & { link?: LinkProps };
-
-export interface ToeristischeVerhuurRegistratiesSourceData {
-  content: ToeristischeVerhuurRegistratieSource[];
+export interface ToeristischeVerhuurRegistratieDetailsSourceData {
+  content: ToeristischeVerhuurRegistratieDetail[];
 }
 
-export function transformToeristischeVerhuurRegistraties(
-  responseData: ToeristischeVerhuurRegistratiesSourceData
-): ToeristischeVerhuurRegistratie[] {
-  return (responseData.content || []).map((registratie) => {
-    return {
-      ...registratie,
-      link: {
-        to: AppRoutes.TOERISTISCHE_VERHUUR,
-        title: registratie.registrationNumber || 'Bekijk registratienummer',
-      },
-    };
-  });
-}
-
-function fetchRegistraties(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+export async function fetchRegistraties(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  return requestData<ToeristischeVerhuurRegistratie[]>(
+  const url = `${process.env.BFF_LVV_API_URL}bsn`;
+  const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-      transformResponse: transformToeristischeVerhuurRegistraties,
+      url,
+      method: 'POST',
+      data: JSON.stringify(authProfileAndToken.profile.id),
+      transformResponse: (response) => {
+        if (!Array.isArray(response)) {
+          return [];
+        }
+        return response.map((r: ToeristischeVerhuurRegistratieNumberSource) =>
+          r.registrationNumber.replaceAll(' ', '')
+        );
+      },
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID
   );
+
+  if (registrationNumbersResponse.status !== 'OK') {
+    return apiDependencyError({
+      registrationNumbers: registrationNumbersResponse,
+    });
+  }
+
+  const registrationDetailResponses = await Promise.all(
+    registrationNumbersResponse.content?.map((num) => {
+      const url = `${process.env.BFF_LVV_API_URL}${num}`;
+      return requestData<ToeristischeVerhuurRegistratieDetailSource>(
+        getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
+          method: 'get',
+          url,
+        }),
+        requestID
+      );
+    }) || []
+  );
+
+  if (!registrationDetailResponses.every((r) => r.status === 'OK')) {
+    return apiErrorResult('Could not retrieve all registration details', null);
+  }
+
+  const registrations: ToeristischeVerhuurRegistratieDetail[] =
+    registrationDetailResponses
+      .map((response) => response.content)
+      .filter(
+        (r): r is ToeristischeVerhuurRegistratieDetailSource =>
+          r !== null &&
+          ['amsterdam', 'weesp'].includes(r?.rentalHouse.city?.toLowerCase())
+      )
+      .map((r) => {
+        const rUpdated: ToeristischeVerhuurRegistratieDetail = {
+          ...r.rentalHouse,
+          registrationNumber: r.registrationNumber,
+          agreementDate: r.agreementDate,
+        };
+        return rUpdated as ToeristischeVerhuurRegistratieDetail;
+      });
+
+  return apiSuccessResult(registrations);
 }
 
 /** Code to transform and type Decos vergunningen to Toeristische verhuur */
@@ -207,8 +259,8 @@ export function transformVergunningenToVerhuur(
 }
 
 async function fetchAndTransformToeristischeVerhuur(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType = 'private'
 ) {
   if (!FeatureToggle.toeristischeVerhuurActive) {
@@ -221,11 +273,11 @@ async function fetchAndTransformToeristischeVerhuur(
   const registratiesRequest =
     profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))
-      : fetchRegistraties(sessionID, passthroughRequestHeaders);
+      : fetchRegistraties(requestID, authProfileAndToken);
 
   const vergunningenRequest = fetchVergunningen(
-    sessionID,
-    passthroughRequestHeaders,
+    requestID,
+    authProfileAndToken,
     {
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
@@ -276,7 +328,7 @@ async function fetchAndTransformToeristischeVerhuur(
 
   return apiSuccessResult(
     {
-      registraties: registraties.content || [],
+      registraties: registraties.status === 'OK' ? registraties.content : [],
       vergunningen: toeristischeVerhuurVergunningen,
       daysLeft,
     },
@@ -435,7 +487,7 @@ export function createToeristischeVerhuurNotification(
 }
 
 function createRegistratieNotification(
-  item: ToeristischeVerhuurRegistratie
+  item: ToeristischeVerhuurRegistratieDetail
 ): MyNotification {
   const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
   const description = `Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is ${item.registrationNumber}.`;
@@ -457,14 +509,14 @@ function createRegistratieNotification(
 }
 
 export async function fetchToeristischeVerhuurGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date,
   profileType?: ProfileType
 ) {
   const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
-    sessionID,
-    passthroughRequestHeaders,
+    requestID,
+    authProfileAndToken,
     profileType
   );
 

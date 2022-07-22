@@ -182,7 +182,7 @@ export function transformGarbageRetrievalData(
 }
 
 export async function fetchAfvalmomenten(
-  sessionID: SessionID,
+  requestID: requestID,
   center: LatLngLiteral | null
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
@@ -191,7 +191,7 @@ export async function fetchAfvalmomenten(
       params,
       transformResponse: transformGarbageRetrievalData,
     }),
-    sessionID
+    requestID
   );
 
   return garbageMomentData;

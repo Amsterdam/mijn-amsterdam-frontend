@@ -160,6 +160,7 @@ export function useFetchPanelFeature() {
     axios({
       url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
       cancelToken: source.token,
+      withCredentials: true,
     })
       .then(({ data: { content: feature } }) => {
         // Add datasetid to the feature data, used for referencing to other states.
@@ -279,6 +280,7 @@ export function useFetchFeatures() {
           },
           method: 'POST',
           cancelToken: tokenSource.token,
+          withCredentials: true,
         });
         return response.data.content;
       } catch (error) {

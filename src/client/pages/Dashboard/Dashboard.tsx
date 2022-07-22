@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { generatePath, Link } from 'react-router-dom';
+import { generatePath, Link, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
@@ -32,6 +32,7 @@ function sortAndFormatChapters(items: ChapterMenuItem[]) {
 
 export default function Dashboard() {
   const appState = useAppStateGetter();
+  const history = useHistory();
   const { TIPS, NOTIFICATIONS } = appState;
   const notifications = useAppStateNotifications();
   const prevChapters = useRef<string>();
@@ -64,6 +65,13 @@ export default function Dashboard() {
       }
     }
   }, [myChapterItems, profileType, isMyChaptersLoading]);
+
+  useEffect(() => {
+    if (history.location.search) {
+      history.replace(history.location.pathname);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-
-import toeristischeVerhuurRegistraties from '../../../server/mock-data/json/registraties-toeristische-verhuur.json';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import {
   transformVergunningenToVerhuur,
@@ -35,12 +33,37 @@ const vergunningen = transformVergunningenData(
 
 type VerhuurState = Pick<AppState, 'TOERISTISCHE_VERHUUR'>;
 
+const registraties = [
+  {
+    "city": "Amsterdam",
+    "houseLetter": null,
+    "houseNumber": "16",
+    "houseNumberExtension": null,
+    "postalCode": "1014AW",
+    "registrationNumber": "0363 E7B8 B042 8A92 37E5",
+    "shortName": "Schakelstraat",
+    "street": "Schakelstraat",
+    "agreementDate": "2021-05-20"
+  },
+  {
+    "city": "Amsterdam",
+    "houseLetter": null,
+    "houseNumber": "1",
+    "houseNumberExtension": null,
+    "postalCode": "1017AB",
+    "registrationNumber": "E7B8 B042 8A92 37E5 0363",
+    "shortName": "Amstel",
+    "street": "Amstel",
+    "agreementDate": "2020-05-20"
+  }
+];
+
 const testState: VerhuurState = {
   TOERISTISCHE_VERHUUR: {
     status: 'OK',
     content: {
       daysLeft: 26,
-      registraties: toeristischeVerhuurRegistraties.content,
+      registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
         new Date('2021-09-22')
@@ -68,7 +91,7 @@ const testState3: VerhuurState = {
     status: 'OK',
     content: {
       daysLeft: 2,
-      registraties: toeristischeVerhuurRegistraties.content,
+      registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
         new Date('2021-09-22')
@@ -82,7 +105,7 @@ const testState4: VerhuurState = {
     status: 'OK',
     content: {
       daysLeft: 2,
-      registraties: toeristischeVerhuurRegistraties.content,
+      registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
         new Date('2021-09-22')
@@ -96,7 +119,7 @@ const testState5: VerhuurState = {
     status: 'OK',
     content: {
       daysLeft: 0,
-      registraties: toeristischeVerhuurRegistraties.content,
+      registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
         new Date('2021-09-22')

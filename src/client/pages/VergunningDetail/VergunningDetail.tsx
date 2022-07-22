@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Vergunning } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { showDocuments } from '../../../universal/helpers/vergunningen';
@@ -22,6 +23,7 @@ import { EvenementVergunning } from './EvenementVergunning';
 import { Flyeren } from './Flyeren';
 import { GPK } from './GPK';
 import { GPP } from './GPP';
+import { Nachtwerkontheffing } from './Nachtwerkontheffing';
 import { Omzettingsvergunning } from './Omzettingsvergunning';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
@@ -32,6 +34,7 @@ export default function VergunningDetail() {
   const { id } = useParams<{ id: string }>();
   const Vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
+
   return (
     <DetailPage>
       <PageHeading
@@ -89,6 +92,10 @@ export default function VergunningDetail() {
             {Vergunning.caseType === CaseType.AanbiedenDiensten && (
               <AanbiedenDiensten vergunning={Vergunning} />
             )}
+            {Vergunning.caseType === CaseType.NachtwerkOntheffing && (
+              <Nachtwerkontheffing vergunning={Vergunning} />
+            )}
+
             {showDocuments(Vergunning?.caseType) &&
               !!Vergunning?.documentsUrl && (
                 <DocumentDetails vergunning={Vergunning} />

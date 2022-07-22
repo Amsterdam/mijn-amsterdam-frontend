@@ -5,18 +5,22 @@ import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config';
-import { fetchBELASTINGGenerated } from './belasting';
+import { AuthProfileAndToken } from '../helpers/app';
+import {
+  fetchBelastingGenerated,
+  fetchSubsidieGenerated,
+  fetchMilieuzoneGenerated,
+  fetchErfpachtGenerated,
+} from './simple-connect';
 import { fetchBRPGenerated } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
-import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchKrefiaGenerated } from './krefia';
-import { fetchMILIEUZONEGenerated } from './milieuzone';
-import { fetchSubsidieGenerated } from './subsidie';
 import { fetchToeristischeVerhuurGenerated } from './toeristische-verhuur';
 import { fetchVergunningenGenerated } from './vergunningen/vergunningen';
 import { fetchWiorGenerated } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { fetchKlachtenGenerated } from './klachten/klachten';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -33,6 +37,7 @@ export function getGeneratedItemsFromApiResults(
       notifications.push(...content.notifications);
     }
   }
+
   const notificationsResult = notifications
     .map((notification) => {
       if (notification.description) {
@@ -50,14 +55,15 @@ export function getGeneratedItemsFromApiResults(
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+
   return {
     NOTIFICATIONS: apiSuccessResult(notificationsResult),
   };
 }
 
 async function fetchServicesGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
   if (profileType === 'commercial') {
@@ -69,14 +75,14 @@ async function fetchServicesGenerated(
       subsidieGeneratedResult,
       toeristischeVerhuurGeneratedResult,
     ] = await Promise.allSettled([
-      fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
-      fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
-      fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
-      fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
-      fetchMaintenanceNotificationsDashboard(sessionID),
+      fetchMilieuzoneGenerated(requestID, authProfileAndToken),
+      fetchVergunningenGenerated(requestID, authProfileAndToken),
+      fetchErfpachtGenerated(requestID, authProfileAndToken),
+      fetchSubsidieGenerated(requestID, authProfileAndToken),
+      fetchMaintenanceNotificationsDashboard(requestID),
       fetchToeristischeVerhuurGenerated(
-        sessionID,
-        passthroughRequestHeaders,
+        requestID,
+        authProfileAndToken,
         new Date(),
         'commercial'
       ),
@@ -115,18 +121,20 @@ async function fetchServicesGenerated(
     fetchKrefiaGeneratedResult,
     fetchWiorGeneratedResult,
     fetchWpiNotificationsResult,
+    klachtenGeneratedResult,
   ] = await Promise.allSettled([
-    fetchBRPGenerated(sessionID, passthroughRequestHeaders),
-    fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
-    fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
-    fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
-    fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
-    fetchSubsidieGenerated(sessionID, passthroughRequestHeaders),
-    fetchMaintenanceNotificationsDashboard(sessionID),
-    fetchToeristischeVerhuurGenerated(sessionID, passthroughRequestHeaders),
-    fetchKrefiaGenerated(sessionID, passthroughRequestHeaders),
-    fetchWiorGenerated(sessionID, passthroughRequestHeaders, profileType),
-    fetchWpiNotifications(sessionID, passthroughRequestHeaders),
+    fetchBRPGenerated(requestID, authProfileAndToken),
+    fetchBelastingGenerated(requestID, authProfileAndToken),
+    fetchMilieuzoneGenerated(requestID, authProfileAndToken),
+    fetchVergunningenGenerated(requestID, authProfileAndToken),
+    fetchErfpachtGenerated(requestID, authProfileAndToken),
+    fetchSubsidieGenerated(requestID, authProfileAndToken),
+    fetchMaintenanceNotificationsDashboard(requestID),
+    fetchToeristischeVerhuurGenerated(requestID, authProfileAndToken),
+    fetchKrefiaGenerated(requestID, authProfileAndToken),
+    fetchWiorGenerated(requestID, authProfileAndToken, profileType),
+    fetchWpiNotifications(requestID, authProfileAndToken),
+    fetchKlachtenGenerated(requestID, authProfileAndToken),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -144,6 +152,7 @@ async function fetchServicesGenerated(
   const krefiaGenerated = getSettledResult(fetchKrefiaGeneratedResult);
   const wiorGenerated = getSettledResult(fetchWiorGeneratedResult);
   const wpiGenerated = getSettledResult(fetchWpiNotificationsResult);
+  const klachtenNotificationsResult = getSettledResult(klachtenGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -157,6 +166,7 @@ async function fetchServicesGenerated(
     krefiaGenerated,
     wiorGenerated,
     wpiGenerated,
+    klachtenNotificationsResult,
   ]);
 }
 

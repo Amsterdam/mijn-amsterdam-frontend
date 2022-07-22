@@ -15,13 +15,12 @@ import {
 } from '../../universal/helpers/api';
 import {
   ApiUrls,
-  BFF_MS_API_BASE_URL,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
-  OUTGOING_REQUEST_HEADERS,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
+import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
 export const axiosRequest = axios.create({
@@ -36,6 +35,7 @@ function enableMockAdapter() {
 
   // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
   const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
+
   entries(mockDataConfig).forEach(
     async ([
       url,
@@ -47,10 +47,19 @@ function enableMockAdapter() {
         delay,
         headers,
         params,
+        pathReg,
       },
     ]) => {
       const onMethod = `on${capitalizeFirstLetter(method)}`;
-      const req = mock[onMethod](url, params);
+
+      let matchUrl: string | RegExp = pathReg || url;
+
+      if (typeof url === 'string' && url.includes('/:')) {
+        const [basePath] = url.split('/:');
+        matchUrl = new RegExp(`${basePath}/*`);
+      }
+
+      const req = mock[onMethod](matchUrl, params);
       if (networkError) {
         req.networkError();
       } else {
@@ -80,33 +89,20 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(sessionID: SessionID) {
+export function clearSessionCache(requestID: requestID) {
   for (const cacheKey of cache.keys()) {
-    if (cacheKey.startsWith(sessionID)) {
+    if (cacheKey.startsWith(requestID)) {
       cache.del(cacheKey);
     }
   }
 }
 
-function filterOutgoingRequestHeaders(headers: Record<string, string> = {}) {
-  const headersFiltered: Record<string, string> = {};
-
-  // Remove particular headers for outgoing requests.
-  OUTGOING_REQUEST_HEADERS.forEach((key) => {
-    if (key in headers) {
-      headersFiltered[key] = headers[key];
-    }
-  });
-
-  return headersFiltered;
-}
-
 function getRequestConfigCacheKey(
-  sessionID: string,
+  requestID: string,
   requestConfig: DataRequestConfig
 ) {
   return [
-    sessionID,
+    requestID,
     requestConfig.method,
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
@@ -115,8 +111,8 @@ function getRequestConfigCacheKey(
 
 export async function requestData<T>(
   config: DataRequestConfig,
-  sessionID: SessionID,
-  passthroughRequestHeaders?: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken?: AuthProfileAndToken
 ) {
   const source = axios.CancelToken.source();
 
@@ -137,13 +133,10 @@ export async function requestData<T>(
     );
   }
 
-  if (
-    requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) &&
-    passthroughRequestHeaders
-  ) {
-    requestConfig.headers = filterOutgoingRequestHeaders(
-      passthroughRequestHeaders
-    );
+  if (requestConfig.hasBearerToken && authProfileAndToken?.token) {
+    requestConfig.headers = Object.assign(requestConfig?.headers ?? {}, {
+      Authorization: `Bearer ${authProfileAndToken.token}`,
+    });
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
@@ -151,7 +144,7 @@ export async function requestData<T>(
   // Construct a cache key based on unique properties of a request
   const cacheKey =
     requestConfig.cacheKey ||
-    getRequestConfigCacheKey(sessionID, requestConfig);
+    getRequestConfigCacheKey(requestID, requestConfig);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);

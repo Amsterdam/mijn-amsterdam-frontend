@@ -7,16 +7,13 @@ import {
   PageTitleMain,
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
-import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageViewWithProfileType } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
 
-const ExcludePageViewTrackingUrls = [
-  TMA_LOGIN_URL_DIGID,
-  TMA_LOGIN_URL_EHERKENNING,
-];
+const ExcludePageViewTrackingUrls = [LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING];
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
