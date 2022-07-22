@@ -121,13 +121,14 @@
 }
 
 .SubmenuItemIcon {
-  width: 2.4rem;
+  width: 3.2rem;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   margin-right: 1rem;
 
   @include mq-tablet() {
+    width: 2.4rem;
     margin-right: 1.6rem;
   }
 }

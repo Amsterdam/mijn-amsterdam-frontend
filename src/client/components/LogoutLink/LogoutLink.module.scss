@@ -5,6 +5,9 @@
   font-weight: normal;
 
   @include mq-tablet() {
+    display: flex !important;
+    align-items: center !important;
+
     color: $color-neutral-grey4 !important;
 
     &:hover {
@@ -12,11 +15,13 @@
     }
 
     font-weight: 700;
+    line-height: 2.4rem;
 
     > svg {
       fill: $color-neutral-grey4;
       width: 2.4rem;
       height: 2.4rem;
+      transform: none;
 
       margin-right: 1.6rem;
     }
