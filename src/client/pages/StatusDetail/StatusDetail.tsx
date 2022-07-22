@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading, relayApiUrl } from '../../../universal/helpers';
 import {
   GenericDocument,
   StatusLine,
@@ -92,6 +92,16 @@ export default function StatusDetail({
     statusItemSteps = [...statusItemSteps]
     statusItemSteps.reverse();
   }
+
+  statusItemSteps = statusItem?.steps.map((step) => {
+    return Object.assign({}, step, {
+      documents: step.documents.map((document) => {
+        return Object.assign({}, document, {
+          url: relayApiUrl(document.url),
+        });
+      }),
+    });
+  }) || [];
   
   return (
     <DetailPage className={styles.StatusDetail}>
