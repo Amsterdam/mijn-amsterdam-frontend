@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading, relayApiUrl } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   GenericDocument,
   StatusLine,
@@ -35,6 +35,7 @@ interface StatusDetailProps {
   showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   showStatusLineConnection?: boolean;
+  reverseSteps?: boolean;
   highlightKey?: string | false;
   documentPathForTracking?: (document: GenericDocument) => string;
 }
@@ -48,6 +49,7 @@ export default function StatusDetail({
   chapter,
   statusLabel = 'Status',
   showStatusLineConnection = true,
+  reverseSteps = false,
   highlightKey,
   documentPathForTracking,
 }: StatusDetailProps) {
@@ -84,17 +86,13 @@ export default function StatusDetail({
     title = statusItem.title;
   }
 
-  const statusSteps =
-    statusItem?.steps.map((step) => {
-      return Object.assign({}, step, {
-        documents: step.documents.map((document) => {
-          return Object.assign({}, document, {
-            url: relayApiUrl(document.url),
-          });
-        }),
-      });
-    }) || [];
+  let statusItemSteps = statusItem?.steps ?? [];
 
+  if (reverseSteps && statusItemSteps.length) {
+    statusItemSteps = [...statusItemSteps]
+    statusItemSteps.reverse();
+  }
+  
   return (
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
@@ -108,7 +106,7 @@ export default function StatusDetail({
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
 
         {isError(STATE) ||
-          (noContent && !statusSteps.length && (
+          (noContent && !statusItems.length && (
             <Alert type="warning">
               <p>
                 We kunnen op dit moment geen gegevens tonen.{' '}
@@ -118,7 +116,7 @@ export default function StatusDetail({
             </Alert>
           ))}
 
-        {!isStateLoading && !statusSteps.length && (
+        {!isStateLoading && !statusItem && !!statusItems.length && (
           <Alert type="warning">
             <p>
               Deze pagina is mogelijk verplaatst. Kies hieronder een van de
@@ -140,7 +138,7 @@ export default function StatusDetail({
 
         {isStateLoading && <LoadingContent />}
       </PageContent>
-      {!!statusSteps?.length && statusItem && (
+      {!!(statusItem?.steps && statusItemSteps.length) && (
         <StatusLineComponent
           trackCategory={`${chapter} / ${statusItem?.about} status`}
           statusLabel={
@@ -149,7 +147,7 @@ export default function StatusDetail({
               : statusLabel
           }
           showStatusLineConnection={showStatusLineConnection}
-          items={statusSteps}
+          items={statusItemSteps}
           showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
