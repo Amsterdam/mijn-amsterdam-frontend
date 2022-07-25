@@ -39,29 +39,14 @@ ENV REACT_APP_ENV=$REACT_APP_ENV
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
 
+
+FROM build-app as build-fe
 # Build client
 RUN npm run build
+
+FROM build-app as build-bff
 # Build bff
 RUN npm run bff-api:build
-
-
-########################################################################################################################
-########################################################################################################################
-# Serving the application (test OT)
-########################################################################################################################
-########################################################################################################################
-FROM build-app as serve-ot-bff
-
-ENV PORT=80
-ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
-ENV BFF_ENV=development
-
-COPY src/server/mock-data/json /app/build-bff/server/mock-data/json
-COPY scripts/serveBuild.js /app/scripts/serveBuild.js
-COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /app/build/robots.txt
-
-# Serving both front-end and back-end on th test environment
-ENTRYPOINT npm run serve-build
 
 
 ########################################################################################################################
@@ -85,7 +70,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy the built application files to the current image
-COPY --from=build-app /app/build /usr/share/nginx/html
+COPY --from=build-fe /app/build /usr/share/nginx/html
 
 # Use LOGOUT_URL for nginx rewrite directive
 CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
@@ -125,14 +110,14 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 WORKDIR /app
 
 # Copy the built application files to the current image
-COPY --from=build-app /app/build-bff /app/build-bff
+COPY --from=build-bff /app/build-bff /app/build-bff
 
 # Copy required node modules
-COPY --from=build-app /app/node_modules /app/node_modules
-COPY --from=build-app /app/package.json /app/package.json
+COPY --from=build-bff /app/node_modules /app/node_modules
+COPY --from=build-bff /app/package.json /app/package.json
 
-RUN apt-get update \
-  && apt-get install nano
+# RUN apt-get update \
+#   && apt-get install nano
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build

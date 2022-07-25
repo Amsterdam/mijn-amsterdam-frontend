@@ -598,7 +598,7 @@ describe('wpi/app-service', () => {
             "link": Object {
               "download": "2022-01-05-Jaaropgave 2022",
               "title": "Bekijk jaaropgave",
-              "to": "/wpi/document?id=660000000010024&isBulk=False&isDms=False",
+              "to": "http://localhost/bff/api/v1/relay/wpi/document?id=660000000010024&isBulk=False&isDms=False",
             },
             "title": "Nieuwe jaaropgave",
           },
@@ -610,7 +610,7 @@ describe('wpi/app-service', () => {
             "link": Object {
               "download": "2022-08-01-Uitkeringsspecificatie Augustus-2022",
               "title": "Bekijk uitkeringsspecificatie",
-              "to": "/wpi/document?id=660000000010112&isBulk=False&isDms=False",
+              "to": "http://localhost/bff/api/v1/relay/wpi/document?id=660000000010112&isBulk=False&isDms=False",
             },
             "title": "Nieuwe uitkeringsspecificatie",
           },

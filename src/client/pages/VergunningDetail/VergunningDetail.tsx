@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { Vergunning } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { showDocuments } from '../../../universal/helpers/vergunningen';
@@ -10,7 +9,7 @@ import {
   DetailPage,
   LoadingContent,
   PageContent,
-  PageHeading,
+  PageHeading
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { AanbiedenDiensten } from './AanbiedenDiensten';

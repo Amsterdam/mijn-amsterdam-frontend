@@ -40,7 +40,7 @@ function transformIncomeSpecificationNotification(
         parseInt(dateFormat(item.datePublished, 'yyyy'), 10) - 1
       } staat voor u klaar.`,
       link: {
-        to: item.url,
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -56,7 +56,7 @@ function transformIncomeSpecificationNotification(
       'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
-      to: item.url,
+      to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },

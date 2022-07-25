@@ -83,6 +83,7 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
 
   return getApiConfig('SUBSIDIE', {
     url,
+    cacheKey: apiEndpointUrl + authProfileAndToken.profile.id,
     headers: {
       Authorization: `Bearer ${getJWT()}`,
     },

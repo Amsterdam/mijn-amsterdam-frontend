@@ -226,17 +226,18 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam"]
-        ]
 
-        // Build the BFF
+         // Build the BFF
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
           [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
+        ]
+
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam"]
         ]
       }
     }

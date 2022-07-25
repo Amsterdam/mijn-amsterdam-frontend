@@ -194,16 +194,14 @@ describe('server/helpers/app', () => {
 
   test('clearRequestCache', () => {
     const requestID = '11223300xx';
-    const nextMock = jest.fn();
     cache.put(requestID, { foo: 'bar' });
 
     expect(cache.get(requestID)).toEqual({ foo: 'bar' });
 
-    clearRequestCache({} as any, { locals: { requestID } } as any, nextMock);
+    clearRequestCache({} as any, { locals: { requestID } } as any);
 
     expect(cache.get(requestID)).toBe(null);
     expect(cache.keys()).toEqual([]);
-    expect(nextMock).toBeCalledTimes(1);
   });
 
   test('clearRequestCache.unknown.key', () => {
@@ -215,13 +213,11 @@ describe('server/helpers/app', () => {
 
     clearRequestCache(
       {} as any,
-      { locals: { requestID: 'some_other_key' } } as any,
-      nextMock
+      { locals: { requestID: 'some_other_key' } } as any
     );
 
     expect(cache.get(requestID)).toEqual({ foo: 'bar' });
     expect(cache.keys()).toEqual([requestID]);
-    expect(nextMock).toBeCalledTimes(1);
   });
 
   test('sendMessage', () => {

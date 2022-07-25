@@ -1,5 +1,3 @@
-import FileCache from './file-cache';
-
 jest.mock('flat-cache', () => {
   const cache: { [key: string]: any } = {};
 
@@ -15,6 +13,9 @@ jest.mock('flat-cache', () => {
     }),
   };
 });
+
+// eslint-disable-next-line import/first
+import FileCache from './file-cache';
 
 describe('FileCache', () => {
   it('should function as expected', () => {

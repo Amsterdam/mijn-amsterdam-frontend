@@ -15,13 +15,25 @@ const DEV_KEY = {
 };
 
 const keystore = jose.JWK.createKeyStore();
-const certContent = IS_AP
-  ? fs.readFileSync(process.env.BFF_CLEOPATRA_PUB_KEY + '').toString()
-  : '';
+let certContent = '';
+let path = process.env.BFF_CLEOPATRA_PUB_KEY;
 
-const pemPubKey = !IS_AP
-  ? keystore.add(DEV_KEY, 'json')
-  : keystore.add(certContent, 'pem');
+try {
+  if (IS_AP && path) {
+    // NOTE: TEMP Fix for wrong certificate location
+    certContent = fs.readFileSync(path).toString();
+  }
+  if (!certContent) {
+    console.log(`Cleopatra certificate not found ${path}`);
+  }
+} catch (error) {
+  console.log(`Cleopatra certificate error not found ${path}`);
+}
+
+const pemPubKey =
+  !IS_AP || !certContent
+    ? keystore.add(DEV_KEY, 'json')
+    : keystore.add(certContent, 'pem');
 
 export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
@@ -116,6 +128,7 @@ async function getConfig(
 
   return getApiConfig('CLEOPATRA', {
     transformResponse: transformMilieuzoneResponse,
+    cacheKey: `cleopatra-${authProfileAndToken.profile.id}`,
     data: postData,
   });
 }

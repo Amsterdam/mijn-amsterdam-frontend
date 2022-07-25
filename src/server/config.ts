@@ -6,14 +6,22 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
-export function getCertificateSync(path?: string) {
+const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
+const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
+
+export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
+    if (name) {
+      console.log(`${name}: Certificate path empty ${path}`);
+    }
     return '';
   }
   let fileContents: string = '';
   try {
     fileContents = fs.readFileSync(path).toString();
-  } catch (error) {}
+  } catch (error) {
+    console.log(`Certificate error, not found ${path}`);
+  }
 
   return fileContents;
 }
@@ -119,7 +127,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(process.env.BFF_SERVER_ADP_ROOT_CA) : [],
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
@@ -182,7 +190,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(process.env.BFF_SERVER_ADP_ROOT_CA) : [],
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
     }),
   },
   KREFIA: {
@@ -192,7 +200,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
@@ -205,8 +213,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   KLACHTEN: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
+    postponeFetch: !IS_ACCEPTANCE,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(process.env.BFF_SISA_CA) : [],
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
   },
 };
@@ -243,6 +252,10 @@ export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
 export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
+export const BFF_OIDC_BASE_URL = `${
+  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
+}`;
+
 export const BffEndpoints = {
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
@@ -260,14 +273,13 @@ export const BffEndpoints = {
   AUTH_BASE_SSO_EHERKENNING,
 
   // Digid
-  AUTH_CALLBACK_DIGID:
-    process.env.BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
+  AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
   AUTH_LOGIN_DIGID: AUTH_BASE_DIGID + AUTH_LOGIN,
   AUTH_LOGOUT_DIGID: AUTH_BASE_DIGID + AUTH_LOGOUT,
 
   // EHerkenning
   AUTH_CALLBACK_EHERKENNING:
-    process.env.BFF_OIDC_BASE_URL + AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+    BFF_OIDC_BASE_URL + AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
   AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
   AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
 
@@ -310,7 +322,7 @@ const oidcConfigBase: ConfigParams = {
   auth0Logout: false,
   idpLogout: true,
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
-  baseURL: process.env.BFF_OIDC_BASE_URL,
+  baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },

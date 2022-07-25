@@ -9,6 +9,8 @@ const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
+console.log('using env', ENV_FILE);
+
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -80,11 +82,19 @@ app.use(compression());
 // Generate request id
 app.use(requestID);
 
+// Destroy the session as soon as the api requests are all processed
+app.use(function (req, res, next) {
+  res.on('finish', function () {
+    clearRequestCache(req, res);
+    console.log('the response has been sent');
+  });
+  next();
+});
+
 app.get(
   BffEndpoints.STATUS_HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
-    res.json({ status: 'OK' });
-    next();
+    return res.json({ status: 'OK' });
   }
 );
 
@@ -100,9 +110,6 @@ if (!IS_AP) {
 
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, protectedRouter);
-
-// Destroy the session as soon as the api requests are all processed
-app.use(clearRequestCache);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 

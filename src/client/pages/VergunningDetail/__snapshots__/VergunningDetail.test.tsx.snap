@@ -1091,20 +1091,6 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
         </p>
       </div>
       <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Soort vergunning
-        </h3>
-        <p
-          class="Value"
-        >
-          Verspreiden reclamemateriaal (sampling)
-        </p>
-      </div>
-      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -1214,51 +1200,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               <time
                 class="StatusDate"
               >
-                07 april 2021
-              </time>
-            </div>
-            <div
-              class="Panel Panel--description"
-            >
-              <div
-                class="PanelContent"
-              />
-            </div>
-            <div
-              class="Panel Panel--documents"
-            />
-          </div>
-        </li>
-        <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
-        >
-          <div
-            class="ListItemInner"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
-            >
-              <span
-                class="ConnectLine ConnectLine--middle-checked-next"
-              />
-              <span
-                class="Checkmark Checkmark--active Checkmark--checked"
-              />
-            </div>
-            <div
-              class="Panel Panel--status"
-            >
-              <strong
-                class="StatusTitle"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="StatusDate"
-              >
-                07 april 2021
+                13 januari 2022
               </time>
             </div>
             <div
@@ -1285,10 +1227,54 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="ConnectLine ConnectLine--checked"
               />
               <span
-                class="Checkmark"
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                13 januari 2022
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -1299,6 +1285,11 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               >
                 Afgehandeld
               </strong>
+              <time
+                class="StatusDate"
+              >
+                31 januari 2022
+              </time>
             </div>
             <div
               class="Panel Panel--description"

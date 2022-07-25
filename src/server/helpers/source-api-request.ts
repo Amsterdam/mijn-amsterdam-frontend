@@ -157,7 +157,7 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
-    isGetRequest &&
+    (isGetRequest || (!isGetRequest && cacheKey)) &&
     !!requestConfig.cacheTimeout &&
     requestConfig.cacheTimeout > 0
   ) {
@@ -184,7 +184,7 @@ export async function requestData<T>(
     clearTimeout(cancelTimeout);
 
     // Use the cache Deferred for resolving the response
-    if (isGetRequest && cache.get(cacheKey)) {
+    if (cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
     }
 
@@ -200,6 +200,7 @@ export async function requestData<T>(
     );
 
     const apiName = api ? api[0] : 'unknown';
+    const errorMessage = error?.response?.data?.message || error.toString();
 
     const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
@@ -212,6 +213,7 @@ export async function requestData<T>(
               module: 'request',
               status: error?.response?.status,
               apiName,
+              errorMessage,
             },
           }
         )
@@ -221,15 +223,12 @@ export async function requestData<T>(
           },
           extra: {
             apiName,
+            errorMessage,
           },
         });
 
     const sentryId = !IS_AP ? null : capturedId;
-    const responseData = apiErrorResult(
-      error?.response?.data?.message || error.toString(),
-      null,
-      sentryId
-    );
+    const responseData = apiErrorResult(errorMessage, null, sentryId);
 
     if (cache.get(cacheKey)) {
       // Resolve with error

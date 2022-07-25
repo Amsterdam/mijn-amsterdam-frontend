@@ -21,8 +21,7 @@ router.get(
   BffEndpoints.CACHE_OVERVIEW,
   async (req: Request, res: Response, next: NextFunction) => {
     const overview = await cacheOverview();
-    res.json(overview);
-    next();
+    return res.json(overview);
   }
 );
 
@@ -30,8 +29,7 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
     const response = await fetchCMSCONTENT(requestID, queryParams(req));
-    res.json(response);
-    next();
+    return res.json(response);
   } catch (error) {
     next(error);
   }
@@ -46,8 +44,7 @@ router.get(
         requestID,
         queryParams(req)
       );
-      res.json(response);
-      next();
+      return res.json(response);
     } catch (error) {
       next(error);
     }
@@ -60,8 +57,7 @@ router.get(
     const requestID = res.locals.requestID;
     try {
       const response = await fetchSearchConfig(requestID, queryParams(req));
-      res.json(response);
-      next();
+      return res.json(response);
     } catch (error) {
       next(error);
     }
@@ -94,8 +90,7 @@ router.post(
         },
       };
 
-      res.json(apiSuccessResult(responseContent));
-      next();
+      return res.json(apiSuccessResult(responseContent));
     } catch (error) {
       next(error);
     }
@@ -133,8 +128,7 @@ router.get(
         res.status(500);
       }
 
-      res.json(response);
-      next();
+      return res.json(response);
     } catch (error) {
       next(error);
     }

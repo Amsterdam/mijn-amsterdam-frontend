@@ -2,7 +2,7 @@ import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { Chapters, FeatureToggle } from '../../universal/config';
+import { Chapters, FeatureToggle, IS_PRODUCTION } from '../../universal/config';
 import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
 import { AppRoutes } from '../../universal/config/routes';
 import {
@@ -77,7 +77,9 @@ export async function fetchRegistraties(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const url = `${process.env.BFF_LVV_API_URL}bsn`;
+  const url = `${process.env.BFF_LVV_API_URL}${
+    IS_PRODUCTION ? 'registrations/' : ''
+  }bsn`;
   const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
       url,

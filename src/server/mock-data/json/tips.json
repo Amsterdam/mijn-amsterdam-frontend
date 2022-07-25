@@ -6,7 +6,7 @@
     "datePublished": "2020-06-15",
     "description": "Maakt u mondkapjes? Of zoekt u manieren om te blijven bewegen? Amsterdammers helpen elkaar tijdens de coronacrisis.",
     "id": "mijn-12",
-    "imgUrl": "/tips/static/tip_images/mondkapjes.jpg",
+    "imgUrl": "api/tips/static/tip_images/mondkapjes.jpg",
     "isPersonalized": false,
     "link": {
       "title": "Vind elkaar",
@@ -25,7 +25,7 @@
     "datePublished": "2020-06-15",
     "description": "Bent u op zoek naar gegevens of onderzoek over uw stad of buurt? U vindt al deze informatie nu op 1 website.",
     "id": "mijn-14",
-    "imgUrl": "/tips/static/tip_images/openresearch.jpg",
+    "imgUrl": "/api/tips/static/tip_images/openresearch.jpg",
     "isPersonalized": false,
     "link": {
       "title": "Kijk op openresearch.amsterdam",

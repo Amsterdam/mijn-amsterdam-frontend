@@ -6,6 +6,7 @@ import {
   transformKlachtenResponse,
 } from './klachten';
 import apiResponse from '../../mock-data/json/klachten.json';
+import { ApiConfig } from '../../config';
 
 describe('Klachten', () => {
   const penv = process.env;
@@ -20,6 +21,8 @@ describe('Klachten', () => {
     },
     token: 'abc123',
   };
+
+  ApiConfig.KLACHTEN.postponeFetch = false;
 
   afterAll(() => {
     // Enable http requests.

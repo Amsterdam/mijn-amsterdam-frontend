@@ -100,6 +100,17 @@ export async function fetchTIPS(
       method: 'POST',
       data: tipsRequestData,
       params,
+      transformResponse: (tips: MyTip[]) => {
+        return tips.map((tip) => {
+          if (tip.imgUrl?.startsWith('/api')) {
+            tip.imgUrl = tip.imgUrl?.replace('/api', '');
+          }
+          if (tip.imgUrl?.startsWith('api/')) {
+            tip.imgUrl = tip.imgUrl?.replace('api/', '/');
+          }
+          return tip;
+        });
+      },
     }),
     requestID,
     authProfileAndToken

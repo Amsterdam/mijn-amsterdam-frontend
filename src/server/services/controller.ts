@@ -311,6 +311,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   // Close the connection when all services responded
   return Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
     sendMessage(res, 'close', 'message', 'close');
+    return res.end();
   });
 }
 
@@ -392,8 +393,7 @@ export async function loadServicesTips(
   const requestID = res.locals.requestID;
   const result = await loadServicesTipsRequestData(requestID, req);
 
-  res.json(result);
-  next();
+  return res.json(result);
 }
 
 export async function loadServicesTipsRequestDataOverview(
@@ -405,7 +405,5 @@ export async function loadServicesTipsRequestDataOverview(
   req.query.optin = 'true';
 
   const result = await createTipsServiceResults(requestID, req);
-  res.json(createTipsRequestData(queryParams(req), result));
-
-  next();
+  return res.json(createTipsRequestData(queryParams(req), result));
 }

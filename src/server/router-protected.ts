@@ -30,8 +30,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await loadServicesAll(req, res);
-      res.json(response);
-      next();
+      return res.json(response);
     } catch (error) {
       next(error);
     }

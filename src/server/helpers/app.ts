@@ -115,14 +115,9 @@ export function sendUnauthorized(res: Response) {
   return res.send(apiErrorResult('Unauthorized', null));
 }
 
-export function clearRequestCache(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function clearRequestCache(req: Request, res: Response) {
   const requestID = res.locals.requestID!;
   clearSessionCache(requestID);
-  next();
 }
 
 export function sendMessage(
