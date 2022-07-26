@@ -28,7 +28,7 @@ import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
 import { BffEndpoints, BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
-import { clearRequestCache, send404, requestID } from './helpers/app';
+import { clearRequestCache, send404, requestID, nocache } from './helpers/app';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as authRouter } from './router-auth';
 import { router as protectedRouter } from './router-protected';
@@ -109,7 +109,7 @@ if (!IS_AP) {
 }
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, protectedRouter);
+app.use(BFF_BASE_PATH, nocache, protectedRouter);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 
