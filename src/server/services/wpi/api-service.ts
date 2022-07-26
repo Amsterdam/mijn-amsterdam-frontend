@@ -137,9 +137,10 @@ export async function fetchBijstandsuitkering(
   return response;
 }
 
-type StadspasResponseDataTransformed = Partial<WpiStadspasResponseData> & {
-  aanvragen: WpiRequestProcess[];
-};
+export type StadspasResponseDataTransformed =
+  Partial<WpiStadspasResponseData> & {
+    aanvragen: WpiRequestProcess[];
+  };
 
 export async function fetchStadspas(
   requestID: requestID,

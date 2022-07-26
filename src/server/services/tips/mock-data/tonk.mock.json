@@ -1,0 +1,95 @@
+{
+  "content": [
+    {
+      "about": "TONK",
+      "dateEnd": "2021-07-20T17:20:04+02:00",
+      "datePublished": "2021-07-20T17:20:04+02:00",
+      "dateStart": "2021-01-02T17:20:04+01:00",
+      "decision": "verlenging",
+      "id": "dcf9ac79cb54f43fc4cf64111aa3545e",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2021-01-02T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-02T17:20:04+01:00",
+              "dcteId": "802",
+              "id": "4400000091",
+              "title": "Aanvraag TONK\n02 januari 2021 17:20",
+              "url": "/wpi/document?id=4400000091&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "productSpecific": "uitkering",
+          "status": "Aanvraag",
+          "isActive": false,
+          "isChecked": true,
+          "description": "<p>\n        Wij hebben uw aanvraag TONK ontvangen.\n      </p>"
+        },
+        {
+          "datePublished": "2021-01-04T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-04T17:20:04+01:00",
+              "dcteId": "176137",
+              "id": "660000000000492",
+              "title": "Brief meer informatie",
+              "url": "/wpi/document?id=660000000000492&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "productSpecific": "uitkering",
+          "status": "Informatie nodig",
+          "isActive": false,
+          "isChecked": true,
+          "description": "<p>\n        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.\n        Bekijk de brief voor meer details.\n      </p>"
+        },
+        {
+          "datePublished": "2021-01-06T17:20:04+01:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2021-01-06T17:20:04+01:00",
+              "dcteId": "176156",
+              "id": "660000000000493",
+              "title": "Besluit toekenning uitkering",
+              "url": "/wpi/document?id=660000000000493&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit",
+          "isActive": false,
+          "isChecked": true,
+          "description": "<p>\n        U hebt recht op de TONK uitkering. Bekijk de brief voor meer details.\n      </p>\n      <p>Wilt u een wijziging in uw inkomen doorgeven? <a rel='external noopener noreferrer' class='inline' href='https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/'>Kijk dan bij 'Wijziging of inkomsten doorgeven'</a></p><p><a rel=\"external noopener noreferrer\" href=\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\">Meer regelingen van de gemeente Amsterdam</a></p>"
+        },
+        {
+          "datePublished": "2021-07-20T17:20:04+02:00",
+          "decision": "verlenging",
+          "documents": [
+            {
+              "datePublished": "2021-07-20T17:20:04+02:00",
+              "dcteId": "176180",
+              "id": "660000000010180",
+              "title": "Besluit verlenging",
+              "url": "/wpi/document?id=660000000010180&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit",
+          "isActive": true,
+          "isChecked": true,
+          "description": "<p>U hebt recht op verlenging van de TONK uitkering. Bekijk de brief voor meer details.</p><p><a rel=\"external noopener noreferrer\" href=\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\">Meer regelingen van de gemeente Amsterdam</a></p>"
+        }
+      ],
+      "title": "TONK",
+      "link": {
+        "to": "/inkomen/tonk/1/dcf9ac79cb54f43fc4cf64111aa3545e",
+        "title": "Bekijk uw aanvraag"
+      }
+    }
+  ],
+  "status": "OK"
+}
