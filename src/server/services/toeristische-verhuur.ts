@@ -77,9 +77,7 @@ export async function fetchRegistraties(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const url = `${process.env.BFF_LVV_API_URL}${
-    IS_PRODUCTION ? 'registrations/' : ''
-  }bsn`;
+  const url = `${process.env.BFF_LVV_API_URL}/bsn`;
   const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
       url,
@@ -105,7 +103,7 @@ export async function fetchRegistraties(
 
   const registrationDetailResponses = await Promise.all(
     registrationNumbersResponse.content?.map((num) => {
-      const url = `${process.env.BFF_LVV_API_URL}${num}`;
+      const url = `${process.env.BFF_LVV_API_URL}/${num}`;
       return requestData<ToeristischeVerhuurRegistratieDetailSource>(
         getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
           method: 'get',

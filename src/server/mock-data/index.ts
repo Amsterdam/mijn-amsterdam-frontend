@@ -3,14 +3,16 @@ import { MyTip } from '../../universal/types';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
+import { decodeToken } from '../helpers/app';
 import AFVAL from './json/afvalophaalgebieden.json';
 import AKTES from './json/aktes.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
-import ERFPACHT from './json/erfpacht.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
+import ERFPACHT from './json/erfpacht.json';
+import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
@@ -25,8 +27,6 @@ import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
-import KLACHTEN from './json/klachten.json';
-import { AuthProfile, decodeToken } from '../helpers/app';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -257,7 +257,7 @@ export const mockDataConfig: MockDataConfig = {
       return JSON.stringify(items);
     },
   },
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + 'bsn']: {
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn']: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
@@ -269,7 +269,7 @@ export const mockDataConfig: MockDataConfig = {
       );
     },
   },
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + ':number']: {
+  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/:number']: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
