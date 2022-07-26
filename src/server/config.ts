@@ -211,7 +211,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   KLACHTEN: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
-    postponeFetch: !IS_ACCEPTANCE,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
