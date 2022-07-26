@@ -1,0 +1,80 @@
+{
+  "content": [
+    {
+      "id": "966d872b686bbf363f5ac78f8bad9fc6",
+      "title": "Bijstandsuitkering",
+      "about": "Bijstandsuitkering",
+      "statusId": "besluit",
+      "decision": "afwijzing",
+      "datePublished": "2017-08-21T15:05:52+02:00",
+      "dateStart": "2017-08-17T15:05:52+02:00",
+      "dateEnd": "2017-08-21T15:05:52+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [],
+          "datePublished": "2017-08-17T15:05:52+02:00",
+          "isActive": false,
+          "isChecked": true,
+          "description": "\n          <p>U hebt op 17 augustus 2017 een bijstandsuitkering aangevraagd.</p>\n          <p>\n            <a\n              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D\n              rel=\"external noopener noreferrer\"\n            >\n              Wat kunt u van ons verwachten?\n            </a>\n          </p>\n        "
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2017-08-17T15:05:52+02:00",
+          "dateDecisionExpected": "2017-10-05T15:05:52+02:00",
+          "isActive": false,
+          "isChecked": true,
+          "description": "\n          <p>\n            Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u\n            nog extra informatie moet opsturen. U ontvangt vóór 05 oktober 2017 ons besluit.\n          </p>\n          <p>\n            Lees meer over uw\n            <br />\n            <a\n              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d\n              rel=\"external noopener noreferrer\"\n            >\n              rechten\n            </a> en <a\n              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d\n              rel=\"external noopener noreferrer\"\n            >\n              plichten\n            </a>\n          </p>\n        "
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Meer informatie",
+          "documents": [
+            {
+              "id": "4400000007",
+              "title": "Formulier Inlichtingen Klant",
+              "url": "/wpi/document?id=4400000007&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            },
+            {
+              "id": "4400000010",
+              "title": "Formulier Inlichtingen partner",
+              "url": "/wpi/document?id=4400000010&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            },
+            {
+              "id": "4400000008",
+              "title": "Aanvraagformulier WWB (kort)",
+              "url": "/wpi/document?id=4400000008&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            }
+          ],
+          "datePublished": "2017-08-18T15:05:52+02:00",
+          "dateDecisionExpected": "2017-10-15T15:05:52+02:00",
+          "dateUserFeedbackExpected": "2017-08-27T15:05:52+02:00",
+          "isActive": false,
+          "isChecked": true,
+          "description": "\n          <p>\n            Wij hebben meer informatie en tijd nodig om uw aanvraag te\n            verwerken. Bekijk de brief voor meer details. U moet de extra\n            informatie vóór 27 augustus 2017 opsturen. Dan ontvangt u\n            vóór 15 oktober 2017 ons besluit.\n          </p>\n          <p>\n            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk\n            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder\n            wij verder kunnen met de behandeling van uw aanvraag.\n          </p>\n        "
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [],
+          "datePublished": "2017-08-21T15:05:52+02:00",
+          "decision": "afwijzing",
+          "isActive": true,
+          "isChecked": true,
+          "description": "U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details."
+        }
+      ],
+      "link": {
+        "to": "/inkomen/bijstandsuitkering/966d872b686bbf363f5ac78f8bad9fc6",
+        "title": "Bekijk uw aanvraag"
+      }
+    }
+  ],
+  "status": "OK"
+}
