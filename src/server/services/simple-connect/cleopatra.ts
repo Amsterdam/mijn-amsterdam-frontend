@@ -23,12 +23,7 @@ try {
     // NOTE: TEMP Fix for wrong certificate location
     certContent = fs.readFileSync(path).toString();
   }
-  if (!certContent) {
-    console.log(`Cleopatra certificate not found ${path}`);
-  }
-} catch (error) {
-  console.log(`Cleopatra certificate error not found ${path}`);
-}
+} catch (error) {}
 
 const pemPubKey =
   !IS_AP || !certContent

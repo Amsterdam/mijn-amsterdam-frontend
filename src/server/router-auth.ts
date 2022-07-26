@@ -36,15 +36,13 @@ export const isAuthenticated =
     return sendUnauthorized(res);
   };
 
-// Enable OIDC
-router.use(BffEndpoints.AUTH_BASE_DIGID, nocache, auth(oidcConfigDigid));
-router.use(
-  BffEndpoints.AUTH_BASE_EHERKENNING,
-  nocache,
-  auth(oidcConfigEherkenning)
-);
+router.use(nocache);
 
-router.use(BffEndpoints.AUTH_BASE_SSO, nocache, async (req, res) => {
+// Enable OIDC
+router.use(BffEndpoints.AUTH_BASE_DIGID, auth(oidcConfigDigid));
+router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
+
+router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
   const authMethod = req.query.authMethod;
 
   switch (authMethod) {

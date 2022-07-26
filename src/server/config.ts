@@ -19,9 +19,7 @@ export function getCertificateSync(path?: string, name?: string) {
   let fileContents: string = '';
   try {
     fileContents = fs.readFileSync(path).toString();
-  } catch (error) {
-    console.log(`Certificate error, not found ${path}`);
-  }
+  } catch (error) {}
 
   return fileContents;
 }
