@@ -17,7 +17,6 @@ import {
   hasBnBVergunning,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
-  hasNoVerhuurRegistrations,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
