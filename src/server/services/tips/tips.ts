@@ -189,25 +189,6 @@ export const tips: Tip[] = [
     imgUrl: '/api/tips/static/tip_images/openresearch.jpg',
   },
   {
-    id: 'mijn-15',
-    owner: 'Diana Le',
-    dateActiveStart: '2020-05-20',
-    dateActiveEnd: '2020-08-20',
-    active: false,
-    priority: 70,
-    datePublished: '2020-06-15',
-    title: 'Gratis uw fiets laten graveren',
-    audience: ['persoonlijk'],
-    description:
-      'Voorkom diefstal van uw fiets en laat een code in uw frame graveren.',
-    isPersonalized: false,
-    link: {
-      title: 'Kijk wanneer de graveeracties zijn',
-      to: 'https://www.amsterdam.nl/parkeren-verkeer/fiets/fietsdepot/fiets-graveren/',
-    },
-    imgUrl: '/api/tips/static/tip_images/fietsgraveren.jpg',
-  },
-  {
     id: 'mijn-12',
     owner: 'Daniel Nagel',
     dateActiveStart: '2020-04-01',
@@ -262,25 +243,6 @@ export const tips: Tip[] = [
       to: 'https://openresearch.amsterdam/',
     },
     imgUrl: '/api/tips/static/tip_images/openresearch.jpg',
-  },
-  {
-    id: 'mijn-15',
-    owner: 'Diana Le',
-    dateActiveStart: '2020-05-20',
-    dateActiveEnd: '2020-08-20',
-    active: false,
-    priority: 70,
-    datePublished: '2020-06-15',
-    title: 'Gratis uw fiets laten graveren',
-    audience: ['persoonlijk'],
-    description:
-      'Voorkom diefstal van uw fiets en laat een code in uw frame graveren.',
-    isPersonalized: false,
-    link: {
-      title: 'Kijk wanneer de graveeracties zijn',
-      to: 'https://www.amsterdam.nl/parkeren-verkeer/fiets/fietsdepot/fiets-graveren/',
-    },
-    imgUrl: '/api/tips/static/tip_images/fietsgraveren.jpg',
   },
   {
     id: 'mijn-16',
@@ -658,7 +620,10 @@ export const tips: Tip[] = [
     audience: ['persoonlijk'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
-    predicates: [hasToeristicheVerhuurVergunningen, hasNoVerhuurRegistrations],
+    predicates: [
+      hasToeristicheVerhuurVergunningen,
+      not(hasVerhuurRegistrations),
+    ],
     reason: 'U ziet deze tip omdat u een vergunning vakantieverhuur hebt',
     isPersonalized: true,
     link: {

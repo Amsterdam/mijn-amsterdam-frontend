@@ -1,8 +1,10 @@
+import { AppState } from '../../client/AppState';
 import { ApiResponse, deepOmitKeys } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { getTips } from './tips/tips-service';
 
 export type TIPSData = MyTip[];
 
@@ -95,24 +97,36 @@ export async function fetchTIPS(
   const params = getTipsRequestParams(queryParams);
   const tipsRequestData = createTipsRequestData(queryParams, serviceResults);
 
-  return requestData<TIPSData>(
-    getApiConfig('TIPS', {
-      method: 'POST',
-      data: tipsRequestData,
-      params,
-      transformResponse: (tips: MyTip[]) => {
-        return tips.map((tip) => {
-          if (tip.imgUrl?.startsWith('/api')) {
-            tip.imgUrl = tip.imgUrl?.replace('/api', '');
-          }
-          if (tip.imgUrl?.startsWith('api/')) {
-            tip.imgUrl = tip.imgUrl?.replace('api/', '/');
-          }
-          return tip;
-        });
-      },
-    }),
-    requestID,
-    authProfileAndToken
+  const tips = getTips(
+    serviceResults as AppState,
+    tipsRequestData.tips,
+    tipsRequestData.optin,
+    params.audience
   );
+
+  return new Promise<ApiResponse<MyTip[]>>(() => ({
+    content: tips,
+    status: 'OK',
+  }));
+
+  // requestData<TIPSData>(
+  //   getApiConfig('TIPS', {
+  //     method: 'POST',
+  //     data: tipsRequestData,
+  //     params,
+  //     transformResponse: (tips: MyTip[]) => {
+  //       return tips.map((tip) => {
+  //         if (tip.imgUrl?.startsWith('/api')) {
+  //           tip.imgUrl = tip.imgUrl?.replace('/api', '');
+  //         }
+  //         if (tip.imgUrl?.startsWith('api/')) {
+  //           tip.imgUrl = tip.imgUrl?.replace('api/', '/');
+  //         }
+  //         return tip;
+  //       });
+  //     },
+  //   }),
+  //   requestID,
+  //   authProfileAndToken
+  // );
 }
