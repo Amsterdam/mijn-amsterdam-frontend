@@ -25,7 +25,7 @@ import {
   fetchMilieuzone,
   fetchErfpacht,
 } from './simple-connect';
-import { createTipsRequestData, fetchTIPS } from './tips';
+import { createTipsRequestData, fetchTIPS } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo';
@@ -374,12 +374,7 @@ async function createTipsServiceResults(requestID: requestID, req: Request) {
 async function loadServicesTipsRequestData(requestID: requestID, req: Request) {
   const serviceResults = await createTipsServiceResults(requestID, req);
 
-  return fetchTIPS(
-    requestID,
-    await getAuth(req),
-    queryParams(req),
-    serviceResults
-  ).catch((error: Error) => {
+  return fetchTIPS(queryParams(req), serviceResults).catch((error: Error) => {
     Sentry.captureException(error);
     return apiErrorResult(`Could not load TIPS, error: ${error.message}`, null);
   });

@@ -14,7 +14,7 @@ export type {
   KrefiaDetail,
 } from './krefia';
 export * from './simple-connect';
-export * from './tips';
+export * from './tips/tips-service';
 export * from './toeristische-verhuur';
 export * from './vergunningen/vergunningen';
 export * from './wmo';

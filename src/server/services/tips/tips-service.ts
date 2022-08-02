@@ -1,104 +1,92 @@
 import { AppState } from '../../../client/AppState';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers';
 import { MyTip } from '../../../universal/types';
-import { tips } from './tips';
+import { collectSourceTips } from './collect-source-tips';
+import { collectTips } from './collect-tips';
+import { ServiceResults, TipAudience } from './tip-types';
 
-function collectTips(
-  appState: Partial<AppState>,
-  optIn: boolean,
-  audience: string
-): MyTip[] {
-  /**
-   * Iterate over tips database and filter out requested tips based on props:
-   * - date period
-   * - audience
-   * - personalized
-   * - predicates
-   *   ...
-   */
-
-  const now = new Date();
-
-  let filteredTips = tips;
-  // If we get an audience first filter all tips using it.
-  if (audience) {
-    filteredTips = tips.filter((t) => t.audience.includes(audience));
-  }
-
-  filteredTips = filteredTips.filter((t) => {
-    // We want only active tips.
-    if (!t.active) {
-      return false;
-    }
-
-    // If user doesn't want personalized tips filter those.
-    if (!optIn && t.isPersonalized) {
-      return false;
-    }
-
-    // If there is a dateStart exclude the tip if the start date is in the future.
-    // If there is a dateEnd exclude the tip if the date end is in the past.
-    if (
-      (t.dateActiveStart && new Date(t.dateActiveStart) > now) ||
-      (t.dateActiveEnd && new Date(t.dateActiveEnd) < now)
-    ) {
-      return false;
-    }
-
-    // Run all predicates, check if any of them is false.
-    if (t.predicates) {
-      return !t.predicates
-        .map((p) => p(appState, now))
-        .some((r) => r === false);
-    }
-
-    return true;
-  });
-
-  return filteredTips.map((t) => ({
-    id: t.id,
-    datePublished: t.datePublished,
-    title: t.title,
-    description: t.description,
-    link: t.link,
-    imgUrl: t.imgUrl,
-    isPersonalized: t.isPersonalized,
-    priority: t.priority,
-    reason: [t.reason],
-    audience: t.audience,
-  })) as MyTip[];
-}
-
-function collectSourceTips(sourceTips: MyTip[] | undefined): MyTip[] {
-  return [];
-}
-
-// TODO: is this sorting in the right order?
 function prioritySort(a: MyTip, b: MyTip) {
   const prioA = a.priority ?? 0;
   const prioB = b.priority ?? 0;
 
   if (prioA < prioB) {
-    return 1;
+    return -1;
   }
 
   if (prioA > prioB) {
-    return -1;
+    return 1;
   }
 
   return 0;
 }
 
-export function getTips(
-  appState: Partial<AppState>,
-  sourceTips: MyTip[] | undefined,
+function getTipsAudience(queryParams: Record<string, string>): TipAudience {
+  let audience = 'persoonlijk';
+
+  switch (queryParams.profileType) {
+    case 'private-commercial':
+    case 'commercial':
+      audience = 'zakelijk';
+      break;
+  }
+
+  return audience as TipAudience;
+}
+
+function getTipsOptin(queryParams: Record<string, string>): boolean {
+  return queryParams.optin === 'true';
+}
+
+function getTipsQueryParams(queryParams: Record<string, string>) {
+  const optIn = getTipsOptin(queryParams);
+  const audience = getTipsAudience(queryParams);
+
+  return {
+    optIn,
+    audience,
+  };
+}
+
+function getTips(
+  appState: ServiceResults | null,
   optIn: boolean,
-  audience: string
+  audience: TipAudience
 ) {
-  const tips1 = collectTips(appState, optIn, audience);
-  const tips2 = collectSourceTips(sourceTips);
+  const tips1 = collectTips(appState as Partial<AppState>, optIn, audience);
+  const tips2 = collectSourceTips(appState);
   const tips = tips1.concat(tips2);
 
   tips.sort(prioritySort);
 
   return tips;
+}
+
+export async function fetchTIPS(
+  queryParams: Record<string, string>,
+  serviceResults: ServiceResults | null
+) {
+  const parsedParams = getTipsQueryParams(queryParams);
+
+  const tips = getTips(
+    serviceResults as AppState,
+    parsedParams.optIn,
+    parsedParams.audience
+  );
+
+  return new Promise<ApiResponse<MyTip[]>>((resolve) => {
+    return resolve(apiSuccessResult(tips));
+  });
+}
+
+export function createTipsRequestData(
+  queryParams: Record<string, string>,
+  serviceResults: ServiceResults | null
+) {
+  const parsedParams = getTipsQueryParams(queryParams);
+  const serviceTips = collectSourceTips(serviceResults);
+
+  return {
+    ...parsedParams,
+    tips: serviceTips,
+  };
 }

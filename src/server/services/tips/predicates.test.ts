@@ -30,13 +30,13 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
-  TipsPredicateFN,
 } from './predicates';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ToeristischeVerhuurRegistratieDetail,
   ToeristischeVerhuurVergunning,
 } from '../toeristische-verhuur';
+import { TipsPredicateFN } from './tip-types';
 
 describe('predicates', () => {
   beforeAll(() => {

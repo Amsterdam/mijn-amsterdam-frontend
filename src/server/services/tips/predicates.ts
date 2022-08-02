@@ -1,11 +1,6 @@
 import { differenceInYears, differenceInCalendarDays } from 'date-fns';
-import { AppState } from '../../../client/AppState';
 import { CaseType } from '../../../universal/types/vergunningen';
-
-export type TipsPredicateFN = (
-  stateData: Partial<AppState>,
-  today?: Date
-) => boolean;
+import { TipsPredicateFN } from './tip-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
