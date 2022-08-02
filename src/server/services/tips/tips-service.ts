@@ -10,11 +10,11 @@ function prioritySort(a: MyTip, b: MyTip) {
   const prioB = b.priority ?? 0;
 
   if (prioA < prioB) {
-    return -1;
+    return 1;
   }
 
   if (prioA > prioB) {
-    return 1;
+    return -1;
   }
 
   return 0;
