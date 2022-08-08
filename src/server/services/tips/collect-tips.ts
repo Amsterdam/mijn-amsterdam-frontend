@@ -64,7 +64,7 @@ export function collectTips(
     imgUrl: t.imgUrl,
     isPersonalized: t.isPersonalized,
     priority: t.priority,
-    reason: [t.reason],
+    reason: t.reason ? [t.reason] : [],
     audience: t.audience,
   })) as MyTip[];
 }

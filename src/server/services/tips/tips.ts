@@ -13,7 +13,7 @@ import {
   hasVerhuurRegistrations,
   is18OrOlder,
   isBetween17and18,
-  isLivingInAmsterdamSindsNumberOfDays,
+  isLivingInAmsterdamLessThanNumberOfDays,
   isReceivingSubsidy,
   not,
   or,
@@ -83,7 +83,7 @@ export const tips: Tip[] = [
     title: 'Bekijk de afvalpunten in de buurt',
     audience: ['persoonlijk'],
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
-    predicates: [isLivingInAmsterdamSindsNumberOfDays(3)],
+    predicates: [isLivingInAmsterdamLessThanNumberOfDays(3)],
     reason: 'U ziet deze tip omdat u net bent verhuisd',
     isPersonalized: true,
     link: {
@@ -179,7 +179,7 @@ export const tips: Tip[] = [
     description:
       'U bent net in Amsterdam komen wonen, welkom! Blijf op de hoogte van het nieuws in uw stadsdeel.',
     predicates: [
-      isLivingInAmsterdamSindsNumberOfDays(6),
+      isLivingInAmsterdamLessThanNumberOfDays(6),
       not(previouslyLivingInAmsterdam),
     ],
     reason: 'U ziet deze tip omdat u net naar Amsterdam bent verhuisd',
@@ -591,7 +591,7 @@ export const tips: Tip[] = [
     predicates: [
       hasBnBVergunning,
       not(hasVerhuurRegistrations),
-      isLivingInAmsterdamSindsNumberOfDays(),
+      isLivingInAmsterdamLessThanNumberOfDays(),
     ],
     reason: 'U ziet deze tip omdat u een vergunning bed & breakfast hebt',
     isPersonalized: true,

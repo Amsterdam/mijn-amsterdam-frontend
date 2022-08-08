@@ -25,7 +25,7 @@ import {
   hasVerhuurRegistrations,
   is18OrOlder,
   isBetween17and18,
-  isLivingInAmsterdamSindsNumberOfDays,
+  isLivingInAmsterdamLessThanNumberOfDays,
   isReceivingSubsidy,
   not,
   or,
@@ -123,7 +123,7 @@ describe('predicates', () => {
       );
     });
 
-    describe('isLivingInAmsterdamSindsNumberOfDays', () => {
+    describe('isLivingInAmsterdamLessThanNumberOfDays', () => {
       const getMockAppState = (begindatumVerblijf: string) => {
         const BRPCopy = { ...BRP };
 
@@ -134,15 +134,14 @@ describe('predicates', () => {
 
       it.each([
         [true, 1, '2022-07-24'],
-        [true, 100, '2020-07-25'],
-        [false, 2, '2022-07-24'],
-        [false, 10, '2022-07-16'],
-        [false, 1000, '2020-01-16'],
+        [false, 100, '2020-07-25'],
+        [false, 3, '2022-07-21'],
+        [true, 10, '2022-07-16'],
       ])(
         'should return %s for %d days since beginDatumVerblijf is %s',
         (expexted, numberOfDays, date) => {
           expect(
-            isLivingInAmsterdamSindsNumberOfDays(numberOfDays)(
+            isLivingInAmsterdamLessThanNumberOfDays(numberOfDays)(
               getMockAppState(date)
             )
           ).toBe(expexted);

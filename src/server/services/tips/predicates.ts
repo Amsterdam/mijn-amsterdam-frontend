@@ -53,7 +53,7 @@ export const previouslyLivingInAmsterdam: TipsPredicateFN = (appState) => {
   );
 };
 
-export const isLivingInAmsterdamSindsNumberOfDays = (
+export const isLivingInAmsterdamLessThanNumberOfDays = (
   numberOfDays: number = 0
 ): TipsPredicateFN => {
   return (stateData, today: Date = new Date()) => {
@@ -61,7 +61,7 @@ export const isLivingInAmsterdamSindsNumberOfDays = (
       differenceInCalendarDays(
         today,
         new Date(stateData?.BRP?.content?.adres.begindatumVerblijf ?? '')
-      ) >= numberOfDays
+      ) <= numberOfDays
     );
   };
 };

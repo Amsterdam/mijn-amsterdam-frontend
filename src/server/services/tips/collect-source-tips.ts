@@ -37,22 +37,3 @@ function extractSuccessResponseContent(
 
   return responseContent;
 }
-
-// export function createTipsRequestData(
-//   queryParams: Record<string, string>,
-//   serviceResults: ServiceResults | null
-// ) {
-//   const optin = queryParams.optin === 'true';
-//   const tipsRequestData: TIPSRequestData = {
-//     optin,
-//   };
-
-//   if (optin && serviceResults) {
-//     Object.assign(
-//       tipsRequestData,
-//       createTipsRequestDataFromServiceResults(serviceResults)
-//     );
-//   }
-
-//   return tipsRequestData;
-// }
