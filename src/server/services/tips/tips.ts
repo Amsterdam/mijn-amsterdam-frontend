@@ -38,6 +38,7 @@ export const tips: Tip[] = [
       to: 'https://www.vca.nu/vacaturebank/',
     },
     imgUrl: '/tips/static/tip_images/vrijwilliger.jpg',
+    isPersonalized: false,
   },
   {
     id: 'mijn-3',
@@ -55,6 +56,7 @@ export const tips: Tip[] = [
       to: 'https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/',
     },
     imgUrl: '/tips/static/tip_images/grofvuil.jpg',
+    isPersonalized: false,
   },
   {
     id: 'mijn-4',
@@ -72,6 +74,7 @@ export const tips: Tip[] = [
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/medebeheer/geveltuin-aanvragen/',
     },
     imgUrl: '/tips/static/tip_images/geveltuin.jpg',
+    isPersonalized: false,
   },
   {
     id: 'mijn-10',
