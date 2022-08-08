@@ -14,6 +14,7 @@ import {
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
+  isMokum,
   isReceivingSubsidy,
   not,
   or,
@@ -591,11 +592,7 @@ export const tips: Tip[] = [
     audience: ['persoonlijk'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
-    predicates: [
-      hasBnBVergunning,
-      not(hasVerhuurRegistrations),
-      isLivingInAmsterdamLessThanNumberOfDays(),
-    ],
+    predicates: [hasBnBVergunning, not(hasVerhuurRegistrations), isMokum],
     reason: 'U ziet deze tip omdat u een vergunning bed & breakfast hebt',
     isPersonalized: true,
     link: {

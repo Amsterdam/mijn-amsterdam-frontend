@@ -179,6 +179,10 @@ export const isReceivingSubsidy: TipsPredicateFN = (
   return !!(hasTozo || hasTonk || hasWpi);
 };
 
+export const isMokum: TipsPredicateFN = (appState) => {
+  return appState.BRP?.content?.persoon.mokum || false;
+};
+
 export function or(predicates: TipsPredicateFN[]): TipsPredicateFN {
   return (stateData, today) => {
     return predicates
