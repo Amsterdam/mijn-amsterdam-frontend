@@ -24,7 +24,7 @@ export default function LogoutLink({ children }: LogoutLinkProps) {
       href={LOGOUT_URL}
       external={true}
     >
-      {children}
+      <span>{children}</span>
     </Linkd>
   );
 }
