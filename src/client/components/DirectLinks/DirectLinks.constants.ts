@@ -71,22 +71,12 @@ const GenericLinks: Record<string, DirectLink> = {
 
 export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
   private: {
-    BUURT: {
-      title: 'Mijn buurt',
-      url: AppRoutes.BUURT,
-      isPhoneScreenLink: true,
-      id: 'MyAreaHeader',
-      isActive: true,
-    },
-    TIPS: GenericLinks.TIPS,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
     AMSTERDAM: GenericLinks.AMSTERDAM,
   },
   'private-commercial': {
-    BUURT: GenericLinks.MIJN_OMGEVING,
-    TIPS: GenericLinks.TIPS,
     UITLEG: GenericLinks.UITLEG,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
@@ -94,8 +84,6 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     AMSTERDAM: GenericLinks.AMSTERDAM,
   },
   commercial: {
-    BUURT: GenericLinks.MIJN_OMGEVING,
-    TIPS: GenericLinks.TIPS,
     UITLEG: GenericLinks.UITLEG,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
