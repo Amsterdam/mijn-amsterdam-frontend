@@ -14,26 +14,7 @@ exports[`<DirectLinks /> renders additional links on phone 1`] = `
     </h3>
     <ul
       class="LinkList"
-    >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn buurt
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
-    </ul>
+    />
   </div>
 </DocumentFragment>
 `;
@@ -53,24 +34,6 @@ exports[`<DirectLinks /> renders commercial links 1`] = `
     <ul
       class="LinkList"
     >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn omgeving
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -175,24 +138,6 @@ exports[`<DirectLinks /> renders private links 1`] = `
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn buurt
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
           href="https://www.amsterdam.nl/sbl/"
           rel="external noopener noreferrer"
         >
@@ -282,24 +227,6 @@ exports[`<DirectLinks /> renders private-commercial links 1`] = `
     <ul
       class="LinkList"
     >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn omgeving
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
