@@ -32,7 +32,7 @@ export function collectTips(
     }
 
     // If user doesn't want personalized tips filter those.
-    if (!optIn && t.isPersonalized) {
+    if (optIn !== t.isPersonalized) {
       return false;
     }
 
