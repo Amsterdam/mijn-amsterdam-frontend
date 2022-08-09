@@ -9,27 +9,32 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
-      <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
-        <InfoDetail
-          label="Van"
-          value={
-            vergunning?.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-'
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
-        <InfoDetail
-          label="Tussen"
-          value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
-        />
-      </InfoDetailGroup>
+      {!!vergunning.decision && <Location location={vergunning.location} />}
+      {!!vergunning?.decision && (
+        <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
+          <InfoDetail
+            label="Van"
+            value={
+              vergunning?.dateStart
+                ? defaultDateFormat(vergunning.dateStart)
+                : '-'
+            }
+          />
+          <InfoDetail
+            label="Tot en met"
+            value={
+              vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+            }
+          />
+          <InfoDetail
+            label="Tussen"
+            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
+          />
+        </InfoDetailGroup>
+      )}
+      {!!vergunning?.decision && (
+        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      )}
     </>
   );
 }
