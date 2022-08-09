@@ -202,7 +202,7 @@ describe('predicates', () => {
       const getMockAppState = (birthdate: string) => {
         const BRPCopy = { ...BRP };
 
-        BRP.content.persoon.geboortedatum = birthdate;
+        BRPCopy.content.persoon.geboortedatum = birthdate;
 
         return getBRPAppState(BRPCopy);
       };

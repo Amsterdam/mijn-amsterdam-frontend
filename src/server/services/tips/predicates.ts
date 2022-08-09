@@ -60,7 +60,7 @@ export const isLivingInAmsterdamLessThanNumberOfDays = (
     return (
       differenceInCalendarDays(
         today,
-        new Date(stateData?.BRP?.content?.adres.begindatumVerblijf ?? '')
+        new Date(stateData?.BRP?.content?.adres?.begindatumVerblijf ?? '')
       ) <= numberOfDays
     );
   };
@@ -105,7 +105,7 @@ export const hasKidsBetweenAges2And18: TipsPredicateFN = (
 
 // Rule 13
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
-  return !!appState.BRP?.content?.persoon.nationaliteiten.some(
+  return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
     (n) => n.omschrijving === 'Nederlandse'
   );
 };
@@ -114,7 +114,7 @@ export const isBetween17and18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  const geboortedatum = appState.BRP?.content?.persoon.geboortedatum;
+  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
 
   if (!geboortedatum) {
     return false;
@@ -180,7 +180,7 @@ export const isReceivingSubsidy: TipsPredicateFN = (
 };
 
 export const isMokum: TipsPredicateFN = (appState) => {
-  return appState.BRP?.content?.persoon.mokum || false;
+  return appState.BRP?.content?.persoon?.mokum || false;
 };
 
 export function or(predicates: TipsPredicateFN[]): TipsPredicateFN {
