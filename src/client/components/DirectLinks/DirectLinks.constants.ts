@@ -67,6 +67,18 @@ const GenericLinks: Record<string, DirectLink> = {
     isExternalLink: true,
     isActive: true,
   },
+  TAXI_PORTAAL: {
+    title: 'Taxiportaal',
+    url: ExternalUrls.AMSTERDAM_TAXI,
+    isExternalLink: true,
+    isActive: true,
+  },
+  VAARVIGNETTEN: {
+    title: 'Varen in Amsterdam',
+    url: ExternalUrls.AMSTERDAM_VAREN,
+    isExternalLink: true,
+    isActive: true,
+  },
 };
 
 export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
@@ -75,6 +87,8 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
     AMSTERDAM: GenericLinks.AMSTERDAM,
+    TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
+    VAREN: GenericLinks.VAARVIGNETTEN,
   },
   'private-commercial': {
     UITLEG: GenericLinks.UITLEG,
@@ -82,6 +96,8 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
+    TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
+    VAREN: GenericLinks.VAARVIGNETTEN,
   },
   commercial: {
     UITLEG: GenericLinks.UITLEG,
@@ -89,5 +105,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
+    TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
+    VAREN: GenericLinks.VAARVIGNETTEN,
   },
 };
