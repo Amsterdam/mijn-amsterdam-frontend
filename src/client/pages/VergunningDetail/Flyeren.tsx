@@ -5,12 +5,15 @@ import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
 import styles from './VergunningDetail.module.scss';
 
+// Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
+// In dat geval allen de datum tonen.
 export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
+  const isVerleend = vergunning.decision === 'Verleend';
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.decision && <Location location={vergunning.location} />}
-      {!!vergunning?.decision && (
+      {isVerleend && <Location location={vergunning.location} />}
+      {isVerleend && (
         <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
           <InfoDetail
             label="Van"
@@ -32,7 +35,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           />
         </InfoDetailGroup>
       )}
-      {!!vergunning?.decision && (
+      {isVerleend && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
