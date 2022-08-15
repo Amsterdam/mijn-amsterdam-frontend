@@ -38,8 +38,10 @@ import {
 import { TipsPredicateFN } from './tip-types';
 
 describe('predicates', () => {
+  const DATE_TO_TEST_AGAINST = '2022-07-25';
+
   beforeAll(() => {
-    jest.useFakeTimers().setSystemTime(new Date('2022-07-25'));
+    jest.useFakeTimers().setSystemTime(new Date(DATE_TO_TEST_AGAINST));
   });
 
   describe('BRP', () => {
