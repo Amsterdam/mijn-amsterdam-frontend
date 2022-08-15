@@ -5,7 +5,7 @@
 @import 'normalize';
 
 :root {
-   --map-container-height: 100%;
+  --map-container-height: 100%;
 }
 
 html,
@@ -22,12 +22,12 @@ html {
 }
 
 body {
-  font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
+  font-family: 'Amsterdam Sans', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
-  
+
   &.has-modal {
     position: fixed;
     width: 100vw;
