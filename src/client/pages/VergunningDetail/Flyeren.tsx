@@ -17,7 +17,8 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {isVerleend && <Location location={vergunning.location} />}
-      {isVerleend && !sameDate && (
+      {isVerleend && !isSameDate && (
+
         <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
           <InfoDetail
             label="Van"
