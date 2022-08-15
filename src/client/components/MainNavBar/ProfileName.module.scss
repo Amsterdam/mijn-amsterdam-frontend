@@ -12,8 +12,8 @@
   @include mq-tablet() {
     display: block;
     margin: 0;
-    padding: 1rem 2rem;
-    border-top: .1rem solid $color-neutral-grey2;
+    padding: 1rem 2rem 1rem 1.6rem;
+    border-top: 0.1rem solid $color-neutral-grey2;
 
     @include select(Button_Button) {
       display: block;
@@ -22,12 +22,15 @@
 }
 
 .ProfileLink {
-  // margin-left: 1.3rem;
   font-weight: normal;
   padding-bottom: 0.3rem;
   padding-left: 2.6rem;
-  border-bottom: .2rem solid transparent;
+  border-bottom: 0.2rem solid transparent;
   font-weight: 500;
+
+  @include mq-tablet() {
+    padding-left: 4rem;
+  }
 
   &:hover {
     color: $color-primary-red;
@@ -36,18 +39,16 @@
   }
 
   svg {
-    position: absolute;;
+    position: absolute;
     width: 1.2em;
     height: 1.2em;
     left: 0;
-    // margin-left: -2.6rem;
-    transform: translateY(-.1rem);
+    transform: translateY(-0.1rem);
   }
 }
 
 .ProfileLink--active {
   color: $color-support-blue;
-  border-bottom-color: $color-support-blue;
 
   svg {
     fill: $color-support-blue;

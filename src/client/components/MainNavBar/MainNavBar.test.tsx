@@ -55,9 +55,9 @@ describe('<MainNavBar />', () => {
       );
 
       expect(screen.getByText('Test Menu Item')).toBeInTheDocument();
-      expect(screen.getByText('Toon navigatie')).toBeInTheDocument();
-      userEvent.click(screen.getByText('Toon navigatie'));
-      expect(screen.getByText('Verberg navigatie')).toBeInTheDocument();
+      expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
+      userEvent.click(screen.getAllByText('Toon navigatie')[0]);
+      expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
       expect(screen.getByText('Uitloggen')).toBeInTheDocument();
     });
   });

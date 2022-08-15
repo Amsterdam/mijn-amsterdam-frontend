@@ -132,7 +132,7 @@ export async function fetchDataset(
     }
     // If cache is stale we throw an error to sentry.
     if (dataCache && dataCache.isStale()) {
-      Sentry.captureException(
+      Sentry.captureMessage(
         `MyArea dataset ${datasetId} is returning stale data`,
         {
           tags: {

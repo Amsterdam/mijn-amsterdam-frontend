@@ -1,12 +1,75 @@
 openapi: 3.0.3
 info:
+  version: '4.0'
   title: Mijn Amsterdam BFF api definition
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
     name: Datapunt Support
     url: https://mijn.amsterdam.nl/
     email: datapunt@amsterdam.nl
+servers:
+  - url: https://mijn.amsterdam.n/api/v1
+  - url: https://mijn.acc.amsterdam.n/api/v1
+  - url: http://localhost:5000/api/v1
 paths:
+  /auth/digid/login:
+    get:
+      description: Redirects to Digid login
+      responses:
+        '301':
+          description: Ok
+  /auth/digid/check:
+    get:
+      description: Endpoint for checking the Digid authorization status
+      responses:
+        '200':
+          description: Returns auth info
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/eherkenning/login:
+    get:
+      description: Redirects to Eherkenning login
+      responses:
+        '301':
+          description: Ok
+  /auth/eherkenning/check:
+    get:
+      description: Endpoint for checking the Eherkenning authorization status
+      responses:
+        '200':
+          description: Returns auth info
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/check:
+    get:
+      description: Endpoint for checking the Eherkenning or Digid authorization status
+      responses:
+        '200':
+          description: Returns auth info
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/token-data:
+    get:
+      description: Endpoint for inspecting the Digid/Eherkenning token data
+      responses:
+        '200':
+          description: Returns token-data
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/logout:
+    get:
+      description: Logs out the user / Destroys the session and redirects to front-end.
+      responses:
+        '301':
+          description: Ok
   /status/health:
     get:
       description: Endpoint for checking whether the server has started.
@@ -134,12 +197,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CmsMaintenanceResponse'
-  /direct/{apiName}:
+  /relay/{rpath}:
     parameters:
-      - name: apiName
+      - name: rpath
         in: path
         required: true
-        description: The name of the api to request data from
+        description: The path of the api to request data from
         schema:
           type: string
     get:

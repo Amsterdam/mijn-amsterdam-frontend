@@ -162,6 +162,7 @@ export default function Linkd({
   external = false,
   onClick,
   download,
+  iconFill,
   ...otherProps
 }: LinkdProps) {
   const AnchorElement = 'a';
@@ -199,7 +200,12 @@ export default function Linkd({
         className: classnames(styles.Linkd, className),
       })}
     >
-      <ButtonBody icon={icon} iconSize={iconSize} iconPosition={iconPosition}>
+      <ButtonBody
+        icon={icon}
+        iconSize={iconSize}
+        iconPosition={iconPosition}
+        iconFill={iconFill}
+      >
         {children}
       </ButtonBody>
     </LinkElement>
