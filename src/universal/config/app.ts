@@ -61,6 +61,8 @@ export const ExternalUrls = {
   AMSTERDAM_LINKEDIN: 'https://www.linkedin.com/company/gemeente-amsterdam',
   AMSTERDAM_VACATURES:
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
+  AMSTERDAM_TAXI: 'https://www.amsterdam.nl/parkeren-verkeer/taxi/',
+  AMSTERDAM_VAREN: 'https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
   EH_SSO_BELASTINGEN:
