@@ -9,16 +9,13 @@ import styles from './VergunningDetail.module.scss';
 // In dat geval allen de datum tonen.
 export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
   const isVerleend = vergunning.decision === 'Verleend';
-
   const isSameDate = vergunning.dateStart === vergunning.dateEnd;
-
 
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {isVerleend && <Location location={vergunning.location} />}
       {isVerleend && !isSameDate && (
-
         <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
           <InfoDetail
             label="Van"
@@ -41,7 +38,6 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
         </InfoDetailGroup>
       )}
       {isVerleend && isSameDate && (
-
         <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
           <InfoDetail
             label="Op"
