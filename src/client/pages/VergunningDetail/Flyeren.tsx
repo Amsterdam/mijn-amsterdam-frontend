@@ -40,7 +40,8 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           />
         </InfoDetailGroup>
       )}
-      {isVerleend && sameDate && (
+      {isVerleend && isSameDate && (
+
         <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
           <InfoDetail
             label="Op"
