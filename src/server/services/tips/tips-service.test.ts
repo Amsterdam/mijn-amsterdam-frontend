@@ -1,4 +1,3 @@
-import MockDate from 'mockdate';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
@@ -8,7 +7,15 @@ import { fetchTIPS } from './tips-service';
 
 describe('fetchTIPS', () => {
   afterAll(() => {
-    MockDate.reset();
+    jest.useRealTimers();
+  });
+
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  beforeEach(() => {
+    jest.setSystemTime(jest.getRealSystemTime());
   });
 
   it('should return the tips in the correct format', async () => {
@@ -21,7 +28,7 @@ describe('fetchTIPS', () => {
   });
 
   it('should return tip mijn-28 when age is between 17 and 18', async () => {
-    MockDate.set('2022-07-25');
+    jest.setSystemTime(new Date('2022-07-25'));
 
     const BRPCopy = { ...BRP };
 
@@ -49,7 +56,7 @@ describe('fetchTIPS', () => {
       )
     ).toBeFalsy();
 
-    MockDate.set('2022-03-14');
+    jest.setSystemTime(new Date('2022-03-14'));
 
     const tipsOnDate = await fetchTIPS(
       { profileType: 'private', optin: 'false' },
@@ -64,7 +71,7 @@ describe('fetchTIPS', () => {
   });
 
   it('should show tip mijn-36', async () => {
-    MockDate.set('2021-09-25');
+    jest.setSystemTime(new Date('2021-09-25'));
 
     const TOZO_copy = { ...TOZO };
 
@@ -91,7 +98,7 @@ describe('fetchTIPS', () => {
   });
 
   it('should show tip mijn-35 and mijn-36', async () => {
-    MockDate.set('2021-09-25');
+    jest.setSystemTime(new Date('2021-09-25'));
 
     const TOZO_copy = { ...TOZO };
     const VERHUUR_copy = { ...TOERISTISCHE_VERHUUR };

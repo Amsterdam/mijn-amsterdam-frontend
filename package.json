@@ -133,7 +133,6 @@
   },
   "devDependencies": {
     "@types/express-http-proxy": "^1.6.3",
-    "mockdate": "^3.0.5",
     "nock": "^13.2.2"
   }
 }

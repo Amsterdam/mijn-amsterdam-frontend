@@ -1,4 +1,3 @@
-import MockDate from 'mockdate';
 import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
@@ -40,7 +39,7 @@ import { TipsPredicateFN } from './tip-types';
 
 describe('predicates', () => {
   beforeAll(() => {
-    MockDate.set('2022-07-25');
+    jest.useFakeTimers().setSystemTime(new Date('2022-07-25'));
   });
 
   describe('BRP', () => {
