@@ -14,26 +14,7 @@ exports[`<DirectLinks /> renders additional links on phone 1`] = `
     </h3>
     <ul
       class="LinkList"
-    >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn buurt
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
-    </ul>
+    />
   </div>
 </DocumentFragment>
 `;
@@ -53,24 +34,6 @@ exports[`<DirectLinks /> renders commercial links 1`] = `
     <ul
       class="LinkList"
     >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn omgeving
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -152,6 +115,42 @@ exports[`<DirectLinks /> renders commercial links 1`] = `
           Amsterdam.nl
         </a>
       </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Taxiportaal
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Varen in Amsterdam
+        </a>
+      </li>
     </ul>
   </div>
 </DocumentFragment>
@@ -172,24 +171,6 @@ exports[`<DirectLinks /> renders private links 1`] = `
     <ul
       class="LinkList"
     >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn buurt
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -262,6 +243,42 @@ exports[`<DirectLinks /> renders private links 1`] = `
           Amsterdam.nl
         </a>
       </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Taxiportaal
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Varen in Amsterdam
+        </a>
+      </li>
     </ul>
   </div>
 </DocumentFragment>
@@ -282,24 +299,6 @@ exports[`<DirectLinks /> renders private-commercial links 1`] = `
     <ul
       class="LinkList"
     >
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/buurt"
-          id="MyAreaHeader"
-        >
-          Mijn omgeving
-        </a>
-      </li>
-      <li>
-        <a
-          class="Button Button__plain Button__lean Linkd"
-          href="/overzicht-tips"
-          id="MyTipsHeader"
-        >
-          Mijn tips
-        </a>
-      </li>
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
@@ -379,6 +378,42 @@ exports[`<DirectLinks /> renders private-commercial links 1`] = `
             External-Link.svg
           </svg>
           Amsterdam.nl
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Taxiportaal
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Varen in Amsterdam
         </a>
       </li>
     </ul>
