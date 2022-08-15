@@ -2,7 +2,7 @@ import { ApiSuccessResponse } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
 import TOZO from './mock-data/tozo.mock.json';
-import TOERISTISCHE_VERHUUR from './mock-data/vakantie_verhuur.mock.json';
+import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
 import { fetchTIPS } from './tips-service';
 
 describe('fetchTIPS', () => {

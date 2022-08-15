@@ -3,7 +3,7 @@ import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
-import UITKERINGEN from './mock-data/wpi_aanvragen.mock.json';
+import UITKERINGEN from './mock-data/wpi-aanvragen.mock.json';
 import TONK from './mock-data/tonk.mock.json';
 import TOZO from './mock-data/tozo.mock.json';
 import TOERISTISCHE_VERHUUR from './mock-data/vakantie_verhuur.mock.json';
