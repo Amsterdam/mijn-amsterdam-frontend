@@ -10,7 +10,8 @@ import styles from './VergunningDetail.module.scss';
 export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
   const isVerleend = vergunning.decision === 'Verleend';
 
-  const sameDate = vergunning.dateStart === vergunning.dateEnd;
+  const isSameDate = vergunning.dateStart === vergunning.dateEnd;
+
 
   return (
     <>
