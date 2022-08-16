@@ -1,9 +1,23 @@
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
-import TOZO from './mock-data/tozo.mock.json';
-import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
+import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
+import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import { fetchTIPS } from './tips-service';
+
+const TOZO = {
+  content: WPI_E.content.filter((c) => c.about === 'Tozo 5'),
+  status: 'OK',
+};
+
+const TOERISTISCHE_VERHUUR = {
+  content: {
+    registraties: [],
+    vergunningen: VERGUNNINGEN.content.filter(
+      (c) => c.caseType === CaseType.VakantieverhuurVergunningaanvraag
+    ),
+  },
+};
 
 describe('fetchTIPS', () => {
   afterAll(() => {

@@ -3,10 +3,8 @@ import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
-import UITKERINGEN from './mock-data/wpi-aanvragen.mock.json';
-import TONK from './mock-data/tonk.mock.json';
-import TOZO from './mock-data/tozo.mock.json';
-import TOERISTISCHE_VERHUUR from './mock-data/vakantie_verhuur.mock.json';
+import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
+import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
 import { transformBRPData } from '../brp';
 import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
@@ -36,6 +34,23 @@ import {
   ToeristischeVerhuurVergunning,
 } from '../toeristische-verhuur';
 import { TipsPredicateFN } from './tip-types';
+
+const TONK = {
+  content: WPI_E.content.filter((c) => c.about === 'TONK'),
+  status: 'OK',
+};
+
+const TOZO = {
+  content: WPI_E.content.filter((c) => c.about === 'Tozo 5'),
+  status: 'OK',
+};
+
+const UITKERINGEN = {
+  content: WPI_AANVRAGEN.content.filter(
+    (c) => c.about === 'Bijstandsuitkering'
+  ),
+  status: 'OK',
+};
 
 describe('predicates', () => {
   const DATE_TO_TEST_AGAINST = '2022-07-25';
@@ -140,12 +155,12 @@ describe('predicates', () => {
         [true, 10, '2022-07-16'],
       ])(
         'should return %s for %d days since beginDatumVerblijf is %s',
-        (expexted, numberOfDays, date) => {
+        (expected, numberOfDays, date) => {
           expect(
             isLivingInAmsterdamLessThanNumberOfDays(numberOfDays)(
               getMockAppState(date)
             )
-          ).toBe(expexted);
+          ).toBe(expected);
         }
       );
     });
