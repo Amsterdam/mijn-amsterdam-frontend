@@ -15,6 +15,7 @@ import {
   nocache,
   sendUnauthorized,
 } from './helpers/app';
+import { countLogin } from './services/visitors';
 
 export const router = express.Router();
 
@@ -74,7 +75,7 @@ router.use(
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=digid',
+    returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
     authorizationParams: {
       redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
     },
@@ -88,6 +89,14 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
       redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
     },
   });
+});
+
+router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
+  const auth = await getAuth(req);
+  if (auth.profile.id) {
+    countLogin(auth.profile.id);
+  }
+  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
 });
 
 router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {

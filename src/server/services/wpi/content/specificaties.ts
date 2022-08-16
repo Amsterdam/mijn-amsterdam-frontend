@@ -1,5 +1,5 @@
 import { differenceInMonths } from 'date-fns';
-import { AppState } from '../../../../client/AppState';
+import type { AppState } from '../../../../client/AppState';
 import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';

@@ -13,6 +13,7 @@ import {
 } from './config';
 import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import { countLogin } from './services/visitors';
 
 export const authRouterDevelopment = express.Router();
 
@@ -34,6 +35,8 @@ authRouterDevelopment.get(
       authMethod,
       userId
     );
+
+    countLogin(userId);
 
     res.cookie(
       OIDC_SESSION_COOKIE_NAME,
