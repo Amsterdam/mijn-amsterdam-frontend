@@ -1,31 +1,12 @@
 import { AppState } from '../../../client/AppState';
 import { MyTip } from '../../../universal/types';
-import { TipAudience } from './tip-types';
+import { Tip, TipAudience } from './tip-types';
 import { tips } from './tips';
 
-export function collectTips(
-  appState: Partial<AppState>,
-  optIn: boolean,
-  audience: TipAudience
-): MyTip[] {
-  /**
-   * Iterate over tips database and filter out requested tips based on props:
-   * - date period
-   * - audience
-   * - personalized
-   * - predicates
-   *   ...
-   */
+function tipsFilter(appState: Partial<AppState>, optIn: boolean) {
+  return (t: Tip) => {
+    const now = new Date();
 
-  const now = new Date();
-
-  let filteredTips = tips;
-  // If we get an audience first filter all tips using it.
-  if (audience) {
-    filteredTips = tips.filter((t) => t.audience.includes(audience));
-  }
-
-  filteredTips = filteredTips.filter((t) => {
     // We want only active tips.
     if (!t.active) {
       return false;
@@ -53,7 +34,30 @@ export function collectTips(
     }
 
     return true;
-  });
+  };
+}
+
+export function collectTips(
+  appState: Partial<AppState>,
+  optIn: boolean,
+  audience: TipAudience
+): MyTip[] {
+  /**
+   * Iterate over tips database and filter out requested tips based on props:
+   * - date period
+   * - audience
+   * - personalized
+   * - predicates
+   *   ...
+   */
+
+  let filteredTips = tips;
+  // If we get an audience first filter all tips using it.
+  if (audience) {
+    filteredTips = tips.filter((t) => t.audience.includes(audience));
+  }
+
+  filteredTips = filteredTips.filter(tipsFilter(appState, optIn));
 
   return filteredTips.map((t) => ({
     id: t.id,
