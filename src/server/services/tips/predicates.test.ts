@@ -4,7 +4,8 @@ import BRP from '../../mock-data/json/brp.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
-import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
+// import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
+import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import { transformBRPData } from '../brp';
 import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
@@ -29,10 +30,6 @@ import {
   previouslyLivingInAmsterdam,
 } from './predicates';
 import { CaseType } from '../../../universal/types/vergunningen';
-import {
-  ToeristischeVerhuurRegistratieDetail,
-  ToeristischeVerhuurVergunning,
-} from '../toeristische-verhuur';
 import { TipsPredicateFN } from './tip-types';
 
 const TONK = {
@@ -50,6 +47,29 @@ const UITKERINGEN = {
     (c) => c.about === 'Bijstandsuitkering'
   ),
   status: 'OK',
+};
+
+const TOERISTISCHE_VERHUUR = {
+  content: {
+    registraties: [
+      {
+        street: 'Amstel',
+        houseNumber: '1',
+        houseLetter: null,
+        houseNumberExtension: null,
+        postalCode: '1012PN',
+        city: 'Amsterdam',
+        shortName: 'Amstel',
+        owner: null,
+        registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
+        agreementDate: '2021-01-01T10:47:44.6107122',
+      },
+    ],
+    vergunningen: VERGUNNINGEN.content.filter((c) =>
+      ['Z/000/000040', 'Z/001/000040'].includes(c.identifier)
+    ),
+    daysLeft: 30,
+  },
 };
 
 describe('predicates', () => {
@@ -445,11 +465,7 @@ describe('predicates', () => {
       TOERISTISCHE_VERHUUR.content.vergunningen[1].caseType = caseType2;
 
       return {
-        TOERISTISCHE_VERHUUR: TOERISTISCHE_VERHUUR as ApiResponse<{
-          registraties: ToeristischeVerhuurRegistratieDetail[];
-          vergunningen: ToeristischeVerhuurVergunning[];
-          daysLeft: number;
-        }>,
+        TOERISTISCHE_VERHUUR: TOERISTISCHE_VERHUUR as ApiResponse<any>,
       };
     };
 
