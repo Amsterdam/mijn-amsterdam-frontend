@@ -151,6 +151,11 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
+  res.setHeader(
+    'Clear-Site-Data',
+    '"cache", "cookies", "storage", "executionContexts"'
+  );
+
   if (hasSessionCookie(req)) {
     const auth = await getAuth(req);
     const redirectToLogoutSpecific =
