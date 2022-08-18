@@ -311,20 +311,20 @@ describe('server/helpers/app', () => {
 
   test('combineCookieChunks', () => {
     const cookies = {
-      'appSession.0': 'xxxx',
+      '__MA-appSession.0': 'xxxx',
       somethingelse: 'foobar',
-      'appSession.1': 'yyyy',
-      'appSession.2': 'zzzz',
+      '__MA-appSession.1': 'yyyy',
+      '__MA-appSession.2': 'zzzz',
     };
     expect(combineCookieChunks(cookies)).toBe('xxxxyyyyzzzz');
   });
 
   test('isSessionCookieName', () => {
-    let name = 'appSession.0';
+    let name = '__MA-appSession.0';
     expect(isSessionCookieName(name)).toBe(true);
-    name = 'appSession';
+    name = '__MA-appSession';
     expect(isSessionCookieName(name)).toBe(true);
-    name = 'appsession';
+    name = '__MA-appSession';
     expect(isSessionCookieName(name)).toBe(false);
   });
 });
