@@ -362,7 +362,7 @@ export function createVergunningNotification(
   return notification;
 }
 
-export async function fetchVergunningenGenerated(
+export async function fetchVergunningenNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date

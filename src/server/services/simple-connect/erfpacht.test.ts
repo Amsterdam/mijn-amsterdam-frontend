@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchErfpacht, fetchErfpachtGenerated } from './erfpacht';
+import { fetchErfpacht, fetchErfpachtNotifications } from './erfpacht';
 
 describe('simple-connect/erfpacht', () => {
   const REQUEST_ID = 'test-x-789';
@@ -91,7 +91,7 @@ describe('simple-connect/erfpacht', () => {
       .get(new RegExp('/api/v2/notifications/bsn/*'))
       .reply(200, null as any);
 
-    const responseContent = await fetchErfpachtGenerated(
+    const responseContent = await fetchErfpachtNotifications(
       REQUEST_ID,
       authProfileAndToken
     );
@@ -124,7 +124,7 @@ describe('simple-connect/erfpacht', () => {
         },
       ]);
 
-    const responseContent = await fetchErfpachtGenerated(
+    const responseContent = await fetchErfpachtNotifications(
       REQUEST_ID,
       authProfileAndToken
     );

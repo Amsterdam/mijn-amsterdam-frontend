@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { Chapters } from '../../../universal/config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchSubsidieGenerated } from './subsidie';
+import { fetchSubsidieNotifications } from './subsidie';
 
 describe('Subsidie', () => {
   const authProfileAndToken: AuthProfileAndToken = {
@@ -30,7 +30,7 @@ describe('Subsidie', () => {
     nock.disableNetConnect();
   });
 
-  test('fetchSubsidieGenerated', async () => {
+  test('fetchSubsidieNotifications', async () => {
     const content = {
       isKnown: true,
       notifications: [
@@ -54,7 +54,7 @@ describe('Subsidie', () => {
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
     {
-      const result = await fetchSubsidieGenerated(
+      const result = await fetchSubsidieNotifications(
         'xx22xx',
         authProfileAndToken
       );
@@ -74,7 +74,7 @@ describe('Subsidie', () => {
     }
 
     {
-      const result = await fetchSubsidieGenerated('xx22xx', {
+      const result = await fetchSubsidieNotifications('xx22xx', {
         ...authProfileAndToken,
         profile: { ...authProfileAndToken.profile, authMethod: 'eherkenning' },
       });
@@ -94,7 +94,7 @@ describe('Subsidie', () => {
     }
 
     {
-      const result = await fetchSubsidieGenerated(
+      const result = await fetchSubsidieNotifications(
         'xx22xx',
         authProfileAndToken
       );

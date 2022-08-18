@@ -1,7 +1,7 @@
 import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchGenerated, fetchService } from './api-service';
+import { fetchTipsAndNotifications, fetchService } from './api-service';
 import { encrypt } from './subsidie';
 
 function encryptPayload(payload: string) {
@@ -59,11 +59,11 @@ function getConfigNotifications(
   });
 }
 
-export async function fetchErfpachtGenerated(
+export async function fetchErfpachtNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchGenerated(
+  const response = await fetchTipsAndNotifications(
     requestID,
     getConfigNotifications(authProfileAndToken),
     Chapters.ERFPACHT

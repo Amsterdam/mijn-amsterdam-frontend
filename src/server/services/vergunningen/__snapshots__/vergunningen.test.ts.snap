@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Vergunningen service FetchVergunningenGenerated: should respond with a success response 1`] = `
+exports[`Vergunningen service fetchVergunningenNotifications: should respond with a success response 1`] = `
 Object {
   "content": Object {
     "notifications": Array [
