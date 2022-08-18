@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { isExternalUrl } from '../../../universal/helpers';
-import { relayApiUrl } from '../../../universal/helpers/utils';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
