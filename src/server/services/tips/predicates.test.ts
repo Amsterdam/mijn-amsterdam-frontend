@@ -4,7 +4,6 @@ import BRP from '../../mock-data/json/brp.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
-// import TOERISTISCHE_VERHUUR from './mock-data/vakantie-verhuur.mock.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import { transformBRPData } from '../brp';
 import { StadspasResponseDataTransformed } from '../wpi/api-service';

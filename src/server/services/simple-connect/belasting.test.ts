@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { ApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchBelasting, fetchBelastingGenerated } from './belasting';
+import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 
 const REQUEST_ID = 'test-x-999';
 const authProfileAndToken: AuthProfileAndToken = {
@@ -105,7 +105,7 @@ describe('simple-connect/belasting', () => {
       }
     `);
 
-    expect(await fetchBelastingGenerated(REQUEST_ID, authProfileAndToken))
+    expect(await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken))
       .toMatchInlineSnapshot(`
       Object {
         "content": Object {

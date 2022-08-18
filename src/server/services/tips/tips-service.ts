@@ -1,7 +1,5 @@
-import { AppState } from '../../../client/AppState';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers';
 import { MyTip } from '../../../universal/types';
-import { collectSourceTips } from './collect-source-tips';
 import { collectTips } from './collect-tips';
 import { ServiceResults, TipAudience } from './tip-types';
 
@@ -47,46 +45,25 @@ function getTipsQueryParams(queryParams: Record<string, string>) {
   };
 }
 
-function getTips(
-  appState: ServiceResults | null,
-  optIn: boolean,
-  audience: TipAudience
+export async function createTipsFromServiceResults(
+  queryParams: Record<string, string>,
+  {
+    serviceResults,
+    tipsDirectlyFromServices,
+  }: {
+    serviceResults: ServiceResults | null;
+    tipsDirectlyFromServices: MyTip[];
+  }
 ) {
-  const tips1 = collectTips(appState as Partial<AppState>, optIn, audience);
-  const tips2 = collectSourceTips(appState);
-  const tips = tips1.concat(tips2);
+  const { optIn, audience } = getTipsQueryParams(queryParams);
+
+  let tips = serviceResults ? collectTips(serviceResults, optIn, audience) : [];
+
+  if (optIn) {
+    tips = tips.concat(tipsDirectlyFromServices);
+  }
 
   tips.sort(prioritySort);
 
-  return tips;
-}
-
-export async function fetchTIPS(
-  queryParams: Record<string, string>,
-  serviceResults: ServiceResults | null
-) {
-  const parsedParams = getTipsQueryParams(queryParams);
-
-  const tips = getTips(
-    serviceResults as AppState,
-    parsedParams.optIn,
-    parsedParams.audience
-  );
-
-  return new Promise<ApiResponse<MyTip[]>>((resolve) => {
-    return resolve(apiSuccessResult(tips));
-  });
-}
-
-export function createTipsRequestData(
-  queryParams: Record<string, string>,
-  serviceResults: ServiceResults | null
-) {
-  const parsedParams = getTipsQueryParams(queryParams);
-  const serviceTips = collectSourceTips(serviceResults);
-
-  return {
-    ...parsedParams,
-    tips: serviceTips,
-  };
+  return apiSuccessResult(tips);
 }

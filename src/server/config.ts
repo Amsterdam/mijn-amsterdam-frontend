@@ -256,7 +256,6 @@ export const BFF_OIDC_BASE_URL = `${
 export const BffEndpoints = {
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
-  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
   SERVICES_ALL: '/services/all',
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',

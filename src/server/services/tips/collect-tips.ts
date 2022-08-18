@@ -1,12 +1,11 @@
-import { AppState } from '../../../client/AppState';
 import { MyTip } from '../../../universal/types';
-import { Tip, TipAudience } from './tip-types';
+import { ServiceResults, Tip, TipAudience } from './tip-types';
 import { tips } from './tips';
 
-function tipsFilter(appState: Partial<AppState>, optIn: boolean) {
-  return (t: Tip) => {
-    const now = new Date();
+function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
+  const now = new Date();
 
+  return (t: Tip) => {
     // We want only active tips.
     if (!t.active) {
       return false;
@@ -29,7 +28,7 @@ function tipsFilter(appState: Partial<AppState>, optIn: boolean) {
     // Run all predicates, check if any of them is false.
     if (t.predicates) {
       return !t.predicates
-        .map((p) => p(appState, now))
+        .map((p) => p(serviceResults, now))
         .some((r) => r === false);
     }
 
@@ -38,7 +37,7 @@ function tipsFilter(appState: Partial<AppState>, optIn: boolean) {
 }
 
 export function collectTips(
-  appState: Partial<AppState>,
+  serviceResults: ServiceResults,
   optIn: boolean,
   audience: TipAudience
 ): MyTip[] {
@@ -57,7 +56,7 @@ export function collectTips(
     filteredTips = tips.filter((t) => t.audience.includes(audience));
   }
 
-  filteredTips = filteredTips.filter(tipsFilter(appState, optIn));
+  filteredTips = filteredTips.filter(tipsFilter(serviceResults, optIn));
 
   return filteredTips.map((t) => ({
     id: t.id,

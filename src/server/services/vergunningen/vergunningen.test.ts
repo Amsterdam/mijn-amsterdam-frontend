@@ -6,7 +6,7 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   fetchAllVergunningen,
-  fetchVergunningenGenerated,
+  fetchVergunningenNotifications,
   transformVergunningenData,
   VergunningenSourceData,
 } from './vergunningen';
@@ -73,9 +73,9 @@ describe('Vergunningen service', () => {
     expect(response).toStrictEqual(errorResponse);
   });
 
-  it('FetchVergunningenGenerated: should respond with a success response', async () => {
+  it('fetchVergunningenNotifications: should respond with a success response', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
-    const response = await fetchVergunningenGenerated(
+    const response = await fetchVergunningenNotifications(
       'x',
       authProfileAndToken,
       new Date('2020-06-23')

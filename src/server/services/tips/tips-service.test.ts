@@ -3,7 +3,7 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
-import { fetchTIPS } from './tips-service';
+import { createTipsFromServiceResults } from './tips-service';
 
 const TOZO = {
   content: WPI_E.content.filter((c) => c.about === 'Tozo 5'),
@@ -19,7 +19,7 @@ const TOERISTISCHE_VERHUUR = {
   },
 };
 
-describe('fetchTIPS', () => {
+describe('createTipsFromServiceResults', () => {
   afterAll(() => {
     jest.useRealTimers();
   });
@@ -33,9 +33,9 @@ describe('fetchTIPS', () => {
   });
 
   it('should return the tips in the correct format', async () => {
-    const tips = await fetchTIPS(
+    const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
-      {}
+      { serviceResults: {}, tipsDirectlyFromServices: [] }
     );
 
     expect(tips).toMatchSnapshot();
@@ -48,10 +48,13 @@ describe('fetchTIPS', () => {
 
     BRPCopy.content.persoon.geboortedatum = '2005-07-24';
 
-    const tips = await fetchTIPS(
+    const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'true' },
       {
-        BRP: BRPCopy as ApiSuccessResponse<any>,
+        serviceResults: {
+          BRP: BRPCopy as ApiSuccessResponse<any>,
+        },
+        tipsDirectlyFromServices: [],
       }
     );
 
@@ -59,9 +62,9 @@ describe('fetchTIPS', () => {
   });
 
   it('should return tips when they are active during the date', async () => {
-    const tips = await fetchTIPS(
+    const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
-      {}
+      { serviceResults: {}, tipsDirectlyFromServices: [] }
     );
 
     expect(
@@ -72,9 +75,9 @@ describe('fetchTIPS', () => {
 
     jest.setSystemTime(new Date('2022-03-14'));
 
-    const tipsOnDate = await fetchTIPS(
+    const tipsOnDate = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
-      {}
+      { serviceResults: {}, tipsDirectlyFromServices: [] }
     );
 
     expect(
@@ -92,19 +95,25 @@ describe('fetchTIPS', () => {
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
 
-    const tips = await fetchTIPS(
+    const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
       {
-        WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+        serviceResults: {
+          WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+        },
+        tipsDirectlyFromServices: [],
       }
     );
 
     expect(tips.content?.find((t) => t.id === 'mijn-36')).toBeFalsy();
 
-    const personalTips = await fetchTIPS(
+    const personalTips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'true' },
       {
-        WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+        serviceResults: {
+          WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+        },
+        tipsDirectlyFromServices: [],
       }
     );
 
@@ -123,12 +132,15 @@ describe('fetchTIPS', () => {
     VERHUUR_copy.content.registraties = [];
     VERHUUR_copy.content.vergunningen[0].caseType = CaseType.BBVergunning;
 
-    const tips = await fetchTIPS(
+    const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'true' },
       {
-        WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
-        TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
-        BRP: BRP as ApiSuccessResponse<any>,
+        serviceResults: {
+          WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+          TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
+          BRP: BRP as ApiSuccessResponse<any>,
+        },
+        tipsDirectlyFromServices: [],
       }
     );
 

@@ -2,7 +2,7 @@ import { Chapters } from '../../../universal/config';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchGenerated, fetchService } from './api-service';
+import { fetchTipsAndNotifications, fetchService } from './api-service';
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
   ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)
@@ -100,11 +100,11 @@ export function fetchBelasting(
   return fetchService(requestID, getConfig(authProfileAndToken.profile.id));
 }
 
-export async function fetchBelastingGenerated(
+export async function fetchBelastingNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchGenerated(
+  return fetchTipsAndNotifications(
     requestID,
     getConfig(authProfileAndToken.profile.id),
     Chapters.BELASTINGEN

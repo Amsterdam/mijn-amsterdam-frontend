@@ -77,7 +77,7 @@ function transformAKTESNotifications(aktes: AKTESData, compareDate: Date) {
   return [];
 }
 
-export async function fetchAKTESGenerated(
+export async function fetchAKTESNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {

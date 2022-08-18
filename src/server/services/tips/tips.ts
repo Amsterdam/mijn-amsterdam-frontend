@@ -106,6 +106,7 @@ export const tips: Tip[] = [
     title: 'Op stap met uw Stadspas',
     audience: ['persoonlijk'],
     description: 'Haalt u alles uit uw Stadspas?',
+    reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
     predicates: [hasValidStadspasRequest],
     isPersonalized: true,
     link: {

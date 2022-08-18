@@ -1,5 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`createTipsFromServiceResults should return the tips in the correct format 1`] = `
+Object {
+  "content": Array [
+    Object {
+      "audience": Array [
+        "persoonlijk",
+      ],
+      "datePublished": "2020-06-15",
+      "description": "Maakt u mondkapjes? Of zoekt u manieren om te blijven bewegen? Amsterdammers helpen elkaar tijdens de coronacrisis.",
+      "id": "mijn-12",
+      "imgUrl": "/tips/static/tip_images/mondkapjes.jpg",
+      "isPersonalized": false,
+      "link": Object {
+        "title": "Vind elkaar",
+        "to": "https://wijamsterdam.nl/",
+      },
+      "priority": 70,
+      "reason": Array [],
+      "title": "Amsterdammers helpen Amsterdammers",
+    },
+    Object {
+      "audience": Array [
+        "persoonlijk",
+      ],
+      "datePublished": "2020-06-15",
+      "description": "Bent u op zoek naar gegevens of onderzoek over uw stad of buurt? U vindt al deze informatie nu op 1 website.",
+      "id": "mijn-14",
+      "imgUrl": "/tips/static/tip_images/openresearch.jpg",
+      "isPersonalized": false,
+      "link": Object {
+        "title": "Kijk op openresearch.amsterdam",
+        "to": "https://openresearch.amsterdam/",
+      },
+      "priority": 70,
+      "reason": Array [],
+      "title": "Voor nieuwsgierige Amsterdammers",
+    },
+    Object {
+      "audience": Array [
+        "persoonlijk",
+      ],
+      "datePublished": "2019-07-24",
+      "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren.",
+      "id": "mijn-3",
+      "imgUrl": "/tips/static/tip_images/grofvuil.jpg",
+      "isPersonalized": false,
+      "link": Object {
+        "title": "Adressen Afvalpunten",
+        "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/",
+      },
+      "priority": 25,
+      "reason": Array [],
+      "title": "Grofvuil",
+    },
+    Object {
+      "audience": Array [
+        "persoonlijk",
+      ],
+      "datePublished": "2019-07-24",
+      "description": "Er is altijd vrijwilligerswerk dat bij u past. Bekijk de vacatures.",
+      "id": "mijn-2",
+      "imgUrl": "/tips/static/tip_images/vrijwilliger.jpg",
+      "isPersonalized": false,
+      "link": Object {
+        "title": "Vrijwilligerscentrale Amsterdam",
+        "to": "https://www.vca.nu/vacaturebank/",
+      },
+      "priority": 20,
+      "reason": Array [],
+      "title": "Vrijwilliger worden?",
+    },
+    Object {
+      "audience": Array [
+        "persoonlijk",
+      ],
+      "datePublished": "2019-07-24",
+      "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
+      "id": "mijn-4",
+      "imgUrl": "/tips/static/tip_images/geveltuin.jpg",
+      "isPersonalized": false,
+      "link": Object {
+        "title": "Meer informatie",
+        "to": "https://www.amsterdam.nl/wonen-leefomgeving/medebeheer/geveltuin-aanvragen/",
+      },
+      "priority": 20,
+      "reason": Array [],
+      "title": "Geveltuin",
+    },
+  ],
+  "status": "OK",
+}
+`;
+
 exports[`fetchTIPS should return the tips in the correct format 1`] = `
 Object {
   "content": Array [

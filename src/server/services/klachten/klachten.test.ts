@@ -2,7 +2,7 @@ import { AuthProfileAndToken } from './../../helpers/app';
 import nock from 'nock';
 import {
   fetchAllKlachten,
-  fetchKlachtenGenerated,
+  fetchKlachtenNotifications,
   transformKlachtenResponse,
 } from './klachten';
 import apiResponse from '../../mock-data/json/klachten.json';
@@ -96,9 +96,12 @@ describe('Klachten', () => {
         expect(res.content?.klachten.length).toBe(10);
       });
 
-      describe('klachtenGenerated', () => {
+      describe('klachtenNotifications', () => {
         it('should generate the expected response', async () => {
-          const res = await fetchKlachtenGenerated(requestId, profileAndToken);
+          const res = await fetchKlachtenNotifications(
+            requestId,
+            profileAndToken
+          );
 
           expect(res).toMatchInlineSnapshot(`
             Object {
