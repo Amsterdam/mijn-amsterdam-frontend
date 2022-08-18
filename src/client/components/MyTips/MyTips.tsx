@@ -42,7 +42,7 @@ function tipTrackingCategory(category: string, isPersonalized: boolean) {
 const Tip = ({ tip, profileType }: TipProps) => {
   const [imgUrl, setImgUrl] = useState(PLACEHOLDER_IMAGE_URL);
 
-  const tipImgUrl = tip.imgUrl ? relayApiUrl(tip.imgUrl) : false;
+  const tipImgUrl = tip.imgUrl;
 
   useEffect(() => {
     if (!tipImgUrl) {
