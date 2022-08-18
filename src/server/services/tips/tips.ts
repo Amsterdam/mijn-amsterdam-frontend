@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../../universal/config';
 import {
   hasAOV,
   hasBijstandsuitkering,
@@ -22,6 +23,10 @@ import {
 } from './predicates';
 import { Tip } from './tip-types';
 
+export const TIPS_IMG_HOST = IS_PRODUCTION
+  ? 'https://mijn.amsterdam.nl'
+  : 'http://localhost:3000';
+
 export const tips: Tip[] = [
   {
     id: 'mijn-2',
@@ -38,7 +43,7 @@ export const tips: Tip[] = [
       title: 'Vrijwilligerscentrale Amsterdam',
       to: 'https://www.vca.nu/vacaturebank/',
     },
-    imgUrl: '/tips/static/tip_images/vrijwilliger.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/vrijwilliger.jpg`,
     isPersonalized: false,
   },
   {
@@ -56,7 +61,7 @@ export const tips: Tip[] = [
       title: 'Adressen Afvalpunten',
       to: 'https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/',
     },
-    imgUrl: '/tips/static/tip_images/grofvuil.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/grofvuil.jpg`,
     isPersonalized: false,
   },
   {
@@ -74,7 +79,7 @@ export const tips: Tip[] = [
       title: 'Meer informatie',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/medebeheer/geveltuin-aanvragen/',
     },
-    imgUrl: '/tips/static/tip_images/geveltuin.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/geveltuin.jpg`,
     isPersonalized: false,
   },
   {
@@ -94,7 +99,7 @@ export const tips: Tip[] = [
       title: 'Kijk op de kaart',
       to: '/buurt',
     },
-    imgUrl: '/tips/static/tip_images/afvalpunt.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/afvalpunt.jpg`,
   },
   {
     id: 'mijn-11',
@@ -113,7 +118,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de aanbiedingen',
       to: 'https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/',
     },
-    imgUrl: '/tips/static/tip_images/stadspas.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stadspas.jpg`,
   },
   {
     id: 'mijn-12',
@@ -132,7 +137,7 @@ export const tips: Tip[] = [
       title: 'Vind elkaar',
       to: 'https://wijamsterdam.nl/',
     },
-    imgUrl: '/tips/static/tip_images/mondkapjes.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/mondkapjes.jpg`,
   },
   {
     id: 'mijn-13',
@@ -150,7 +155,7 @@ export const tips: Tip[] = [
       title: 'Kijk hoe u energie kunt besparen',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/duurzaam-amsterdam/vve-advies/',
     },
-    imgUrl: '/tips/static/tip_images/energieadvies.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/energieadvies.jpg`,
   },
   {
     id: 'mijn-14',
@@ -169,7 +174,7 @@ export const tips: Tip[] = [
       title: 'Kijk op openresearch.amsterdam',
       to: 'https://openresearch.amsterdam/',
     },
-    imgUrl: '/tips/static/tip_images/openresearch.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/openresearch.jpg`,
   },
   {
     id: 'mijn-16',
@@ -193,7 +198,7 @@ export const tips: Tip[] = [
       title: 'Lees meer in deze nieuwsbrief',
       to: 'https://www.amsterdam.nl/nieuwsbrief/',
     },
-    imgUrl: '/tips/static/tip_images/nieuwinamsterdam.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/nieuwinamsterdam.jpg`,
   },
   {
     id: 'mijn-17',
@@ -213,7 +218,7 @@ export const tips: Tip[] = [
       title: 'Kijk wat voor u geldt',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B5DDAF0C4-9649-4E15-90DC-23C6E48A0575%7D',
     },
-    imgUrl: '/tips/static/tip_images/gemeentelijke belastingen.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/gemeentelijke belastingen.jpg`,
   },
   {
     id: 'mijn-18',
@@ -233,7 +238,7 @@ export const tips: Tip[] = [
       title: 'Kijk op de kaart',
       to: 'https://www.amsterdam.nl/buurten/',
     },
-    imgUrl: '/tips/static/tip_images/Idee voor uw buurt.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/Idee voor uw buurt.jpg`,
   },
   {
     id: 'mijn-19',
@@ -253,7 +258,7 @@ export const tips: Tip[] = [
       title: 'Lees hoe het werkt',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B17DE644B-ADB1-4AD3-B04E-40D6736566B3%7D',
     },
-    imgUrl: '/tips/static/tip_images/Bedrijveninvesteringszones.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/Bedrijveninvesteringszones.jpg`,
   },
   {
     id: 'mijn-20',
@@ -273,7 +278,7 @@ export const tips: Tip[] = [
       title: 'Kijk wat de mogelijkheden zijn',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B3D70B70E-8A19-4A95-BE31-8743995BC545%7D',
     },
-    imgUrl: '/tips/static/tip_images/Bedrijfsafval.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/Bedrijfsafval.jpg`,
   },
   {
     id: 'mijn-21',
@@ -293,7 +298,7 @@ export const tips: Tip[] = [
       title: 'Meld u aan',
       to: 'https://www.amsterdam.nl/ondernemen/bedrijfsruimte/stadsloods/',
     },
-    imgUrl: '/tips/static/tip_images/bedrijfsruimte.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/bedrijfsruimte.jpg`,
   },
   {
     id: 'mijn-22',
@@ -314,7 +319,7 @@ export const tips: Tip[] = [
       title: 'Kijk of u recht hebt',
       to: 'https://www.amsterdam.nl/pakjekans',
     },
-    imgUrl: '/tips/static/tip_images/laat_geen_geld_liggen.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/laat_geen_geld_liggen.jpg`,
   },
   {
     id: 'mijn-23',
@@ -335,7 +340,7 @@ export const tips: Tip[] = [
       title: 'Bekijk het filmpje',
       to: 'https://vimeo.com/436735156',
     },
-    imgUrl: '/tips/static/tip_images/020werkt.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/020werkt.jpg`,
   },
   {
     id: 'mijn-24',
@@ -356,7 +361,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de coronamaatregelen van RMC en Transvision',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7BAC803D4E-BAB4-4865-91EA-88BD00EBD9F2%7D#case_%7B549B25AF-B9C1-47E3-8106-6DE7F5551AB2%7D',
     },
-    imgUrl: '/tips/static/tip_images/mondkapje.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/mondkapje.jpg`,
   },
   {
     id: 'mijn-25',
@@ -379,7 +384,7 @@ export const tips: Tip[] = [
       title: 'Kies een sportvereniging',
       to: 'https://www.amsterdam.nl/svjeugd',
     },
-    imgUrl: '/tips/static/tip_images/sporten_met_korting.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/sporten_met_korting.jpg`,
   },
   {
     id: 'mijn-26',
@@ -400,7 +405,7 @@ export const tips: Tip[] = [
       title: 'Vind hulp bij u in de buurt',
       to: 'https://www.buurtteamamsterdam.nl/',
     },
-    imgUrl: '/tips/static/tip_images/schuldhulpverlening.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/schuldhulpverlening.jpg`,
   },
   {
     id: 'mijn-27',
@@ -427,7 +432,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
     },
-    imgUrl: '/tips/static/tip_images/stemmen2021.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stemmen2021.jpg`,
   },
   {
     id: 'mijn-28',
@@ -449,7 +454,7 @@ export const tips: Tip[] = [
       title: 'Download de app',
       to: 'https://pingping.amsterdam.nl/',
     },
-    imgUrl: '/tips/static/tip_images/pingping.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/pingping.jpg`,
   },
   {
     id: 'mijn-29',
@@ -470,7 +475,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de coronamaatregelen',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B43A9E379-2E1B-463F-BE4D-168BD48C0499%7D#case_%7BC2578879-6863-4240-BC62-296645E60625%7D',
     },
-    imgUrl: '/tips/static/tip_images/stem.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stem.jpg`,
   },
   {
     id: 'mijn-30',
@@ -491,7 +496,7 @@ export const tips: Tip[] = [
       title: 'Kijk hoe u iemand machtigt',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7b6D786182-CBA3-4319-A794-F915E7DE37C2%7d',
     },
-    imgUrl: '/tips/static/tip_images/stem.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stem.jpg`,
   },
   {
     id: 'mijn-31',
@@ -512,7 +517,7 @@ export const tips: Tip[] = [
       title: 'Kijk voor een stembureau bij u in de buurt',
       to: 'https://stembureaus.amsterdam.nl/map',
     },
-    imgUrl: '/tips/static/tip_images/stem.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stem.jpg`,
   },
   {
     id: 'mijn-32',
@@ -533,7 +538,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de flyer hoe de stemstraat werkt',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B43A9E379-2E1B-463F-BE4D-168BD48C0499%7D#case_%7BC2578879-6863-4240-BC62-296645E60625%7D',
     },
-    imgUrl: '/tips/static/tip_images/stem.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stem.jpg`,
   },
   {
     id: 'mijn-33',
@@ -557,7 +562,7 @@ export const tips: Tip[] = [
       title: 'U leest hier wat de voorwaarden zijn',
       to: 'https://www.amsterdam.nl/vakantieverhuur',
     },
-    imgUrl: '/tips/static/tip_images/vakantieverhuur.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/vakantieverhuur.jpg`,
   },
   {
     id: 'mijn-34',
@@ -579,7 +584,7 @@ export const tips: Tip[] = [
       title: 'Lees hier de voorwaarde',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/',
     },
-    imgUrl: '/tips/static/tip_images/vakantieverhuur.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/vakantieverhuur.jpg`,
   },
   {
     id: 'mijn-35',
@@ -600,7 +605,7 @@ export const tips: Tip[] = [
       title: 'U leest hier wat de voorwaarden zijn',
       to: 'https://www.amsterdam.nl/bedandbreakfast ',
     },
-    imgUrl: '/tips/static/tip_images/vakantieverhuur.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/vakantieverhuur.jpg`,
   },
   {
     id: 'mijn-36',
@@ -621,7 +626,7 @@ export const tips: Tip[] = [
       title: 'Vraag direct vergoeding aan',
       to: 'https://www.stichtingsina.nl/sport/',
     },
-    imgUrl: '/tips/static/tip_images/sporten_met_korting.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/sporten_met_korting.jpg`,
   },
   {
     id: 'mijn-37',
@@ -642,7 +647,7 @@ export const tips: Tip[] = [
       title: 'Kijk voor een stembureau bij u in de buurt',
       to: 'http://www.amsterdam.nl/verkiezingen',
     },
-    imgUrl: '/tips/static/tip_images/stem.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stem.jpg`,
   },
   {
     id: 'mijn-39',
@@ -663,7 +668,7 @@ export const tips: Tip[] = [
       title: 'Kijk hoe u iemand machtigt',
       to: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7BA991E320-B926-4DD8-845D-65E51519D304%7D',
     },
-    imgUrl: '/tips/static/tip_images/stemmen.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stemmen.jpg`,
   },
   {
     id: 'mijn-40',
@@ -684,7 +689,7 @@ export const tips: Tip[] = [
       title: 'Bekijk de kandidatenlijsten',
       to: 'https://www.amsterdam.nl/verkiezingen',
     },
-    imgUrl: '/tips/static/tip_images/stemmen.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stemmen.jpg`,
   },
   {
     id: 'mijn-41',
@@ -705,6 +710,6 @@ export const tips: Tip[] = [
       title: 'Bekijk de stemwijzer',
       to: 'https://www.amsterdam.nl/verkiezingen',
     },
-    imgUrl: '/tips/static/tip_images/stemmen.jpg',
+    imgUrl: `${TIPS_IMG_HOST}/img/tips/stemmen.jpg`,
   },
 ];
