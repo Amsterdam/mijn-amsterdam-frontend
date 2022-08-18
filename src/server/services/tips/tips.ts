@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../../universal/config';
 import {
   hasAOV,
   hasBijstandsuitkering,
@@ -23,9 +22,7 @@ import {
 } from './predicates';
 import { Tip } from './tip-types';
 
-export const TIPS_IMG_HOST = IS_PRODUCTION
-  ? 'https://mijn.amsterdam.nl'
-  : 'http://localhost:3000';
+export const TIPS_IMG_HOST = process.env.MA_FE_URL;
 
 export const tips: Tip[] = [
   {
