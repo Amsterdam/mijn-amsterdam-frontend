@@ -324,7 +324,7 @@ describe('server/helpers/app', () => {
     expect(isSessionCookieName(name)).toBe(true);
     name = '__MA-appSession';
     expect(isSessionCookieName(name)).toBe(true);
-    name = '__MA-appSession';
+    name = 'MA-appSession';
     expect(isSessionCookieName(name)).toBe(false);
   });
 });
