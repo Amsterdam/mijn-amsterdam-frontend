@@ -32,13 +32,16 @@ describe('createTipsFromServiceResults', () => {
     jest.setSystemTime(jest.getRealSystemTime());
   });
 
-  it('should return the tips in the correct format', async () => {
+  it('Should not return personalized tips if not opted-in', async () => {
     const tips = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
       { serviceResults: {}, tipsDirectlyFromServices: [] }
     );
 
-    expect(tips).toMatchSnapshot();
+    expect(tips.content.length).toBeGreaterThan(0);
+    expect(tips.content.every((tip) => tip.isPersonalized === false)).toBe(
+      true
+    );
   });
 
   it('should return tip mijn-28 when age is between 17 and 18', async () => {
