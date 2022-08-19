@@ -15,6 +15,6 @@ global.matchMedia =
     };
   };
 
-process.env.MA_FE_URL = 'http://test-host';
+process.env.BFF_FRONTEND_URL = 'http://test-host';
 process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = 'http://localhost/smile';
 process.env.BFF_OIDC_BASE_URL = 'http://localhost/bff';
