@@ -28,6 +28,17 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-07-29",
+        "description": "Uw ontheffingsaanvraag voor verspreiden reclamemateriaal (sampling) is in behandeling genomen.",
+        "id": "vergunning-1580959320-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/flyeren-sampling/1580959320",
+        },
+        "title": "Verspreiden reclamemateriaal (sampling) in behandeling",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-07-31T00:00:00",
         "description": "Uw ontheffingsaanvraag voor verspreiden reclamemateriaal (sampling) is afgehandeld.",
         "id": "vergunning-421733388-notification",
@@ -377,7 +388,7 @@ exports[`Vergunningen service should format data correctly 1`] = `
 Array [
   Object {
     "caseType": "Flyeren-Sampling",
-    "dateEnd": "2022-09-05T00:00:00",
+    "dateEnd": null,
     "dateRequest": "2022-08-09T00:00:00",
     "dateStart": "2022-09-05T00:00:00",
     "dateWorkflowActive": "2022-08-08T00:00:00",
@@ -403,6 +414,28 @@ Array [
     "status": "Ontvangen",
     "timeEnd": "16:00",
     "timeStart": "11:00",
+    "title": "Verspreiden reclamemateriaal (sampling)",
+  },
+  Object {
+    "caseType": "Flyeren-Sampling",
+    "dateDecision": null,
+    "dateEnd": null,
+    "dateRequest": "2022-07-29",
+    "dateStart": "2022-08-05",
+    "dateWorkflowActive": "2022-07-29",
+    "decision": "Ingetrokken",
+    "description": "Flyeren",
+    "documentsUrl": "/decosjoin/listdocuments/gAAAAABi_zeO4a-nizqypkMoIzQ1pSLyeLUMK6zuHCLmvNuf6eiA1fo4jHhmqXruqiOr3h1USFONE6c9NNKMmEM_M-SH4QkdKg4a5msw2pUlRMtFqajhFi2N4jiJMpWJ--CWUeDYU2iI",
+    "id": "1580959320",
+    "identifier": "Z/22/1978055",
+    "link": Object {
+      "title": "Bekijk hoe het met uw aanvraag staat",
+      "to": "/vergunningen/flyeren-sampling/1580959320",
+    },
+    "location": "Solebaystraat 20",
+    "status": "Ontvangen",
+    "timeEnd": "21:00",
+    "timeStart": "09:00",
     "title": "Verspreiden reclamemateriaal (sampling)",
   },
   Object {
