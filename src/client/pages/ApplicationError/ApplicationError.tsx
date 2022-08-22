@@ -1,17 +1,36 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FallbackProps } from 'react-error-boundary';
 import classNames from 'classnames';
 import styles from './ApplicationError.module.scss';
+import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
 import { AppRoutes } from '../../../universal/config';
 import { useDesktopScreen } from '../../hooks';
 import Heading from '../../components/Heading/Heading';
-import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
+import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
+import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import { Linkd } from '../../components';
+import { isExternalUrl } from '../../../universal/helpers';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
+
+const BOTTOM_LINKS = [
+  {
+    title: 'Over deze site',
+    to: 'https://www.amsterdam.nl/overdezesite/',
+  },
+  {
+    title: 'Privacy',
+    to: 'https://www.amsterdam.nl/privacy/',
+  },
+  {
+    title: 'Webarchief',
+    to: 'https://amsterdam.archiefweb.eu/',
+  },
+];
 
 function imgUrl(
   imageName: string,
@@ -42,12 +61,12 @@ export default function ApplicationError({ error }: FallbackProps) {
   const location = window.location;
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
 
+  const containerRole = useDesktopScreen() ? 'row' : undefined;
+  const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
+  const [isOpen, toggleOpen] = useState(false);
+
   return (
     <>
-      {/* <h1>Kritieke applicatie fout</h1>
-      <p>
-        <strong>Error:</strong> {error && error.toString()}
-      </p> */}
       <header className={styles.header}>
         <div className={styles.topBar}>
           <span className={styles.logoLink}>
@@ -105,7 +124,7 @@ export default function ApplicationError({ error }: FallbackProps) {
           </picture>
         </div>
       </header>
-      <TextPage>
+      <TextPage className={styles.Page}>
         <PageHeading>Kritieke applicatie fout</PageHeading>
         <PageContent>
           <p>
@@ -121,6 +140,69 @@ export default function ApplicationError({ error }: FallbackProps) {
           </p>
         </PageContent>
       </TextPage>
+      <footer className={footerStyles.MainFooter} id="skip-to-id-MainFooter">
+        <div
+          className={classNames(
+            footerStyles.TopBar,
+            footerStyles.InnerContainer
+          )}
+        >
+          <div className={footerStyles.InnerContainer}>
+            <div
+              className={classNames(
+                footerStyles.Panel,
+                isOpen && footerStyles.PanelOpen
+              )}
+              role={containerRole}
+            >
+              <h3
+                role={titleRole}
+                onClick={() => toggleOpen((isOpen) => !isOpen)}
+              >
+                Contact
+              </h3>
+              <div>
+                <p>
+                  Hebt u een vraag en kunt u het antwoord niet vinden op deze
+                  website? Neem dan contact met ons op.
+                </p>
+                <ul>
+                  <li>
+                    <a href="https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx">
+                      Contactformulier
+                    </a>
+                  </li>
+                  <li>
+                    <strong>
+                      Bel het telefoonnummer <a href="tel:14020">14 020</a>
+                    </strong>
+                    maandag tot en met vrijdag van 08.00 tot 18.00 uur
+                  </li>
+                  <li>
+                    <a href="https://www.amsterdam.nl/contact/">
+                      Contactgegevens en openingstijden
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={footerStyles.BottomBar}>
+          <div className={footerStyles.InnerContainer}>
+            {BOTTOM_LINKS.map((link) => (
+              <Linkd
+                key={link.title}
+                href={link.to}
+                external={isExternalUrl(link.to)}
+              >
+                {link.title}
+              </Linkd>
+            ))}
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
