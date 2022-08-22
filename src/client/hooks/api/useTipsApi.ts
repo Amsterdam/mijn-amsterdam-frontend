@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import type { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
+import { MyTip } from '../../../universal/types';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateSetter } from '../useAppState';
@@ -19,7 +19,7 @@ export function useTipsApi() {
   const isInitialMount = useRef(true);
   const { isOptIn } = useOptIn();
   const profileType = useProfileTypeValue();
-  const [api, fetchTips] = useDataApi<ApiResponse<TIPSData | null>>(
+  const [api, fetchTips] = useDataApi<ApiResponse<MyTip[] | null>>(
     requestConfig,
     pristineData
   );

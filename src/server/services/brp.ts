@@ -201,7 +201,7 @@ export async function fetchBRP(
   return requestData<BRPData>(options, requestID, authProfileAndToken);
 }
 
-export async function fetchBRPGenerated(
+export async function fetchBrpNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {

@@ -1126,7 +1126,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
             <p
               class="Value"
             >
-              01 mei 2022
+              01 oktober 2022
             </p>
           </div>
           <div
@@ -1140,7 +1140,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
             <p
               class="Value"
             >
-              05 mei 2022
+              05 oktober 2022
             </p>
           </div>
           <div
@@ -1154,7 +1154,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
             <p
               class="Value"
             >
-              10:00 - 17:00
+              11:00 - 16:00
             </p>
           </div>
         </div>
@@ -1200,51 +1200,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               <time
                 class="StatusDate"
               >
-                13 januari 2022
-              </time>
-            </div>
-            <div
-              class="Panel Panel--description"
-            >
-              <div
-                class="PanelContent"
-              />
-            </div>
-            <div
-              class="Panel Panel--documents"
-            />
-          </div>
-        </li>
-        <li
-          class="ListItem"
-          style="display: block;"
-        >
-          <div
-            class="ListItemInner"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
-            >
-              <span
-                class="ConnectLine ConnectLine--checked"
-              />
-              <span
-                class="Checkmark Checkmark--checked"
-              />
-            </div>
-            <div
-              class="Panel Panel--status"
-            >
-              <strong
-                class="StatusTitle"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="StatusDate"
-              >
-                13 januari 2022
+                08 augustus 2022
               </time>
             </div>
             <div
@@ -1271,7 +1227,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+                class="ConnectLine ConnectLine--middle-checked-next"
               />
               <span
                 class="Checkmark Checkmark--active Checkmark--checked"
@@ -1283,13 +1239,52 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               <strong
                 class="StatusTitle"
               >
-                Afgehandeld
+                In behandeling
               </strong>
               <time
                 class="StatusDate"
               >
-                31 januari 2022
+                08 augustus 2022
               </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
             </div>
             <div
               class="Panel Panel--description"

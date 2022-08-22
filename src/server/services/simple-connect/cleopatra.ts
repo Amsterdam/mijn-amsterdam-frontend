@@ -4,7 +4,7 @@ import { Chapters, IS_AP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchGenerated, fetchService } from './api-service';
+import { fetchTipsAndNotifications, fetchService } from './api-service';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -135,11 +135,11 @@ export async function fetchMilieuzone(
   return fetchService(requestID, await getConfig(authProfileAndToken), false);
 }
 
-export async function fetchMilieuzoneGenerated(
+export async function fetchMilieuzoneNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchGenerated(
+  const response = await fetchTipsAndNotifications(
     requestID,
     await getConfig(authProfileAndToken),
     Chapters.MILIEUZONE

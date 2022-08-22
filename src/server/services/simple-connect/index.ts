@@ -1,4 +1,4 @@
-export { fetchBelasting, fetchBelastingGenerated } from './belasting';
-export { fetchSubsidie, fetchSubsidieGenerated } from './subsidie';
-export { fetchMilieuzone, fetchMilieuzoneGenerated } from './cleopatra';
-export { fetchErfpacht, fetchErfpachtGenerated } from './erfpacht';
+export { fetchBelasting, fetchBelastingNotifications } from './belasting';
+export { fetchSubsidie, fetchSubsidieNotifications } from './subsidie';
+export { fetchMilieuzone, fetchMilieuzoneNotifications } from './cleopatra';
+export { fetchErfpacht, fetchErfpachtNotifications } from './erfpacht';

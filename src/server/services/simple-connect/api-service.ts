@@ -31,7 +31,7 @@ function transformApiResponseDefault(
 export async function fetchService<T extends ApiPatternResponseA>(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
-  includeGenerated: boolean = false
+  includeTipsAndNotifications: boolean = false
 ): Promise<ApiResponse<T | null>> {
   const apiConfigMerged: DataRequestConfig = {
     ...apiConfig,
@@ -42,7 +42,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
 
   const response = await requestData<T>(apiConfigMerged, requestID);
 
-  if (response.status === 'OK' && !includeGenerated) {
+  if (response.status === 'OK' && !includeTipsAndNotifications) {
     return Object.assign({}, response, {
       content:
         response.content &&
@@ -75,7 +75,7 @@ export function transformNotificationsDefault(
   return notificationsTransformed;
 }
 
-export async function fetchGenerated(
+export async function fetchTipsAndNotifications(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
   chapter: Chapter

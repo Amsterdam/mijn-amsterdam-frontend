@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { ApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchBelasting, fetchBelastingGenerated } from './belasting';
+import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 
 const REQUEST_ID = 'test-x-999';
 const authProfileAndToken: AuthProfileAndToken = {
@@ -105,7 +105,7 @@ describe('simple-connect/belasting', () => {
       }
     `);
 
-    expect(await fetchBelastingGenerated(REQUEST_ID, authProfileAndToken))
+    expect(await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken))
       .toMatchInlineSnapshot(`
       Object {
         "content": Object {
@@ -127,6 +127,7 @@ describe('simple-connect/belasting', () => {
               "datePublished": "2022-05-30T09:00:34Z",
               "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
               "id": "belasting-5",
+              "imgUrl": "http://test-host/img/tips/belastingen.jpg",
               "isPersonalized": true,
               "link": Object {
                 "title": "Vraag direct aan",

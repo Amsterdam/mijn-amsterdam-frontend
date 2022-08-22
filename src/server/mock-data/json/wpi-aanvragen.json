@@ -163,9 +163,9 @@
       "about": "Stadspas",
       "statusId": "besluit",
       "decision": "toekenning",
-      "datePublished": "2019-06-07T15:05:52+02:00",
-      "dateStart": "2019-05-08T15:05:52+02:00",
-      "dateEnd": "2019-06-07T15:05:52+02:00",
+      "datePublished": "2022-06-07T15:05:52+02:00",
+      "dateStart": "2022-05-08T15:05:52+02:00",
+      "dateEnd": "2022-06-07T15:05:52+02:00",
       "steps": [
         {
           "id": "aanvraag",
@@ -175,31 +175,31 @@
               "id": "4400000013",
               "title": "Aanvraag Stadspas (balie)",
               "url": "/wpi/document?id=4400000013&isBulk=True&isDms=False",
-              "datePublished": "2019-05-08T15:05:52+02:00"
+              "datePublished": "2022-05-08T15:05:52+02:00"
             }
           ],
-          "datePublished": "2019-05-08T15:05:52+02:00"
+          "datePublished": "2022-05-08T15:05:52+02:00"
         },
         {
           "id": "inBehandeling",
           "status": "In behandeling",
           "documents": [],
-          "datePublished": "2019-05-10T15:05:52+02:00",
-          "dateDecisionExpected": "2019-07-03T15:05:52+02:00"
+          "datePublished": "2022-05-10T15:05:52+02:00",
+          "dateDecisionExpected": "2022-07-03T15:05:52+02:00"
         },
         {
           "id": "herstelTermijn",
           "status": "Meer informatie",
           "documents": [],
-          "datePublished": "2019-05-17T15:05:52+02:00",
-          "dateDecisionExpected": "2019-07-23T15:05:52+02:00",
-          "dateUserFeedbackExpected": "2019-05-28T15:05:52+02:00"
+          "datePublished": "2022-05-17T15:05:52+02:00",
+          "dateDecisionExpected": "2022-07-23T15:05:52+02:00",
+          "dateUserFeedbackExpected": "2022-05-28T15:05:52+02:00"
         },
         {
           "id": "besluit",
           "status": "Besluit",
           "documents": [],
-          "datePublished": "2019-06-07T15:05:52+02:00",
+          "datePublished": "2022-06-07T15:05:52+02:00",
           "decision": "toekenning"
         }
       ]
