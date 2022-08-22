@@ -13,6 +13,7 @@ import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-a
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { Linkd, LinkdInline } from '../../components';
 import { isExternalUrl } from '../../../universal/helpers';
+import { useUsabilla } from '../../hooks/useUsabilla';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -58,6 +59,7 @@ const srcSet = {
 };
 
 export default function ApplicationError({ error }: FallbackProps) {
+  useUsabilla();
   const location = window.location;
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
 
