@@ -4,14 +4,14 @@ import { FallbackProps } from 'react-error-boundary';
 import classNames from 'classnames';
 import styles from './ApplicationError.module.scss';
 import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, ExternalUrls } from '../../../universal/config';
 import { useDesktopScreen } from '../../hooks';
 import Heading from '../../components/Heading/Heading';
 import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { Linkd } from '../../components';
+import { Linkd, LinkdInline } from '../../components';
 import { isExternalUrl } from '../../../universal/helpers';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
@@ -135,8 +135,22 @@ export default function ApplicationError({ error }: FallbackProps) {
             Als het probleem zich blijft voordoen maak melding bij “Uw mening”
             aan de rechter zijkant van deze pagina.
           </p>
+          {error && (
+            <p>
+              <strong>Fout:</strong> {error.toString()}
+            </p>
+          )}
+          <Heading size="tiny" el="h4">
+            Vragen over Mijn Amsterdam?
+          </Heading>
           <p>
-            <strong>Error:</strong> {error && error.toString()}
+            Kijk bij
+            <LinkdInline
+              external={true}
+              href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+            >
+              veelgestelde vragen over Mijn Amsterdam
+            </LinkdInline>
           </p>
         </PageContent>
       </TextPage>
