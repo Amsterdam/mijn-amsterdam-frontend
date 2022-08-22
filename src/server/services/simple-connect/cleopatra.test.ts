@@ -3,7 +3,7 @@ import { ApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   fetchMilieuzone,
-  fetchMilieuzoneGenerated,
+  fetchMilieuzoneNotifications,
   getJSONRequestPayload,
 } from './cleopatra';
 
@@ -111,12 +111,12 @@ describe('simple-connect/cleopatra', () => {
       }
     `);
 
-    const responseContentGenerated = await fetchMilieuzoneGenerated(
+    const notificationsResponse = await fetchMilieuzoneNotifications(
       REQUEST_ID,
       authProfileAndToken
     );
 
-    expect(responseContentGenerated).toMatchInlineSnapshot(`
+    expect(notificationsResponse).toMatchInlineSnapshot(`
       Object {
         "content": Object {
           "notifications": Array [

@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import { fetchKrefiaGenerated } from '.';
+import { fetchKrefiaNotifications } from '.';
 
 import { jsonCopy, omit } from '../../universal/helpers';
 import { ApiConfig } from '../config';
@@ -51,12 +51,12 @@ describe('Kredietbank & FIBU service', () => {
     await fetchKrefia('x2', authProfileAndToken);
     expect(axiosRequestSpy.mock.calls.length).toEqual(2);
 
-    const generatedResponse = await fetchKrefiaGenerated(
+    const notificationsResponse = await fetchKrefiaNotifications(
       'x1',
       authProfileAndToken
     );
 
-    expect(generatedResponse).toEqual({
+    expect(notificationsResponse).toEqual({
       content: {
         notifications: [
           {

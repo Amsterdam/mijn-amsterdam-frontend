@@ -11,7 +11,6 @@ import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 
 const TAGS_ALLOWED = [

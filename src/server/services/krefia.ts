@@ -95,7 +95,7 @@ export async function fetchKrefia(
   return response;
 }
 
-export async function fetchKrefiaGenerated(
+export async function fetchKrefiaNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {

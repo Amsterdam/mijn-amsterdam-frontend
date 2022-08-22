@@ -186,7 +186,7 @@ export async function fetchAllKlachten(
   return initalResponse;
 }
 
-export async function fetchKlachtenGenerated(
+export async function fetchKlachtenNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
