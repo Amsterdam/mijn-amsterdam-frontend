@@ -1,6 +1,6 @@
 export { default as Alert } from './Alert/Alert';
 export { default as AlphaComponent } from './AlphaComponent/AlphaComponent';
-export { default as ApplicationError } from './ApplicationError/ApplicationError';
+export { default as ApplicationError } from '../pages/ApplicationError/ApplicationError';
 export { default as AutoLogoutDialog } from './AutoLogoutDialog/AutoLogoutDialog';
 export { Button, default as Linkd, LinkdInline } from './Button/Button';
 export { default as ChapterIcon } from './ChapterIcon/ChapterIcon';

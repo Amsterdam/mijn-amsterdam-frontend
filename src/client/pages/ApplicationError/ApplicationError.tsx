@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import styles from './ApplicationError.module.scss';
 import { AppRoutes } from '../../../universal/config';
 import { useDesktopScreen } from '../../hooks';
-import Heading from '../Heading/Heading';
+import Heading from '../../components/Heading/Heading';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { PageContent, TextPage } from '../Page/Page';
-import PageHeading from '../PageHeading/PageHeading';
+import { PageContent, TextPage } from '../../components/Page/Page';
+import PageHeading from '../../components/PageHeading/PageHeading';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
