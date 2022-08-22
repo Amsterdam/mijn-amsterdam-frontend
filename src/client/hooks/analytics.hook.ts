@@ -11,7 +11,7 @@ import { useSessionStorage } from './storage.hook';
 
 let MatomoInstance: MatomoTracker;
 
-const siteId = getOtapEnvItem('analyticsId') || -1;
+const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as number;
 const hasSiteId = siteId !== -1 && !!siteId;
 
 const MatomoTrackerConfig: UserOptions = {

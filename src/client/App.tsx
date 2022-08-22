@@ -278,14 +278,6 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-
-  useScript({
-    src: '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
-    defer: false,
-    async: true,
-    isEnabled: IS_AP,
-  });
-
   useUsabilla();
 
   return (
