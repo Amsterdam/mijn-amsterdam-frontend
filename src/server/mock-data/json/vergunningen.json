@@ -687,12 +687,34 @@
       "dateRequest": "2022-08-09T00:00:00",
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
       "dateStart": "2022-09-05T00:00:00",
-      "dateEnd": "2022-09-05T00:00:00",
+      "dateEnd": null,
       "timeStart": "11:00",
       "timeEnd": "17:00",
       "status": "Ontvangen",
       "decision": "Verleend",
       "dateWorkflowActive": "2022-08-08T00:00:00"
+    },
+    {
+      "caseType": "Flyeren-Sampling",
+      "dateDecision": null,
+      "dateEnd": null,
+      "dateRequest": "2022-07-29",
+      "dateStart": "2022-08-05",
+      "dateWorkflowActive": "2022-07-29",
+      "decision": "Ingetrokken",
+      "description": "Flyeren",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABi_zeO4a-nizqypkMoIzQ1pSLyeLUMK6zuHCLmvNuf6eiA1fo4jHhmqXruqiOr3h1USFONE6c9NNKMmEM_M-SH4QkdKg4a5msw2pUlRMtFqajhFi2N4jiJMpWJ--CWUeDYU2iI",
+      "id": "1580959320",
+      "identifier": "Z/22/1978055",
+      "location": "Solebaystraat 20",
+      "status": "Ontvangen",
+      "timeEnd": "21:00",
+      "timeStart": "09:00",
+      "title": "Verspreiden reclamemateriaal (sampling)",
+      "link": {
+        "to": "/vergunningen/flyeren-sampling/1580959320",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
     },
     {
       "caseType": "Aanbieden van diensten",

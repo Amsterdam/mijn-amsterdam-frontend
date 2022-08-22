@@ -1159,20 +1159,6 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
           </div>
         </div>
       </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Resultaat
-        </h3>
-        <p
-          class="Value"
-        >
-          Verleend
-        </p>
-      </div>
     </div>
     <div
       class="StatusLine VergunningStatus"

@@ -9,7 +9,9 @@ import styles from './VergunningDetail.module.scss';
 // In dat geval allen de datum tonen.
 export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
   const isVerleend = vergunning.decision === 'Verleend';
-  const isSameDate = vergunning.dateStart === vergunning.dateEnd;
+  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+  const isSameDate =
+    vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 
   return (
     <>
@@ -57,7 +59,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           />
         </InfoDetailGroup>
       )}
-      {isVerleend && (
+      {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
