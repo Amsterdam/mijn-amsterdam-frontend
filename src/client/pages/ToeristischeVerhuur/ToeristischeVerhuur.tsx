@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isError } from '../../../universal/helpers';

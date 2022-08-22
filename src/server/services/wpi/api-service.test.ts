@@ -1,6 +1,5 @@
 import nock from 'nock';
 import { ApiErrorResponse, jsonCopy } from '../../../universal/helpers';
-import { BFF_PORT } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   fetchBijstandsuitkering,
@@ -107,7 +106,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchRequestProcess', async () => {
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, { status: 'OK', content });
 
@@ -148,7 +147,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchRequestProcess-with-error', async () => {
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(500, { content: null });
 
@@ -197,7 +196,7 @@ describe('wpi/app-service', () => {
     contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
       '2022-04-27T15:05:52+02:00';
 
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',
@@ -267,14 +266,14 @@ describe('wpi/app-service', () => {
     contentStadspas.steps[2].id = 'besluit';
     contentStadspas.steps[2].status = 'Besluit';
 
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',
         content: [contentBijstandsuitkering, contentStadspas],
       });
 
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/stadspas')
       .reply(200, {
         status: 'OK',
@@ -302,7 +301,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchStadspas-with-error', async () => {
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(404, {
         content: null,
@@ -323,7 +322,7 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchWpiNotifications', async () => {
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering-en-stadspas/aanvragen')
       .reply(200, {
         status: 'OK',

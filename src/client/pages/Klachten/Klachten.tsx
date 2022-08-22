@@ -18,7 +18,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import { useAppStateGetter } from '../../hooks';
-import { Klacht } from '../../../server/services/klachten/types';
+import type { Klacht } from '../../../server/services/klachten/types';
 import styles from './Klachten.module.scss';
 
 const DISPLAY_PROPS_KLACHTEN = {

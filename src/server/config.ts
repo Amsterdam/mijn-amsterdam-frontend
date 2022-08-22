@@ -4,7 +4,7 @@ import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
-import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { IS_AP } from '../universal/config/env';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
 const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
@@ -33,27 +33,12 @@ export const BFF_REQUEST_CACHE_ENABLED =
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-export const BFF_BASE_PATH = '/api/v1';
+export const BFF_BASE_PATH = process.env.BFF_BASE_PATH || '/api/v1';
 export const BFF_PUBLIC_URL = `${
   process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
 }`;
 
-const BFF_MS_API_HOST = IS_PRODUCTION
-  ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
-  : IS_ACCEPTANCE
-  ? process.env.BFF_MS_API_HOST || 'acc.mijn.data.amsterdam.nl'
-  : 'localhost';
-
-const BFF_MS_API_PORT = IS_AP ? '' : `:${BFF_PORT}`;
-const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
-
-export const BFF_MS_API_BASE_PATH = IS_AP ? '/api' : '';
-export const BFF_MS_API_BASE = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
-export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
-
-export const BFF_DATAPUNT_API_BASE_URL = IS_AP
-  ? 'https://api.data.amsterdam.nl'
-  : BFF_MS_API_BASE_URL;
+export const BFF_MS_API_BASE_URL = `${process.env.BFF_MS_API_BASE_URL}`;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -173,9 +158,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   ERFPACHT: {
     url: process.env.BFF_MIJN_ERFPACHT_API_URL,
   },
-  BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
+  BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
   AFVAL: {
-    url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
+    url: `https://api.data.amsterdam.nl/afvalophaalgebieden/search/`,
   },
   KVK: {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
@@ -237,7 +222,7 @@ export const RelayPathsAllowed = {
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
 };
 
-export const AUTH_BASE = '/api/v1/auth';
+export const AUTH_BASE = `${BFF_BASE_PATH}/auth`;
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
 

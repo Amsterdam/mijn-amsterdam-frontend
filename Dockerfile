@@ -7,20 +7,29 @@ FROM node:16.15.0 as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
+ENV TZ=Europe/Amsterdam
 
-WORKDIR /app
+WORKDIR /build-space
 
-COPY tsconfig.json /app/
-COPY tsconfig.bff.json /app/
-COPY package.json /app/
-COPY package-lock.json /app/
-COPY .env.production /app/
-COPY .prettierrc.json /app/
+COPY tsconfig.json /build-space/
+COPY tsconfig.bff.json /build-space/
+COPY package.json /build-space/
+COPY package-lock.json /build-space/
+
+# Front-end env files
+COPY .env.production /build-space/
+
+# BFF env files
+#COPY .env.bff.development /build-space/
+COPY .env.bff.test /build-space/
+#COPY .env.bff.acceptance /build-space/
+
+COPY .prettierrc.json /build-space/
+
+COPY public /build-space/public
+COPY src /build-space/src
 
 RUN npm ci
-
-COPY public /app/public
-COPY src /app/src
 
 
 ########################################################################################################################
@@ -28,24 +37,20 @@ COPY src /app/src
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps as build-app
+FROM build-deps as build-app-fe
 
-ENV BROWSER=none
-ENV CI=true
+ARG MA_OTAP_ENV=development
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
-ARG REACT_APP_ENV=production
-ENV REACT_APP_ENV=$REACT_APP_ENV
+ARG MA_BFF_API_URL=/
+ENV MA_BFF_API_URL=$MA_BFF_API_URL
 
-ENV INLINE_RUNTIME_CHUNK=false
-ENV TZ=Europe/Amsterdam
-
-
-FROM build-app as build-fe
-# Build client
+# Build FE
 RUN npm run build
 
-FROM build-app as build-bff
-# Build bff
+FROM build-deps as build-app-bff
+
+# Build BFF
 RUN npm run bff-api:build
 
 
@@ -54,70 +59,60 @@ RUN npm run bff-api:build
 # Front-end Web server image (Acceptance, Production)
 ########################################################################################################################
 ########################################################################################################################
-FROM nginx:stable-alpine as deploy-ap-frontend
+FROM nginx:stable-alpine as deploy-frontend
+
+WORKDIR /app
 
 LABEL name="mijnamsterdam FRONTEND"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
-ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 ENV TZ=Europe/Amsterdam
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+# Copy the built application files to the current image
+COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
+
+COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.allow.txt
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
-
-# Copy the built application files to the current image
-COPY --from=build-fe /app/build /usr/share/nginx/html
-
-# Use LOGOUT_URL for nginx rewrite directive
-CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
-
-
-########################################################################################################################
-########################################################################################################################
-# Front-end Web server image Acceptance
-########################################################################################################################
-########################################################################################################################
-FROM deploy-ap-frontend as deploy-acceptance-frontend
-COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/nginx/html/robots.txt
-
 
 ########################################################################################################################
 ########################################################################################################################
 # Front-end Web server image Production
 ########################################################################################################################
 ########################################################################################################################
-FROM deploy-ap-frontend as deploy-production-frontend
-COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/nginx/html/robots.txt
+FROM deploy-frontend as deploy-production-frontend
+COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
 ########################################################################################################################
 ########################################################################################################################
-# Bff Web server image (Acceptance, Production)
+# Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.13.0 as deploy-ap-bff
-
-ENV BFF_ENV=production
-ENV TZ=Europe/Amsterdam
-
-LABEL name="mijnamsterdam BFF (Back-end for front-end)"
-LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+FROM build-app-bff as deploy-bff
 
 WORKDIR /app
 
+ENV TZ=Europe/Amsterdam
+
+LABEL name="Mijn.Amsterdam BFF (Back-end for front-end)"
+LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+
 # Copy the built application files to the current image
-COPY --from=build-bff /app/build-bff /app/build-bff
-
-# Copy required node modules
-COPY --from=build-bff /app/node_modules /app/node_modules
-COPY --from=build-bff /app/package.json /app/package.json
-
-# RUN apt-get update \
-#   && apt-get install nano
+COPY --from=build-app-bff /build-space/build-bff /app/build-bff
+COPY --from=build-app-bff /build-space/node_modules /app/node_modules
+COPY --from=build-app-bff /build-space/package.json /app/package.json
 
 # Run the app
+ENTRYPOINT npm run bff-api:serve-build
+
+FROM deploy-bff as deploy-bff-o
+
+ENV MA_OTAP_ENV=test
+COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
 ENTRYPOINT npm run bff-api:serve-build

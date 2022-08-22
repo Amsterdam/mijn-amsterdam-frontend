@@ -364,7 +364,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <a
             class="MainNavSubmenuLink"
             data-chapter-id="MILIEUZONE"
-            href=""
+            href="https://ontheffingen.amsterdam.nl/publiek/aanvragen"
             rel="external"
           >
             <span

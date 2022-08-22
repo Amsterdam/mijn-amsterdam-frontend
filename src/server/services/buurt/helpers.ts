@@ -641,12 +641,3 @@ export function getBboxFromFeatures(
   // create a bounding rectangle that can be used in leaflet
   return bbox;
 }
-
-export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
-  const southWest = bounds.getSouthWest();
-  const northEast = bounds.getNorthEast();
-  return [
-    [southWest.lat, southWest.lng],
-    [northEast.lat, northEast.lng],
-  ];
-}

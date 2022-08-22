@@ -13,7 +13,7 @@ To see the application quickly running locally, clone the repo and cd into the p
 ```
 BROWSER=none
 REACT_APP_VERSION=$npm_package_version
-REACT_APP_ENV=development
+MA_OTAP_ENV=development | test | acceptance | production
 ```
 
 Put the following commands in your terminal:

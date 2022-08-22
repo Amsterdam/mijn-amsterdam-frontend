@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
+import { OTAP_ENV, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -306,11 +306,11 @@ export const datasetEndpoints: Record<
   meldingenBuurt: {
     listUrl: () =>
       `https://${
-        ENV === 'production' ? '' : 'acc.'
+        OTAP_ENV === 'production' ? '' : 'acc.'
       }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
     detailUrl: () =>
       `https://${
-        ENV === 'production' ? '' : 'acc.'
+        OTAP_ENV === 'production' ? '' : 'acc.'
       }api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/`,
     transformList: transformMeldingenBuurtResponse,
     featureType: 'Point',

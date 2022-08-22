@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
+import type {
   WpiStadspasBudget,
   WpiStadspasTransaction,
 } from '../../../server/services/wpi/wpi-types';

@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -20,6 +19,7 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../Inkomen/Inkomen';
 import styles from './Stadspas.module.scss';
 
 const stadspasDisplayProps = {

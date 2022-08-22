@@ -12,7 +12,7 @@ import App from './client/App';
 import ApplicationError from './client/components/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
-import { ENV, getOtapEnvItem } from './universal/config/env';
+import { OTAP_ENV, getOtapEnvItem } from './universal/config/env';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -29,8 +29,8 @@ console.info('App version: ' + release);
 
 Sentry.init({
   dsn: getOtapEnvItem('sentryDsn'),
-  environment: ENV,
-  debug: ENV === 'development',
+  environment: OTAP_ENV,
+  debug: OTAP_ENV === 'development',
   ignoreErrors: [
     'a[b].target.className.indexOf is not a function',
     "Failed to execute 'removeChild' on 'Node'",
@@ -39,7 +39,7 @@ Sentry.init({
   tracesSampleRate: 0.5,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (ENV === 'development') {
+    if (OTAP_ENV === 'development') {
       console.log(hint);
       return null;
     }

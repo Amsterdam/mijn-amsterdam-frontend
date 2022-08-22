@@ -1,3 +1,5 @@
+const DEFAULT_OTAP_ENV = 'development';
+
 interface EnvVars {
   analyticsId?: number;
   analyticsUrlBase?: string;
@@ -14,23 +16,16 @@ interface EnvVars {
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
-function getBrowserEnv() {
-  return process.env.REACT_APP_ENV || 'production';
-}
-
-function isBrowser() {
-  // @ts-ignore
-  return typeof window !== 'undefined' && !!window.document;
-}
-
-export const ENV = `${
-  isBrowser() ? getBrowserEnv() : process.env.BFF_ENV ?? 'development'
+export const OTAP_ENV = `${
+  (process.env.REACT_APP_OTAP_ENV || process.env.MA_OTAP_ENV) ??
+  DEFAULT_OTAP_ENV
 }` as OtapEnvName;
 
-process.env.NODE_ENV !== 'test' && console.info(`App running in ${ENV} mode.`);
+process.env.NODE_ENV !== 'test' &&
+  console.info(`App running in ${OTAP_ENV} mode.`);
 
-export const IS_ACCEPTANCE = ENV === 'acceptance';
-export const IS_PRODUCTION = ENV === 'production';
+export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
+export const IS_PRODUCTION = OTAP_ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 
 const otapServerEnv: OtapEnv = {
@@ -46,10 +41,7 @@ const otapServerEnv: OtapEnv = {
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
   },
-  test: {
-    krefiaDirectLink: 'https://krefia.amsterdam.nl',
-    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
-  },
+  test: {},
   acceptance: {
     analyticsId: 25,
     analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',

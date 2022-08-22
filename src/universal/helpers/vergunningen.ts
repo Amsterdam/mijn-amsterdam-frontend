@@ -1,5 +1,5 @@
 import { differenceInMonths } from 'date-fns';
-import {
+import type {
   Vergunning,
   VergunningExpirable,
 } from '../../server/services/vergunningen/vergunningen';

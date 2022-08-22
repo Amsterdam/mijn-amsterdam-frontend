@@ -10,7 +10,7 @@ import type {
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
-import {
+import type {
   WpiRequestProcess,
   WpiStadspasResponseData,
 } from '../../../server/services/wpi/wpi-types';

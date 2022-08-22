@@ -79,7 +79,7 @@ function enableMockAdapter() {
   );
 }
 
-if (!IS_AP && !process.env.BFF_DISABLE_MOCK_ADAPTER) {
+if (!IS_AP && process.env.BFF_ENABLE_MOCK_ADAPTER === 'true') {
   console.info('Axios Mock adapter enabled');
   enableMockAdapter();
 }

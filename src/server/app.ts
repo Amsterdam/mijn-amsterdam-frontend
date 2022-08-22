@@ -3,13 +3,12 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 
-const isDevelopment = ENV === 'development';
-const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
-
-const envConfig = dotenv.config({ path: ENV_FILE });
-dotenvExpand.expand(envConfig);
-
-console.log('using env', ENV_FILE);
+if (process.env.NODE_ENV !== 'test') {
+  const ENV_FILE = `.env.bff.${OTAP_ENV}`;
+  console.debug(`trying env file ${ENV_FILE}`);
+  const envConfig = dotenv.config({ path: ENV_FILE });
+  dotenvExpand.expand(envConfig);
+}
 
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
@@ -36,11 +35,11 @@ import { router as publicRouter } from './router-public';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
-  environment: ENV,
-  debug: isDevelopment,
+  environment: OTAP_ENV,
+  debug: OTAP_ENV === 'development',
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (isDevelopment) {
+    if (OTAP_ENV === 'development') {
       console.log(hint);
       return null;
     }
@@ -135,7 +134,9 @@ app.use((req: Request, res: Response) => {
 
 const server = app.listen(BFF_PORT, () => {
   console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDevelopment}]`
+    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${
+      OTAP_ENV === 'development'
+    }]`
   );
 });
 
