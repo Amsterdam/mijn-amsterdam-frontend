@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
+import { getOtapEnvItem, IS_AP, OTAP_ENV } from '../universal/config/env';
 
 if (process.env.NODE_ENV !== 'test') {
   const ENV_FILE = `.env.bff.${OTAP_ENV}`;
@@ -27,9 +27,9 @@ import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
 import { BffEndpoints, BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
-import { clearRequestCache, send404, requestID, nocache } from './helpers/app';
-import { authRouterDevelopment, relayDevRouter } from './router-development';
+import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
+import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 

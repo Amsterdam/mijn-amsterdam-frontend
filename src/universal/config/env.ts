@@ -1,5 +1,3 @@
-const DEFAULT_OTAP_ENV = 'development';
-
 interface EnvVars {
   analyticsId?: number;
   analyticsUrlBase?: string;
@@ -15,6 +13,8 @@ interface EnvVars {
 
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
+
+const DEFAULT_OTAP_ENV = 'development';
 
 export const OTAP_ENV = `${
   (process.env.REACT_APP_OTAP_ENV || process.env.MA_OTAP_ENV) ??
@@ -75,5 +75,5 @@ const otapServerEnv: OtapEnv = {
 };
 
 export function getOtapEnvItem<K extends keyof EnvVars>(key: K) {
-  return otapServerEnv[ENV] && otapServerEnv[ENV][key];
+  return otapServerEnv[OTAP_ENV] && otapServerEnv[OTAP_ENV][key];
 }
