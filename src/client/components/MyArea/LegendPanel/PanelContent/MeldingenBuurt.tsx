@@ -22,8 +22,6 @@ export default function MyArePanelContentMeldingenBuurt({
   datasetId,
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
-  console.log(panelItem);
-
   return (
     <GenericBase
       title={displayCategoryTitle(panelItem.categorie)}

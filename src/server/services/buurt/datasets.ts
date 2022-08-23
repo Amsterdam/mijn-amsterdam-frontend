@@ -418,7 +418,6 @@ function transformMeldingDetailResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  console.log(responseData);
   const subcategorie = transformSlugToCategorie(responseData?.subcategorie);
 
   return {
