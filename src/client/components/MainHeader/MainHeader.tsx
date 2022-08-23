@@ -30,8 +30,6 @@ export default function MainHeader({
   const location = useLocation();
   const isPhonescreen = usePhoneScreen();
 
-  throw new Error('Fout');
-
   return (
     <header className={styles.header}>
       {!isPhonescreen && (
