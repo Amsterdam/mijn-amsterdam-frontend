@@ -22,11 +22,16 @@ export default function MyArePanelContentMeldingenBuurt({
   datasetId,
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
+  console.log(panelItem);
+
   return (
     <GenericBase
       title={displayCategoryTitle(panelItem.categorie)}
       supTitle="Meldingen"
     >
+      {!!panelItem.subcategorie && (
+        <InfoDetail label="Subcategorie" value={panelItem.subcategorie} />
+      )}
       {!!panelItem.datumCreatie && (
         <InfoDetail
           label="Datum en tijd melding"
