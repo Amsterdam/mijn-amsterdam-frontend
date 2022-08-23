@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { usePageChange } from '.';
-import { trackPageViewWithProfileType } from './analytics.hook';
+import { trackPageViewWithCustomDimension } from './analytics.hook';
 import * as rrd from 'react-router-dom';
 
 jest.mock('./useProfileType');
@@ -35,7 +35,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/');
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimension).toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 
@@ -44,7 +44,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/abcd');
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).not.toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 
@@ -54,7 +54,7 @@ describe('usePageChange', () => {
 
     const { result } = renderHook(() => usePageChange());
 
-    expect(trackPageViewWithProfileType).not.toHaveBeenCalled();
+    expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
     expect(result.error).toBeUndefined();
   });
 });

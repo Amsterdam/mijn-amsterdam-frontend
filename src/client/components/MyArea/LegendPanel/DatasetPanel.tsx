@@ -6,7 +6,7 @@ import {
   DatasetControl,
   DatasetId,
 } from '../../../../universal/config/myarea-datasets';
-import { trackEventWithProfileType } from '../../../hooks';
+import { trackEventWithCustomDimension } from '../../../hooks';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon } from '../datasets';
 import {
@@ -59,7 +59,7 @@ export function DatasetPanel({
       isIndeterminate={isIndeterminate}
       onChange={() => {
         onControlItemChange('dataset', [datasetId]);
-        trackEventWithProfileType(
+        trackEventWithCustomDimension(
           {
             category: MY_AREA_TRACKING_CATEGORY,
             name: `Dataset: ${dataset.title}`,

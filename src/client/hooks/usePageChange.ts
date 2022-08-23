@@ -8,7 +8,7 @@ import {
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../config/api';
-import { trackPageViewWithProfileType } from './analytics.hook';
+import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
@@ -84,7 +84,7 @@ export function usePageChange() {
       }
 
       if (isPageFound) {
-        trackPageViewWithProfileType(
+        trackPageViewWithCustomDimension(
           termReplace(title),
           CustomTrackingUrls[location.pathname] || location.pathname,
           profileType,
