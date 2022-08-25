@@ -15,7 +15,7 @@ import {
   nocache,
   sendUnauthorized,
 } from './helpers/app';
-import { countLogin } from './services/visitors';
+import { countLoggedInVisit } from './services/visitors';
 
 export const router = express.Router();
 
@@ -94,7 +94,7 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
 router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   const auth = await getAuth(req);
   if (auth.profile.id) {
-    countLogin(auth.profile.id);
+    countLoggedInVisit(auth.profile.id);
   }
   return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
 });

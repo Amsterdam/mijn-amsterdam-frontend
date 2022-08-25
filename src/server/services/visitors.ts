@@ -26,7 +26,7 @@ function hashUserId(userID: string, salt = SALT) {
   return shasum.digest('hex');
 }
 
-export function countLogin(userID: string) {
+export function countLoggedInVisit(userID: string) {
   const userIDHashed = hashUserId(userID);
   const countStatsCache = fileCache.getKey('stats');
 
