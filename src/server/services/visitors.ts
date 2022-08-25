@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 /**
  * This service is an initial POC to count the unique logins per userID. This gives us the ability to use this stat
  * as a kpi. Currently the data lives in a cache which gets deleted everytime a new version of the application is deployed.
- * Also there are 2 servers so the stats are divided between 2 disks. A proper solution would require a database + backup functionality.
+ * Also the application os loadbalanced so the stats are divided between multiple disks. A proper solution would require a database + backup functionality.
  */
 
 const SALT = process.env.BFF_LOGIN_COUNT_SALT;
