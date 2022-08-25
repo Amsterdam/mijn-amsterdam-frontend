@@ -21,7 +21,7 @@ function hashUserId(userID: string, salt = SALT) {
     throw new Error('No salt provided');
   }
 
-  const shasum = crypto.createHash('sha1');
+  const shasum = crypto.createHash('sha256');
   shasum.update(userID + salt);
   return shasum.digest('hex');
 }
