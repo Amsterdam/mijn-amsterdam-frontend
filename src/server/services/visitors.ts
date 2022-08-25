@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import os from 'os';
 import FileCache from '../helpers/file-cache';
 import { Request, Response } from 'express';
 
@@ -59,6 +60,7 @@ export function loginStats(req: Request, res: Response) {
   }
 
   return res.send({
+    server: os.hostname(),
     dateCreated: fileCache.getKey('dateCreated') || null,
     dateModified: fileCache.getKey('dateModified') || null,
     totalLogins,
