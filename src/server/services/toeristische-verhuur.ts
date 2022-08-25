@@ -508,7 +508,7 @@ function createRegistratieNotification(
   };
 }
 
-export async function fetchToeristischeVerhuurGenerated(
+export async function fetchToeristischeVerhuurNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date,

@@ -6,7 +6,7 @@ import {
   DatasetPropertyValue,
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config';
-import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
+import { trackEventWithCustomDimension } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon } from '../datasets';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
@@ -61,7 +61,7 @@ export function DatasetControlPanel({
       }
       onChange={() => {
         onControlItemChange('category', datasetIds);
-        trackEventWithProfileType(
+        trackEventWithCustomDimension(
           {
             category: MY_AREA_TRACKING_CATEGORY,
             name: `Dataset categorie: ${category.title}`,

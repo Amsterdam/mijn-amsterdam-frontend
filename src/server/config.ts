@@ -256,7 +256,6 @@ export const BFF_OIDC_BASE_URL = `${
 export const BffEndpoints = {
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
-  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: '/services/tips/requestdataoverview',
   SERVICES_ALL: '/services/all',
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
@@ -310,7 +309,7 @@ export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
-export const OIDC_SESSION_COOKIE_NAME = 'appSession';
+export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_OIDC_COOKIE_ENCRYPTION_KEY}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;

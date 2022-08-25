@@ -27,7 +27,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   };
 }
 
-export async function fetchWiorGenerated(
+export async function fetchWiorNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType

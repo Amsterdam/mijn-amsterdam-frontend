@@ -22,8 +22,8 @@ export default function Landing() {
 
   useEffect(() => {
     trackPageView(
-      'Landingspagina',
-      document.location.pathname + '/landingspagina'
+      'Landing',
+      document.location.pathname + 'landing'
     );
   }, []);
 

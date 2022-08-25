@@ -32,7 +32,7 @@ import {
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import {
-  trackEventWithProfileType,
+  trackEventWithCustomDimension,
   useAppStateGetter,
   useAppStateReady,
 } from '../../hooks';
@@ -226,7 +226,7 @@ export function useOnMarkerClick() {
           datasetId,
           id,
         });
-        trackEventWithProfileType(
+        trackEventWithCustomDimension(
           {
             category: MY_AREA_TRACKING_CATEGORY,
             name: `${capitalizeFirstLetter(datasetId)} marker`,

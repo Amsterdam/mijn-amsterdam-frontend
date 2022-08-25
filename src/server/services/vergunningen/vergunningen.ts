@@ -160,6 +160,7 @@ export interface BZP extends VergunningBase {
 
 export interface Flyeren extends VergunningBase {
   caseType: CaseType.Flyeren;
+  decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
   location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
@@ -361,7 +362,7 @@ export function createVergunningNotification(
   return notification;
 }
 
-export async function fetchVergunningenGenerated(
+export async function fetchVergunningenNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date

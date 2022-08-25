@@ -8,7 +8,7 @@ import {
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config/myarea-datasets';
 import { sortAlpha } from '../../../../universal/helpers';
-import { trackEventWithProfileType } from '../../../hooks/analytics.hook';
+import { trackEventWithCustomDimension } from '../../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon, getIconChildIdFromValue } from '../datasets';
 import {
@@ -105,7 +105,7 @@ export function DatasetPropertyFilterPanel({
                 isIndeterminate={false}
                 onChange={() => {
                   onFilterControlItemChange(datasetId, propertyName, value);
-                  trackEventWithProfileType(
+                  trackEventWithCustomDimension(
                     {
                       category: MY_AREA_TRACKING_CATEGORY,
                       name: `Filter: ${propertyName} ${value}`,

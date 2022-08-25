@@ -91,8 +91,8 @@ describe('simple-connect/api-service', () => {
     `);
   });
 
-  test('fetchGenerated 1', async () => {
-    const responseContent = await service.fetchGenerated(
+  test('fetchTipsAndNotifications 1', async () => {
+    const responseContent = await service.fetchTipsAndNotifications(
       REQUEST_ID,
       {
         url: 'http://test/api',

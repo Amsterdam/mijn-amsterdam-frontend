@@ -20,7 +20,6 @@ import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
-import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
@@ -229,32 +228,6 @@ export const mockDataConfig: MockDataConfig = {
         return await loadMockApiResponseJson(KVK2);
       }
       return await loadMockApiResponseJson(KVK1);
-    },
-  },
-  [ApiUrls.TIPS]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    method: 'post',
-    responseData: async (config: any) => {
-      const requestData = JSON.parse(config.data);
-      const content = await loadMockApiResponseJson(TIPS);
-      const tips = JSON.parse(content);
-      const sourceTips: MyTip[] = requestData?.tips || [];
-
-      const items = [
-        ...(tips as MyTip[]),
-        ...sourceTips.map((tip) =>
-          Object.assign(tip, { isPersonalized: true })
-        ),
-      ]
-        .filter((tip: MyTip) =>
-          requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
-        )
-        .map((tip) => {
-          return Object.assign(tip, {
-            title: `[${config.params.audience}] ${tip.title}`,
-          });
-        });
-      return JSON.stringify(items);
     },
   },
   [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn']: {

@@ -209,8 +209,18 @@ export const notificationContent: NotificationContent = {
         `Uw ontheffingsaanvraag ${item.title} is afgehandeld.`,
     },
   },
-  //TODO: Add those eventually later
-  // [CaseType.VakantieVerhuur]: {},
-  // [CaseType.BBVergunning]: {},
-  // [CaseType.VakantieverhuurVergunningaanvraag]: {},
+  [CaseType.Flyeren]: {
+    inProgress: {
+      ...inProgress,
+      title: (item) => `${item.title} in behandeling`,
+      description: (item) =>
+        `Uw ontheffingsaanvraag voor ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      title: (item) => `${item.title} afgehandeld`,
+      description: (item) =>
+        `Uw ontheffingsaanvraag voor ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+    },
+  },
 };

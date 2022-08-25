@@ -7,7 +7,7 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
-import { fetchGenerated, fetchService } from './api-service';
+import { fetchTipsAndNotifications, fetchService } from './api-service';
 
 export function decrypt(encryptedValue: string, encryptionKey: string) {
   const keyBuffer = Buffer.from(encryptionKey);
@@ -97,11 +97,11 @@ export async function fetchSubsidie(
   return fetchService(requestID, getConfig(authProfileAndToken), false);
 }
 
-export async function fetchSubsidieGenerated(
+export async function fetchSubsidieNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchGenerated(
+  const response = await fetchTipsAndNotifications(
     requestID,
     getConfig(authProfileAndToken),
     Chapters.SUBSIDIE
