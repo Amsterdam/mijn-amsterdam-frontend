@@ -2,6 +2,7 @@ import MatomoTracker from '@datapunt/matomo-tracker-js';
 import {
   CustomDimension,
   TrackEventParams,
+  TrackPageViewParams,
   UserOptions,
 } from '@datapunt/matomo-tracker-js/lib/types';
 import { useDebouncedCallback } from 'use-debounce';
@@ -11,7 +12,7 @@ import { useSessionStorage } from './storage.hook';
 
 let MatomoInstance: MatomoTracker;
 
-const siteId = getOtapEnvItem('analyticsId') || -1;
+const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as number;
 const hasSiteId = siteId !== -1 && !!siteId;
 
 const MatomoTrackerConfig: UserOptions = {
@@ -20,34 +21,17 @@ const MatomoTrackerConfig: UserOptions = {
 };
 
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
-enum CustomVariableId {
+enum CustomDimensionId {
   ProfileType = 2,
   City = 3,
 }
 
-type CustomVariable = {
-  id: CustomVariableId;
-  name: string;
-  value: string;
-  scope: 'page' | 'visit';
-};
-
-function profileTypeDimension(profileType: ProfileType): CustomVariable {
-  return {
-    id: CustomVariableId.ProfileType,
-    name: 'ProfileType',
-    value: profileType,
-    scope: 'page',
-  };
+function profileTypeDimension(profileType: ProfileType) {
+  return { id: CustomDimensionId.ProfileType, value: profileType };
 }
 
-function userCityDimension(userCity: string): CustomVariable {
-  return {
-    id: CustomVariableId.City,
-    name: 'City',
-    value: userCity,
-    scope: 'visit',
-  };
+function userCityDimension(userCity: string) {
+  return { id: CustomDimensionId.City, value: userCity };
 }
 
 // Initialize connection with analytics
@@ -66,7 +50,7 @@ export function trackSearch(keyword: string, category: string) {
   return MatomoInstance && MatomoInstance.trackSiteSearch(payload);
 }
 
-export function trackEventWithProfileType(
+export function trackEventWithCustomDimension(
   payload: TrackEventParams,
   profileType: ProfileType
 ) {
@@ -83,7 +67,7 @@ export function trackEventWithProfileType(
 export function trackPageView(
   title?: string,
   url?: string,
-  customVariables?: CustomVariable[]
+  customDimensions?: CustomDimension[]
 ) {
   let href = url || document.location.href;
 
@@ -91,28 +75,16 @@ export function trackPageView(
     href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
   }
 
-  const payload = {
+  const payload: TrackPageViewParams = {
     documentTitle: title || document.title,
     href,
+    customDimensions,
   };
-
-  const payloadSZ = {
-    url: payload.href,
-    title: payload.documentTitle,
-  };
-
-  // The siteimprove tracking call
-  (window as any)._sz?.push(['trackdynamic', payloadSZ]);
-
-  // Track custom variabels (if any)
-  customVariables?.forEach((v) => {
-    MatomoInstance?.pushInstruction('setCustomVariable', ...Object.values(v));
-  });
 
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
-export function trackPageViewWithProfileType(
+export function trackPageViewWithCustomDimension(
   title: string,
   url: string,
   profileType: ProfileType,
@@ -144,7 +116,7 @@ export function trackItemPresentation(
     name,
     action: 'Tonen',
   };
-  return trackEventWithProfileType(payload, profileType);
+  return trackEventWithCustomDimension(payload, profileType);
 }
 
 export function trackItemClick(
@@ -152,7 +124,7 @@ export function trackItemClick(
   name: string,
   profileType: ProfileType
 ) {
-  return trackEventWithProfileType(
+  return trackEventWithCustomDimension(
     {
       category,
       name,
