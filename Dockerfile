@@ -29,6 +29,19 @@ COPY .prettierrc.json /build-space/
 COPY public /build-space/public
 COPY src /build-space/src
 
+# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends dialog \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends openssh-server \
+  && echo "$SSH_PASSWD" | chpasswd 
+
+COPY conf/sshd_config /etc/ssh/
+COPY conf/docker-entrypoint.sh /usr/local/bin/
+
+RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
+
 RUN npm ci
 
 
@@ -115,4 +128,4 @@ FROM deploy-bff as deploy-bff-o
 
 ENV MA_OTAP_ENV=test
 COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
-ENTRYPOINT npm run bff-api:serve-build
+ENTRYPOINT [ "/bin/sh", "/usr/local/bin/docker-entrypoint.sh"]
