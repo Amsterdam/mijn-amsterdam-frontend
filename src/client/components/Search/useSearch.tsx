@@ -20,7 +20,7 @@ import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
-import { trackEventWithProfileType } from '../../hooks';
+import { trackEventWithCustomDimension } from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKey';
@@ -427,7 +427,7 @@ export function useSearchOnPage(): {
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
-      trackEventWithProfileType(
+      trackEventWithCustomDimension(
         {
           category: 'Zoeken',
           name: 'Zoekbalk open/dicht',

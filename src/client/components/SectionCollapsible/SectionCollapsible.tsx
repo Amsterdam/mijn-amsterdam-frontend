@@ -6,7 +6,7 @@ import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import {
-  trackEventWithProfileType,
+  trackEventWithCustomDimension,
   useContentDimensions,
   useSessionStorage,
 } from '../../hooks';
@@ -97,7 +97,7 @@ export default function SectionCollapsible({
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {
-      trackEventWithProfileType(
+      trackEventWithCustomDimension(
         {
           ...track,
           action: 'Open klikken',
