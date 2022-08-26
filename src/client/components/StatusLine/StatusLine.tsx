@@ -4,7 +4,7 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
-import { trackEventWithProfileType } from '../../hooks/analytics.hook';
+import { trackEventWithCustomDimension } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
@@ -292,7 +292,7 @@ export default function StatusLine({
 
   function toggleCollapsed() {
     if (isCollapsed) {
-      trackEventWithProfileType(
+      trackEventWithCustomDimension(
         {
           category: trackCategory,
           name: 'Metrolijn',
