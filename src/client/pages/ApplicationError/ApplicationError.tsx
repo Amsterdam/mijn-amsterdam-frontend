@@ -18,21 +18,6 @@ import { useUsabilla } from '../../hooks/useUsabilla';
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
 
-const BOTTOM_LINKS = [
-  {
-    title: 'Over deze site',
-    to: 'https://www.amsterdam.nl/overdezesite/',
-  },
-  {
-    title: 'Privacy',
-    to: 'https://www.amsterdam.nl/privacy/',
-  },
-  {
-    title: 'Webarchief',
-    to: 'https://amsterdam.archiefweb.eu/',
-  },
-];
-
 function imgUrl(
   imageName: string,
   width: number,
@@ -49,12 +34,6 @@ function imgUrl(
 }
 
 const srcSet = {
-  PORTRAIT_SMALL: imgUrl('algemeen', 360, 'portrait', 1, ''),
-  PORTRAIT_SMALL_2X: imgUrl('algemeen', 360, 'portrait', 2, ''),
-  PORTRAIT_SMALL_3X: imgUrl('algemeen', 360, 'portrait', 3, ''),
-  LANDSCAPE_SMALL: imgUrl('algemeen', 1024, 'landscape', 1, ''),
-  LANDSCAPE_MEDIUM: imgUrl('algemeen', 1366, 'landscape', 1, ''),
-  LANDSCAPE_LARGE: imgUrl('algemeen', 1600, 'landscape', 1, ''),
   FALLBACK: imgUrl('algemeen', 1600, 'landscape', 1, '', 'jpg'),
 };
 
@@ -97,33 +76,7 @@ export default function ApplicationError({ error }: FallbackProps) {
         </div>
 
         <div className={classNames(styles.MainHeaderHero)}>
-          <picture>
-            <source
-              media="(orientation: portrait) and (max-width: 320px)"
-              srcSet={srcSet.PORTRAIT_SMALL}
-            />
-            <source
-              media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 320px)"
-              srcSet={srcSet.PORTRAIT_SMALL_2X}
-            />
-            <source
-              media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) and (min-width: 320px)"
-              srcSet={srcSet.PORTRAIT_SMALL_3X}
-            />
-            <source
-              media="(max-width: 1024px)"
-              srcSet={srcSet.LANDSCAPE_SMALL}
-            />
-            <source
-              media="(min-width: 1024px)"
-              srcSet={srcSet.LANDSCAPE_MEDIUM}
-            />
-            <source
-              media="(min-width: 1440px)"
-              srcSet={srcSet.LANDSCAPE_LARGE}
-            />
-            <img src={srcSet.FALLBACK} className={styles.Image} alt="" />
-          </picture>
+          <img src={srcSet.FALLBACK} className={styles.Image} alt="" />
         </div>
       </header>
       <TextPage className={styles.Page}>
@@ -206,17 +159,7 @@ export default function ApplicationError({ error }: FallbackProps) {
         </div>
 
         <div className={footerStyles.BottomBar}>
-          <div className={footerStyles.InnerContainer}>
-            {BOTTOM_LINKS.map((link) => (
-              <Linkd
-                key={link.title}
-                href={link.to}
-                external={isExternalUrl(link.to)}
-              >
-                {link.title}
-              </Linkd>
-            ))}
-          </div>
+          <div className={footerStyles.InnerContainer}></div>
         </div>
       </footer>
     </>
