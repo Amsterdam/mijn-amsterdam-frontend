@@ -271,6 +271,7 @@ export const BffEndpoints = {
   // Digid
   AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
   AUTH_LOGIN_DIGID: AUTH_BASE_DIGID + AUTH_LOGIN,
+  AUTH_LOGIN_DIGID_LANDING: AUTH_BASE_DIGID + AUTH_LOGIN + '/landing',
   AUTH_LOGOUT_DIGID: AUTH_BASE_DIGID + AUTH_LOGOUT,
 
   // EHerkenning
@@ -292,7 +293,7 @@ export const BffEndpoints = {
   CMS_CONTENT: '/services/cms',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
-
+  LOGIN_STATS: '/status/logins',
   STATUS_HEALTH: '/bff/status/health',
 };
 
