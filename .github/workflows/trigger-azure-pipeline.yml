@@ -1,0 +1,37 @@
+name: CI
+
+# Run this workflow every time a commit gets pushed to main or a pull request gets opened against main
+on:
+  push:
+    branches:
+      - main
+      - test
+      - acceptance
+      - production-release-*
+      - MIJN-4445-azure-migratie
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+    build:
+        name: Call Azure Pipeline
+        runs-on: ubuntu-latest
+        steps:
+          - name: Extract branch name
+            shell: bash
+            run: echo "##[set-output name=branch_name;]$(echo ${GITHUB_REF#refs/heads/})"
+            id: extract_branch
+
+          - name: get epository name
+            shell: bash
+            run: echo "##[set-output name=repo_name;]$(echo ${GITHUB_REPOSITORY#*/})"
+            id: extract_repo
+
+          - name: Azure Pipelines Action
+            uses: Azure/pipelines@v1.2
+            with:
+              azure-devops-project-url: '${{ secrets.AZURE_DEVOPS_PROJECT_URL }}'
+              azure-pipeline-name: '${{ secrets.AZURE_DEVOPS_PIPELINE_NAME }}'
+              azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
+              azure-pipeline-variables:  '{"ghTargetBranch": "${{ steps.extract_branch.outputs.branch_name }}", "ghRepositoryName": "${{ steps.extract_repo.outputs.repo_name }}"}'
