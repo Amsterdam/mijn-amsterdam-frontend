@@ -141,7 +141,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Voornamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Wesley
                   </td>
                 </tr>
@@ -153,7 +155,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Titel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Hertogin
                   </td>
                 </tr>
@@ -165,7 +169,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Achternaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Beemsterboer
                   </td>
                 </tr>
@@ -177,7 +183,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Geslacht
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Man
                   </td>
                 </tr>
@@ -189,7 +197,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       BSN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     129095205
                   </td>
                 </tr>
@@ -201,7 +211,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Geboortedatum
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     01 januari 1950
                   </td>
                 </tr>
@@ -213,7 +225,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Geboorteplaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Lochem
                   </td>
                 </tr>
@@ -225,7 +239,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Geboorteland
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederland
                   </td>
                 </tr>
@@ -237,7 +253,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Nationaliteit
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederlandse
                   </td>
                 </tr>
@@ -298,7 +316,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Straat
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Burgemeester Röellstr 1
                   </td>
                 </tr>
@@ -310,7 +330,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Plaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     1064 BH Amsterdam
                   </td>
                 </tr>
@@ -322,7 +344,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                       Vanaf
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 januari 1967
                   </td>
                 </tr>
@@ -406,7 +430,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Status
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Gehuwd
                         </td>
                       </tr>
@@ -418,7 +444,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1999
                         </td>
                       </tr>
@@ -430,7 +458,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -442,7 +472,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -454,7 +486,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -466,7 +500,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -478,7 +514,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -490,7 +528,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -577,7 +617,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -589,7 +631,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1912
                         </td>
                       </tr>
@@ -601,7 +645,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 1998
                         </td>
                       </tr>
@@ -613,7 +659,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -625,7 +673,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -637,7 +687,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -649,7 +701,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -661,7 +715,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -673,7 +729,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -695,7 +753,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -707,7 +767,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -719,7 +781,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -731,7 +795,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -743,7 +809,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -755,7 +823,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -767,7 +837,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -779,7 +851,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -866,7 +940,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Yassine
                         </td>
                       </tr>
@@ -878,7 +954,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -890,7 +968,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -902,7 +982,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -924,7 +1006,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Marwan
                         </td>
                       </tr>
@@ -936,7 +1020,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -948,7 +1034,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -960,7 +1048,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -972,7 +1062,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Datum overlijden
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -1059,7 +1151,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Senior
                         </td>
                       </tr>
@@ -1071,7 +1165,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboer
                         </td>
                       </tr>
@@ -1083,7 +1179,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -1095,7 +1193,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -1107,7 +1207,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -1119,7 +1221,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -1141,7 +1245,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Seniora
                         </td>
                       </tr>
@@ -1153,7 +1259,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboerin
                         </td>
                       </tr>
@@ -1165,7 +1273,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -1177,7 +1287,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -1189,7 +1301,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -1201,7 +1315,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -1269,7 +1385,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Ampèrestraat 9  H
                         </td>
                       </tr>
@@ -1281,7 +1399,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 NK Amsterdam
                         </td>
                       </tr>
@@ -1293,7 +1413,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -1305,7 +1427,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 augustus 2012
                         </td>
                       </tr>
@@ -1327,7 +1451,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Middenweg 9  3
                         </td>
                       </tr>
@@ -1339,7 +1465,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 AA Amsterdam
                         </td>
                       </tr>
@@ -1351,7 +1479,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1990
                         </td>
                       </tr>
@@ -1363,7 +1493,9 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -1546,7 +1678,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Voornamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Wesley
                   </td>
                 </tr>
@@ -1558,7 +1692,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Titel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Hertogin
                   </td>
                 </tr>
@@ -1570,7 +1706,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Achternaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Beemsterboer
                   </td>
                 </tr>
@@ -1582,7 +1720,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Geslacht
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Man
                   </td>
                 </tr>
@@ -1594,7 +1734,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       BSN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     129095205
                   </td>
                 </tr>
@@ -1606,7 +1748,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Geboortedatum
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     01 januari 1950
                   </td>
                 </tr>
@@ -1618,7 +1762,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Geboorteplaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Lochem
                   </td>
                 </tr>
@@ -1630,7 +1776,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Geboorteland
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederland
                   </td>
                 </tr>
@@ -1642,7 +1790,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Nationaliteit
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederlandse
                   </td>
                 </tr>
@@ -1703,7 +1853,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Straat
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Burgemeester Röellstr 1
                   </td>
                 </tr>
@@ -1715,7 +1867,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Plaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     1064 BH Amsterdam
                   </td>
                 </tr>
@@ -1727,7 +1881,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                       Vanaf
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 januari 1967
                   </td>
                 </tr>
@@ -1811,7 +1967,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Status
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Gehuwd
                         </td>
                       </tr>
@@ -1823,7 +1981,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1999
                         </td>
                       </tr>
@@ -1835,7 +1995,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -1847,7 +2009,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -1859,7 +2023,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -1871,7 +2037,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -1883,7 +2051,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -1895,7 +2065,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -1982,7 +2154,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -1994,7 +2168,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1912
                         </td>
                       </tr>
@@ -2006,7 +2182,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 1998
                         </td>
                       </tr>
@@ -2018,7 +2196,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -2030,7 +2210,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -2042,7 +2224,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -2054,7 +2238,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -2066,7 +2252,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2078,7 +2266,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2100,7 +2290,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -2112,7 +2304,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2124,7 +2318,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -2136,7 +2332,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -2148,7 +2346,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -2160,7 +2360,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -2172,7 +2374,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2184,7 +2388,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2271,7 +2477,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Yassine
                         </td>
                       </tr>
@@ -2283,7 +2491,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -2295,7 +2505,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2307,7 +2519,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2329,7 +2543,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Marwan
                         </td>
                       </tr>
@@ -2341,7 +2557,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -2353,7 +2571,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2365,7 +2585,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2377,7 +2599,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Datum overlijden
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -2464,7 +2688,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Senior
                         </td>
                       </tr>
@@ -2476,7 +2702,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboer
                         </td>
                       </tr>
@@ -2488,7 +2716,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2500,7 +2730,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -2512,7 +2744,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -2524,7 +2758,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -2546,7 +2782,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Seniora
                         </td>
                       </tr>
@@ -2558,7 +2796,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboerin
                         </td>
                       </tr>
@@ -2570,7 +2810,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -2582,7 +2824,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -2594,7 +2838,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -2606,7 +2852,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -2674,7 +2922,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Ampèrestraat 9  H
                         </td>
                       </tr>
@@ -2686,7 +2936,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 NK Amsterdam
                         </td>
                       </tr>
@@ -2698,7 +2950,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -2710,7 +2964,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 augustus 2012
                         </td>
                       </tr>
@@ -2732,7 +2988,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Middenweg 9  3
                         </td>
                       </tr>
@@ -2744,7 +3002,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 AA Amsterdam
                         </td>
                       </tr>
@@ -2756,7 +3016,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1990
                         </td>
                       </tr>
@@ -2768,7 +3030,9 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -2951,7 +3215,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Voornamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Wesley
                   </td>
                 </tr>
@@ -2963,7 +3229,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Titel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Hertogin
                   </td>
                 </tr>
@@ -2975,7 +3243,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Achternaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Beemsterboer
                   </td>
                 </tr>
@@ -2987,7 +3257,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Geslacht
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Man
                   </td>
                 </tr>
@@ -2999,7 +3271,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       BSN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     129095205
                   </td>
                 </tr>
@@ -3011,7 +3285,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Geboortedatum
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     01 januari 1950
                   </td>
                 </tr>
@@ -3023,7 +3299,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Geboorteplaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Lochem
                   </td>
                 </tr>
@@ -3035,7 +3313,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Geboorteland
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederland
                   </td>
                 </tr>
@@ -3047,7 +3327,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Nationaliteit
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederlandse
                   </td>
                 </tr>
@@ -3059,7 +3341,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Burgerlijke staat
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Ongehuwd
                   </td>
                 </tr>
@@ -3120,7 +3404,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Straat
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Burgemeester Röellstr 1
                   </td>
                 </tr>
@@ -3132,7 +3418,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Plaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     1064 BH Amsterdam
                   </td>
                 </tr>
@@ -3144,7 +3432,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                       Vanaf
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 januari 1967
                   </td>
                 </tr>
@@ -3228,7 +3518,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -3240,7 +3532,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1912
                         </td>
                       </tr>
@@ -3252,7 +3546,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 1998
                         </td>
                       </tr>
@@ -3264,7 +3560,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -3276,7 +3574,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -3288,7 +3588,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -3300,7 +3602,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -3312,7 +3616,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3324,7 +3630,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3336,7 +3644,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3358,7 +3668,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -3370,7 +3682,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3382,7 +3696,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -3394,7 +3710,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -3406,7 +3724,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -3418,7 +3738,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -3430,7 +3752,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3442,7 +3766,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3454,7 +3780,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3541,7 +3869,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Yassine
                         </td>
                       </tr>
@@ -3553,7 +3883,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -3565,7 +3897,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3577,7 +3911,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3589,7 +3925,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3611,7 +3949,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Marwan
                         </td>
                       </tr>
@@ -3623,7 +3963,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -3635,7 +3977,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3647,7 +3991,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3659,7 +4005,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Datum overlijden
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -3671,7 +4019,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3758,7 +4108,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Senior
                         </td>
                       </tr>
@@ -3770,7 +4122,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboer
                         </td>
                       </tr>
@@ -3782,7 +4136,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3794,7 +4150,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -3806,7 +4164,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -3818,7 +4178,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -3830,7 +4192,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3852,7 +4216,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Seniora
                         </td>
                       </tr>
@@ -3864,7 +4230,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboerin
                         </td>
                       </tr>
@@ -3876,7 +4244,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -3888,7 +4258,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -3900,7 +4272,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -3912,7 +4286,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -3924,7 +4300,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Burgerlijke staat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Ongehuwd
                         </td>
                       </tr>
@@ -3992,7 +4370,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Ampèrestraat 9  H
                         </td>
                       </tr>
@@ -4004,7 +4384,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 NK Amsterdam
                         </td>
                       </tr>
@@ -4016,7 +4398,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -4028,7 +4412,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 augustus 2012
                         </td>
                       </tr>
@@ -4050,7 +4436,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Middenweg 9  3
                         </td>
                       </tr>
@@ -4062,7 +4450,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 AA Amsterdam
                         </td>
                       </tr>
@@ -4074,7 +4464,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1990
                         </td>
                       </tr>
@@ -4086,7 +4478,9 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -4272,7 +4666,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Voornamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Wesley
                   </td>
                 </tr>
@@ -4284,7 +4680,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Titel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Hertogin
                   </td>
                 </tr>
@@ -4296,7 +4694,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Achternaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Beemsterboer
                   </td>
                 </tr>
@@ -4308,7 +4708,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Geslacht
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Man
                   </td>
                 </tr>
@@ -4320,7 +4722,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       BSN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     129095205
                   </td>
                 </tr>
@@ -4332,7 +4736,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Geboortedatum
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     01 januari 1950
                   </td>
                 </tr>
@@ -4344,7 +4750,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Geboorteplaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Lochem
                   </td>
                 </tr>
@@ -4356,7 +4764,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Geboorteland
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederland
                   </td>
                 </tr>
@@ -4368,7 +4778,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Nationaliteit
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederlandse
                   </td>
                 </tr>
@@ -4410,7 +4822,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Straat
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Burgemeester Röellstr 1
                   </td>
                 </tr>
@@ -4422,7 +4836,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Plaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     1064 BH Amsterdam
                   </td>
                 </tr>
@@ -4434,7 +4850,9 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
                       Vanaf
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 januari 1967
                   </td>
                 </tr>
@@ -4611,7 +5029,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Voornamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Wesley
                   </td>
                 </tr>
@@ -4623,7 +5043,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Titel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Hertogin
                   </td>
                 </tr>
@@ -4635,7 +5057,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Achternaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Beemsterboer
                   </td>
                 </tr>
@@ -4647,7 +5071,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Geslacht
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Man
                   </td>
                 </tr>
@@ -4659,7 +5085,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       BSN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     129095205
                   </td>
                 </tr>
@@ -4671,7 +5099,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Geboortedatum
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     01 januari 1950
                   </td>
                 </tr>
@@ -4683,7 +5113,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Geboorteplaats
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Lochem
                   </td>
                 </tr>
@@ -4695,7 +5127,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Geboorteland
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederland
                   </td>
                 </tr>
@@ -4707,7 +5141,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                       Nationaliteit
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="no"
+                  >
                     Nederlandse
                   </td>
                 </tr>
@@ -4766,7 +5202,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                   <th>
                     <span />
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Niet woonachtig in Nederland
                   </td>
                 </tr>
@@ -4850,7 +5288,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Status
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Gehuwd
                         </td>
                       </tr>
@@ -4862,7 +5302,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1999
                         </td>
                       </tr>
@@ -4874,7 +5316,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -4886,7 +5330,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -4898,7 +5344,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -4910,7 +5358,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -4922,7 +5372,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -4934,7 +5386,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5021,7 +5475,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -5033,7 +5489,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1912
                         </td>
                       </tr>
@@ -5045,7 +5503,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 1998
                         </td>
                       </tr>
@@ -5057,7 +5517,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -5069,7 +5531,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -5081,7 +5545,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -5093,7 +5559,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -5105,7 +5573,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5117,7 +5587,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5139,7 +5611,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Verbintenis
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Huwelijk
                         </td>
                       </tr>
@@ -5151,7 +5625,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Einddatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5163,7 +5639,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Asilah
                         </td>
                       </tr>
@@ -5175,7 +5653,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Land
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Marokko
                         </td>
                       </tr>
@@ -5187,7 +5667,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Souad
                         </td>
                       </tr>
@@ -5199,7 +5681,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Bakker
                         </td>
                       </tr>
@@ -5211,7 +5695,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5223,7 +5709,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5310,7 +5798,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Yassine
                         </td>
                       </tr>
@@ -5322,7 +5812,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -5334,7 +5826,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5346,7 +5840,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5368,7 +5864,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Marwan
                         </td>
                       </tr>
@@ -5380,7 +5878,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Kosterijk
                         </td>
                       </tr>
@@ -5392,7 +5892,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5404,7 +5906,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5416,7 +5920,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Datum overlijden
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           08 juli 2019
                         </td>
                       </tr>
@@ -5503,7 +6009,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Senior
                         </td>
                       </tr>
@@ -5515,7 +6023,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboer
                         </td>
                       </tr>
@@ -5527,7 +6037,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5539,7 +6051,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -5551,7 +6065,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -5563,7 +6079,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -5585,7 +6103,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Voornamen
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Seniora
                         </td>
                       </tr>
@@ -5597,7 +6117,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Achternaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Beemsterboerin
                         </td>
                       </tr>
@@ -5609,7 +6131,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             BSN
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           123456780
                         </td>
                       </tr>
@@ -5621,7 +6145,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 januari 1920
                         </td>
                       </tr>
@@ -5633,7 +6159,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboorteplaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Lochem
                         </td>
                       </tr>
@@ -5645,7 +6173,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Geboorteland
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Nederland
                         </td>
                       </tr>
@@ -5713,7 +6243,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Ampèrestraat 9  H
                         </td>
                       </tr>
@@ -5725,7 +6257,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 NK Amsterdam
                         </td>
                       </tr>
@@ -5737,7 +6271,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
@@ -5749,7 +6285,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 augustus 2012
                         </td>
                       </tr>
@@ -5771,7 +6309,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Straat
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           Middenweg 9  3
                         </td>
                       </tr>
@@ -5783,7 +6323,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Plaats
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           1098 AA Amsterdam
                         </td>
                       </tr>
@@ -5795,7 +6337,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Vanaf
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 januari 1990
                         </td>
                       </tr>
@@ -5807,7 +6351,9 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                             Tot
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 september 2005
                         </td>
                       </tr>
