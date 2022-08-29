@@ -78,6 +78,15 @@ RUN npm run bff-api:build
 ########################################################################################################################
 FROM nginx:stable-alpine as deploy-frontend
 
+ARG MA_OTAP_ENV=development
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ARG MA_BFF_API_URL=/
+ENV MA_BFF_API_URL=$MA_BFF_API_URL
+
+ARG MA_BFF_AUTH_PATH=/auth
+ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
+
 WORKDIR /app
 
 LABEL name="mijnamsterdam FRONTEND"
