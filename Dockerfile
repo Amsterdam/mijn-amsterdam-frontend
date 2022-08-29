@@ -6,8 +6,6 @@ ARG BUILD_DEPS_IMAGE=build-deps
 ########################################################################################################################
 FROM node:16.15.0 as build-deps
 
-# Indicating we are on a CI environment
-ENV CI=true
 ENV TZ=Europe/Amsterdam
 
 WORKDIR /build-space
@@ -43,7 +41,7 @@ COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
-RUN npm ci
+RUN npm install --prefer-offline --no-audit
 
 COPY . ./ 
 
