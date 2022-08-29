@@ -1,3 +1,4 @@
+ARG BUILD_DEPS_IMAGE=build-deps
 ########################################################################################################################
 ########################################################################################################################
 # Start with a node image for build dependencies
@@ -50,7 +51,7 @@ RUN npm ci
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps as build-app-fe
+FROM $BUILD_DEPS_IMAGE as build-app-fe
 
 ARG MA_OTAP_ENV=development
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
@@ -64,7 +65,7 @@ ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 # Build FE
 RUN npm run build
 
-FROM build-deps as build-app-bff
+FROM $BUILD_DEPS_IMAGE as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
