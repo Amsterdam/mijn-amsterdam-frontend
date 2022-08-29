@@ -11,8 +11,7 @@ import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { Linkd, LinkdInline } from '../../components';
-import { isExternalUrl } from '../../../universal/helpers';
+import { LinkdInline } from '../../components';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
