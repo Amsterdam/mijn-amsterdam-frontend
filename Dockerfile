@@ -41,7 +41,7 @@ COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
-RUN npm install --prefer-offline --no-audit
+RUN npm install --prefer-offline --no-audit --progress=false
 
 COPY . ./ 
 
