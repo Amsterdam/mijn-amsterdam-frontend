@@ -64,10 +64,20 @@ ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 # Build FE
 RUN npm run build
 
+# Tests FE
+FROM build-app-fe as tests-fe
+
+ENTRYPOINT [ "npm", "test" ]
+
 FROM build-deps as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
+
+# Tests BFF
+FROM build-app-fe as tests-bff
+
+ENTRYPOINT [ "npm", "run", "bff-api:test" ]
 
 
 ########################################################################################################################
