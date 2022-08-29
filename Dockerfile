@@ -38,9 +38,9 @@ RUN apt-get update \
   && echo "$SSH_PASSWD" | chpasswd 
 
 COPY conf/sshd_config /etc/ssh/
-COPY conf/docker-entrypoint.sh /usr/local/bin/
+COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 
-RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
+RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
 RUN npm ci
 
@@ -64,20 +64,10 @@ ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 # Build FE
 RUN npm run build
 
-# Tests FE
-FROM build-app-fe as tests-fe
-
-ENTRYPOINT [ "npm", "test" ]
-
 FROM build-deps as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
-
-# Tests BFF
-FROM build-app-fe as tests-bff
-
-ENTRYPOINT [ "npm", "run", "bff-api:test" ]
 
 
 ########################################################################################################################
@@ -135,10 +125,10 @@ COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
 
 # Run the app
-ENTRYPOINT npm run bff-api:serve-build
+CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-o
 
 ENV MA_OTAP_ENV=test
 COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
-ENTRYPOINT [ "/bin/sh", "/usr/local/bin/docker-entrypoint.sh"]
+CMD /usr/local/bin/docker-entrypoint-bff.sh
