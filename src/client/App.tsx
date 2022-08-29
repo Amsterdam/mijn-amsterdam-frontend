@@ -10,13 +10,13 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_AP } from '../universal/config/env';
+import { getOtapEnvItem } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { useAnalytics, usePageChange, useScript } from './hooks';
+import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -278,14 +278,6 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-
-  useScript({
-    src: '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
-    defer: false,
-    async: true,
-    isEnabled: IS_AP,
-  });
-
   useUsabilla();
 
   return (
