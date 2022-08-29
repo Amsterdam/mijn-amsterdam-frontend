@@ -67,10 +67,14 @@ ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 # Build FE
 RUN npm run build
 
+COPY . ./ 
+
 FROM $BUILD_DEPS_IMAGE as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
+
+COPY . ./
 
 
 ########################################################################################################################
