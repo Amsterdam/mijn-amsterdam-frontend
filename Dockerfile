@@ -10,23 +10,8 @@ ENV TZ=Europe/Amsterdam
 
 WORKDIR /build-space
 
-COPY tsconfig.json /build-space/
-COPY tsconfig.bff.json /build-space/
 COPY package.json /build-space/
 COPY package-lock.json /build-space/
-
-# Front-end env files
-COPY .env.production /build-space/
-
-# BFF env files
-#COPY .env.bff.development /build-space/
-COPY .env.bff.test /build-space/
-#COPY .env.bff.acceptance /build-space/
-
-COPY .prettierrc.json /build-space/
-
-COPY public /build-space/public
-COPY src /build-space/src
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
@@ -41,9 +26,23 @@ COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
-RUN npm install --prefer-offline --no-audit --progress=false
+RUN npm ci --prefer-offline --no-audit --progress=false
 
-COPY . ./ 
+COPY tsconfig.json /build-space/
+COPY tsconfig.bff.json /build-space/
+
+# Front-end env files
+COPY .env.production /build-space/
+
+# BFF env files
+#COPY .env.bff.development /build-space/
+COPY .env.bff.test /build-space/
+#COPY .env.bff.acceptance /build-space/
+
+COPY .prettierrc.json /build-space/
+
+COPY public /build-space/public
+COPY src /build-space/src
 
 
 ########################################################################################################################
@@ -65,14 +64,10 @@ ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 # Build FE
 RUN npm run build
 
-COPY . ./ 
-
 FROM $BUILD_DEPS_IMAGE as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
-
-COPY . ./
 
 
 ########################################################################################################################
