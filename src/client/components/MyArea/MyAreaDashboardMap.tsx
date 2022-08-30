@@ -2,6 +2,7 @@ import { LatLngLiteral } from 'leaflet';
 import { BAGData } from '../../../server/services';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
+import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -52,9 +53,14 @@ export default function MyAreaDashboard() {
             !!location?.latlng && (
               <CustomLatLonMarker
                 key={location?.latlng.lat + location?.latlng.lng}
-                label=""
+                label={
+                  location?.address
+                    ? getFullAddress(location.address, true)
+                    : ''
+                }
                 center={location.latlng}
                 zoom={HOOD_ZOOM}
+                iconUrl={iconUrlCommercialSecondary}
               />
             )
         )}
