@@ -317,7 +317,7 @@ export const datasetEndpoints: Record<
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    geometryKey: 'geometry',
+    geometryKey: 'geometry_visualisatie',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   },
 };
