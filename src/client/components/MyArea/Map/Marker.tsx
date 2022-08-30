@@ -1,6 +1,6 @@
 import { Marker as MarkerComponent } from '@amsterdam/react-maps';
 import {
-  LatLngExpression,
+  LatLngLiteral,
   LeafletEventHandlerFn,
   Marker as MarkerType,
   MarkerOptions,
@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 
 type Props = {
-  latLng: LatLngExpression;
+  latLng: LatLngLiteral;
   events?: { [key: string]: LeafletEventHandlerFn };
   options?: MarkerOptions;
   setInstance?: (markerInstance?: MarkerType) => void;

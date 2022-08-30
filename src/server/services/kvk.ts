@@ -4,6 +4,7 @@ import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { isAmsterdamAddress } from './buurt/helpers';
 
 type Rechtsvorm = string;
 
@@ -106,35 +107,32 @@ export interface KVKSourceData {
 
 export interface KVKData extends KVKSourceDataContent {}
 
-export function getKvkAddress(kvkData: KVKData) {
-  let address: Adres | null = null;
-  const vestigingen = kvkData?.vestigingen;
+export function getKvkAddresses(kvkData: KVKData | null): Adres[] {
+  let vestigingen: Vestiging[] = [];
 
-  if (!vestigingen?.length) {
-    return null;
+  if (!kvkData?.vestigingen?.length) {
+    return [];
   }
 
-  if (vestigingen.length) {
-    const vestiging = kvkData?.vestigingen.find(
+  vestigingen = kvkData.vestigingen.filter(
+    (vestiging) =>
+      !!vestiging.bezoekadres &&
+      isAmsterdamAddress(vestiging.bezoekadres.woonplaatsNaam)
+  );
+
+  if (!vestigingen.length) {
+    vestigingen = kvkData.vestigingen.filter(
       (vestiging) =>
-        !!vestiging.bezoekadres &&
-        (vestiging.bezoekadres.mokum === true ||
-          vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
+        !!vestiging.postadres &&
+        isAmsterdamAddress(vestiging.postadres.woonplaatsNaam)
     );
-    address = vestiging?.bezoekadres || null;
-
-    if (!address) {
-      const vestiging = kvkData?.vestigingen.find(
-        (vestiging) =>
-          !!vestiging.postadres &&
-          (vestiging.postadres.mokum === true ||
-            vestiging.postadres.woonplaatsNaam === 'Amsterdam')
-      );
-      address = vestiging?.postadres || null;
-    }
   }
 
-  return address;
+  const addresses = vestigingen
+    .map((vestiging) => vestiging.bezoekadres || vestiging.postadres)
+    .filter((adres: Adres | null): adres is Adres => !!adres);
+
+  return addresses;
 }
 
 export function transformKVKData(responseData: KVKSourceData): KVKData | null {
@@ -146,16 +144,19 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   ) {
     return null;
   }
+
   if (responseData.content.onderneming?.handelsnamen) {
     responseData.content.onderneming.handelsnaam =
       responseData.content.onderneming?.handelsnamen.shift() || null;
   }
+
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       (vestiging) => {
         const isHoofdvestiging =
           vestiging.typeringVestiging === 'Hoofdvestiging' &&
           !vestiging.datumEinde;
+
         return Object.assign(vestiging, {
           isHoofdvestiging,
           websites:

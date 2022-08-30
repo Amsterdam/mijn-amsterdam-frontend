@@ -26,6 +26,7 @@ export function getLatLonByAddress(
     const result1 = results.find((result) => {
       const isWoonplaatsMatch =
         result.woonplaats === (isWeesp ? 'Weesp' : 'Amsterdam');
+
       const isAddressMatch = result.adres
         .toLowerCase()
         .includes(bagSearchAddress.toLowerCase());

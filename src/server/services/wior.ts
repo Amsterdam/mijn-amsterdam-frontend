@@ -66,11 +66,13 @@ export async function fetchWiorNotifications(
   );
   if (
     MY_LOCATION.status === 'OK' &&
-    MY_LOCATION.content?.latlng &&
+    MY_LOCATION.content?.[0]?.latlng &&
     wiorMeldingen?.status === 'OK'
   ) {
+    // Take first address
+    const latlng = MY_LOCATION.content[0].latlng;
     const featuresInRadius = filterFeaturesinRadius(
-      MY_LOCATION.content?.latlng,
+      latlng,
       wiorMeldingen.content.features,
       WITHIN_RADIUS_KM
     );
@@ -79,11 +81,9 @@ export async function fetchWiorNotifications(
       [datasetId],
       filters
     );
-    const bbox = getBboxFromFeatures(
-      filteredFeatures,
-      MY_LOCATION.content?.latlng
-    );
+    const bbox = getBboxFromFeatures(filteredFeatures, latlng);
     const notification = getNotification(bbox);
+
     return apiSuccessResult({
       notifications:
         FeatureToggle.wiorMeldingen && filteredFeatures.length >= 2

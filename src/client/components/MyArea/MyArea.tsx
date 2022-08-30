@@ -20,7 +20,7 @@ import BaseLayerToggle, {
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
 import Zoom from './Map/Zoom';
-import { useMapLocations } from './MyArea.hooks';
+import { MapLocationMarker, useMapLocations } from './MyArea.hooks';
 import styles from './MyArea.module.scss';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
@@ -60,7 +60,7 @@ export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
   zoom?: number;
-  centerMarker?: { latlng: LatLngLiteral; label: string };
+  centerMarker?: MapLocationMarker;
   activeBaseLayerType?: BaseLayerType;
 }
 
@@ -87,8 +87,13 @@ export default function MyArea({
   ).height;
   const [mapInstance, setMapInstance] = useState<L.Map>();
 
-  const { mapCenter, mapZoom, homeLocationMarker, customLocationMarker } =
-    useMapLocations(mapInstance, centerMarker, zoom);
+  const {
+    mapCenter,
+    mapZoom,
+    homeLocationMarker,
+    customLocationMarker,
+    secondaryLocationMarkers,
+  } = useMapLocations(mapInstance, centerMarker, zoom);
 
   const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
     useMemo(() => {
@@ -156,13 +161,22 @@ export default function MyArea({
                 />
               )}
               {(!homeLocationMarker ||
-                customLocationMarker.type === 'custom') && (
-                <CustomLatLonMarker
-                  label={customLocationMarker.label}
-                  center={customLocationMarker.latlng}
-                  zoom={zoom}
-                />
-              )}
+                customLocationMarker.type === 'custom') &&
+                customLocationMarker.latlng && (
+                  <CustomLatLonMarker
+                    label={customLocationMarker.label}
+                    center={customLocationMarker.latlng}
+                    zoom={zoom}
+                  />
+                )}
+              {secondaryLocationMarkers.length &&
+                secondaryLocationMarkers.map((location) => (
+                  <CustomLatLonMarker
+                    label={location.label}
+                    center={location.latlng}
+                    zoom={zoom}
+                  />
+                ))}
               <ViewerContainer
                 mapOffset={mapOffset}
                 topLeft={

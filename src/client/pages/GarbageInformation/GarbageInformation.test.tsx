@@ -52,7 +52,7 @@ const testState: any = {
   },
   AFVAL: { status: 'OK', content: [restafval, grofvuil] },
   AFVALPUNTEN: { status: 'OK', content: { centers: [afvalpunt] } },
-  MY_LOCATION: { status: 'OK', content: { latlng: { lat: 'x', lng: 'y' } } },
+  MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 'x', lng: 'y' } }] },
 };
 
 function initializeState(snapshot: MutableSnapshot) {
