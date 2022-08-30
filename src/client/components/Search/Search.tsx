@@ -7,7 +7,7 @@ import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
-  trackEventWithProfileType,
+  trackEventWithCustomDimension,
   trackSearch,
 } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
@@ -160,7 +160,7 @@ export function Search({
 
   const trackSearchBarEvent = useCallback(
     (action: string) =>
-      trackEventWithProfileType(
+      trackEventWithCustomDimension(
         {
           category: 'Zoeken',
           name: `${searchCategory} interactie`,

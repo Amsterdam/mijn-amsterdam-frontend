@@ -9,7 +9,7 @@ import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
-import ApplicationError from './client/components/ApplicationError/ApplicationError';
+import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
 import { ENV, getOtapEnvItem } from './universal/config/env';
@@ -23,7 +23,7 @@ if (
 }
 
 const release = `mijnamsterdam-frontend@${
-  (process.env.REACT_APP_VERSION || 'latest-unknown')
+  process.env.REACT_APP_VERSION || 'latest-unknown'
 }`;
 console.info('App version: ' + release);
 

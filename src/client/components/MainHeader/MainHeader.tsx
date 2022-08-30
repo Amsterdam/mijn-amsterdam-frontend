@@ -28,10 +28,11 @@ export default function MainHeader({
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
   const hasErrors = !!errors.length;
   const location = useLocation();
+  const isPhonescreen = usePhoneScreen();
 
   return (
     <header className={styles.header}>
-      {!usePhoneScreen() && (
+      {!isPhonescreen && (
         <nav className={styles.DirectSkipLinks}>
           <Linkd external={true} tabIndex={0} href="#skip-to-id-AppContent">
             Direct naar: <b>Pagina inhoud</b>

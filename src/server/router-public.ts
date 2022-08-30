@@ -14,6 +14,8 @@ import {
 } from './services';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
+import { loginStats } from './services/visitors';
+import basicAuth from 'express-basic-auth';
 
 export const router = express.Router();
 
@@ -134,3 +136,16 @@ router.get(
     }
   }
 );
+
+if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
+  router.get(
+    BffEndpoints.LOGIN_STATS,
+    basicAuth({
+      users: {
+        admin: process.env.BFF_LOGIN_COUNT_ADMIN_PW,
+      },
+      challenge: true,
+    }),
+    loginStats
+  );
+}

@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
+import { trackPageViewWithCustomDimension } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
 import Linkd from '../Button/Button';
@@ -85,7 +85,7 @@ export function DocumentLink({
               addFileType(`/downloads/${document.download || document.title}`);
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackPageViewWithProfileType(
+          trackPageViewWithCustomDimension(
             document.title,
             trackingUrl,
             profileType,

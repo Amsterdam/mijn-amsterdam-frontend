@@ -1,6 +1,6 @@
+import { HTMLProps } from 'react';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
 import Heading, { HeadingTagName } from '../Heading/Heading';
-import { HTMLProps } from 'react';
 
 import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
