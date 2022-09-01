@@ -21,25 +21,51 @@ export const PRISTINE_APPSTATE: AppState = {
   NOTIFICATIONS: apiPristineResult([]),
 
   // Direct
-  WPI_SPECIFICATIES: apiPristineResult({
-    jaaropgaven: [],
-    uitkeringsspecificaties: [],
+  WPI_SPECIFICATIES: apiPristineResult(
+    {
+      jaaropgaven: [],
+      uitkeringsspecificaties: [],
+    },
+    {
+      profileTypes: ['private'],
+    }
+  ),
+  KREFIA: apiPristineResult(null, {
+    isActive: FeatureToggle.krefiaActive,
+    profileTypes: ['private'],
   }),
-  KREFIA: apiPristineResult(null, FeatureToggle.krefiaActive),
-  WPI_AANVRAGEN: apiPristineResult([]),
-  WPI_TOZO: apiPristineResult([]),
-  WPI_TONK: apiPristineResult([]),
-  WPI_BBZ: apiPristineResult([]),
-  WPI_STADSPAS: apiPristineResult(null),
-  WMO: apiPristineResult([]),
+  WPI_AANVRAGEN: apiPristineResult([], {
+    profileTypes: ['private'],
+  }),
+  WPI_TOZO: apiPristineResult([], {
+    profileTypes: ['private', 'private-commercial'],
+  }),
+  WPI_TONK: apiPristineResult([], {
+    profileTypes: ['private', 'private-commercial'],
+  }),
+  WPI_BBZ: apiPristineResult([], {
+    profileTypes: ['private', 'private-commercial'],
+  }),
+  WPI_STADSPAS: apiPristineResult(null, {
+    profileTypes: ['private'],
+  }),
+  WMO: apiPristineResult([], {
+    profileTypes: ['private'],
+  }),
   ERFPACHT: apiPristineResult({ isKnown: false }),
   SUBSIDIE: apiPristineResult(
     { isKnown: false, notifications: [] },
-    FeatureToggle.subsidieActive
+    { isActive: FeatureToggle.subsidieActive }
   ),
-  BELASTINGEN: apiPristineResult({ isKnown: true }),
+  BELASTINGEN: apiPristineResult(
+    { isKnown: true },
+    { profileTypes: ['private', 'private-commercial'] }
+  ),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
-  AKTES: apiPristineResult([], FeatureToggle.aktesActive),
+  AKTES: apiPristineResult([], {
+    isActive: FeatureToggle.aktesActive,
+    profileTypes: ['private'],
+  }),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],
@@ -51,7 +77,9 @@ export const PRISTINE_APPSTATE: AppState = {
   KVK: apiPristineResult(null),
 
   // Related
-  BRP: apiPristineResult(null),
+  BRP: apiPristineResult(null, {
+    profileTypes: ['private', 'private-commercial'],
+  }),
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],
@@ -66,7 +94,10 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
-  KLACHTEN: apiPristineResult({ aantal: 0, klachten: [] }),
+  KLACHTEN: apiPristineResult(
+    { aantal: 0, klachten: [] },
+    { profileTypes: ['private', 'private-commercial'] }
+  ),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

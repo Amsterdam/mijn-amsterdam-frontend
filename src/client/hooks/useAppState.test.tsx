@@ -1,11 +1,19 @@
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
-import { apiPristineResult } from '../../universal/helpers';
+import recoil, { atom } from 'recoil';
+import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
 import { renderRecoilHook } from '../utils/renderRecoilHook';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
-import { useAppStateRemote } from './useAppState';
+import * as profileTypeHooks from './useProfileType';
+
+import {
+  useAppStateReady,
+  useAppStateRemote,
+  appStateAtom,
+  isAppStateReady,
+} from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
@@ -143,5 +151,36 @@ describe('useAppState', () => {
         },
       })
     );
+  });
+
+  describe('isAppStateReady', () => {
+    const pristineState = {
+      TEST: apiPristineResult(null, { profileTypes: ['private'] }),
+    } as any;
+
+    it('Should initially be false', async () => {
+      const appState = { TEST: pristineState.TEST } as any;
+
+      const isReady = isAppStateReady(appState, pristineState, 'private');
+      expect(isReady).toBe(false);
+    });
+
+    it('Should be true if we have proper data', async () => {
+      const isReady = isAppStateReady(
+        { TEST: apiSuccessResult('test') } as any,
+        pristineState,
+        'private'
+      );
+      expect(isReady).toBe(true);
+    });
+
+    it('Should be false if we have proper data but a different profile type', async () => {
+      const isReady = isAppStateReady(
+        { TEST: apiSuccessResult('test') } as any,
+        pristineState,
+        'commercial'
+      );
+      expect(isReady).toBe(false);
+    });
   });
 });
