@@ -1,5 +1,5 @@
 import { renderRecoilHook } from '../../utils/renderRecoilHook';
-import { useMapLocations } from './MyArea.hooks';
+import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
 import * as reactMaps from '@amsterdam/react-maps';
 import { appStateAtom } from '../../hooks';
 
@@ -52,7 +52,6 @@ describe('MyArea.hooks', () => {
     it('Returns a passed locaton', () => {
       const { result } = renderRecoilHook(() => {
         return useMapLocations(
-          mapInstanceMock,
           {
             type: 'home',
             latlng: { lat: 9988, lng: 6677 },
@@ -81,14 +80,12 @@ describe('MyArea.hooks', () => {
           "secondaryLocationMarkers": Array [],
         }
       `);
-
-      expect(mapInstanceMock.setView).toHaveBeenCalled();
     });
 
     it('Returns locations fed by AppState', () => {
       const { result } = renderRecoilHook(
         () => {
-          return useMapLocations(mapInstanceMock);
+          return useMapLocations();
         },
         {
           states: [
@@ -158,11 +155,6 @@ describe('MyArea.hooks', () => {
           ],
         }
       `);
-
-      expect(mapInstanceMock.setView).toHaveBeenCalledWith(
-        { lat: 123, lng: 456 },
-        12
-      );
     });
 
     it('Returns primary location fed by AppState', () => {
@@ -220,8 +212,100 @@ describe('MyArea.hooks', () => {
           "secondaryLocationMarkers": Array [],
         }
       `);
+    });
+  });
 
-      expect(mapInstanceMock.setView).not.toHaveBeenCalledWith();
+  describe('useSetMapCenterAtLocation', () => {
+    test('Center around custom location', () => {
+      renderRecoilHook(() => {
+        return useSetMapCenterAtLocation(
+          mapInstanceMock,
+          4,
+          {
+            type: 'custom',
+            latlng: {
+              lat: 11.11,
+              lng: 88.77,
+            },
+            label: 'Custom location',
+          },
+          {
+            type: 'home',
+            latlng: {
+              lat: 3.3333,
+              lng: 9.9999,
+            },
+            label: 'Test location home',
+          }
+        );
+      });
+
+      expect(mapInstanceMock.setView).toHaveBeenCalledWith(
+        {
+          lat: 11.11,
+          lng: 88.77,
+        },
+        4
+      );
+    });
+
+    test('Center around home location', () => {
+      renderRecoilHook(() => {
+        return useSetMapCenterAtLocation(
+          mapInstanceMock,
+          4,
+          {
+            type: 'default',
+            latlng: {
+              lat: 11.11,
+              lng: 88.77,
+            },
+            label: 'Custom location defaul',
+          },
+          {
+            type: 'home',
+            latlng: {
+              lat: 3.3333,
+              lng: 9.9999,
+            },
+            label: 'Test location home',
+          }
+        );
+      });
+
+      expect(mapInstanceMock.setView).toHaveBeenCalledWith(
+        {
+          lat: 3.3333,
+          lng: 9.9999,
+        },
+        4
+      );
+    });
+
+    test('Center around custom default location', () => {
+      renderRecoilHook(() => {
+        return useSetMapCenterAtLocation(
+          mapInstanceMock,
+          4,
+          {
+            type: 'default',
+            latlng: {
+              lat: 11.11,
+              lng: 88.77,
+            },
+            label: 'Custom location defaul',
+          },
+          null
+        );
+      });
+
+      expect(mapInstanceMock.setView).toHaveBeenCalledWith(
+        {
+          lat: 11.11,
+          lng: 88.77,
+        },
+        4
+      );
     });
   });
 });

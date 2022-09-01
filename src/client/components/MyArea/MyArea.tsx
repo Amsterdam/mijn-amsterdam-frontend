@@ -20,7 +20,11 @@ import BaseLayerToggle, {
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
 import Zoom from './Map/Zoom';
-import { MapLocationMarker, useMapLocations } from './MyArea.hooks';
+import {
+  MapLocationMarker,
+  useMapLocations,
+  useSetMapCenterAtLocation,
+} from './MyArea.hooks';
 import styles from './MyArea.module.scss';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
@@ -94,7 +98,14 @@ export default function MyArea({
     homeLocationMarker,
     customLocationMarker,
     secondaryLocationMarkers,
-  } = useMapLocations(mapInstance, centerMarker, zoom);
+  } = useMapLocations(centerMarker, zoom);
+
+  useSetMapCenterAtLocation(
+    mapInstance,
+    zoom,
+    customLocationMarker,
+    homeLocationMarker
+  );
 
   const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
     useMemo(() => {

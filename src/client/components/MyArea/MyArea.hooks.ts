@@ -507,7 +507,6 @@ export interface MapLocations {
 }
 
 export function useMapLocations(
-  mapInstance?: L.Map,
   centerMarker?: MapLocationMarker,
   zoom?: number
 ) {
@@ -626,8 +625,26 @@ export function useMapLocations(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  return {
+    mapCenter,
+    homeLocationMarker,
+    customLocationMarker,
+    secondaryLocationMarkers,
+    mapZoom: zoom,
+  };
+}
+
+export function useSetMapCenterAtLocation(
+  mapInstance: L.Map | undefined,
+  zoom: number,
+  customLocationMarker: MapLocationMarker,
+  homeLocationMarker: MapLocationMarker | null
+) {
+  const history = useHistory();
   const isAppStateReady = useAppStateReady();
-  const isReady = !urlQueryConfig.get('center');
+
+  // Don't invoke setView if we have a center query parameter on load. The center param has to be processed first.
+  const isReady = !new URLSearchParams(history.location?.search).get('center');
   const isReadyForSetViewUpdates = useRef(isReady);
 
   /**
@@ -663,12 +680,4 @@ export function useMapLocations(
       isReadyForSetViewUpdates.current = true;
     }
   }, [mapInstance, isAppStateReady]);
-
-  return {
-    mapCenter,
-    homeLocationMarker,
-    customLocationMarker,
-    secondaryLocationMarkers,
-    mapZoom: zoom,
-  };
 }
