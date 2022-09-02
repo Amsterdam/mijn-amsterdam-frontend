@@ -105,6 +105,11 @@ app.use(BFF_BASE_PATH, publicRouter);
 if (!IS_AP) {
   app.use(authRouterDevelopment);
   app.use(relayDevRouter);
+  app.use((req, res, next) => {
+    const penv = JSON.stringify(process.env);
+    console.log(penv);
+    next();
+  });
 }
 
 // Mount the routers at the base path
