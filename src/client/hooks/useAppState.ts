@@ -205,7 +205,7 @@ export function isAppStateReady(
       ] as unknown as ApiPristineResponse<any>;
 
       const isProfileMatch =
-        !stateConfig.profileTypes?.length ||
+        !stateConfig?.profileTypes?.length ||
         stateConfig.profileTypes.includes(profileType);
       return stateConfig.isActive && isProfileMatch;
     }

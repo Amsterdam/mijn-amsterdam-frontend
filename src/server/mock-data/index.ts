@@ -168,18 +168,18 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  // [ApiUrls.BAG]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-  //   responseData: async (config: any) => {
-  //     // if (isCommercialUser(config)) {
-  //     //   return 'no-content';
-  //     // }
-  //     if (config.params.q === 'Schakelstraat 16') {
-  //       return await loadMockApiResponseJson(BAG2);
-  //     }
-  //     return await loadMockApiResponseJson(BAG);
-  //   },
-  // },
+  [ApiUrls.BAG]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
+      if (config.params.q === 'Schakelstraat 16') {
+        return await loadMockApiResponseJson(BAG2);
+      }
+      return await loadMockApiResponseJson(BAG);
+    },
+  },
   [ApiUrls.AFVAL]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
