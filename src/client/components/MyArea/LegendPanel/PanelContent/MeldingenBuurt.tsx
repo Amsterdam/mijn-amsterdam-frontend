@@ -27,6 +27,9 @@ export default function MyArePanelContentMeldingenBuurt({
       title={displayCategoryTitle(panelItem.categorie)}
       supTitle="Meldingen"
     >
+      {!!panelItem.subcategorie && (
+        <InfoDetail label="Subcategorie" value={panelItem.subcategorie} />
+      )}
       {!!panelItem.datumCreatie && (
         <InfoDetail
           label="Datum en tijd melding"
