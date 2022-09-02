@@ -7,6 +7,7 @@ ARG BUILD_DEPS_IMAGE=build-deps
 FROM node:16.15.0 as build-deps
 
 ENV TZ=Europe/Amsterdam
+ENV CI=true
 
 WORKDIR /build-space
 
