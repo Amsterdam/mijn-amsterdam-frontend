@@ -26,7 +26,7 @@ authRouterDevelopment.get(
       ),
       httpOnly: true,
       path: '/',
-      secure: false, // Not secure for local development
+      secure: process.env.BFF_USE_SECURE_COOKIE === 'true',
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
