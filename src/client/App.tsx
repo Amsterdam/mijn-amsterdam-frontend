@@ -6,7 +6,7 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory
+  useHistory,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -22,7 +22,7 @@ import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkEntry,
-  useDeeplinkRedirect
+  useDeeplinkRedirect,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
@@ -142,7 +142,7 @@ function AppAuthenticated() {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
       history.push(redirectAfterLogin);
     }
-  }, [redirectAfterLogin, history])
+  }, [redirectAfterLogin, history]);
 
   return (
     <>
