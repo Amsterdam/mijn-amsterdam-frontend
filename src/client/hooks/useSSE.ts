@@ -124,6 +124,9 @@ export function useSSE({
       es.removeEventListener(eventName, onMessageEvent);
 
       window.removeEventListener('beforeunload', closeEventSource);
+
+      // Close the EventSource when cleaning up this hook.
+      closeEventSource();
     };
   }, [
     es,

@@ -6,6 +6,7 @@ import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
 import { IconHomeCommercial, IconProfile } from '../../assets/icons';
+import { useAppStateReady } from '../../hooks';
 import { useProfileType } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -114,6 +115,7 @@ export function ProfileName({
   profileType,
 }: ProfileNameProps) {
   const history = useHistory();
+  const isAppStateReady = useAppStateReady();
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
@@ -154,7 +156,11 @@ export function ProfileName({
         styles[`ProfileName--${profileType}`]
       )}
     >
-      {nameContent || <LoadingContent barConfig={[['15rem', '1rem', '0']]} />}
+      {isAppStateReady ? (
+        nameContent
+      ) : (
+        <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+      )}
     </span>
   );
 }
