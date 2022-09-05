@@ -293,7 +293,7 @@ export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
   '/tips/static/tip_images',
 ];
 
-export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
+export const OIDC_SESSION_MAX_AGE_SECONDS = 135 * 60; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_OIDC_COOKIE_ENCRYPTION_KEY}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
