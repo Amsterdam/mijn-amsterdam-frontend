@@ -43,6 +43,7 @@ const otapServerEnv: OtapEnv = {
   },
   test: {
     bffSentryDsn:
+      // actually de dsn for front-end
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
   },
   acceptance: {
