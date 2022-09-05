@@ -50,10 +50,7 @@ const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 export const BFF_MS_API_BASE_PATH = IS_AP ? '/api' : '';
 export const BFF_MS_API_BASE = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
 export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
-
-export const BFF_DATAPUNT_API_BASE_URL = IS_AP
-  ? 'https://api.data.amsterdam.nl'
-  : 'https://api.data.amsterdam.nl';
+export const BFF_DATAPUNT_API_BASE_URL = 'https://api.data.amsterdam.nl';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
