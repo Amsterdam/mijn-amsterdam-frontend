@@ -346,7 +346,7 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
 };
 
 export const corsOptions: CorsOptions = {
-  origin: '*',
+  origin: process.env.BFF_FRONTEND_URL,
   credentials: true,
 };
 

@@ -41,7 +41,10 @@ const otapServerEnv: OtapEnv = {
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
   },
-  test: {},
+  test: {
+    bffSentryDsn:
+      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
+  },
   acceptance: {
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
