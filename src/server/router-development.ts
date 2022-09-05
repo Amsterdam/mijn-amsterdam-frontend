@@ -21,13 +21,13 @@ authRouterDevelopment.get(
   '/api/v1/dev/auth/:authMethod/login',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
-      expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000
-      ),
-      httpOnly: true,
-      path: '/',
-      secure: process.env.BFF_USE_SECURE_COOKIE === 'true',
-      sameSite: 'none',
+      // expires: new Date(
+      //   new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000
+      // ),
+      // httpOnly: true,
+      // path: '/',
+      // secure: process.env.BFF_USE_SECURE_COOKIE === 'true',
+      // sameSite: false,
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
     const userId = `xxx-${authMethod}-xxx`;
