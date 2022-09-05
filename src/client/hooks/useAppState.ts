@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
+import { ApiPristineResponse } from '../../universal/helpers';
 
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
@@ -191,16 +192,39 @@ export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
 }
 
+export function isAppStateReady(
+  appState: AppState,
+  pristineAppState: AppState,
+  profileType: ProfileType
+) {
+  const profileStates = Object.entries(appState).filter(
+    ([appStateKey, state]) => {
+      const key = appStateKey as keyof AppState;
+      const stateConfig = pristineAppState[
+        key
+      ] as unknown as ApiPristineResponse<any>;
+
+      const isProfileMatch =
+        !stateConfig?.profileTypes?.length ||
+        stateConfig.profileTypes.includes(profileType);
+      return stateConfig.isActive && isProfileMatch;
+    }
+  );
+
+  return (
+    !!profileStates.length &&
+    profileStates.every(([appStateKey, state]) => {
+      return state.status !== 'PRISTINE';
+    })
+  );
+}
+
 export function useAppStateReady() {
   const appState = useAppStateGetter();
+  const profileType = useProfileTypeValue();
+
   return useMemo(
-    () =>
-      Object.entries(appState).every(([appStateKey, state]) => {
-        return (
-          state.status !== 'PRISTINE' ||
-          (state.status === 'PRISTINE' && !state.isActive)
-        );
-      }),
-    [appState]
+    () => isAppStateReady(appState, PRISTINE_APPSTATE, profileType),
+    [appState, profileType]
   );
 }

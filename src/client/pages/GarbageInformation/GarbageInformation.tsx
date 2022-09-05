@@ -181,8 +181,8 @@ export default function GarbageInformation() {
           label="Uw adres"
           value={
             <>
-              {MY_LOCATION.content?.address ? (
-                getFullAddress(MY_LOCATION.content.address)
+              {MY_LOCATION.content?.[0]?.address ? (
+                getFullAddress(MY_LOCATION.content?.[0].address)
               ) : isLoading(MY_LOCATION) ? (
                 <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
               ) : (

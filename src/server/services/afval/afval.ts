@@ -15,8 +15,8 @@ export async function fetchAFVAL(
     profileType
   );
 
-  if (MY_LOCATION.status === 'OK') {
-    return await fetchAfvalmomenten(requestID, MY_LOCATION.content?.latlng);
+  if (MY_LOCATION.status === 'OK' && MY_LOCATION.content?.[0]?.latlng) {
+    return await fetchAfvalmomenten(requestID, MY_LOCATION.content[0].latlng);
   }
   return apiDependencyError({ MY_LOCATION });
 }
@@ -32,8 +32,8 @@ export async function fetchAFVALPUNTEN(
     profileType
   );
 
-  if (MY_LOCATION.status === 'OK') {
-    return await fetchAfvalpunten(MY_LOCATION.content?.latlng);
+  if (MY_LOCATION.status === 'OK' && MY_LOCATION.content?.[0]?.latlng) {
+    return await fetchAfvalpunten(MY_LOCATION.content[0].latlng);
   }
   return apiDependencyError({ MY_LOCATION });
 }

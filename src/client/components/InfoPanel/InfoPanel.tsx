@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
 import slug from 'slugme';
 import styles from './InfoPanel.module.scss';
+import { personalDetailFields } from './personalDetailFields';
 
 export interface ActionLink {
   title: string;
@@ -40,6 +41,10 @@ export interface InfoPanelProps {
 export interface InfoPanelCollapsibleProps extends InfoPanelProps {
   id: string;
   startCollapsed?: boolean;
+}
+
+function isPersonalDetailField(field: string) {
+  return personalDetailFields.includes(field.toLocaleLowerCase());
 }
 
 function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
@@ -114,7 +119,9 @@ function InfoPanelTable({
                     <th>
                       <span>{title}</span>
                     </th>
-                    <td>{getValue(value)}</td>
+                    <td translate={isPersonalDetailField(title) ? 'no' : 'yes'}>
+                      {getValue(value)}
+                    </td>
                   </tr>
                 );
               })}

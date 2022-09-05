@@ -124,12 +124,15 @@ export function Search({
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<any>(null);
-  const results = useSearchResults(extendedAMResults);
+
   const [isResultsVisible, setResultsVisible] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);
   const [term, setTerm_] = useSearchTerm();
+
   useSearchIndex();
+
+  const results = useSearchResults(extendedAMResults);
 
   const setTerm = useCallback(
     (term) => {
@@ -244,6 +247,10 @@ export function Search({
     if (termInitial && searchBarRef.current) {
       searchBarRef.current.value = termInitial;
     }
+
+    return () => {
+      onFinish('Unmount component');
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

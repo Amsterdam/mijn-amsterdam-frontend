@@ -34,7 +34,7 @@ const testState: any = {
       },
     ],
   },
-  MY_LOCATION: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
+  MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 5, lng: 40 } }] },
   NOTIFICATIONS: {
     status: 'OK',
     content: [

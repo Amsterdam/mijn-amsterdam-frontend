@@ -134,12 +134,14 @@ interface HomeIconMarkerProps {
   center: LatLngLiteral;
   label: string;
   zoom?: number;
+  iconUrl?: string;
 }
 
 export function CustomLatLonMarker({
   center,
   zoom = LOCATION_ZOOM,
   label = '',
+  iconUrl = markerIconUrl,
 }: HomeIconMarkerProps) {
   const mapRef = useMapRef();
 
@@ -154,7 +156,7 @@ export function CustomLatLonMarker({
 
   return (
     <MyAreaMarker
-      iconUrl={markerIconUrl}
+      iconUrl={iconUrl}
       onClick={doCenter}
       latlng={center}
       label={label}

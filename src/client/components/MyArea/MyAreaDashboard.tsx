@@ -18,7 +18,7 @@ export default function MyAreaDashboard() {
   const { BRP, KVK } = useAppStateGetter();
   const isPrivate = profileType === 'private';
   // Check if the Map is nearly scrolled into view
-  const isOnScreen = useOnScreen(ref, '-200px');
+  const isOnScreen = useOnScreen(ref, '-100px');
   const mokum = isPrivate ? isMokum(BRP.content) : isMokum(KVK.content);
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
