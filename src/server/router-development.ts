@@ -27,7 +27,7 @@ authRouterDevelopment.get(
       httpOnly: true,
       path: '/',
       secure: process.env.BFF_USE_SECURE_COOKIE === 'true',
-      sameSite: 'lax',
+      sameSite: 'none',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
     const userId = `xxx-${authMethod}-xxx`;
