@@ -11,9 +11,6 @@ ENV CI=true
 
 WORKDIR /build-space
 
-COPY package.json /build-space/
-COPY package-lock.json /build-space/
-
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
@@ -22,12 +19,15 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends openssh-server \
   && echo "$SSH_PASSWD" | chpasswd 
 
+COPY package.json /build-space/
+COPY package-lock.json /build-space/
+
+RUN npm ci --prefer-offline --no-audit --progress=false
+
 COPY conf/sshd_config /etc/ssh/
 COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
-
-RUN npm ci --prefer-offline --no-audit --progress=false
 
 COPY tsconfig.json /build-space/
 COPY tsconfig.bff.json /build-space/
