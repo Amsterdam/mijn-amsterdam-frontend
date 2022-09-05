@@ -1,0 +1,46 @@
+{
+    "_links": {
+        "self": {
+            "href": "https://api.data.amsterdam.nl/atlas/search/adres/?q=Schakelstraat%2016&page=1"
+        },
+        "next": {
+            "href": null
+        },
+        "prev": {
+            "href": null
+        }
+    },
+    "count_hits": 1,
+    "count": 1,
+    "results": [
+        {
+            "_links": {
+                "self": {
+                    "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000805808/"
+                }
+            },
+            "type": "verblijfsobject",
+            "dataset": "v11_nummeraanduiding",
+            "adres": "Schakelstraat 16",
+            "postcode": "1014AW",
+            "straatnaam": "Schakelstraat",
+            "huisnummer": 16,
+            "toevoeging": "16",
+            "bag_huisletter": "",
+            "bag_toevoeging": "",
+            "woonplaats": "Amsterdam",
+            "type_adres": "Hoofdadres",
+            "status": "Naamgeving uitgegeven",
+            "landelijk_id": "0363200000264604",
+            "vbo_status": "Verblijfsobject in gebruik",
+            "adresseerbaar_object_id": "0363010000805808",
+            "subtype": "verblijfsobject",
+            "centroid": [
+                4.849395020024492,
+                52.39058967407032
+            ],
+            "subtype_id": "0363010000805808",
+            "_display": "Schakelstraat 16"
+        }
+    ]
+}
