@@ -67,11 +67,11 @@
         ],
         "bezoekadres": {
           "huisletter": null,
-          "huisnummer": "18",
+          "huisnummer": "1",
           "huisnummertoevoeging": null,
           "postcode": "1114 BD",
-          "straatnaam": "Borchlandweg",
-          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+          "straatnaam": "Amstel",
+          "woonplaatsNaam": "Amsterdam"
         },
         "datumAanvang": "2020-05-01",
         "datumEinde": null,
@@ -83,11 +83,11 @@
         ],
         "postadres": {
           "huisletter": null,
-          "huisnummer": "18",
+          "huisnummer": "1",
           "huisnummertoevoeging": null,
           "postcode": null,
-          "straatnaam": "Borchlandweg",
-          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+          "straatnaam": "Amstel",
+          "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310208451362",
         "typeringVestiging": "Nevenvestiging",
@@ -102,10 +102,10 @@
         ],
         "bezoekadres": {
           "huisletter": null,
-          "huisnummer": "590",
+          "huisnummer": "250",
           "huisnummertoevoeging": null,
-          "postcode": "1101 DS",
-          "straatnaam": "Arena boulevard",
+          "postcode": "1055 EK",
+          "straatnaam": "Bos en Lommerplein",
           "woonplaatsNaam": "Amsterdam"
         },
         "datumAanvang": "2020-05-01",
@@ -117,10 +117,10 @@
         ],
         "postadres": {
           "huisletter": null,
-          "huisnummer": "590",
+          "huisnummer": "250",
           "huisnummertoevoeging": null,
           "postcode": null,
-          "straatnaam": "Arena boulevard",
+          "straatnaam": "Bos en Lommerplein",
           "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310205641954",

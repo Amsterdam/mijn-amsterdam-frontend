@@ -325,7 +325,9 @@
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
       "keywords": [
-        "Parkeren"
+        "Parkeren",
+        "private",
+        "commercial"
       ]
     },
     {
@@ -355,7 +357,9 @@
         "Landelijk registratienummer"
       ],
       "profileTypes": [
-        "private"
+        "private",
+        "commercial",
+        "private-commercial"
       ]
     },
     {
@@ -593,7 +597,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -607,7 +612,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -619,7 +625,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -633,7 +640,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -647,7 +655,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -661,7 +670,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -675,7 +685,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -689,7 +700,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -704,7 +716,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -717,19 +730,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
-      ]
-    },
-    {
-      "url": "/buurt?datasetIds=[%22evenementen%22]",
-      "displayTitle": "Evenementen bij mij in de buurt",
-      "description": "Evenementen bij mij in de buurt",
-      "keywords": [
-        "Evenementen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -742,7 +744,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -756,7 +759,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -769,7 +773,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -783,7 +788,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -796,7 +802,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -811,7 +818,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -825,7 +833,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -838,7 +847,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -851,7 +861,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -866,7 +877,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -881,7 +893,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -896,7 +909,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     },
     {
@@ -911,7 +925,8 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ]
     }
   ],
@@ -966,7 +981,8 @@
       "isEnabled": true,
       "profileTypes": [
         "private",
-        "private-commercial"
+        "private-commercial",
+        "commercial"
       ],
       "keywordsGeneratedFromProps": [
         "caseType",

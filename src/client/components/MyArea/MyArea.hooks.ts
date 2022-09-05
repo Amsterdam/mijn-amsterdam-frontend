@@ -1,6 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
+import { LatLngBoundsLiteral, LeafletEvent, LatLngLiteral } from 'leaflet';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
@@ -40,6 +40,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
 import * as Sentry from '@sentry/react';
+import { BAGData } from '../../../server/services';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -491,9 +492,22 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
   );
 }
 
+export interface MapLocationMarker {
+  type?: string;
+  latlng: LatLngLiteral;
+  label: string;
+}
+
+export interface MapLocations {
+  mapCenter: LatLngLiteral;
+  homeLocationMarker: MapLocationMarker | null;
+  customLocationMarker: MapLocationMarker | null;
+  secondaryLocationMarkers: MapLocationMarker[];
+  mapZoom: number;
+}
+
 export function useMapLocations(
-  mapInstance?: L.Map,
-  centerMarker?: { latlng: LatLngLiteral; label: string },
+  centerMarker?: MapLocationMarker,
   zoom?: number
 ) {
   const history = useHistory();
@@ -523,14 +537,14 @@ export function useMapLocations(
   const queryCenterMarker = urlQueryConfig.get('centerMarker');
 
   const customLocationMarker = useMemo(() => {
-    const customLocationMarker =
+    const customLocationMarker: MapLocationMarker =
       !!queryCenterMarker && typeof queryCenterMarker === 'string'
         ? JSON.parse(queryCenterMarker)
         : centerMarker;
     const centerMarkerLabel = customLocationMarker?.label;
     const centerMarkerLatLng = customLocationMarker?.latlng;
 
-    let latlng = DEFAULT_MAP_OPTIONS.center!;
+    let latlng: LatLngLiteral = DEFAULT_MAP_OPTIONS.center!;
     let label = 'Amsterdam centrum';
     let type = 'default';
 
@@ -553,16 +567,39 @@ export function useMapLocations(
     };
   }, [queryCenterMarker, centerMarker]);
 
-  const homeLocationMarker = useMemo(() => {
-    if (MY_LOCATION.content?.latlng && !centerMarker) {
-      const latlng = MY_LOCATION.content.latlng;
-      const label = MY_LOCATION.content?.address
-        ? getFullAddress(MY_LOCATION.content.address, true)
-        : 'Mijn locatie';
-      return { latlng, label, type: 'home' };
-    }
-    return null;
-  }, [MY_LOCATION.content, centerMarker]);
+  const { home: homeLocationMarker, secondary: secondaryLocationMarkers } =
+    useMemo(() => {
+      const locations = (MY_LOCATION.content || []).filter(
+        (location: BAGData | null): location is BAGData => !!location
+      );
+      const [primaryLocation, ...secondaryLocations] = locations;
+
+      let homeLocationMarker: MapLocationMarker | null = null;
+      let secondaryLocationMarkers: MapLocationMarker[] = [];
+
+      if (primaryLocation?.latlng && !centerMarker) {
+        const latlng = primaryLocation.latlng;
+        const label = primaryLocation.address
+          ? getFullAddress(primaryLocation.address, true)
+          : 'Mijn locatie';
+        homeLocationMarker = { latlng, label, type: 'home' };
+      }
+      if (secondaryLocations?.length) {
+        for (const location of secondaryLocations) {
+          const latlng = location.latlng;
+          const label = location.address
+            ? getFullAddress(location.address, true)
+            : 'Mijn andere locatie';
+          if (latlng) {
+            secondaryLocationMarkers.push({ latlng, label, type: 'secondary' });
+          }
+        }
+      }
+      return {
+        home: homeLocationMarker,
+        secondary: secondaryLocationMarkers,
+      };
+    }, [MY_LOCATION.content, centerMarker]);
 
   const urlQueryCenter = urlQueryConfig.get('center');
   const centerStateLatLng = useMemo(() => {
@@ -578,7 +615,7 @@ export function useMapLocations(
       center = centerStateLatLng;
     } else if (customLocationMarker.type === 'custom') {
       center = customLocationMarker.latlng;
-    } else if (homeLocationMarker) {
+    } else if (homeLocationMarker && homeLocationMarker?.latlng) {
       center = homeLocationMarker?.latlng;
     }
 
@@ -588,8 +625,26 @@ export function useMapLocations(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  return {
+    mapCenter,
+    homeLocationMarker,
+    customLocationMarker,
+    secondaryLocationMarkers,
+    mapZoom: zoom,
+  };
+}
+
+export function useSetMapCenterAtLocation(
+  mapInstance: L.Map | undefined,
+  zoom: number,
+  customLocationMarker: MapLocationMarker,
+  homeLocationMarker: MapLocationMarker | null
+) {
+  const history = useHistory();
   const isAppStateReady = useAppStateReady();
-  const isReady = !urlQueryConfig.get('center');
+
+  // Don't invoke setView if we have a center query parameter on load. The center param has to be processed first.
+  const isReady = !new URLSearchParams(history.location?.search).get('center');
   const isReadyForSetViewUpdates = useRef(isReady);
 
   /**
@@ -607,11 +662,13 @@ export function useMapLocations(
    * */
   useEffect(() => {
     if (mapInstance && isReadyForSetViewUpdates.current === true) {
-      let centerMarker = customLocationMarker;
+      let centerMarker: MapLocationMarker = customLocationMarker;
       if (customLocationMarker.type === 'default' && !!homeLocationMarker) {
         centerMarker = homeLocationMarker;
       }
-      mapInstance.setView(centerMarker.latlng, zoom);
+      if (centerMarker.latlng) {
+        mapInstance.setView(centerMarker.latlng, zoom);
+      }
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
@@ -623,11 +680,4 @@ export function useMapLocations(
       isReadyForSetViewUpdates.current = true;
     }
   }, [mapInstance, isAppStateReady]);
-
-  return {
-    mapCenter,
-    homeLocationMarker,
-    customLocationMarker,
-    mapZoom: zoom,
-  };
 }

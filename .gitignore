@@ -21,3 +21,4 @@ build-bff
 
 .eslintcache
 .vscode
+/src/server/cache/dev.visitors.flat-cache.json

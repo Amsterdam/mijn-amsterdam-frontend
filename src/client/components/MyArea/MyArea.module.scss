@@ -78,7 +78,8 @@
   border-radius: 0;
   border: 0;
   box-shadow: none;
-  white-space: pre-wrap;
+  padding: .2rem .5rem;
+  line-height: initial;
 
   &:before {
     display: none;
@@ -88,8 +89,8 @@
 .MarkerLabelText {
   color: $color-black;
   text-align: center;
-  font-size: 1.8rem;
   font-weight: bold;
+  width: max-content;
 }
 
 .DirectSkipLinks {

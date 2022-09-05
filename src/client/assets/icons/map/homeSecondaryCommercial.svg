@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <clipPath id="i0">
+      <path d="M17,3 L18,8 L18,10 L17,10 L17,16 L15,16 L15,10 L11,10 L11,16 L1,16 L1,10 L0,10 L0,8 L1,3 L17,3 Z M9,10 L3,10 L3,14 L9,14 L9,10 Z M17,0 L17,2 L1,2 L1,0 L17,0 Z"></path>
+    </clipPath>
+  </defs>
+  <title>Bedrijfsgebouw nevenvestiging</title>
+  <circle fill="#ff0000" id="path877" cx="16" cy="16" r="16" />
+  <g transform="translate(7.0 9.0)">
+    <g clip-path="url(#i0)">
+      <polygon points="0,0 18,0 18,16 0,16 0,0" stroke="none" fill="white"></polygon>
+    </g>
+  </g>
+</svg>

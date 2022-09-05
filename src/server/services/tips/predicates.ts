@@ -1,5 +1,6 @@
 import { differenceInYears, differenceInCalendarDays } from 'date-fns';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { isAmsterdamAddress } from '../buurt/helpers';
 import { TipsPredicateFN } from './tip-types';
 
 // rule 2
@@ -49,7 +50,9 @@ export const hasValidStadspasRequest: TipsPredicateFN = (
 export const previouslyLivingInAmsterdam: TipsPredicateFN = (appState) => {
   return !!(
     appState.BRP?.content?.adresHistorisch &&
-    appState.BRP?.content?.adresHistorisch[0]?.woonplaatsNaam === 'Amsterdam'
+    isAmsterdamAddress(
+      appState.BRP?.content?.adresHistorisch[0]?.woonplaatsNaam
+    )
   );
 };
 

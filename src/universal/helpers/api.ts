@@ -20,7 +20,13 @@ export type ApiPristineResponse<T> = {
   content: T | null;
   status: 'PRISTINE';
   isActive?: boolean;
+  profileTypes?: ProfileType[];
 };
+
+export interface PristineStageConfig {
+  isActive?: boolean;
+  profileTypes?: ProfileType[];
+}
 
 // Used of the request to the api must be postponed, for example when using a feature toggle.
 export type ApiPostponeResponse = {
@@ -133,12 +139,13 @@ export function getFailedDependencies<T>(results: T) {
 
 export function apiPristineResult<T>(
   content: T,
-  isActive: boolean = true
+  config?: PristineStageConfig
 ): ApiPristineResponse<T> {
   return {
     content,
     status: 'PRISTINE',
-    isActive,
+    isActive: config?.isActive ?? true,
+    profileTypes: config?.profileTypes ?? [],
   };
 }
 

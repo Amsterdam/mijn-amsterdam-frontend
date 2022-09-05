@@ -1,13 +1,10 @@
 import { apiSuccessResult } from '../../universal/helpers';
-import { MyTip } from '../../universal/types';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import { decodeToken } from '../helpers/app';
 import AFVAL from './json/afvalophaalgebieden.json';
 import AKTES from './json/aktes.json';
-import BAG from './json/bag.json';
-import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
@@ -167,18 +164,6 @@ export const mockDataConfig: MockDataConfig = {
       //   return 'no-content';
       // }
       return await loadMockApiResponseJson(SUBSIDIE);
-    },
-  },
-  [ApiUrls.BAG]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      if (config.params.q === 'Schakelstraat 16') {
-        return await loadMockApiResponseJson(BAG2);
-      }
-      return await loadMockApiResponseJson(BAG);
     },
   },
   [ApiUrls.AFVAL]: {

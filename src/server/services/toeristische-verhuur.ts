@@ -32,6 +32,7 @@ import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { isAmsterdamAddress } from './buurt/helpers';
 import {
   BBVergunning,
   fetchVergunningen,
@@ -123,8 +124,7 @@ export async function fetchRegistraties(
       .map((response) => response.content)
       .filter(
         (r): r is ToeristischeVerhuurRegistratieDetailSource =>
-          r !== null &&
-          ['amsterdam', 'weesp'].includes(r?.rentalHouse.city?.toLowerCase())
+          r !== null && isAmsterdamAddress(r?.rentalHouse.city)
       )
       .map((r) => {
         const rUpdated: ToeristischeVerhuurRegistratieDetail = {

@@ -53,7 +53,7 @@ export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
-  : BFF_MS_API_BASE_URL;
+  : 'https://api.data.amsterdam.nl';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
