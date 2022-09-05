@@ -85,7 +85,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Handelsnaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Feestwinkel
                   </td>
                 </tr>
@@ -97,7 +99,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Overige handelsnamen
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <span>
                       Ballonenverkoop B.V.
                       <br />
@@ -112,7 +116,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Rechtsvorm
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     BeslotenVennootschap
                   </td>
                 </tr>
@@ -124,7 +130,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Activiteiten
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Detailhandel via internet in kleding en mode-artikelen
                   </td>
                 </tr>
@@ -136,7 +144,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Overige activiteiten
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <span>
                       Elektrotechnische bouwinstallatie
                       <br />
@@ -181,7 +191,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       RSIN
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     999999999
                   </td>
                 </tr>
@@ -193,7 +205,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       KVKnummer
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     90006151
                   </td>
                 </tr>
@@ -205,7 +219,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Statutaire naam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Ballonenverkoop B.V.
                   </td>
                 </tr>
@@ -217,7 +233,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Statutaire zetel
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Amsterdam
                   </td>
                 </tr>
@@ -259,7 +277,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Vestigingsnummer
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     990000996064
                   </td>
                 </tr>
@@ -271,7 +291,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Handelsnaam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <span>
                       Ballonenverkoop B.V.
                       <br />
@@ -286,7 +308,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Bezoekadres
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Laan der Hesperiden 66
 1076 DE, Amsterdam
                   </td>
@@ -299,7 +323,9 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
                       Postadres
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Laan der Hesperiden 66
 Amsterdam
                   </td>
@@ -312,7 +338,9 @@ Amsterdam
                       Telefoonnummer
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <a
                       class="Button Button__inline Button__lean Linkd LinkedInline"
                       href="tel:+310209991362"
@@ -330,7 +358,9 @@ Amsterdam
                       Website
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <span>
                       <a
                         class="Button Button__inline Button__lean Linkd LinkedInline"
@@ -351,7 +381,9 @@ Amsterdam
                       E-mail
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <a
                       class="Button Button__inline Button__lean Linkd LinkedInline"
                       href="mailto:info@electrotechniek.amsterdam.nl"
@@ -369,7 +401,9 @@ Amsterdam
                       Fax
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     +310204107999
                   </td>
                 </tr>
@@ -381,7 +415,9 @@ Amsterdam
                       Activiteiten
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     <span>
                       Geestelijke gezondheids- en verslavingszorg met overnachting
                       <br />
@@ -400,7 +436,9 @@ Amsterdam
                       Datum vestiging
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 januari 2020
                   </td>
                 </tr>
@@ -465,7 +503,9 @@ Amsterdam
                             Vestigingsnummer
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           990000996080
                         </td>
                       </tr>
@@ -477,7 +517,9 @@ Amsterdam
                             Handelsnaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <span>
                             Ballonenverkoop B.V.
                             <br />
@@ -496,7 +538,9 @@ Amsterdam
                             Bezoekadres
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Borchlandweg 18
 1114 BD, Amsterdam-Duivendrecht
                         </td>
@@ -509,7 +553,9 @@ Amsterdam
                             Postadres
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Borchlandweg 18
 Amsterdam-Duivendrecht
                         </td>
@@ -522,7 +568,9 @@ Amsterdam-Duivendrecht
                             Telefoonnummer
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <a
                             class="Button Button__inline Button__lean Linkd LinkedInline"
                             href="tel:+310208451362"
@@ -540,7 +588,9 @@ Amsterdam-Duivendrecht
                             Website
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <span>
                             <a
                               class="Button Button__inline Button__lean Linkd LinkedInline"
@@ -561,7 +611,9 @@ Amsterdam-Duivendrecht
                             E-mail
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <a
                             class="Button Button__inline Button__lean Linkd LinkedInline"
                             href="mailto:info@feestwinkel.nl"
@@ -579,7 +631,9 @@ Amsterdam-Duivendrecht
                             Fax
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           +310204107765
                         </td>
                       </tr>
@@ -591,7 +645,9 @@ Amsterdam-Duivendrecht
                             Activiteiten
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <span>
                             Winkels in boeken
                             <br />
@@ -606,7 +662,9 @@ Amsterdam-Duivendrecht
                             Datum vestiging
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 mei 2020
                         </td>
                       </tr>
@@ -628,7 +686,9 @@ Amsterdam-Duivendrecht
                             Vestigingsnummer
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           990000996072
                         </td>
                       </tr>
@@ -640,7 +700,9 @@ Amsterdam-Duivendrecht
                             Handelsnaam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <span>
                             Ballonenverkoop B.V.
                             <br />
@@ -655,7 +717,9 @@ Amsterdam-Duivendrecht
                             Bezoekadres
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Arena boulevard 590
 1101 DS, Amsterdam
                         </td>
@@ -668,7 +732,9 @@ Amsterdam-Duivendrecht
                             Postadres
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Arena boulevard 590
 Amsterdam
                         </td>
@@ -681,7 +747,9 @@ Amsterdam
                             Telefoonnummer
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <a
                             class="Button Button__inline Button__lean Linkd LinkedInline"
                             href="tel:+310205641954"
@@ -699,7 +767,9 @@ Amsterdam
                             Activiteiten
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           <span>
                             Detailhandel via internet in kleding en mode-artikelen
                             <br />
@@ -714,7 +784,9 @@ Amsterdam
                             Datum vestiging
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           01 mei 2020
                         </td>
                       </tr>
@@ -759,7 +831,9 @@ Amsterdam
                       Naam
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Georges Rudy Janssen van Son
                   </td>
                 </tr>
@@ -771,7 +845,9 @@ Amsterdam
                       Type gemachtigde
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     Boekhouder
                   </td>
                 </tr>
@@ -783,7 +859,9 @@ Amsterdam
                       Datum ingang machtiging
                     </span>
                   </th>
-                  <td>
+                  <td
+                    translate="yes"
+                  >
                     01 oktober 1976
                   </td>
                 </tr>
@@ -848,7 +926,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Wesley Vlag
                         </td>
                       </tr>
@@ -860,7 +940,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -872,7 +954,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Bestuurder
                         </td>
                       </tr>
@@ -884,7 +968,9 @@ Amsterdam
                             Soort bevoegdheid
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Alleen zelfstandig bevoegd
                         </td>
                       </tr>
@@ -906,7 +992,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Hendrika Johanna Theodora Grupstal
                         </td>
                       </tr>
@@ -918,7 +1006,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -930,7 +1020,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Bestuurder
                         </td>
                       </tr>
@@ -942,7 +1034,9 @@ Amsterdam
                             Soort bevoegdheid
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Alleen zelfstandig bevoegd
                         </td>
                       </tr>
@@ -964,7 +1058,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Pierre Vlag
                         </td>
                       </tr>
@@ -976,7 +1072,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -988,7 +1086,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Bestuurder
                         </td>
                       </tr>
@@ -1000,7 +1100,9 @@ Amsterdam
                             Soort bevoegdheid
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Alleen zelfstandig bevoegd
                         </td>
                       </tr>
@@ -1022,7 +1124,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Dennis Uiersin
                         </td>
                       </tr>
@@ -1034,7 +1138,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -1046,7 +1152,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Bestuurder
                         </td>
                       </tr>
@@ -1058,7 +1166,9 @@ Amsterdam
                             Soort bevoegdheid
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Alleen zelfstandig bevoegd
                         </td>
                       </tr>
@@ -1126,7 +1236,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Georges Rudy Janssen van Son
                         </td>
                       </tr>
@@ -1138,7 +1250,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -1150,7 +1264,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Commissaris
                         </td>
                       </tr>
@@ -1172,7 +1288,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Jan Jansen
                         </td>
                       </tr>
@@ -1184,7 +1302,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -1196,7 +1316,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Commissaris
                         </td>
                       </tr>
@@ -1218,7 +1340,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Boris Johnsson
                         </td>
                       </tr>
@@ -1230,7 +1354,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -1242,7 +1368,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Commissaris
                         </td>
                       </tr>
@@ -1264,7 +1392,9 @@ Amsterdam
                             Naam
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Kamlawatie Katar
                         </td>
                       </tr>
@@ -1276,7 +1406,9 @@ Amsterdam
                             Geboortedatum
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="no"
+                        >
                           01 oktober 1976
                         </td>
                       </tr>
@@ -1288,7 +1420,9 @@ Amsterdam
                             Functie
                           </span>
                         </th>
-                        <td>
+                        <td
+                          translate="yes"
+                        >
                           Enig aandeelhouder
                         </td>
                       </tr>

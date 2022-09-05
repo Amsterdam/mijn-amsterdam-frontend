@@ -154,7 +154,7 @@ export default function MainNavBar({
     isSearchActive,
     setSearchActive,
     trackSearchBarEvent,
-    isDisplaySearch,
+    isDisplayLiveSearch,
   } = useSearchOnPage();
 
   // Bind click outside and tab navigation interaction
@@ -266,7 +266,7 @@ export default function MainNavBar({
         </>
       )}
       <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplaySearch && (
+        {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
           <IconButton
             aria-label="Zoeken in mijn amsterdam"
             className={styles.SearchButton}
@@ -280,7 +280,7 @@ export default function MainNavBar({
           />
         )}
       </div>
-      {isDisplaySearch && isSearchActive && (
+      {isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>

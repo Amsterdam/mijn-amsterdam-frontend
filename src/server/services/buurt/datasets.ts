@@ -19,6 +19,7 @@ import {
   getPropertyFilters,
   transformDsoApiListResponse,
 } from './helpers';
+import { transformSlugToCategorie } from './meldingen-subcategories';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -307,12 +308,13 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
-      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt-geometrie_visualisatie&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
     detailUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
       }api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/`,
     transformList: transformMeldingenBuurtResponse,
+    transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometry',
@@ -408,6 +410,19 @@ function transformAfvalcontainerDetailResponse(
         },
       ],
     },
+  };
+}
+
+function transformMeldingDetailResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const subcategorie = transformSlugToCategorie(responseData?.subcategorie);
+
+  return {
+    ...responseData,
+    subcategorie,
   };
 }
 
