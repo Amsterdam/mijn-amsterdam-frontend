@@ -416,12 +416,12 @@ export function useSearchOnPage(): {
   isSearchActive: boolean;
   setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
   trackSearchBarEvent: (action: string) => void;
-  isDisplaySearch: boolean;
+  isDisplayLiveSearch: boolean;
 } {
   const profileType = useProfileTypeValue();
   const [isSearchActive, setSearchActive] = useState(false);
   const location = useLocation();
-  const isDisplaySearch = !matchPath(location.pathname, {
+  const isDisplayLiveSearch = !matchPath(location.pathname, {
     path: AppRoutes.SEARCH,
   });
 
@@ -439,12 +439,12 @@ export function useSearchOnPage(): {
   );
 
   useEffect(() => {
-    if (isSearchActive) {
+    if (isSearchActive && isDisplayLiveSearch) {
       document.body.classList.add('is-typeAheadActive');
     } else {
       document.body.classList.remove('is-typeAheadActive');
     }
-  }, [isSearchActive]);
+  }, [isSearchActive, isDisplayLiveSearch]);
 
   useKeyUp((event) => {
     if (event.key === 'z' && !isSearchActive) {
@@ -457,6 +457,6 @@ export function useSearchOnPage(): {
     isSearchActive,
     setSearchActive,
     trackSearchBarEvent,
-    isDisplaySearch,
+    isDisplayLiveSearch,
   };
 }
