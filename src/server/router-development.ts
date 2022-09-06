@@ -8,7 +8,7 @@ import path from 'path';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
-  // OIDC_SESSION_MAX_AGE_SECONDS,
+  OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
 } from './config';
 import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
@@ -21,14 +21,11 @@ authRouterDevelopment.get(
   '/api/v1/dev/auth/:authMethod/login',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
-      // expires: new Date(
-      //   new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000
-      // ),
+      expires: new Date(
+        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
+      ),
       httpOnly: true,
-      path: '/',
-      secure: process.env.BFF_USE_SECURE_COOKIE === 'true',
       sameSite: false,
-      domain: '.azurewebsites.net',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
     const userId = `xxx-${authMethod}-xxx`;
