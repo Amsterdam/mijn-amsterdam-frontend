@@ -1,4 +1,7 @@
-import { apiDependencyError } from '../../../universal/helpers';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
 import { fetchAfvalmomenten } from './afvalmomenten';
@@ -15,9 +18,16 @@ export async function fetchAFVAL(
     profileType
   );
 
-  if (MY_LOCATION.status === 'OK' && MY_LOCATION.content?.[0]?.latlng) {
-    return await fetchAfvalmomenten(requestID, MY_LOCATION.content[0].latlng);
+  if (MY_LOCATION.status === 'OK') {
+    const primaryLocation = MY_LOCATION.content?.[0]?.latlng;
+
+    if (!primaryLocation) {
+      return apiSuccessResult([]);
+    }
+
+    return await fetchAfvalmomenten(requestID, primaryLocation);
   }
+
   return apiDependencyError({ MY_LOCATION });
 }
 
@@ -32,8 +42,15 @@ export async function fetchAFVALPUNTEN(
     profileType
   );
 
-  if (MY_LOCATION.status === 'OK' && MY_LOCATION.content?.[0]?.latlng) {
-    return await fetchAfvalpunten(MY_LOCATION.content[0].latlng);
+  if (MY_LOCATION.status === 'OK') {
+    const primaryLocation = MY_LOCATION.content?.[0]?.latlng;
+
+    if (!primaryLocation) {
+      return apiSuccessResult(null);
+    }
+
+    return await fetchAfvalpunten(primaryLocation);
   }
+
   return apiDependencyError({ MY_LOCATION });
 }
