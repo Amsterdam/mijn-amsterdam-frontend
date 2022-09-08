@@ -11,7 +11,17 @@ function encryptPayload(payload: string) {
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
-  return [iv, encrypted.toString('base64url')];
+  return [iv, encrypted.toString('base64')] as const;
+}
+
+function encryptPayloadWithoutForwardSlashes(
+  payload: string
+): ReturnType<typeof encryptPayload> {
+  const encrypted = encryptPayload(payload);
+  if (encrypted[1] && encrypted[1].includes('/')) {
+    return encryptPayloadWithoutForwardSlashes(payload);
+  }
+  return encrypted;
 }
 
 type ErfpachtSourceResponse = 'true' | 'false';
@@ -26,17 +36,17 @@ export function getConfigMain(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [iv, payload] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'company' : 'user';
-
-  return getApiConfig('ERFPACHT', {
+  const config = {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/groundlease/${type}/${payload}`,
     headers: {
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
     },
     transformResponse: transformErfpachtResponse,
-  });
+  };
+  return getApiConfig('ERFPACHT', config);
 }
 
 export async function fetchErfpacht(
