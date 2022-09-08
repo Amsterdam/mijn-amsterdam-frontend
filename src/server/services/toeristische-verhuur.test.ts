@@ -48,19 +48,15 @@ describe('Toeristische verhuur service', () => {
     profile: { authMethod: 'digid', profileType: 'private', id: 'DIGID-BSN' },
     token: 'xxxxxx',
   };
-  const BFF_LVV_API_URL = '/remote/lvv/api';
-  const penv = process.env;
-  process.env = {
-    ...penv,
-    BFF_LVV_API_URL,
-  };
 
   jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
+
+  const BFF_LVV_API_URL = process.env.BFF_LVV_API_URL;
 
   afterAll(() => {
     axMock.restore();
     ApiConfig.VERGUNNINGEN.url = TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL;
-    process.env = penv;
+    process.env.BFF_LVV_API_URL = BFF_LVV_API_URL;
   });
 
   axMock

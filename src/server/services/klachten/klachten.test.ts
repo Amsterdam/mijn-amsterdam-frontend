@@ -9,8 +9,6 @@ import apiResponse from '../../mock-data/json/klachten.json';
 import { ApiConfig } from '../../config';
 
 describe('Klachten', () => {
-  const penv = process.env;
-
   const requestId = '456';
 
   const profileAndToken: AuthProfileAndToken = {
@@ -34,12 +32,6 @@ describe('Klachten', () => {
     // Disable real http requests.
     // All requests should be mocked.
     nock.disableNetConnect();
-
-    process.env = {
-      ...penv,
-      BFF_SMILE_USERNAME: 'test2',
-      BFF_SMILE_PASSWORD: 'testpwd2',
-    };
   });
 
   afterEach(() => {
