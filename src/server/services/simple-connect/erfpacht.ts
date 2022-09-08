@@ -61,7 +61,7 @@ function getConfigNotifications(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [iv, payload] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'kvk' : 'bsn';
 
   return getApiConfig('ERFPACHT', {
