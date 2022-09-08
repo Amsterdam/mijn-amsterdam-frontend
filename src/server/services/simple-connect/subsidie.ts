@@ -78,7 +78,7 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
       ? 'citizen/'
       : 'company/');
 
-  const ivAndPayload = encrypt(
+  const [ivAndPayload] = encrypt(
     authProfileAndToken.profile.id + '',
     process.env.BFF_SISA_ENCRYPTION_KEY + ''
   );
