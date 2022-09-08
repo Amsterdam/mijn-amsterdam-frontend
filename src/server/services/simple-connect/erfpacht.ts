@@ -11,7 +11,7 @@ function encryptPayload(payload: string) {
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
-  return [iv, encrypted.toString('base64')];
+  return [iv, encrypted.toString('base64url')];
 }
 
 type ErfpachtSourceResponse = 'true' | 'false';
