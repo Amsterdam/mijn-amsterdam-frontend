@@ -24,11 +24,11 @@ function encryptPayloadWithoutForwardSlashes(
   return encrypted;
 }
 
-type ErfpachtSourceResponse = 'true' | 'false';
+type ErfpachtSourceResponse = boolean;
 
-function transformErfpachtResponse(response: ErfpachtSourceResponse) {
+function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
   return {
-    isKnown: response === 'true',
+    isKnown,
   };
 }
 
