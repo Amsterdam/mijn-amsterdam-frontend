@@ -2,10 +2,16 @@ import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchTipsAndNotifications, fetchService } from './api-service';
-import { encrypt } from './subsidie';
+import crypto from 'crypto';
 
 function encryptPayload(payload: string) {
-  return encrypt(payload, process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '');
+  const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
+  const iv = crypto.randomBytes(16).toString('base64').slice(0, 16);
+  const ivBuffer = Buffer.from(iv);
+  const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
+  const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
+
+  return [iv, encrypted.toString('base64')];
 }
 
 type ErfpachtSourceResponse = 'true' | 'false';
@@ -20,7 +26,7 @@ export function getConfigMain(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [, payload, iv] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayload(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'company' : 'user';
 
   return getApiConfig('ERFPACHT', {
@@ -44,7 +50,7 @@ function getConfigNotifications(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [, payload, iv] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayload(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'kvk' : 'bsn';
 
   return getApiConfig('ERFPACHT', {

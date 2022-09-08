@@ -169,8 +169,7 @@ describe('simple-connect/erfpacht', () => {
     };
 
     const cfg = getConfigMain(authProfileAndToken);
-
-    const ivBuffer = Buffer.from(cfg.headers!['X-RANDOM-IV']!, 'base64');
+    const ivBuffer = Buffer.from(cfg.headers!['X-RANDOM-IV']!);
 
     expect(cfg.headers!['X-API-KEY']).toBeDefined();
     expect(ivBuffer.length).toBe(16);

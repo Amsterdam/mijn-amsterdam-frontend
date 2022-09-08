@@ -30,9 +30,9 @@ export function encrypt(plainText: string, encryptionKey: string) {
 
   return [
     Buffer.concat([iv, encrypted]).toString('base64url'),
-    encrypted.toString('base64url'),
-    iv.toString('base64url'),
-  ];
+    encrypted,
+    iv,
+  ] as const;
 }
 
 function getJWT() {
