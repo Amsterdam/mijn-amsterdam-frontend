@@ -16,11 +16,11 @@ function transformErfpachtResponse(response: ErfpachtSourceResponse) {
   };
 }
 
-function getConfigMain(
+export function getConfigMain(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [payload, iv] = encryptPayload(profile.id + '');
+  const [, payload, iv] = encryptPayload(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'company' : 'user';
 
   return getApiConfig('ERFPACHT', {

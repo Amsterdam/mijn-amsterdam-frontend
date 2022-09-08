@@ -1,6 +1,11 @@
+import { createDecipheriv } from 'crypto';
 import nock from 'nock';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchErfpacht, fetchErfpachtNotifications } from './erfpacht';
+import {
+  fetchErfpacht,
+  fetchErfpachtNotifications,
+  getConfigMain,
+} from './erfpacht';
 
 describe('simple-connect/erfpacht', () => {
   const REQUEST_ID = 'test-x-789';
@@ -20,6 +25,7 @@ describe('simple-connect/erfpacht', () => {
   beforeAll(() => {
     process.env = {
       ...penv,
+      BFF_MIJN_ERFPACHT_API_KEY: 'foo-bar-123',
       BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2: 'xxxxxxxxxxxxxxxx',
       BFF_MIJN_ERFPACHT_API_URL: 'http://localhost/erfpacht',
     };
@@ -150,5 +156,36 @@ describe('simple-connect/erfpacht', () => {
         "status": "OK",
       }
     `);
+  });
+
+  test('getConfigMain', () => {
+    const authProfileAndToken: AuthProfileAndToken = {
+      profile: {
+        authMethod: 'digid',
+        profileType: 'private',
+        id: 'DIGID-BSN',
+      },
+      token: '123abc',
+    };
+
+    const cfg = getConfigMain(authProfileAndToken);
+
+    const ivBuffer = Buffer.from(cfg.headers!['X-RANDOM-IV']!, 'base64');
+
+    expect(cfg.headers!['X-API-KEY']).toBeDefined();
+    expect(ivBuffer.length).toBe(16);
+
+    const lastSegment = cfg.url?.split('/').pop();
+
+    const keyBuffer = Buffer.from(
+      process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2!
+    );
+    const dataBuffer = Buffer.from(lastSegment!, 'base64');
+
+    const decipheriv = createDecipheriv('aes-128-cbc', keyBuffer, ivBuffer);
+    const decodedUserId =
+      decipheriv.update(dataBuffer).toString() + decipheriv.final('utf-8');
+
+    expect(decodedUserId).toBe('DIGID-BSN');
   });
 });
