@@ -28,7 +28,11 @@ export function encrypt(plainText: string, encryptionKey: string) {
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
-  return Buffer.concat([iv, encrypted]).toString('base64url');
+  return [
+    Buffer.concat([iv, encrypted]).toString('base64url'),
+    encrypted,
+    iv,
+  ] as const;
 }
 
 function getJWT() {
@@ -74,12 +78,12 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
       ? 'citizen/'
       : 'company/');
 
-  const url =
-    apiEndpointUrl +
-    encrypt(
-      authProfileAndToken.profile.id + '',
-      process.env.BFF_SISA_ENCRYPTION_KEY + ''
-    );
+  const [ivAndPayload] = encrypt(
+    authProfileAndToken.profile.id + '',
+    process.env.BFF_SISA_ENCRYPTION_KEY + ''
+  );
+
+  const url = apiEndpointUrl + ivAndPayload;
 
   return getApiConfig('SUBSIDIE', {
     url,

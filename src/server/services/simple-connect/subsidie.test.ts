@@ -9,22 +9,13 @@ describe('Subsidie', () => {
     token: 'xxxxxx',
   };
 
-  const penv = process.env;
-
   afterAll(() => {
     // Enable http requests.
     nock.enableNetConnect();
     nock.restore();
-    process.env = penv;
   });
 
   beforeAll(() => {
-    process.env = {
-      ...penv,
-      BFF_SISA_ENCRYPTION_KEY: 'xxxxxxxxxxxxxxxx',
-      BFF_SISA_CLIENT_SECRET: 'xxxxxxxxxxxxxxxx',
-      BFF_SISA_API_ENDPOINT: 'http://localhost/remote/subsidies/api/',
-    };
     // Disable real http requests.
     // All requests should be mocked.
     nock.disableNetConnect();
