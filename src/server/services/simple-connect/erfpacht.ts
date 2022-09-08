@@ -1,17 +1,17 @@
+import crypto from 'crypto';
 import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchTipsAndNotifications, fetchService } from './api-service';
-import crypto from 'crypto';
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
   const iv = crypto.randomBytes(16).toString('base64').slice(0, 16);
-  const ivBuffer = Buffer.from(iv);
+  const ivBuffer = Buffer.from(iv, 'utf-8');
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
-  return [iv, encrypted.toString('base64')] as const;
+  return [ivBuffer.toString(), encrypted.toString('base64')] as const;
 }
 
 function encryptPayloadWithoutForwardSlashes(
@@ -46,6 +46,7 @@ export function getConfigMain(
     },
     transformResponse: transformErfpachtResponse,
   };
+
   return getApiConfig('ERFPACHT', config);
 }
 
