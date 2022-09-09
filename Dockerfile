@@ -58,9 +58,7 @@ ENV MA_BFF_API_URL=$MA_BFF_API_URL
 ARG MA_BFF_AUTH_PATH=/auth
 ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 
-COPY src/client /build-space/src/client
-COPY src/universal /build-space/src/universal
-COPY src/index.tsx /build-space/src/index.tsx
+COPY src /build-space/src
 COPY public /build-space/public
 
 # Build FE
