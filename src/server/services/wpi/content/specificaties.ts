@@ -1,8 +1,8 @@
 import { differenceInMonths } from 'date-fns';
-import type { AppState } from '../../../../client/AppState';
 import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
+import { ServiceResults } from '../../tips/tip-types';
 import { documentDownloadName } from '../helpers';
 import {
   WpiIncomeSpecification,
@@ -64,7 +64,7 @@ function transformIncomeSpecificationNotification(
 }
 
 export function getNotifications(
-  specificatiesContent: AppState['WPI_SPECIFICATIES']['content']
+  specificatiesContent: ServiceResults['WPI_SPECIFICATIES']['content']
 ) {
   const notifications: MyNotification[] = [];
 

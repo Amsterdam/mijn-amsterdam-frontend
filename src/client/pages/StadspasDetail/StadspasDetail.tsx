@@ -11,7 +11,6 @@ import {
   ApiResponse,
   isError,
   isLoading,
-  relayApiUrl,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
@@ -28,6 +27,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';

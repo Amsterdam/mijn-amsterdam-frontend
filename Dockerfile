@@ -40,10 +40,7 @@ COPY .env.bff.test /build-space/
 #COPY .env.bff.acceptance /build-space/
 
 COPY .prettierrc.json /build-space/
-
-COPY public /build-space/public
-COPY src /build-space/src
-
+COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
 
 ########################################################################################################################
 ########################################################################################################################
@@ -61,10 +58,20 @@ ENV MA_BFF_API_URL=$MA_BFF_API_URL
 ARG MA_BFF_AUTH_PATH=/auth
 ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 
+COPY src/client /build-space/src/client
+COPY src/universal /build-space/src/universal
+COPY src/index.tsx /build-space/src/index.tsx
+
 # Build FE
 RUN npm run build
+COPY public /build-space/public
+
 
 FROM build-deps as build-app-bff
+
+COPY src/server /build-space/src/server
+COPY src/universal /build-space/src/universal
+COPY src/bffserver.ts /build-space/src/bffserver.ts
 
 # Build BFF
 RUN npm run bff-api:build
@@ -77,15 +84,6 @@ RUN npm run bff-api:build
 ########################################################################################################################
 FROM nginx:stable-alpine as deploy-frontend
 
-ARG MA_OTAP_ENV=development
-ENV MA_OTAP_ENV=$MA_OTAP_ENV
-
-ARG MA_BFF_API_URL=/
-ENV MA_BFF_API_URL=$MA_BFF_API_URL
-
-ARG MA_BFF_AUTH_PATH=/auth
-ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
-
 WORKDIR /app
 
 LABEL name="mijnamsterdam FRONTEND"
@@ -93,17 +91,16 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
 ENV TZ=Europe/Amsterdam
 
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+  && ln -sf /dev/stderr /var/log/nginx/error.log
+
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
 COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
-
 COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.allow.txt
-
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-  && ln -sf /dev/stderr /var/log/nginx/error.log
 
 ########################################################################################################################
 ########################################################################################################################

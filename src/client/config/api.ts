@@ -145,3 +145,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
 
   return [];
 }
+
+export function relayApiUrl(path: string) {
+  return `${BFF_API_BASE_URL}/relay${path}`;
+}

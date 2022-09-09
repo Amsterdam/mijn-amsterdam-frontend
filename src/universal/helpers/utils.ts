@@ -1,6 +1,5 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
-import { BFF_API_BASE_URL } from '../../client/config/api';
 import { PrivateRoutes } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -44,10 +43,6 @@ export function isExternalUrl(url: string) {
   return !isInteralUrl(url);
 }
 
-export function relayApiUrl(path: string) {
-  return `${BFF_API_BASE_URL}/relay${path}`;
-}
-
 export function range(a: number, b: number) {
   return Array.from(
     (function* (x, y) {
@@ -57,12 +52,12 @@ export function range(a: number, b: number) {
 }
 
 export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
-  (Object.keys(obj) as U[]).reduce(
+  (Object.keys(obj as unknown as object) as U[]).reduce(
     (acc, curr) => (keys.includes(curr) ? acc : { ...acc, [curr]: obj[curr] }),
     {} as Omit<T, U>
   );
 
-export function pick<T>(source: T, keys: string[]) {
+export function pick<T extends object>(source: T, keys: string[]) {
   return Object.fromEntries(
     Object.entries(source).filter(([key]) => keys.includes(key))
   );

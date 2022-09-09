@@ -7,12 +7,12 @@ import {
   apiPristineResult,
   ApiResponse,
   apiSuccessResult,
-  relayApiUrl,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import DocumentList from '../../components/DocumentList/DocumentList';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 
 interface DocumentDetailsProps {

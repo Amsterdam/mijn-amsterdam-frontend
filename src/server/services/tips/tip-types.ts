@@ -1,4 +1,3 @@
-import { AppState } from '../../../client/AppState';
 import { ApiResponse } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 
@@ -25,7 +24,7 @@ export type Tip = {
 };
 
 export type TipsPredicateFN = (
-  stateData: Partial<AppState>,
+  stateData: Partial<ServiceResults>,
   today?: Date
 ) => boolean;
 
