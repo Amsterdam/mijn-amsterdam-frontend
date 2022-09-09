@@ -41,6 +41,7 @@ COPY .env.bff.test /build-space/
 
 COPY .prettierrc.json /build-space/
 COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
+COPY src /build-space/src
 
 ########################################################################################################################
 ########################################################################################################################
@@ -58,7 +59,6 @@ ENV MA_BFF_API_URL=$MA_BFF_API_URL
 ARG MA_BFF_AUTH_PATH=/auth
 ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 
-COPY src /build-space/src
 COPY public /build-space/public
 
 # Build FE
@@ -66,10 +66,6 @@ RUN npm run build
 
 
 FROM build-deps as build-app-bff
-
-COPY src/server /build-space/src/server
-COPY src/universal /build-space/src/universal
-COPY src/bffserver.ts /build-space/src/bffserver.ts
 
 # Build BFF
 RUN npm run bff-api:build
