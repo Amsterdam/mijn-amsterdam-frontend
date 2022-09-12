@@ -60,9 +60,11 @@ export default function Vergunningen() {
       (vergunning) => vergunning.status !== 'Afgehandeld'
     );
   }, [vergunningen]);
+
   const hasActualGPK = vergunningenActual.find(
     (vergunning) => vergunning.caseType === CaseType.GPK
   );
+
   return (
     <OverviewPage className={styles.Vergunningen}>
       <PageHeading

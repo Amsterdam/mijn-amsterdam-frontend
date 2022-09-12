@@ -30,9 +30,9 @@ export function encrypt(plainText: string, encryptionKey: string) {
 
   return [
     Buffer.concat([iv, encrypted]).toString('base64url'),
-    encrypted.toString('base64url'),
-    iv.toString('base64url'),
-  ];
+    encrypted,
+    iv,
+  ] as const;
 }
 
 function getJWT() {
@@ -78,7 +78,7 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
       ? 'citizen/'
       : 'company/');
 
-  const ivAndPayload = encrypt(
+  const [ivAndPayload] = encrypt(
     authProfileAndToken.profile.id + '',
     process.env.BFF_SISA_ENCRYPTION_KEY + ''
   );

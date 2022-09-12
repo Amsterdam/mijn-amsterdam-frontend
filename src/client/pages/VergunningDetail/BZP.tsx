@@ -10,22 +10,18 @@ export function BZP({ vergunning }: { vergunning: BZPVergunning }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Kenteken" value={vergunning.kenteken || '-'} />
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Vanaf"
-          value={
-            vergunning?.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-'
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
-      </InfoDetailGroup>
+      {!!vergunning.dateStart && !!vergunning.dateEnd && (
+        <InfoDetailGroup>
+          <InfoDetail
+            label="Vanaf"
+            value={defaultDateFormat(vergunning.dateStart)}
+          />
+          <InfoDetail
+            label="Tot en met"
+            value={defaultDateFormat(vergunning.dateEnd)}
+          />
+        </InfoDetailGroup>
+      )}
       {!!vergunning?.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

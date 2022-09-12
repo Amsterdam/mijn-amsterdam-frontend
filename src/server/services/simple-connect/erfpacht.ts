@@ -1,18 +1,34 @@
+import crypto from 'crypto';
 import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchTipsAndNotifications, fetchService } from './api-service';
-import { encrypt } from './subsidie';
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 function encryptPayload(payload: string) {
-  return encrypt(payload, process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '');
+  const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
+  const iv = crypto.randomBytes(16).toString('base64').slice(0, 16);
+  const ivBuffer = Buffer.from(iv, 'utf-8');
+  const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
+  const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
+
+  return [ivBuffer.toString(), encrypted.toString('base64')] as const;
 }
 
-type ErfpachtSourceResponse = 'true' | 'false';
+function encryptPayloadWithoutForwardSlashes(
+  payload: string
+): ReturnType<typeof encryptPayload> {
+  const encrypted = encryptPayload(payload);
+  if (encrypted[1] && encrypted[1].includes('/')) {
+    return encryptPayloadWithoutForwardSlashes(payload);
+  }
+  return encrypted;
+}
 
-function transformErfpachtResponse(response: ErfpachtSourceResponse) {
+type ErfpachtSourceResponse = boolean;
+
+function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
   return {
-    isKnown: response === 'true',
+    isKnown,
   };
 }
 
@@ -20,17 +36,18 @@ export function getConfigMain(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [, payload, iv] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'company' : 'user';
-
-  return getApiConfig('ERFPACHT', {
+  const config = {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/groundlease/${type}/${payload}`,
     headers: {
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
     },
     transformResponse: transformErfpachtResponse,
-  });
+  };
+
+  return getApiConfig('ERFPACHT', config);
 }
 
 export async function fetchErfpacht(
@@ -44,7 +61,7 @@ function getConfigNotifications(
   authProfileAndToken: AuthProfileAndToken
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
-  const [payload, iv] = encryptPayload(profile.id + '');
+  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'kvk' : 'bsn';
 
   return getApiConfig('ERFPACHT', {
