@@ -18,10 +18,12 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends openssh-server \
   && echo "$SSH_PASSWD" | chpasswd 
 
-COPY package.json /build-space/
 COPY package-lock.json /build-space/
 
 RUN npm ci --prefer-offline --no-audit --progress=false
+COPY package.json /build-space/
+
+FROM build-deps as build-deps-with-sources
 
 COPY conf/sshd_config /etc/ssh/
 COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
@@ -48,7 +50,7 @@ COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps as build-app-fe
+FROM build-deps-with-sources as build-app-fe
 
 ARG MA_OTAP_ENV=development
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
@@ -65,7 +67,7 @@ COPY public /build-space/public
 RUN npm run build
 
 
-FROM build-deps as build-app-bff
+FROM build-deps-with-sources as build-app-bff
 
 # Build BFF
 RUN npm run bff-api:build
