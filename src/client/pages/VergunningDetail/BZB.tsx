@@ -10,23 +10,19 @@ export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Vanaf"
-          value={
-            vergunning?.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-'
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
-      </InfoDetailGroup>
-      {!!vergunning?.decision && (
+      {!!vergunning.dateStart && !!vergunning.dateEnd && (
+        <InfoDetailGroup>
+          <InfoDetail
+            label="Vanaf"
+            value={defaultDateFormat(vergunning.dateStart)}
+          />
+          <InfoDetail
+            label="Tot en met"
+            value={defaultDateFormat(vergunning.dateEnd)}
+          />
+        </InfoDetailGroup>
+      )}
+      {!!vergunning.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>

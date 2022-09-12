@@ -25,6 +25,7 @@ export function isNearEndDate(vergunning: VergunningExpirable) {
   }
 
   const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+
   return (
     !isExpired(vergunning) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
