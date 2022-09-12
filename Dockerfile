@@ -94,7 +94,8 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
 COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
-COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.allow.txt
+# COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.allow.txt
+COPY --from=build-deps /build-space/src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.txt
 
 ########################################################################################################################
 ########################################################################################################################
@@ -102,7 +103,7 @@ COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.allow.tx
 ########################################################################################################################
 ########################################################################################################################
 FROM deploy-frontend as deploy-production-frontend
-COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
+COPY --from=build-deps /build-space/src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
 ########################################################################################################################
