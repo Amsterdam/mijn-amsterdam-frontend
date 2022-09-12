@@ -22,12 +22,14 @@ COPY package-lock.json /build-space/
 COPY package.json /build-space/
 
 RUN npm ci --prefer-offline --no-audit --progress=false
+COPY conf/sshd_config /etc/ssh/
+
 
 FROM build-deps as build-deps-with-sources
 
-COPY conf/sshd_config /etc/ssh/
-COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
+COPY .prettierrc.json /build-space/
 
+COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
 COPY tsconfig.json /build-space/
@@ -41,9 +43,8 @@ COPY .env.production /build-space/
 COPY .env.bff.test /build-space/
 #COPY .env.bff.acceptance /build-space/
 
-COPY .prettierrc.json /build-space/
-COPY src /build-space/src
 COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
+COPY src /build-space/src
 
 ########################################################################################################################
 ########################################################################################################################
