@@ -19,9 +19,9 @@ RUN apt-get update \
   && echo "$SSH_PASSWD" | chpasswd 
 
 COPY package-lock.json /build-space/
+COPY package.json /build-space/
 
 RUN npm ci --prefer-offline --no-audit --progress=false
-COPY package.json /build-space/
 
 FROM build-deps as build-deps-with-sources
 
