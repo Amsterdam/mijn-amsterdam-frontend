@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.15.0 as build-deps
+FROM node:16 as build-deps
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -40,8 +40,8 @@ COPY .env.bff.test /build-space/
 #COPY .env.bff.acceptance /build-space/
 
 COPY .prettierrc.json /build-space/
-COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
 COPY src /build-space/src
+COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
 
 ########################################################################################################################
 ########################################################################################################################
