@@ -137,6 +137,7 @@ app.use((req: Request, res: Response) => {
   return res.end();
 });
 
+// Start the server
 const server = app.listen(BFF_PORT, () => {
   console.info(
     `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${
