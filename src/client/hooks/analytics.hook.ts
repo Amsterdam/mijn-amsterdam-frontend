@@ -81,6 +81,8 @@ export function trackPageView(
     customDimensions,
   };
 
+  console.log('payload', payload);
+
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 

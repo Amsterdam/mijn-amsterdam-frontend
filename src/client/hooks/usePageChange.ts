@@ -7,6 +7,7 @@ import {
   PageTitleMain,
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
+import { Match } from '../../universal/types';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
@@ -84,13 +85,36 @@ export function usePageChange() {
       }
 
       if (isPageFound) {
+        console.log(
+          'getCustomTrackingUrl',
+          getCustomTrackingUrl(location.pathname)
+        );
+
         trackPageViewWithCustomDimension(
           termReplace(title),
-          CustomTrackingUrls[location.pathname] || location.pathname,
+          getCustomTrackingUrl(location.pathname),
           profileType,
           userCity
         );
       }
     }
   }, [location.pathname, termReplace, profileType, userCity]);
+}
+
+function getCustomTrackingUrl(pathname: string) {
+  const route = Object.keys(CustomTrackingUrls).find((r) => {
+    return matchPath(pathname, r);
+  });
+
+  if (route) {
+    const matchResult = matchPath(pathname, route);
+
+    if (!matchResult || !matchResult.isExact) {
+      return pathname;
+    }
+
+    return CustomTrackingUrls[route](matchResult);
+  }
+
+  return pathname;
 }

@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+import { Match } from '../types';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
@@ -106,7 +107,16 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
 );
 
 export const CustomTrackingUrls = {
-  [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: Match) => {
+    return `/vergunning/${match.params?.title}`;
+  },
+  [AppRoutes['INKOMEN/BBZ']]: (match: Match) => {
+    return `/inkomen/bbz/${match.params?.version}`;
+  },
+  [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart/',
+  [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
+  [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
+  [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
 };
 
 export const NoHeroRoutes = [AppRoutes.BUURT];
