@@ -94,3 +94,10 @@ export interface ApiError {
   error: string;
   stateKey: string;
 }
+
+export interface Match {
+  isExact: boolean;
+  params: Record<string, string>;
+  path: string;
+  url: string;
+}

@@ -86,11 +86,29 @@ export function usePageChange() {
       if (isPageFound) {
         trackPageViewWithCustomDimension(
           termReplace(title),
-          CustomTrackingUrls[location.pathname] || location.pathname,
+          getCustomTrackingUrl(location.pathname),
           profileType,
           userCity
         );
       }
     }
   }, [location.pathname, termReplace, profileType, userCity]);
+}
+
+function getCustomTrackingUrl(pathname: string) {
+  const route = Object.keys(CustomTrackingUrls).find((r) => {
+    return matchPath(pathname, r);
+  });
+
+  if (route) {
+    const matchResult = matchPath(pathname, route);
+
+    if (!matchResult || !matchResult.isExact) {
+      return pathname;
+    }
+
+    return CustomTrackingUrls[route](matchResult);
+  }
+
+  return pathname;
 }
