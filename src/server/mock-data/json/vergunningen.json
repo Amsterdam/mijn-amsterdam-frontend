@@ -822,15 +822,30 @@
       "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
       "identifier": "Z/22/1691001",
       "dateRequest": "2022-07-13T00:00:00",
-      "dateDecision": "2022-07-18T00:00:00",
+      "dateDecision": "2022-09-15T00:00:00",
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
-      "dateStart": "2022-09-01",
-      "dateEnd": "2022-09-05",
+      "dateStart": "2022-10-01",
+      "dateEnd": "2022-10-05",
       "timeStart": "10:00",
       "timeEnd": "18:00",
       "status": "Afgehandeld",
       "decision": "Verleend",
       "dateWorkflowActive": "2022-07-13T00:00:00"
+    },
+    {
+      "caseType": "Nachtwerkontheffing",
+      "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
+      "identifier": "Z/22/1691001",
+      "dateRequest": "2022-09-16T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
+      "dateStart": "2022-10-15",
+      "dateEnd": "2022-10-25",
+      "timeStart": "22:00",
+      "timeEnd": "05:00",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-09-16T00:00:00"
     }
   ],
   "status": "OK"
