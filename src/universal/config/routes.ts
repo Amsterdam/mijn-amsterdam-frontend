@@ -125,7 +125,7 @@ export const CustomTrackingUrls: {
     return `/inkomen/tozo/${match.params?.version}`;
   },
   [AppRoutes['INKOMEN/TONK']]: (match) => {
-    return `/inkomen/tonk/${match.params?.version}`;
+    return `/inkomen/tonk`;
   },
 
   [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
