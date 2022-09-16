@@ -31,7 +31,7 @@ type ErfpachtSourceResponse = boolean;
 
 function transformErfpachtResponse(
   isKnown: ErfpachtSourceResponse,
-  uid: string
+  uid?: string
 ) {
   if (`${uid}` === TEST_UID) {
     Sentry.captureMessage('Result for erfpacht 912345664', {
