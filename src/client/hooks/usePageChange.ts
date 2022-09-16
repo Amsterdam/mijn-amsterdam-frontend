@@ -7,7 +7,6 @@ import {
   PageTitleMain,
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config';
-import { Match } from '../../universal/types';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
