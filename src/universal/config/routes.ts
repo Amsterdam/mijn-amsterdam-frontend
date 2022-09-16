@@ -116,7 +116,7 @@ export const CustomTrackingUrls: {
   },
 
   [AppRoutes['INKOMEN/BBZ']]: (match) => {
-    return `/inkomen/bbz/${match.params?.version}`;
+    return `/inkomen/bbz`;
   },
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match) => {
     return `/inkomen/bijstandsuitkering`;
