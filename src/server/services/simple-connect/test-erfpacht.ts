@@ -12,7 +12,7 @@ const profileAndToken: AuthProfileAndToken = {
   token: 'xx',
 };
 
-console.log(getConfigMain(profileAndToken));
+console.log(getConfigMain(profileAndToken, 'xx-xxx'));
 
 console.log('fetching....');
 

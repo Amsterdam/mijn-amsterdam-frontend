@@ -71,7 +71,10 @@ function addAuthMethodToNotificationLinks(
   });
 }
 
-function getConfig(authProfileAndToken: AuthProfileAndToken) {
+function getConfig(
+  authProfileAndToken: AuthProfileAndToken,
+  requestID: requestID
+) {
   const apiEndpointUrl =
     process.env.BFF_SISA_API_ENDPOINT +
     (authProfileAndToken.profile.authMethod === 'digid'
@@ -87,7 +90,7 @@ function getConfig(authProfileAndToken: AuthProfileAndToken) {
 
   return getApiConfig('SUBSIDIE', {
     url,
-    cacheKey: apiEndpointUrl + authProfileAndToken.profile.id,
+    cacheKey: apiEndpointUrl + requestID,
     headers: {
       Authorization: `Bearer ${getJWT()}`,
     },
@@ -98,7 +101,11 @@ export async function fetchSubsidie(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getConfig(authProfileAndToken), false);
+  return fetchService(
+    requestID,
+    getConfig(authProfileAndToken, requestID),
+    false
+  );
 }
 
 export async function fetchSubsidieNotifications(
@@ -107,7 +114,7 @@ export async function fetchSubsidieNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     requestID,
-    getConfig(authProfileAndToken),
+    getConfig(authProfileAndToken, requestID),
     Chapters.SUBSIDIE
   );
 
