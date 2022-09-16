@@ -3,6 +3,9 @@ import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
+import * as Sentry from '@sentry/node';
+
+const TEST_UID = '912345664';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
@@ -26,7 +29,17 @@ function encryptPayloadWithoutForwardSlashes(
 
 type ErfpachtSourceResponse = boolean;
 
-function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
+function transformErfpachtResponse(
+  isKnown: ErfpachtSourceResponse,
+  uid: string
+) {
+  if (`${uid}` === TEST_UID) {
+    Sentry.captureMessage('Result for erfpacht 912345664', {
+      extra: {
+        isKnown,
+      },
+    });
+  }
   return {
     isKnown,
   };
@@ -44,7 +57,8 @@ export function getConfigMain(
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
     },
-    transformResponse: transformErfpachtResponse,
+    transformResponse: (response: ErfpachtSourceResponse) =>
+      transformErfpachtResponse(response, profile.id),
   };
 
   return getApiConfig('ERFPACHT', config);
