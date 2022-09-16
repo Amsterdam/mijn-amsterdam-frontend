@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+import { Match } from '../types';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
@@ -105,8 +106,49 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
   (path) => !PublicRoutes.includes(path)
 );
 
-export const CustomTrackingUrls = {
-  [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
+type AppRoute = keyof typeof AppRoutes;
+
+export const CustomTrackingUrls: {
+  [key: AppRoute]: (match: Match) => string;
+} = {
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match) => {
+    return `/vergunning/${match.params?.title}`;
+  },
+
+  [AppRoutes['INKOMEN/BBZ']]: (match) => {
+    return `/inkomen/bbz`;
+  },
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match) => {
+    return `/inkomen/bijstandsuitkering`;
+  },
+  [AppRoutes['INKOMEN/TOZO']]: (match) => {
+    return `/inkomen/tozo/${match.params?.version}`;
+  },
+  [AppRoutes['INKOMEN/TONK']]: (match) => {
+    return `/inkomen/tonk`;
+  },
+
+  [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
+
+  [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
+  [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
+
+  [AppRoutes['ZORG/VOORZIENINGEN']]: () =>
+    '/zorg-en-ondersteuning/voorziening',
+
+  [AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR']]: (match) => {
+    return `/toeristische-verhuur/vakantieverhuur/${match.params?.title}`;
+  },
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
+    '/toeristische-verhuur/vergunning',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
+    '/toeristische-verhuur/vergunning/bed-and-breakfast',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]: () =>
+    '/toeristische-verhuur/vergunning/vakantieverhuur',
+
+  [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
+
+  [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
 };
 
 export const NoHeroRoutes = [AppRoutes.BUURT];
