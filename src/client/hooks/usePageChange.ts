@@ -85,11 +85,6 @@ export function usePageChange() {
       }
 
       if (isPageFound) {
-        console.log(
-          'getCustomTrackingUrl',
-          getCustomTrackingUrl(location.pathname)
-        );
-
         trackPageViewWithCustomDimension(
           termReplace(title),
           getCustomTrackingUrl(location.pathname),

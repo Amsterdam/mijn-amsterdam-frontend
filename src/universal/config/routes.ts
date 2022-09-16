@@ -106,16 +106,45 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
   (path) => !PublicRoutes.includes(path)
 );
 
-export const CustomTrackingUrls = {
-  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: Match) => {
+type AppRoute = keyof typeof AppRoutes;
+
+export const CustomTrackingUrls: {
+  [key: AppRoute]: (match: Match) => string;
+} = {
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match) => {
     return `/vergunning/${match.params?.title}`;
   },
-  [AppRoutes['INKOMEN/BBZ']]: (match: Match) => {
+
+  [AppRoutes['INKOMEN/BBZ']]: (match) => {
     return `/inkomen/bbz/${match.params?.version}`;
   },
-  [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart/',
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match) => {
+    return `/inkomen/bijstandsuitkering/${match.params?.version}`;
+  },
+  [AppRoutes['INKOMEN/TOZO']]: (match) => {
+    return `/inkomen/tozo/${match.params?.version}`;
+  },
+  [AppRoutes['INKOMEN/TONK']]: (match) => {
+    return `/inkomen/tonk/${match.params?.version}`;
+  },
+
+  [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
+
   [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
   [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
+
+  [AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR']]: (match) => {
+    return `/toeristische-verhuur/vakantieverhuur/${match.params?.title}`;
+  },
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
+    '/toeristische-verhuur/vergunning',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
+    '/toeristische-verhuur/vergunning/bed-and-breakfast',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]: () =>
+    '/toeristische-verhuur/vergunning/vakantieverhuur',
+
+  [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
+
   [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
 };
 
