@@ -56,11 +56,8 @@ export function hasOtherActualVergunningOfSameType(
 export const hasWorkflow = (caseType: CaseType) =>
   caseType === CaseType.Omzettingsvergunning;
 
-export const isExpireable = (caseType: CaseType) =>
-  [CaseType.GPK, CaseType.BZB, CaseType.BZP].includes(caseType);
-
-export const showDocuments = (caseType: CaseType) =>
-  ![
+export const showDocuments = (caseType: CaseType) => {
+  const shouldShowDocuments = ![
     CaseType.GPP,
     CaseType.GPK,
     CaseType.Omzettingsvergunning,
@@ -69,3 +66,5 @@ export const showDocuments = (caseType: CaseType) =>
     CaseType.Flyeren,
     CaseType.AanbiedenDiensten,
   ].includes(caseType);
+  return shouldShowDocuments;
+};

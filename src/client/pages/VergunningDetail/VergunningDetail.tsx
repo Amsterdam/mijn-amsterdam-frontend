@@ -7,9 +7,11 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
+  Linkd,
+  LinkdInline,
   LoadingContent,
   PageContent,
-  PageHeading
+  PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { AanbiedenDiensten } from './AanbiedenDiensten';
@@ -99,6 +101,20 @@ export default function VergunningDetail() {
               !!Vergunning?.documentsUrl && (
                 <DocumentDetails vergunning={Vergunning} />
               )}
+
+            {Vergunning.caseType === CaseType.BZP && (
+              <p className={styles.Disclaimer}>
+                U kunt uw kenteken{' '}
+                <LinkdInline
+                  external
+                  href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
+                >
+                  hier
+                </LinkdInline>{' '}
+                wijzigen. Doorgevoerde wijzigingen worden niet getoond in Mijn
+                Amsterdam.
+              </p>
+            )}
           </>
         )}
       </PageContent>
