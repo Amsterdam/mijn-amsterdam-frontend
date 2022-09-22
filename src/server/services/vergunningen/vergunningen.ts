@@ -312,7 +312,7 @@ function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
     case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
       return notificationContent[item.caseType]?.isExpired;
 
-    // NOTE: For permits you can have multiple of.
+    // NOTE: For permits you can have more than one of.
     // prettier-ignore
     case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item):
       return notificationContent[item.caseType]?.isExpired;
