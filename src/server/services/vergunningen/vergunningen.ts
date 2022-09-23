@@ -143,6 +143,7 @@ export interface BBVergunning extends VergunningBase {
 export interface BZB extends VergunningBase {
   caseType: CaseType.BZB;
   companyName: string | null;
+  numberOfPermits: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;
