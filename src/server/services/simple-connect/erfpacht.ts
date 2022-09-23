@@ -29,7 +29,6 @@ type ErfpachtSourceResponse = boolean;
 function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
   return {
     isKnown: isKnown ?? false,
-    r: isKnown,
   };
 }
 
