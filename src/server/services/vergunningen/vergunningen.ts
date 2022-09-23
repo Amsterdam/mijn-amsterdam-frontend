@@ -10,7 +10,6 @@ import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
   isActualNotification,
-  isExpireable,
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
@@ -304,12 +303,23 @@ function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
   );
   // Ignore formatting of the switch case statements for readability
   switch (true) {
+    // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    // NOTE: For permits you can have more than one of.
+    // prettier-ignore
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
+      item.decision === 'Verleend' &&
+      isNearEndDate(item):
       return notificationContent[item.caseType]?.isExpired;
 
     // prettier-ignore
