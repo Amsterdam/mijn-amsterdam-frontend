@@ -57,11 +57,9 @@ function hashUserId(userID: string, salt = SALT) {
 export async function countLoggedInVisit(userID: string) {
   const userIDHashed = hashUserId(userID);
   const rs = await query(queries.countLogin, [userIDHashed]);
-  console.log('rs', rs);
 }
 
 export async function loginStats(req: Request, res: Response) {
-  console.log('loginstatssss');
   const today = new Date();
   const dateEndday = format(today, QUERY_DATE_FORMAT);
   const ranges = [
@@ -115,11 +113,6 @@ export async function loginStats(req: Request, res: Response) {
       dateStart: startOfYear(sub(today, { years: 1 })),
       dateEnd: sub(startOfYear(today), { days: 1 }),
     },
-    // {
-    //   label: 'Altijd',
-    //   dateStart: dateMin,
-    //   dateEnd: dateMax,
-    // },
   ].map((r) => {
     return {
       ...r,
@@ -163,8 +156,6 @@ export async function loginStats(req: Request, res: Response) {
     queries.totalLogins({ start: dateStart, end: dateEnd })
   );
 
-  console.log(totalLoginsResult);
-
   if (totalLoginsResult?.rowCount) {
     totalLogins = parseInt(totalLoginsResult.rows[0].count, 10);
   }
@@ -176,8 +167,6 @@ export async function loginStats(req: Request, res: Response) {
   if (uniqueLoginsResult?.rowCount) {
     uniqueLogins = uniqueLoginsResult.rowCount;
   }
-
-  console.log(ranges);
 
   return res.render('login-count', {
     dateMin,
