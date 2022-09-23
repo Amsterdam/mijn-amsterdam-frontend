@@ -7,7 +7,6 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
-  Linkd,
   LinkdInline,
   LoadingContent,
   PageContent,
