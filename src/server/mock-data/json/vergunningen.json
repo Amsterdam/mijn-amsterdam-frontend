@@ -11,14 +11,10 @@
       "description": "Ontheffing Blauwe Zone Bewoner",
       "documentsUrl": "/decosjoin/listdocuments/gAAAAABjKYDIOgDQc8saVY2ZLlB6GL7lYkkLmPGiyQQpkrtr_WsCzAaNTNGDJ4lZeOojHKiiJbDY7FIBAQd_xBOpIcb09p0QoPQRUtBLZ3UYBpcIeOnAVUHe6h_PVrLmoXfn7XKbL9yt",
       "id": "2191426354",
-      "identifier": "Z/22/1979539",
+      "identifier": "Z/22/19795392",
       "kenteken": "GD-33-MV",
       "status": "Ontvangen",
-      "title": "Parkeerontheffingen Blauwe zone particulieren",
-      "link": {
-        "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2191426354",
-        "title": "Bekijk hoe het met uw aanvraag staat"
-      }
+      "title": "Parkeerontheffingen Blauwe zone particulieren"
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone particulieren",
@@ -31,14 +27,10 @@
       "description": "Ontheffing Blauwe Zone Bewoner",
       "documentsUrl": "/decosjoin/listdocuments/gAAAAABjKYDIW5uIPJMbvPENwMiCHvpFMqPWpGFgnJllKUUZrEDsNjSjcsxQ8gUJ5O0Ub9j5XyXot8je3Ao8BLEvPF0W3CpOmtnQYO2uOSChEpabt70mV3C6Pu7LFwlTo-RVEvHB-4r_",
       "id": "162761969",
-      "identifier": "Z/22/1979538",
+      "identifier": "Z/22/19795384",
       "kenteken": "GE-12-XD | XY-666-Z",
       "status": "Afgehandeld",
-      "title": "Parkeerontheffingen Blauwe zone particulieren",
-      "link": {
-        "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/162761969",
-        "title": "Bekijk hoe het met uw aanvraag staat"
-      }
+      "title": "Parkeerontheffingen Blauwe zone particulieren"
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
@@ -50,15 +42,12 @@
       "decision": null,
       "description": "Ontheffing Blauwe Zone Bedrijven",
       "documentsUrl": "/decosjoin/listdocuments/gAAAAABjKYDIOgDQc8saVY2ZLlB6GL7lYkkLmPGiyQQpkrtr_WsCzAaNTNGDJ4lZeOojHKiiJbDY7FIBAQd_xBOpIcb09p0QoPQRUtBLZ3UYBpcIeOnAVUHe6h_PVrLmoXfn7XKbL9yt",
-      "id": "2191426354",
+      "id": "219142236354",
       "identifier": "Z/22/1979539",
       "companyName": "Bedrijfje van de zaak",
+      "numberOfPermits": "2",
       "status": "Ontvangen",
-      "title": "Parkeerontheffingen Blauwe zone bedrijven",
-      "link": {
-        "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354",
-        "title": "Bekijk hoe het met uw aanvraag staat"
-      }
+      "title": "Parkeerontheffingen Blauwe zone bedrijven"
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
@@ -70,15 +59,12 @@
       "decision": "Verleend",
       "description": "Ontheffing Blauwe Zone Bedrijven",
       "documentsUrl": "/decosjoin/listdocuments/gAAAAABjKYDIW5uIPJMbvPENwMiCHvpFMqPWpGFgnJllKUUZrEDsNjSjcsxQ8gUJ5O0Ub9j5XyXot8je3Ao8BLEvPF0W3CpOmtnQYO2uOSChEpabt70mV3C6Pu7LFwlTo-RVEvHB-4r_",
-      "id": "162761969",
+      "id": "162777761969",
       "identifier": "Z/22/1979538",
       "companyName": "Bedrijfje van de zaak",
+      "numberOfPermits": "44",
       "status": "Afgehandeld",
-      "title": "Parkeerontheffingen Blauwe zone bedrijven",
-      "link": {
-        "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969",
-        "title": "Bekijk hoe het met uw aanvraag staat"
-      }
+      "title": "Parkeerontheffingen Blauwe zone bedrijven"
     },
     {
       "caseType": "Omzettingsvergunning",
