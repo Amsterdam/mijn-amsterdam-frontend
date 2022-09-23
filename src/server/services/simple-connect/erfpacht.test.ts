@@ -42,7 +42,6 @@ describe('simple-connect/erfpacht', () => {
       Object {
         "content": Object {
           "isKnown": false,
-          "r": null,
         },
         "status": "OK",
       }
@@ -63,7 +62,6 @@ describe('simple-connect/erfpacht', () => {
       Object {
         "content": Object {
           "isKnown": true,
-          "r": true,
         },
         "status": "OK",
       }
@@ -84,7 +82,6 @@ describe('simple-connect/erfpacht', () => {
       Object {
         "content": Object {
           "isKnown": false,
-          "r": false,
         },
         "status": "OK",
       }
