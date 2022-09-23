@@ -102,19 +102,21 @@ export default function VergunningDetail() {
                 <DocumentDetails vergunning={Vergunning} />
               )}
 
-            {Vergunning.caseType === CaseType.BZP && (
-              <p className={styles.Disclaimer}>
-                U kunt uw kenteken{' '}
-                <LinkdInline
-                  external
-                  href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
-                >
-                  hier
-                </LinkdInline>{' '}
-                wijzigen. Doorgevoerde wijzigingen worden niet getoond in Mijn
-                Amsterdam.
-              </p>
-            )}
+            {Vergunning.caseType === CaseType.BZP &&
+              Vergunning.decision === 'Verleend' &&
+              Vergunning.status === 'Afgehandeld' && (
+                <p className={styles.Disclaimer}>
+                  U kunt uw kenteken{' '}
+                  <LinkdInline
+                    external
+                    href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
+                  >
+                    hier
+                  </LinkdInline>{' '}
+                  wijzigen. Doorgevoerde wijzigingen worden niet getoond in Mijn
+                  Amsterdam.
+                </p>
+              )}
           </>
         )}
       </PageContent>
