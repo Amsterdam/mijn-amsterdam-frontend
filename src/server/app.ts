@@ -53,6 +53,9 @@ Sentry.init(sentryOptions);
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', './src/server/views');
+
 // set up rate limiter: maximum of five requests per minute
 
 const limiter = rateLimit({
