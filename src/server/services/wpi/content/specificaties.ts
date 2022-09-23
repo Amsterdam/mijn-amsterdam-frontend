@@ -4,7 +4,7 @@ import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { documentDownloadName } from '../helpers';
-import {
+import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
 } from '../wpi-types';
