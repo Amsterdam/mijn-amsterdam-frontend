@@ -1,4 +1,4 @@
-import { AppState } from '../../../client/AppState';
+import type { AppState } from '../../../client/AppState';
 import { ApiResponse } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 
