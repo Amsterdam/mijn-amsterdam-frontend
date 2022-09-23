@@ -110,7 +110,7 @@
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
     "node-jose": "^2.1.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^7.0.3",
     "prettier": "^2.5.1",
     "proj4": "^2.7.5",
     "react": "^17.0.2",
