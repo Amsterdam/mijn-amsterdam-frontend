@@ -52,9 +52,10 @@ const sentryOptions: Sentry.NodeOptions = {
 Sentry.init(sentryOptions);
 
 const app = express();
+const viewDir = __dirname.split('/').slice(-2, -1);
 
 app.set('view engine', 'pug');
-app.set('views', './src/server/views');
+app.set('views', `./${viewDir}/server/views`);
 
 // set up rate limiter: maximum of five requests per minute
 
