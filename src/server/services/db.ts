@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/node';
 import { Client, ClientConfig } from 'pg';
-import { IS_AP } from '../../universal/config';
 
 export const pgDbConfig: ClientConfig = {
   host: process.env.DB_HOST,
@@ -8,10 +7,8 @@ export const pgDbConfig: ClientConfig = {
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: { rejectUnauthorized: IS_AP },
+  ssl: { rejectUnauthorized: false },
 };
-
-console.log('pgDbConfig', pgDbConfig);
 
 const client = new Client(pgDbConfig);
 let isConnected = false;
