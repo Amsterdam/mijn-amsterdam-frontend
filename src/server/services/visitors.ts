@@ -13,7 +13,7 @@ import { Request, Response } from 'express';
 import { IS_AP, IS_PRODUCTION } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { query } from './db';
-
+import db from 'pg';
 /**
  * This service is an initial POC to count the unique logins per userID. This gives us the ability to use this stat
  * as a kpi. Currently the data lives in a cache which gets deleted everytime a new version of the application is deployed.
@@ -34,12 +34,14 @@ interface DateRange {
   end: string;
 }
 
+function escapeIdentifier(input: string) {
+  return db.Client.prototype.escapeIdentifier(input);
+}
+
 const queries = {
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid) VALUES ($1) RETURNING id`,
-  totalLogins: ({ start, end }: DateRange) =>
-    `SELECT count(id) FROM ${tableNameLoginCount} WHERE '[${start}, ${end}]'::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: ({ start, end }: DateRange) =>
-    `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE '[${start}, ${end}]'::daterange @> date_created::date GROUP BY uid`,
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 };
@@ -152,17 +154,17 @@ export async function loginStats(req: Request, res: Response) {
     dateEnd = req.query.dateEnd as string;
   }
 
-  const totalLoginsResult = await query(
-    queries.totalLogins({ start: dateStart, end: dateEnd })
-  );
+  const totalLoginsResult = await query(queries.totalLogins, [
+    `[${dateStart}, ${dateEnd}]`,
+  ]);
 
   if (totalLoginsResult?.rowCount) {
     totalLogins = parseInt(totalLoginsResult.rows[0].count, 10);
   }
 
-  const uniqueLoginsResult = await query(
-    queries.uniqueLogins({ start: dateStart, end: dateEnd })
-  );
+  const uniqueLoginsResult = await query(queries.uniqueLogins, [
+    `[${dateStart}, ${dateEnd}]`,
+  ]);
 
   if (uniqueLoginsResult?.rowCount) {
     uniqueLogins = uniqueLoginsResult.rowCount;
