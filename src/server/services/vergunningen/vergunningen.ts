@@ -258,6 +258,28 @@ const vergunningOptionsDefault: VergunningOptions = {
     !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
 };
 
+export function addLinks(
+  vergunningen: VergunningenData,
+  appRoute: VergunningOptions['appRoute']
+) {
+  return vergunningen.map((vergunning) => {
+    const route =
+      typeof appRoute === 'function' ? appRoute(vergunning) : appRoute;
+    return {
+      ...vergunning,
+      link: {
+        to: generatePath(route, {
+          title: slug(vergunning.caseType, {
+            lower: true,
+          }),
+          id: vergunning.id,
+        }),
+        title: `Bekijk hoe het met uw aanvraag staat`,
+      },
+    };
+  });
+}
+
 export async function fetchVergunningen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -267,26 +289,7 @@ export async function fetchVergunningen(
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
-    vergunningen = vergunningen.map((vergunning) => {
-      const appRoute =
-        typeof options.appRoute === 'function'
-          ? options.appRoute(vergunning)
-          : options.appRoute;
-      return {
-        ...vergunning,
-        link: {
-          to: options?.appRoute
-            ? generatePath(appRoute, {
-                title: slug(vergunning.caseType, {
-                  lower: true,
-                }),
-                id: vergunning.id,
-              })
-            : '/',
-          title: `Bekijk hoe het met uw aanvraag staat`,
-        },
-      };
-    });
+    vergunningen = addLinks(vergunningen, options.appRoute);
 
     if (options?.filter) {
       vergunningen = vergunningen.filter(options.filter);
