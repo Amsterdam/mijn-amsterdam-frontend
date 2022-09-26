@@ -128,21 +128,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2191426354"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1979539
-                  </a>
+                  Z/22/19795392
                 </td>
                 <td
                   class="DisplayProp"
@@ -175,21 +161,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1979539
-                  </a>
+                  Z/22/1979539
                 </td>
                 <td
                   class="DisplayProp"
@@ -920,21 +892,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/162761969"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1979538
-                  </a>
+                  Z/22/19795384
                 </td>
                 <td
                   class="DisplayProp"
@@ -967,21 +925,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1979538
-                  </a>
+                  Z/22/1979538
                 </td>
                 <td
                   class="DisplayProp"
