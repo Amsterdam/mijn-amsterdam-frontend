@@ -15,7 +15,9 @@ const aanvraagLabels: WpiRequestStatusLabels = {
       } ontvangen op ${defaultDateTimeFormat(statusStep!.datePublished)}`,
   },
   description: (requestProcess, statusStep) =>
-    `<p>Wij hebben uw aanvraag Bbz ontvangen. Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details.</p>`,
+    `<p>Wij hebben uw aanvraag ${
+          statusStep.about || requestProcess.about
+        } ontvangen. Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details.</p>`,
 };
 
 const beslisTermijnLabels: WpiRequestStatusLabels = {
