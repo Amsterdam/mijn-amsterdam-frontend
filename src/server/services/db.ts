@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { Client, ClientConfig } from 'pg';
+import { Pool, ClientConfig } from 'pg';
 
 export const pgDbConfig: ClientConfig = {
   host: process.env.DB_HOST,
@@ -10,19 +10,23 @@ export const pgDbConfig: ClientConfig = {
   ssl: { rejectUnauthorized: false },
 };
 
-const client = new Client(pgDbConfig);
+const pool = new Pool(pgDbConfig);
 let isConnected = false;
 
 export async function query(query: string, values?: any[]) {
   let result = null;
   try {
     if (!isConnected) {
-      await client.connect();
+      await pool.connect();
       isConnected = true;
     }
-    result = await client.query(query, values);
+    result = await pool.query(query, values);
   } catch (error) {
     Sentry.captureException(error);
   }
   return result;
 }
+
+process.on('beforeExit', () => {
+  pool.end();
+});
