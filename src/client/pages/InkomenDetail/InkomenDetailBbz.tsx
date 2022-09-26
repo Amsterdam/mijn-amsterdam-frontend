@@ -11,7 +11,8 @@ export default function InkomenDetailBbz() {
   const { id } = useParams<{ id: string }>();
   const statusItem = WPI_BBZ.content?.find((item) => item.id === id);
   const hasDecisionStep =
-    statusItem?.steps.some((step) => step.id === 'besluit') ?? false;
+    statusItem?.steps.some((step) => step.id.includes('besluit')) ?? false;
+
   const pageContent = useCallback((isLoading, inkomenItem) => {
     return (
       <>
