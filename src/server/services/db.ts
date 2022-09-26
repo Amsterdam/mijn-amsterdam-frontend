@@ -21,7 +21,6 @@ export async function query(query: string, values?: any[]) {
       isConnected = true;
     }
     result = await client.query(query, values);
-    // await pool.end();
   } catch (error) {
     Sentry.captureException(error);
   }
