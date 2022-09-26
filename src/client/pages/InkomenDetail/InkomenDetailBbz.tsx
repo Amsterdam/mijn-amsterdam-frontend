@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks';
@@ -50,49 +49,7 @@ export default function InkomenDetailBbz() {
       documentPathForTracking={(document) =>
         `/downloads/inkomen/bbz/${document.title.split(/\n/)[0]}`
       }
-      getItems={() => {
-        if (!statusItem) {
-          return [];
-        }
-
-        if (
-          statusItem.steps.some((s) =>
-            REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(s.id)
-          )
-        ) {
-          // If its a completed request, pass data without processing (show's all steps seperate)
-          return [statusItem] as any[];
-        }
-
-        // It's an open request, combine all aanvraag steps into one.
-        const requests = statusItem.steps.filter((s) => s.id === 'aanvraag');
-
-        // Only 1 aanvraag steps, early return
-        if (requests.length === 1) {
-          return [statusItem] as any[];
-        }
-
-        const requestStep = { ...requests[0] };
-        const otherRequestDocuments = requests
-          .slice(1)
-          .map((s) => s.documents)
-          .flat();
-
-        // Combine the documents
-        requestStep.documents = [
-          ...requestStep.documents,
-          ...otherRequestDocuments,
-        ];
-        const otherSteps = statusItem.steps.filter((s) => s.id !== 'aanvraag');
-
-        // Create new item.
-        const returnItem = {
-          ...statusItem,
-          steps: [requestStep, ...otherSteps],
-        };
-
-        return [returnItem] as any[];
-      }}
+      reverseSteps={hasDecisionStep} // For an unknown business reason, the historic steps of BBZ are shown in reverse.
     />
   );
 }
