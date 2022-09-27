@@ -163,4 +163,31 @@ describe('<StatusDetail />', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Aanvraag Test item')).toBeInTheDocument();
   });
+
+  it('Reverses the steps', () => {
+    function DetailComponent() {
+      return (
+        <StatusDetail
+          chapter="INKOMEN"
+          stateKey="WPI_TOZO"
+          showToggleMore={false}
+          reverseSteps={true}
+          maxStepCount={() => 3}
+          statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
+        />
+      );
+    }
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={DetailComponent}
+        initializeState={initializeState}
+      />
+    );
+
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

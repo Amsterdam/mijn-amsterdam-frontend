@@ -10,6 +10,10 @@ export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
+      <InfoDetail
+        label="Aantal aangevraagde ontheffingen"
+        value={vergunning.numberOfPermits}
+      />
       {!!vergunning.dateStart && !!vergunning.dateEnd && (
         <InfoDetailGroup>
           <InfoDetail

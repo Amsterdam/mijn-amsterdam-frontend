@@ -10,7 +10,6 @@ import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
   isActualNotification,
-  isExpireable,
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
@@ -144,6 +143,7 @@ export interface BBVergunning extends VergunningBase {
 export interface BZB extends VergunningBase {
   caseType: CaseType.BZB;
   companyName: string | null;
+  numberOfPermits: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;
@@ -258,6 +258,28 @@ const vergunningOptionsDefault: VergunningOptions = {
     !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
 };
 
+export function addLinks(
+  vergunningen: VergunningenData,
+  appRoute: VergunningOptions['appRoute']
+) {
+  return vergunningen.map((vergunning) => {
+    const route =
+      typeof appRoute === 'function' ? appRoute(vergunning) : appRoute;
+    return {
+      ...vergunning,
+      link: {
+        to: generatePath(route, {
+          title: slug(vergunning.caseType, {
+            lower: true,
+          }),
+          id: vergunning.id,
+        }),
+        title: `Bekijk hoe het met uw aanvraag staat`,
+      },
+    };
+  });
+}
+
 export async function fetchVergunningen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -267,26 +289,7 @@ export async function fetchVergunningen(
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
-    vergunningen = vergunningen.map((vergunning) => {
-      const appRoute =
-        typeof options.appRoute === 'function'
-          ? options.appRoute(vergunning)
-          : options.appRoute;
-      return {
-        ...vergunning,
-        link: {
-          to: options?.appRoute
-            ? generatePath(appRoute, {
-                title: slug(vergunning.caseType, {
-                  lower: true,
-                }),
-                id: vergunning.id,
-              })
-            : '/',
-          title: `Bekijk hoe het met uw aanvraag staat`,
-        },
-      };
-    });
+    vergunningen = addLinks(vergunningen, options.appRoute);
 
     if (options?.filter) {
       vergunningen = vergunningen.filter(options.filter);
@@ -304,12 +307,23 @@ function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
   );
   // Ignore formatting of the switch case statements for readability
   switch (true) {
+    // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    // NOTE: For permits you can have more than one of.
+    // prettier-ignore
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item):
+      return notificationContent[item.caseType]?.isExpired;
+
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
+      item.decision === 'Verleend' &&
+      isNearEndDate(item):
       return notificationContent[item.caseType]?.isExpired;
 
     // prettier-ignore

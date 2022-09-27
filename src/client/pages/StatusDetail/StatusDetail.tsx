@@ -89,20 +89,21 @@ export default function StatusDetail({
   let statusItemSteps = statusItem?.steps ?? [];
 
   if (reverseSteps && statusItemSteps.length) {
-    statusItemSteps = [...statusItemSteps]
+    statusItemSteps = [...statusItemSteps];
     statusItemSteps.reverse();
   }
 
-  statusItemSteps = statusItem?.steps.map((step) => {
-    return Object.assign({}, step, {
-      documents: step.documents.map((document) => {
-        return Object.assign({}, document, {
-          url: relayApiUrl(document.url),
-        });
-      }),
-    });
-  }) || [];
-  
+  statusItemSteps =
+    statusItemSteps.map((step) => {
+      return Object.assign({}, step, {
+        documents: step.documents.map((document) => {
+          return Object.assign({}, document, {
+            url: relayApiUrl(document.url),
+          });
+        }),
+      });
+    }) || [];
+
   return (
     <DetailPage className={styles.StatusDetail}>
       <PageHeading

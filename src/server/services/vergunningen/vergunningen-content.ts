@@ -1,9 +1,9 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
-import { dateFormat } from '../../../universal/helpers';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { Vergunning, VergunningExpirable } from './vergunningen';
+import { BZP, Vergunning, VergunningExpirable } from './vergunningen';
 
 type NotificationStatusType =
   | 'almostExpired'
@@ -107,14 +107,34 @@ const done: NotificationLabels = {
 
 export const notificationContent: NotificationContent = {
   [CaseType.BZB]: {
-    almostExpired,
-    isExpired,
+    almostExpired: {
+      ...almostExpired,
+      description: (item) =>
+        `Uw ${item.title} met zaaknummer ${item.identifier} loopt binnenkort af.`,
+    },
+    isExpired: {
+      ...isExpired,
+      description: (item: BZP | any) =>
+        `Uw ${item.title} met zaaknummer ${item.identifier} is ${
+          item.dateEnd && `op ${defaultDateFormat(item.dateEnd)} `
+        }verlopen.`,
+    },
     inProgress,
     done,
   },
   [CaseType.BZP]: {
-    almostExpired,
-    isExpired,
+    almostExpired: {
+      ...almostExpired,
+      description: (item) =>
+        `Uw ${item.title} met zaaknummer ${item.identifier} loopt binnenkort af.`,
+    },
+    isExpired: {
+      ...isExpired,
+      description: (item: BZP | any) =>
+        `Uw ${item.title} met zaaknummer ${item.identifier} is ${
+          item.dateEnd && `op ${defaultDateFormat(item.dateEnd)} `
+        }verlopen.`,
+    },
     inProgress,
     done,
   },
