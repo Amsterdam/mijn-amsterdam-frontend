@@ -113,7 +113,7 @@ export const notificationContent: NotificationContent = {
       description: (item: BZB | any) =>
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) loopt ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
-        }} af.`,
+        } af.`,
     },
     isExpired: {
       ...isExpired,
@@ -121,7 +121,7 @@ export const notificationContent: NotificationContent = {
       description: (item: BZB | any) =>
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) is ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
-        }} verlopen.`,
+        } verlopen.`,
     },
     inProgress: {
       ...inProgress,
@@ -143,7 +143,7 @@ export const notificationContent: NotificationContent = {
       description: (item: BZP | any) =>
         `Uw ontheffing blauwe zone (${item.kenteken}) loopt ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
-        }} af.`,
+        } af.`,
     },
     isExpired: {
       ...isExpired,
@@ -151,7 +151,7 @@ export const notificationContent: NotificationContent = {
       description: (item: BZP | any) =>
         `Uw ontheffing blauwe zone (${item.kenteken}) is ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
-        }} verlopen.`,
+        } verlopen.`,
     },
     inProgress: {
       ...inProgress,
