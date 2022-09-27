@@ -51,4 +51,5 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.PARKEREN]: IconParkeren,
   [Chapters.KLACHTEN]: IconKlachten,
   [Chapters.HORECA]: IconHoreca,
+  ALERT: IconAlert,
 };

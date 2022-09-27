@@ -72,6 +72,8 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
+  VERGUNNINGEN_LOPEND: 'Vergunningen',
+  VERGUNNINGEN_EERDER: 'Vergunningen',
   KVK: 'Mijn onderneming',
   SIA: 'Meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
@@ -113,6 +115,8 @@ export const DocumentTitles = {
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
+  [AppRoutes.VERGUNNINGEN_LOPEND]: `${ChapterTitles.VERGUNNINGEN} lopende aanvragen`,
+  [AppRoutes.VERGUNNINGEN_EERDER]: `${ChapterTitles.VERGUNNINGEN} eerdere aanvragen`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,

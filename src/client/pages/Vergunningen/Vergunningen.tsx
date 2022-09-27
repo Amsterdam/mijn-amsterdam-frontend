@@ -17,16 +17,17 @@ import {
   Table,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
+import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
-const DISPLAY_PROPS = {
+export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   dateRequest: 'Aangevraagd',
 };
 
-const DISPLAY_PROPS_HISTORY = {
+export const DISPLAY_PROPS_HISTORY = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   decision: 'Resultaat',
@@ -111,7 +112,11 @@ export default function Vergunningen() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
-          items={vergunningenActual}
+          items={vergunningenActual.slice(0, 3)}
+        />
+        <PageTableCutoffLink
+          count={vergunningenActual.length}
+          appRouteWithPageParam={AppRoutes.VERGUNNINGEN_LOPEND}
         />
       </SectionCollapsible>
       <SectionCollapsible
