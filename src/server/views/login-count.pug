@@ -1,0 +1,28 @@
+nav
+  each range in ranges
+    a(href=`?dateStart=${range.dateStart}&dateEnd=${range.dateEnd}`) #{range.label}
+    | #{' '} | #{' '}
+
+table 
+  tr
+    th Totaal logins
+    td= totalLogins
+  tr
+    th Unieke ingelogde bezoekers
+    td= uniqueLogins
+  tr
+    th Laatste login
+    td= dateMax
+  tr
+    th Eerste login
+    td= dateMin
+
+
+h3 Selecteer datum bereik
+
+form(action='')
+  label Vanaf
+    input(name='dateStart', type='date', value=dateStart)
+  label Tot
+    input(name='dateEnd', type='date', value=dateEnd)
+  button(type='submit') Verstuur

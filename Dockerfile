@@ -109,6 +109,7 @@ WORKDIR /app
 
 # Copy the built application files to the current image
 COPY --from=build-bff /app/build-bff /app/build-bff
+COPY --from=build-deps /app/src/server/views /app/build-bff/server/views
 
 # Copy required node modules
 COPY --from=build-bff /app/node_modules /app/node_modules
