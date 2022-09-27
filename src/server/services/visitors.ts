@@ -13,30 +13,20 @@ import { Request, Response } from 'express';
 import { IS_AP, IS_PRODUCTION } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { query } from './db';
-import db from 'pg';
+
 /**
- * This service is an initial POC to count the unique logins per userID. This gives us the ability to use this stat
- * as a kpi. Currently the data lives in a cache which gets deleted everytime a new version of the application is deployed.
- * Also the application os loadbalanced so the stats are divided between multiple disks. A proper solution would require a database + backup functionality.
+ * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
  */
 
 const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
 
-let tableNameLoginCount = 'dev_login_count';
-
-if (IS_AP) {
-  tableNameLoginCount = IS_PRODUCTION ? 'prod_login_count' : 'acc_login_count';
-}
-
-interface DateRange {
-  start: string;
-  end: string;
-}
-
-function escapeIdentifier(input: string) {
-  return db.Client.prototype.escapeIdentifier(input);
-}
+/**
+ * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
+ */
+const tableNameLoginCount =
+  process.env.BFF_LOGIN_COUNT_TABLE ??
+  (IS_PRODUCTION ? 'prod_login_count' : 'acc_login_count');
 
 const queries = {
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid) VALUES ($1) RETURNING id`,
@@ -56,12 +46,17 @@ function hashUserId(userID: string, salt = SALT) {
   return shasum.digest('hex');
 }
 
-export async function countLoggedInVisit(userID: string) {
+export function countLoggedInVisit(userID: string) {
   const userIDHashed = hashUserId(userID);
-  const rs = await query(queries.countLogin, [userIDHashed]);
+  return query(queries.countLogin, [userIDHashed]);
 }
 
 export async function loginStats(req: Request, res: Response) {
+  if (!IS_AP && !process.env.BFF_LOGIN_COUNT_TABLE) {
+    res.send(
+      'Supply database credentials and enable your Datapunt VPN to use this view locally.'
+    );
+  }
   const today = new Date();
   const dateEndday = format(today, QUERY_DATE_FORMAT);
   const ranges = [
