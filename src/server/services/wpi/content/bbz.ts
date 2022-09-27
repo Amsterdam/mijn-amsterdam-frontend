@@ -1,6 +1,24 @@
+import { defaultDateTimeFormat } from '../../../../universal/helpers';
 import { productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
+
+const aanvraagLabels: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `Wij hebben uw aanvraag ${
+        statusStep.about || requestProcess.about
+      } ontvangen`,
+    description: (requestProcess, statusStep) =>
+      `Wij hebben uw aanvraag ${
+        requestProcess.title
+      } ontvangen op ${defaultDateTimeFormat(statusStep!.datePublished)}`,
+  },
+  description: (requestProcess, statusStep) =>
+    `<p>Wij hebben uw aanvraag ${
+          statusStep.about || requestProcess.about
+        } ontvangen. Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details.</p>`,
+};
 
 const beslisTermijnLabels: WpiRequestStatusLabels = {
   notification: {
@@ -75,7 +93,7 @@ const besluitLabels: WpiRequestStatusLabels = {
 };
 
 export const requestProcess = {
-  aanvraag: tozoRequestProcess.aanvraag,
+  aanvraag: aanvraagLabels,
   voorschot: tozoRequestProcess.voorschot,
   herstelTermijn: tozoRequestProcess.herstelTermijn,
   inkomstenwijziging: tozoRequestProcess.inkomstenwijziging,
