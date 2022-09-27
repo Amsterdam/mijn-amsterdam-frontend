@@ -3,7 +3,7 @@ import { LinkProps } from 'react-router-dom';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { BZP, Vergunning, VergunningExpirable } from './vergunningen';
+import { BZB, BZP, Vergunning, VergunningExpirable } from './vergunningen';
 
 type NotificationStatusType =
   | 'almostExpired'
@@ -110,7 +110,7 @@ export const notificationContent: NotificationContent = {
     almostExpired: {
       ...almostExpired,
       title: () => 'Uw ontheffing blauwe zone verloopt binnenkort',
-      description: (item: BZP | any) =>
+      description: (item: BZB | any) =>
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) loopt ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
         }} af.`,
@@ -118,7 +118,7 @@ export const notificationContent: NotificationContent = {
     isExpired: {
       ...isExpired,
       title: () => 'Uw ontheffing blauwe zone is verlopen',
-      description: (item: BZP | any) =>
+      description: (item: BZB | any) =>
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) is ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
         }} verlopen.`,
@@ -126,13 +126,13 @@ export const notificationContent: NotificationContent = {
     inProgress: {
       ...inProgress,
       title: () => 'Aanvraag ontheffing blauwe zone',
-      description: (item: BZP | any) =>
+      description: (item: BZB | any) =>
         `Uw aanvraag ontheffing blauwe zone bedrijven (${item.identifier}) is in behandeling genomen.`,
     },
     done: {
       ...done,
       title: () => 'Aanvraag ontheffing blauwe zone',
-      description: (item: BZP | any) =>
+      description: (item: BZB | any) =>
         `Uw aanvraag ontheffing blauwe zone bedrijven (${item.identifier}) is afgehandeld.`,
     },
   },
