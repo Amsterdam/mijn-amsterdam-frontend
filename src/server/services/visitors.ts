@@ -53,7 +53,7 @@ export function countLoggedInVisit(userID: string) {
 
 export async function loginStats(req: Request, res: Response) {
   if (!IS_AP && !process.env.BFF_LOGIN_COUNT_TABLE) {
-    res.send(
+    return res.send(
       'Supply database credentials and enable your Datapunt VPN to use this view locally.'
     );
   }
