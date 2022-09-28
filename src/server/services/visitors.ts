@@ -10,9 +10,9 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_AP, IS_PRODUCTION } from '../../universal/config';
+import { IS_AP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { query } from './db';
+import { query, tableNameLoginCount } from './db';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -20,13 +20,6 @@ import { query } from './db';
 
 const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
-
-/**
- * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
- */
-const tableNameLoginCount =
-  process.env.BFF_LOGIN_COUNT_TABLE ??
-  (IS_PRODUCTION ? 'prod_login_count' : 'acc_login_count');
 
 const queries = {
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid) VALUES ($1) RETURNING id`,
