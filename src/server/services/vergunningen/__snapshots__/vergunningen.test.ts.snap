@@ -461,7 +461,7 @@ Object {
         "id": "vergunning-302573541-notification",
         "link": Object {
           "title": "Vraag op tijd een nieuwe ontheffing aan",
-          "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
         },
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
@@ -472,7 +472,7 @@ Object {
         "id": "vergunning-162761969-notification",
         "link": Object {
           "title": "Vraag op tijd een nieuwe ontheffing aan",
-          "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
         },
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
