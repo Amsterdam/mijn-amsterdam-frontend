@@ -274,7 +274,7 @@ Object {
         "description": "Uw ontheffing blauwe zone (A0-03-48N) is op 02 juli 2021 verlopen.",
         "id": "vergunning-3490008162-notification",
         "link": Object {
-          "title": "Vraag zonodig een nieuwe vergunning aan",
+          "title": "Vraag een nieuwe ontheffing aan",
           "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D",
         },
         "title": "Uw ontheffing blauwe zone is verlopen",
