@@ -324,7 +324,7 @@ function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
     case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
       item.decision === 'Verleend' &&
       isNearEndDate(item):
-      return notificationContent[item.caseType]?.isExpired;
+      return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
     case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
