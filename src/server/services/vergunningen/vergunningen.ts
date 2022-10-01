@@ -301,7 +301,11 @@ export async function fetchVergunningen(
   return response;
 }
 
-function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
+function getNotificationLabels(
+  item: Vergunning,
+  items: Vergunning[],
+  compareToDate: Date = new Date()
+) {
   const allItems = items.filter(
     (caseItem: Vergunning) => caseItem.caseType === item.caseType
   );
@@ -309,21 +313,21 @@ function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
   switch (true) {
     // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItems, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItems, item):
       return notificationContent[item.caseType]?.isExpired;
 
     // NOTE: For permits you can have more than one of.
     // prettier-ignore
-    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item):
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item, compareToDate):
       return notificationContent[item.caseType]?.isExpired;
 
     case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
       item.decision === 'Verleend' &&
-      isNearEndDate(item):
+      isNearEndDate(item, compareToDate):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
@@ -353,7 +357,8 @@ function assignNotificationProperties(
 
 export function createVergunningNotification(
   item: Vergunning,
-  items: Vergunning[]
+  items: Vergunning[],
+  dateNow?: Date
 ): MyNotification {
   const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
@@ -367,7 +372,7 @@ export function createVergunningNotification(
     },
   };
 
-  const labels = getNotificationLabels(item, items);
+  const labels = getNotificationLabels(item, items, dateNow);
 
   if (labels) {
     assignNotificationProperties(notification, labels, item);
@@ -395,7 +400,11 @@ export async function fetchVergunningenNotifications(
                 isActualNotification(vergunning.dateDecision, compareToDate))
           )
           .map((vergunning) =>
-            createVergunningNotification(vergunning, VERGUNNINGEN.content)
+            createVergunningNotification(
+              vergunning,
+              VERGUNNINGEN.content,
+              compareDate
+            )
           )
       : [];
 

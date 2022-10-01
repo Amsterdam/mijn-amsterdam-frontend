@@ -70,8 +70,8 @@ export function isCurrentYear(datestr: string) {
   return isThisYear(new Date(datestr));
 }
 
-export function monthsFromNow(datestr: string) {
-  return differenceInMonths(new Date(datestr), new Date());
+export function monthsFromNow(datestr: string, dateNow?: Date) {
+  return differenceInMonths(new Date(datestr), dateNow || new Date());
 }
 
 export function getMonth(index: number) {

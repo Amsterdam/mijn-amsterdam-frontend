@@ -11,34 +11,37 @@ export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export function isActualNotification(
   datePublished: string,
-  compareDate: Date
+  dateNow: Date
 ): boolean {
   return (
-    differenceInMonths(compareDate, new Date(datePublished)) <
+    differenceInMonths(dateNow, new Date(datePublished)) <
     MONTHS_TO_KEEP_NOTIFICATIONS
   );
 }
 
-export function isNearEndDate(vergunning: VergunningExpirable) {
+export function isNearEndDate(
+  vergunning: VergunningExpirable,
+  dateNow: Date = new Date()
+) {
   if (!vergunning.dateEnd) {
     return false;
   }
 
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+  const monthsTillEnd = monthsFromNow(vergunning.dateEnd, dateNow);
 
   return (
-    !isExpired(vergunning) &&
+    !isExpired(vergunning, dateNow) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0
+    monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
   );
 }
 
-export function isExpired(vergunning: VergunningExpirable) {
+export function isExpired(vergunning: VergunningExpirable, dateNow?: Date) {
   if (!vergunning.dateEnd) {
     return false;
   }
 
-  return isDateInPast(vergunning.dateEnd);
+  return isDateInPast(vergunning.dateEnd, dateNow);
 }
 
 export function hasOtherActualVergunningOfSameType(

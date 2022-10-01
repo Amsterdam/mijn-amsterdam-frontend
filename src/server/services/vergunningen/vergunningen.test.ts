@@ -7,6 +7,8 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   addLinks,
+  BZB,
+  BZP,
   fetchAllVergunningen,
   fetchVergunningenNotifications,
   transformVergunningenData,
@@ -21,6 +23,7 @@ describe('Vergunningen service', () => {
   const DUMMY_URL_1 = '/x';
   const DUMMY_URL_2 = '/y';
   const DUMMY_URL_3 = '/z';
+  const DUMMY_URL_4 = '/a';
 
   const authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private' },
@@ -37,6 +40,12 @@ describe('Vergunningen service', () => {
   axMock.onGet(DUMMY_URL_1).reply(200, DUMMY_RESPONSE);
   axMock.onGet(DUMMY_URL_2).reply(200, null);
   axMock.onGet(DUMMY_URL_3).reply(500, { message: 'fat chance!' });
+  axMock.onGet(DUMMY_URL_4).reply(200, {
+    content: DUMMY_RESPONSE.content.filter((x: BZP | BZB) =>
+      x.caseType.includes('Blauwe zone')
+    ),
+    status: 'OK',
+  });
 
   it('should format data correctly', () => {
     expect(
@@ -75,12 +84,22 @@ describe('Vergunningen service', () => {
     expect(response).toStrictEqual(errorResponse);
   });
 
-  it('fetchVergunningenNotifications: should respond with a success response', async () => {
+  it('fetchVergunningenNotifications', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
     const response = await fetchVergunningenNotifications(
       'x',
       authProfileAndToken,
       new Date('2020-06-23')
+    );
+    expect(response).toMatchSnapshot();
+  });
+
+  it('fetchVergunningenNotifications BZP/BZB', async () => {
+    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_4;
+    const response = await fetchVergunningenNotifications(
+      'x',
+      authProfileAndToken,
+      new Date('2022-09-20')
     );
     expect(response).toMatchSnapshot();
   });
