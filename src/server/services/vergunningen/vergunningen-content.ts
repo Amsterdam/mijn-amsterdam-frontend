@@ -38,9 +38,9 @@ type NotificationContent = {
 
 const notificationLinks: NotificationLinks = {
   [CaseType.BZB]:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx',
   [CaseType.BZP]:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx',
   [CaseType.GPK]:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
 };
@@ -114,6 +114,10 @@ export const notificationContent: NotificationContent = {
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) loopt ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
         } af.`,
+      link: (item) => ({
+        title: `Vraag op tijd een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
     },
     isExpired: {
       ...isExpired,
@@ -122,6 +126,10 @@ export const notificationContent: NotificationContent = {
         `Uw ontheffing blauwe zone bedrijven (${item.identifier}) is ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
         } verlopen.`,
+      link: (item) => ({
+        title: `Vraag een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
     },
     inProgress: {
       ...inProgress,
@@ -144,6 +152,10 @@ export const notificationContent: NotificationContent = {
         `Uw ontheffing blauwe zone (${item.kenteken}) loopt ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
         } af.`,
+      link: (item) => ({
+        title: `Vraag op tijd een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
     },
     isExpired: {
       ...isExpired,
@@ -152,6 +164,10 @@ export const notificationContent: NotificationContent = {
         `Uw ontheffing blauwe zone (${item.kenteken}) is ${
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
         } verlopen.`,
+      link: (item) => ({
+        title: `Vraag een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
     },
     inProgress: {
       ...inProgress,

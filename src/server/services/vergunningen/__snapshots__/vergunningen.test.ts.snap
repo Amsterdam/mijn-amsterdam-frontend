@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Vergunningen service fetchVergunningenNotifications: should respond with a success response 1`] = `
+exports[`Vergunningen service fetchVergunningenNotifications 1`] = `
 Object {
   "content": Object {
     "notifications": Array [
@@ -237,14 +237,14 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-07-06",
-        "description": "Uw Europese gehandicaptenparkeerkaart (GPK) loopt binnenkort af.",
+        "datePublished": "2021-09-03",
+        "description": "Uw vergunningsaanvraag voor Europese gehandicaptenparkeerkaart (GPK) is in behandeling genomen.",
         "id": "vergunning-1221166450-notification",
         "link": Object {
-          "title": "Vraag tijdig een nieuwe vergunning aan",
-          "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
+          "title": "Bekijk details",
+          "to": "/vergunningen/gpk/1221166450",
         },
-        "title": "Uw GPK loopt af",
+        "title": "Uw GPK is in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -270,14 +270,14 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-07-02",
-        "description": "Uw ontheffing blauwe zone (A0-03-48N) is op 02 juli 2021 verlopen.",
+        "datePublished": "2021-06-02",
+        "description": "Uw aanvraag ontheffing blauwe zone (A0-03-48N) is afgehandeld.",
         "id": "vergunning-3490008162-notification",
         "link": Object {
-          "title": "Vraag zonodig een nieuwe vergunning aan",
-          "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D",
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/3490008162",
         },
-        "title": "Uw ontheffing blauwe zone is verlopen",
+        "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -421,6 +421,60 @@ Object {
           "to": "/vergunningen/tvm-rvv-object/3468041544",
         },
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
+      },
+    ],
+  },
+  "status": "OK",
+}
+`;
+
+exports[`Vergunningen service fetchVergunningenNotifications BZP/BZB 1`] = `
+Object {
+  "content": Object {
+    "notifications": Array [
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-09-01",
+        "description": "Uw aanvraag ontheffing blauwe zone (GD-33-MV) is in behandeling genomen.",
+        "id": "vergunning-2295682720-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
+        },
+        "title": "Aanvraag ontheffing blauwe zone",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-09-01",
+        "description": "Uw aanvraag ontheffing blauwe zone bedrijven (Z/22/1979539) is in behandeling genomen.",
+        "id": "vergunning-2191426354-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354",
+        },
+        "title": "Aanvraag ontheffing blauwe zone",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-06-30",
+        "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
+        "id": "vergunning-302573541-notification",
+        "link": Object {
+          "title": "Vraag op tijd een nieuwe ontheffing aan",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+        },
+        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-06-30",
+        "description": "Uw ontheffing blauwe zone bedrijven (Z/22/1979538) loopt op 30 september 2022 af.",
+        "id": "vergunning-162761969-notification",
+        "link": Object {
+          "title": "Vraag op tijd een nieuwe ontheffing aan",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+        },
+        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
     ],
   },

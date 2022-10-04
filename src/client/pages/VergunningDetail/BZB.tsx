@@ -14,18 +14,20 @@ export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
         label="Aantal aangevraagde ontheffingen"
         value={vergunning.numberOfPermits}
       />
-      {!!vergunning.dateStart && !!vergunning.dateEnd && (
-        <InfoDetailGroup>
-          <InfoDetail
-            label="Vanaf"
-            value={defaultDateFormat(vergunning.dateStart)}
-          />
-          <InfoDetail
-            label="Tot en met"
-            value={defaultDateFormat(vergunning.dateEnd)}
-          />
-        </InfoDetailGroup>
-      )}
+      {!!vergunning.dateStart &&
+        !!vergunning.dateEnd &&
+        vergunning.decision === 'Verleend' && (
+          <InfoDetailGroup>
+            <InfoDetail
+              label="Vanaf"
+              value={defaultDateFormat(vergunning.dateStart)}
+            />
+            <InfoDetail
+              label="Tot en met"
+              value={defaultDateFormat(vergunning.dateEnd)}
+            />
+          </InfoDetailGroup>
+        )}
       {!!vergunning.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
