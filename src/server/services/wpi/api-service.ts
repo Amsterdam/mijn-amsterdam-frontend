@@ -407,5 +407,6 @@ export async function fetchWpiNotifications(
       }
     }
   }
+
   return apiSuccessResult({ notifications });
 }

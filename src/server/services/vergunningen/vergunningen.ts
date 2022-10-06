@@ -393,19 +393,23 @@ export async function fetchVergunningenNotifications(
 
     const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
       ? VERGUNNINGEN.content
-          .filter(
+          .map(
             (vergunning) =>
+              [
+                createVergunningNotification(
+                  vergunning,
+                  VERGUNNINGEN.content,
+                  compareDate
+                ),
+                vergunning,
+              ] as const
+          )
+          .filter(
+            ([notification, vergunning]) =>
               vergunning.status !== 'Afgehandeld' ||
-              (vergunning.dateDecision &&
-                isActualNotification(vergunning.dateDecision, compareToDate))
+              isActualNotification(notification.datePublished, compareToDate)
           )
-          .map((vergunning) =>
-            createVergunningNotification(
-              vergunning,
-              VERGUNNINGEN.content,
-              compareDate
-            )
-          )
+          .map(([notification]) => notification)
       : [];
 
     return apiSuccessResult({
