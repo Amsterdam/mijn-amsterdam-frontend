@@ -28,28 +28,6 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-09-01",
-        "description": "Uw aanvraag ontheffing blauwe zone (GE-12-XD | XY-666-Z) is afgehandeld.",
-        "id": "vergunning-302573541-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541",
-        },
-        "title": "Aanvraag ontheffing blauwe zone",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-09-01",
-        "description": "Uw aanvraag ontheffing blauwe zone bedrijven (Z/22/1979538) is afgehandeld.",
-        "id": "vergunning-162761969-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969",
-        },
-        "title": "Aanvraag ontheffing blauwe zone",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-08-09T00:00:00",
         "description": "Uw ontheffingsaanvraag voor verspreiden reclamemateriaal (sampling) is in behandeling genomen.",
         "id": "vergunning-1314482059-notification",
@@ -83,50 +61,6 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-07-31T00:00:00",
-        "description": "Uw ontheffingsaanvraag voor verspreiden reclamemateriaal (sampling) is afgehandeld.",
-        "id": "vergunning-421733388-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/flyeren-sampling/421733388",
-        },
-        "title": "Verspreiden reclamemateriaal (sampling) afgehandeld",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-07-13T00:00:00",
-        "description": "Er is een update in uw vergunningsaanvraag.",
-        "id": "vergunning-321076396-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/nachtwerkontheffing/321076396",
-        },
-        "title": "Vergunningsaanvraag",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-02-08T00:00:00",
-        "description": "Uw ontheffingsaanvraag Aanbieden van diensten is afgehandeld.",
-        "id": "vergunning-1939428970-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/aanbieden-van-diensten/1939428970",
-        },
-        "title": "Aanbieden van diensten afgehandeld",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-02-08T00:00:00",
-        "description": "Uw ontheffingsaanvraag Aanbieden van diensten is afgehandeld.",
-        "id": "vergunning-458936654-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/aanbieden-van-diensten/458936654",
-        },
-        "title": "Aanbieden van diensten afgehandeld",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-01-17T00:00:00",
         "description": "Uw ontheffingsaanvraag Aanbieden van diensten is in behandeling genomen.",
         "id": "vergunning-3407608046-notification",
@@ -149,28 +83,6 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-10-17",
-        "description": "Uw Evenement melding is afgehandeld.",
-        "id": "vergunning-3446432146-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/evenement-melding/3446432146",
-        },
-        "title": "Evenement melding afgehandeld",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-10-17",
-        "description": "Uw vergunningsaanvraag Evenement vergunning is afgehandeld.",
-        "id": "vergunning-830781715-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/evenement-vergunning/830781715",
-        },
-        "title": "Evenement vergunning afgehandeld",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
         "description": "Uw vergunningsaanvraag Evenement vergunning is ontvangen.",
         "id": "vergunning-3073404626-notification",
@@ -179,17 +91,6 @@ Object {
           "to": "/vergunningen/evenement-vergunning/3073404626",
         },
         "title": "Evenement vergunning ontvangen",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-10-17",
-        "description": "Uw vergunningsaanvraag Evenement vergunning is afgehandeld.",
-        "id": "vergunning-4081922197-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/evenement-vergunning/4081922197",
-        },
-        "title": "Evenement vergunning afgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -212,17 +113,6 @@ Object {
           "to": "/vergunningen/omzettingsvergunning/913567999",
         },
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-10-18",
-        "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) is afgehandeld",
-        "id": "vergunning-3664304440-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/omzettingsvergunning/3664304440",
-        },
-        "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) afgehandeld",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -267,28 +157,6 @@ Object {
           "to": "/vergunningen/omzettingsvergunning/333728632",
         },
         "title": "Aanvraag (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-06-02",
-        "description": "Uw aanvraag ontheffing blauwe zone (A0-03-48N) is afgehandeld.",
-        "id": "vergunning-3490008162-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/3490008162",
-        },
-        "title": "Aanvraag ontheffing blauwe zone",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-06-02",
-        "description": "Uw aanvraag ontheffing blauwe zone bedrijven (Z/21/1600000) is afgehandeld.",
-        "id": "vergunning-3577730497-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
-        },
-        "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -475,6 +343,17 @@ Object {
           "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
         },
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-07-02",
+        "description": "Uw ontheffing blauwe zone bedrijven (Z/21/1600000) is op 02 juli 2022 verlopen.",
+        "id": "vergunning-3577730497-notification",
+        "link": Object {
+          "title": "Vraag een nieuwe ontheffing aan",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+        },
+        "title": "Uw ontheffing blauwe zone is verlopen",
       },
     ],
   },

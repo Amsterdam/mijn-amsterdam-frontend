@@ -58,6 +58,7 @@ export interface TVMRVVObject extends VergunningBase {
   timeStart: string | null;
   timeEnd: string | null;
   location: string | null;
+  kenteken: string | null;
 }
 
 export interface GPK extends VergunningBase {
@@ -301,23 +302,24 @@ export async function fetchVergunningen(
   return response;
 }
 
-function getNotificationLabels(
+export function getNotificationLabels(
   item: Vergunning,
   items: Vergunning[],
   compareToDate: Date = new Date()
 ) {
-  const allItems = items.filter(
+  const allItemsOfSameType = items.filter(
     (caseItem: Vergunning) => caseItem.caseType === item.caseType
   );
+
   // Ignore formatting of the switch case statements for readability
   switch (true) {
     // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.isExpired;
 
     // NOTE: For permits you can have more than one of.
@@ -381,6 +383,30 @@ export function createVergunningNotification(
   return notification;
 }
 
+export function getVergunningNotifications(
+  vergunningen: Vergunning[],
+  compareDate: Date = new Date()
+) {
+  return vergunningen
+    .map(
+      (vergunning, index, allVergunningen) =>
+        [
+          createVergunningNotification(
+            vergunning,
+            allVergunningen,
+            compareDate
+          ),
+          vergunning,
+        ] as const
+    )
+    .filter(
+      ([notification, vergunning]) =>
+        vergunning.status !== 'Afgehandeld' ||
+        isActualNotification(notification.datePublished, compareDate)
+    )
+    .map(([notification]) => notification);
+}
+
 export async function fetchVergunningenNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -389,28 +415,10 @@ export async function fetchVergunningenNotifications(
   const VERGUNNINGEN = await fetchVergunningen(requestID, authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
-    const compareToDate = compareDate || new Date();
-
-    const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
-      ? VERGUNNINGEN.content
-          .map(
-            (vergunning) =>
-              [
-                createVergunningNotification(
-                  vergunning,
-                  VERGUNNINGEN.content,
-                  compareDate
-                ),
-                vergunning,
-              ] as const
-          )
-          .filter(
-            ([notification, vergunning]) =>
-              vergunning.status !== 'Afgehandeld' ||
-              isActualNotification(notification.datePublished, compareToDate)
-          )
-          .map(([notification]) => notification)
-      : [];
+    const notifications = getVergunningNotifications(
+      VERGUNNINGEN.content ?? [],
+      compareDate
+    );
 
     return apiSuccessResult({
       notifications,
