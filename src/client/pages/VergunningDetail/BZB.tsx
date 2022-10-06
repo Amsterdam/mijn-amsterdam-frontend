@@ -16,7 +16,8 @@ export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
       />
       {!!vergunning.dateStart &&
         !!vergunning.dateEnd &&
-        vergunning.decision === 'Verleend' && (
+        vergunning.decision === 'Verleend' &&
+        vergunning.status === 'Afgehandeld' && (
           <InfoDetailGroup>
             <InfoDetail
               label="Vanaf"

@@ -12,7 +12,8 @@ export function BZP({ vergunning }: { vergunning: BZPVergunning }) {
       <InfoDetail label="Kenteken" value={vergunning.kenteken || '-'} />
       {!!vergunning.dateStart &&
         !!vergunning.dateEnd &&
-        vergunning.decision === 'Verleend' && (
+        vergunning.decision === 'Verleend' &&
+        vergunning.status === 'Afgehandeld' && (
           <InfoDetailGroup>
             <InfoDetail
               label="Vanaf"
