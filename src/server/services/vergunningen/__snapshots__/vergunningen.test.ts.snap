@@ -356,8 +356,8 @@ Object {
         "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
         "id": "vergunning-302573541-notification",
         "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541",
+          "title": "Vraag op tijd een nieuwe ontheffing aan",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
         },
         "subject": "302573541",
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",

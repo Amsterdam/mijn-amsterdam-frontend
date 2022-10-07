@@ -294,8 +294,8 @@ describe('Vergunningen service', () => {
             "description": "Uw ontheffing blauwe zone (GD-33-MV) loopt op 28 december 2022 af.",
             "id": "vergunning-2295682720-notification",
             "link": Object {
-              "title": "Bekijk details",
-              "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
+              "title": "Vraag op tijd een nieuwe ontheffing aan",
+              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
             },
             "subject": "2295682720",
             "title": "Uw ontheffing blauwe zone verloopt binnenkort",
@@ -322,8 +322,8 @@ describe('Vergunningen service', () => {
             "description": "Uw ontheffing blauwe zone (GD-33-MV) is op 06 september 2022 verlopen.",
             "id": "vergunning-2295682720-notification",
             "link": Object {
-              "title": "Bekijk details",
-              "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
+              "title": "Vraag een nieuwe ontheffing aan",
+              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
             },
             "subject": "2295682720",
             "title": "Uw ontheffing blauwe zone is verlopen",
