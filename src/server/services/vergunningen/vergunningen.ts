@@ -368,6 +368,7 @@ export function createVergunningNotification(
     title: 'Vergunningsaanvraag',
     description: 'Er is een update in uw vergunningsaanvraag.',
     datePublished: item.dateRequest,
+    subject: item.id,
     link: {
       to: item.link.to,
       title: 'Bekijk details',

@@ -4,10 +4,12 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 
 import type { BZB as BZBVergunning } from '../../../server/services/vergunningen/vergunningen';
+import { ExpirationdNotifications } from './BZP';
 
 export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (
     <>
+      <ExpirationdNotifications id={vergunning.id} />
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
       <InfoDetail

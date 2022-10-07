@@ -215,6 +215,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
+            "subject": "3607535691",
             "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
           },
         ]
@@ -241,6 +242,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/2247558132",
             },
+            "subject": "2247558132",
             "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
           },
         ]
@@ -267,6 +269,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
+            "subject": "3607535691",
             "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
           },
         ]
@@ -291,9 +294,10 @@ describe('Vergunningen service', () => {
             "description": "Uw ontheffing blauwe zone (GD-33-MV) loopt op 28 december 2022 af.",
             "id": "vergunning-2295682720-notification",
             "link": Object {
-              "title": "Vraag op tijd een nieuwe ontheffing aan",
-              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+              "title": "Bekijk details",
+              "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
             },
+            "subject": "2295682720",
             "title": "Uw ontheffing blauwe zone verloopt binnenkort",
           },
         ]
@@ -318,9 +322,10 @@ describe('Vergunningen service', () => {
             "description": "Uw ontheffing blauwe zone (GD-33-MV) is op 06 september 2022 verlopen.",
             "id": "vergunning-2295682720-notification",
             "link": Object {
-              "title": "Vraag een nieuwe ontheffing aan",
-              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+              "title": "Bekijk details",
+              "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
             },
+            "subject": "2295682720",
             "title": "Uw ontheffing blauwe zone is verlopen",
           },
         ]
@@ -361,6 +366,7 @@ describe('Vergunningen service', () => {
               "title": "Vraag tijdig een nieuwe vergunning aan",
               "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
             },
+            "subject": "1221166450",
             "title": "Uw GPK loopt af",
           },
         ]
@@ -388,6 +394,7 @@ describe('Vergunningen service', () => {
               "title": "Vraag zonodig een nieuwe vergunning aan",
               "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
             },
+            "subject": "1221166450",
             "title": "Uw GPK is verlopen",
           },
         ]
@@ -439,6 +446,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
+            "subject": "1056864091",
             "title": "GPK afgehandeld",
           },
         ]
@@ -465,6 +473,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
+            "subject": "1056864091",
             "title": "Uw GPK is in behandeling",
           },
         ]
@@ -497,6 +506,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/omzettingsvergunning/1037482200",
             },
+            "subject": "1037482200",
             "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
           },
         ]
@@ -529,6 +539,7 @@ describe('Vergunningen service', () => {
               "title": "Bekijk details",
               "to": "/vergunningen/omzettingsvergunning/1037482200",
             },
+            "subject": "1037482200",
             "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) afgehandeld",
           },
         ]

@@ -13,6 +13,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
         },
+        "subject": "2295682720",
         "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
@@ -24,6 +25,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354",
         },
+        "subject": "2191426354",
         "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
@@ -35,6 +37,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/flyeren-sampling/1314482059",
         },
+        "subject": "1314482059",
         "title": "Verspreiden reclamemateriaal (sampling) in behandeling",
       },
       Object {
@@ -46,6 +49,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/flyeren-sampling/239013065",
         },
+        "subject": "239013065",
         "title": "Verspreiden reclamemateriaal (sampling) in behandeling",
       },
       Object {
@@ -57,6 +61,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/flyeren-sampling/1580959320",
         },
+        "subject": "1580959320",
         "title": "Verspreiden reclamemateriaal (sampling) in behandeling",
       },
       Object {
@@ -68,6 +73,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/aanbieden-van-diensten/3407608046",
         },
+        "subject": "3407608046",
         "title": "Aanbieden van diensten in behandeling",
       },
       Object {
@@ -79,6 +85,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/evenement-melding/4187042164",
         },
+        "subject": "4187042164",
         "title": "Evenement melding in behandeling",
       },
       Object {
@@ -90,6 +97,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/evenement-vergunning/3073404626",
         },
+        "subject": "3073404626",
         "title": "Evenement vergunning ontvangen",
       },
       Object {
@@ -101,6 +109,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/omzettingsvergunning/2331715774",
         },
+        "subject": "2331715774",
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
       },
       Object {
@@ -112,6 +121,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/omzettingsvergunning/913567999",
         },
+        "subject": "913567999",
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
       Object {
@@ -123,6 +133,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/e-rvv-tvm/3105266233",
         },
+        "subject": "3105266233",
         "title": "Uw e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling",
       },
       Object {
@@ -134,6 +145,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/gpk/1221166450",
         },
+        "subject": "1221166450",
         "title": "Uw GPK is in behandeling",
       },
       Object {
@@ -145,6 +157,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/gpp/260384730",
         },
+        "subject": "260384730",
         "title": "Uw GPP is in behandeling",
       },
       Object {
@@ -156,6 +169,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/omzettingsvergunning/333728632",
         },
+        "subject": "333728632",
         "title": "Aanvraag (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
       Object {
@@ -167,6 +181,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3607535691",
         },
+        "subject": "3607535691",
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
       Object {
@@ -178,6 +193,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3276988108",
         },
+        "subject": "3276988108",
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
       Object {
@@ -189,6 +205,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/2804017741",
         },
+        "subject": "2804017741",
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
       Object {
@@ -200,6 +217,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/1324498924",
         },
+        "subject": "1324498924",
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
       Object {
@@ -211,6 +229,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3452781026",
         },
+        "subject": "3452781026",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -222,6 +241,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/2872491299",
         },
+        "subject": "2872491299",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -233,6 +253,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3490212832",
         },
+        "subject": "3490212832",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -244,6 +265,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/2909923105",
         },
+        "subject": "2909923105",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -255,6 +277,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3706696166",
         },
+        "subject": "3706696166",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -266,6 +289,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/976898368",
         },
+        "subject": "976898368",
         "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
       },
       Object {
@@ -277,6 +301,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/2594256166",
         },
+        "subject": "2594256166",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
       Object {
@@ -288,6 +313,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/tvm-rvv-object/3468041544",
         },
+        "subject": "3468041544",
         "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
       },
     ],
@@ -309,6 +335,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
         },
+        "subject": "2295682720",
         "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
@@ -320,6 +347,7 @@ Object {
           "title": "Bekijk details",
           "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354",
         },
+        "subject": "2191426354",
         "title": "Aanvraag ontheffing blauwe zone",
       },
       Object {
@@ -328,9 +356,10 @@ Object {
         "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
         "id": "vergunning-302573541-notification",
         "link": Object {
-          "title": "Vraag op tijd een nieuwe ontheffing aan",
-          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541",
         },
+        "subject": "302573541",
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
       Object {
@@ -339,9 +368,10 @@ Object {
         "description": "Uw ontheffing blauwe zone bedrijven (Z/22/1979538) loopt op 30 september 2022 af.",
         "id": "vergunning-162761969-notification",
         "link": Object {
-          "title": "Vraag op tijd een nieuwe ontheffing aan",
-          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969",
         },
+        "subject": "162761969",
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
       Object {
@@ -350,9 +380,10 @@ Object {
         "description": "Uw ontheffing blauwe zone bedrijven (Z/21/1600000) is op 02 juli 2022 verlopen.",
         "id": "vergunning-3577730497-notification",
         "link": Object {
-          "title": "Vraag een nieuwe ontheffing aan",
-          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
         },
+        "subject": "3577730497",
         "title": "Uw ontheffing blauwe zone is verlopen",
       },
     ],

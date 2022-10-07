@@ -37,10 +37,6 @@ type NotificationContent = {
 };
 
 const notificationLinks: NotificationLinks = {
-  [CaseType.BZB]:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx',
-  [CaseType.BZP]:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx',
   [CaseType.GPK]:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
 };
@@ -115,7 +111,7 @@ export const notificationContent: NotificationContent = {
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
         } af.`,
       link: (item) => ({
-        title: `Vraag op tijd een nieuwe ontheffing aan`,
+        title: 'Bekijk details',
         to: notificationLinks[item.caseType] || item.link.to,
       }),
     },
@@ -127,7 +123,7 @@ export const notificationContent: NotificationContent = {
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
         } verlopen.`,
       link: (item) => ({
-        title: `Vraag een nieuwe ontheffing aan`,
+        title: 'Bekijk details',
         to: notificationLinks[item.caseType] || item.link.to,
       }),
     },
@@ -153,7 +149,7 @@ export const notificationContent: NotificationContent = {
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
         } af.`,
       link: (item) => ({
-        title: `Vraag op tijd een nieuwe ontheffing aan`,
+        title: 'Bekijk details',
         to: notificationLinks[item.caseType] || item.link.to,
       }),
     },
@@ -165,7 +161,7 @@ export const notificationContent: NotificationContent = {
           item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
         } verlopen.`,
       link: (item) => ({
-        title: `Vraag een nieuwe ontheffing aan`,
+        title: 'Bekijk details',
         to: notificationLinks[item.caseType] || item.link.to,
       }),
     },
