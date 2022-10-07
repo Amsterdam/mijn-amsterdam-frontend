@@ -4,7 +4,54 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 
 import type { BZB as BZBVergunning } from '../../../server/services/vergunningen/vergunningen';
-import { ExpirationdNotifications } from './BZP';
+import { useAppStateGetter } from '../../hooks';
+import { MyNotification } from '../../../universal/types';
+import { InnerHtml, LinkdInline } from '../../components';
+
+function ExpirationdNotifications({ id }: { id: string }) {
+  const appState = useAppStateGetter();
+  const isExpiredNotification = appState.NOTIFICATIONS.content?.find(
+    (notification: MyNotification) =>
+      notification.subject === id &&
+      notification.title === 'Uw ontheffing blauwe zone is verlopen'
+  );
+  const willExpireSoonNotification = appState.NOTIFICATIONS.content?.find(
+    (notification: MyNotification) =>
+      notification.subject === id &&
+      notification.title === 'Uw ontheffing blauwe zone verloopt binnenkort'
+  );
+
+  return (
+    <>
+      {!!isExpiredNotification && (
+        <>
+          <InnerHtml>{isExpiredNotification.description}</InnerHtml>
+          <p>
+            <LinkdInline
+              external
+              href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
+            >
+              Verleng uw ontheffing
+            </LinkdInline>
+          </p>
+        </>
+      )}
+      {!!willExpireSoonNotification && (
+        <>
+          <InnerHtml>{willExpireSoonNotification.description}</InnerHtml>
+          <p>
+            <LinkdInline
+              external
+              href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
+            >
+              Verleng uw ontheffing
+            </LinkdInline>
+          </p>
+        </>
+      )}
+    </>
+  );
+}
 
 export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (
