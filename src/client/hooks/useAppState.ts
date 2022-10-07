@@ -206,8 +206,13 @@ export function isAppStateReady(
 
       const isProfileMatch =
         !stateConfig?.profileTypes?.length ||
-        stateConfig.profileTypes.includes(profileType);
-      return stateConfig.isActive && isProfileMatch;
+        stateConfig?.profileTypes.includes(profileType);
+
+      if (!stateConfig) {
+        Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
+      }
+
+      return isProfileMatch && !!stateConfig?.isActive;
     }
   );
 
