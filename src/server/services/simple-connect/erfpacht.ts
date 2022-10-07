@@ -11,7 +11,7 @@ function encryptPayload(payload: string) {
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
-  return [ivBuffer.toString(), encrypted.toString('base64')] as const;
+  return [ivBuffer.toString(), encrypted.toString('base64url')] as const;
 }
 
 function encryptPayloadWithoutForwardSlashes(
