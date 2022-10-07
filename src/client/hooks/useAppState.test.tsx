@@ -183,7 +183,7 @@ describe('useAppState', () => {
         pristineState,
         'private'
       );
-      expect(isReady).toBe(false);
+      expect(isReady).toBe(true);
       expect(spy).toHaveBeenCalledWith('unknown stateConfig key: BLAP');
     });
   });
