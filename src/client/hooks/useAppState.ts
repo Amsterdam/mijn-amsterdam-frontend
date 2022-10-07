@@ -212,7 +212,7 @@ export function isAppStateReady(
         Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
       }
 
-      // If we encounter an unknown stateConfig we pass allow it to be ready so we don't block ready completely
+      // If we encounter an unknown stateConfig we treat the state to be ready so we don't block the isReady completely.
       return isProfileMatch && (!!stateConfig?.isActive || !stateConfig);
     }
   );
