@@ -60,8 +60,7 @@ describe('DocumentList', () => {
     await waitFor(() =>
       expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
         ITEMS[0].title,
-        // The additional leading / is representing window.location.pathname
-        '//downloads/' + ITEMS[0].title + '.pdf',
+        '/downloads/' + ITEMS[0].title + '.pdf',
         'private',
         ''
       )
@@ -112,7 +111,8 @@ describe('DocumentList', () => {
     const fetch = ((global as any).fetch = jest
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-    const track = ((analytics as any).trackPageViewWithCustomDimension = jest.fn());
+    const track = ((analytics as any).trackPageViewWithCustomDimension =
+      jest.fn());
     const captureException = ((Sentry as any).captureException = jest.fn());
 
     render(
