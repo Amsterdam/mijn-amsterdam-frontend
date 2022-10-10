@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import {
   WpiStadspasBudget,
   WpiStadspasTransaction,
@@ -27,11 +27,14 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
+  Pagination,
 } from '../../components';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
+
+const PAGE_SIZE = 10;
 
 interface TransactionProps {
   value: number;
@@ -127,6 +130,9 @@ interface StadspasBudgetProps {
 function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
   const [isTransactionOverviewActive, toggleTransactionOverview] =
     useState(false);
+  const { id } = useParams<{ id: string }>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const history = useHistory();
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
@@ -140,6 +146,15 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
     isLoading: isLoadingTransactions,
     isError,
   } = api;
+
+  const shouldPaginate = !!transactions && transactions?.length > PAGE_SIZE;
+  const startIndex = currentPage - 1;
+  const start = startIndex * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+
+  const paginatedTransactions = shouldPaginate
+    ? transactions?.slice(start, end)
+    : transactions;
 
   return (
     <>
@@ -161,7 +176,21 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
           hebt klopt altijd.
         </p>
         {!!isTransactionOverviewActive && !isLoadingTransactions && (
-          <TransactionOverview transactions={transactions} />
+          <>
+            <TransactionOverview transactions={paginatedTransactions} />
+
+            {shouldPaginate && (
+              <Pagination
+                className={styles.Pagination}
+                totalCount={transactions?.length || 0}
+                pageSize={PAGE_SIZE}
+                currentPage={currentPage}
+                onPageClick={(page) => {
+                  setCurrentPage(page);
+                }}
+              />
+            )}
+          </>
         )}
         {isError && (
           <Alert type="warning">
