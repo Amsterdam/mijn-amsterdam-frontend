@@ -31,7 +31,7 @@ function ExpirationdNotifications({ id }: { id: string }) {
               external
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
-              Verleng uw ontheffing
+              Vraag een nieuwe ontheffing aan
             </LinkdInline>
           </p>
         </>
@@ -44,7 +44,7 @@ function ExpirationdNotifications({ id }: { id: string }) {
               external
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
-              Verleng uw ontheffing
+              Vraag op tijd een nieuwe ontheffing aan
             </LinkdInline>
           </p>
         </>
