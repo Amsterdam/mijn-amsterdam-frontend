@@ -8,7 +8,7 @@ import { useAppStateGetter } from '../../hooks';
 import { MyNotification } from '../../../universal/types';
 import { InnerHtml, LinkdInline } from '../../components';
 
-function ExpirationdNotifications({ id }: { id: string }) {
+function ExpirationNotifications({ id }: { id: string }) {
   const appState = useAppStateGetter();
   const isExpiredNotification = appState.NOTIFICATIONS.content?.find(
     (notification: MyNotification) =>
@@ -56,7 +56,7 @@ function ExpirationdNotifications({ id }: { id: string }) {
 export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (
     <>
-      <ExpirationdNotifications id={vergunning.id} />
+      <ExpirationNotifications id={vergunning.id} />
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
       <InfoDetail
