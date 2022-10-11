@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { useMemo, useState } from 'react';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   WpiStadspasBudget,
   WpiStadspasTransaction,
@@ -130,9 +130,7 @@ interface StadspasBudgetProps {
 function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
   const [isTransactionOverviewActive, toggleTransactionOverview] =
     useState(false);
-  const { id } = useParams<{ id: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const history = useHistory();
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
