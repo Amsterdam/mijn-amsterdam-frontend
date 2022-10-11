@@ -207,7 +207,13 @@ export function isAppStateReady(
       const isProfileMatch =
         !stateConfig?.profileTypes?.length ||
         stateConfig.profileTypes.includes(profileType);
-      return stateConfig.isActive && isProfileMatch;
+
+      if (!stateConfig) {
+        Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
+      }
+
+      // If we encounter an unknown stateConfig we treat the state to be ready so we don't block the isReady completely.
+      return isProfileMatch && (!!stateConfig?.isActive || !stateConfig);
     }
   );
 
