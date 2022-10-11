@@ -17,6 +17,10 @@ const testState = {
     status: 'OK',
     content,
   },
+  NOTIFICATIONS: {
+    status: 'OK',
+    content: [],
+  },
 };
 
 function state(state: any) {
