@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   WpiStadspasBudget,
   WpiStadspasTransaction,
