@@ -135,8 +135,6 @@ function StadspasBudget({
   isTransactionOverviewActive,
   toggleTransactionOverview,
 }: StadspasBudgetProps) {
-  // const [isTransactionOverviewActive, toggleTransactionOverview] =
-  //   useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
@@ -228,6 +226,9 @@ function StadspasBudget({
 
 export default function StadspasDetail() {
   const { WPI_STADSPAS } = useAppStateGetter();
+  const [openTransactionOverview, setOpenTransactionOverview] = useState<
+    number | null
+  >(null);
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
     ? WPI_STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
@@ -235,10 +236,6 @@ export default function StadspasDetail() {
   const isErrorStadspas = isError(WPI_STADSPAS);
   const isLoadingStadspas = isLoading(WPI_STADSPAS);
   const noContent = !stadspasItem;
-
-  const [openTransactionOverview, setOpenTransactionOverview] = useState<
-    number | null
-  >(null);
 
   return (
     <DetailPage>
