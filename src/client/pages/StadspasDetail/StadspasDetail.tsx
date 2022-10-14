@@ -125,11 +125,18 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
 interface StadspasBudgetProps {
   urlTransactions: string;
   budget: WpiStadspasBudget;
+  isTransactionOverviewActive: boolean;
+  toggleTransactionOverview: () => void;
 }
 
-function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
-  const [isTransactionOverviewActive, toggleTransactionOverview] =
-    useState(false);
+function StadspasBudget({
+  urlTransactions,
+  budget,
+  isTransactionOverviewActive,
+  toggleTransactionOverview,
+}: StadspasBudgetProps) {
+  // const [isTransactionOverviewActive, toggleTransactionOverview] =
+  //   useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
@@ -204,9 +211,7 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
             icon={IconChevronRight}
             variant="plain"
             lean={true}
-            onClick={() =>
-              toggleTransactionOverview(!isTransactionOverviewActive)
-            }
+            onClick={() => toggleTransactionOverview()}
           >
             {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
             uitgegeven
@@ -230,6 +235,10 @@ export default function StadspasDetail() {
   const isErrorStadspas = isError(WPI_STADSPAS);
   const isLoadingStadspas = isLoading(WPI_STADSPAS);
   const noContent = !stadspasItem;
+
+  const [openTransactionOverview, setOpenTransactionOverview] = useState<
+    number | null
+  >(null);
 
   return (
     <DetailPage>
@@ -267,11 +276,17 @@ export default function StadspasDetail() {
           </p>
         </PageContent>
       )}
-      {stadspasItem?.budgets.map((budget) => (
+      {stadspasItem?.budgets.map((budget, index) => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.code}
           budget={budget}
+          isTransactionOverviewActive={openTransactionOverview === index}
+          toggleTransactionOverview={() =>
+            setOpenTransactionOverview(
+              index === openTransactionOverview ? null : index
+            )
+          }
         />
       ))}
     </DetailPage>
