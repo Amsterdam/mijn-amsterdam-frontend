@@ -82,7 +82,7 @@ export function DocumentLink({
           const trackingUrl = trackPath
             ? trackPath(document)
             : window.location.pathname +
-              addFileType(`downloads/${document.download || document.title}`);
+              addFileType(`/downloads/${document.download || document.title}`);
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
           trackPageViewWithCustomDimension(

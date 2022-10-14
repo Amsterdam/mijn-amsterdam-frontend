@@ -60,7 +60,8 @@ describe('DocumentList', () => {
     await waitFor(() =>
       expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
         ITEMS[0].title,
-        '/downloads/' + ITEMS[0].title + '.pdf',
+        // The additional leading / is representing window.location.pathname
+        '//downloads/' + ITEMS[0].title + '.pdf',
         'private',
         ''
       )
