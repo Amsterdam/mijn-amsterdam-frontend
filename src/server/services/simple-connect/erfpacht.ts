@@ -11,7 +11,7 @@ function encryptPayload(payload: string) {
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
-  return [ivBuffer.toString(), encrypted.toString('base64')] as const;
+  return [ivBuffer.toString(), encrypted.toString('base64url')] as const;
 }
 
 function encryptPayloadWithoutForwardSlashes(
@@ -28,23 +28,26 @@ type ErfpachtSourceResponse = boolean;
 
 function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
   return {
-    isKnown,
+    isKnown: isKnown ?? false,
   };
 }
 
 export function getConfigMain(
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  requestID: requestID
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
   const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
   const type = profile.profileType === 'commercial' ? 'company' : 'user';
   const config = {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/groundlease/${type}/${payload}`,
+    cacheKey: `erfpacht-main-${requestID}`,
     headers: {
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
     },
-    transformResponse: transformErfpachtResponse,
+    transformResponse: (response: ErfpachtSourceResponse) =>
+      transformErfpachtResponse(response),
   };
 
   return getApiConfig('ERFPACHT', config);
@@ -54,11 +57,16 @@ export async function fetchErfpacht(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getConfigMain(authProfileAndToken), false);
+  return fetchService(
+    requestID,
+    getConfigMain(authProfileAndToken, requestID),
+    false
+  );
 }
 
 function getConfigNotifications(
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  requestID: requestID
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
   const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
@@ -66,6 +74,7 @@ function getConfigNotifications(
 
   return getApiConfig('ERFPACHT', {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/notifications/${type}/${payload}`,
+    cacheKey: `erfpacht-notifications-${requestID}`,
     headers: {
       'X-RANDOM-IV': iv,
       'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
@@ -82,7 +91,7 @@ export async function fetchErfpachtNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     requestID,
-    getConfigNotifications(authProfileAndToken),
+    getConfigNotifications(authProfileAndToken, requestID),
     Chapters.ERFPACHT
   );
 

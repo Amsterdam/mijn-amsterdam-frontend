@@ -14,7 +14,7 @@ import { fetchAKTES } from './aktes';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchTipsAndNotifications } from './tips-and-notifications-from-source';
+import { fetchTipsAndNotifications } from './tips-and-notifications';
 import { fetchMyLocation } from './home';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';

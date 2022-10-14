@@ -115,7 +115,8 @@ function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
 }
 
 async function getConfig(
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  requestID: requestID
 ): Promise<DataRequestConfig> {
   const postData = await encryptPayload(
     getJSONRequestPayload(authProfileAndToken.profile)
@@ -123,7 +124,7 @@ async function getConfig(
 
   return getApiConfig('CLEOPATRA', {
     transformResponse: transformMilieuzoneResponse,
-    cacheKey: `cleopatra-${authProfileAndToken.profile.id}`,
+    cacheKey: `cleopatra-${requestID}`,
     data: postData,
   });
 }
@@ -132,7 +133,11 @@ export async function fetchMilieuzone(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, await getConfig(authProfileAndToken), false);
+  return fetchService(
+    requestID,
+    await getConfig(authProfileAndToken, requestID),
+    false
+  );
 }
 
 export async function fetchMilieuzoneNotifications(
@@ -141,7 +146,7 @@ export async function fetchMilieuzoneNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     requestID,
-    await getConfig(authProfileAndToken),
+    await getConfig(authProfileAndToken, requestID),
     Chapters.MILIEUZONE
   );
 

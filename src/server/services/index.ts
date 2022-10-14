@@ -5,7 +5,7 @@ export * from './brp';
 export * from './buurt/buurt';
 export * from './buurt/supercluster';
 export * from './cms-content';
-export * from './tips-and-notifications-from-source';
+export * from './tips-and-notifications';
 export { fetchKrefia, fetchKrefiaNotifications } from './krefia';
 export type {
   Krefia,

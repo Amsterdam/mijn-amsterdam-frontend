@@ -36,6 +36,7 @@ export interface MyNotification {
   link?: LinkProps;
   hideDatePublished?: boolean;
   isAlert?: boolean;
+  subject?: string;
 
   // NOTE: Maybe move this to client?
   customLink?: {
@@ -93,4 +94,11 @@ export interface ApiError {
   name: string;
   error: string;
   stateKey: string;
+}
+
+export interface Match {
+  isExact: boolean;
+  params: Record<string, string>;
+  path: string;
+  url: string;
 }

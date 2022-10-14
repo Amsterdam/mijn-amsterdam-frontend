@@ -1,19 +1,12 @@
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
-import recoil, { atom } from 'recoil';
 import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
 import { renderRecoilHook } from '../utils/renderRecoilHook';
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
-import * as profileTypeHooks from './useProfileType';
-
-import {
-  useAppStateReady,
-  useAppStateRemote,
-  appStateAtom,
-  isAppStateReady,
-} from './useAppState';
+import * as Sentry from '@sentry/react';
+import { isAppStateReady, useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
@@ -181,6 +174,17 @@ describe('useAppState', () => {
         'commercial'
       );
       expect(isReady).toBe(false);
+    });
+
+    it('Should be false if we have statekey mismatch', async () => {
+      const spy = jest.spyOn(Sentry, 'captureMessage');
+      const isReady = isAppStateReady(
+        { BLAP: apiSuccessResult('blap') } as any,
+        pristineState,
+        'private'
+      );
+      expect(isReady).toBe(true);
+      expect(spy).toHaveBeenCalledWith('unknown stateConfig key: BLAP');
     });
   });
 });

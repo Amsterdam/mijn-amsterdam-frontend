@@ -9,36 +9,52 @@ import { isDateInPast, monthsFromNow } from './date';
 export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
+const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
+  CaseType.GPP,
+  CaseType.GPK,
+  CaseType.Omzettingsvergunning,
+  CaseType.EvenementMelding,
+  CaseType.EvenementVergunning,
+  CaseType.Flyeren,
+  CaseType.AanbiedenDiensten,
+];
+
+const CASE_TYPES_WITH_WORKFLOW = [CaseType.Omzettingsvergunning];
+
 export function isActualNotification(
   datePublished: string,
-  compareDate: Date
+  dateNow: Date = new Date()
 ): boolean {
-  return (
-    differenceInMonths(compareDate, new Date(datePublished)) <
-    MONTHS_TO_KEEP_NOTIFICATIONS
-  );
+  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
+  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
 
-export function isNearEndDate(vergunning: VergunningExpirable) {
+export function isNearEndDate(
+  vergunning: VergunningExpirable,
+  dateNow: Date = new Date()
+) {
   if (!vergunning.dateEnd) {
     return false;
   }
 
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd);
+  const monthsTillEnd = monthsFromNow(vergunning.dateEnd, dateNow);
 
   return (
-    !isExpired(vergunning) &&
+    !isExpired(vergunning, dateNow) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0
+    monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
   );
 }
 
-export function isExpired(vergunning: VergunningExpirable) {
+export function isExpired(
+  vergunning: VergunningExpirable,
+  dateNow: Date = new Date()
+) {
   if (!vergunning.dateEnd) {
     return false;
   }
 
-  return isDateInPast(vergunning.dateEnd);
+  return isDateInPast(vergunning.dateEnd, dateNow);
 }
 
 export function hasOtherActualVergunningOfSameType(
@@ -53,19 +69,12 @@ export function hasOtherActualVergunningOfSameType(
   );
 }
 
-export const hasWorkflow = (caseType: CaseType) =>
-  caseType === CaseType.Omzettingsvergunning;
+export function hasWorkflow(caseType: CaseType) {
+  return CASE_TYPES_WITH_WORKFLOW.includes(caseType);
+}
 
-export const isExpireable = (caseType: CaseType) =>
-  [CaseType.GPK, CaseType.BZB, CaseType.BZP].includes(caseType);
-
-export const showDocuments = (caseType: CaseType) =>
-  ![
-    CaseType.GPP,
-    CaseType.GPK,
-    CaseType.Omzettingsvergunning,
-    CaseType.EvenementMelding,
-    CaseType.EvenementVergunning,
-    CaseType.Flyeren,
-    CaseType.AanbiedenDiensten,
-  ].includes(caseType);
+export function showDocuments(caseType: CaseType) {
+  const isExcluded =
+    EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY.includes(caseType);
+  return !isExcluded;
+}

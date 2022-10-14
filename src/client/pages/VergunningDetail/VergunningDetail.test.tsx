@@ -17,6 +17,10 @@ const testState = {
     status: 'OK',
     content,
   },
+  NOTIFICATIONS: {
+    status: 'OK',
+    content: [],
+  },
 };
 
 function state(state: any) {
@@ -106,6 +110,42 @@ describe('<VergunningDetail />', () => {
     it('should match the full page snapshot', () => {
       const { asFragment } = render(
         <MockVergunningDetail identifier="Z/22/1691001" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('BZP - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/19795392" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('BZP - Verleend', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/19795384" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('BZB - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1979538" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('BZB - Verleend', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1979539" />
       );
       expect(asFragment()).toMatchSnapshot();
     });

@@ -83,20 +83,21 @@ export default function Inkomen() {
       ...(bbzItems || []),
     ]
       .map((item) => {
+        const isBbz = item.about === 'Bbz';
         const isBbzHistoric =
-          item.about === 'Bbz' &&
-          item.steps.some((step) => step.id === 'besluit');
+          isBbz && item.steps.some((step) => step.id === 'besluit');
         const activeStatusStep = item.steps[item.steps.length - 1];
         return Object.assign({}, item, {
           displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
           displayDateStart: isBbzHistoric
             ? defaultDateFormat(
-                [...item.steps].reverse().find((s) => s.id === 'aanvraag')!
-                  .datePublished
+                item.steps.find((s) => s.id === 'aanvraag')!.datePublished
               )
             : defaultDateFormat(item.dateStart),
           status: isBbzHistoric
             ? '-'
+            : isBbz
+            ? 'In behandeling'
             : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });
       })

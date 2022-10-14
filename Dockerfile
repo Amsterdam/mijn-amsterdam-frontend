@@ -89,7 +89,7 @@ ENV TZ=Europe/Amsterdam
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
+COPY conf/nginx-server-default.template.conf /etc/nginx/conf.d/default.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image

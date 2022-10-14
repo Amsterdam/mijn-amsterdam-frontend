@@ -27,7 +27,7 @@ jest.mock('../helpers/app', () => ({
   },
 }));
 
-jest.mock('./tips-and-notifications-from-source', () => ({
+jest.mock('./tips-and-notifications', () => ({
   fetchTipsAndNotifications: async () => {
     return {
       NOTIFICATIONS: { content: [] },

@@ -52,8 +52,11 @@ export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
 /**
  * Checks if date is a date is historic, today _is_ included.
  */
-export function isDateInPast(date: string | Date, dateNow?: string | Date) {
-  return new Date(date).getTime() <= new Date(dateNow || new Date()).getTime();
+export function isDateInPast(
+  date: string | Date,
+  dateNow: string | Date = new Date()
+) {
+  return new Date(date).getTime() <= new Date(dateNow).getTime();
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
@@ -70,8 +73,8 @@ export function isCurrentYear(datestr: string) {
   return isThisYear(new Date(datestr));
 }
 
-export function monthsFromNow(datestr: string) {
-  return differenceInMonths(new Date(datestr), new Date());
+export function monthsFromNow(datestr: string, dateNow?: Date) {
+  return differenceInMonths(new Date(datestr), dateNow || new Date());
 }
 
 export function getMonth(index: number) {

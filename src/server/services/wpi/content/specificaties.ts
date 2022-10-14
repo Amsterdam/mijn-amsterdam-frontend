@@ -4,7 +4,7 @@ import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { ServiceResults } from '../../tips/tip-types';
 import { documentDownloadName } from '../helpers';
-import {
+import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
 } from '../wpi-types';

@@ -10,7 +10,6 @@ import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
   isActualNotification,
-  isExpireable,
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
@@ -59,6 +58,7 @@ export interface TVMRVVObject extends VergunningBase {
   timeStart: string | null;
   timeEnd: string | null;
   location: string | null;
+  kenteken: string | null;
 }
 
 export interface GPK extends VergunningBase {
@@ -144,6 +144,7 @@ export interface BBVergunning extends VergunningBase {
 export interface BZB extends VergunningBase {
   caseType: CaseType.BZB;
   companyName: string | null;
+  numberOfPermits: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   decision: string | null;
@@ -258,6 +259,28 @@ const vergunningOptionsDefault: VergunningOptions = {
     !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
 };
 
+export function addLinks(
+  vergunningen: VergunningenData,
+  appRoute: VergunningOptions['appRoute']
+) {
+  return vergunningen.map((vergunning) => {
+    const route =
+      typeof appRoute === 'function' ? appRoute(vergunning) : appRoute;
+    return {
+      ...vergunning,
+      link: {
+        to: generatePath(route, {
+          title: slug(vergunning.caseType, {
+            lower: true,
+          }),
+          id: vergunning.id,
+        }),
+        title: `Bekijk hoe het met uw aanvraag staat`,
+      },
+    };
+  });
+}
+
 export async function fetchVergunningen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -267,26 +290,7 @@ export async function fetchVergunningen(
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
-    vergunningen = vergunningen.map((vergunning) => {
-      const appRoute =
-        typeof options.appRoute === 'function'
-          ? options.appRoute(vergunning)
-          : options.appRoute;
-      return {
-        ...vergunning,
-        link: {
-          to: options?.appRoute
-            ? generatePath(appRoute, {
-                title: slug(vergunning.caseType, {
-                  lower: true,
-                }),
-                id: vergunning.id,
-              })
-            : '/',
-          title: `Bekijk hoe het met uw aanvraag staat`,
-        },
-      };
-    });
+    vergunningen = addLinks(vergunningen, options.appRoute);
 
     if (options?.filter) {
       vergunningen = vergunningen.filter(options.filter);
@@ -298,19 +302,35 @@ export async function fetchVergunningen(
   return response;
 }
 
-function getNotificationLabels(item: Vergunning, items: Vergunning[]) {
-  const allItems = items.filter(
+export function getNotificationLabels(
+  item: Vergunning,
+  items: Vergunning[],
+  compareToDate: Date = new Date()
+) {
+  const allItemsOfSameType = items.filter(
     (caseItem: Vergunning) => caseItem.caseType === item.caseType
   );
+
   // Ignore formatting of the switch case statements for readability
   switch (true) {
+    // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isNearEndDate(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case isExpireable(item.caseType) && item.decision === 'Verleend' && isExpired(item) && !hasOtherActualVergunningOfSameType(allItems, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isExpired(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.isExpired;
+
+    // NOTE: For permits you can have more than one of.
+    // prettier-ignore
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item, compareToDate):
+      return notificationContent[item.caseType]?.isExpired;
+
+    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
+      item.decision === 'Verleend' &&
+      isNearEndDate(item, compareToDate):
+      return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
     case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
@@ -339,7 +359,8 @@ function assignNotificationProperties(
 
 export function createVergunningNotification(
   item: Vergunning,
-  items: Vergunning[]
+  items: Vergunning[],
+  dateNow?: Date
 ): MyNotification {
   const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
@@ -347,19 +368,44 @@ export function createVergunningNotification(
     title: 'Vergunningsaanvraag',
     description: 'Er is een update in uw vergunningsaanvraag.',
     datePublished: item.dateRequest,
+    subject: item.id,
     link: {
       to: item.link.to,
       title: 'Bekijk details',
     },
   };
 
-  const labels = getNotificationLabels(item, items);
+  const labels = getNotificationLabels(item, items, dateNow);
 
   if (labels) {
     assignNotificationProperties(notification, labels, item);
   }
 
   return notification;
+}
+
+export function getVergunningNotifications(
+  vergunningen: Vergunning[],
+  compareDate: Date = new Date()
+) {
+  return vergunningen
+    .map(
+      (vergunning, index, allVergunningen) =>
+        [
+          createVergunningNotification(
+            vergunning,
+            allVergunningen,
+            compareDate
+          ),
+          vergunning,
+        ] as const
+    )
+    .filter(
+      ([notification, vergunning]) =>
+        vergunning.status !== 'Afgehandeld' ||
+        isActualNotification(notification.datePublished, compareDate)
+    )
+    .map(([notification]) => notification);
 }
 
 export async function fetchVergunningenNotifications(
@@ -370,20 +416,10 @@ export async function fetchVergunningenNotifications(
   const VERGUNNINGEN = await fetchVergunningen(requestID, authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
-    const compareToDate = compareDate || new Date();
-
-    const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
-      ? VERGUNNINGEN.content
-          .filter(
-            (vergunning) =>
-              vergunning.status !== 'Afgehandeld' ||
-              (vergunning.dateDecision &&
-                isActualNotification(vergunning.dateDecision, compareToDate))
-          )
-          .map((vergunning) =>
-            createVergunningNotification(vergunning, VERGUNNINGEN.content)
-          )
-      : [];
+    const notifications = getVergunningNotifications(
+      VERGUNNINGEN.content ?? [],
+      compareDate
+    );
 
     return apiSuccessResult({
       notifications,

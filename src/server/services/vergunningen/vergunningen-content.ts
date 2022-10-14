@@ -1,9 +1,9 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
-import { dateFormat } from '../../../universal/helpers';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { Vergunning, VergunningExpirable } from './vergunningen';
+import { BZB, BZP, Vergunning, VergunningExpirable } from './vergunningen';
 
 type NotificationStatusType =
   | 'almostExpired'
@@ -37,12 +37,10 @@ type NotificationContent = {
 };
 
 const notificationLinks: NotificationLinks = {
-  [CaseType.BZB]:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D',
-  [CaseType.BZP]:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B1153113D-FA40-4EB0-8132-84E99746D7B0%7D', // Not yet available in RD
   [CaseType.GPK]:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx',
+  [CaseType.BZP]:
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx',
 };
 
 const almostExpired: NotificationLabels = {
@@ -107,16 +105,80 @@ const done: NotificationLabels = {
 
 export const notificationContent: NotificationContent = {
   [CaseType.BZB]: {
-    almostExpired,
-    isExpired,
-    inProgress,
-    done,
+    almostExpired: {
+      ...almostExpired,
+      title: () => 'Uw ontheffing blauwe zone verloopt binnenkort',
+      description: (item: BZB | any) =>
+        `Uw ontheffing blauwe zone bedrijven (${item.identifier}) loopt ${
+          item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
+        } af.`,
+      link: (item) => ({
+        title: 'Bekijk details',
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
+    },
+    isExpired: {
+      ...isExpired,
+      title: () => 'Uw ontheffing blauwe zone is verlopen',
+      description: (item: BZB | any) =>
+        `Uw ontheffing blauwe zone bedrijven (${item.identifier}) is ${
+          item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
+        } verlopen.`,
+      link: (item) => ({
+        title: 'Bekijk details',
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
+    },
+    inProgress: {
+      ...inProgress,
+      title: () => 'Aanvraag ontheffing blauwe zone',
+      description: (item: BZB | any) =>
+        `Uw aanvraag ontheffing blauwe zone bedrijven (${item.identifier}) is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      title: () => 'Aanvraag ontheffing blauwe zone',
+      description: (item: BZB | any) =>
+        `Uw aanvraag ontheffing blauwe zone bedrijven (${item.identifier}) is afgehandeld.`,
+    },
   },
   [CaseType.BZP]: {
-    almostExpired,
-    isExpired,
-    inProgress,
-    done,
+    almostExpired: {
+      ...almostExpired,
+      title: () => 'Uw ontheffing blauwe zone verloopt binnenkort',
+      description: (item: BZP | any) =>
+        `Uw ontheffing blauwe zone (${item.kenteken}) loopt ${
+          item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : 'binnenkort'
+        } af.`,
+      link: (item) => ({
+        title: `Vraag op tijd een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
+    },
+    isExpired: {
+      ...isExpired,
+      title: () => 'Uw ontheffing blauwe zone is verlopen',
+      description: (item: BZP | any) =>
+        `Uw ontheffing blauwe zone (${item.kenteken}) is ${
+          item.dateEnd ? `op ${defaultDateFormat(item.dateEnd)}` : ''
+        } verlopen.`,
+      link: (item) => ({
+        title: `Vraag een nieuwe ontheffing aan`,
+        to: notificationLinks[item.caseType] || item.link.to,
+      }),
+    },
+    inProgress: {
+      ...inProgress,
+      title: () => 'Aanvraag ontheffing blauwe zone',
+      description: (item: BZP | any) =>
+        `Uw aanvraag ontheffing blauwe zone (${item.kenteken}) is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      title: () => 'Aanvraag ontheffing blauwe zone',
+      description: (item: BZP | any) =>
+        `Uw aanvraag ontheffing blauwe zone (${item.kenteken}) is afgehandeld.`,
+    },
   },
   [CaseType.GPK]: {
     almostExpired,
