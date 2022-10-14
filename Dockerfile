@@ -93,14 +93,14 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
-CMD envsubst '${MA_APP_HOST}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
+RUN envsubst '${MA_APP_HOST}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-
 
 # Copy the built application files to the current image
 COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
 COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.txt
+
+CMD nginx -g 'daemon off;'
 
 ########################################################################################################################
 ########################################################################################################################
