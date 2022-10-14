@@ -45,7 +45,7 @@ export default function MyNotifications({
     ) &&
     !welcomNotificationShown.current
   ) {
-    // Send matomo event indicating we've shown the notification
+    // Send event indicating we've shown the notification
     welcomNotificationShown.current = true;
     trackItemPresentation(
       trackCategory,
