@@ -1,29 +1,29 @@
-import MatomoTracker from '@datapunt/matomo-tracker-js';
+import PiwikTracker from '@amsterdam/piwik-tracker';
 import {
   CustomDimension,
   TrackEventParams,
   TrackPageViewParams,
   UserOptions,
-} from '@datapunt/matomo-tracker-js/lib/types';
+} from '@amsterdam/piwik-tracker/lib/types';
 import { useDebouncedCallback } from 'use-debounce';
 import { getOtapEnvItem } from '../../universal/config';
 import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { useSessionStorage } from './storage.hook';
 
-let MatomoInstance: MatomoTracker;
+let PiwikInstance: PiwikTracker;
 
 const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as number;
 const hasSiteId = siteId !== -1 && !!siteId;
 
-const MatomoTrackerConfig: UserOptions = {
+const PiwikTrackerConfig: UserOptions = {
   urlBase: getOtapEnvItem('analyticsUrlBase') || '',
   siteId,
 };
 
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
 enum CustomDimensionId {
-  ProfileType = 2,
-  City = 3,
+  ProfileType = 1,
+  City = 2,
 }
 
 function profileTypeDimension(profileType: ProfileType) {
@@ -36,18 +36,18 @@ function userCityDimension(userCity: string) {
 
 // Initialize connection with analytics
 export function useAnalytics(isEnabled: boolean = true) {
-  if (isEnabled && hasSiteId && !MatomoInstance) {
-    MatomoInstance = new MatomoTracker(MatomoTrackerConfig);
+  if (isEnabled && hasSiteId && !PiwikInstance) {
+    PiwikInstance = new PiwikTracker(PiwikTrackerConfig);
   }
 }
 
 export function trackEvent(payload: TrackEventParams) {
-  return MatomoInstance && MatomoInstance.trackEvent(payload);
+  return PiwikInstance && PiwikInstance.trackEvent(payload);
 }
 
 export function trackSearch(keyword: string, category: string) {
   const payload = { keyword, category };
-  return MatomoInstance && MatomoInstance.trackSiteSearch(payload);
+  return PiwikInstance && PiwikInstance.trackSiteSearch(payload);
 }
 
 export function trackEventWithCustomDimension(
@@ -61,7 +61,7 @@ export function trackEventWithCustomDimension(
       profileTypeDimension(profileType),
     ],
   };
-  return MatomoInstance && MatomoInstance.trackEvent(payloadFinal);
+  return PiwikInstance && PiwikInstance.trackEvent(payloadFinal);
 }
 
 export function trackPageView(
@@ -81,7 +81,7 @@ export function trackPageView(
     customDimensions,
   };
 
-  return MatomoInstance && MatomoInstance.trackPageView(payload);
+  return PiwikInstance && PiwikInstance.trackPageView(payload);
 }
 
 export function trackPageViewWithCustomDimension(
@@ -98,8 +98,8 @@ export function trackPageViewWithCustomDimension(
 
 export function trackLink(url: string) {
   return (
-    MatomoInstance &&
-    MatomoInstance.trackLink({
+    PiwikInstance &&
+    PiwikInstance.trackLink({
       href: url,
       linkType: 'link',
     })
