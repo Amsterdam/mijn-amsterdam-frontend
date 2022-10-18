@@ -15,15 +15,15 @@ export function Nachtwerkontheffing({
 }) {
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
+      <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
 
-      {!!vergunning?.decision && (
+      {!!vergunning.decision && (
         <InfoDetailGroup>
           <InfoDetail
             label="Vanaf"
             value={
-              vergunning?.timeStart && vergunning?.dateStart
+              vergunning.timeStart && vergunning.dateStart
                 ? defaultDateTimeFormat(
                     `${vergunning.dateStart}T${vergunning.timeStart}`
                   )
@@ -35,7 +35,7 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Tot en met"
             value={
-              vergunning?.timeEnd && vergunning?.dateEnd
+              vergunning.timeEnd && vergunning.dateEnd
                 ? defaultDateTimeFormat(
                     `${vergunning.dateEnd}T${vergunning.timeEnd}`
                   )
@@ -46,7 +46,7 @@ export function Nachtwerkontheffing({
           />
         </InfoDetailGroup>
       )}
-      {!!vergunning?.decision && (
+      {!!vergunning.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
