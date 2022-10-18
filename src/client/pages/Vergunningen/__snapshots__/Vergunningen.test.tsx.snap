@@ -130,6 +130,53 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/nachtwerkontheffing/504231399"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1691001
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    16 september 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
                   >
                     <svg
