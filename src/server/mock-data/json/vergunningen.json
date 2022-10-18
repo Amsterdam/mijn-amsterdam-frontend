@@ -183,8 +183,8 @@
       "description": "Amstel 1 Evenement vergunning",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11.15",
-      "timeStart": "08.15",
+      "timeEnd": "11:15",
+      "timeStart": "08:15",
       "decision": null,
       "dateWorkflowActive": "2021-10-01"
     },
