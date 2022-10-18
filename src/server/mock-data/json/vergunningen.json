@@ -826,8 +826,8 @@
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
       "dateStart": "2022-10-01",
       "dateEnd": "2022-10-05",
-      "timeStart": "10.15",
-      "timeEnd": "18.35",
+      "timeStart": "10:15",
+      "timeEnd": "18:35",
       "status": "Afgehandeld",
       "decision": "Verleend",
       "dateWorkflowActive": "2022-07-13T00:00:00"
