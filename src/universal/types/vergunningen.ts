@@ -14,4 +14,5 @@ export enum CaseType {
   Flyeren = 'Flyeren-Sampling',
   AanbiedenDiensten = 'Aanbieden van diensten',
   NachtwerkOntheffing = 'Nachtwerkontheffing',
+  ZwaarVerkeer = 'Zwaar verkeer',
 }
