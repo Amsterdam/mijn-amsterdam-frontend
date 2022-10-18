@@ -13,7 +13,7 @@ export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
 
       <InfoDetail label="Kentekens" value={vergunning.licencePlates || '-'} />
 
-      {!!vergunning?.decision && (
+      {!!vergunning.decision && (
         <InfoDetailGroup>
           <InfoDetail
             label="Van"
@@ -31,7 +31,7 @@ export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
           />
         </InfoDetailGroup>
       )}
-      {!!vergunning?.decision && (
+      {!!vergunning.decision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
