@@ -183,8 +183,8 @@
       "description": "Amstel 1 Evenement vergunning",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11.15",
-      "timeStart": "08.15",
+      "timeEnd": "11:15",
+      "timeStart": "08:15",
       "decision": null,
       "dateWorkflowActive": "2021-10-01"
     },
@@ -199,8 +199,8 @@
       "description": "Amstel 1 Evenement vergunning",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11.30",
-      "timeStart": "08.30",
+      "timeEnd": "11:30",
+      "timeStart": "08:30",
       "decision": null,
       "dateWorkflowActive": "2021-10-01"
     },
@@ -826,8 +826,8 @@
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
       "dateStart": "2022-10-01",
       "dateEnd": "2022-10-05",
-      "timeStart": "10.15",
-      "timeEnd": "18.35",
+      "timeStart": "10:15",
+      "timeEnd": "18:35",
       "status": "Afgehandeld",
       "decision": "Verleend",
       "dateWorkflowActive": "2022-07-13T00:00:00"
@@ -841,8 +841,8 @@
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
       "dateStart": "2022-10-15",
       "dateEnd": "2022-10-25",
-      "timeStart": "22.10",
-      "timeEnd": "05.35",
+      "timeStart": "22:10",
+      "timeEnd": "05:35",
       "status": "Ontvangen",
       "decision": null,
       "dateWorkflowActive": "2022-09-16T00:00:00"
