@@ -13,13 +13,6 @@ export function Nachtwerkontheffing({
 }: {
   vergunning: NachtwerkontheffingType;
 }) {
-  const startTime = vergunning?.timeStart
-    ? vergunning.timeStart.replace('.', ':')
-    : null;
-  const endTime = vergunning?.timeEnd
-    ? vergunning.timeEnd.replace('.', ':')
-    : null;
-
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
@@ -30,8 +23,10 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Vanaf"
             value={
-              startTime && vergunning?.dateStart
-                ? defaultDateTimeFormat(`${vergunning.dateStart}T${startTime}`)
+              vergunning?.timeStart && vergunning?.dateStart
+                ? defaultDateTimeFormat(
+                    `${vergunning.dateStart}T${vergunning?.timeStart}`
+                  )
                 : vergunning.dateStart
                 ? defaultDateFormat(vergunning.dateStart)
                 : '-'
@@ -40,8 +35,10 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Tot en met"
             value={
-              endTime && vergunning?.dateEnd
-                ? defaultDateTimeFormat(`${vergunning.dateEnd}T${endTime}`)
+              vergunning?.timeEnd && vergunning?.dateEnd
+                ? defaultDateTimeFormat(
+                    `${vergunning.dateEnd}T${vergunning?.timeEnd}`
+                  )
                 : vergunning.dateEnd
                 ? defaultDateFormat(vergunning.dateEnd)
                 : '-'
