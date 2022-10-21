@@ -35,7 +35,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           />
           <InfoDetail
             label="Tussen"
-            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
+            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd} uur`}
           />
         </InfoDetailGroup>
       )}
