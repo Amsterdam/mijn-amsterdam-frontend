@@ -17,9 +17,13 @@ const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
   CaseType.EvenementVergunning,
   CaseType.Flyeren,
   CaseType.AanbiedenDiensten,
+  CaseType.NachtwerkOntheffing,
 ];
 
-const CASE_TYPES_WITH_WORKFLOW = [CaseType.Omzettingsvergunning];
+const CASE_TYPES_WITH_WORKFLOW = [
+  CaseType.Omzettingsvergunning,
+  CaseType.NachtwerkOntheffing,
+];
 
 export function isActualNotification(
   datePublished: string,

@@ -1,7 +1,7 @@
 import type { Nachtwerkontheffing as NachtwerkontheffingType } from '../../../server/services';
 import {
+  dateTimeFormatYear,
   defaultDateFormat,
-  defaultDateTimeFormat,
 } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
@@ -24,7 +24,7 @@ export function Nachtwerkontheffing({
             label="Vanaf"
             value={
               vergunning.timeStart && vergunning.dateStart
-                ? defaultDateTimeFormat(
+                ? dateTimeFormatYear(
                     `${vergunning.dateStart}T${vergunning.timeStart}`
                   )
                 : vergunning.dateStart
@@ -36,7 +36,7 @@ export function Nachtwerkontheffing({
             label="Tot en met"
             value={
               vergunning.timeEnd && vergunning.dateEnd
-                ? defaultDateTimeFormat(
+                ? dateTimeFormatYear(
                     `${vergunning.dateEnd}T${vergunning.timeEnd}`
                   )
                 : vergunning.dateEnd
