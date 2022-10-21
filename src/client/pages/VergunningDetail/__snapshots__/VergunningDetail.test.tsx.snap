@@ -1154,7 +1154,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
             <p
               class="Value"
             >
-              11:00 - 16:00
+              11:00 - 16:00 uur
             </p>
           </div>
         </div>
