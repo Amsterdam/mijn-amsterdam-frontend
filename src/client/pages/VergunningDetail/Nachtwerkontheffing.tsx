@@ -22,7 +22,7 @@ export function Nachtwerkontheffing({
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
-      {isVerleend && <Location location={vergunning.location} />}
+      <Location location={vergunning.location} />
 
       {isVerleend && !isSameDate && (
         <InfoDetailGroup className={styles.DateAndTime_SingleLine}>

@@ -1110,7 +1110,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
         </p>
       </div>
       <div
-        class="InfoDetailGroup Flyeren_DateAndTime"
+        class="InfoDetailGroup DateAndTime_SingleLine"
       >
         <div
           class="InfoDetailGroupContent"
