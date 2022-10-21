@@ -29,11 +29,7 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Vanaf"
             value={
-              vergunning.timeStart && vergunning.dateStart
-                ? dateTimeFormatYear(
-                    `${vergunning.dateStart}T${vergunning.timeStart}`
-                  )
-                : vergunning.dateStart
+              vergunning.dateStart
                 ? defaultDateFormat(vergunning.dateStart)
                 : '-'
             }
@@ -41,18 +37,12 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Tot en met"
             value={
-              vergunning.timeEnd && vergunning.dateEnd
-                ? dateTimeFormatYear(
-                    `${vergunning.dateEnd}T${vergunning.timeEnd}`
-                  )
-                : vergunning.dateEnd
-                ? defaultDateFormat(vergunning.dateEnd)
-                : '-'
+              vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
             }
           />
           <InfoDetail
             label="Tussen"
-            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
+            value={`${vergunning.timeStart} - ${vergunning.timeEnd}`}
           />
         </InfoDetailGroup>
       )}
@@ -61,18 +51,18 @@ export function Nachtwerkontheffing({
           <InfoDetail
             label="Op"
             value={
-              vergunning?.dateStart
+              vergunning.dateStart
                 ? defaultDateFormat(vergunning.dateStart)
                 : '-'
             }
           />
           <InfoDetail
             label="Van"
-            value={vergunning?.timeStart ? `${vergunning.timeStart} uur` : '-'}
+            value={vergunning.timeStart ? `${vergunning.timeStart} uur` : '-'}
           />
           <InfoDetail
             label="Tot"
-            value={vergunning?.timeEnd ? `${vergunning.timeEnd} uur` : '-'}
+            value={vergunning.timeEnd ? `${vergunning.timeEnd} uur` : '-'}
           />
         </InfoDetailGroup>
       )}
