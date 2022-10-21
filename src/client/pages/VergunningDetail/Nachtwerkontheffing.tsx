@@ -39,7 +39,7 @@ export function Nachtwerkontheffing({
           />
           <InfoDetail
             label="Tussen"
-            value={`${vergunning.timeStart} - ${vergunning.timeEnd}`}
+            value={`${vergunning.timeStart} - ${vergunning.timeEnd} uur`}
           />
         </InfoDetailGroup>
       )}
