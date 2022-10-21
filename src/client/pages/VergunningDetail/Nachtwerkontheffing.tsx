@@ -1,8 +1,5 @@
 import type { Nachtwerkontheffing as NachtwerkontheffingType } from '../../../server/services';
-import {
-  dateTimeFormatYear,
-  defaultDateFormat,
-} from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
