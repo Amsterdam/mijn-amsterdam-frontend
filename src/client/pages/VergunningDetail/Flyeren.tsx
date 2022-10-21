@@ -20,7 +20,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
       {isVerleend && !isSameDate && (
         <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
           <InfoDetail
-            label="Van"
+            label="Vanaf"
             value={
               vergunning?.dateStart
                 ? defaultDateFormat(vergunning.dateStart)

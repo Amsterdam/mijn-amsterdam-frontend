@@ -1121,7 +1121,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
             <h3
               class="Heading Heading__tiny Label"
             >
-              Van
+              Vanaf
             </h3>
             <p
               class="Value"
