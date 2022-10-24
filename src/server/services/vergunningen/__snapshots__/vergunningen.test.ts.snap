@@ -6,6 +6,30 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-10-19T00:00:00",
+        "description": "Uw aanvraag ontheffing zone zwaar verkeer is in behandeling genomen.",
+        "id": "vergunning-2318111872-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/zwaar-verkeer/2318111872",
+        },
+        "subject": "2318111872",
+        "title": "Aanvraag ontheffing zwaar verkeer in behandeling",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-10-16T00:00:00",
+        "description": "Uw aanvraag ontheffing zone zwaar verkeer is ontvangen.",
+        "id": "vergunning-1863159343-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/zwaar-verkeer/1863159343",
+        },
+        "subject": "1863159343",
+        "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-16T00:00:00",
         "description": "Uw aanvraag Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) is in behandeling genomen.",
         "id": "vergunning-504231399-notification",
@@ -370,6 +394,36 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "Zwaar verkeer",
+    "dateDecision": null,
+    "dateEnd": "2023-12-15",
+    "dateRequest": "2022-10-19T00:00:00",
+    "dateStart": "2023-01-15",
+    "dateWorkflowActive": "2022-10-21",
+    "decision": null,
+    "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
+    "id": "2318111872",
+    "identifier": "Z/22/1692013",
+    "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
+    "status": "In behandeling",
+    "title": "Ontheffing zwaar verkeer",
+  },
+  Object {
+    "caseType": "Zwaar verkeer",
+    "dateDecision": null,
+    "dateEnd": "2023-11-25",
+    "dateRequest": "2022-10-16T00:00:00",
+    "dateStart": "2022-11-15",
+    "dateWorkflowActive": null,
+    "decision": null,
+    "exemptionKind": "Jaarontheffing hele zone met gewichtsverklaring en verklaring ondeelbare lading",
+    "id": "1863159343",
+    "identifier": "Z/22/1692002",
+    "licencePlates": "XX-123-Z, XX-122-Z",
+    "status": "Ontvangen",
+    "title": "Ontheffing zwaar verkeer",
+  },
   Object {
     "caseType": "Nachtwerkontheffing",
     "dateDecision": null,

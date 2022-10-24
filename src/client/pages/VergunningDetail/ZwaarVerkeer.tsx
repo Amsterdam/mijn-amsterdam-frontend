@@ -5,33 +5,35 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 
 export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
+  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
 
-      <InfoDetail label="Soort ontheffing" value={vergunning.kind || '-'} />
+      <InfoDetail
+        label="Soort ontheffing"
+        value={vergunning.exemptionKind || '-'}
+      />
 
       <InfoDetail label="Kentekens" value={vergunning.licencePlates || '-'} />
 
-      {!!vergunning.decision && (
-        <InfoDetailGroup>
-          <InfoDetail
-            label="Van"
-            value={
-              vergunning.dateStart
-                ? defaultDateFormat(vergunning.dateStart)
-                : '-'
-            }
-          />
-          <InfoDetail
-            label="Tot en met"
-            value={
-              vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-            }
-          />
-        </InfoDetailGroup>
-      )}
-      {!!vergunning.decision && (
+      <InfoDetailGroup>
+        <InfoDetail
+          label="Vanaf"
+          value={
+            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
+          }
+        />
+        <InfoDetail
+          label="Tot en met"
+          value={
+            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+          }
+        />
+      </InfoDetailGroup>
+
+      {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>

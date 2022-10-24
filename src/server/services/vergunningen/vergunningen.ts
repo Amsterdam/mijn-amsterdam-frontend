@@ -188,7 +188,7 @@ export interface Nachtwerkontheffing extends VergunningBase {
 
 export interface ZwaarVerkeer extends VergunningBase {
   caseType: CaseType.ZwaarVerkeer;
-  kind: string | null;
+  exemptionKind: string | null;
   licencePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;

@@ -23,6 +23,7 @@ const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
 const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.Omzettingsvergunning,
   CaseType.NachtwerkOntheffing,
+  CaseType.ZwaarVerkeer,
 ];
 
 export function isActualNotification(

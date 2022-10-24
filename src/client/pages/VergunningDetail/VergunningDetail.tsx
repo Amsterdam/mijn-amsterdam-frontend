@@ -28,6 +28,7 @@ import { Omzettingsvergunning } from './Omzettingsvergunning';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
 import styles from './VergunningDetail.module.scss';
+import { ZwaarVerkeer } from './ZwaarVerkeer';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -94,6 +95,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.NachtwerkOntheffing && (
               <Nachtwerkontheffing vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.ZwaarVerkeer && (
+              <ZwaarVerkeer vergunning={Vergunning} />
             )}
 
             {showDocuments(Vergunning?.caseType) &&
