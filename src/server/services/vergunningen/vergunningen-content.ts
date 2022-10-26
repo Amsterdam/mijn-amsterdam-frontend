@@ -289,20 +289,18 @@ export const notificationContent: NotificationContent = {
     requested: {
       ...requested,
       title: () => `Aanvraag nachtwerkontheffing ontvangen`,
-      description: (item) =>
-        `Uw aanvraag ${item.title.toLocaleLowerCase()} is ontvangen.`,
+      description: (item) => `Uw aanvraag ${item.title} is ontvangen.`,
     },
     inProgress: {
       ...inProgress,
       title: () => `Aanvraag nachtwerkontheffing in behandeling`,
       description: (item) =>
-        `Uw aanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+        `Uw aanvraag ${item.title} is in behandeling genomen.`,
     },
     done: {
       ...done,
       title: () => `Aanvraag nachtwerkontheffing afgehandeld`,
-      description: (item) =>
-        `Uw aanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+      description: (item) => `Uw aanvraag ${item.title} is afgehandeld.`,
     },
   },
 };

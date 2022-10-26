@@ -18,9 +18,9 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {isVerleend && <Location location={vergunning.location} />}
       {isVerleend && !isSameDate && (
-        <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
+        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
           <InfoDetail
-            label="Van"
+            label="Vanaf"
             value={
               vergunning?.dateStart
                 ? defaultDateFormat(vergunning.dateStart)
@@ -35,12 +35,12 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
           />
           <InfoDetail
             label="Tussen"
-            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd}`}
+            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd} uur`}
           />
         </InfoDetailGroup>
       )}
       {isVerleend && isSameDate && (
-        <InfoDetailGroup className={styles.Flyeren_DateAndTime}>
+        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
           <InfoDetail
             label="Op"
             value={
