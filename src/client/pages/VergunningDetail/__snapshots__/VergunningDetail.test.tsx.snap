@@ -1216,7 +1216,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
+          class="ListItem"
           style="display: block;"
         >
           <div
@@ -1227,10 +1227,10 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="ConnectLine ConnectLine--checked"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="Checkmark Checkmark--checked"
               />
             </div>
             <div
@@ -1260,7 +1260,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
           </div>
         </li>
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
           style="display: block;"
         >
           <div
@@ -1271,10 +1271,10 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
               />
               <span
-                class="Checkmark"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div

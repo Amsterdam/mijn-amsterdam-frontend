@@ -126,6 +126,7 @@ describe('Vergunningen service', () => {
     description: 'Slopen',
     dateEnd: '2020-07-02',
     dateWorkflowActive: '2020-06-24T00:00:00',
+    processed: true,
   };
 
   const BZP_DUMMY = {
@@ -201,6 +202,7 @@ describe('Vergunningen service', () => {
         dateDecision: null,
         decision: null,
         status: 'In behandeling',
+        processed: false,
       });
 
       const notifications = createVergunningNotifications(tvmDummy);
@@ -228,6 +230,7 @@ describe('Vergunningen service', () => {
         dateDecision: null,
         decision: null,
         status: 'In behandeling',
+        processed: false,
       });
 
       const notifications = createVergunningNotifications(tvmDummy);
@@ -337,7 +340,8 @@ describe('Vergunningen service', () => {
         dateDecision: '2021-10-04',
         decision: 'Verleend',
         status: 'Afgehandeld',
-        dateEnd: '2022-07-06',
+        dateEnd: '2022-06-01',
+        processed: true,
       });
 
       const notifications = createVergunningNotifications(bzpDummy);
@@ -407,6 +411,7 @@ describe('Vergunningen service', () => {
         decision: 'Verleend',
         status: 'Afgehandeld',
         dateEnd: '2022-05-06',
+        processed: true,
       });
 
       const notifications = createVergunningNotifications(gpkDummy);
@@ -422,6 +427,7 @@ describe('Vergunningen service', () => {
         status: 'Afgehandeld',
         dateEnd: '2022-12-06',
         identifier: 'x1',
+        processed: true,
       });
 
       const gpkDummy2 = Object.assign(jsonCopy(GPK_DUMMY), {
@@ -431,6 +437,7 @@ describe('Vergunningen service', () => {
         status: 'Afgehandeld',
         dateEnd: '2023-09-28',
         identifier: 'x2',
+        processed: true,
       });
 
       const notifications = createVergunningNotifications(gpkDummy, gpkDummy2);
@@ -571,6 +578,7 @@ describe('Vergunningen service', () => {
             "title": "Bekijk hoe het met uw aanvraag staat",
             "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2191426354",
           },
+          "processed": false,
           "status": "Ontvangen",
           "title": "Parkeerontheffingen Blauwe zone particulieren",
         },
