@@ -929,6 +929,30 @@
       "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
       "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
       "processed": false
+    },
+    {
+      "caseType": "Splitsingsvergunning",
+      "title": "Splitsingsvergunning",
+      "identifier": "Z/22/1697573",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 7 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Vormen van Woonruimte",
+      "title": "Vormen van Woonruimte",
+      "identifier": "Z/22/1697574",
+      "dateRequest": "2022-10-27T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
     }
   ],
   "status": "OK"

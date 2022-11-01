@@ -29,6 +29,7 @@ import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
 import styles from './VergunningDetail.module.scss';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
+import { Woonvergunningen } from './Woonvergunningen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -98,6 +99,14 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.ZwaarVerkeer && (
               <ZwaarVerkeer vergunning={Vergunning} />
+            )}
+
+            {(Vergunning.caseType === CaseType.Onttrekkingsvergunning ||
+              Vergunning.caseType === CaseType.Samenvoegingsvergunning ||
+              Vergunning.caseType === CaseType.OnttrekkingsvergunningSloop ||
+              Vergunning.caseType === CaseType.VormenVanWoonruimte ||
+              Vergunning.caseType === CaseType.Splitsingsvergunning) && (
+              <Woonvergunningen vergunning={Vergunning} />
             )}
 
             {showDocuments(Vergunning?.caseType) &&
