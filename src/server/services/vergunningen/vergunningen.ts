@@ -193,6 +193,30 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
 }
+export interface Samenvoegingsvergunning extends VergunningBase {
+  caseType: CaseType.Samenvoegingsvergunning;
+  location: string | null;
+}
+
+export interface Onttrekkingsvergunning extends VergunningBase {
+  caseType: CaseType.Onttrekkingsvergunning;
+  location: string | null;
+}
+
+export interface OnttrekkingsvergunningSloop extends VergunningBase {
+  caseType: CaseType.OnttrekkingsvergunningSloop;
+  location: string | null;
+}
+
+export interface VormenVanWoonruimte extends VergunningBase {
+  caseType: CaseType.VormenVanWoonruimte;
+  location: string | null;
+}
+
+export interface Splitsingsvergunning extends VergunningBase {
+  caseType: CaseType.Splitsingsvergunning;
+  location: string | null;
+}
 
 export type Vergunning =
   | TVMRVVObject
@@ -210,7 +234,12 @@ export type Vergunning =
   | Flyeren
   | AanbiedenDiensten
   | Nachtwerkontheffing
-  | ZwaarVerkeer;
+  | ZwaarVerkeer
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | VormenVanWoonruimte
+  | Splitsingsvergunning;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];

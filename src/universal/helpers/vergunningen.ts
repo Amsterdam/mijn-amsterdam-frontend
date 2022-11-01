@@ -18,12 +18,22 @@ const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
   CaseType.Flyeren,
   CaseType.AanbiedenDiensten,
   CaseType.NachtwerkOntheffing,
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
+  CaseType.Splitsingsvergunning,
 ];
 
 const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.Omzettingsvergunning,
   CaseType.NachtwerkOntheffing,
   CaseType.ZwaarVerkeer,
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
+  CaseType.Splitsingsvergunning,
 ];
 
 export function isActualNotification(
