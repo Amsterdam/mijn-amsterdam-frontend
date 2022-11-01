@@ -953,6 +953,30 @@
       "decision": null,
       "dateWorkflowActive": "2022-11-01T00:00:00",
       "processed": false
+    },
+    {
+      "caseType": "Onttrekkingsvergunning voor sloop",
+      "title": "Onttrekkingsvergunning voor sloop",
+      "identifier": "Z/22/1797585",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "processed": false
+    },
+    {
+      "caseType": "Samenvoegingsvergunning",
+      "title": "Samenvoegingsvergunning",
+      "identifier": "Z/22/1797585",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-01T00:00:00",
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
     }
   ],
   "status": "OK"
