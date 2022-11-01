@@ -51,6 +51,8 @@ const otapServerEnv: OtapEnv = {
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
   },
   acceptance: {
+    analyticsId: 'c166e22f-2fb6-4cbe-bb98-b7e3053c2150',
+    analyticsUrlBase: 'https://dap.amsterdam.nl/',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
