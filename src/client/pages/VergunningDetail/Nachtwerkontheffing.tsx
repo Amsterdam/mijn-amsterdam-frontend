@@ -11,8 +11,8 @@ export function Nachtwerkontheffing({
 }: {
   vergunning: NachtwerkontheffingType;
 }) {
-  const isVerleend = vergunning.decision === 'Verleend';
-  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+  const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
+  const isAfgehandeld = vergunning.processed;
   const isSameDate =
     vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 
