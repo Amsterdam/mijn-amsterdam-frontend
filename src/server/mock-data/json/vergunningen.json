@@ -899,6 +899,36 @@
       "decision": null,
       "dateWorkflowActive": "2022-09-16T00:00:00",
       "processed": false
+    },
+    {
+      "caseType": "Zwaar verkeer",
+      "title": "Ontheffing zwaar verkeer",
+      "identifier": "Z/22/1692002",
+      "dateRequest": "2022-10-16T00:00:00",
+      "dateDecision": null,
+      "dateStart": "2022-11-15",
+      "dateEnd": "2023-11-25",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "exemptionKind": "Jaarontheffing hele zone met gewichtsverklaring en verklaring ondeelbare lading",
+      "licencePlates": "XX-123-Z, XX-122-Z",
+      "processed": false
+    },
+    {
+      "caseType": "Zwaar verkeer",
+      "title": "Ontheffing zwaar verkeer",
+      "identifier": "Z/22/1692013",
+      "dateRequest": "2022-10-19T00:00:00",
+      "dateDecision": null,
+      "dateStart": "2023-01-15",
+      "dateEnd": "2023-12-15",
+      "status": "In behandeling",
+      "decision": null,
+      "dateWorkflowActive": "2022-10-21",
+      "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
+      "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
+      "processed": false
     }
   ],
   "status": "OK"

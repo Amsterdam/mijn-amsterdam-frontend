@@ -150,4 +150,13 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Zwaarverkeer', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1692013" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });

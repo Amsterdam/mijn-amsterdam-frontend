@@ -186,6 +186,14 @@ export interface Nachtwerkontheffing extends VergunningBase {
   timeEnd: string | null;
 }
 
+export interface ZwaarVerkeer extends VergunningBase {
+  caseType: CaseType.ZwaarVerkeer;
+  exemptionKind: string | null;
+  licencePlates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -201,7 +209,8 @@ export type Vergunning =
   | VakantieverhuurVergunningaanvraag
   | Flyeren
   | AanbiedenDiensten
-  | Nachtwerkontheffing;
+  | Nachtwerkontheffing
+  | ZwaarVerkeer;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];

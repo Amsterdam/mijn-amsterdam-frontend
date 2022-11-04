@@ -303,4 +303,24 @@ export const notificationContent: NotificationContent = {
       description: (item) => `Uw aanvraag ${item.title} is afgehandeld.`,
     },
   },
+  [CaseType.ZwaarVerkeer]: {
+    requested: {
+      ...requested,
+      title: () => `Aanvraag ontheffing zwaar verkeer ontvangen`,
+      description: () =>
+        `Uw aanvraag ontheffing zone zwaar verkeer is ontvangen.`,
+    },
+    inProgress: {
+      ...inProgress,
+      title: () => `Aanvraag ontheffing zwaar verkeer in behandeling`,
+      description: () =>
+        `Uw aanvraag ontheffing zone zwaar verkeer is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      title: () => `Aanvraag ontheffing zwaar verkeer afgehandeld`,
+      description: () =>
+        `Uw aanvraag ontheffing zone zwaar verkeer is afgehandeld.`,
+    },
+  },
 };
