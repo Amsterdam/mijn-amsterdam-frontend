@@ -106,19 +106,22 @@ const done: NotificationLabels = {
 const woningVergunningenLabels: NotificatonContentLabels = {
   requested: {
     ...requested,
-    title: (item) => `Aanvraag ${item.title} ontvangen`,
-    description: (item) => `Uw aanvraag ${item.title} is ontvangen.`,
+    title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} ontvangen`,
+    description: (item) =>
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is ontvangen.`,
   },
   inProgress: {
     ...inProgress,
-    title: (item) => `Aanvraag ${item.title} in behandeling`,
+    title: (item) =>
+      `Aanvraag ${item.title?.toLocaleLowerCase()} in behandeling`,
     description: (item) =>
-      `Uw aanvraag ${item.title} is in behandeling genomen.`,
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is in behandeling genomen.`,
   },
   done: {
     ...done,
-    title: (item) => `Aanvraag ${item.title} afgehandeld`,
-    description: (item) => `Uw aanvraag ${item.title} is afgehandeld.`,
+    title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
+    description: (item) =>
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is afgehandeld.`,
   },
 };
 
