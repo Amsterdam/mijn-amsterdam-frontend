@@ -193,6 +193,7 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
 }
+
 export interface Samenvoegingsvergunning extends VergunningBase {
   caseType: CaseType.Samenvoegingsvergunning;
   location: string | null;
