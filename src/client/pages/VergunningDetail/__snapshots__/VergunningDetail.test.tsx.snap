@@ -2819,6 +2819,458 @@ exports[`<VergunningDetail /> Nachtwerkontheffing should match the full page sna
 </DocumentFragment>
 `;
 
+exports[`<VergunningDetail /> Splitsingsvergunning - In behandeling should match the full page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Vergunningen"
+          class="ChapterIcon"
+          fill="black"
+        >
+          vergunningen.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Vergunningen
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Splitsingsvergunning
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="Value"
+        >
+          Z/22/1697573
+        </p>
+      </div>
+      <div
+        class="InfoDetail LocationInfo"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Locatie
+        </h3>
+        <p
+          class="Value"
+        >
+          Gustav Mahlerlaan 7 1082 PP Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
+      class="StatusLine VergunningStatus"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 november 2022
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--middle-checked-next"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 november 2022
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<VergunningDetail /> VormenVanWoonruimte - In behandeling should match the full page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Vergunningen"
+          class="ChapterIcon"
+          fill="black"
+        >
+          vergunningen.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Vergunningen
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Vormen van Woonruimte
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="Value"
+        >
+          Z/22/1697574
+        </p>
+      </div>
+      <div
+        class="InfoDetail LocationInfo"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Locatie
+        </h3>
+        <p
+          class="Value"
+        >
+          Gustav Mahlerlaan 14 1082 PP Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
+      class="StatusLine VergunningStatus"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                27 oktober 2022
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--middle-checked-next"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 november 2022
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`<VergunningDetail /> Zwaarverkeer should match the full page snapshot 1`] = `
 <DocumentFragment>
   <main

@@ -130,6 +130,194 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/splitsingsvergunning/4220998766"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1697573
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Splitsingsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/onttrekkingsvergunning-voor-sloop/2377704102"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797585
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Onttrekkingsvergunning voor sloop
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/samenvoegingsvergunning/2377704102"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797585
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Samenvoegingsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/vormen-van-woonruimte/4289555340"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1697574
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vormen van Woonruimte
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    27 oktober 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
                     href="/vergunningen/zwaar-verkeer/2318111872"
                   >
                     <svg
