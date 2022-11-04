@@ -51,15 +51,11 @@ export default function Vergunningen() {
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
-    return vergunningen.filter(
-      (vergunning) => vergunning.status === 'Afgehandeld'
-    );
+    return vergunningen.filter((vergunning) => vergunning.processed);
   }, [vergunningen]);
 
   const vergunningenActual = useMemo(() => {
-    return vergunningen.filter(
-      (vergunning) => vergunning.status !== 'Afgehandeld'
-    );
+    return vergunningen.filter((vergunning) => !vergunning.processed);
   }, [vergunningen]);
 
   const hasActualGPK = vergunningenActual.find(

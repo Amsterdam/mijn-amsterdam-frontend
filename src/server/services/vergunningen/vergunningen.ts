@@ -49,6 +49,7 @@ export interface VergunningBase {
   documentsUrl: string | null;
   id: string;
   link: LinkProps;
+  processed: boolean;
 }
 
 export interface TVMRVVObject extends VergunningBase {
@@ -402,7 +403,7 @@ export function getVergunningNotifications(
     )
     .filter(
       ([notification, vergunning]) =>
-        vergunning.status !== 'Afgehandeld' ||
+        !vergunning.processed ||
         isActualNotification(notification.datePublished, compareDate)
     )
     .map(([notification]) => notification);
