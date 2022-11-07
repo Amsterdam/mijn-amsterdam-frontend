@@ -28,7 +28,7 @@ Object {
         "subject": "1863159343",
         "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag splitsingsvergunning is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag splitsingsvergunning is in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -40,7 +40,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag onttrekkingsvergunning voor sloop is ontvangen.",
+        "description": "Uw vergunningsaanvraag onttrekkingsvergunning voor sloop is ontvangen.",
         "id": "vergunning-2377704102-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -52,7 +52,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag samenvoegingsvergunning is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag samenvoegingsvergunning is in behandeling genomen.",
         "id": "vergunning-2377704102-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -64,7 +64,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-10-27T00:00:00",
-        "description": "Uw aanvraag vormen van woonruimte is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag vormen van woonruimte is in behandeling genomen.",
         "id": "vergunning-4289555340-notification",
         "link": Object {
           "title": "Bekijk details",
