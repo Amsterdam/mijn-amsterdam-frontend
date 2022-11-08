@@ -177,4 +177,22 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Onttrekkingsvergunning voor sloop - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1797585" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Samenvoegingsvergunning - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1797696" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });

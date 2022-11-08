@@ -224,7 +224,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/samenvoegingsvergunning/2377704102"
+                    href="/vergunningen/samenvoegingsvergunning/3588461895"
                   >
                     <svg
                       aria-hidden="true"
@@ -235,7 +235,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
-                    Z/22/1797585
+                    Z/22/1797696
                   </a>
                 </td>
                 <td
@@ -1354,6 +1354,53 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/onttrekkingsvergunning/1659133230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797707
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Onttrekkingsvergunning voor ander gebruik
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
               <tr
                 class="TableRow"
               >
