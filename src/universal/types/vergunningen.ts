@@ -16,8 +16,8 @@ export enum CaseType {
   NachtwerkOntheffing = 'Nachtwerkontheffing',
   ZwaarVerkeer = 'Zwaar verkeer',
   Samenvoegingsvergunning = 'Samenvoegingsvergunning',
-  Onttrekkingsvergunning = 'Onttrekkingsvergunning',
+  Onttrekkingsvergunning = 'Onttrekkingsvergunning voor ander gebruik',
   OnttrekkingsvergunningSloop = 'Onttrekkingsvergunning voor sloop',
-  VormenVanWoonruimte = 'Vormen van Woonruimte',
+  VormenVanWoonruimte = 'Woningvormingsvergunning',
   Splitsingsvergunning = 'Splitsingsvergunning',
 }
