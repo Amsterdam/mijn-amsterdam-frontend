@@ -20,7 +20,7 @@ export function Woonvergunningen({
 }: {
   vergunning: VergunningType;
 }) {
-  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+  const isAfgehandeld = vergunning.processed;
 
   return (
     <>

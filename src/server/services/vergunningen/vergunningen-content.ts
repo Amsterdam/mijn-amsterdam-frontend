@@ -108,20 +108,20 @@ const woningVergunningenLabels: NotificatonContentLabels = {
     ...requested,
     title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} ontvangen`,
     description: (item) =>
-      `Uw vergunningsaanvraag ${item.title?.toLocaleLowerCase()} is ontvangen.`,
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is ontvangen.`,
   },
   inProgress: {
     ...inProgress,
     title: (item) =>
       `Aanvraag ${item.title?.toLocaleLowerCase()} in behandeling`,
     description: (item) =>
-      `Uw vergunningsaanvraag ${item.title?.toLocaleLowerCase()} is in behandeling genomen.`,
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is in behandeling genomen.`,
   },
   done: {
     ...done,
     title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
     description: (item) =>
-      `Uw vergunningsaanvraag ${item.title?.toLocaleLowerCase()} is afgehandeld.`,
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is afgehandeld.`,
   },
 };
 
