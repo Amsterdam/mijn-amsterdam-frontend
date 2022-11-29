@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
+exports[`<Inkomen /> with items from BBZ, TONK, TOZO Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
     class="Page OverviewPage Inkomen"
@@ -297,6 +297,39 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
                 <td
                   class="DisplayPropTitle"
                 >
+                  Bbz item
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum aanvraag:
+                  </span>
+                  <span>
+                    14 juli 2022
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum besluit:
+                  </span>
+                  <span>
+                    24 juli 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
                   Aanvraag inkomen item
                 </td>
                 <td
@@ -392,6 +425,396 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Uitkeringsspecificaties
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table SpecificationsTable"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                />
+                <th
+                  class="DisplayProp"
+                >
+                  Regeling
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Datum
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Specificatie Mei 2020
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Regeling:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum:
+                  </span>
+                  <span>
+                    14 Mei 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Documenten:
+                  </span>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/api/v1/relay/wpi/document/id"
+                    >
+                      PDF
+                    </a>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Jaaropgaven
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table SpecificationsTable SpecificationsTable--annualStatements"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                />
+                <th
+                  class="DisplayProp"
+                >
+                  Datum
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Jaaropgave 2020
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum:
+                  </span>
+                  <span>
+                    14 Juli 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Documenten:
+                  </span>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/api/v1/relay/wpi/document/id"
+                    >
+                      PDF
+                    </a>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<Inkomen /> without items from BBZ, TONK, TOZO Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage Inkomen"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Inkomen"
+          class="ChapterIcon"
+          fill="black"
+        >
+          inkomen.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Inkomen
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Op deze pagina vindt u informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/werk-inkomen"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Algemene informatie over Werk en Inkomen
+        </a>
+        <br />
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/werk-inkomen/contact/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Contact Werk en Inkomen
+        </a>
+      </p>
+    </div>
+    <section
+      class="SectionCollapsible SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Lopende aanvragen
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U hebt op dit moment geen lopende aanvragen.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Eerdere aanvragen
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U hebt op dit moment geen eerdere aanvragen.
+          </p>
         </div>
       </div>
     </section>
