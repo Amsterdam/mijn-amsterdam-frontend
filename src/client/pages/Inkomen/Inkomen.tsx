@@ -85,7 +85,8 @@ export default function Inkomen() {
           displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
           displayDateStart: isBbzHistoric
             ? defaultDateFormat(
-                item.steps.find((s) => s.id === 'aanvraag')!.datePublished
+                item.steps.find((s) => s.id === 'aanvraag')?.datePublished ||
+                  item.datePublished
               )
             : defaultDateFormat(item.dateStart),
           status: isBbzHistoric

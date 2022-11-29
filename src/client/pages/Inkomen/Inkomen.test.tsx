@@ -106,22 +106,26 @@ const testState: any = {
       },
     ],
   },
-  WPI_BBZ: [
-    {
-      title: 'Bbz item',
-      datePublished: '2022-07-24',
-      dateStart: '2022-07-14',
-      statusId: 'besluit',
-      id: 'aanvraag-7',
-      steps: [
-        {
-          id: 'besluit',
-          status: 'Besluit',
-          datePublished: '2022-07-24',
-        },
-      ],
-    },
-  ],
+  WPI_BBZ: {
+    status: 'OK',
+    content: [
+      {
+        title: 'Bbz item',
+        datePublished: '2022-07-24',
+        dateStart: '2022-07-14',
+        statusId: 'besluit',
+        id: 'aanvraag-7',
+        about: 'Bbz',
+        steps: [
+          {
+            id: 'besluit',
+            status: 'Besluit',
+            datePublished: '2022-07-24',
+          },
+        ],
+      },
+    ],
+  },
   WPI_SPECIFICATIES: {
     status: 'OK',
     content: {
@@ -151,25 +155,57 @@ const testState: any = {
   },
 };
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
 describe('<Inkomen />', () => {
-  const routeEntry = generatePath(AppRoutes.INKOMEN);
-  const routePath = AppRoutes.INKOMEN;
+  describe('with items from BBZ, TONK, TOZO', () => {
+    function initializeState(snapshot: MutableSnapshot) {
+      snapshot.set(appStateAtom, testState);
+    }
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Inkomen}
-      initializeState={initializeState}
-    />
-  );
+    const routeEntry = generatePath(AppRoutes.INKOMEN);
+    const routePath = AppRoutes.INKOMEN;
 
-  it('Matches the Full Page snapshot', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Inkomen}
+        initializeState={initializeState}
+      />
+    );
+
+    it('Matches the Full Page snapshot', () => {
+      const { asFragment } = render(<Component />);
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('without items from BBZ, TONK, TOZO', () => {
+    function initializeState(snapshot: MutableSnapshot) {
+      const { WPI_SPECIFICATIES } = testState;
+      snapshot.set(appStateAtom, {
+        WPI_SPECIFICATIES,
+        WPI_AANVRAGEN: {},
+        WPI_TOZO: {},
+        WPI_TONK: {},
+        WPI_BBZ: {},
+      } as any);
+    }
+
+    const routeEntry = generatePath(AppRoutes.INKOMEN);
+    const routePath = AppRoutes.INKOMEN;
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Inkomen}
+        initializeState={initializeState}
+      />
+    );
+
+    it('Matches the Full Page snapshot', () => {
+      const { asFragment } = render(<Component />);
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });
