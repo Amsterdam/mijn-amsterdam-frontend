@@ -16,14 +16,6 @@ import { isDateInPast, monthsFromNow } from './date';
 export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
-export const woonVergunningTypes = [
-  CaseType.Samenvoegingsvergunning,
-  CaseType.Onttrekkingsvergunning,
-  CaseType.OnttrekkingsvergunningSloop,
-  CaseType.VormenVanWoonruimte,
-  CaseType.Splitsingsvergunning,
-];
-
 const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
   CaseType.GPP,
   CaseType.GPK,
@@ -50,23 +42,26 @@ const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.Splitsingsvergunning,
 ];
 
-export function isWoonvergunning(
-  vergunning: Vergunning
-): vergunning is
+export const woonVergunningTypes = [
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
+  CaseType.Splitsingsvergunning,
+];
+
+export type WoningVergunning =
   | Samenvoegingsvergunning
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
   | VormenVanWoonruimte
-  | Splitsingsvergunning {
+  | Splitsingsvergunning;
+
+export function isWoonvergunning(
+  vergunning: Vergunning
+): vergunning is WoningVergunning {
   return woonVergunningTypes.includes(
-    (
-      vergunning as
-        | Samenvoegingsvergunning
-        | Onttrekkingsvergunning
-        | OnttrekkingsvergunningSloop
-        | VormenVanWoonruimte
-        | Splitsingsvergunning
-    ).caseType
+    (vergunning as WoningVergunning).caseType
   );
 }
 

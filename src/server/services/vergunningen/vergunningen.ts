@@ -194,7 +194,7 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateEnd: string | null;
 }
 
-interface WoonVergunning extends VergunningBase {
+export interface WoonVergunning extends VergunningBase {
   location: string | null;
 }
 
