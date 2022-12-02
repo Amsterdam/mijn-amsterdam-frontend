@@ -194,29 +194,28 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateEnd: string | null;
 }
 
-export interface Samenvoegingsvergunning extends VergunningBase {
+interface WoonVergunning extends VergunningBase {
+  location: string | null;
+}
+
+export interface Samenvoegingsvergunning extends WoonVergunning {
   caseType: CaseType.Samenvoegingsvergunning;
-  location: string | null;
 }
 
-export interface Onttrekkingsvergunning extends VergunningBase {
+export interface Onttrekkingsvergunning extends WoonVergunning {
   caseType: CaseType.Onttrekkingsvergunning;
-  location: string | null;
 }
 
-export interface OnttrekkingsvergunningSloop extends VergunningBase {
+export interface OnttrekkingsvergunningSloop extends WoonVergunning {
   caseType: CaseType.OnttrekkingsvergunningSloop;
-  location: string | null;
 }
 
-export interface VormenVanWoonruimte extends VergunningBase {
+export interface VormenVanWoonruimte extends WoonVergunning {
   caseType: CaseType.VormenVanWoonruimte;
-  location: string | null;
 }
 
-export interface Splitsingsvergunning extends VergunningBase {
+export interface Splitsingsvergunning extends WoonVergunning {
   caseType: CaseType.Splitsingsvergunning;
-  location: string | null;
 }
 
 export type Vergunning =
