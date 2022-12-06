@@ -12,7 +12,21 @@
       "serviceDateStart": null,
       "serviceOrderDate": "2022-02-13",
       "supplier": "Medipoint",
-      "title": "rolstoelfiets met hulpmotor"
+      "title": "rolstoelfiets met hulpmotor",
+      "documents": [
+        {
+          "id": "B744593",
+          "title": "WRV rapport",
+          "datePublished": "2021-03-31T15:28:05",
+          "url": "#"
+        },
+        {
+          "id": "B740440",
+          "title": "E-mail memo",
+          "datePublished": "2021-03-15T16:20:44",
+          "url": "#"
+        }
+      ]
     },
     {
       "title": "hulp bij het huishouden (nog niet geleverd)",

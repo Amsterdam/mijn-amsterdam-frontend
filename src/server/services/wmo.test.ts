@@ -23,6 +23,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: null,
     serviceDateStart: null,
     serviceDateEnd: null,
+    documents: [],
   },
   {
     title: 'hulp bij het huishouden (geleverd)',
@@ -36,6 +37,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: null,
     serviceDateStart: '2022-01-12',
     serviceDateEnd: null,
+    documents: [],
   },
   {
     title: 'hulp bij het huishouden (tijdelijk gestopt)',
@@ -49,6 +51,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: null,
     serviceDateStart: '2022-01-12',
     serviceDateEnd: '2022-02-05',
+    documents: [],
   },
   {
     title: 'hulp bij het huishouden (gestopt)',
@@ -62,6 +65,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: null,
     serviceDateStart: '2022-01-12',
     serviceDateEnd: '2022-01-19',
+    documents: [],
   },
   {
     dateDecision: '2016-06-10',
@@ -76,6 +80,7 @@ const apiTestItems: WmoApiItem[] = [
     supplier: null,
     title:
       'financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen',
+    documents: [],
   },
   {
     title: 'PGB item 1',
@@ -89,6 +94,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: '2017-11-24',
     serviceDateStart: '2017-11-24',
     serviceDateEnd: '2018-11-23',
+    documents: [],
   },
   {
     title: 'woonruimte aanpassing (opdracht gegeven)',
@@ -102,6 +108,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: '2022-01-12',
     serviceDateStart: null,
     serviceDateEnd: null,
+    documents: [],
   },
   {
     title: 'woonruimteaanpassing',
@@ -115,6 +122,7 @@ const apiTestItems: WmoApiItem[] = [
     serviceOrderDate: '2022-01-23T13:31:36',
     serviceDateStart: null,
     serviceDateEnd: null,
+    documents: [],
   },
 ];
 

@@ -1,3 +1,4 @@
+import { doc } from 'prettier';
 import { generatePath } from 'react-router';
 import { AppRoutes } from '../../universal/config';
 import {
@@ -6,7 +7,7 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../universal/helpers';
-import { hash } from '../../universal/helpers/utils';
+import { hash, relayApiUrl } from '../../universal/helpers/utils';
 import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -25,6 +26,7 @@ export interface WmoApiItem {
   serviceOrderDate: string | null;
   itemTypeCode: string;
   deliveryType: 'PGB' | 'ZIN' | '';
+  documents: GenericDocument[];
 }
 
 export interface WmoApiData {
@@ -656,7 +658,13 @@ function formatWmoStatusLineItems(
           isVisible: statusItem.isVisible
             ? statusItem?.isVisible(index, wmoItem, today)
             : true,
-          documents: [], // NOTE: To be implemented
+          documents:
+            statusItem.status === 'Besluit'
+              ? wmoItem.documents?.map((doc) => ({
+                  ...doc,
+                  url: relayApiUrl(doc.url),
+                }))
+              : [], // NOTE: To be implemented
         };
 
         if (index === 0) {
