@@ -41,7 +41,7 @@ export interface WmoItemStep {
   status: string;
   datePublished: string;
   description: string;
-  documents: GenericDocument[];
+  documents: GenericDocument[] | null;
   isActive?: boolean;
   isChecked?: boolean;
   [key: string]: any;
@@ -664,7 +664,7 @@ function formatWmoStatusLineItems(
                   ...doc,
                   url: relayApiUrl(doc.url),
                 }))
-              : [], // NOTE: To be implemented
+              : null, // NOTE: To be implemented
         };
 
         if (index === 0) {
