@@ -1,4 +1,3 @@
-import { doc } from 'prettier';
 import { generatePath } from 'react-router';
 import { AppRoutes } from '../../universal/config';
 import {
