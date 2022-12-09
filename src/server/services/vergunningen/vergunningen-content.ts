@@ -116,6 +116,7 @@ const woningVergunningenLabels: NotificatonContentLabels = {
       `Aanvraag ${item.title?.toLocaleLowerCase()} in behandeling`,
     description: (item) =>
       `Uw aanvraag ${item.title?.toLocaleLowerCase()} is in behandeling genomen.`,
+    datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
   },
   done: {
     ...done,
