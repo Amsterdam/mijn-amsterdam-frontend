@@ -6,27 +6,6 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-10-21",
-        "description": "Uw aanvraag ontheffing zone zwaar verkeer is in behandeling genomen.",
-        "id": "vergunning-2318111872-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/zwaar-verkeer/2318111872",
-        },
-        "subject": "2318111872",
-        "title": "Aanvraag ontheffing zwaar verkeer in behandeling",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-10-16T00:00:00",
-        "description": "Uw aanvraag ontheffing zone zwaar verkeer is ontvangen.",
-        "id": "vergunning-1863159343-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/zwaar-verkeer/1863159343",
-        },
-        "subject": "1863159343",
-        "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Uw aanvraag splitsingsvergunning is in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
@@ -75,7 +54,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-10-19T00:00:00",
+        "datePublished": "2022-10-21",
         "description": "Uw aanvraag ontheffing zone zwaar verkeer is in behandeling genomen.",
         "id": "vergunning-2318111872-notification",
         "link": Object {
