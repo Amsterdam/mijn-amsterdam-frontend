@@ -315,6 +315,7 @@ export const notificationContent: NotificationContent = {
       title: () => `Aanvraag ontheffing zwaar verkeer in behandeling`,
       description: () =>
         `Uw aanvraag ontheffing zone zwaar verkeer is in behandeling genomen.`,
+      datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
     },
     done: {
       ...done,
