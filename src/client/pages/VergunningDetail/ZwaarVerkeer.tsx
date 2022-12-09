@@ -5,7 +5,7 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 
 export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
-  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+  const isAfgehandeld = vergunning.processed;
 
   return (
     <>
