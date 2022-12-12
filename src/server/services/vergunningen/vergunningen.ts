@@ -346,10 +346,10 @@ export function getNotificationLabels(
     case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
       return notificationContent[item.caseType]?.requested;
 
-    case item.status !== 'Afgehandeld':
+    case item.status !== 'Afgehandeld' || !item.processed:
       return notificationContent[item.caseType]?.inProgress;
 
-    case item.status === 'Afgehandeld':
+    case item.status === 'Afgehandeld' && item.processed:
       return notificationContent[item.caseType]?.done;
   }
 }

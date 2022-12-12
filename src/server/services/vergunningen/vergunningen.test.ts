@@ -530,6 +530,7 @@ describe('Vergunningen service', () => {
           status: 'Afgehandeld',
           identifier: 'x1',
           dateWorkflowActive: '2022-09-27',
+          processed: true,
         }
       );
 
