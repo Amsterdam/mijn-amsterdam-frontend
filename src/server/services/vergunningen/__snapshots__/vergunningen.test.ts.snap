@@ -102,15 +102,15 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-10-17",
-        "description": "Uw vergunningsaanvraag Evenement vergunning is afgehandeld.",
+        "datePublished": "2021-10-01",
+        "description": "Uw vergunningsaanvraag Evenement vergunning is ontvangen.",
         "id": "vergunning-4081922197-notification",
         "link": Object {
           "title": "Bekijk details",
           "to": "/vergunningen/evenement-vergunning/4081922197",
         },
         "subject": "4081922197",
-        "title": "Evenement vergunning afgehandeld",
+        "title": "Evenement vergunning ontvangen",
       },
       Object {
         "chapter": "VERGUNNINGEN",
