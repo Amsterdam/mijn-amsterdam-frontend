@@ -19,7 +19,6 @@ import {
   getPropertyFilters,
   transformDsoApiListResponse,
 } from './helpers';
-import { transformSlugToCategorie } from './meldingen-subcategories';
 
 enum zIndexPane {
   PARKEERZONES = '650',
