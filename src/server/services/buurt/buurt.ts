@@ -247,9 +247,18 @@ export async function loadFeatureDetail(
       ? config.detailUrl(config)
       : config.detailUrl;
 
-  const url = config.idKeyDetail
+  let url = config.idKeyDetail
     ? `${detailUrl}?${config.idKeyDetail}=${id}`
     : `${detailUrl}${id}`;
+
+  if (!detailUrl) {
+    const listUrl =
+      typeof config.listUrl === 'function'
+        ? config.listUrl(config)
+        : config.listUrl;
+
+    if (listUrl) url = listUrl;
+  }
 
   const requestConfig: DataRequestConfig = {
     url,
@@ -262,7 +271,8 @@ export async function loadFeatureDetail(
     requestConfig.transformResponse = config.transformDetail.bind(
       null,
       datasetId,
-      config
+      config,
+      id
     );
   }
 

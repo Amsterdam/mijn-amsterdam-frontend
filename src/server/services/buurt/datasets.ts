@@ -86,6 +86,7 @@ export interface DatasetConfig {
   transformDetail?: (
     datasetId: DatasetId,
     config: DatasetConfig,
+    id: any,
     data: any
   ) => any;
   requestConfig?: DataRequestConfig;
@@ -308,17 +309,14 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
-      }api.data.amsterdam.nl/v1/wfs/meldingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=meldingen_buurt-geometrie_visualisatie&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
-    detailUrl: () =>
-      `https://${
-        ENV === 'production' ? '' : 'acc.'
-      }api.data.amsterdam.nl/v1/meldingen/meldingen_buurt/`,
+      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    idKeyList: 'ma_melding_id',
   },
 };
 
@@ -328,16 +326,19 @@ function transformMeldingenBuurtResponse(
   responseData: any
 ) {
   const features =
-    responseData?.features.map((feature: any) => {
-      const categorie = feature.properties.categorie;
+    responseData?.features.map((feature: any, index: number) => {
+      const categorie = feature.properties.category.parent.name;
 
-      const config =
+      const dataSetConfig =
         DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.categorie
           ?.valueConfig;
 
       const displayCat = capitalizeFirstLetter(categorie);
 
-      if (config && !(displayCat in config)) {
+      if (config.idKeyList) feature.properties[config.idKeyList] = index;
+
+      feature.properties.categorie = categorie;
+      if (dataSetConfig && !(displayCat in dataSetConfig)) {
         feature.properties.categorie = 'overig';
       }
 
@@ -416,13 +417,24 @@ function transformAfvalcontainerDetailResponse(
 function transformMeldingDetailResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  id: number,
+  responseData: {
+    features: any[];
+  }
 ) {
-  const subcategorie = transformSlugToCategorie(responseData?.subcategorie);
+  const item = responseData?.features[id];
+
+  if (!item) {
+    throw new Error(
+      `Buurt item with id ${id} not found. Got ${responseData?.features?.length} items to search.`
+    );
+  }
 
   return {
-    ...responseData,
-    subcategorie,
+    id,
+    categorie: item?.properties?.category?.parent?.name,
+    subcategorie: item?.properties?.category?.name,
+    datumCreatie: item?.properties?.created_at,
   };
 }
 
