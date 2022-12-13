@@ -103,6 +103,29 @@ const done: NotificationLabels = {
   }),
 };
 
+const woningVergunningenLabels: NotificatonContentLabels = {
+  requested: {
+    ...requested,
+    title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} ontvangen`,
+    description: (item) =>
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is ontvangen.`,
+  },
+  inProgress: {
+    ...inProgress,
+    title: (item) =>
+      `Aanvraag ${item.title?.toLocaleLowerCase()} in behandeling`,
+    description: (item) =>
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is in behandeling genomen.`,
+    datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
+  },
+  done: {
+    ...done,
+    title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
+    description: (item) =>
+      `Uw aanvraag ${item.title?.toLocaleLowerCase()} is afgehandeld.`,
+  },
+};
+
 export const notificationContent: NotificationContent = {
   [CaseType.BZB]: {
     almostExpired: {
@@ -324,4 +347,9 @@ export const notificationContent: NotificationContent = {
         `Uw aanvraag ontheffing zone zwaar verkeer is afgehandeld.`,
     },
   },
+  [CaseType.Splitsingsvergunning]: woningVergunningenLabels,
+  [CaseType.Samenvoegingsvergunning]: woningVergunningenLabels,
+  [CaseType.Onttrekkingsvergunning]: woningVergunningenLabels,
+  [CaseType.OnttrekkingsvergunningSloop]: woningVergunningenLabels,
+  [CaseType.VormenVanWoonruimte]: woningVergunningenLabels,
 };

@@ -929,6 +929,66 @@
       "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
       "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
       "processed": false
+    },
+    {
+      "caseType": "Splitsingsvergunning",
+      "title": "Splitsingsvergunning",
+      "identifier": "Z/22/1697573",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 7 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Woningvormingsvergunning",
+      "title": "Vormen van Woonruimte",
+      "identifier": "Z/22/1697574",
+      "dateRequest": "2022-10-27T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Onttrekkingsvergunning voor sloop",
+      "title": "Onttrekkingsvergunning voor sloop",
+      "identifier": "Z/22/1797585",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "processed": false
+    },
+    {
+      "caseType": "Onttrekkingsvergunning",
+      "title": "Onttrekkingsvergunning voor ander gebruik",
+      "identifier": "Z/22/1797707",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-08T00:00:00",
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Afgehandeld",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-11-07T00:00:00",
+      "processed": true
+    },
+    {
+      "caseType": "Samenvoegingsvergunning",
+      "title": "Samenvoegingsvergunning",
+      "identifier": "Z/22/1797696",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-01T00:00:00",
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
     }
   ],
   "status": "OK"
