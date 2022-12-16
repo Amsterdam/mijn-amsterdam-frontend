@@ -326,7 +326,7 @@ function transformMeldingenBuurtResponse(
 ) {
   const features =
     responseData?.features.map((feature: any, index: number) => {
-      const categorie = feature.properties.category.parent.name;
+      const categorie = feature.properties.category.parent.slug;
 
       const dataSetConfig =
         DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.categorie
