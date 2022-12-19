@@ -5,7 +5,7 @@ import type {
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { PageContent } from '../../components';
+import { LinkdInline, PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -143,6 +143,16 @@ export default function VergunningVerhuur({
   return (
     <>
       <PageContent className={styles.DetailPageContent}>
+        <p>
+          Vakantieverhuur kunt u melden en annuleren via{' '}
+          <LinkdInline
+            external={true}
+            href="https://www.toeristischeverhuur.nl/portaal/login"
+          >
+            Registratie Toeristische Verhuur Woonruimte
+          </LinkdInline>
+          .
+        </p>
         <InfoDetail
           label="Gemeentelijk zaaknummer"
           value={vergunning?.identifier ?? '-'}

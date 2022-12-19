@@ -35,27 +35,27 @@ type VerhuurState = Pick<AppState, 'TOERISTISCHE_VERHUUR'>;
 
 const registraties = [
   {
-    "city": "Amsterdam",
-    "houseLetter": null,
-    "houseNumber": "16",
-    "houseNumberExtension": null,
-    "postalCode": "1014AW",
-    "registrationNumber": "0363 E7B8 B042 8A92 37E5",
-    "shortName": "Schakelstraat",
-    "street": "Schakelstraat",
-    "agreementDate": "2021-05-20"
+    city: 'Amsterdam',
+    houseLetter: null,
+    houseNumber: '16',
+    houseNumberExtension: null,
+    postalCode: '1014AW',
+    registrationNumber: '0363 E7B8 B042 8A92 37E5',
+    shortName: 'Schakelstraat',
+    street: 'Schakelstraat',
+    agreementDate: '2021-05-20',
   },
   {
-    "city": "Amsterdam",
-    "houseLetter": null,
-    "houseNumber": "1",
-    "houseNumberExtension": null,
-    "postalCode": "1017AB",
-    "registrationNumber": "E7B8 B042 8A92 37E5 0363",
-    "shortName": "Amstel",
-    "street": "Amstel",
-    "agreementDate": "2020-05-20"
-  }
+    city: 'Amsterdam',
+    houseLetter: null,
+    houseNumber: '1',
+    houseNumberExtension: null,
+    postalCode: '1017AB',
+    registrationNumber: 'E7B8 B042 8A92 37E5 0363',
+    shortName: 'Amstel',
+    street: 'Amstel',
+    agreementDate: '2020-05-20',
+  },
 ];
 
 const testState: VerhuurState = {
@@ -169,14 +169,8 @@ describe('<ToeristischeVerhuur />', () => {
       screen.queryAllByText('Registratienummer toeristische verhuur').length
     ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
-    expect(
-      screen.getByText('U hebt nog 26 nachten dat u uw woning mag verhuren.')
-    ).toBeInTheDocument();
     expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
-    expect(screen.getByText('Geplande verhuur')).toBeInTheDocument();
-    expect(screen.getByText('Geannuleerde verhuur')).toBeInTheDocument();
-    expect(screen.getByText('Afgelopen verhuur')).toBeInTheDocument();
 
     expect(
       screen.getByText(
@@ -227,13 +221,5 @@ describe('<ToeristischeVerhuur />', () => {
     expect(
       screen.queryByText('Vergunning bed & breakfast')
     ).not.toBeInTheDocument();
-  });
-
-  it('Shows Different text about nights rent left', () => {
-    render(<Component state={testState5} />);
-
-    expect(
-      screen.getByText(/Uw woning is dit kalenderjaar al 30 nachten verhuurd./)
-    ).toBeInTheDocument();
   });
 });
