@@ -149,7 +149,7 @@ export default function VergunningVerhuur({
             external={true}
             href="https://www.toeristischeverhuur.nl/portaal/login"
           >
-            Registratie Toeristische Verhuur Woonruimte
+            toeristischeverhuur.nl
           </LinkdInline>
           .
         </p>

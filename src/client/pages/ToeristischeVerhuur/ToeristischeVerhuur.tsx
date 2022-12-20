@@ -156,7 +156,7 @@ export default function ToeristischeVerhuur() {
             external={true}
             href="https://www.toeristischeverhuur.nl/portaal/login"
           >
-            Registratienummer aanvragen of vakantieverhuur melden
+            Vakantieverhuur melden of registratienummer aanvragen
           </Linkd>
 
           <MaintenanceNotifications page="toeristische-verhuur" />
