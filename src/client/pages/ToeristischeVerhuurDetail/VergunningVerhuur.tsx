@@ -147,6 +147,7 @@ export default function VergunningVerhuur({
           Vakantieverhuur kunt u melden en annuleren via{' '}
           <LinkdInline
             external={true}
+            target="_blank"
             href="https://www.toeristischeverhuur.nl/portaal/login"
           >
             toeristischeverhuur.nl
