@@ -61,12 +61,11 @@ export default function ToeristischeVerhuur() {
     );
   }, [content?.vergunningen]);
 
-  const [, vergunningen] = useMemo(() => {
+  const vergunningen = useMemo(() => {
     if (!content?.vergunningen?.length) {
-      return [[], []];
+      return [];
     }
 
-    const verhuur = [];
     const vergunningen = [];
 
     for (const vergunning of content.vergunningen) {
@@ -86,15 +85,10 @@ export default function ToeristischeVerhuur() {
         )
       ) {
         vergunningen.push(displayVergunning);
-      } else {
-        verhuur.push(displayVergunning);
       }
     }
 
-    return [
-      addTitleLinkComponent(verhuur, 'dateStart'),
-      addTitleLinkComponent(vergunningen, 'title'),
-    ];
+    return addTitleLinkComponent(vergunningen, 'title');
   }, [content?.vergunningen]);
 
   const hasRegistrations = !!content?.registraties.length;

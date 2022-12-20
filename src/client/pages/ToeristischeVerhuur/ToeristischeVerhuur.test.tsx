@@ -62,7 +62,6 @@ const testState: VerhuurState = {
   TOERISTISCHE_VERHUUR: {
     status: 'OK',
     content: {
-      daysLeft: 26,
       registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
@@ -76,7 +75,6 @@ const testState2: VerhuurState = {
   TOERISTISCHE_VERHUUR: {
     status: 'OK',
     content: {
-      daysLeft: 2,
       registraties: [],
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
@@ -90,7 +88,6 @@ const testState3: VerhuurState = {
   TOERISTISCHE_VERHUUR: {
     status: 'OK',
     content: {
-      daysLeft: 2,
       registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
@@ -104,21 +101,6 @@ const testState4: VerhuurState = {
   TOERISTISCHE_VERHUUR: {
     status: 'OK',
     content: {
-      daysLeft: 2,
-      registraties,
-      vergunningen: transformVergunningenToVerhuur(
-        vergunningen,
-        new Date('2021-09-22')
-      ).filter((vergunning) => vergunning.caseType !== CaseType.BBVergunning),
-    },
-  },
-};
-
-const testState5: VerhuurState = {
-  TOERISTISCHE_VERHUUR: {
-    status: 'OK',
-    content: {
-      daysLeft: 0,
       registraties,
       vergunningen: transformVergunningenToVerhuur(
         vergunningen,
