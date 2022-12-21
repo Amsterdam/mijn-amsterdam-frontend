@@ -140,20 +140,25 @@ export default function VergunningVerhuur({
     | ToeristischeVerhuurBBVergunning;
 }) {
   const statusLineItems = useStatusLineItems(vergunning);
+  const isVakantieVerhuur =
+    vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag;
+
   return (
     <>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          Vakantieverhuur kunt u melden en annuleren via{' '}
-          <LinkdInline
-            external={true}
-            target="_blank"
-            href="https://www.toeristischeverhuur.nl/portaal/login"
-          >
-            toeristischeverhuur.nl
-          </LinkdInline>
-          .
-        </p>
+        {isVakantieVerhuur && (
+          <p>
+            Vakantieverhuur kunt u melden en annuleren via{' '}
+            <LinkdInline
+              external={true}
+              target="_blank"
+              href="https://www.toeristischeverhuur.nl/portaal/login"
+            >
+              toeristischeverhuur.nl
+            </LinkdInline>
+            .
+          </p>
+        )}
         <InfoDetail
           label="Gemeentelijk zaaknummer"
           value={vergunning?.identifier ?? '-'}
