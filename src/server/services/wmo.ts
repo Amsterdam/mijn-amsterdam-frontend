@@ -659,10 +659,11 @@ function formatWmoStatusLineItems(
             : true,
           documents:
             statusItem.status === 'Besluit'
-              ? wmoItem.documents?.map((doc) => ({
-                  ...doc,
-                  url: relayApiUrl(doc.url),
-                }))
+              ? wmoItem.documents?.map((doc) =>
+                  Object.assign(doc, {
+                    url: relayApiUrl(doc.url),
+                  })
+                )
               : null, // NOTE: To be implemented
         };
 

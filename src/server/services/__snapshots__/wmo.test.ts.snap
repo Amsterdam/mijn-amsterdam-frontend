@@ -43,7 +43,7 @@ Array [
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
@@ -55,7 +55,7 @@ Array [
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
@@ -67,7 +67,7 @@ Array [
         "description": "<p>
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -118,7 +118,7 @@ Array [
             De gemeente heeft opdracht gegeven aan JTWD - Zorg om de aanpassingen aan uw woning uit
             te voeren.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
@@ -130,7 +130,7 @@ Array [
         "description": "<p>
             Uw recht op woonruimteaanpassing is beëindigd per 10 maart 2022
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": true,
         "isChecked": true,
@@ -182,7 +182,7 @@ Array [
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
@@ -194,7 +194,7 @@ Array [
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
@@ -206,7 +206,7 @@ Array [
         "description": "<p>
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -258,7 +258,7 @@ Array [
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
@@ -270,7 +270,7 @@ Array [
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-2",
         "isActive": true,
         "isChecked": true,
@@ -282,7 +282,7 @@ Array [
         "description": "<p>
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -332,7 +332,7 @@ Array [
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
@@ -345,7 +345,7 @@ Array [
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
             meer krijgt.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-2",
         "isActive": false,
         "isChecked": true,
@@ -357,7 +357,7 @@ Array [
         "description": "<p>
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": true,
         "isChecked": true,
@@ -408,7 +408,7 @@ Array [
             De gemeente heeft opdracht gegeven aan Aanpassing Thuiszorg om de aanpassingen aan uw woning uit
             te voeren.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
@@ -421,7 +421,7 @@ Array [
             Aanpassing Thuiszorg heeft aan ons doorgegeven dat de
             aanpassing aan uw woning is uitgevoerd.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
@@ -433,7 +433,7 @@ Array [
         "description": "<p>
             Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
           </p>",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -487,7 +487,7 @@ Array [
 
             
           ",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": true,
         "isChecked": false,
@@ -540,7 +540,7 @@ Array [
             </p>
             
           ",
-        "documents": Array [],
+        "documents": null,
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
