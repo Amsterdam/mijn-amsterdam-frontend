@@ -52,7 +52,15 @@
       "dateEnd": null,
       "serviceOrderDate": null,
       "serviceDateStart": "2022-01-12",
-      "serviceDateEnd": null
+      "serviceDateEnd": null,
+      "documents": [
+        {
+          "id": "B744594",
+          "title": "WRV rapport",
+          "datePublished": "2021-03-31T15:28:05",
+          "url": "#"
+        }
+      ]
     },
     {
       "title": "hulp bij het huishouden (tijdelijk gestopt)",

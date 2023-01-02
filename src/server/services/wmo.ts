@@ -25,7 +25,7 @@ export interface WmoApiItem {
   serviceOrderDate: string | null;
   itemTypeCode: string;
   deliveryType: 'PGB' | 'ZIN' | '';
-  documents: GenericDocument[];
+  documents: GenericDocument[] | null;
 }
 
 export interface WmoApiData {
@@ -40,7 +40,7 @@ export interface WmoItemStep {
   status: string;
   datePublished: string;
   description: string;
-  documents: GenericDocument[] | null;
+  documents: GenericDocument[];
   isActive?: boolean;
   isChecked?: boolean;
   [key: string]: any;
@@ -659,15 +659,17 @@ function formatWmoStatusLineItems(
             : true,
           documents:
             statusItem.status === 'Besluit'
-              ? wmoItem.documents?.map((doc) =>
-                  Object.assign(doc, {
-                    url: doc.url,
-                  })
-                )
+              ? wmoItem.documents?.length === 1
+                ? wmoItem.documents?.map((doc) =>
+                    Object.assign(doc, {
+                      url: doc.url,
+                    })
+                  )
+                : []
               : [],
         };
 
-        if (index === 0) {
+        if (index === 0 && stepData.documents?.length === 0) {
           stepData.altDocumentContent = `<p>
             <strong>
               ${
