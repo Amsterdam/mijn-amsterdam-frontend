@@ -52,87 +52,82 @@ export interface VergunningBase {
   processed: boolean;
 }
 
-export interface TVMRVVObject extends VergunningBase {
+export interface VergunningWithLocation extends VergunningBase {
+  location: string | null;
+}
+
+export interface TVMRVVObject extends VergunningWithLocation {
   caseType: CaseType.TVMRVVObject;
   dateStart: string | null;
   dateEnd: string | null;
   timeStart: string | null;
   timeEnd: string | null;
-  location: string | null;
   kenteken: string | null;
 }
 
-export interface GPK extends VergunningBase {
+export interface GPK extends VergunningWithLocation {
   caseType: CaseType.GPK;
   cardtype: 'driver' | 'passenger';
   cardNumber: number | null;
   dateEnd: string | null;
-  location: string | null;
   requestReason: string | null;
 }
 
-export interface GPP extends VergunningBase {
+export interface GPP extends VergunningWithLocation {
   caseType: CaseType.GPP;
-  location: string | null;
   kenteken: string | null;
 }
 
-export interface EvenementMelding extends VergunningBase {
+export interface EvenementMelding extends VergunningWithLocation {
   caseType: CaseType.EvenementMelding;
-  location: string | null;
   timeStart: string | null;
   timeEnd: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
-export interface EvenementVergunning extends VergunningBase {
+export interface EvenementVergunning extends VergunningWithLocation {
   caseType: CaseType.EvenementVergunning;
-  location: string | null;
   timeStart: string | null;
   timeEnd: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
-export interface Omzettingsvergunning extends VergunningBase {
+export interface Omzettingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Omzettingsvergunning;
-  location: string | null;
   dateWorkflowActive: string | null;
 }
 
-export interface ERVV extends VergunningBase {
+export interface ERVV extends VergunningWithLocation {
   caseType: CaseType.ERVV;
   dateStart: string | null;
   dateEnd: string | null;
-  location: string | null;
   timeStart: string | null;
   timeEnd: string | null;
 }
 
-export interface Vakantieverhuur extends VergunningBase {
+export interface Vakantieverhuur extends VergunningWithLocation {
   caseType: CaseType.VakantieVerhuur;
   title: 'Geplande verhuur' | 'Geannuleerde verhuur' | 'Afgelopen verhuur';
   decision: 'Verleend';
   dateStart: string | null;
   dateEnd: string | null;
-  location: string | null;
 }
 
-export interface VakantieverhuurVergunningaanvraag extends VergunningBase {
+export interface VakantieverhuurVergunningaanvraag
+  extends VergunningWithLocation {
   caseType: CaseType.VakantieverhuurVergunningaanvraag;
   title: 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
   decision: 'Verleend' | 'Ingetrokken';
-  location: string | null;
 }
 
-export interface BBVergunning extends VergunningBase {
+export interface BBVergunning extends VergunningWithLocation {
   caseType: CaseType.BBVergunning;
   title: 'Vergunning bed & breakfast';
   decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
-  location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   requester: string | null;
@@ -160,26 +155,23 @@ export interface BZP extends VergunningBase {
   decision: string | null;
 }
 
-export interface Flyeren extends VergunningBase {
+export interface Flyeren extends VergunningWithLocation {
   caseType: CaseType.Flyeren;
   decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
-  location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   timeStart: string | null;
   timeEnd: string | null;
 }
 
-export interface AanbiedenDiensten extends VergunningBase {
+export interface AanbiedenDiensten extends VergunningWithLocation {
   caseType: CaseType.AanbiedenDiensten;
-  location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
-export interface Nachtwerkontheffing extends VergunningBase {
+export interface Nachtwerkontheffing extends VergunningWithLocation {
   caseType: CaseType.NachtwerkOntheffing;
-  location: string | null;
   dateStart: string | null;
   dateEnd: string | null;
   timeStart: string | null;
@@ -194,28 +186,31 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateEnd: string | null;
 }
 
-export interface WoonVergunning extends VergunningBase {
-  location: string | null;
-}
-
-export interface Samenvoegingsvergunning extends WoonVergunning {
+export interface Samenvoegingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Samenvoegingsvergunning;
 }
 
-export interface Onttrekkingsvergunning extends WoonVergunning {
+export interface Onttrekkingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Onttrekkingsvergunning;
 }
 
-export interface OnttrekkingsvergunningSloop extends WoonVergunning {
+export interface OnttrekkingsvergunningSloop extends VergunningWithLocation {
   caseType: CaseType.OnttrekkingsvergunningSloop;
 }
 
-export interface VormenVanWoonruimte extends WoonVergunning {
+export interface VormenVanWoonruimte extends VergunningWithLocation {
   caseType: CaseType.VormenVanWoonruimte;
 }
 
-export interface Splitsingsvergunning extends WoonVergunning {
+export interface Splitsingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Splitsingsvergunning;
+}
+
+export interface Ligplaatsvergunning extends VergunningWithLocation {
+  caseType: CaseType.VOB;
+  requestKind: string | null;
+  reason: string | null;
+  dateEnd: string | null;
 }
 
 export type Vergunning =
@@ -239,7 +234,8 @@ export type Vergunning =
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
   | VormenVanWoonruimte
-  | Splitsingsvergunning;
+  | Splitsingsvergunning
+  | Ligplaatsvergunning;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];

@@ -989,6 +989,21 @@
       "decision": "Verleend",
       "dateWorkflowActive": "2022-11-01T00:00:00",
       "processed": false
+    },
+    {
+      "caseType": "VOB",
+      "title": "Ligplaatsvergunning (VOB)",
+      "identifier": "Z/23/1797714",
+      "dateRequest": "2023-01-01T00:00:00",
+      "dateDecision": "2023-01-02T00:00:00",
+      "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2023-01-01T00:00:00",
+      "processed": true,
+      "requestKind": "Ligplaatsvergunning woonboot",
+      "reason": "Nieuwe ligplaats",
+      "dateEnd": "2025-01-02T00:00:00"
     }
   ],
   "status": "OK"

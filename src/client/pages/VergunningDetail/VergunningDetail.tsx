@@ -32,6 +32,7 @@ import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { Woonvergunningen } from './Woonvergunningen';
+import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
 
 export default function VergunningDetail() {
@@ -102,6 +103,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.ZwaarVerkeer && (
               <ZwaarVerkeer vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.VOB && (
+              <VOB vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (
