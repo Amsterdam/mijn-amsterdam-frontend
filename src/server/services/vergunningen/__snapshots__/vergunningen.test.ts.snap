@@ -443,6 +443,22 @@ Object {
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
   Object {
+    "caseType": "VOB",
+    "dateDecision": "2023-01-02T00:00:00",
+    "dateEnd": "2025-01-02T00:00:00",
+    "dateRequest": "2023-01-01T00:00:00",
+    "dateWorkflowActive": "2023-01-01T00:00:00",
+    "decision": "Verleend",
+    "id": "3689116237",
+    "identifier": "Z/23/1797714",
+    "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+    "processed": true,
+    "reason": "Nieuwe ligplaats",
+    "requestKind": "Ligplaatsvergunning woonboot",
+    "status": "Ontvangen",
+    "title": "Ligplaatsvergunning (VOB)",
+  },
+  Object {
     "caseType": "Splitsingsvergunning",
     "dateDecision": null,
     "dateRequest": "2022-11-01T00:00:00",
