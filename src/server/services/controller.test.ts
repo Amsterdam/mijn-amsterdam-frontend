@@ -40,40 +40,49 @@ describe('controller', () => {
   const servicesPrivate = controller.servicesTipsByProfileType.private;
   const servicesCommercial = controller.servicesTipsByProfileType.commercial;
 
-  controller.servicesTipsByProfileType.private = {
-    BRP: async () => {
-      return {
-        content: {
-          persoon: {
-            geboortedatum: `${new Date().getFullYear() - 17}-06-06`,
-          },
-        },
-      };
-    },
-  };
+  beforeAll(() => {
+    jest
+      .useFakeTimers('modern')
+      .setSystemTime(new Date('2022-07-22').getTime());
+  });
 
-  controller.servicesTipsByProfileType.commercial = {
-    KVK: async () => {
-      return {
-        content: {
-          onderneming: {
-            datumAanvang: null,
-            datumEinde: null,
-            handelsnamen: ['Kruijff Sport', 'Local Streetplanet Eenmanszaak'],
-            hoofdactiviteit: 'Caf\u00e9s',
-            overigeActiviteiten: ['Jachthavens'],
-            rechtsvorm: null,
-            kvkNummer: '90006178',
+  beforeEach(() => {
+    controller.servicesTipsByProfileType.private = {
+      BRP: async () => {
+        return {
+          content: {
+            persoon: {
+              geboortedatum: `${new Date().getFullYear() - 17}-06-06`,
+            },
           },
-          vestigingen: [],
-        },
-      };
-    },
-  };
+        };
+      },
+    };
+
+    controller.servicesTipsByProfileType.commercial = {
+      KVK: async () => {
+        return {
+          content: {
+            onderneming: {
+              datumAanvang: null,
+              datumEinde: null,
+              handelsnamen: ['Kruijff Sport', 'Local Streetplanet Eenmanszaak'],
+              hoofdactiviteit: 'Caf\u00e9s',
+              overigeActiviteiten: ['Jachthavens'],
+              rechtsvorm: null,
+              kvkNummer: '90006178',
+            },
+            vestigingen: [],
+          },
+        };
+      },
+    };
+  });
 
   afterAll(() => {
     controller.servicesTipsByProfileType.private = servicesPrivate;
     controller.servicesTipsByProfileType.commercial = servicesCommercial;
+    jest.useRealTimers();
   });
 
   test('Only persoonlijke tips, not opted-in', async () => {
