@@ -43,7 +43,7 @@ describe('controller', () => {
   beforeAll(() => {
     jest
       .useFakeTimers('modern')
-      .setSystemTime(new Date('2022-02-22').getTime());
+      .setSystemTime(new Date('2022-07-22').getTime());
   });
 
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe('controller', () => {
         return {
           content: {
             persoon: {
-              geboortedatum: `${new Date().getFullYear() - 18}-06-06`,
+              geboortedatum: `${new Date().getFullYear() - 17}-06-06`,
             },
           },
         };
