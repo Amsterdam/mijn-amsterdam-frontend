@@ -9,6 +9,9 @@ export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
+      {isAfgehandeld && (
+        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      )}
       {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetail
         label="Soort aanvraag"
@@ -21,9 +24,6 @@ export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
           vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
         }
       />
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
     </>
   );
 }
