@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { defaultDateFormat, isError } from '../../../universal/helpers';
@@ -6,7 +6,6 @@ import {
   addTitleLinkComponent,
   Alert,
   ChapterIcon,
-  Heading,
   InfoDetail,
   Linkd,
   LinkdInline,
@@ -19,13 +18,6 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
-
-const DISPLAY_PROPS_VERHUUR = {
-  dateStart: 'Start verhuur',
-  dateEnd: 'Einde verhuur',
-  dateRequest: 'Ontvangen op',
-  duration: 'Aantal nachten',
-};
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
   title: 'Soort vergunning',
@@ -40,6 +32,7 @@ const BB_VERGUNNING_DISCLAIMER =
 export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
+
   const hasVergunningenVakantieVerhuur = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
@@ -59,6 +52,7 @@ export default function ToeristischeVerhuur() {
       (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
     );
   }, [content?.vergunningen]);
+
   const hasVergunningBBVerleend = useMemo(() => {
     return content?.vergunningen.some(
       (vergunning) =>
@@ -66,12 +60,12 @@ export default function ToeristischeVerhuur() {
         vergunning.decision === 'Verleend'
     );
   }, [content?.vergunningen]);
-  const [verhuur, vergunningen] = useMemo(() => {
+
+  const vergunningen = useMemo(() => {
     if (!content?.vergunningen?.length) {
-      return [[], []];
+      return [];
     }
 
-    const verhuur = [];
     const vergunningen = [];
 
     for (const vergunning of content.vergunningen) {
@@ -91,62 +85,17 @@ export default function ToeristischeVerhuur() {
         )
       ) {
         vergunningen.push(displayVergunning);
-      } else {
-        verhuur.push(displayVergunning);
       }
     }
 
-    return [
-      addTitleLinkComponent(verhuur, 'dateStart'),
-      addTitleLinkComponent(vergunningen, 'title'),
-    ];
+    return addTitleLinkComponent(vergunningen, 'title');
   }, [content?.vergunningen]);
 
-  const cancelledVerhuur = useMemo(() => {
-    return verhuur.filter(
-      (verhuur) => verhuur.title === 'Geannuleerde verhuur'
-    );
-  }, [verhuur]);
-
-  const plannedVerhuur = useMemo(() => {
-    return verhuur.filter((verhuur) => verhuur.title === 'Geplande verhuur');
-  }, [verhuur]);
-
-  const previousVerhuur = useMemo(() => {
-    return verhuur.filter((verhuur) => verhuur.title === 'Afgelopen verhuur');
-  }, [verhuur]);
-
-  const isCollapsed = (listTitle: string): boolean => {
-    switch (listTitle) {
-      case 'gepland':
-        return !plannedVerhuur.length && !!verhuur.length;
-      case 'geannuleerd':
-        return (
-          !!plannedVerhuur.length ||
-          (!plannedVerhuur.length && !!verhuur.length)
-        );
-      case 'previous':
-        return (
-          !!plannedVerhuur.length ||
-          !!cancelledVerhuur.length ||
-          !verhuur.length
-        );
-      case 'vergunningen':
-        return (
-          !!plannedVerhuur.length ||
-          !!cancelledVerhuur.length ||
-          !!previousVerhuur.length
-        );
-      default:
-        return false;
-    }
-  };
   const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const hasBothVerleend =
     hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
-  const daysRemaining = Math.max(0, content?.daysLeft ?? 30);
 
   return (
     <OverviewPage className={styles.ToeristischeVerhuur}>
@@ -161,7 +110,7 @@ export default function ToeristischeVerhuur() {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder vindt u een overzicht van uw aanvragen voor toeristische
+          Hieronder vindt u een overzicht van uw vergunningen voor toeristische
           verhuur.
         </p>
 
@@ -197,6 +146,14 @@ export default function ToeristischeVerhuur() {
             Meer over toeristenbelasting
           </Linkd>
 
+          <Linkd
+            target="_blank"
+            external={true}
+            href="https://www.toeristischeverhuur.nl/portaal/login"
+          >
+            Vakantieverhuur melden of registratienummer aanvragen
+          </Linkd>
+
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
         {isError(TOERISTISCHE_VERHUUR) && (
@@ -205,45 +162,6 @@ export default function ToeristischeVerhuur() {
           </Alert>
         )}
         <div className={styles.Detail}>
-          {hasVergunningenVakantieVerhuur && (
-            <>
-              <Heading el="h3" size="tiny" className={styles.InvertedLabel}>
-                {daysRemaining === 0 && (
-                  <>
-                    U mag uw woning dit kalenderjaar niet meer verhuren voor
-                    vakantieverhuur.
-                    <br />
-                    Uw woning is dit kalenderjaar al 30 nachten verhuurd.
-                  </>
-                )}
-                {daysRemaining > 0 && (
-                  <>
-                    U hebt nog {daysRemaining} nachten dat u uw woning mag
-                    verhuren.
-                  </>
-                )}
-              </Heading>
-
-              <p className={styles.DetailText}>
-                Het aantal resterende nachten is gebaseerd op uw meldingen voor
-                ingeplande en afgelopen verhuur. Dit is zonder eventuele
-                meldingen die dit jaar door een mede-verhuurder of vorige
-                bewoner zijn gedaan.
-              </p>
-
-              <p>
-                Aan de informatie op deze pagina kunnen geen rechten worden
-                ontleend. Kijk voor meer informatie bij{' '}
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/melden"
-                >
-                  Vakantieverhuur melden
-                </LinkdInline>
-                .
-              </p>
-            </>
-          )}
           {hasBothVerleend && (
             <Alert type="warning">
               <p>
@@ -280,72 +198,14 @@ export default function ToeristischeVerhuur() {
           )}
         </div>
       </PageContent>
-      {hasVergunningenVakantieVerhuur && (
-        <>
-          <SectionCollapsible
-            id="SectionCollapsible-planned-verhuur"
-            title="Geplande verhuur"
-            className={styles.SectionBorderTop}
-            startCollapsed={isCollapsed('gepland')}
-            hasItems={!!plannedVerhuur.length}
-            noItemsMessage="Er is geen geplande verhuur gevonden"
-            track={{
-              category: 'Toeristische verhuur / Geplande Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={plannedVerhuur}
-            />
-          </SectionCollapsible>
-          <SectionCollapsible
-            id="SectionCollapsible-cancelled-verhuur"
-            title="Geannuleerde verhuur"
-            startCollapsed={isCollapsed('geannuleerd')}
-            hasItems={!!cancelledVerhuur.length}
-            noItemsMessage="Er is geen geannuleerde verhuur gevonden"
-            track={{
-              category: 'Toeristische verhuur / afgemeld Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={cancelledVerhuur}
-            />
-          </SectionCollapsible>
-          <SectionCollapsible
-            id="SectionCollapsible-previous-verhuur"
-            title="Afgelopen verhuur"
-            noItemsMessage="Er is geen afgelopen verhuur gevonden."
-            startCollapsed={isCollapsed('previous')}
-            hasItems={!!previousVerhuur.length}
-            track={{
-              category: 'Toeristische verhuur / afgelopen Verhuur',
-              name: 'Datatabel',
-            }}
-          >
-            <Table
-              className={styles.Table}
-              titleKey="dateStart"
-              displayProps={DISPLAY_PROPS_VERHUUR}
-              items={previousVerhuur}
-            />
-          </SectionCollapsible>
-        </>
-      )}
+
       <SectionCollapsible
         id="SectionCollapsible-vergunningen"
         className={styles.SectionNoBorderBottom}
         title="Vergunningen"
         hasItems={!!vergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
-        startCollapsed={isCollapsed('vergunningen')}
+        startCollapsed={false}
         track={{
           category: 'Toeristische verhuur / vergunningen',
           name: 'Datatabel',

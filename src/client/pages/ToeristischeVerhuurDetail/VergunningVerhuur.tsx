@@ -5,7 +5,7 @@ import type {
 } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { PageContent } from '../../components';
+import { LinkdInline, PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -140,9 +140,25 @@ export default function VergunningVerhuur({
     | ToeristischeVerhuurBBVergunning;
 }) {
   const statusLineItems = useStatusLineItems(vergunning);
+  const isVakantieVerhuur =
+    vergunning.caseType === CaseType.VakantieverhuurVergunningaanvraag;
+
   return (
     <>
       <PageContent className={styles.DetailPageContent}>
+        {isVakantieVerhuur && (
+          <p>
+            Vakantieverhuur kunt u melden en annuleren via{' '}
+            <LinkdInline
+              external={true}
+              target="_blank"
+              href="https://www.toeristischeverhuur.nl/portaal/login"
+            >
+              toeristischeverhuur.nl
+            </LinkdInline>
+            .
+          </p>
+        )}
         <InfoDetail
           label="Gemeentelijk zaaknummer"
           value={vergunning?.identifier ?? '-'}
