@@ -6,7 +6,7 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../universal/helpers';
-import { hash, relayApiUrl } from '../../universal/helpers/utils';
+import { hash } from '../../universal/helpers/utils';
 import { GenericDocument, LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -661,10 +661,10 @@ function formatWmoStatusLineItems(
             statusItem.status === 'Besluit'
               ? wmoItem.documents?.map((doc) =>
                   Object.assign(doc, {
-                    url: relayApiUrl(doc.url),
+                    url: doc.url,
                   })
                 )
-              : null, // NOTE: To be implemented
+              : [],
         };
 
         if (index === 0) {
