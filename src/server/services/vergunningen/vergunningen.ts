@@ -368,13 +368,13 @@ export function getNotificationLabels(
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
-    case item.status !== 'Afgehandeld' && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
+    case !item.processed && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
       return notificationContent[item.caseType]?.requested;
 
-    case item.status !== 'Afgehandeld' || !item.processed:
+    case !item.processed:
       return notificationContent[item.caseType]?.inProgress;
 
-    case item.status === 'Afgehandeld' && item.processed:
+    case item.processed:
       return notificationContent[item.caseType]?.done;
   }
 }

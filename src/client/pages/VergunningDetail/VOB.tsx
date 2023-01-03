@@ -18,12 +18,14 @@ export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
         value={vergunning?.requestKind || '-'}
       />
       <InfoDetail label="Reden" value={vergunning?.reason || '-'} />
-      <InfoDetail
-        label="Tot en met"
-        value={
-          vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-        }
-      />
+      {isAfgehandeld && vergunning.decision === 'Verleend' && (
+        <InfoDetail
+          label="Tot en met"
+          value={
+            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+          }
+        />
+      )}
     </>
   );
 }

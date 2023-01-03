@@ -347,6 +347,22 @@ export const notificationContent: NotificationContent = {
         `Uw aanvraag ontheffing zone zwaar verkeer is afgehandeld.`,
     },
   },
+  [CaseType.VOB]: {
+    inProgress: {
+      ...inProgress,
+      title: (item) =>
+        `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
+      description: (item) =>
+        `Uw vergunningsaanvraag ${item.title} is in behandeling genomen.`,
+      datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
+    },
+    done: {
+      ...done,
+      title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
+      description: (item) =>
+        `Uw vergunningsaanvraag ${item.title} is afgehandeld`,
+    },
+  },
   [CaseType.Splitsingsvergunning]: woningVergunningenLabels,
   [CaseType.Samenvoegingsvergunning]: woningVergunningenLabels,
   [CaseType.Onttrekkingsvergunning]: woningVergunningenLabels,
