@@ -6,6 +6,18 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-01-03T00:00:00",
+        "description": "Uw vergunningsaanvraag Ligplaatsvergunning (VOB) is in behandeling genomen.",
+        "id": "vergunning-513492494-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/vob/513492494",
+        },
+        "subject": "513492494",
+        "title": "Aanvraag ligplaatsvergunning (vob) in behandeling",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Uw aanvraag splitsingsvergunning is in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
@@ -442,6 +454,22 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "VOB",
+    "dateDecision": null,
+    "dateEnd": "2024-01-02T00:00:00",
+    "dateRequest": "2023-01-03T00:00:00",
+    "dateWorkflowActive": "2023-01-03T00:00:00",
+    "decision": null,
+    "id": "513492494",
+    "identifier": "Z/23/1797715",
+    "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+    "processed": false,
+    "reason": "Nieuwe ligplaats",
+    "requestKind": "Ligplaatsvergunning woonboot",
+    "status": "Ontvangen",
+    "title": "Ligplaatsvergunning (VOB)",
+  },
   Object {
     "caseType": "VOB",
     "dateDecision": "2023-01-02T00:00:00",
