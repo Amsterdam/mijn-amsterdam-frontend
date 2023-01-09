@@ -353,14 +353,13 @@ export const notificationContent: NotificationContent = {
       title: (item) =>
         `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
       description: (item) =>
-        `Uw vergunningsaanvraag ${item.title} is in behandeling genomen.`,
+        `Uw aanvraag ${item.title} is in behandeling genomen.`,
       datePublished: (item) => item.dateWorkflowActive ?? item.dateRequest,
     },
     done: {
       ...done,
       title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
-      description: (item) =>
-        `Uw vergunningsaanvraag ${item.title} is afgehandeld`,
+      description: (item) => `Uw aanvraag ${item.title} is afgehandeld`,
     },
   },
   [CaseType.Splitsingsvergunning]: woningVergunningenLabels,
