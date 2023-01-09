@@ -62,9 +62,9 @@ export default function ApplicationError({ error }: FallbackProps) {
             </a>
             {location.pathname !== AppRoutes.ROOT ? (
               <Heading size="large" el="h1">
-                <Link to={AppRoutes.ROOT} title="Terug naar home">
+                <a href={AppRoutes.ROOT} title="Terug naar home">
                   Mijn Amsterdam
-                </Link>
+                </a>
               </Heading>
             ) : (
               <Heading size="large" el="h1">
