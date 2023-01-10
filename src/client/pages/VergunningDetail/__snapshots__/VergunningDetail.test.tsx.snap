@@ -2593,6 +2593,547 @@ exports[`<VergunningDetail /> BZP - Verleend should match the full page snapshot
 </DocumentFragment>
 `;
 
+exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should match the full page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Vergunningen"
+          class="ChapterIcon"
+          fill="black"
+        >
+          vergunningen.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Vergunningen
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Ligplaatsvergunning (VOB)
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="Value"
+        >
+          Z/23/1797715
+        </p>
+      </div>
+      <div
+        class="InfoDetail LocationInfo"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Locatie
+        </h3>
+        <p
+          class="Value"
+        >
+          J.J. Cremerplein 54I 1054 TM Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort aanvraag
+        </h3>
+        <p
+          class="Value"
+        >
+          Ligplaatsvergunning woonboot
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Reden
+        </h3>
+        <p
+          class="Value"
+        >
+          Nieuwe ligplaats
+        </p>
+      </div>
+    </div>
+    <div
+      class="StatusLine VergunningStatus"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                03 januari 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--middle-checked-next"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                03 januari 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match the full page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Vergunningen"
+          class="ChapterIcon"
+          fill="black"
+        >
+          vergunningen.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Vergunningen
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Ligplaatsvergunning (VOB)
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent DetailPageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="Value"
+        >
+          Z/23/1797714
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="Value"
+        >
+          Verleend
+        </p>
+      </div>
+      <div
+        class="InfoDetail LocationInfo"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Locatie
+        </h3>
+        <p
+          class="Value"
+        >
+          J.J. Cremerplein 54I 1054 TM Amsterdam 
+          <button
+            class="Button Button__inline Button__lean MapLink"
+          >
+            Bekijk op de kaart
+          </button>
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort aanvraag
+        </h3>
+        <p
+          class="Value"
+        >
+          Ligplaatsvergunning woonboot
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Reden
+        </h3>
+        <p
+          class="Value"
+        >
+          Nieuwe ligplaats
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Tot en met
+        </h3>
+        <p
+          class="Value"
+        >
+          02 januari 2025
+        </p>
+      </div>
+    </div>
+    <div
+      class="StatusLine VergunningStatus"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 januari 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 januari 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                02 januari 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`<VergunningDetail /> Nachtwerkontheffing should match the full page snapshot 1`] = `
 <DocumentFragment>
   <main
