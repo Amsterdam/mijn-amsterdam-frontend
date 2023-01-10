@@ -195,4 +195,22 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Ligplaatsvergunning (VOB) - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/1797715" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Ligplaatsvergunning (VOB) - Verleend', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/1797714" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });
