@@ -45,7 +45,7 @@ describe('controller', () => {
       return {
         content: {
           persoon: {
-            geboortedatum: `${new Date().getFullYear() - 17}-06-06`,
+            geboortedatum: `${new Date().getFullYear() - 18}-06-06`,
           },
         },
       };
