@@ -5,8 +5,7 @@ describe('ApplicationError', () => {
   it('Renders without crashing', () => {
     const error = new Error('There is an error');
 
-    // @ts-ignore
-    render(<ApplicationError error={error} />);
+    render(<ApplicationError error={error} resetErrorBoundary={jest.fn()} />);
     expect(screen.getByText(/There is an error/)).toBeInTheDocument();
   });
 
@@ -18,8 +17,7 @@ describe('ApplicationError', () => {
 
     const error = new Error('There is a different error');
 
-    // @ts-ignore
-    render(<ApplicationError error={error} />);
+    render(<ApplicationError error={error} resetErrorBoundary={jest.fn()} />);
     expect(screen.getByText(/There is a different error/)).toBeInTheDocument();
   });
 });
