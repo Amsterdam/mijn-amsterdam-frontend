@@ -18,16 +18,6 @@ jobs:
     name: Call Azure Pipeline
     runs-on: ubuntu-latest
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch_name;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
-      - name: get epository name
-        shell: bash
-        run: echo "##[set-output name=repo_name;]$(echo ${GITHUB_REPOSITORY#*/})"
-        id: extract_repo
-
       - name: Azure Pipelines Action
         uses: Azure/pipelines@v1.2
         with:
