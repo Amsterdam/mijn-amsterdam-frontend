@@ -18,10 +18,20 @@ jobs:
     name: Call Azure Pipeline
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch_name;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: get epository name
+        shell: bash
+        run: echo "##[set-output name=repo_name;]$(echo ${GITHUB_REPOSITORY#*/})"
+        id: extract_repo
+
       - name: Azure Pipelines Action
-        uses: Azure/pipelines@v1.6
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: '${{ secrets.AZURE_DEVOPS_PROJECT_URL }}'
           azure-pipeline-name: '${{ secrets.AZURE_DEVOPS_PIPELINE_NAME }}'
           azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
-          azure-pipeline-variables: '{"ghTargetBranch": "$(echo ${GITHUB_REF#refs/heads/})", "ghRepositoryName": "$(echo ${GITHUB_REPOSITORY#*/})"}'
+          azure-pipeline-variables: '{"ghTargetBranch": "${{ github.ref_name }}", "ghRepositoryName": "${{ github.event.repository.name }}"}'
