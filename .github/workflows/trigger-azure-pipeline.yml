@@ -4,11 +4,11 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - test
-      - acceptance
-      - production-release-*
-      - MIJN-4445-azure-migratie
+      # - main
+      - testen
+      # - acceptatie
+      # - production-release-*
+      - ontwikkelen
   pull_request:
     branches:
       - main
