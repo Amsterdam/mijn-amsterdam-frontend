@@ -992,7 +992,7 @@
     },
     {
       "caseType": "VOB",
-      "title": "Ligplaatsvergunning (VOB)",
+      "title": "Ligplaatsvergunning",
       "identifier": "Z/23/1797714",
       "dateRequest": "2023-01-01T00:00:00",
       "dateDecision": "2023-01-02T00:00:00",
@@ -1007,7 +1007,7 @@
     },
     {
       "caseType": "VOB",
-      "title": "Ligplaatsvergunning (VOB)",
+      "title": "Ligplaatsvergunning",
       "identifier": "Z/23/1797715",
       "dateRequest": "2023-01-03T00:00:00",
       "dateDecision": null,
