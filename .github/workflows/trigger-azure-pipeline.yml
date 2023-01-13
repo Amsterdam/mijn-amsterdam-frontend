@@ -20,13 +20,13 @@ jobs:
     steps:
       - name: Determine Dtap
         run: |
-          repo=${{ github.event.repository.name }}
-          echo repo: $repo
-          echo "DTAPNAME=${repo:0:1}" >> $GITHUB_ENV
+          ref=${{ github.ref_name }}
+          echo ref: $ref
+          echo "DTAPNAME=${ref:0:1}" >> $GITHUB_ENV
       - name: Azure Pipelines Action
         uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: '${{ secrets.AZURE_DEVOPS_PROJECT_URL }}'
-          azure-pipeline-name: '${{ secrets.AZURE_DEVOPS_PIPELINE_NAME }}'
+          azure-pipeline-name: '${{ github.ref_name }}PipelineMain'
           azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"ghTargetBranch": "${{ github.ref_name }}", "ghRepositoryName": "${{ github.event.repository.name }}", "ghDtapName": "${{ env.DTAPNAME }}"}'
