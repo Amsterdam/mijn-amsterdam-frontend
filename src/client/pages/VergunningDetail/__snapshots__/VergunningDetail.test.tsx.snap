@@ -2634,7 +2634,7 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should 
         <h2
           class="Heading Heading__large"
         >
-          Ligplaatsvergunning (VOB)
+          Ligplaatsvergunning
         </h2>
       </div>
     </header>
@@ -2888,7 +2888,7 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
         <h2
           class="Heading Heading__large"
         >
-          Ligplaatsvergunning (VOB)
+          Ligplaatsvergunning
         </h2>
       </div>
     </header>

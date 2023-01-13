@@ -7,14 +7,14 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-01-03T00:00:00",
-        "description": "Uw aanvraag Ligplaatsvergunning (VOB) is in behandeling genomen.",
+        "description": "Uw aanvraag Ligplaatsvergunning is in behandeling genomen.",
         "id": "vergunning-513492494-notification",
         "link": Object {
           "title": "Bekijk details",
           "to": "/vergunningen/vob/513492494",
         },
         "subject": "513492494",
-        "title": "Aanvraag ligplaatsvergunning (vob) in behandeling",
+        "title": "Aanvraag ligplaatsvergunning in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
@@ -468,7 +468,7 @@ Array [
     "reason": "Nieuwe ligplaats",
     "requestKind": "Ligplaatsvergunning woonboot",
     "status": "Ontvangen",
-    "title": "Ligplaatsvergunning (VOB)",
+    "title": "Ligplaatsvergunning",
   },
   Object {
     "caseType": "VOB",
@@ -484,7 +484,7 @@ Array [
     "reason": "Nieuwe ligplaats",
     "requestKind": "Ligplaatsvergunning woonboot",
     "status": "Ontvangen",
-    "title": "Ligplaatsvergunning (VOB)",
+    "title": "Ligplaatsvergunning",
   },
   Object {
     "caseType": "Splitsingsvergunning",
