@@ -29,4 +29,4 @@ jobs:
           azure-devops-project-url: '${{ secrets.AZURE_DEVOPS_PROJECT_URL }}'
           azure-pipeline-name: '${{ github.ref_name }}PipelineMain'
           azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
-          azure-pipeline-variables: '{"ghTargetBranch": "${{ github.ref_name }}", "ghRepositoryName": "${{ github.event.repository.name }}"}'
+          azure-pipeline-variables: '{"ghTargetBranch": "${{ github.ref_name }}"}'
