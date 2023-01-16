@@ -27,6 +27,7 @@ jobs:
         uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: '${{ secrets.AZURE_DEVOPS_PROJECT_URL }}'
-          azure-pipeline-name: '${{ github.ref_name }}PipelineMain'
+          # azure-pipeline-name: '${{ github.ref_name }}PipelineMain'
+          azure-pipeline-name: 'MaMain'
           azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"ghTargetBranch": "${{ github.ref_name }}"}'
