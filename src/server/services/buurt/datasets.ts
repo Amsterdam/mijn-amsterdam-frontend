@@ -85,7 +85,7 @@ export interface DatasetConfig {
   transformDetail?: (
     datasetId: DatasetId,
     config: DatasetConfig,
-    id: any,
+    id: string,
     data: any
   ) => any;
   requestConfig?: DataRequestConfig;
@@ -416,12 +416,12 @@ function transformAfvalcontainerDetailResponse(
 function transformMeldingDetailResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  id: number,
+  id: string,
   responseData: {
     features: any[];
   }
 ) {
-  const item = responseData?.features[id];
+  const item = responseData?.features[parseInt(id)];
 
   if (!item) {
     throw new Error(
