@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FallbackProps } from 'react-error-boundary';
+import type { FallbackProps } from 'react-error-boundary';
 import classNames from 'classnames';
 import styles from './ApplicationError.module.scss';
 import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
@@ -39,10 +38,11 @@ const srcSet = {
 export default function ApplicationError({ error }: FallbackProps) {
   useUsabilla();
   const location = window.location;
-  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+  const isLargeScreen = useDesktopScreen();
+  const Logo = isLargeScreen ? AmsterdamLogoLarge : AmsterdamLogo;
 
-  const containerRole = useDesktopScreen() ? 'row' : undefined;
-  const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
+  const containerRole = isLargeScreen ? 'row' : undefined;
+  const titleRole = isLargeScreen ? 'columnheader' : 'button';
   const [isOpen, toggleOpen] = useState(false);
 
   return (
@@ -62,9 +62,9 @@ export default function ApplicationError({ error }: FallbackProps) {
             </a>
             {location.pathname !== AppRoutes.ROOT ? (
               <Heading size="large" el="h1">
-                <Link to={AppRoutes.ROOT} title="Terug naar home">
+                <a href={AppRoutes.ROOT} title="Terug naar home">
                   Mijn Amsterdam
-                </Link>
+                </a>
               </Heading>
             ) : (
               <Heading size="large" el="h1">
