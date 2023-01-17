@@ -183,20 +183,22 @@ export async function requestData<T>(
 
     // if we have a next link
     if (
-      response.headers?.link?.indexOf('rel="next"') !== -1 &&
-      requestConfig.mergeResults !== undefined
+      response.headers?.link?.indexOf('rel="next"') > 0 &&
+      typeof requestConfig.mergeResults === 'function'
     ) {
       // parse link header and get value of rel="next" url
       const links = response.headers.link.split(',');
-      const next = links.find((link) => link.indexOf('rel="next"'));
+      const next = links.find((link) => link.indexOf('rel="next"') > 0);
       if (next === undefined) {
-        throw new Error('Something went wrong parsing the link header.');
+        throw new Error('Something went wrong while parsing the link header.');
       }
-      const nextUrl = next.split(';')[0].trim();
+
+      const rawUrl = next.split(';')[0].trim();
+      const nextUrl = rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
 
       const newRequest = {
         ...requestConfig,
-        url: nextUrl.substring(1, nextUrl.length - 2), // The link values should according to spec be wrapped in <> so we need to strip those.
+        url: nextUrl,
       };
 
       response.data = await requestConfig.mergeResults<T>(

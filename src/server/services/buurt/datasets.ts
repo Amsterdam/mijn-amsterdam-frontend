@@ -1,11 +1,7 @@
-import {
-  ApiSuccessResponse,
-  ApiErrorResponse,
-} from './../../../universal/helpers/api';
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -85,7 +81,7 @@ export interface DatasetConfig {
     datasetId: DatasetId,
     config: DatasetConfig,
     data: any
-  ) => any;
+  ) => DatasetFeatures;
   transformDetail?: (
     datasetId: DatasetId,
     config: DatasetConfig,
@@ -103,12 +99,6 @@ export interface DatasetConfig {
   idKeyDetail?: string;
   geometryKey?: string;
   triesUntilConsiderdStale: number;
-  mergeResults?: (
-    responseData: any,
-    newResponse:
-      | ApiSuccessResponse<DatasetFeatures>
-      | ApiErrorResponse<DatasetFeatures>
-  ) => any;
 }
 
 function dsoApiListUrl(
@@ -316,9 +306,7 @@ export const datasetEndpoints: Record<
   },
   meldingenBuurt: {
     listUrl: () =>
-      `https://${
-        ENV === 'production' ? '' : 'acc.'
-      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268`,
+      `https://api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`, // TODO: Restore url
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
@@ -326,8 +314,18 @@ export const datasetEndpoints: Record<
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'ma_melding_id',
-    mergeResults: (responseData, newResponse) => {
-      return responseData;
+    requestConfig: {
+      mergeResults: (responseData, newResponse) => {
+        console.log(
+          `Merging two datasets. New length will be ${
+            responseData.concat(newResponse.content).length
+          }`
+        );
+
+        return newResponse.content === null
+          ? responseData
+          : responseData.concat(newResponse.content);
+      },
     },
   },
 };
