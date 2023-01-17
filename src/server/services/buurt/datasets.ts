@@ -318,12 +318,6 @@ export const datasetEndpoints: Record<
     idKeyList: 'ma_melding_id',
     requestConfig: {
       mergeResults: (responseData, newResponse) => {
-        console.log(
-          `Merging two datasets. New length will be ${
-            responseData.concat(newResponse.content).length
-          }`
-        );
-
         return newResponse.content === null
           ? responseData
           : responseData.concat(newResponse.content);
