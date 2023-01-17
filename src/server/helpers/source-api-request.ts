@@ -180,6 +180,31 @@ export async function requestData<T>(
 
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
+
+    // if we have a next link
+    if (
+      response.headers?.link?.indexOf('rel="next"') !== -1 &&
+      requestConfig.mergeResults !== undefined
+    ) {
+      // parse link header and get value of rel="next" url
+      const links = response.headers.link.split(',');
+      const next = links.find((link) => link.indexOf('rel="next"'));
+      if (next === undefined) {
+        throw new Error('Something went wrong parsing the link header.');
+      }
+      const nextUrl = next.split(';')[0].trim();
+
+      const newRequest = {
+        ...requestConfig,
+        url: nextUrl.substring(1, nextUrl.length - 2), // The link values should according to spec be wrapped in <> so we need to strip those.
+      };
+
+      response.data = await requestConfig.mergeResults<T>(
+        response.data,
+        await requestData(newRequest, requestID, authProfileAndToken)
+      );
+    }
+
     const responseData = apiSuccessResult<T>(response.data);
 
     // Clears the timeout after the above request promise is settled

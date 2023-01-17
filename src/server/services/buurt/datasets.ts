@@ -1,3 +1,7 @@
+import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+} from './../../../universal/helpers/api';
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
@@ -99,6 +103,12 @@ export interface DatasetConfig {
   idKeyDetail?: string;
   geometryKey?: string;
   triesUntilConsiderdStale: number;
+  mergeResults?: (
+    responseData: any,
+    newResponse:
+      | ApiSuccessResponse<DatasetFeatures>
+      | ApiErrorResponse<DatasetFeatures>
+  ) => any;
 }
 
 function dsoApiListUrl(
@@ -316,6 +326,9 @@ export const datasetEndpoints: Record<
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'ma_melding_id',
+    mergeResults: (responseData, newResponse) => {
+      return responseData;
+    },
   },
 };
 

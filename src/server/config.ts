@@ -1,3 +1,8 @@
+import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+  ApiPostponeResponse,
+} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
@@ -68,6 +73,14 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   cacheKey?: string;
   hasBearerToken?: boolean;
+
+  mergeResults?: <T>(
+    responseData: any,
+    newRequest:
+      | ApiSuccessResponse<T>
+      | ApiErrorResponse<null>
+      | ApiPostponeResponse
+  ) => any;
 }
 
 const ONE_SECOND_MS = 1000;
