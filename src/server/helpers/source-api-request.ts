@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/node';
-import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import axios, {
+  AxiosPromise,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -99,6 +103,18 @@ export function clearSessionCache(requestID: requestID) {
   }
 }
 
+function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
+  // parse link header and get value of rel="next" url
+  const links = headers.link.split(',');
+  const next = links.find((link) => link.indexOf('rel="next"') > 0);
+  if (next === undefined) {
+    throw new Error('Something went wrong while parsing the link header.');
+  }
+
+  const rawUrl = next.split(';')[0].trim();
+  return rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
+}
+
 function getRequestConfigCacheKey(
   requestID: string,
   requestConfig: DataRequestConfig
@@ -186,15 +202,7 @@ export async function requestData<T>(
       response.headers?.link?.indexOf('rel="next"') > 0 &&
       typeof requestConfig.mergeResults === 'function'
     ) {
-      // parse link header and get value of rel="next" url
-      const links = response.headers.link.split(',');
-      const next = links.find((link) => link.indexOf('rel="next"') > 0);
-      if (next === undefined) {
-        throw new Error('Something went wrong while parsing the link header.');
-      }
-
-      const rawUrl = next.split(';')[0].trim();
-      const nextUrl = rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
+      const nextUrl = getNextUrlFromLinkHeader(response.headers);
 
       const newRequest = {
         ...requestConfig,
