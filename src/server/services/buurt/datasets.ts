@@ -308,7 +308,7 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
-      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`, // TODO: Restore url
+      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
