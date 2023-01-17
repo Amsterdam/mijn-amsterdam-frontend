@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -306,7 +306,9 @@ export const datasetEndpoints: Record<
   },
   meldingenBuurt: {
     listUrl: () =>
-      `https://api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`, // TODO: Restore url
+      `https://${
+        ENV === 'production' ? '' : 'acc.'
+      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`, // TODO: Restore url
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
