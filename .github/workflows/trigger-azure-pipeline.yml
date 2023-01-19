@@ -18,11 +18,11 @@ jobs:
     name: Call Azure Pipeline
     runs-on: ubuntu-latest
     steps:
-      # - name: Determine Dtap
-      #   run: |
-      #     ref=${{ github.ref_name }}
-      #     echo ref: $ref
-      #     echo "DTAPNAME=${ref:0:1}" >> $GITHUB_ENV
+      - name: Determine Dtap
+        run: |
+          ref=${{ github.ref_name }}
+          echo ref: $ref
+          echo "DTAPNAME=${ref:0:1}" >> $GITHUB_ENV
       - name: Azure Pipelines Action
         uses: Azure/pipelines@v1.2
         with:
