@@ -86,7 +86,13 @@ export function Dialog({
 
   return isOpen
     ? ReactDOM.createPortal(
-        <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
+        <FocusTrap
+          focusTrapOptions={{
+            escapeDeactivates: false,
+            // Prevents testing fails. https://github.com/focus-trap/tabbable#display-check
+            tabbableOptions: { displayCheck: 'none' },
+          }}
+        >
           <div className={styles.ModalContainer}>
             <div
               className={classnames(styles.Modal, className)}
