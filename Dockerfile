@@ -67,12 +67,6 @@ RUN npm run build
 
 FROM build-deps as build-app-bff
 
-ARG BFF_PUBLIC_URL=https://mijn.amsterdam.nl
-ENV BFF_PUBLIC_URL=$BFF_PUBLIC_URL
-
-ARG FE_PUBLIC_URL=https://mijn.amsterdam.nl
-ENV FE_PUBLIC_URL=$FE_PUBLIC_URL
-
 # Build BFF
 RUN npm run bff-api:build
 
