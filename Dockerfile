@@ -59,12 +59,6 @@ ENV MA_BFF_API_URL=$MA_BFF_API_URL
 ARG MA_BFF_AUTH_PATH=/auth
 ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
 
-ARG FE_PUBLIC_URL=https://mijn.amsterdam.nl
-ENV FE_PUBLIC_URL=$FE_PUBLIC_URL
-
-ARG BFF_PUBLIC_URL=https://mijn.amsterdam.nl
-ENV BFF_PUBLIC_URL=$BFF_PUBLIC_URL
-
 COPY public /build-space/public
 
 # Build FE
@@ -72,6 +66,12 @@ RUN npm run build
 
 
 FROM build-deps as build-app-bff
+
+ARG BFF_PUBLIC_URL=https://mijn.amsterdam.nl
+ENV BFF_PUBLIC_URL=$BFF_PUBLIC_URL
+
+ARG FE_PUBLIC_URL=https://mijn.amsterdam.nl
+ENV FE_PUBLIC_URL=$FE_PUBLIC_URL
 
 # Build BFF
 RUN npm run bff-api:build
