@@ -314,6 +314,7 @@ const oidcConfigBase: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+  // @ts-expect-error
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,

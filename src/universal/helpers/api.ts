@@ -119,7 +119,7 @@ export function apiSuccessResult<T>(
   return result;
 }
 
-export function getFailedDependencies<T>(results: T) {
+export function getFailedDependencies<T extends object>(results: T) {
   let failedDependencies: FailedDependencies | undefined = undefined;
 
   for (const [key, apiResult] of Object.entries(results)) {

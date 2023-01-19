@@ -23,7 +23,7 @@ import {
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
-const { encryption: deriveKey } = require('express-openid-connect/lib/hkdf');
+const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
