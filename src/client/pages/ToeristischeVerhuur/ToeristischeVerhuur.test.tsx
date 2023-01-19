@@ -156,7 +156,7 @@ describe('<ToeristischeVerhuur />', () => {
 
     expect(
       screen.getByText(
-        /Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen\./gi
+        /Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen\./i
       )
     ).toBeInTheDocument();
   });

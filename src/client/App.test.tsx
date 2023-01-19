@@ -22,7 +22,7 @@ describe('App', () => {
     });
 
     render(<App />);
-    expect(screen.getByText(/Welkom/gi)).toBeInTheDocument();
+    expect(screen.getByText(/Welkom/i)).toBeInTheDocument();
   });
 
   it('Renders Landing Page', async () => {
