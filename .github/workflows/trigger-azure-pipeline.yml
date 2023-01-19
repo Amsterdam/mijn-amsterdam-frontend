@@ -9,9 +9,9 @@ on:
       # - acceptatie
       # - production-release-*
       - ontwikkelen
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   build:
