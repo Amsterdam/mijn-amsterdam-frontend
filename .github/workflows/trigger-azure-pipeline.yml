@@ -9,6 +9,7 @@ on:
       # - acceptatie
       # - production-release-*
       - ontwikkelen
+  # TODO: Configureer trigger die zegt dat er alleen gebouwd/getest moet worden op azure pipeline
   # pull_request:
   #   branches:
   #     - main
