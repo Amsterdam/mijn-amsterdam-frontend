@@ -43,10 +43,6 @@ export function isExternalUrl(url: string) {
   return !isInteralUrl(url);
 }
 
-export function relayApiUrl(path: string) {
-  return `${BFF_API_BASE_URL}/relay${path}`;
-}
-
 export function range(a: number, b: number) {
   return Array.from(
     (function* (x, y) {
