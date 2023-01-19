@@ -112,7 +112,8 @@ describe('DocumentList', () => {
     const fetch = ((global as any).fetch = jest
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-    const track = ((analytics as any).trackPageViewWithCustomDimension = jest.fn());
+    const track = ((analytics as any).trackPageViewWithCustomDimension =
+      jest.fn());
     const captureException = ((Sentry as any).captureException = jest.fn());
 
     render(

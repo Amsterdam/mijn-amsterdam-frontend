@@ -26,12 +26,15 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
+  Pagination,
 } from '../../components';
 import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
+
+const PAGE_SIZE = 10;
 
 interface TransactionProps {
   value: number;
@@ -122,11 +125,17 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
 interface StadspasBudgetProps {
   urlTransactions: string;
   budget: WpiStadspasBudget;
+  isTransactionOverviewActive: boolean;
+  toggleTransactionOverview: () => void;
 }
 
-function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
-  const [isTransactionOverviewActive, toggleTransactionOverview] =
-    useState(false);
+function StadspasBudget({
+  urlTransactions,
+  budget,
+  isTransactionOverviewActive,
+  toggleTransactionOverview,
+}: StadspasBudgetProps) {
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
     {
@@ -140,6 +149,15 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
     isLoading: isLoadingTransactions,
     isError,
   } = api;
+
+  const shouldPaginate = !!transactions && transactions?.length > PAGE_SIZE;
+  const startIndex = currentPage - 1;
+  const start = startIndex * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+
+  const paginatedTransactions = shouldPaginate
+    ? transactions?.slice(start, end)
+    : transactions;
 
   return (
     <>
@@ -161,7 +179,21 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
           hebt klopt altijd.
         </p>
         {!!isTransactionOverviewActive && !isLoadingTransactions && (
-          <TransactionOverview transactions={transactions} />
+          <>
+            <TransactionOverview transactions={paginatedTransactions} />
+
+            {shouldPaginate && (
+              <Pagination
+                className={styles.Pagination}
+                totalCount={transactions?.length || 0}
+                pageSize={PAGE_SIZE}
+                currentPage={currentPage}
+                onPageClick={(page) => {
+                  setCurrentPage(page);
+                }}
+              />
+            )}
+          </>
         )}
         {isError && (
           <Alert type="warning">
@@ -177,9 +209,7 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
             icon={IconChevronRight}
             variant="plain"
             lean={true}
-            onClick={() =>
-              toggleTransactionOverview(!isTransactionOverviewActive)
-            }
+            onClick={() => toggleTransactionOverview()}
           >
             {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
             uitgegeven
@@ -196,6 +226,9 @@ function StadspasBudget({ urlTransactions, budget }: StadspasBudgetProps) {
 
 export default function StadspasDetail() {
   const { WPI_STADSPAS } = useAppStateGetter();
+  const [openTransactionOverview, setOpenTransactionOverview] = useState<
+    number | null
+  >(null);
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
     ? WPI_STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
@@ -240,11 +273,17 @@ export default function StadspasDetail() {
           </p>
         </PageContent>
       )}
-      {stadspasItem?.budgets.map((budget) => (
+      {stadspasItem?.budgets.map((budget, index) => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.code}
           budget={budget}
+          isTransactionOverviewActive={openTransactionOverview === index}
+          toggleTransactionOverview={() =>
+            setOpenTransactionOverview(
+              index === openTransactionOverview ? null : index
+            )
+          }
         />
       ))}
     </DetailPage>

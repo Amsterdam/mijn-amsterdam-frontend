@@ -6,7 +6,6 @@ import { AuthProfileAndToken } from '../helpers/app';
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,
-  daysRentLeftInCalendarYear,
   fetchToeristischeVerhuur,
 } from './toeristische-verhuur';
 import { toeristischeVerhuurVergunningTypes } from './vergunningen/vergunningen';
@@ -214,28 +213,6 @@ describe('Toeristische verhuur service', () => {
       },
     ];
 
-    const notification1 = createToeristischeVerhuurNotification(
-      dummyData[0],
-      dummyData
-    );
-
-    expect(notification1.title).toBe(`Vakantieverhuur gepland`);
-    expect(notification1.description).toBe(
-      `Wij hebben uw melding voor vakantieverhuur van 10 juli 2029 tot 14 juli 2029 ontvangen.`
-    );
-    expect(notification1.link?.title).toBe('Bekijk uw geplande verhuur');
-
-    const notification2 = createToeristischeVerhuurNotification(
-      dummyData[1],
-      dummyData
-    );
-
-    expect(notification2.title).toBe(`Vakantieverhuur geannuleerd`);
-    expect(notification2.description).toBe(
-      `Wij hebben uw annulering voor vakantieverhuur van 05 juni 2021 tot 10 juni 2021 ontvangen.`
-    );
-    expect(notification2.link?.title).toBe('Bekijk uw geannuleerde verhuur');
-
     const notification3 = createToeristischeVerhuurNotification(
       dummyData[2],
       dummyData
@@ -295,26 +272,5 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification8.title).toBe('Uw vergunning bed & breakfast loopt af');
-  });
-
-  it('Should caclulate days rent left in calendar year', () => {
-    const dates: any = [
-      {
-        dateStart: '2020-12-28',
-        dateEnd: '2021-01-02',
-        duration: 5,
-      },
-      {
-        dateStart: '2021-06-10',
-        dateEnd: '2021-06-15',
-        duration: 5,
-      },
-      {
-        dateStart: '2021-12-28',
-        dateEnd: '2022-01-02',
-        duration: 5,
-      },
-    ];
-    expect(daysRentLeftInCalendarYear(dates)).toBe(21);
   });
 });

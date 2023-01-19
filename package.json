@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "4.23.0",
+  "version": "4.33.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
@@ -19,7 +19,7 @@
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
     "bff-api:test": "react-scripts test src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
-    "bff-api:serve-dev": "cross-env MA_OTAP_ENV=development ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
+    "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"
   },
   "eslintConfig": {
@@ -45,7 +45,7 @@
     "@amsterdam/react-maps": "^0.12.0",
     "@azure/identity": "^2.1.0",
     "@azure/keyvault-secrets": "^4.5.1",
-    "@datapunt/matomo-tracker-js": "^0.5.1",
+    "@amsterdam/piwik-tracker": "^1.0.0",
     "@sentry/node": "^6.15.0",
     "@sentry/react": "^6.15.0",
     "@testing-library/dom": "^8.11.1",
@@ -92,7 +92,7 @@
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^8.0.3",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^1.6.3",
     "express-openid-connect": "^2.5.2",
@@ -113,7 +113,7 @@
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
     "node-jose": "^2.1.1",
-    "node-sass": "^7.0.3",
+    "node-sass": "^8.0.0",
     "pg": "^8.8.0",
     "prettier": "^2.5.1",
     "proj4": "^2.7.5",

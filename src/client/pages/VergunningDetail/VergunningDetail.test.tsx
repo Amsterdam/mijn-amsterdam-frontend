@@ -150,4 +150,67 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Zwaarverkeer', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1692013" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Splitsingsvergunning - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1697573" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('VormenVanWoonruimte - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1697574" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Onttrekkingsvergunning voor sloop - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1797585" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Samenvoegingsvergunning - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/22/1797696" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Ligplaatsvergunning (VOB) - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/1797715" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Ligplaatsvergunning (VOB) - Verleend', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/1797714" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });

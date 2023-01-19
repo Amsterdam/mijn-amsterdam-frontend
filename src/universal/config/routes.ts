@@ -133,8 +133,7 @@ export const CustomTrackingUrls: {
   [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
   [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
 
-  [AppRoutes['ZORG/VOORZIENINGEN']]: () =>
-    '/zorg-en-ondersteuning/voorziening',
+  [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
 
   [AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR']]: (match) => {
     return `/toeristische-verhuur/vakantieverhuur/${match.params?.title}`;

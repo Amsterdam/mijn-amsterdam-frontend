@@ -13,6 +13,7 @@ import {
 } from './config';
 import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import { countLoggedInVisit } from './services/visitors';
 
 export const authRouterDevelopment = express.Router();
@@ -79,28 +80,7 @@ relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
 });
 
 relayDevRouter.get(RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES, (req, res) => {
-  return res.send(
-    apiSuccessResult([
-      {
-        id: 'xx1',
-        title: 'Hema',
-        amount: -31.3,
-        date: '2020-01-04',
-      },
-      {
-        id: 'xx2',
-        title: 'Aktiesport',
-        amount: 21.3,
-        date: '2019-12-16',
-      },
-      {
-        id: 'xx3',
-        title: 'Hema',
-        amount: -0.99,
-        date: '2019-10-21',
-      },
-    ])
-  );
+  return res.send(apiSuccessResult(STADSPAS_TRANSACTIES));
 });
 
 relayDevRouter.get(

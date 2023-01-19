@@ -130,6 +130,382 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/vob/513492494"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/23/1797715
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Ligplaatsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    03 januari 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/splitsingsvergunning/4220998766"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1697573
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Splitsingsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/onttrekkingsvergunning-voor-sloop/2377704102"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797585
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Onttrekkingsvergunning voor sloop
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/samenvoegingsvergunning/3588461895"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797696
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Samenvoegingsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/woningvormingsvergunning/4289555340"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1697574
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vormen van Woonruimte
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    27 oktober 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/zwaar-verkeer/2318111872"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1692013
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Ontheffing zwaar verkeer
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    19 oktober 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/zwaar-verkeer/1863159343"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1692002
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Ontheffing zwaar verkeer
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    16 oktober 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/nachtwerkontheffing/504231399"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1691001
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    16 september 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
                   >
                     <svg
@@ -213,147 +589,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     01 september 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/flyeren-sampling/1314482059"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1597502
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Verspreiden reclamemateriaal (sampling)
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    09 augustus 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/flyeren-sampling/239013065"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1597501
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Verspreiden reclamemateriaal (sampling)
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    08 augustus 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/flyeren-sampling/1580959320"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/22/1978055
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Verspreiden reclamemateriaal (sampling)
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    29 juli 2022
                   </span>
                 </td>
               </tr>
@@ -471,6 +706,53 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                       Chevron-Right.svg
                     </svg>
                     Z/111/000003
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Evenement vergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/evenement-vergunning/4081922197"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/111/000004
                   </a>
                 </td>
                 <td
@@ -624,53 +906,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    03 september 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/gpk/1221166450"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/000/000008
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Europese gehandicaptenparkeerkaart (GPK)
                   </span>
                 </td>
                 <td
@@ -1174,6 +1409,100 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/vob/3689116237"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/23/1797714
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Ligplaatsvergunning
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/onttrekkingsvergunning/1659133230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1797707
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Onttrekkingsvergunning voor ander gebruik
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541"
                   >
                     <svg
@@ -1257,6 +1586,147 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/flyeren-sampling/1314482059"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1597502
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Verspreiden reclamemateriaal (sampling)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/flyeren-sampling/239013065"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1597501
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Verspreiden reclamemateriaal (sampling)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/flyeren-sampling/1580959320"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/22/1978055
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Verspreiden reclamemateriaal (sampling)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Ingetrokken
                   </span>
                 </td>
               </tr>
@@ -1550,53 +2020,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="Button Button__plain Button__lean Linkd"
-                    href="/vergunningen/evenement-vergunning/4081922197"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Z/111/000004
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement vergunning
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                     
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
                     href="/vergunningen/omzettingsvergunning/3664304440"
                   >
                     <svg
@@ -1621,6 +2044,53 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/vergunningen/gpk/1221166450"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/000/000008
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Europese gehandicaptenparkeerkaart (GPK)
                   </span>
                 </td>
                 <td
@@ -2064,15 +2534,6 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
         </div>
       </div>
     </section>
-    <div
-      class="PageContent"
-    >
-      <p
-        class="SuppressedParagraph"
-      >
-        Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
-      </p>
-    </div>
   </main>
 </DocumentFragment>
 `;

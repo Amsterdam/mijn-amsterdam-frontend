@@ -14,7 +14,8 @@
       "identifier": "Z/22/19795392",
       "kenteken": "GD-33-MV",
       "status": "Ontvangen",
-      "title": "Parkeerontheffingen Blauwe zone particulieren"
+      "title": "Parkeerontheffingen Blauwe zone particulieren",
+      "processed": false
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone particulieren",
@@ -30,7 +31,8 @@
       "identifier": "Z/22/19795384",
       "kenteken": "GE-12-XD | XY-666-Z",
       "status": "Afgehandeld",
-      "title": "Parkeerontheffingen Blauwe zone particulieren"
+      "title": "Parkeerontheffingen Blauwe zone particulieren",
+      "processed": true
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
@@ -47,7 +49,8 @@
       "companyName": "Bedrijfje van de zaak",
       "numberOfPermits": "2",
       "status": "Ontvangen",
-      "title": "Parkeerontheffingen Blauwe zone bedrijven"
+      "title": "Parkeerontheffingen Blauwe zone bedrijven",
+      "processed": false
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
@@ -64,7 +67,8 @@
       "companyName": "Bedrijfje van de zaak",
       "numberOfPermits": "44",
       "status": "Afgehandeld",
-      "title": "Parkeerontheffingen Blauwe zone bedrijven"
+      "title": "Parkeerontheffingen Blauwe zone bedrijven",
+      "processed": true
     },
     {
       "caseType": "Omzettingsvergunning",
@@ -77,7 +81,8 @@
       "location": "Herengracht 23 1382AG Weesp",
       "status": "Ontvangen",
       "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
-      "dateWorkflowActive": null
+      "dateWorkflowActive": null,
+      "processed": false
     },
     {
       "caseType": "Omzettingsvergunning",
@@ -90,7 +95,8 @@
       "location": "Burgemeester Röellstraat 1 1064 BH Amsterdam",
       "status": "In behandeling",
       "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
-      "dateWorkflowActive": "2021-10-08"
+      "dateWorkflowActive": "2021-10-08",
+      "processed": false
     },
     {
       "caseType": "Omzettingsvergunning",
@@ -103,7 +109,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "In behandeling",
       "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
-      "dateWorkflowActive": null
+      "dateWorkflowActive": null,
+      "processed": false
     },
     {
       "caseType": "Omzettingsvergunning",
@@ -116,7 +123,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
       "description": "Amstel 1 Omzettingsvergunning voor het een en ander",
-      "dateWorkflowActive": "2021-10-08"
+      "dateWorkflowActive": "2021-10-08",
+      "processed": true
     },
     {
       "caseType": "Evenement melding",
@@ -129,13 +137,14 @@
       "description": "Amstel 1 Evenement melding",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11:00",
-      "timeStart": "08:00",
+      "timeEnd": "11:30",
+      "timeStart": "08:30",
       "eventType": "Dance evenement",
       "activities": "Dansen en plezier maken",
       "visitorCount": "3.000",
       "decision": "Gemeld",
-      "dateWorkflowActive": "2021-10-01"
+      "dateWorkflowActive": "2021-10-01",
+      "processed": true
     },
     {
       "caseType": "Evenement melding",
@@ -154,7 +163,8 @@
       "activities": "Dansen en plezier maken",
       "visitorCount": "3.000",
       "decision": null,
-      "dateWorkflowActive": "2021-10-17"
+      "dateWorkflowActive": "2021-10-17",
+      "processed": false
     },
     {
       "caseType": "Evenement vergunning",
@@ -170,7 +180,8 @@
       "timeEnd": "11:00",
       "timeStart": "08:00",
       "decision": "Verleend",
-      "dateWorkflowActive": "2021-10-01"
+      "dateWorkflowActive": "2021-10-01",
+      "processed": true
     },
     {
       "caseType": "Evenement vergunning",
@@ -183,10 +194,11 @@
       "description": "Amstel 1 Evenement vergunning",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11:00",
-      "timeStart": "08:00",
+      "timeEnd": "11:15",
+      "timeStart": "08:15",
       "decision": null,
-      "dateWorkflowActive": "2021-10-01"
+      "dateWorkflowActive": "2021-10-01",
+      "processed": false
     },
     {
       "caseType": "Evenement vergunning",
@@ -199,10 +211,11 @@
       "description": "Amstel 1 Evenement vergunning",
       "dateStart": "2021-10-13",
       "dateEnd": "2021-10-13",
-      "timeEnd": "11:00",
-      "timeStart": "08:00",
+      "timeEnd": "11:30",
+      "timeStart": "08:30",
       "decision": null,
-      "dateWorkflowActive": "2021-10-01"
+      "dateWorkflowActive": "2021-10-01",
+      "processed": false
     },
     {
       "caseType": "E-RVV - TVM",
@@ -219,7 +232,8 @@
       "timeEnd": "18:00",
       "timeStart": "10:00",
       "description": "Amstel 1 E-RVV aanvraag",
-      "dateWorkflowActive": "2021-09-03"
+      "dateWorkflowActive": "2021-09-03",
+      "processed": false
     },
     {
       "caseType": "Vakantieverhuur",
@@ -234,7 +248,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 1",
-      "dateWorkflowActive": "2020-05-10"
+      "dateWorkflowActive": "2020-05-10",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur",
@@ -249,7 +264,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 1",
-      "dateWorkflowActive": "2020-04-23"
+      "dateWorkflowActive": "2020-04-23",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur",
@@ -264,7 +280,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 2",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur",
@@ -279,7 +296,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur 3",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur",
@@ -294,7 +312,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur afmelding",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur",
@@ -309,7 +328,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Verleend",
       "description": "Amstel 1 Vakantieverhuur afmelding",
-      "dateWorkflowActive": "2021-05-22"
+      "dateWorkflowActive": "2021-05-22",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
@@ -324,7 +344,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
       "description": "Amstel 1 Vakantieverhuur aanvraag vergunning",
-      "dateWorkflowActive": "2020-05-10"
+      "dateWorkflowActive": "2020-05-10",
+      "processed": true
     },
     {
       "caseType": "B&B - vergunning",
@@ -341,7 +362,8 @@
       "status": "Ontvangen",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",
-      "description": "Amstel 1 B&B aanvraag vergunning"
+      "description": "Amstel 1 B&B aanvraag vergunning",
+      "processed": false
     },
     {
       "caseType": "B&B - vergunning",
@@ -357,7 +379,8 @@
       "dateWorkflowActive": "2021-05-11",
       "status": "In behandeling",
       "requester": "Jan Hendrik",
-      "owner": "Jan Hendrik"
+      "owner": "Jan Hendrik",
+      "processed": false
     },
     {
       "caseType": "B&B - vergunning",
@@ -374,7 +397,8 @@
       "status": "Afgehandeld",
       "requester": "Jan Hendrik",
       "owner": "Jan Hendrik",
-      "description": "Amstel 1 B&B aanvraag vergunning"
+      "description": "Amstel 1 B&B aanvraag vergunning",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
@@ -389,7 +413,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
       "description": "Amstel 1 Vakantieverhuur aanvraag vergunning",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "processed": true
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
@@ -404,7 +429,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Afgehandeld",
       "description": "Amstel 1 Vakantieverhuur aanvraag vergunning",
-      "dateWorkflowActive": "2021-05-10"
+      "dateWorkflowActive": "2021-05-10",
+      "processed": true
     },
     {
       "caseType": "GPK",
@@ -421,7 +447,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
       "description": "Amstel 1 GPK aanvraag",
-      "dateWorkflowActive": "2021-09-03"
+      "dateWorkflowActive": "2021-09-03",
+      "processed": true
     },
     {
       "caseType": "GPP",
@@ -435,7 +462,8 @@
       "location": "Amstel 1 1017AB Amsterdam",
       "status": "Ontvangen",
       "description": "Amstel 1 GPP aanvraag",
-      "dateWorkflowActive": "2021-04-07"
+      "dateWorkflowActive": "2021-04-07",
+      "processed": false
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone particulieren",
@@ -449,7 +477,8 @@
       "kenteken": "A0-03-48N",
       "status": "Afgehandeld",
       "dateEnd": "2021-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
@@ -463,7 +492,8 @@
       "companyName": "Haineken B.V.",
       "status": "Afgehandeld",
       "dateEnd": "2022-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -481,7 +511,8 @@
       "timeStart": "10:00",
       "description": "Slopen",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -499,7 +530,8 @@
       "timeStart": "10:00",
       "description": "TVM / 3 PV - Arent Janszoon Ernststraat 780",
       "dateEnd": "2022-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -517,7 +549,8 @@
       "timeStart": "10:00",
       "description": "Arent Janszoon Ernststraat 779 1012AA",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -535,7 +568,8 @@
       "timeStart": "10:00",
       "description": "TVM / 3 PV - Arent Janszoon Ernststraat 777",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -553,7 +587,8 @@
       "timeStart": "10:00",
       "description": "Wij gaan verbouwen aan de Bloemstraat 5",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -571,7 +606,8 @@
       "timeStart": "10:00",
       "description": "Wij gaan verbouwen aan de Bloemstraat 4",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -589,7 +625,8 @@
       "timeStart": "10:00",
       "description": "Nellestein RVV ontheffing",
       "dateEnd": null,
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -607,7 +644,8 @@
       "timeStart": "10:00",
       "description": "Wij gaan verbouwen aan de Bloemstraat 2",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -625,7 +663,8 @@
       "timeStart": "10:00",
       "description": "Wij gaan verbouwen aan de Bloemstraat 26 h. Wij willen hiervoor graag 2 parkeervakken reserveren om materialen / container op te plaatsen.",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2020-06-24T00:00:00"
+      "dateWorkflowActive": "2020-06-24T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -643,7 +682,8 @@
       "timeStart": "10:00",
       "description": "SB RVV ontheffing hele stad",
       "dateEnd": "2020-06-25",
-      "dateWorkflowActive": "2020-06-17T00:00:00"
+      "dateWorkflowActive": "2020-06-17T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -661,7 +701,8 @@
       "timeStart": "10:00",
       "description": "SB RVV ontheffing hele stad",
       "dateEnd": "2020-06-16",
-      "dateWorkflowActive": "2020-06-08T00:00:00"
+      "dateWorkflowActive": "2020-06-08T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -679,7 +720,8 @@
       "timeStart": "10:00",
       "description": "7,5 ton ontheffing",
       "dateEnd": null,
-      "dateWorkflowActive": "2020-05-03T00:00:00"
+      "dateWorkflowActive": "2020-05-03T00:00:00",
+      "processed": false
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -697,7 +739,8 @@
       "timeStart": "10:00",
       "description": "Bulkaanvraag door Raoul Verheezen t.b.v. Wagenpark (M-AMS1909 004195)",
       "dateEnd": "2020-12-31",
-      "dateWorkflowActive": "2019-12-31T00:00:00"
+      "dateWorkflowActive": "2019-12-31T00:00:00",
+      "processed": true
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -715,7 +758,8 @@
       "timeStart": "10:00",
       "description": "TVM / 3 PV - Arent Janszoon Ernststraat 888",
       "dateEnd": "2020-07-02",
-      "dateWorkflowActive": "2019-06-13T00:00:00"
+      "dateWorkflowActive": "2019-06-13T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Flyeren-Sampling",
@@ -730,7 +774,8 @@
       "timeEnd": "17:00",
       "status": "Afgehandeld",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-07-13T00:00:00"
+      "dateWorkflowActive": "2022-07-13T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Flyeren-Sampling",
@@ -744,7 +789,8 @@
       "timeEnd": "16:00",
       "status": "Ontvangen",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-08-08T00:00:00"
+      "dateWorkflowActive": "2022-08-08T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Flyeren-Sampling",
@@ -758,7 +804,8 @@
       "timeEnd": "17:00",
       "status": "Ontvangen",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-08-08T00:00:00"
+      "dateWorkflowActive": "2022-08-08T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Flyeren-Sampling",
@@ -780,7 +827,8 @@
       "link": {
         "to": "/vergunningen/flyeren-sampling/1580959320",
         "title": "Bekijk hoe het met uw aanvraag staat"
-      }
+      },
+      "processed": true
     },
     {
       "caseType": "Aanbieden van diensten",
@@ -793,7 +841,8 @@
       "dateEnd": "2022-04-05T00:00:00",
       "status": "Afgehandeld",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-01-13T00:00:00"
+      "dateWorkflowActive": "2022-01-13T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Aanbieden van diensten",
@@ -806,7 +855,8 @@
       "dateEnd": "2022-06-01T00:00:00",
       "status": "Afgehandeld",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-02-07T00:00:00"
+      "dateWorkflowActive": "2022-02-07T00:00:00",
+      "processed": true
     },
     {
       "caseType": "Aanbieden van diensten",
@@ -815,22 +865,160 @@
       "dateRequest": "2022-01-17T00:00:00",
       "dateDecision": "2022-02-08T00:00:00",
       "status": "Ontvangen",
-      "dateWorkflowActive": "2022-01-13T00:00:00"
+      "dateWorkflowActive": "2022-01-13T00:00:00",
+      "processed": false
     },
     {
       "caseType": "Nachtwerkontheffing",
       "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
       "identifier": "Z/22/1691001",
       "dateRequest": "2022-07-13T00:00:00",
-      "dateDecision": "2022-07-18T00:00:00",
+      "dateDecision": "2022-09-15T00:00:00",
       "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
-      "dateStart": "2022-09-01",
-      "dateEnd": "2022-09-05",
-      "timeStart": "10:00",
-      "timeEnd": "18:00",
+      "dateStart": "2022-10-01",
+      "dateEnd": "2022-10-05",
+      "timeStart": "10:15",
+      "timeEnd": "18:35",
       "status": "Afgehandeld",
       "decision": "Verleend",
-      "dateWorkflowActive": "2022-07-13T00:00:00"
+      "dateWorkflowActive": "2022-07-13T00:00:00",
+      "processed": true
+    },
+    {
+      "caseType": "Nachtwerkontheffing",
+      "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
+      "identifier": "Z/22/1691001",
+      "dateRequest": "2022-09-16T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 10 1082 PP Amsterdam",
+      "dateStart": "2022-10-15",
+      "dateEnd": "2022-10-25",
+      "timeStart": "22:10",
+      "timeEnd": "05:35",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-09-16T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Zwaar verkeer",
+      "title": "Ontheffing zwaar verkeer",
+      "identifier": "Z/22/1692002",
+      "dateRequest": "2022-10-16T00:00:00",
+      "dateDecision": null,
+      "dateStart": "2022-11-15",
+      "dateEnd": "2023-11-25",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "exemptionKind": "Jaarontheffing hele zone met gewichtsverklaring en verklaring ondeelbare lading",
+      "licencePlates": "XX-123-Z, XX-122-Z",
+      "processed": false
+    },
+    {
+      "caseType": "Zwaar verkeer",
+      "title": "Ontheffing zwaar verkeer",
+      "identifier": "Z/22/1692013",
+      "dateRequest": "2022-10-19T00:00:00",
+      "dateDecision": null,
+      "dateStart": "2023-01-15",
+      "dateEnd": "2023-12-15",
+      "status": "In behandeling",
+      "decision": null,
+      "dateWorkflowActive": "2022-10-21",
+      "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
+      "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
+      "processed": false
+    },
+    {
+      "caseType": "Splitsingsvergunning",
+      "title": "Splitsingsvergunning",
+      "identifier": "Z/22/1697573",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 7 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Woningvormingsvergunning",
+      "title": "Vormen van Woonruimte",
+      "identifier": "Z/22/1697574",
+      "dateRequest": "2022-10-27T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "Onttrekkingsvergunning voor sloop",
+      "title": "Onttrekkingsvergunning voor sloop",
+      "identifier": "Z/22/1797585",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": null,
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "processed": false
+    },
+    {
+      "caseType": "Onttrekkingsvergunning",
+      "title": "Onttrekkingsvergunning voor ander gebruik",
+      "identifier": "Z/22/1797707",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-08T00:00:00",
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Afgehandeld",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-11-07T00:00:00",
+      "processed": true
+    },
+    {
+      "caseType": "Samenvoegingsvergunning",
+      "title": "Samenvoegingsvergunning",
+      "identifier": "Z/22/1797696",
+      "dateRequest": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-01T00:00:00",
+      "location": "Gustav Mahlerlaan 14 1082 PP Amsterdam",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2022-11-01T00:00:00",
+      "processed": false
+    },
+    {
+      "caseType": "VOB",
+      "title": "Ligplaatsvergunning",
+      "identifier": "Z/23/1797714",
+      "dateRequest": "2023-01-01T00:00:00",
+      "dateDecision": "2023-01-02T00:00:00",
+      "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2023-01-01T00:00:00",
+      "processed": true,
+      "requestKind": "Ligplaatsvergunning woonboot",
+      "reason": "Nieuwe ligplaats",
+      "dateEnd": "2025-01-02T00:00:00"
+    },
+    {
+      "caseType": "VOB",
+      "title": "Ligplaatsvergunning",
+      "identifier": "Z/23/1797715",
+      "dateRequest": "2023-01-03T00:00:00",
+      "dateDecision": null,
+      "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2023-01-03T00:00:00",
+      "processed": false,
+      "requestKind": "Ligplaatsvergunning woonboot",
+      "reason": "Nieuwe ligplaats",
+      "dateEnd": "2024-01-02T00:00:00"
     }
   ],
   "status": "OK"

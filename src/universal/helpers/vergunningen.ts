@@ -1,5 +1,12 @@
 import { differenceInMonths } from 'date-fns';
 import type {
+  Samenvoegingsvergunning,
+  Onttrekkingsvergunning,
+  OnttrekkingsvergunningSloop,
+  VormenVanWoonruimte,
+  Splitsingsvergunning,
+} from '../../server/services/vergunningen/vergunningen';
+import {
   Vergunning,
   VergunningExpirable,
 } from '../../server/services/vergunningen/vergunningen';
@@ -17,9 +24,46 @@ const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
   CaseType.EvenementVergunning,
   CaseType.Flyeren,
   CaseType.AanbiedenDiensten,
+  CaseType.NachtwerkOntheffing,
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
 ];
 
-const CASE_TYPES_WITH_WORKFLOW = [CaseType.Omzettingsvergunning];
+const CASE_TYPES_WITH_WORKFLOW = [
+  CaseType.Omzettingsvergunning,
+  CaseType.NachtwerkOntheffing,
+  CaseType.ZwaarVerkeer,
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
+  CaseType.Splitsingsvergunning,
+];
+
+export const woonVergunningTypes = [
+  CaseType.Samenvoegingsvergunning,
+  CaseType.Onttrekkingsvergunning,
+  CaseType.OnttrekkingsvergunningSloop,
+  CaseType.VormenVanWoonruimte,
+  CaseType.Splitsingsvergunning,
+];
+
+export type WoningVergunning =
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | VormenVanWoonruimte
+  | Splitsingsvergunning;
+
+export function isWoonvergunning(
+  vergunning: Vergunning
+): vergunning is WoningVergunning {
+  return woonVergunningTypes.includes(
+    (vergunning as WoningVergunning).caseType
+  );
+}
 
 export function isActualNotification(
   datePublished: string,

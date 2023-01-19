@@ -1,7 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { showDocuments } from '../../../universal/helpers/vergunningen';
+import {
+  isWoonvergunning,
+  showDocuments,
+} from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   Alert,
@@ -27,6 +30,9 @@ import { Nachtwerkontheffing } from './Nachtwerkontheffing';
 import { Omzettingsvergunning } from './Omzettingsvergunning';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
+import { ZwaarVerkeer } from './ZwaarVerkeer';
+import { Woonvergunningen } from './Woonvergunningen';
+import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
 
 export default function VergunningDetail() {
@@ -94,6 +100,16 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.NachtwerkOntheffing && (
               <Nachtwerkontheffing vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.ZwaarVerkeer && (
+              <ZwaarVerkeer vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.VOB && (
+              <VOB vergunning={Vergunning} />
+            )}
+
+            {isWoonvergunning(Vergunning) && (
+              <Woonvergunningen vergunning={Vergunning} />
             )}
 
             {showDocuments(Vergunning?.caseType) &&

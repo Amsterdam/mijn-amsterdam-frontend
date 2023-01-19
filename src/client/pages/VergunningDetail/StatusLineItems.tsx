@@ -14,7 +14,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       return [];
     }
 
-    const isDone = vergunning.status === 'Afgehandeld';
+    const isDone = vergunning.processed;
     const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
     const inProgressActive = hasWorkflow(vergunning.caseType)
       ? hasDateWorkflowActive && !isDone

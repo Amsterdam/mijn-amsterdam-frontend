@@ -24,7 +24,7 @@ export const FeatureToggle = {
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
-  meldingenBuurtActive: !IS_PRODUCTION,
+  meldingenBuurtActive: true,
   inkomenBBZActive: true,
   erfpachtV2EndpointActive: true,
   subsidieActive: true,
@@ -35,7 +35,6 @@ export const FeatureToggle = {
   klachtenActive: true,
 };
 
-export const MAXIMUM_DAYS_RENT_ALLOWED = 30;
 export const DEFAULT_PROFILE_TYPE = 'private';
 
 export const ExternalUrls = {

@@ -2,8 +2,7 @@ import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { Chapters, FeatureToggle, IS_PRODUCTION } from '../../universal/config';
-import { MAXIMUM_DAYS_RENT_ALLOWED } from '../../universal/config/app';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   apiDependencyError,
@@ -16,8 +15,6 @@ import {
   calculateDaysBetweenDates,
   dateFormat,
   dateSort,
-  defaultDateFormat,
-  isCurrentYear,
   isDateInPast,
 } from '../../universal/helpers/date';
 import {
@@ -164,40 +161,6 @@ export type ToeristischeVerhuurVergunning =
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
 
-export function daysRentLeftInCalendarYear(
-  verhuurItems: ToeristischeVerhuur[]
-): number {
-  return verhuurItems
-    .map((verhuur) => {
-      if (!verhuur.dateEnd || !verhuur.dateStart) {
-        return 0;
-      }
-
-      const startsInCurrentYear = isCurrentYear(verhuur.dateStart);
-      const endsInCurrentYear = isCurrentYear(verhuur.dateEnd);
-      switch (true) {
-        case startsInCurrentYear && endsInCurrentYear:
-          return verhuur.duration;
-        case startsInCurrentYear && !endsInCurrentYear:
-          return calculateDaysBetweenDates(
-            `${new Date().getFullYear()}-12-31`,
-            verhuur.dateStart
-          );
-        case !startsInCurrentYear && endsInCurrentYear:
-          return calculateDaysBetweenDates(
-            verhuur.dateEnd,
-            `${new Date().getFullYear()}-01-01`
-          );
-      }
-
-      return 0;
-    })
-    .reduce(
-      (total: number, duration: number) => total - duration,
-      MAXIMUM_DAYS_RENT_ALLOWED
-    );
-}
-
 export function transformVergunningenToVerhuur(
   vergunningen: VakantieverhuurVergunning[],
   dateCompare?: Date
@@ -267,7 +230,6 @@ async function fetchAndTransformToeristischeVerhuur(
     return apiSuccessResult({
       vergunningen: [],
       registraties: [],
-      daysLeft: MAXIMUM_DAYS_RENT_ALLOWED,
     });
   }
   const registratiesRequest =
@@ -315,12 +277,6 @@ async function fetchAndTransformToeristischeVerhuur(
     vergunningen.content as VakantieverhuurVergunning[]
   );
 
-  const verhuurVergunningen = toeristischeVerhuurVergunningen.filter(
-    (verhuur): verhuur is ToeristischeVerhuur =>
-      verhuur.title === 'Geplande verhuur' ||
-      verhuur.title === 'Afgelopen verhuur'
-  );
-  const daysLeft = daysRentLeftInCalendarYear(verhuurVergunningen);
   const failedDependencies = getFailedDependencies({
     registraties,
     vergunningen,
@@ -330,7 +286,6 @@ async function fetchAndTransformToeristischeVerhuur(
     {
       registraties: registraties.status === 'OK' ? registraties.content : [],
       vergunningen: toeristischeVerhuurVergunningen,
-      daysLeft,
     },
     failedDependencies
   );
@@ -434,39 +389,6 @@ export function createToeristischeVerhuurNotification(
         title = `Aanvraag ${vergunningTitleLower} in behandeling`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
         cta = `Bekijk uw aanvraag`;
-        linkTo = ctaLinkToDetail;
-        datePublished = item.dateRequest;
-        break;
-    }
-  } else {
-    const ctaLinkToDetail = generatePath(
-      AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
-      {
-        title: slug(item.title, {
-          lower: true,
-        }),
-        id: item.id,
-      }
-    );
-
-    const period = !!(item.dateStart && item.dateEnd)
-      ? `van ${defaultDateFormat(item.dateStart)} tot ${defaultDateFormat(
-          item.dateEnd
-        )} `
-      : '';
-
-    switch (true) {
-      case item.title === 'Geannuleerde verhuur':
-        title = `Vakantieverhuur geannuleerd`;
-        description = `Wij hebben uw annulering voor vakantieverhuur ${period}ontvangen.`;
-        cta = 'Bekijk uw geannuleerde verhuur';
-        linkTo = ctaLinkToDetail;
-        datePublished = item.dateRequest;
-        break;
-      case item.title === 'Geplande verhuur':
-        title = `Vakantieverhuur gepland`;
-        description = `Wij hebben uw melding voor vakantieverhuur ${period}ontvangen.`;
-        cta = 'Bekijk uw geplande verhuur';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateRequest;
         break;

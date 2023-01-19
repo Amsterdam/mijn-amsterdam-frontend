@@ -195,8 +195,8 @@ export async function requestData<T>(
     const shouldCaptureMessage =
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    const api = Object.entries(ApiUrls).find(
-      ([, url]) => requestConfig.url === url
+    const api = Object.entries(ApiUrls).find(([, url]) =>
+      requestConfig.url?.startsWith(url)
     );
 
     const apiName = api ? api[0] : 'unknown';
