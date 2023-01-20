@@ -3,7 +3,6 @@ trigger:
     include:
       - ontwikkelen
       - testen
-      - acceptatie
   # tags:
   #   include:
   #     - release-v*
@@ -25,10 +24,6 @@ variables:
       - group: MAPipelineVariables-o
   - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
       - group: MAPipelineVariables-t
-  - ${{ if eq(variables['Build.SourceBranchName'], 'acceptatie') }}:
-      - group: MAPipelineVariables-a
-  - ${{ if eq(variables['Build.SourceBranchName'], 'productie') }}:
-      - group: MAPipelineVariables-p
 
 stages:
   # - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
