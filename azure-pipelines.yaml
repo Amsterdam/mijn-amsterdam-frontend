@@ -54,6 +54,27 @@ resources:
       name: CCC-Public/BB-StorageAccount
       ref: refs/tags/1.0.3
 
+parameters:
+  - name: 'DeployBaseInfra'
+    displayName: 'Deploy the Base infrastructure?'
+    type: boolean
+    default: false
+
+  - name: 'DeployAppserviceInfra'
+    displayName: 'Deploy the AppService infrastructure?'
+    type: boolean
+    default: false
+
+  - name: 'DeployApplicationGateway'
+    displayName: 'Deploy the ApplicationGateway?'
+    type: boolean
+    default: false
+
+  - name: 'BuildTestDeployApplications'
+    displayName: 'Deploy the ApplicationGateway?'
+    type: boolean
+    default: true
+
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - group: MAPipelineVariables-o
@@ -61,16 +82,29 @@ variables:
       - group: MAPipelineVariables-t
 
 stages:
-  # - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-  #     - template: pipelines/stages/build-applications.yaml@MamsInfra
-  #     - template: pipelines/stages/test-applications.yaml@MamsInfra
-
   - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - template: pipelines/stages/deploy-infra-test.yaml@MamsInfra
+      - ${{ if or(eq(parameters.DeployBaseInfra, true),eq(parameters.DeployAppserviceInfra, true),eq(parameters.DeployApplicationGateway, true)) }}:
+          - template: pipelines/stages/deploy-infra.yaml@MamsInfra
+            parameters:
+              serviceConnectionName: $(serviceConnectionName)
+              dtapName: $(dtapName)
+              adoEnvironment: $(adoEnvironment)
+              DeployBaseInfra: ${{ parameters.DeployBaseInfra }}
+              DeployAppserviceInfra: ${{ parameters.DeployAppserviceInfra }}
+              DeployApplicationGateway: ${{ parameters.DeployApplicationGateway }}
+
+  - ${{ if eq(parameters.BuildTestDeployApplications, true) }}:
+      - template: pipelines/stages/build-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
           dtapName: $(dtapName)
-          adoEnvironment: $(adoEnvironment)
-      # - template: pipelines/stages/build-applications.yaml@MamsInfra
-      # - template: pipelines/stages/test-applications.yaml@MamsInfra
-      # - template: pipelines/stages/deploy-applications.yaml@MamsInfra
+      - template: pipelines/stages/test-frontend.yaml@MamsInfra
+        parameters:
+          serviceConnectionName: $(serviceConnectionName)
+          dtapName: $(dtapName)
+
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
+        parameters:
+          serviceConnectionName: $(serviceConnectionName)
+          dtapName: $(dtapName)
