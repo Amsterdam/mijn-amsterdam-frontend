@@ -69,6 +69,8 @@ stages:
       - template: pipelines/stages/deploy-infra-test.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
+          dtapName: $(dtapName)
+          adoEnvironment: $(adoEnvironment)
       # - template: pipelines/stages/build-applications.yaml@MamsInfra
       # - template: pipelines/stages/test-applications.yaml@MamsInfra
       # - template: pipelines/stages/deploy-applications.yaml@MamsInfra
