@@ -7,7 +7,7 @@ pr:
       - ontwikkelen
 
 variables:
-  - ${{ if eq(Build.SourceBranchName, 'ontwikkelen') }}:
+  - ${{ if eq($[Build.SourceBranchName], 'ontwikkelen') }}:
       - group: MAPipelineVariables-o
 
 steps:
