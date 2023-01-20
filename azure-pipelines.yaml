@@ -13,7 +13,7 @@ variables:
 steps:
   - bash: |
       echo $(serviceConnectionName)
-      echo $(variables['System.PullRequest.TargetBranch'])
+      echo ${{ variables['System.PullRequest.TargetBranch'] }}
 
   # - task: AzureCLI@2
   #   displayName: Get ACR access token
