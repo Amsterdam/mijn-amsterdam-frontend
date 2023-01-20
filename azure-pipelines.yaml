@@ -4,9 +4,9 @@ trigger:
       - ontwikkelen
       - testen
       - acceptatie
-  tags:
-    include:
-      - release-v*
+  # tags:
+  #   include:
+  #     - release-v*
 
 pr:
   branches:
