@@ -18,6 +18,41 @@ resources:
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/pipeline-fe
+    - repository: BB-ResourceGroup
+      type: git
+      name: CCC-Public/BB-ResourceGroup
+      ref: refs/tags/1.0.0
+    - repository: BB-AppService
+      type: git
+      name: CCC-Public/BB-AppService
+      ref: refs/tags/1.0.2
+    - repository: BB-ContainerRegistry
+      type: git
+      name: CCC-Public/BB-ContainerRegistry
+      ref: refs/tags/1.0.0
+    - repository: BB-LogAnalytics
+      type: git
+      name: CCC-Public/BB-LogAnalytics
+      ref: refs/tags/1.0.0
+    - repository: BB-KeyVault
+      type: git
+      name: CCC-Public/BB-KeyVault
+      ref: refs/tags/1.0.3
+    - repository: CCC-Generiek
+      type: git
+      name: CCC-Public/CCC-Generiek
+    - repository: BB-ApplicationGateway
+      type: git
+      name: CCC-Public/BB-ApplicationGateway
+      ref: refs/tags/1.0.5
+    - repository: BB-PrivateEndpoint
+      type: git
+      name: CCC-Public/BB-PrivateEndpoint
+      ref: refs/tags/1.0.4
+    - repository: BB-StorageAccount
+      type: git
+      name: CCC-Public/BB-StorageAccount
+      ref: refs/tags/1.0.3
 
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
