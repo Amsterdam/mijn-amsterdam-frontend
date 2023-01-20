@@ -100,7 +100,6 @@ stages:
 
       - template: pipelines/stages/test-frontend.yaml@MamsInfra
         parameters:
-          serviceConnectionName: $(serviceConnectionName)
           adoEnvironment: $(adoEnvironment)
 
   - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
