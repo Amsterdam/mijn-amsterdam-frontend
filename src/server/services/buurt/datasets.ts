@@ -317,7 +317,7 @@ export const datasetEndpoints: Record<
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'ma_melding_id',
     requestConfig: {
-      mergeResults: (responseData, newResponse) => {
+      combinePaginatedResults: (responseData, newResponse) => {
         return newResponse.content === null
           ? responseData
           : responseData.concat(newResponse.content);

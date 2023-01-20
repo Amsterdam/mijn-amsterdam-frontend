@@ -74,7 +74,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   cacheKey?: string;
   hasBearerToken?: boolean;
 
-  mergeResults?: <T>(
+  combinePaginatedResults?: <T>(
     responseData: any,
     newRequest:
       | ApiSuccessResponse<T>

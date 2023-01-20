@@ -106,7 +106,9 @@ export function clearSessionCache(requestID: requestID) {
 function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
   // parse link header and get value of rel="next" url
   const links = headers.link.split(',');
-  const next = links.find((link) => link.indexOf('rel="next"') > 0);
+  const next = links.find(
+    (link) => link.includes('rel="next"') && link.includes(';')
+  );
   if (next === undefined) {
     throw new Error('Something went wrong while parsing the link header.');
   }
@@ -199,8 +201,8 @@ export async function requestData<T>(
 
     // if we have a next link
     if (
-      response.headers?.link?.indexOf('rel="next"') > 0 &&
-      typeof requestConfig.mergeResults === 'function'
+      response.headers?.link?.includes('rel="next"') &&
+      typeof requestConfig.combinePaginatedResults === 'function'
     ) {
       const nextUrl = getNextUrlFromLinkHeader(response.headers);
 
@@ -209,7 +211,7 @@ export async function requestData<T>(
         url: nextUrl,
       };
 
-      response.data = await requestConfig.mergeResults<T>(
+      response.data = await requestConfig.combinePaginatedResults<T>(
         response.data,
         await requestData(newRequest, requestID, authProfileAndToken)
       );
