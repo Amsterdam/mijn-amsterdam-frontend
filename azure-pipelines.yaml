@@ -1,0 +1,11 @@
+trigger:
+  - ontwikkelen
+
+pr:
+  branches:
+    include:
+      - ontwikkelen
+
+steps:
+  - bash: |
+      printenv
