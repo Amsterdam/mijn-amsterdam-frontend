@@ -6,6 +6,12 @@ pr:
     include:
       - ontwikkelen
 
+variables:
+  - ${{ if eq(Build.SourceBranchName, 'ontwikkelen') }}:
+      - group: MAPipelineVariables-o
+
 steps:
+  - bash: |
+      echo $(serviceConnectionName)
   - bash: |
       printenv
