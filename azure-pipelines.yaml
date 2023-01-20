@@ -11,18 +11,18 @@ variables:
       - group: MAPipelineVariables-o
 
 steps:
-  - bash: |
-      echo $(serviceConnectionName)
+  # - bash: |
+  #     echo $(serviceConnectionName)
 
-  - task: AzureCLI@2
-    displayName: Get ACR access token
-    inputs:
-      azureSubscription: $(serviceConnectionName)
-      scriptType: pscore
-      scriptLocation: inlineScript
-      inlineScript: |
-        $token= & az acr login --name $(dockerRegistryName) --expose-token --output tsv --query accessToken
-          Write-Output("##vso[task.setvariable variable=DOCKER_TOKEN;]$token")
+  # - task: AzureCLI@2
+  #   displayName: Get ACR access token
+  #   inputs:
+  #     azureSubscription: $(serviceConnectionName)
+  #     scriptType: pscore
+  #     scriptLocation: inlineScript
+  #     inlineScript: |
+  #       $token= & az acr login --name $(dockerRegistryName) --expose-token --output tsv --query accessToken
+  #         Write-Output("##vso[task.setvariable variable=DOCKER_TOKEN;]$token")
 
   - bash: |
       printenv
