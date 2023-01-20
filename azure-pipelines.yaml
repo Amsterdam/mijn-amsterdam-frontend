@@ -87,7 +87,6 @@ stages:
           - template: pipelines/stages/deploy-infra.yaml@MamsInfra
             parameters:
               serviceConnectionName: $(serviceConnectionName)
-              dtapName: $(dtapName)
               adoEnvironment: $(adoEnvironment)
               DeployBaseInfra: ${{ parameters.DeployBaseInfra }}
               DeployAppserviceInfra: ${{ parameters.DeployAppserviceInfra }}
@@ -97,14 +96,15 @@ stages:
       - template: pipelines/stages/build-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
-          dtapName: $(dtapName)
+          adoEnvironment: $(adoEnvironment)
+
       - template: pipelines/stages/test-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
-          dtapName: $(dtapName)
+          adoEnvironment: $(adoEnvironment)
 
   - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
-          dtapName: $(dtapName)
+          adoEnvironment: $(adoEnvironment)
