@@ -66,12 +66,10 @@ parameters:
     default: false
 
   - name: 'DeployApplicationGateway'
-    displayName: 'Deploy the ApplicationGateway?'
     type: boolean
     default: false
 
   - name: 'BuildTestDeployApplications'
-    displayName: 'Deploy the ApplicationGateway?'
     type: boolean
     default: true
 
