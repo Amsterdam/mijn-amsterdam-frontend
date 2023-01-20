@@ -1,28 +1,44 @@
 trigger:
-  - ontwikkelen
+  branches:
+    include:
+      - ontwikkelen
+      - testen
+      - acceptatie
+  tags:
+    include:
+      - release-v*
 
 pr:
   branches:
     include:
-      - ontwikkelen
+      - main
+
+resources:
+  repositories:
+    - repository: MamsInfra
+      type: git
+      name: MijnAmsterdam/mijn-amsterdam-infra
+      ref: refs/heads/pipeline-fe
 
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - group: MAPipelineVariables-o
+  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+      - group: MAPipelineVariables-t
+  - ${{ if eq(variables['Build.SourceBranchName'], 'acceptatie') }}:
+      - group: MAPipelineVariables-a
+  - ${{ if eq(variables['Build.SourceBranchName'], 'productie') }}:
+      - group: MAPipelineVariables-p
 
-steps:
-  # - bash: |
-  #     echo $(serviceConnectionName)
+stages:
+  # - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+  #     - template: pipelines/stages/build-applications.yaml@MamsInfra
+  #     - template: pipelines/stages/test-applications.yaml@MamsInfra
 
-  # - task: AzureCLI@2
-  #   displayName: Get ACR access token
-  #   inputs:
-  #     azureSubscription: $(serviceConnectionName)
-  #     scriptType: pscore
-  #     scriptLocation: inlineScript
-  #     inlineScript: |
-  #       $token= & az acr login --name $(dockerRegistryName) --expose-token --output tsv --query accessToken
-  #         Write-Output("##vso[task.setvariable variable=DOCKER_TOKEN;]$token")
-
-  - bash: |
-      printenv
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: pipelines/stages/deploy-infra-test.yaml@MamsInfra
+        parameters:
+          serviceConnectionName: $(serviceConnectionName)
+      # - template: pipelines/stages/build-applications.yaml@MamsInfra
+      # - template: pipelines/stages/test-applications.yaml@MamsInfra
+      # - template: pipelines/stages/deploy-applications.yaml@MamsInfra
