@@ -343,7 +343,7 @@ function transformMeldingenBuurtResponse(
 
       if (config.idKeyList) feature.properties[config.idKeyList] = index;
 
-      feature.properties.categorie = categorie;
+      feature.properties.categorie = displayCat;
       if (dataSetConfig && !(displayCat in dataSetConfig)) {
         feature.properties.categorie = 'overig';
       }
@@ -428,7 +428,7 @@ function transformMeldingDetailResponse(
     features: any[];
   }
 ) {
-  const item = responseData?.features[parseInt(id)];
+  const item = responseData?.features[parseInt(id, 10)];
 
   if (!item) {
     throw new Error(
