@@ -61,7 +61,7 @@ describe('requestData paginated requests', () => {
     );
 
     expect(scope?.isDone()).toEqual(true); // Assert all defined endpoints were hit
-    expect(scope?.activeMocks()).toEqual([]); // Assert there are no more active mocks
+    expect(scope?.activeMocks().length).toEqual(0); // Assert there are no more active mocks
   });
 
   it('Should combine results using the function passed via combinePaginatedResults', async () => {
