@@ -81,11 +81,15 @@ export interface DataRequestConfig extends AxiosRequestConfig {
       | ApiErrorResponse<null>
       | ApiPostponeResponse
   ) => any;
+
+  page?: number;
 }
 
 const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
 const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
+
+export const MAXIMUM_AMOUNT_OF_PAGES = 10; // If we are requesting a paginated rescource request a maximum of 10 pages.
 
 export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 20 * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
@@ -96,6 +100,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   hasBearerToken: true,
+  page: 1,
 };
 
 export type SourceApiKey =
