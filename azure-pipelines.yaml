@@ -18,60 +18,6 @@ resources:
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/pipeline-fe
-    - repository: BB-ResourceGroup
-      type: git
-      name: CCC-Public/BB-ResourceGroup
-      ref: refs/tags/1.0.0
-    - repository: BB-AppService
-      type: git
-      name: CCC-Public/BB-AppService
-      ref: refs/tags/1.0.2
-    - repository: BB-ContainerRegistry
-      type: git
-      name: CCC-Public/BB-ContainerRegistry
-      ref: refs/tags/1.0.0
-    - repository: BB-LogAnalytics
-      type: git
-      name: CCC-Public/BB-LogAnalytics
-      ref: refs/tags/1.0.0
-    - repository: BB-KeyVault
-      type: git
-      name: CCC-Public/BB-KeyVault
-      ref: refs/tags/1.0.3
-    - repository: CCC-Generiek
-      type: git
-      name: CCC-Public/CCC-Generiek
-    - repository: BB-ApplicationGateway
-      type: git
-      name: CCC-Public/BB-ApplicationGateway
-      ref: refs/tags/1.0.5
-    - repository: BB-PrivateEndpoint
-      type: git
-      name: CCC-Public/BB-PrivateEndpoint
-      ref: refs/tags/1.0.4
-    - repository: BB-StorageAccount
-      type: git
-      name: CCC-Public/BB-StorageAccount
-      ref: refs/tags/1.0.3
-
-parameters:
-  - name: 'DeployBaseInfra'
-    displayName: 'Deploy the Base infrastructure?'
-    type: boolean
-    default: false
-
-  - name: 'DeployAppserviceInfra'
-    displayName: 'Deploy the AppService infrastructure?'
-    type: boolean
-    default: false
-
-  - name: 'DeployApplicationGateway'
-    type: boolean
-    default: false
-
-  - name: 'BuildTestDeployApplications'
-    type: boolean
-    default: true
 
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
@@ -80,25 +26,14 @@ variables:
       - group: MAPipelineVariables-t
 
 stages:
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - ${{ if or(eq(parameters.DeployBaseInfra, true),eq(parameters.DeployAppserviceInfra, true),eq(parameters.DeployApplicationGateway, true)) }}:
-          - template: pipelines/stages/deploy-infra.yaml@MamsInfra
-            parameters:
-              serviceConnectionName: $(serviceConnectionName)
-              adoEnvironment: $(adoEnvironment)
-              DeployBaseInfra: ${{ parameters.DeployBaseInfra }}
-              DeployAppserviceInfra: ${{ parameters.DeployAppserviceInfra }}
-              DeployApplicationGateway: ${{ parameters.DeployApplicationGateway }}
+  - template: pipelines/stages/build-frontend.yaml@MamsInfra
+    parameters:
+      serviceConnectionName: $(serviceConnectionName)
+      adoEnvironment: $(adoEnvironment)
 
-  - ${{ if eq(parameters.BuildTestDeployApplications, true) }}:
-      - template: pipelines/stages/build-frontend.yaml@MamsInfra
-        parameters:
-          serviceConnectionName: $(serviceConnectionName)
-          adoEnvironment: $(adoEnvironment)
-
-      - template: pipelines/stages/test-frontend.yaml@MamsInfra
-        parameters:
-          adoEnvironment: $(adoEnvironment)
+  - template: pipelines/stages/test-frontend.yaml@MamsInfra
+    parameters:
+      adoEnvironment: $(adoEnvironment)
 
   - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
