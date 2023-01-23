@@ -19,6 +19,17 @@ resources:
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/pipeline-fe
 
+parameters:
+  - name: Build
+    type: boolean
+    default: true
+  - name: Test
+    type: boolean
+    default: true
+  - name: Deploy
+    type: boolean
+    default: true
+
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - group: MAPipelineVariables-o
@@ -26,16 +37,18 @@ variables:
       - group: MAPipelineVariables-t
 
 stages:
-  - template: pipelines/stages/build-frontend.yaml@MamsInfra
-    parameters:
-      serviceConnectionName: $(serviceConnectionName)
-      adoEnvironment: $(adoEnvironment)
+  - ${{ if eq(parameters.Build, true) }}:
+      - template: pipelines/stages/build-frontend.yaml@MamsInfra
+        parameters:
+          serviceConnectionName: $(serviceConnectionName)
+          adoEnvironment: $(adoEnvironment)
 
-  - template: pipelines/stages/test-frontend.yaml@MamsInfra
-    parameters:
-      adoEnvironment: $(adoEnvironment)
+  - ${{ if eq(parameters.Test, true) }}:
+      - template: pipelines/stages/test-frontend.yaml@MamsInfra
+        parameters:
+          adoEnvironment: $(adoEnvironment)
 
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+  - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.Deploy, true)) }}:
       - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
