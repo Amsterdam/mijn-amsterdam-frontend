@@ -1,7 +1,7 @@
 import { differenceInDays, format } from 'date-fns';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { OTAP_ENV, IS_PRODUCTION } from '../../../universal/config/env';
+import { ENV, IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -307,7 +307,7 @@ export const datasetEndpoints: Record<
   meldingenBuurt: {
     listUrl: () =>
       `https://${
-        OTAP_ENV === 'production' ? '' : 'acc.'
+        ENV === 'production' ? '' : 'acc.'
       }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
