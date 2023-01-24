@@ -128,7 +128,7 @@ describe('requestData paginated requests', () => {
         'test'
       );
 
-      expect(result.content).toEqual({ results: content.slice(0, -1) });
+      expect(result.content).toEqual({ results: content.slice(0, -1) }); // assert that results from last page were not included
       expect(scope?.isDone()).toEqual(false); // Assert that not all defined endpoints were hit
       expect(scope?.activeMocks().length).toEqual(1); // Assert there is still one more active endpoint
     });
