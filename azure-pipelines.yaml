@@ -41,12 +41,9 @@ stages:
       - template: pipelines/stages/build-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
-          adoEnvironment: $(adoEnvironment)
 
   - ${{ if eq(parameters.Test, true) }}:
       - template: pipelines/stages/test-frontend.yaml@MamsInfra
-        parameters:
-          adoEnvironment: $(adoEnvironment)
 
   - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.Deploy, true)) }}:
       - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
