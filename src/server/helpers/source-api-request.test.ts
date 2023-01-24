@@ -4,9 +4,14 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { BFF_MS_API_BASE_URL } from '../config';
+import { ApiUrlEntries, BFF_MS_API_BASE_URL } from '../config';
 import { AuthProfileAndToken } from './app';
-import { axiosRequest, cache, requestData } from './source-api-request';
+import {
+  axiosRequest,
+  cache,
+  findApiByRequestUrl,
+  requestData,
+} from './source-api-request';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
@@ -150,5 +155,32 @@ describe('requestData.ts', () => {
     const error = new Error('Network Error');
 
     expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, null));
+  });
+
+  test('Find corresponding api', () => {
+    const entries: ApiUrlEntries = [
+      ['WMO', 'http://get/foo'],
+      [
+        'BRP',
+        { private: 'http://get/bar', commercial: 'https://get/bar/commercial' },
+      ],
+      [
+        'KREFIA',
+        {
+          private: 'http://get/world',
+          commercial: 'https://get/world/commercial',
+        },
+      ],
+    ];
+
+    expect(findApiByRequestUrl(entries, 'http://get/foo')).toBe('WMO');
+    expect(findApiByRequestUrl(entries, 'http://get/bar')).toBe('BRP');
+    expect(findApiByRequestUrl(entries, 'http://get/bar/commercial')).toBe(
+      'BRP'
+    );
+    expect(findApiByRequestUrl(entries, 'http://get/some/thing')).toBe(
+      'unknown'
+    );
+    expect(findApiByRequestUrl(entries, 'http://get')).toBe('unknown');
   });
 });

@@ -14,6 +14,8 @@ import {
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import {
+  apiUrlEntries,
+  ApiUrlEntries,
   ApiUrls,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
@@ -195,11 +197,7 @@ export async function requestData<T>(
     const shouldCaptureMessage =
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    const api = Object.entries(ApiUrls).find(([, url]) =>
-      requestConfig.url?.startsWith(url)
-    );
-
-    const apiName = api ? api[0] : 'unknown';
+    const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
     const errorMessage = error?.response?.data?.message || error.toString();
 
     const capturedId = shouldCaptureMessage
@@ -239,4 +237,20 @@ export async function requestData<T>(
 
     return responseData;
   }
+}
+
+export function findApiByRequestUrl(
+  apiUrlEntries: ApiUrlEntries,
+  requestUrl?: string
+) {
+  const api = apiUrlEntries.find(([_apiName, url]) => {
+    if (typeof url === 'object') {
+      return Object.entries(url as object).some(([_profileType, url]) =>
+        requestUrl?.startsWith(url)
+      );
+    }
+    return requestUrl?.startsWith(url);
+  });
+  const apiName = api ? api[0] : 'unknown';
+  return apiName;
 }
