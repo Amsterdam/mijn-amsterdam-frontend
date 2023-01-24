@@ -343,7 +343,7 @@ function transformMeldingenBuurtResponse(
 
       if (config.idKeyList) feature.properties[config.idKeyList] = index;
 
-      feature.properties.categorie = displayCat;
+      feature.properties.categorie = categorie;
       if (dataSetConfig && !(displayCat in dataSetConfig)) {
         feature.properties.categorie = 'overig';
       }
