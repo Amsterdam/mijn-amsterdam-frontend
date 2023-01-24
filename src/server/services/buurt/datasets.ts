@@ -322,6 +322,7 @@ export const datasetEndpoints: Record<
           ? responseData
           : responseData.concat(newResponse.content);
       },
+      maximumAmountOfPages: 5,
     },
   },
 };

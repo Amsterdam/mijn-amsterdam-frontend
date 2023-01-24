@@ -24,7 +24,6 @@ import {
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
-  MAXIMUM_AMOUNT_OF_PAGES,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { AuthProfileAndToken } from './app';
@@ -203,7 +202,8 @@ export async function requestData<T>(
     // if we have a next link
     if (
       requestConfig?.page &&
-      requestConfig?.page < MAXIMUM_AMOUNT_OF_PAGES &&
+      requestConfig?.maximumAmountOfPages &&
+      requestConfig?.page < requestConfig?.maximumAmountOfPages &&
       response.headers?.link?.includes('rel="next"') &&
       typeof requestConfig.combinePaginatedResults === 'function'
     ) {

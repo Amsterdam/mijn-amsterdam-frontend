@@ -59,6 +59,7 @@ describe('requestData paginated requests', () => {
         {
           url: 'https://localhost/paginated',
           combinePaginatedResults: combine,
+          maximumAmountOfPages: 2,
         },
         'test'
       );
@@ -75,6 +76,7 @@ describe('requestData paginated requests', () => {
         {
           url: 'https://localhost/paginated',
           combinePaginatedResults: combineMock,
+          maximumAmountOfPages: 2,
         },
         'test'
       );
@@ -115,12 +117,13 @@ describe('requestData paginated requests', () => {
       type Response = { results: string[] };
 
       expect(scope?.isDone()).toEqual(false);
-      // expect(scope?.activeMocks().length).toEqual(11);
+      expect(scope?.activeMocks().length).toEqual(11);
 
       const result = await requestData<Response>(
         {
           url: 'https://localhost/paginated/1',
           combinePaginatedResults: combine,
+          maximumAmountOfPages: 10,
         },
         'test'
       );
