@@ -56,13 +56,16 @@ export function range(a: number, b: number) {
   );
 }
 
-export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
+export const omit = <T extends object, U extends keyof T>(
+  obj: T,
+  keys: U[]
+): Omit<T, U> =>
   (Object.keys(obj) as U[]).reduce(
     (acc, curr) => (keys.includes(curr) ? acc : { ...acc, [curr]: obj[curr] }),
     {} as Omit<T, U>
   );
 
-export function pick<T>(source: T, keys: string[]) {
+export function pick<T extends object>(source: T, keys: string[]) {
   return Object.fromEntries(
     Object.entries(source).filter(([key]) => keys.includes(key))
   );

@@ -14,7 +14,7 @@ describe('Aktes service', () => {
   });
 
   it('Should fetch the data', async () => {
-    axMock.onGet(ApiUrls.AKTES).replyOnce(200, DUMMY_RESPONSE);
+    axMock.onGet(String(ApiUrls.AKTES)).replyOnce(200, DUMMY_RESPONSE);
 
     const rs = await fetchAKTES('x', {
       profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },
@@ -28,7 +28,7 @@ describe('Aktes service', () => {
   });
 
   it('Fetch fails', async () => {
-    axMock.onGet(ApiUrls.AKTES).replyOnce(500, []);
+    axMock.onGet(String(ApiUrls.AKTES)).replyOnce(500, []);
 
     const rs = await fetchAKTES('x', {
       profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },

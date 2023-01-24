@@ -15,11 +15,11 @@ describe('BAG service', () => {
   });
 
   axMock
-    .onGet(ApiUrls.BAG, { params: { q: 'straatje 25', features: 2 } })
+    .onGet(String(ApiUrls.BAG), { params: { q: 'straatje 25', features: 2 } })
     .reply(200, DUMMY_RESPONSE);
 
   // Error response
-  axMock.onGet(ApiUrls.BAG, { params: { q: 'undefined' } }).reply(500);
+  axMock.onGet(String(ApiUrls.BAG), { params: { q: 'undefined' } }).reply(500);
 
   it('should extraxt a lat/lon object', () => {
     const address = { straatnaam: 'Herengracht', huisnummer: '23' } as Adres;
