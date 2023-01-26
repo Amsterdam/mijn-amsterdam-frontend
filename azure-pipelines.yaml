@@ -41,16 +41,16 @@ stages:
       - template: pipelines/stages/build-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
-          dtapName: $(dtapName)
+          dtapName: ${{ variables.dtapName }}
 
   - ${{ if eq(parameters.Test, true) }}:
       - template: pipelines/stages/test-frontend.yaml@MamsInfra
         parameters:
-          dtapName: $(dtapName)
+          dtapName: ${{ variables.dtapName }}
 
   - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.Deploy, true)) }}:
       - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
         parameters:
           serviceConnectionName: $(serviceConnectionName)
           adoEnvironment: $(adoEnvironment)
-          dtapName: $(dtapName)
+          dtapName: ${{ variables.dtapName }}
