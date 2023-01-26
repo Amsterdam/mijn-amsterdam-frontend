@@ -50,6 +50,7 @@ COPY src /build-space/src
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
+# Env parameters will be passed to React Build via the .env.xxxx files
 ARG MA_OTAP_ENV=development
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
@@ -58,6 +59,9 @@ ENV MA_BFF_API_URL=$MA_BFF_API_URL
 
 ARG MA_BFF_AUTH_PATH=/auth
 ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
+
+ARG REACT_APP_ADO_BUILD_ID=0
+ENV REACT_APP_ADO_BUILD_ID=$REACT_APP_ADO_BUILD_ID
 
 COPY public /build-space/public
 

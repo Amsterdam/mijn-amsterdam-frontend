@@ -26,9 +26,10 @@ const release = `mijnamsterdam-frontend@${
   process.env.REACT_APP_VERSION ?? 'latest-unknown'
 }`;
 console.info(
-  'App version: %s, Commit sha: %s',
+  'App version: %s, Commit sha: %s, Build id:, %s',
   release,
-  process.env.REACT_APP_GIT_SHA ?? 'unknown'
+  process.env.REACT_APP_GIT_SHA ?? 'unknown',
+  process.env.REACT_APP_ADO_BUILD_ID ?? '0'
 );
 
 Sentry.init({
