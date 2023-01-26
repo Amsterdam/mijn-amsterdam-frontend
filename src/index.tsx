@@ -23,9 +23,13 @@ if (
 }
 
 const release = `mijnamsterdam-frontend@${
-  process.env.REACT_APP_VERSION || 'latest-unknown'
+  process.env.REACT_APP_VERSION ?? 'latest-unknown'
 }`;
-console.info('App version: ' + release);
+console.info(
+  'App version: %s, Commit sha: %s',
+  release,
+  process.env.REACT_APP_GIT_SHA ?? 'unknown'
+);
 
 Sentry.init({
   dsn: getOtapEnvItem('sentryDsn'),

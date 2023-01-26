@@ -8,7 +8,7 @@
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
-    "build": "react-scripts build",
+    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
     "serve-build": "concurrently \"npm:bff-api:serve-build\" \"node scripts/serveBuild\"",
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
     "release:bug": "sh scripts/release.sh --bug",

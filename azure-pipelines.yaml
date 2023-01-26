@@ -28,7 +28,7 @@ parameters:
     default: true
   - name: Deploy
     type: boolean
-    default: true
+    default: false
 
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
