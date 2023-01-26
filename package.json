@@ -14,7 +14,7 @@
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
-    "start": "cross-env MA_OTAP_ENV=development REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
+    "start": "cross-env MA_OTAP_ENV=development REACT_APP_GIT_SHA=`git rev-parse HEAD` react-scripts start",
     "test": "react-scripts test src/client",
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
     "bff-api:test": "react-scripts test src/server src/universal",
