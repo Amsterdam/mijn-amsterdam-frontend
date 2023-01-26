@@ -33,8 +33,12 @@ parameters:
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - group: MAPipelineVariables-o
+      - name: dtapName
+        value: o
   - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
       - group: MAPipelineVariables-t
+      - name: dtapName
+        value: t
 
 stages:
   - ${{ if eq(parameters.Build, true) }}:
