@@ -52,22 +52,20 @@ function isCommercialUser(config: any) {
   return false;
 }
 
-type MockDataConfig = Record<
-  string,
-  {
-    method?: 'post' | 'get';
-    status: (args?: any) => number;
-    responseData: any;
-    delay?: number;
-    networkError?: boolean;
-    headers?: Record<string, string>;
-    params?: Record<string, string>;
-    pathReg?: RegExp;
-  }
->;
+interface DataConfigObject {
+  method?: 'post' | 'get';
+  status: (args?: any) => number;
+  responseData: any;
+  delay?: number;
+  networkError?: boolean;
+  headers?: Record<string, string>;
+  params?: Record<string, string>;
+  pathReg?: RegExp;
+}
+type MockDataConfig = Record<string, DataConfigObject>;
 
 export const mockDataConfig: MockDataConfig = {
-  [ApiUrls.BELASTINGEN]: {
+  [String(ApiUrls.BELASTINGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -76,7 +74,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
-  [ApiUrls.BRP]: {
+  [String(ApiUrls.BRP)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
     responseData: async (config: any) => {
@@ -87,7 +85,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
 
-  [ApiUrls.AKTES]: {
+  [String(ApiUrls.AKTES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
     responseData: async (config: any) => {
@@ -97,7 +95,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(AKTES);
     },
   },
-  [ApiUrls.WMO]: {
+  [String(ApiUrls.WMO)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -106,7 +104,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WMO);
     },
   },
-  [ApiUrls.WPI_AANVRAGEN]: {
+  [String(ApiUrls.WPI_AANVRAGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 3400,
     responseData: async (config: any) => {
@@ -116,7 +114,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_AANVRAGEN);
     },
   },
-  [ApiUrls.WPI_E_AANVRAGEN]: {
+  [String(ApiUrls.WPI_E_AANVRAGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -125,7 +123,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_E_AANVRAGEN);
     },
   },
-  [ApiUrls.WPI_STADSPAS]: {
+  [String(ApiUrls.WPI_STADSPAS)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -134,7 +132,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_STADSPAS);
     },
   },
-  [ApiUrls.WPI_SPECIFICATIES]: {
+  [String(ApiUrls.WPI_SPECIFICATIES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -143,7 +141,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(WPI_SPECIFICATIES);
     },
   },
-  [ApiUrls.ERFPACHT]: {
+  [String(ApiUrls.ERFPACHT)]: {
     pathReg: new RegExp('/remote/erfpacht/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
@@ -156,7 +154,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(ERFPACHT);
     },
   },
-  [ApiUrls.SUBSIDIE]: {
+  [String(ApiUrls.SUBSIDIE)]: {
     pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
@@ -166,7 +164,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  [ApiUrls.AFVAL]: {
+  [String(ApiUrls.AFVAL)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -175,7 +173,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(AFVAL);
     },
   },
-  [ApiUrls.CLEOPATRA]: {
+  [String(ApiUrls.CLEOPATRA)]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
@@ -185,7 +183,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(MILIEUZONE);
     },
   },
-  [ApiUrls.VERGUNNINGEN]: {
+  [String(ApiUrls.VERGUNNINGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -207,7 +205,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
 
-  [ApiUrls.KVK]: {
+  [String(ApiUrls.KVK)]: {
     // delay: 12000,
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
@@ -217,7 +215,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(KVK1);
     },
   },
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn']: {
+  [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn')]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
@@ -229,7 +227,7 @@ export const mockDataConfig: MockDataConfig = {
       );
     },
   },
-  [ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/:number']: {
+  [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/:number')]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -241,7 +239,7 @@ export const mockDataConfig: MockDataConfig = {
       });
     },
   },
-  [ApiUrls.KREFIA]: {
+  [String(ApiUrls.KREFIA)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
@@ -250,7 +248,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(KREFIA);
     },
   },
-  [ApiUrls.KLACHTEN]: {
+  [String(ApiUrls.KLACHTEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     method: 'post',
     responseData: async (config: any) => {

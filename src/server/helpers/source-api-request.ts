@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/node';
-import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import axios, {
+  AxiosPromise,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -14,6 +18,8 @@ import {
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import {
+  apiUrlEntries,
+  ApiUrlEntries,
   ApiUrls,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
@@ -97,6 +103,20 @@ export function clearSessionCache(requestID: requestID) {
   }
 }
 
+function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
+  // parse link header and get value of rel="next" url
+  const links = headers.link.split(',');
+  const next = links.find(
+    (link) => link.includes('rel="next"') && link.includes(';')
+  );
+  if (next === undefined) {
+    throw new Error('Something went wrong while parsing the link header.');
+  }
+
+  const rawUrl = next.split(';')[0].trim();
+  return rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
+}
+
 function getRequestConfigCacheKey(
   requestID: string,
   requestConfig: DataRequestConfig
@@ -178,6 +198,29 @@ export async function requestData<T>(
 
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
+
+    // if we have a next link
+    if (
+      requestConfig?.page &&
+      requestConfig?.maximumAmountOfPages &&
+      requestConfig?.page < requestConfig?.maximumAmountOfPages &&
+      response.headers?.link?.includes('rel="next"') &&
+      typeof requestConfig.combinePaginatedResults === 'function'
+    ) {
+      const nextUrl = getNextUrlFromLinkHeader(response.headers);
+
+      const newRequest = {
+        ...requestConfig,
+        url: nextUrl,
+        page: requestConfig.page + 1,
+      };
+
+      response.data = await requestConfig.combinePaginatedResults<T>(
+        response.data,
+        await requestData(newRequest, requestID, authProfileAndToken)
+      );
+    }
+
     const responseData = apiSuccessResult<T>(response.data);
 
     // Clears the timeout after the above request promise is settled
@@ -195,11 +238,7 @@ export async function requestData<T>(
     const shouldCaptureMessage =
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    const api = Object.entries(ApiUrls).find(([, url]) =>
-      requestConfig.url?.startsWith(url)
-    );
-
-    const apiName = api ? api[0] : 'unknown';
+    const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
     const errorMessage = error?.response?.data?.message || error.toString();
 
     const capturedId = shouldCaptureMessage
@@ -239,4 +278,20 @@ export async function requestData<T>(
 
     return responseData;
   }
+}
+
+export function findApiByRequestUrl(
+  apiUrlEntries: ApiUrlEntries,
+  requestUrl?: string
+) {
+  const api = apiUrlEntries.find(([_apiName, url]) => {
+    if (typeof url === 'object') {
+      return Object.entries(url as object).some(([_profileType, url]) =>
+        requestUrl?.startsWith(url)
+      );
+    }
+    return requestUrl?.startsWith(url);
+  });
+  const apiName = api ? api[0] : 'unknown';
+  return apiName;
 }

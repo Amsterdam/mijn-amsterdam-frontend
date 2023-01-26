@@ -1,3 +1,8 @@
+import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+  ApiPostponeResponse,
+} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
@@ -53,6 +58,17 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   cacheKey?: string;
   hasBearerToken?: boolean;
+
+  combinePaginatedResults?: <T>(
+    responseData: any,
+    newRequest:
+      | ApiSuccessResponse<T>
+      | ApiErrorResponse<null>
+      | ApiPostponeResponse
+  ) => any;
+
+  page?: number;
+  maximumAmountOfPages?: number;
 }
 
 const ONE_SECOND_MS = 1000;
@@ -68,6 +84,8 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   hasBearerToken: true,
+  page: 1,
+  maximumAmountOfPages: 0,
 };
 
 export type SourceApiKey =
@@ -208,12 +226,21 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
 };
 
+type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
+type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
+
 export const ApiUrls = Object.entries(ApiConfig).reduce(
-  (acc, [apiName, { url }]) => {
+  (acc, [apiName, { url, urls }]) => {
+    if (urls) {
+      return Object.assign(acc, { [apiName]: urls });
+    }
     return Object.assign(acc, { [apiName]: url || '' });
   },
-  {} as Record<SourceApiKey, string>
+  {} as Record<SourceApiKey, ApiUrlObject>
 );
+
+export type ApiUrlEntries = ApiUrlEntry[];
+export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign({}, ApiConfig[name] || {}, config || {});
@@ -314,7 +341,7 @@ const oidcConfigBase: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
-  // @ts-expect-error
+  // @ts-ignore
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
