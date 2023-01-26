@@ -1,3 +1,8 @@
+import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+  ApiPostponeResponse,
+} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
@@ -68,6 +73,17 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   cacheKey?: string;
   hasBearerToken?: boolean;
+
+  combinePaginatedResults?: <T>(
+    responseData: any,
+    newRequest:
+      | ApiSuccessResponse<T>
+      | ApiErrorResponse<null>
+      | ApiPostponeResponse
+  ) => any;
+
+  page?: number;
+  maximumAmountOfPages?: number;
 }
 
 const ONE_SECOND_MS = 1000;
@@ -83,6 +99,8 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   hasBearerToken: true,
+  page: 1,
+  maximumAmountOfPages: 0,
 };
 
 export type SourceApiKey =

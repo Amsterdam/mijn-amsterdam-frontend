@@ -81,7 +81,7 @@ export interface DatasetConfig {
     datasetId: DatasetId,
     config: DatasetConfig,
     data: any
-  ) => any;
+  ) => DatasetFeatures;
   transformDetail?: (
     datasetId: DatasetId,
     config: DatasetConfig,
@@ -308,7 +308,7 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         ENV === 'production' ? '' : 'acc.'
-      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268`,
+      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
@@ -316,6 +316,14 @@ export const datasetEndpoints: Record<
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'ma_melding_id',
+    requestConfig: {
+      combinePaginatedResults: (responseData, newResponse) => {
+        return newResponse.content === null
+          ? responseData
+          : responseData.concat(newResponse.content);
+      },
+      maximumAmountOfPages: 5,
+    },
   },
 };
 
@@ -421,7 +429,7 @@ function transformMeldingDetailResponse(
     features: any[];
   }
 ) {
-  const item = responseData?.features[parseInt(id)];
+  const item = responseData?.features[parseInt(id, 10)];
 
   if (!item) {
     throw new Error(
