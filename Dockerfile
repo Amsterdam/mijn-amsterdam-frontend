@@ -36,7 +36,7 @@ COPY tsconfig.bff.json /build-space/
 COPY .env.production /build-space/
 
 # BFF env files
-#COPY .env.bff.development /build-space/
+COPY .env.bff.development /build-space/
 COPY .env.bff.test /build-space/
 #COPY .env.bff.acceptance /build-space/
 
