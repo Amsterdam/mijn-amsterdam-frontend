@@ -142,8 +142,8 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-o
 
-ENV MA_OTAP_ENV=test
-COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
+ENV MA_OTAP_ENV=development
+COPY --from=build-app-bff /build-space/.env.bff.development /app/.env.bff.development
 CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-t
