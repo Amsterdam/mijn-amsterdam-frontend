@@ -16,7 +16,7 @@
     "release": "sh scripts/release.sh --minor",
     "start": "cross-env MA_OTAP_ENV=development REACT_APP_GIT_SHA=`git rev-parse HEAD` react-scripts start",
     "test": "react-scripts test src/client",
-    "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
+    "bff-api:watch": "FE_PUBLIC_URL=http://localhost:3000 BFF_PUBLIC_URL=http://localhost:5000 BFF_PORT=5000 nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
     "bff-api:test": "react-scripts test src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",

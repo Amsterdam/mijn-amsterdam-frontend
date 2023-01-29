@@ -1,6 +1,11 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle } from '../../../universal/config';
+import {
+  FeatureToggle,
+  IS_AP,
+  OTAP_ENV,
+  testAccounts,
+} from '../../../universal/config';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
@@ -17,14 +22,36 @@ import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 
+let loginUrlDigid = LOGIN_URL_DIGID;
+
+if (!IS_AP) {
+  loginUrlDigid += '/dev';
+}
+
+function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
+  return (
+    <div className={styles.TestAccountSelect}>
+      <label>
+        <span>Login met account</span>
+        <select
+          onChange={(event) =>
+            onSelect(LOGIN_URL_DIGID + '/' + event.target.value)
+          }
+        >
+          {Object.keys(testAccounts).map((userName) => (
+            <option>{userName}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
 export default function Landing() {
   const loginButton = useRef(null);
 
   useEffect(() => {
-    trackPageView(
-      'Landing',
-      document.location.pathname + 'landing'
-    );
+    trackPageView('Landing', document.location.pathname + 'landing');
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
@@ -33,6 +60,8 @@ export default function Landing() {
 
   const isRedirectingAny =
     isRedirecting || isRedirectingEherkenning || isRedirectingIrma;
+
+  const [loginUrl, setLoginUrl] = useState(loginUrlDigid);
 
   return (
     <TextPage>
@@ -55,10 +84,13 @@ export default function Landing() {
             </Heading>
           )}
           <p>
+            {OTAP_ENV === 'test' && (
+              <TestAccountSelect onSelect={(url) => setLoginUrl(url)} />
+            )}
             <a
               ref={loginButton}
               role="button"
-              href={LOGIN_URL_DIGID}
+              href={loginUrl}
               onClick={() => setRedirecting(true)}
               rel="noopener noreferrer"
               className={classnames(

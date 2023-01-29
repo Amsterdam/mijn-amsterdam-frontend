@@ -15,11 +15,12 @@ import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import { countLoggedInVisit } from './services/visitors';
+import { DEV_USER_ID, testAccounts } from '../universal/config';
 
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/api/v1/dev/auth/:authMethod/login',
+  '/api/v1/dev/auth/:authMethod/login/:user',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -29,7 +30,7 @@ authRouterDevelopment.get(
       sameSite: false,
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userId = `xxx-${authMethod}-xxx`;
+    const userId = testAccounts[req.params.user] ?? DEV_USER_ID;
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId
