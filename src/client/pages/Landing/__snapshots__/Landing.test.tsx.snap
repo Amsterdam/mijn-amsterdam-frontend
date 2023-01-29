@@ -36,7 +36,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           <a
             class="LoginBtn"
-            href="/api/v1/auth/digid/login"
+            href="/api/v1/auth/digid/login/dev"
             rel="noopener noreferrer"
             role="button"
           >
