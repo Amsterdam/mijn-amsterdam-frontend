@@ -153,4 +153,5 @@ FROM deploy-bff as deploy-bff-t
 
 ENV MA_OTAP_ENV=test
 COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
+COPY files /app/files
 CMD /usr/local/bin/docker-entrypoint-bff.sh
