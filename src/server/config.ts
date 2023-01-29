@@ -9,15 +9,15 @@ import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
-import { IS_AP } from '../universal/config/env';
+import { IS_TAP } from '../universal/config/env';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
-const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
+const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SERVER_PRIVATE_G1_CERT;
 
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
     if (name) {
-      console.log(`${name}: Certificate path empty ${path}`);
+      console.log(`${name}: Certificate path empty`);
     }
     return '';
   }
@@ -134,7 +134,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
+      ca: IS_TAP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
@@ -143,8 +143,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
-      cert: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
-      key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
+      cert: IS_TAP
+        ? getCertificateSync(process.env.BFF_CLEOPATRA_PUBLIC_CERT)
+        : [],
+      key: IS_TAP ? getCertificateSync(process.env.BFF_CLEOPATRA_KEY) : [],
     }),
   },
   VERGUNNINGEN: {
@@ -197,7 +199,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
+      ca: IS_TAP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
     }),
   },
   KREFIA: {
@@ -207,7 +209,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+      ca: IS_TAP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
@@ -221,7 +223,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+      ca: IS_TAP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
   },
 };

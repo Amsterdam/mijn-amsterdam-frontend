@@ -24,9 +24,12 @@ export const OTAP_ENV = `${
 process.env.NODE_ENV !== 'test' &&
   console.info(`App running in ${OTAP_ENV} mode.`);
 
+export const IS_DEVELOPMENT = OTAP_ENV === 'development';
+export const IS_TEST = OTAP_ENV === 'test';
 export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
 export const IS_PRODUCTION = OTAP_ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
+export const IS_TAP = IS_TEST || IS_ACCEPTANCE || IS_PRODUCTION;
 
 const otapServerEnv: OtapEnv = {
   development: {
