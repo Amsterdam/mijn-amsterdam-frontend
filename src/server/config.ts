@@ -45,6 +45,17 @@ export const BFF_PUBLIC_URL = `${
 
 export const BFF_MS_API_BASE_URL = `${process.env.BFF_MS_API_BASE_URL}`;
 
+export const WPI_API_BASE_URL =
+  process.env.BFF_WPI_API_BASE_URL ?? BFF_MS_API_BASE_URL;
+export const VERGUNNINGEN_API_BASE_URL =
+  process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? BFF_MS_API_BASE_URL;
+export const KREFIA_API_BASE_URL =
+  process.env.BFF_KREFIA_API_BASE_URL ?? BFF_MS_API_BASE_URL;
+export const MKS_API_BASE_URL =
+  process.env.BFF_MKS_API_BASE_URL ?? BFF_MS_API_BASE_URL;
+export const WMO_API_BASE_URL =
+  process.env.BFF_WMO_API_BASE_URL ?? BFF_MS_API_BASE_URL;
+
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
   cancelTimeout?: number;
@@ -117,19 +128,19 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
-    url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
+    url: `${WMO_API_BASE_URL}/wmoned/voorzieningen`,
   },
   WPI_E_AANVRAGEN: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/e-aanvragen`,
+    url: `${WPI_API_BASE_URL}/wpi/e-aanvragen`,
   },
   WPI_AANVRAGEN: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    url: `${WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
   },
   WPI_SPECIFICATIES: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
   },
   WPI_STADSPAS: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
+    url: `${WPI_API_BASE_URL}/wpi/stadspas`,
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
@@ -150,7 +161,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   VERGUNNINGEN: {
-    url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
+    url: `${VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
   },
   CMS_CONTENT_GENERAL_INFO: {
@@ -176,7 +187,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
-  BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp` },
+  BRP: { url: `${MKS_API_BASE_URL}/brp/brp` },
   AKTES: {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
@@ -189,7 +200,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `https://api.data.amsterdam.nl/afvalophaalgebieden/search/`,
   },
   KVK: {
-    url: `${BFF_MS_API_BASE_URL}/brp/hr`,
+    url: `${MKS_API_BASE_URL}/brp/hr`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: process.env.BFF_LVV_API_URL,
@@ -203,7 +214,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   KREFIA: {
-    url: `${BFF_MS_API_BASE_URL}/krefia/all`,
+    url: `${KREFIA_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
   },
   SUBSIDIE: {
