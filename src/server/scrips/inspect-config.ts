@@ -1,3 +1,3 @@
-import { ApiConfig } from '../config';
+import { ApiConfig, envDebug } from '../config';
 
-console.log(ApiConfig);
+console.log(envDebug, ApiConfig);

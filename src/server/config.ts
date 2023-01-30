@@ -228,6 +228,12 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
 };
 
+export const envDebug = Object.fromEntries(
+  Object.entries(process.env).map(([key, value]) => {
+    return [key, value];
+  })
+);
+
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
 
