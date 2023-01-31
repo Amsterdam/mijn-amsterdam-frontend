@@ -33,6 +33,7 @@ export function isChapterActive(
     KVK,
     KREFIA,
     KLACHTEN,
+    BEZWAREN,
   }: AppState
 ) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -140,6 +141,14 @@ export function isChapterActive(
         !isLoading(KLACHTEN) &&
         !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
+      );
+
+    case Chapters.BEZWAREN:
+      console.log('BEZWAREN', BEZWAREN);
+      return (
+        !isLoading(BEZWAREN) &&
+        !!BEZWAREN?.content?.length &&
+        FeatureToggle.bezwarenActive
       );
   }
 

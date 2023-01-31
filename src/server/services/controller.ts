@@ -11,20 +11,21 @@ import {
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchAKTES } from './aktes';
+import { fetchBezwaren } from './bezwaren';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchTipsAndNotifications } from './tips-and-notifications';
 import { fetchMyLocation } from './home';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import {
   fetchBelasting,
-  fetchSubsidie,
-  fetchMilieuzone,
   fetchErfpacht,
+  fetchMilieuzone,
+  fetchSubsidie,
 } from './simple-connect';
+import { fetchTipsAndNotifications } from './tips-and-notifications';
 import { createTipsFromServiceResults } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -104,6 +105,7 @@ const MILIEUZONE = callService(fetchMilieuzone);
 const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
+const BEZWAREN = callService(fetchBezwaren);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
@@ -140,6 +142,7 @@ const SERVICES_INDEX = {
   ERFPACHT,
   SUBSIDIE,
   KLACHTEN,
+  BEZWAREN,
   NOTIFICATIONS,
 };
 
@@ -198,6 +201,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     WMO,
     KLACHTEN,
+    BEZWAREN,
   },
   'private-commercial': {
     AFVAL,
@@ -223,6 +227,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     WMO,
     KLACHTEN,
+    BEZWAREN,
   },
   commercial: {
     AFVAL,

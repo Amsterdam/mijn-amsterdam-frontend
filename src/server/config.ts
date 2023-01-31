@@ -110,6 +110,8 @@ export type SourceApiKey =
   | 'WPI_SPECIFICATIES'
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
+  | 'BEZWAREN_LIST'
+  | 'BEZWAREN_DOCUMENTS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
@@ -145,6 +147,21 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   WPI_STADSPAS: {
     url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
+  },
+  BEZWAREN_LIST: {
+    url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
+    method: 'POST',
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+  },
+  BEZWAREN_DOCUMENTS: {
+    url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,

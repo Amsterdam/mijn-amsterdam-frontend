@@ -36,6 +36,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial'],
   },
   {
+    title: ChapterTitles.BEZWAREN,
+    id: Chapters.BEZWAREN,
+    to: AppRoutes.BEZWAREN,
+    profileTypes: ['private', 'private-commercial'],
+  },
+  {
     title: ChapterTitles.BELASTINGEN,
     id: Chapters.BELASTINGEN,
     to: ExternalUrls.EH_SSO_BELASTINGEN,
