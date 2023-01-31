@@ -58,12 +58,6 @@ authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
 
 export const relayDevRouter = express.Router();
 
-relayDevRouter.get('/wpi-test', async (req, res, next) => {
-  axios('wpi-api').then((resp) => {
-    return res.send(resp);
-  });
-});
-
 relayDevRouter.get(RelayPathsAllowed.TIP_IMAGES, (req, res, next) => {
   return res.sendFile(
     path.join(
