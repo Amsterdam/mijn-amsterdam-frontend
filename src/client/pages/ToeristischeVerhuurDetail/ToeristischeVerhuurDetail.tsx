@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
-import { CaseType } from '../../../universal/types/vergunningen';
 import {
   Alert,
   ChapterIcon,
