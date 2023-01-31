@@ -191,7 +191,6 @@ export const mockDataConfig: MockDataConfig = {
           (vergunning) => {
             // NOTE: Never a commercial permit.
             return ![
-              'Vakantieverhuur',
               'Vakantieverhuur vergunningsaanvraag',
               'Parkeerontheffingen Blauwe zone particulieren',
             ].includes(vergunning.caseType);

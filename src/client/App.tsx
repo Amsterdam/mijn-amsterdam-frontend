@@ -229,7 +229,6 @@ function AppAuthenticated() {
               path={[
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
               ]}
               component={ToeristischeVerhuurDetail}

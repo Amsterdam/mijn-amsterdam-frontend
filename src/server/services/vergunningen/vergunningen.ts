@@ -29,11 +29,7 @@ import {
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
-> = [
-  CaseType.VakantieVerhuur,
-  CaseType.VakantieverhuurVergunningaanvraag,
-  CaseType.BBVergunning,
-];
+> = [CaseType.VakantieverhuurVergunningaanvraag, CaseType.BBVergunning];
 
 export interface VergunningBase {
   caseType: CaseType;
@@ -105,14 +101,6 @@ export interface ERVV extends VergunningWithLocation {
   dateEnd: string | null;
   timeStart: string | null;
   timeEnd: string | null;
-}
-
-export interface Vakantieverhuur extends VergunningWithLocation {
-  caseType: CaseType.VakantieVerhuur;
-  title: 'Geplande verhuur' | 'Geannuleerde verhuur' | 'Afgelopen verhuur';
-  decision: 'Verleend';
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
 export interface VakantieverhuurVergunningaanvraag
@@ -223,7 +211,6 @@ export type Vergunning =
   | ERVV
   | BZB
   | BZP
-  | Vakantieverhuur
   | BBVergunning
   | VakantieverhuurVergunningaanvraag
   | Flyeren
