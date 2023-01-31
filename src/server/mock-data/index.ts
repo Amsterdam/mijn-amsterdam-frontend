@@ -86,26 +86,26 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BRP);
     },
   },
-  // [String(ApiUrls.BEZWAREN_LIST)]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-  //   // delay: 2500,
-  //   responseData: async (config: any) => {
-  //     if (isCommercialUser(config)) {
-  //       return 'no-content';
-  //     }
-  //     return await loadMockApiResponseJson(BEZWAREN);
-  //   },
-  // },
-  // [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-  //   // delay: 2500,
-  //   responseData: async (config: any) => {
-  //     if (isCommercialUser(config)) {
-  //       return 'no-content';
-  //     }
-  //     return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
-  //   },
-  // },
+  [String(ApiUrls.BEZWAREN_LIST)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN);
+    },
+  },
+  [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
+    },
+  },
   [String(ApiUrls.AKTES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
