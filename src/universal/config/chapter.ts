@@ -114,9 +114,6 @@ export const DocumentTitles = {
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
-    'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'
-  ]]: `Vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
   ]]: `Vergunning | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes[

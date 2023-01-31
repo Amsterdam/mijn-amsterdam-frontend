@@ -33,8 +33,6 @@ export const AppRoutes: Record<string, string> = {
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
-  'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR':
-    '/toeristische-verhuur/vakantieverhuur/:title/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
   'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
     '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
@@ -135,9 +133,6 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
 
-  [AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR']]: (match) => {
-    return `/toeristische-verhuur/vakantieverhuur/${match.params?.title}`;
-  },
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
     '/toeristische-verhuur/vergunning',
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
