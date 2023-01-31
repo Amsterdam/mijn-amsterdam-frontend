@@ -16,6 +16,7 @@ import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documente
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import { countLoggedInVisit } from './services/visitors';
 import { DEV_USER_ID, testAccounts } from '../universal/config';
+import axios from 'axios';
 
 export const authRouterDevelopment = express.Router();
 
@@ -58,13 +59,9 @@ authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
 export const relayDevRouter = express.Router();
 
 relayDevRouter.get('/wpi-test', async (req, res, next) => {
-  fetch('wpi-api')
-    .then((res) => {
-      return res.json();
-    })
-    .then((resp) => {
-      return res.send(resp);
-    });
+  axios('wpi-api').then((resp) => {
+    return res.send(resp);
+  });
 });
 
 relayDevRouter.get(RelayPathsAllowed.TIP_IMAGES, (req, res, next) => {
