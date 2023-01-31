@@ -39,53 +39,6 @@ function state(state: any) {
   return initializeState;
 }
 
-describe('<ToeristischVerhuurDetail />', () => {
-  jest.useFakeTimers('modern').setSystemTime(new Date('2021-06-10').getTime());
-
-  (window as any).scrollTo = jest.fn();
-
-  const verhuur = vergunningen?.find(
-    (vergunning) =>
-      vergunning.title === 'Geplande verhuur' &&
-      vergunning.dateStart === '2029-07-10'
-  );
-
-  const routeEntry = generatePath(
-    AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
-    {
-      title: slug(verhuur?.title, {
-        lower: true,
-      }),
-      id: verhuur?.id,
-    }
-  );
-
-  const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
-
-  let Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ToeristischVerhuurDetail}
-      initializeState={state(testState)}
-    />
-  );
-
-  it('Matches the Full Page snapshot', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('Show correct properties for detail page', () => {
-    render(<Component />);
-    expect(screen.getAllByText('10 mei 2021').length).toBe(3);
-    expect(screen.getByText('10 juli 2029')).toBeInTheDocument();
-    expect(screen.getByText('14 juli 2029')).toBeInTheDocument();
-    expect(screen.getByText('Ontvangen')).toBeInTheDocument();
-    expect(screen.getByText('Gemeld')).toBeInTheDocument();
-  });
-});
-
 describe('<ToeristischVerhuurDetail />, vergunning', () => {
   (window as any).scrollTo = jest.fn();
   const vergunning = vergunningen?.find(

@@ -172,24 +172,6 @@ describe('Toeristische verhuur service', () => {
   it('Should create notifcations from vergunningen', async () => {
     const dummyData: any = [
       {
-        id: 'i-1',
-        caseType: 'Vakantieverhuur',
-        dateRequest: '2021-06-01',
-        dateStart: '2029-07-10',
-        dateEnd: '2029-07-14',
-        title: 'Geplande verhuur',
-        status: 'Afgehandeld',
-      },
-      {
-        id: 'i-2',
-        caseType: 'Vakantieverhuur afmelding',
-        dateRequest: '2021-06-01',
-        dateStart: '2021-06-05',
-        dateEnd: '2021-06-10',
-        title: 'Geannuleerde verhuur',
-        status: 'Ontvangen',
-      },
-      {
         id: 'i-3',
         identifier: 'Z/1/2/3',
         caseType: 'Vakantieverhuur vergunningsaanvraag',
@@ -214,22 +196,22 @@ describe('Toeristische verhuur service', () => {
     ];
 
     const notification3 = createToeristischeVerhuurNotification(
-      dummyData[2],
+      dummyData[0],
       dummyData
     );
 
     expect(notification3.title).toBe(
-      `Aanvraag ${dummyData[2].title.toLowerCase()} verleend`
+      `Aanvraag ${dummyData[0].title.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${dummyData[2].title.toLowerCase()} met gemeentelijk zaaknummer ${
-        dummyData[2].identifier
+      `Wij hebben uw aanvraag voor een ${dummyData[0].title.toLowerCase()} met gemeentelijk zaaknummer ${
+        dummyData[0].identifier
       } verleend.`
     );
     expect(notification3.link?.title).toBe('Bekijk uw aanvraag');
 
     const notification4 = createToeristischeVerhuurNotification(
-      { ...dummyData[2], dateEnd: '2021-05-30' },
+      { ...dummyData[0], dateEnd: '2021-05-30' },
       dummyData
     );
 
@@ -238,14 +220,14 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification5 = createToeristischeVerhuurNotification(
-      { ...dummyData[2], dateEnd: '2021-08-30' },
+      { ...dummyData[0], dateEnd: '2021-08-30' },
       dummyData
     );
 
     expect(notification5.title).toBe('Uw vergunning vakantieverhuur loopt af');
 
     const notification6 = createToeristischeVerhuurNotification(
-      dummyData[3],
+      dummyData[1],
       dummyData
     );
 
@@ -253,12 +235,12 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag vergunning bed & breakfast verleend`
     );
     expect(notification6.description).toBe(
-      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${dummyData[3].identifier} verleend.`
+      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${dummyData[1].identifier} verleend.`
     );
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 
     const notification7 = createToeristischeVerhuurNotification(
-      { ...dummyData[3], dateEnd: '2021-05-30' },
+      { ...dummyData[1], dateEnd: '2021-05-30' },
       dummyData
     );
 
@@ -267,7 +249,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification8 = createToeristischeVerhuurNotification(
-      { ...dummyData[3], dateEnd: '2021-08-30' },
+      { ...dummyData[1], dateEnd: '2021-08-30' },
       dummyData
     );
 

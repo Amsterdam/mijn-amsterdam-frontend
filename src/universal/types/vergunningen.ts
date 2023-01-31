@@ -6,7 +6,6 @@ export enum CaseType {
   EvenementVergunning = 'Evenement vergunning',
   Omzettingsvergunning = 'Omzettingsvergunning',
   ERVV = 'E-RVV - TVM',
-  VakantieVerhuur = 'Vakantieverhuur',
   VakantieverhuurVergunningaanvraag = 'Vakantieverhuur vergunningsaanvraag',
   BBVergunning = 'B&B - vergunning',
   BZP = 'Parkeerontheffingen Blauwe zone particulieren',

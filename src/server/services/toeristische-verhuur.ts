@@ -34,7 +34,6 @@ import {
   BBVergunning,
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
-  Vakantieverhuur,
   VakantieverhuurVergunningaanvraag,
   Vergunning,
 } from './vergunningen/vergunningen';
@@ -143,12 +142,8 @@ interface ToeristischeVerhuurVergunningProps {
 
 // A union of the the source types that are retrieved from the Decos api
 export type VakantieverhuurVergunning =
-  | Vakantieverhuur
   | BBVergunning
   | VakantieverhuurVergunningaanvraag;
-
-export type ToeristischeVerhuur = ToeristischeVerhuurVergunningProps &
-  Vakantieverhuur;
 
 export type ToeristischeVerhuurVergunningaanvraag =
   VakantieverhuurVergunningaanvraag & ToeristischeVerhuurVergunningProps;
@@ -157,7 +152,6 @@ export type ToeristischeVerhuurBBVergunning = BBVergunning &
   ToeristischeVerhuurVergunningProps;
 
 export type ToeristischeVerhuurVergunning =
-  | ToeristischeVerhuur
   | ToeristischeVerhuurBBVergunning
   | ToeristischeVerhuurVergunningaanvraag;
 
@@ -197,28 +191,20 @@ export function transformVergunningenToVerhuur(
     };
   });
 
-  const geplandeVerhuur: ToeristischeVerhuur[] = [];
   const overige: ToeristischeVerhuurVergunning[] = [];
 
   for (const vergunning of vergunningenTransformed) {
-    if (vergunning.title === 'Geplande verhuur' && vergunning.isActual) {
-      geplandeVerhuur.push(vergunning);
-    } else {
-      // We consider expired B&B permits as not relevent for the user.
-      if (
-        vergunning.title === 'Vergunning bed & breakfast' &&
-        !vergunning.isActual
-      ) {
-        continue;
-      }
-      overige.push(vergunning);
+    // We consider expired B&B permits as not relevent for the user.
+    if (
+      vergunning.title === 'Vergunning bed & breakfast' &&
+      !vergunning.isActual
+    ) {
+      continue;
     }
+    overige.push(vergunning);
   }
 
-  return [
-    ...geplandeVerhuur.sort(dateSort('dateStart', 'asc')),
-    ...overige.sort(dateSort('dateStart', 'desc')),
-  ];
+  return [...overige.sort(dateSort('dateStart', 'desc'))];
 }
 
 async function fetchAndTransformToeristischeVerhuur(
@@ -247,18 +233,8 @@ async function fetchAndTransformToeristischeVerhuur(
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
           case CaseType.VakantieverhuurVergunningaanvraag:
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
-          case CaseType.VakantieVerhuur:
-            return generatePath(
-              AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
-              {
-                title: slug(vergunning.title, {
-                  lower: true,
-                }),
-                id: vergunning.id,
-              }
-            );
           default:
-            return AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'];
+            return AppRoutes['TOERISTISCHE_VERHUUR'];
         }
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunning =>
@@ -445,9 +421,7 @@ export async function fetchToeristischeVerhuurNotifications(
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const vergunningen = TOERISTISCHE_VERHUUR.content.vergunningen.filter(
-      (vergunning) => vergunning.title !== 'Afgelopen verhuur'
-    );
+    const vergunningen = TOERISTISCHE_VERHUUR.content.vergunningen;
     const vergunningNotifications = vergunningen.map((vergunning) =>
       createToeristischeVerhuurNotification(vergunning, vergunningen)
     );

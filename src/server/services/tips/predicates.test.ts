@@ -19,7 +19,6 @@ import {
   hasTozo,
   hasValidId,
   hasValidStadspasRequest,
-  hasVerhuurRegistrations,
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
@@ -470,14 +469,13 @@ describe('predicates', () => {
 
     describe('hasToeristicheVerhuurVergunningen', () => {
       it.each([
-        [true, CaseType.VakantieVerhuur, CaseType.VakantieVerhuur],
+        [true, CaseType.VakantieverhuurVergunningaanvraag],
+        [true, CaseType.VakantieverhuurVergunningaanvraag],
         [
           true,
-          CaseType.VakantieVerhuur,
+          CaseType.BBVergunning,
           CaseType.VakantieverhuurVergunningaanvraag,
         ],
-        [true, CaseType.VakantieverhuurVergunningaanvraag],
-        [true, CaseType.VakantieVerhuur, CaseType.BBVergunning],
         [false, CaseType.BBVergunning],
       ])(
         'should return %s for caseType %s and second caseType %s',
@@ -494,8 +492,7 @@ describe('predicates', () => {
     describe('hasBnBVergunning', () => {
       it.each([
         [true, CaseType.BBVergunning],
-        [true, CaseType.BBVergunning, CaseType.VakantieVerhuur],
-        [false, CaseType.VakantieVerhuur],
+        [true, CaseType.BBVergunning],
       ])(
         'should return %s for caseType %s',
         (expected, caseType, caseType2 = caseType) => {
@@ -504,21 +501,6 @@ describe('predicates', () => {
           );
         }
       );
-    });
-
-    describe('hasVerhuurRegistrations', () => {
-      it('should return expected result', () => {
-        const appState = getMockAppState(
-          CaseType.VakantieVerhuur,
-          CaseType.VakantieVerhuur
-        );
-
-        expect(hasVerhuurRegistrations(appState)).toBe(true);
-
-        appState.TOERISTISCHE_VERHUUR.content!.registraties = [];
-
-        expect(hasVerhuurRegistrations(appState)).toBe(false);
-      });
     });
   });
 
