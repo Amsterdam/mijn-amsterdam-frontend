@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, OTAP_ENV } from '../universal/config/env';
+import { getOtapEnvItem } from '../universal/config/env';
 import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -146,16 +146,6 @@ function AppAuthenticated() {
 
   return (
     <>
-      {['test', 'development', 'acceptance'].includes(OTAP_ENV) && (
-        <div
-          className={classnames(
-            styles['otap-env-bar'],
-            styles[`otap-env-bar--${OTAP_ENV}`]
-          )}
-        >
-          Site is running on <b>{OTAP_ENV}</b> environment
-        </div>
-      )}
       <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
