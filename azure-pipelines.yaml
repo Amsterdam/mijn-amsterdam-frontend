@@ -40,21 +40,9 @@ variables:
       - name: dtapName
         value: t
 
-stages:
-  - ${{ if eq(parameters.Build, true) }}:
-      - template: pipelines/stages/build-frontend.yaml@MamsInfra
-        parameters:
-          serviceConnectionName: $(serviceConnectionName)
-          dtapName: ${{ variables.dtapName }}
-
-  - ${{ if eq(parameters.Test, true) }}:
-      - template: pipelines/stages/test-frontend.yaml@MamsInfra
-        parameters:
-          dtapName: ${{ variables.dtapName }}
-
-  - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.Deploy, true)) }}:
-      - template: pipelines/stages/deploy-frontend.yaml@MamsInfra
-        parameters:
-          serviceConnectionName: $(serviceConnectionName)
-          adoEnvironment: $(adoEnvironment)
-          dtapName: ${{ variables.dtapName }}
+jobs:
+  - template: pipelines/jobs/apps./btd-frontend.yaml@MamsInfra
+    parameters:
+      serviceConnectionName: $(serviceConnectionName)
+      adoEnvironment: $(adoEnvironment)
+      dtapName: ${{ variables.dtapName }}
