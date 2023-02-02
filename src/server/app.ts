@@ -5,6 +5,7 @@ import { getOtapEnvItem, IS_AP, OTAP_ENV } from '../universal/config/env';
 
 if (process.env.NODE_ENV !== 'test') {
   const ENV_FILE = `.env.bff.${OTAP_ENV}`;
+  console.log(process.env);
   console.debug(`trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
   console.debug(envConfig);
