@@ -41,7 +41,7 @@ variables:
         value: t
 
 jobs:
-  - template: pipelines/jobs/apps./btd-frontend.yaml@MamsInfra
+  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       serviceConnectionName: $(serviceConnectionName)
       adoEnvironment: $(adoEnvironment)
