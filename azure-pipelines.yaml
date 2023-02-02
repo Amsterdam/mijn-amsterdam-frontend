@@ -44,5 +44,4 @@ jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       serviceConnectionName: $(serviceConnectionName)
-      adoEnvironment: $(adoEnvironment)
       dtapName: ${{ variables.dtapName }}
