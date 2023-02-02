@@ -7,6 +7,7 @@ if (process.env.NODE_ENV !== 'test') {
   const ENV_FILE = `.env.bff.${OTAP_ENV}`;
   console.debug(`trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
+  console.debug(envConfig);
   dotenvExpand.expand(envConfig);
 }
 
@@ -97,7 +98,7 @@ app.use(function (req, res, next) {
 app.get(
   BffEndpoints.STATUS_HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
-    return res.json({ status: 'OK' });
+    return res.json({ status: 'OK', otapEnv: OTAP_ENV });
   }
 );
 
