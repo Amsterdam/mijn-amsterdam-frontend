@@ -20,13 +20,19 @@ resources:
       ref: refs/heads/pipeline-fe
 
 parameters:
-  - name: Build
+  - name: btdBuild
     type: boolean
     default: true
-  - name: Test
+  - name: btdTest
     type: boolean
     default: true
-  - name: Deploy
+  - name: btdDeploy
+    type: boolean
+    default: true
+  - name: btdAppBFF
+    type: boolean
+    default: true
+  - name: btdAppUI
     type: boolean
     default: true
 
@@ -45,3 +51,8 @@ jobs:
     parameters:
       serviceConnectionName: $(serviceConnectionName)
       dtapName: ${{ variables.dtapName }}
+      btdBuild: ${{ parameters.btdBuild }}
+      btdTest: ${{ parameters.btdTest }}
+      btdDeploy: ${{ parameters.btdDeploy }}
+      btdAppBFF: ${{ parameters.btdAppBFF }}
+      btdAppUI: ${{ parameters.btdAppUI }}
