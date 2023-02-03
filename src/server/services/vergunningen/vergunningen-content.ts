@@ -125,7 +125,7 @@ const doneShort: NotificationLabels = {
 };
 
 const defaultNotificationLabels: Record<string, NotificatonContentLabels> = {
-  full: {
+  long: {
     requested,
     inProgress,
     done,
@@ -193,18 +193,18 @@ export const notificationContent: NotificationContent = {
     },
   },
   [CaseType.GPK]: {
-    ...defaultNotificationLabels.full,
+    ...defaultNotificationLabels.long,
     almostExpired,
     isExpired,
   },
-  [CaseType.GPP]: defaultNotificationLabels.full,
-  [CaseType.ERVV]: defaultNotificationLabels.full,
-  [CaseType.TVMRVVObject]: defaultNotificationLabels.full,
+  [CaseType.GPP]: defaultNotificationLabels.long,
+  [CaseType.ERVV]: defaultNotificationLabels.long,
+  [CaseType.TVMRVVObject]: defaultNotificationLabels.long,
   [CaseType.EvenementVergunning]: defaultNotificationLabels.short,
-  [CaseType.EvenementMelding]: defaultNotificationLabels.full,
+  [CaseType.EvenementMelding]: defaultNotificationLabels.long,
   [CaseType.Omzettingsvergunning]: defaultNotificationLabels.short,
-  [CaseType.AanbiedenDiensten]: defaultNotificationLabels.full,
-  [CaseType.Flyeren]: defaultNotificationLabels.full,
+  [CaseType.AanbiedenDiensten]: defaultNotificationLabels.long,
+  [CaseType.Flyeren]: defaultNotificationLabels.long,
   [CaseType.NachtwerkOntheffing]: defaultNotificationLabels.short,
   [CaseType.ZwaarVerkeer]: defaultNotificationLabels.short,
   [CaseType.VOB]: defaultNotificationLabels.short,
@@ -212,5 +212,5 @@ export const notificationContent: NotificationContent = {
   [CaseType.Samenvoegingsvergunning]: defaultNotificationLabels.short,
   [CaseType.Onttrekkingsvergunning]: defaultNotificationLabels.short,
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
-  [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.short,
+  [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
 };
