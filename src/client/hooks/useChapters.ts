@@ -144,7 +144,6 @@ export function isChapterActive(
       );
 
     case Chapters.BEZWAREN:
-      console.log('BEZWAREN', BEZWAREN);
       return (
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
