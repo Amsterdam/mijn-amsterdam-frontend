@@ -6,6 +6,8 @@ import { decodeToken } from '../helpers/app';
 import AFVAL from './json/afvalophaalgebieden.json';
 import AKTES from './json/aktes.json';
 import BELASTINGEN from './json/belasting.json';
+import BEZWAREN from './json/bezwaren.json';
+import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -84,7 +86,26 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(BRP);
     },
   },
-
+  [String(ApiUrls.BEZWAREN_LIST)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN);
+    },
+  },
+  [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
+    },
+  },
   [String(ApiUrls.AKTES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
