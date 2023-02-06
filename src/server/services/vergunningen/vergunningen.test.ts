@@ -211,14 +211,14 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2020-06-24T00:00:00",
-            "description": "Uw vergunningsaanvraag voor Tijdelijke verkeersmaatregel is in behandeling genomen.",
+            "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
             "id": "vergunning-3607535691-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
             "subject": "3607535691",
-            "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
+            "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
           },
         ]
       `);
@@ -239,14 +239,14 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2018-01-23",
-            "description": "Uw vergunningsaanvraag voor Tijdelijke verkeersmaatregel is in behandeling genomen.",
+            "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
             "id": "vergunning-2247558132-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/2247558132",
             },
             "subject": "2247558132",
-            "title": "Uw Tijdelijke verkeersmaatregel is in behandeling",
+            "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
           },
         ]
       `);
@@ -266,14 +266,14 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-04",
-            "description": "Uw vergunningsaanvraag voor een Tijdelijke verkeersmaatregel is afgehandeld.",
+            "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
             "id": "vergunning-3607535691-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
             "subject": "3607535691",
-            "title": "Uw Tijdelijke verkeersmaatregel is afgehandeld",
+            "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
           },
         ]
       `);
@@ -371,7 +371,7 @@ describe('Vergunningen service', () => {
               "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
             },
             "subject": "1221166450",
-            "title": "Uw GPK loopt af",
+            "title": "Uw europese gehandicaptenparkeerkaart (gpk) loopt af",
           },
         ]
       `);
@@ -447,14 +447,14 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-04",
-            "description": "Uw vergunningsaanvraag voor een Europese gehandicaptenparkeerkaart (GPK) is afgehandeld.",
+            "description": "Uw vergunningsaanvraag voor een europese gehandicaptenparkeerkaart (gpk) is afgehandeld.",
             "id": "vergunning-1056864091-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
             "subject": "1056864091",
-            "title": "GPK afgehandeld",
+            "title": "Aanvraag europese gehandicaptenparkeerkaart (gpk) afgehandeld",
           },
         ]
       `);
@@ -474,14 +474,14 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-23",
-            "description": "Uw vergunningsaanvraag voor Europese gehandicaptenparkeerkaart (GPK) is in behandeling genomen.",
+            "description": "Uw vergunningsaanvraag voor europese gehandicaptenparkeerkaart (gpk) is in behandeling genomen.",
             "id": "vergunning-1056864091-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
             "subject": "1056864091",
-            "title": "Uw GPK is in behandeling",
+            "title": "Aanvraag europese gehandicaptenparkeerkaart (gpk) in behandeling",
           },
         ]
       `);
@@ -506,8 +506,8 @@ describe('Vergunningen service', () => {
         Array [
           Object {
             "chapter": "VERGUNNINGEN",
-            "datePublished": "2022-09-27",
-            "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) (Röel) is in behandeling genomen.",
+            "datePublished": "2022-09-23",
+            "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
             "id": "vergunning-1037482200-notification",
             "link": Object {
               "title": "Bekijk details",
@@ -541,7 +541,7 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-20",
-            "description": "Uw vergunningsaanvraag Vergunning voor kamerverhuur (omzettingsvergunning) (Röel) is afgehandeld",
+            "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is afgehandeld.",
             "id": "vergunning-1037482200-notification",
             "link": Object {
               "title": "Bekijk details",
