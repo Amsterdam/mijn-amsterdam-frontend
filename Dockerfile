@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16 as build-deps
+FROM amsterdam/node as build-deps
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
