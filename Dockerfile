@@ -3,12 +3,21 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM amsterdam/node as build-deps
+FROM node:16 as build-deps
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
 
 WORKDIR /build-space
+
+# Copy certificate
+COPY certs/adp_rootca.crt /usr/local/share/ca-certificates/
+
+# Tell node to use openssl ca
+ENV NODE_OPTIONS=--use-openssl-ca
+
+# Update new cert
+RUN update-ca-certificates
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
