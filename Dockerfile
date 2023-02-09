@@ -11,13 +11,14 @@ ENV CI=true
 WORKDIR /build-space
 
 # Copy certificate
-COPY certs/adp_rootca.crt /usr/local/share/ca-certificates/
+COPY ca/* /usr/local/share/ca-certificates/extras/
 
 # Tell node to use openssl ca
 ENV NODE_OPTIONS=--use-openssl-ca
 
 # Update new cert
-RUN update-ca-certificates
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
