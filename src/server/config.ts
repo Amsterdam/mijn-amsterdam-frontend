@@ -155,6 +155,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
     url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
@@ -162,6 +163,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
