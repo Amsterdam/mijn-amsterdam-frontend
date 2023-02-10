@@ -373,6 +373,7 @@ const oidcConfigBase: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+  clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
     rolling: true,
