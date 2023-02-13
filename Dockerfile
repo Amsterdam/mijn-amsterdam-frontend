@@ -96,7 +96,7 @@ RUN npm run bff-api:build
 # Front-end Web server image (Acceptance, Production)
 ########################################################################################################################
 ########################################################################################################################
-FROM nginx:stable-alpine as deploy-frontend
+FROM nginx:latest as deploy-frontend
 
 WORKDIR /app
 
