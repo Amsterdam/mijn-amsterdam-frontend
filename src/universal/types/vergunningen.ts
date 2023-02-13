@@ -20,4 +20,5 @@ export enum CaseType {
   VormenVanWoonruimte = 'Woningvormingsvergunning',
   Splitsingsvergunning = 'Splitsingsvergunning',
   VOB = 'VOB',
+  ExploitatieHorecabedrijf = 'exploitatie Horecabedrijf',
 }
