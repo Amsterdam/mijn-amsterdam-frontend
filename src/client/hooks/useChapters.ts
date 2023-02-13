@@ -34,6 +34,7 @@ export function isChapterActive(
     KREFIA,
     KLACHTEN,
     BEZWAREN,
+    HORECA,
   }: AppState
 ) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -148,6 +149,13 @@ export function isChapterActive(
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
+      );
+
+    case Chapters.HORECA:
+      return (
+        !isLoading(HORECA) &&
+        // !!HORECA?.content?.vergunningen.length &&
+        FeatureToggle.horecaActive
       );
   }
 

@@ -27,6 +27,7 @@ import {
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
+import Horeca from './pages/Horeca/Horeca';
 
 import { default as LandingPage } from './pages/Landing/Landing';
 
@@ -246,6 +247,12 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
+          )}
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes.HORECA} component={Horeca} />
+          )}
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes['HORECA/DETAIL']} component={Horeca} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
