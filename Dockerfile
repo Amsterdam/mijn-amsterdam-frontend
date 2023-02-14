@@ -13,9 +13,6 @@ WORKDIR /build-space
 # Copy certificate
 COPY ca/* /usr/local/share/ca-certificates/extras/
 
-# Tell node to use openssl ca
-ENV NODE_OPTIONS=--use-openssl-ca
-
 # Update new cert
 RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
   && update-ca-certificates
