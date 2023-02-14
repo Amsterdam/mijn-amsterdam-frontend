@@ -239,6 +239,8 @@ export type Vergunning =
   | Ligplaatsvergunning
   | ExploitatieHorecabedrijf;
 
+export type HorecaVergunningen = ExploitatieHorecabedrijf;
+
 export type VergunningenSourceData = {
   content?: Vergunning[];
   status: 'OK' | 'ERROR';
@@ -292,7 +294,9 @@ export function fetchAllVergunningen(
 
 const vergunningOptionsDefault: VergunningOptions = {
   appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: (vergunning) =>
+  filter: (
+    vergunning: Vergunning
+  ): vergunning is VakantieverhuurVergunningaanvraag =>
     !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
 };
 

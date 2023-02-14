@@ -1,9 +1,10 @@
 import { AppRoutes, FeatureToggle } from '../../universal/config';
-import { apiSuccessResult, getSettledResult } from '../../universal/helpers';
+import { apiSuccessResult } from '../../universal/helpers';
 import { CaseType } from '../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../helpers/app';
 import {
   fetchVergunningen,
+  HorecaVergunningen,
   horecaVergunningTypes,
   Vergunning,
 } from './vergunningen/vergunningen';
@@ -37,6 +38,8 @@ export async function fetchHorecaVergunningen(
   );
 
   return apiSuccessResult({
-    vergunningen: [],
+    vergunningen: vergunningenResponse.content as HorecaVergunningen[],
   });
 }
+
+// TODO: notifications
