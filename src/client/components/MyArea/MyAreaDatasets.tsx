@@ -68,6 +68,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const currentZoom = map.getZoom();
     const currentCenter = map.getCenter();
     const currentBbox = toBoundLiteral(map.getBounds());
+
     const zoom = queryConfig?.s
       ? currentZoom
       : queryConfig?.zoom || currentZoom;
@@ -104,7 +105,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) &&
       isEqual(bbox, currentBbox)
     ) {
-      map.setView(center, zoom);
+      // map.setView(center, zoom);
     }
 
     if (!isEqual(activeFeature, loadingFeature)) {

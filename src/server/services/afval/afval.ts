@@ -4,7 +4,7 @@ import {
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
-import { fetchAfvalmomenten } from './afvalmomenten';
+import { fetchAfvalwijzer } from './afvalwijzer';
 import { fetchAfvalpunten } from './afvalpunten';
 
 export async function fetchAFVAL(
@@ -19,13 +19,15 @@ export async function fetchAFVAL(
   );
 
   if (MY_LOCATION.status === 'OK') {
-    const primaryLocation = MY_LOCATION.content?.[0]?.latlng;
+    const bagID = MY_LOCATION.content?.[0]?.bagNummeraanduidingId;
 
-    if (!primaryLocation) {
+    console.log('address.address.address', bagID);
+
+    if (!bagID) {
       return apiSuccessResult([]);
     }
 
-    return await fetchAfvalmomenten(requestID, primaryLocation);
+    return await fetchAfvalwijzer(requestID, bagID);
   }
 
   return apiDependencyError({ MY_LOCATION });

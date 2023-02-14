@@ -185,15 +185,15 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  [String(ApiUrls.AFVAL)]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      return await loadMockApiResponseJson(AFVAL);
-    },
-  },
+  // [String(ApiUrls.AFVAL)]: {
+  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+  //   responseData: async (config: any) => {
+  //     // if (isCommercialUser(config)) {
+  //     //   return 'no-content';
+  //     // }
+  //     return await loadMockApiResponseJson(AFVAL);
+  //   },
+  // },
   [String(ApiUrls.CLEOPATRA)]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),

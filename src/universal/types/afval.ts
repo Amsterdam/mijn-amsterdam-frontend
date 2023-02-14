@@ -1,4 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
+import { LinkProps } from './App.types';
 
 export enum Stadsdeel {
   centrum = 'Centrum',
@@ -10,14 +11,25 @@ export enum Stadsdeel {
   zuidoost = 'Zuidoost',
 }
 
-export interface GarbageRetrievalMoment {
-  title: string;
-  aanbiedwijze: string;
-  stadsdeel: Stadsdeel;
-  type: 'grofvuil' | 'huisvuil';
-  buitenZetten: string;
-  ophaaldag: string;
-  opmerking: string;
+export type GarbageFractionCode =
+  | 'Textiel'
+  | 'Rest'
+  | 'Glas'
+  | 'GA'
+  | 'Plastic'
+  | 'Papier'
+  | 'GFT';
+
+export interface GarbageFractionInformationFormatted {
+  titel: string;
+  instructie: string | null;
+  instructieCTA: LinkProps | null;
+  waar: string | LinkProps | null;
+  ophaaldagen: string | null;
+  buitenzetten: string | null;
+  opmerking: string | null;
+  kalendermelding: string | null;
+  fractieCode: GarbageFractionCode;
 }
 
 export interface GarbageCenter {
@@ -31,5 +43,4 @@ export interface GarbageCenter {
   website: string;
 }
 
-export type AFVALData = GarbageRetrievalMoment[];
 export type AFVALPUNTENData = GarbageCenter[];

@@ -102,7 +102,7 @@ export default function MyArea({
 
   useSetMapCenterAtLocation(
     mapInstance,
-    zoom,
+    mapZoom,
     customLocationMarker,
     homeLocationMarker
   );
