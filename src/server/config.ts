@@ -133,9 +133,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
-    }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   CLEOPATRA: {
