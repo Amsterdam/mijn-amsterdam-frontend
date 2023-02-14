@@ -64,7 +64,7 @@ export default function Horeca() {
         hasItems={!!vergunningen?.length}
         isLoading={isLoading(HORECA)}
         track={{
-          category: 'Vergunningen overzicht',
+          category: 'Horecavergunningen overzicht',
           name: 'Datatabel',
         }}
         className=""
