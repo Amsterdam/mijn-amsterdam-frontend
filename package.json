@@ -111,7 +111,7 @@
     "memoizee": "^0.4.15",
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
-    "node-jose": "^2.1.1",
+    "node-jose": "^2.2.0",
     "node-sass": "^7.0.3",
     "pg": "^8.8.0",
     "prettier": "^2.5.1",
