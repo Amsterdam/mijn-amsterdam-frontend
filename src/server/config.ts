@@ -11,9 +11,6 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_TAP } from '../universal/config/env';
 
-const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
-const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SERVER_PRIVATE_G1_CERT;
-
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
     if (name) {
@@ -195,9 +192,6 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
-    }),
   },
   KREFIA: {
     url: `${process.env.BFF_KREFIA_API_BASE_URL}/krefia/all`,
@@ -205,9 +199,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {
@@ -219,9 +210,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   KLACHTEN: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
   },
 };
 

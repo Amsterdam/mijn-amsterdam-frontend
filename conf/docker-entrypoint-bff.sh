@@ -8,3 +8,4 @@ service ssh start
 export NODE_OPTIONS=--use-openssl-ca
 
 npm run bff-api:serve-build
+
