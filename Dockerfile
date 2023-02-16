@@ -138,6 +138,7 @@ FROM build-app-bff as deploy-bff
 WORKDIR /app
 
 ENV TZ=Europe/Amsterdam
+ENV NODE_OPTIONS=--use-openssl-ca
 
 LABEL name="Mijn.Amsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
