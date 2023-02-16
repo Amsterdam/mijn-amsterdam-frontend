@@ -7,23 +7,24 @@ import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult } from '../../universal/helpers';
 import {
-  DEV_JWK_PRIVATE,
-  DEV_JWK_PUBLIC,
   oidcConfigDigid,
   oidcConfigEherkenning,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
   OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-  OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
 } from '../config';
+import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
+
+export function decodeToken(idToken: string) {
+  return jose.JWT.decode(idToken);
+}
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
@@ -225,66 +226,6 @@ export function isProtectedRoute(pathRequested: string) {
       strict: false,
     });
   });
-}
-
-/**
- *
- * Helpers for development
- */
-
-function encryptDevSessionCookieValue(payload: string, headers: object) {
-  const alg = 'dir';
-  const enc = 'A256GCM';
-  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
-
-  return JWE.encrypt(payload, key, { alg, enc, ...headers });
-}
-
-function getPrivateKeyForDevelopment() {
-  const key = JWK.asKey(DEV_JWK_PRIVATE);
-  return key;
-}
-
-function getPublicKeyForDevelopment() {
-  return JWK.asKey(DEV_JWK_PUBLIC);
-}
-
-function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
-  const idToken = jose.JWT.sign(
-    {
-      [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
-      aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
-    },
-    getPrivateKeyForDevelopment(),
-    {
-      algorithm: 'RS256',
-    }
-  );
-  return idToken;
-}
-
-export function decodeToken(idToken: string) {
-  return jose.JWT.decode(idToken);
-}
-
-export function generateDevSessionCookieValue(
-  authMethod: AuthProfile['authMethod'],
-  userID: string
-) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
-
-  const value = encryptDevSessionCookieValue(
-    JSON.stringify({ id_token: signToken(authMethod, userID) }),
-    {
-      iat,
-      uat,
-      exp,
-    }
-  );
-
-  return value;
 }
 
 export function nocache(req: Request, res: Response, next: NextFunction) {
