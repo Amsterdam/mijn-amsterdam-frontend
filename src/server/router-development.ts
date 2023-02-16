@@ -5,18 +5,19 @@ import express, {
   Response,
 } from 'express';
 import path from 'path';
+import { DEV_USER_ID, testAccounts } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
 } from './config';
-import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import { AuthProfile, getAuth } from './helpers/app';
+import { generateDevSessionCookieValue } from './helpers/app.development';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
+import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import { fetchBelasting } from './services';
 import { countLoggedInVisit } from './services/visitors';
-import { DEV_USER_ID, testAccounts } from '../universal/config';
-import axios from 'axios';
 
 export const authRouterDevelopment = express.Router();
 
@@ -54,6 +55,21 @@ authRouterDevelopment.get(
 authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
   return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+});
+
+// TODO: Remove when done migrating to azure and debugging.
+authRouterDevelopment.get('/api/v1/dev/test', async (req, res) => {
+  const auth = await getAuth(req);
+  fetchBelasting(res.locals.requestID, {
+    profile: { id: auth.profile.id },
+  } as any).then(
+    (respData) => {
+      res.send({ respData, env: process.env });
+    },
+    (error) => {
+      res.send(error);
+    }
+  );
 });
 
 export const relayDevRouter = express.Router();
