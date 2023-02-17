@@ -4,7 +4,9 @@ export { ReactComponent as IconAfvalGft } from './gft.svg';
 export { ReactComponent as IconAfvalPlastic } from './plastic.svg';
 export { ReactComponent as IconAfvalTextiel } from './textile.svg';
 export { ReactComponent as IconAfvalPapier } from './paper.svg';
-export { ReactComponent as IconAfvalRest } from './trashcontainer.svg';
+export { ReactComponent as IconAfvalRest } from './rest-afval.svg';
+export { ReactComponent as IconAfvalGrofAfval } from './grof-afval.svg';
+
 export { ReactComponent as IconAuto } from './car.svg';
 export { ReactComponent as IconBekendmaking } from './bekendmaking.svg';
 export { ReactComponent as IconEvenement } from './evenement.svg';

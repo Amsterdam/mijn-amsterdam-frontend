@@ -667,7 +667,7 @@ export function useSetMapCenterAtLocation(
         centerMarker = homeLocationMarker;
       }
       if (centerMarker.latlng) {
-        // mapInstance.setView(centerMarker.latlng, zoom);
+        mapInstance.setView(centerMarker.latlng, zoom);
       }
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.

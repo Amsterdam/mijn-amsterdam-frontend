@@ -9,25 +9,6 @@ import GarbageInformation from './GarbageInformation';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
-const restafval = {
-  title: 'Gooi zakken in container',
-  aanbiedwijze: 'In container',
-  stadsdeel: 'Zuid-Oost',
-  type: 'huisvuil',
-  buitenZetten: '',
-  ophaaldag: '',
-  opmerking: 'Hou het netjes!',
-};
-const grofvuil = {
-  title: 'Zetje afval aan de weg',
-  aanbiedwijze: 'Aan de weg',
-  stadsdeel: 'Zuid-Oost',
-  type: 'grofvuil',
-  buitenZetten: 'vanaf Woensdag 20:00 tot Donderdag 07:00',
-  ophaaldag: 'Donderdag',
-  opmerking: 'Hou het netjes!',
-};
-
 const afvalpunt = {
   title: 'De afvalpuntenweg',
   latlng: { latng: { lat: 5, lng: 40 } },
@@ -50,7 +31,38 @@ const testState: any = {
       },
     },
   },
-  AFVAL: { status: 'OK', content: [restafval, grofvuil] },
+  AFVAL: {
+    status: 'OK',
+    content: [
+      {
+        titel: 'Glas',
+        instructie: 'In de container voor glas',
+        instructieCTA: null,
+        ophaaldagen: null,
+        buitenzetten: null,
+        waar: {
+          to: '/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}',
+          title: 'Kaart met containers in de buurt',
+        },
+        opmerking: null,
+        kalendermelding: null,
+        fractieCode: 'Glas',
+      },
+      {
+        titel: 'Groente-, fruit-, etensresten en tuinafval (gfe/t)',
+        instructie: 'Bij het restafval',
+        instructieCTA: null,
+        ophaaldagen:
+          'maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag',
+        buitenzetten: '',
+        waar: '',
+        opmerking:
+          'Tuinafval kunt u ook laten <a href="https://www.amsterdam.nl/tuinafval">ophalen.</a>',
+        kalendermelding: null,
+        fractieCode: 'GFT',
+      },
+    ],
+  },
   AFVALPUNTEN: { status: 'OK', content: { centers: [afvalpunt] } },
   MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 'x', lng: 'y' } }] },
 };

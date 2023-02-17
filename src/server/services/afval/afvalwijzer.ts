@@ -6,6 +6,7 @@ import {
 } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers/source-api-request';
+import { sanitizeCmsContent } from '../cms-content';
 
 interface GarbageFractionData {
   straatnaam: string;
@@ -46,7 +47,9 @@ interface AFVALSourceData {
 function formatKalenderOpmerking(
   fractionData: GarbageFractionData
 ): string | null {
-  return fractionData.afvalwijzerAfvalkalenderOpmerking ?? null;
+  return fractionData.afvalwijzerAfvalkalenderOpmerking
+    ? sanitizeCmsContent(fractionData.afvalwijzerAfvalkalenderOpmerking)
+    : null;
 }
 
 function formatKalenderMelding(
@@ -64,7 +67,7 @@ function formatKalenderMelding(
     const today = new Date();
 
     if (from && to && from <= today && to >= today) {
-      return fractionData.afvalwijzerAfvalkalenderMelding;
+      return sanitizeCmsContent(fractionData.afvalwijzerAfvalkalenderMelding);
     }
   }
 
@@ -100,11 +103,13 @@ function formatFraction(
 ): GarbageFractionInformationFormatted {
   return {
     titel: formatTitel(fractionData),
-    instructie: fractionData.afvalwijzerInstructie2 ?? null,
+    instructie: fractionData.afvalwijzerInstructie2
+      ? sanitizeCmsContent(fractionData.afvalwijzerInstructie2)
+      : null,
     instructieCTA:
       fractionData.afvalwijzerButtontekst && fractionData.afvalwijzerUrl
         ? {
-            title: fractionData.afvalwijzerButtontekst,
+            title: sanitizeCmsContent(fractionData.afvalwijzerButtontekst),
             to: fractionData.afvalwijzerUrl,
           }
         : null,
@@ -127,7 +132,9 @@ export function transformGarbageDataResponse(afvalSourceData: AFVALSourceData) {
   const GarbageFractionInformationFormatted: GarbageFractionInformationFormatted[] =
     [];
 
-  const garbageFractions = afvalSourceData._embedded.afvalwijzer;
+  const garbageFractions = afvalSourceData._embedded.afvalwijzer.filter(
+    (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
+  );
 
   for (const fraction of garbageFractions) {
     switch (fraction.afvalwijzerFractieCode) {

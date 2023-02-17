@@ -3,7 +3,7 @@
 exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage GarbageInformation"
+    class="Page DetailPage"
   >
     <header
       class="PageHeading hasIcon hasBackLink"
@@ -49,7 +49,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
       class="PageContent"
     >
       <p>
-        Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
+        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
       </p>
       <p>
         <a
@@ -66,7 +66,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-          De regels voor afval en hergebruik
+          Meer informatie over regels voor afval en hergebruik
         </a>
         <br />
         <a
@@ -100,344 +100,112 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           Onbekend adres
         </p>
       </div>
-    </div>
-    <section
-      class="SectionCollapsible GarbageSectionCollapsible"
-    >
-      <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
-      >
-        <button
-          aria-expanded="false"
-          class="TitleToggle"
-        >
-          <svg
-            aria-hidden="true"
-            class="CaretIcon"
-          >
-            Chevron-Right.svg
-          </svg>
-           Zetje afval aan de weg
-        </button>
-      </h3>
       <div
-        aria-hidden="true"
-        class="Panel"
-        style="height: 0px;"
+        class="GarbageFractionPanels"
       >
         <div
-          class="PanelInner"
-        >
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Hoe
-            </h3>
-            <p
-              class="Value"
-            >
-              Aan de weg
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Buiten zetten
-            </h3>
-            <p
-              class="Value"
-            >
-              vanaf Woensdag 20:00 tot Donderdag 07:00
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Ophaaldag
-            </h3>
-            <p
-              class="Value"
-            >
-              Donderdag
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Opmerking
-            </h3>
-            <div
-              class="Value"
-            >
-              <p>
-                Hou het netjes!
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section
-      class="SectionCollapsible GarbageSectionCollapsible"
-    >
-      <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
-      >
-        <button
-          aria-expanded="false"
-          class="TitleToggle"
-        >
-          <svg
-            aria-hidden="true"
-            class="CaretIcon"
-          >
-            Chevron-Right.svg
-          </svg>
-           Gooi zakken in container
-        </button>
-      </h3>
-      <div
-        aria-hidden="true"
-        class="Panel"
-        style="height: 0px;"
-      >
+          class="GarbageFractionPanelsColumn"
+        />
         <div
-          class="PanelInner"
+          class="GarbageFractionPanelsColumn"
         >
-          <div
-            class="InfoDetail GarbageInfoDetail"
+          <article
+            class="GarbageFractionPanel"
           >
             <h3
-              class="Heading Heading__tiny Label"
+              class="GarbageFractionPanelTitle"
             >
-              Hoe
-            </h3>
-            <p
-              class="Value"
-            >
-              In container
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Opmerking
-            </h3>
-            <div
-              class="Value"
-            >
-              <p>
-                Hou het netjes!
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section
-      class="SectionCollapsible GarbageSectionCollapsible"
-    >
-      <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
-      >
-        <button
-          aria-expanded="false"
-          class="TitleToggle"
-        >
-          <svg
-            aria-hidden="true"
-            class="CaretIcon"
-          >
-            Chevron-Right.svg
-          </svg>
-           Afvalcontainers in de buurt
-        </button>
-      </h3>
-      <div
-        aria-hidden="true"
-        class="Panel"
-        style="height: 0px;"
-      >
-        <div
-          class="PanelInner"
-        >
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Overzicht in uw buurt
-            </h3>
-            <p
-              class="Value"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/buurt?datasetIds=[\\"afvalcontainers\\"]"
+              <span
+                class="GarbageFractionIcon"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
-                >
-                  Chevron-Right.svg
+                <svg>
+                  gft.svg
                 </svg>
-                Bekijk de afvalcontainer locaties.
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section
-      class="SectionCollapsible GarbageSectionCollapsible Afvalpunten"
-    >
-      <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
-      >
-        <button
-          aria-expanded="false"
-          class="TitleToggle"
-        >
-          <svg
-            aria-hidden="true"
-            class="CaretIcon"
-          >
-            Chevron-Right.svg
-          </svg>
-           Afvalpunten
-        </button>
-      </h3>
-      <div
-        aria-hidden="true"
-        class="Panel"
-        style="height: 0px;"
-      >
-        <div
-          class="PanelInner"
-        >
-          <h3
-            class="Heading Heading__medium AfvalpuntContentHeading"
-          >
-            De afvalpuntenweg 
-            <span
-              class="DistanceToHome"
-            >
-              +/-34KM
-            </span>
-          </h3>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h4
-              class="Heading Heading__tiny Label"
-            >
-              Adres
-            </h4>
+              </span>
+              Groente-, fruit-, etensresten en tuinafval (gfe/t)
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                Bij het restafval
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Ophaaldag
+              </dt>
+              <dd>
+                maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
+              </dd>
+            </dl>
             <div
-              class="Value"
+              class="GarbageFractionPanelOpmerking"
             >
-              <p
-                class="NoMargin"
-              >
-                afvalpuntenweg 23, 1067 BA
-              </p>
-            </div>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h4
-              class="Heading Heading__tiny Label"
-            >
-              Telefoon
-            </h4>
-            <p
-              class="Value"
-            >
-              <a
-                href="tel:123123123"
-              >
-                123123123
-              </a>
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h4
-              class="Heading Heading__tiny Label"
-            >
-              E-mail
-            </h4>
-            <p
-              class="Value"
-            >
-              <a
-                href="mailto:afval@punt.com"
-              >
-                afval@punt.com
-              </a>
-            </p>
-          </div>
-          <div
-            class="InfoDetail GarbageInfoDetail"
-          >
-            <h4
-              class="Heading Heading__tiny Label"
-            >
-              Meer informatie
-            </h4>
-            <p
-              class="Value"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="http://example.org/afvalpunt"
-                rel="external noopener noreferrer"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+              <div>
+                Tuinafval kunt u ook laten 
+                <a
+                  href="https://www.amsterdam.nl/tuinafval"
                 >
-                  Chevron-Right.svg
+                  ophalen.
+                </a>
+              </div>
+            </div>
+          </article>
+          <article
+            class="GarbageFractionPanel"
+          >
+            <h3
+              class="GarbageFractionPanelTitle"
+            >
+              <span
+                class="GarbageFractionIcon"
+              >
+                <svg>
+                  glas.svg
                 </svg>
-                Spullen wegbrengen naar een Afvalpunt
-              </a>
-            </p>
-          </div>
+              </span>
+              Glas
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                In de container voor glas
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Waar
+              </dt>
+              <dd>
+                <a
+                  class="Button Button__inline Button__lean Linkd LinkedInline"
+                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Glas\\"%3A1}}}}"
+                >
+                  Kaart met containers in de buurt
+                </a>
+              </dd>
+            </dl>
+          </article>
         </div>
       </div>
-    </section>
-    <div
-      class="PageContent"
-    >
+      <p>
+        <button
+          class="Button Button__secondary ContactLink"
+        >
+          Klopt de informatie niet? Geef het door
+        </button>
+      </p>
+      <h3>
+        Afvalcontainers in de buurt
+      </h3>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd ContactLink"
-          href="https://formulier.amsterdam.nl/mail/afval/afvalwijzer/"
-          rel="external noopener noreferrer"
+          class="Button Button__plain Button__lean Linkd"
+          href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14"
         >
           <svg
             aria-hidden="true"
@@ -448,9 +216,39 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-          Kloppen de dagen, tijden of adressen niet? Geef het aan ons door.
+          Kaart met containers in de buurt
         </a>
       </p>
+      <h3>
+        Adressen afvalpunten
+      </h3>
+      <ul
+        class="UnstyledList"
+      >
+        <li>
+          <a
+            class="Button Button__plain Button__lean Linkd"
+            href="http://example.org/afvalpunt"
+            rel="external noopener noreferrer"
+          >
+            <svg
+              aria-hidden="true"
+              class="Icon Icon__left"
+              fill="#000"
+              height="14px"
+              width="14px"
+            >
+              Chevron-Right.svg
+            </svg>
+            De afvalpuntenweg
+            <span
+              class="DistanceToHome"
+            >
+              +/-34KM
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
   </main>
 </DocumentFragment>

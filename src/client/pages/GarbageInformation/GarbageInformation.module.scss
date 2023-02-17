@@ -1,23 +1,11 @@
 @import '../../styles/_global.scss';
 
-.GarbageInformation {
-  @include select(PageContent) {
-    padding-bottom: $page-content-bottom-space;
-  }
-}
-
 .DistanceToHome {
   font-size: 1.3rem;
   color: $color-neutral-grey4;
   font-weight: normal;
-}
-
-.ContactLink {
-  margin-left: -1.8rem;
-
-  @include mq-phone {
-    margin-left: 0;
-  }
+  display: inline-block;
+  margin-left: .5rem;
 }
 
 .NoMargin {
@@ -63,11 +51,20 @@
   justify-content: space-between;
 }
 
+.GarbageFractionPanelsColumn {
+  &:first-child {
+    width: calc(50% - 1rem);
+  }
+  &:last-child {
+    width: calc(50% - 1rem);
+    margin-left: 1rem;
+  }
+}
+
 .GarbageFractionPanel {
   background-color: $color-neutral-grey1;
   margin-bottom: 1.6rem;
   padding: .8rem 1.6rem;
-  width: calc(50% - .8rem);
 
   dl {
     display: flex;
@@ -75,7 +72,7 @@
   }
 
   dt {
-    width: 20%;
+    min-width: 22%;
     color: $color-neutral-grey4;
   }
 
@@ -89,4 +86,31 @@
   font-size: 1.8rem;
   margin: 0;
   border-bottom: .1rem solid $color-neutral-grey4;
+  display: flex;
+}
+
+.GarbageFractionIcon {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.GarbageFractionPanelOpmerking {
+  a {
+    color: $color-primary-darkblue;
+    &:hover {
+      color: $color-primary-red;
+    }
+    &:visited {
+      color: $color-support-purple;
+    }
+  }
+}
+
+.GarbageFractionPanelHighlight {
+  background-color: $color-support-focus;
+  padding: .5rem 1rem;
+}
+
+.UnstyledList {
+  @include reset-list-style();
 }
