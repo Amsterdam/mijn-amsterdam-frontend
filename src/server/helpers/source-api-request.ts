@@ -196,6 +196,10 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
 
+    if (requestConfig.debugRequestConfig) {
+      console.log(requestConfig);
+    }
+
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
 
@@ -214,10 +218,6 @@ export async function requestData<T>(
         url: nextUrl,
         page: requestConfig.page + 1,
       };
-
-      if (newRequest.debugRequestConfig) {
-        console.debug(newRequest);
-      }
 
       response.data = await requestConfig.combinePaginatedResults<T>(
         response.data,
