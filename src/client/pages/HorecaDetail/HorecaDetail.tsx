@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
@@ -11,6 +11,7 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks';
+import { HORECA_PAGE_SIZE } from '../Horeca/Horeca';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 
@@ -18,6 +19,9 @@ export default function HorecaDetail() {
   const { HORECA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const Vergunning = HORECA.content?.find((item) => item.id === id);
+  const vergunningIndex = (HORECA.content || []).findIndex(
+    (vergunning) => vergunning.id === id
+  );
   const noContent = !isLoading(HORECA) && !Vergunning;
 
   return (
@@ -25,12 +29,17 @@ export default function HorecaDetail() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: AppRoutes.HORECA,
+          to: generatePath(AppRoutes.HORECA, {
+            page:
+              vergunningIndex > 0
+                ? Math.ceil((vergunningIndex + 1) / HORECA_PAGE_SIZE)
+                : 1,
+          }),
           title: ChapterTitles.HORECA,
         }}
         isLoading={isLoading(HORECA)}
       >
-        {Vergunning?.title || 'Vergunning'}
+        {Vergunning?.title || 'Horecavergunning'}
       </PageHeading>
 
       <PageContent className="">

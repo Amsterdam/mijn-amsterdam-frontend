@@ -10,7 +10,7 @@ import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
-interface ObjectWithLinkAttr extends Object {
+interface ObjectWithOptionalLinkAttr extends Object {
   link?: LinkProps | undefined;
 }
 
@@ -18,7 +18,7 @@ interface ObjectWithOptionalId extends Object {
   id?: number | string;
 }
 
-export function addTitleLinkComponent<T extends ObjectWithLinkAttr>(
+export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
   titleKey: keyof T = 'title' as keyof T
 ) {
