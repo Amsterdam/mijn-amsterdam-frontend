@@ -15,9 +15,7 @@ export async function fetchHorecaVergunningen(
   profileType: ProfileType = 'private'
 ) {
   if (!FeatureToggle.horecaActive) {
-    return apiSuccessResult({
-      vergunningen: [],
-    });
+    return apiSuccessResult([]);
   }
 
   const vergunningenResponse = await fetchVergunningen(
@@ -37,9 +35,7 @@ export async function fetchHorecaVergunningen(
     }
   );
 
-  return apiSuccessResult({
-    vergunningen: vergunningenResponse.content as HorecaVergunningen[],
-  });
+  return apiSuccessResult(vergunningenResponse.content as HorecaVergunningen[]);
 }
 
 // TODO: notifications

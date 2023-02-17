@@ -99,7 +99,7 @@ export const PRISTINE_APPSTATE: AppState = {
     { profileTypes: ['private', 'private-commercial'] }
   ),
 
-  HORECA: apiPristineResult({ vergunningen: [] }),
+  HORECA: apiPristineResult([]),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

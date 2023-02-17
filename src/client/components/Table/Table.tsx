@@ -37,13 +37,13 @@ export function addTitleLinkComponent<T extends ObjectWithLinkAttr>(
   });
 }
 
-type DisplayProp<T> = { [Property in keyof T]+?: string | number | ReactNode };
+type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
 
 export interface TableProps<T> {
   items: T[];
   className?: string;
   titleKey?: keyof T;
-  displayProps?: DisplayProp<T>;
+  displayProps?: DisplayProps<T>;
 }
 
 interface TdValueProps {
@@ -67,7 +67,7 @@ export default function Table<T extends ObjectWithOptionalId>({
   className,
 }: TableProps<T>) {
   const displayPropsFinal = !displayProps
-    ? ({ [titleKey]: ' ' } as DisplayProp<T>)
+    ? ({ [titleKey]: ' ' } as DisplayProps<T>)
     : displayProps;
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
