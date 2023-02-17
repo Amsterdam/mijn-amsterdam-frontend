@@ -1,14 +1,26 @@
 import classnames from 'classnames';
 import { isValidElement, ReactNode } from 'react';
-import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
-import { Unshaped } from '../../../universal/types';
+import {
+  capitalizeFirstLetter,
+  entries,
+  keys,
+} from '../../../universal/helpers';
+import { LinkProps } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
-export function addTitleLinkComponent(
-  items: any[],
-  titleKey: string = 'title'
+interface ObjectWithLinkAttr extends Object {
+  link?: LinkProps | undefined;
+}
+
+interface ObjectWithOptionalId extends Object {
+  id?: number | string;
+}
+
+export function addTitleLinkComponent<T extends ObjectWithLinkAttr>(
+  items: T[],
+  titleKey: keyof T = 'title' as keyof T
 ) {
   return items.map((item) => {
     if (!item.link?.to) {
@@ -18,18 +30,20 @@ export function addTitleLinkComponent(
       ...item,
       [titleKey]: (
         <Linkd href={item.link.to}>
-          {capitalizeFirstLetter(item[titleKey]) || 'Onbekend item'}
+          {capitalizeFirstLetter(item[titleKey] as string) || 'Onbekend item'}
         </Linkd>
       ),
     };
   });
 }
 
-export interface TableProps {
-  items: Unshaped[];
+type DisplayProp<T> = { [Property in keyof T]+?: string | number | ReactNode };
+
+export interface TableProps<T> {
+  items: T[];
   className?: string;
-  titleKey?: string;
-  displayProps?: { [key: string]: string | number | ReactNode };
+  titleKey?: keyof T;
+  displayProps?: DisplayProp<T>;
 }
 
 interface TdValueProps {
@@ -46,19 +60,21 @@ function TdValue({ value }: TdValueProps) {
   return <InnerHtml el="span">{value as string}</InnerHtml>;
 }
 
-export default function Table({
+export default function Table<T extends ObjectWithOptionalId>({
   items,
   displayProps,
-  titleKey = 'title',
+  titleKey = 'title' as keyof T,
   className,
-}: TableProps) {
-  const displayPropsFinal = !displayProps ? { [titleKey]: ' ' } : displayProps;
+}: TableProps<T>) {
+  const displayPropsFinal = !displayProps
+    ? ({ [titleKey]: ' ' } as DisplayProp<T>)
+    : displayProps;
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
   );
-  const hasDisplayPropTableHeadingLabels = !!Object.keys(
-    displayPropsFinal
-  ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
+  const hasDisplayPropTableHeadingLabels = !!keys(displayPropsFinal).filter(
+    (titleKey) => !!displayPropsFinal[titleKey]
+  ).length;
   const FirstHeadCellTag = !!displayPropsFinal[titleKey] ? 'th' : 'td';
 
   return (
@@ -83,9 +99,9 @@ export default function Table({
         </thead>
       )}
       <tbody>
-        {items.map((item: Unshaped, index) => (
+        {items.map((item, index) => (
           <tr
-            key={item.id || `${titleKey}-${index}`}
+            key={item.id || `${String(titleKey)}-${index}`}
             className={styles.TableRow}
           >
             {titleKey in item && (

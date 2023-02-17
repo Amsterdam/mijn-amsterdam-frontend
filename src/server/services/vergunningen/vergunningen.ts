@@ -296,8 +296,10 @@ const vergunningOptionsDefault: VergunningOptions = {
   appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: (
     vergunning: Vergunning
-  ): vergunning is VakantieverhuurVergunningaanvraag =>
-    !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+  ): vergunning is VakantieverhuurVergunningaanvraag | HorecaVergunningen =>
+    ![...toeristischeVerhuurVergunningTypes, ...horecaVergunningTypes].includes(
+      vergunning.caseType
+    ),
 };
 
 export function addLinks(
