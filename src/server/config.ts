@@ -55,6 +55,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   cacheKey?: string;
   hasBearerToken?: boolean;
+  debugRequestConfig?: boolean;
 
   combinePaginatedResults?: <T>(
     responseData: any,
@@ -115,6 +116,7 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
     url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
+    debugRequestConfig: true,
   },
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,

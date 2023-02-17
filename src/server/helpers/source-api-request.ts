@@ -215,6 +215,10 @@ export async function requestData<T>(
         page: requestConfig.page + 1,
       };
 
+      if (newRequest.debugRequestConfig) {
+        console.debug(newRequest);
+      }
+
       response.data = await requestConfig.combinePaginatedResults<T>(
         response.data,
         await requestData(newRequest, requestID, authProfileAndToken)
