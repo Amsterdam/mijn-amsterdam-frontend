@@ -22,7 +22,8 @@ export default function HorecaDetail() {
   const vergunningIndex = (HORECA.content || []).findIndex(
     (vergunning) => vergunning.id === id
   );
-  const noContent = !isLoading(HORECA) && !Vergunning;
+  const isLoadingContent = isLoading(HORECA);
+  const noContent = !isLoadingContent && !Vergunning;
 
   return (
     <DetailPage>
@@ -37,7 +38,7 @@ export default function HorecaDetail() {
           }),
           title: ChapterTitles.HORECA,
         }}
-        isLoading={isLoading(HORECA)}
+        isLoading={isLoadingContent}
       >
         {Vergunning?.title || 'Horecavergunning'}
       </PageHeading>
@@ -48,8 +49,8 @@ export default function HorecaDetail() {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading(HORECA) && <LoadingContent className="" />}
-        {!isLoading(HORECA) && Vergunning && (
+        {isLoadingContent && <LoadingContent className="" />}
+        {!isLoadingContent && Vergunning && (
           <>
             {Vergunning.caseType === CaseType.ExploitatieHorecabedrijf && (
               <ExploitatieHorecabedrijf vergunning={Vergunning} />
@@ -57,7 +58,7 @@ export default function HorecaDetail() {
           </>
         )}
       </PageContent>
-      {!isLoading(HORECA) && Vergunning && (
+      {!isLoadingContent && Vergunning && (
         <StatusLineItems
           vergunning={Vergunning}
           trackPath={(document) =>

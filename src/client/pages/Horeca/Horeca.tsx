@@ -17,6 +17,7 @@ import {
   Table,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks';
+import styles from './Horeca.module.scss';
 
 const DISPLAY_PROPS_HORECA = {
   identifier: 'Kenmerk',
@@ -53,7 +54,7 @@ export default function Horeca() {
   const items = addTitleLinkComponent(vergunningen, 'identifier');
 
   return (
-    <OverviewPage className="">
+    <OverviewPage className={styles.Horeca}>
       <PageHeading
         backLink={{
           to: AppRoutes.HOME,

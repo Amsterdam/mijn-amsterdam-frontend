@@ -1,13 +1,27 @@
 import { AppRoutes, FeatureToggle } from '../../universal/config';
-import { apiSuccessResult } from '../../universal/helpers';
+import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
 import { CaseType } from '../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../helpers/app';
 import {
   fetchVergunningen,
+  getVergunningNotifications,
   HorecaVergunningen,
   horecaVergunningTypes,
   Vergunning,
 } from './vergunningen/vergunningen';
+
+const horecaOptions = {
+  appRoute: (vergunning: Vergunning) => {
+    switch (vergunning.caseType) {
+      case CaseType.ExploitatieHorecabedrijf:
+        return AppRoutes['HORECA/DETAIL'];
+      default:
+        return AppRoutes.HORECA;
+    }
+  },
+  filter: (vergunning: Vergunning) =>
+    horecaVergunningTypes.includes(vergunning.caseType),
+};
 
 export async function fetchHorecaVergunningen(
   requestID: requestID,
@@ -21,21 +35,33 @@ export async function fetchHorecaVergunningen(
   const vergunningenResponse = await fetchVergunningen(
     requestID,
     authProfileAndToken,
-    {
-      appRoute: (vergunning: Vergunning) => {
-        switch (vergunning.caseType) {
-          case CaseType.ExploitatieHorecabedrijf:
-            return AppRoutes['HORECA/DETAIL'];
-          default:
-            return AppRoutes.HORECA;
-        }
-      },
-      filter: (vergunning) =>
-        horecaVergunningTypes.includes(vergunning.caseType),
-    }
+    horecaOptions
   );
 
   return apiSuccessResult(vergunningenResponse.content as HorecaVergunningen[]);
 }
 
-// TODO: notifications
+export async function fetchHorecaNotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  compareDate?: Date
+) {
+  const VERGUNNINGEN = await fetchVergunningen(
+    requestID,
+    authProfileAndToken,
+    horecaOptions
+  );
+
+  if (VERGUNNINGEN.status === 'OK') {
+    const notifications = getVergunningNotifications(
+      VERGUNNINGEN.content ?? [],
+      compareDate
+    );
+
+    return apiSuccessResult({
+      notifications,
+    });
+  }
+
+  return apiDependencyError({ VERGUNNINGEN });
+}
