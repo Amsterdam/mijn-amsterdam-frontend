@@ -46,6 +46,12 @@ export async function fetchHorecaNotifications(
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {
+  if (!FeatureToggle.horecaActive) {
+    return apiSuccessResult({
+      notifications: [],
+    });
+  }
+
   const VERGUNNINGEN = await fetchVergunningen(
     requestID,
     authProfileAndToken,
