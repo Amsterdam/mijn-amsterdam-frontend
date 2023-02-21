@@ -10,7 +10,7 @@ import {
   Vergunning,
 } from './vergunningen/vergunningen';
 
-const horecaOptions = {
+export const horecaOptions = {
   appRoute: (vergunning: Vergunning) => {
     switch (vergunning.caseType) {
       case CaseType.ExploitatieHorecabedrijf:
