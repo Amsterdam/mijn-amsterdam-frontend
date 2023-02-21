@@ -154,7 +154,7 @@ export function isChapterActive(
     case Chapters.HORECA:
       return (
         !isLoading(HORECA) &&
-        // !!HORECA?.content?.vergunningen.length &&
+        !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
       );
   }
