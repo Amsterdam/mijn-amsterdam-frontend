@@ -43,8 +43,16 @@ export default function Horeca() {
   })();
 
   const totalCount = HORECA.content?.length || 0;
+
+  const vergunningenPaginated = (() => {
+    const startIndex = currentPage - 1;
+    const start = startIndex * HORECA_PAGE_SIZE;
+    const end = start + HORECA_PAGE_SIZE;
+    return HORECA.content?.slice(start, end) || [];
+  })();
+
   const vergunningen =
-    HORECA.content?.map((v) => {
+    vergunningenPaginated?.map((v) => {
       return {
         ...v,
         dateRequest: defaultDateFormat(v.dateRequest),
