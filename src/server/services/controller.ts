@@ -152,6 +152,10 @@ export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = ServicesType;
 type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
+type PrivateServicesAttributeBased = Pick<
+  ServiceMap,
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS'
+>;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -171,6 +175,7 @@ type CommercialServices = Pick<
 
 type ServicesByProfileType = {
   private: PrivateServices;
+  'private-attributes': PrivateServicesAttributeBased;
   'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
@@ -202,6 +207,10 @@ export const servicesByProfileType: ServicesByProfileType = {
     WMO,
     KLACHTEN,
     BEZWAREN,
+  },
+  'private-attributes': {
+    CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
   },
   'private-commercial': {
     AFVAL,
@@ -252,6 +261,7 @@ export const servicesTipsByProfileType = {
     servicesByProfileType.private,
     tipsOmit as Array<keyof PrivateServices>
   ),
+  'private-attributes': servicesByProfileType['private-attributes'],
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
     tipsOmit as Array<keyof PrivateCommercialServices>
@@ -265,7 +275,11 @@ export const servicesTipsByProfileType = {
 function loadServices(
   requestID: requestID,
   req: Request,
-  serviceMap: PrivateServices | CommercialServices | PrivateCommercialServices,
+  serviceMap:
+    | PrivateServices
+    | CommercialServices
+    | PrivateCommercialServices
+    | PrivateServicesAttributeBased,
   filterIds: requestID[] = []
 ) {
   return Object.entries(serviceMap)

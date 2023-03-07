@@ -192,6 +192,8 @@ export const ApiConfig: ApiDataRequestConfig = {
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       'private-commercial':
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
+      'private-attributes':
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
     },
@@ -428,7 +430,7 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
     return oidcConfigDigid.clientID;
   },
   get yivi() {
-    return oidcConfigDigid.clientID;
+    return oidcConfigYivi.clientID;
   },
 };
 

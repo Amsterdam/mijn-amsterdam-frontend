@@ -155,6 +155,14 @@ export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
         title: termReplace('private', ChapterTitles[item.id]),
       };
     }),
+  'private-attributes': myChaptersMenuItems
+    .filter((item) => item.profileTypes.includes('private-attributes'))
+    .map((item) => {
+      return {
+        ...item,
+        title: termReplace('private-attributes', ChapterTitles[item.id]),
+      };
+    }),
   'private-commercial': myChaptersMenuItems
     .filter((item) => item.profileTypes.includes('private-commercial'))
     .map((item) => {

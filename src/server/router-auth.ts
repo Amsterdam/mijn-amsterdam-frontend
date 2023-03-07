@@ -143,7 +143,7 @@ router.get(BffEndpoints.AUTH_CHECK_YIVI, async (req, res) => {
     return res.send(
       apiSuccessResult({
         isAuthenticated: true,
-        profileType: 'private',
+        profileType: 'private-attributes',
         authMethod: 'yivi',
       })
     );
@@ -184,7 +184,12 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
-      return res.send(apiSuccessResult(await decodeOIDCToken(auth.token)));
+      return res.send(
+        apiSuccessResult({
+          tokenData: await decodeOIDCToken(auth.token),
+          profile: auth.profile,
+        })
+      );
     } catch (error) {
       Sentry.captureException(error);
     }

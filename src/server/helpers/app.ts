@@ -28,7 +28,7 @@ const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid' | 'yivi';
-  profileType: 'private' | 'private-commercial' | 'commercial';
+  profileType: ProfileType;
   id?: string;
 }
 

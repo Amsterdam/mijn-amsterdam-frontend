@@ -108,4 +108,5 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
     VAREN: GenericLinks.VAARVIGNETTEN,
   },
+  'private-attributes': {},
 };
