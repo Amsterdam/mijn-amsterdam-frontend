@@ -417,7 +417,7 @@ export const oidcConfigYivi: ConfigParams = {
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
   digid: 'sub',
-  yivi: 'email',
+  yivi: 'sub',
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
