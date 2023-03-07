@@ -499,20 +499,6 @@
       ]
     },
     {
-      "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Plastic%22:1}}}}",
-      "displayTitle": "Plasticcontainers bij mij in de buurt",
-      "description": "Plasticcontainers bij mij in de buurt.",
-      "keywords": [
-        "Plastic",
-        "Plactic containers",
-        "Plasticontainer"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
-    },
-    {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Rest%22:1}}}}",
       "displayTitle": "Restcontainers bij mij in de buurt",
       "description": "Restcontainers bij mij in de buurt.",

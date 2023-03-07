@@ -1,7 +1,6 @@
 // Map icons
 export { ReactComponent as IconAfvalGlas } from './glas.svg';
 export { ReactComponent as IconAfvalGft } from './gft.svg';
-export { ReactComponent as IconAfvalPlastic } from './plastic.svg';
 export { ReactComponent as IconAfvalTextiel } from './textile.svg';
 export { ReactComponent as IconAfvalPapier } from './paper.svg';
 export { ReactComponent as IconAfvalRest } from './trashcontainer.svg';
