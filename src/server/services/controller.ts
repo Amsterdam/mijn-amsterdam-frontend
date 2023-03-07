@@ -154,7 +154,7 @@ type PrivateServices = ServicesType;
 type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS'
 >;
 
 type CommercialServices = Pick<
@@ -211,6 +211,7 @@ export const servicesByProfileType: ServicesByProfileType = {
   'private-attributes': {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
+    NOTIFICATIONS,
   },
   'private-commercial': {
     AFVAL,
