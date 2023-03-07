@@ -1,7 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
 import { omit } from '../../universal/helpers';
-import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
   getAuth,
@@ -108,14 +112,21 @@ const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
 
 // Special services that aggeragates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
-  (
+const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+  const profileType = getProfileType(req);
+
+  if (profileType === 'private-attributes') {
+    return apiSuccessResult([]);
+  }
+
+  return (
     await fetchTipsAndNotifications(
       requestID,
       await getAuth(req),
       getProfileType(req)
     )
   ).NOTIFICATIONS;
+};
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
