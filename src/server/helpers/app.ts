@@ -11,6 +11,7 @@ import {
   DEV_JWK_PUBLIC,
   oidcConfigDigid,
   oidcConfigEherkenning,
+  oidcConfigYivi,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -26,7 +27,7 @@ import { axiosRequest, clearSessionCache } from './source-api-request';
 const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid';
+  authMethod: 'eherkenning' | 'digid' | 'yivi';
   profileType: 'private' | 'private-commercial' | 'commercial';
   id?: string;
 }
@@ -39,6 +40,10 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
     case oidcConfigEherkenning.clientID:
       authMethod = 'eherkenning';
       profileType = 'commercial';
+      break;
+    case oidcConfigYivi.clientID:
+      authMethod = 'yivi';
+      profileType = 'private';
       break;
     case oidcConfigDigid.clientID:
     default:
