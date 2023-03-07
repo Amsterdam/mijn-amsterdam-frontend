@@ -377,27 +377,33 @@ function transformAfvalcontainersResponse(
     ? responseData?.features
     : getApiEmbeddedResponse(datasetId, responseData);
   return transformDsoApiListResponse(datasetId, config, {
-    features: features.map((feature: any) => {
-      let fractie_omschrijving = feature.properties.fractie_omschrijving;
-      if (!fractie_omschrijving || fractie_omschrijving === 'GFT') {
-        fractie_omschrijving = createCustomFractieOmschrijving(
-          feature.properties
-        );
-      }
-      return {
-        ...feature,
-        properties: {
-          ...feature.properties,
-          fractie_omschrijving,
-        },
-      };
-    }),
+    features: features
+      .filter(
+        (feature: any) =>
+          feature.fractie_omschrijving?.toLowerCase() !== 'plastic'
+      )
+      .map((feature: any) => {
+        let fractie_omschrijving = feature.properties.fractie_omschrijving;
+        if (!fractie_omschrijving || fractie_omschrijving === 'GFT') {
+          fractie_omschrijving = createCustomFractieOmschrijving(
+            feature.properties
+          );
+        }
+        return {
+          ...feature,
+          properties: {
+            ...feature.properties,
+            fractie_omschrijving,
+          },
+        };
+      }),
   });
 }
 
 function transformAfvalcontainerDetailResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
+  id: string,
   responseData: any
 ) {
   const feature = discoverSingleApiEmbeddedResponse(responseData);

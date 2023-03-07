@@ -282,6 +282,7 @@ export async function loadFeatureDetail(
 
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);
+
     // Replace the value of the `idKeyDetail` property. E.g. idKeyDetail = someOtherId  item.id = item.someOtherId;
     if (config.idKeyDetail) {
       item.id = encodeURIComponent(item[config.idKeyDetail]);

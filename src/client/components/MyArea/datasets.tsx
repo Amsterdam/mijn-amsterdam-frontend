@@ -8,7 +8,6 @@ import {
   IconAfvalGlas,
   IconAfvalMelding,
   IconAfvalPapier,
-  IconAfvalPlastic,
   IconAfvalRest,
   IconAfvalTextiel,
   IconAuto,
@@ -89,11 +88,6 @@ export const datasetIcons: Record<
     gft: (
       <DatasetIcon className={styles.DatasetIcon__valid}>
         <IconAfvalGft fill={Colors.white} />
-      </DatasetIcon>
-    ),
-    plastic: (
-      <DatasetIcon className={styles.DatasetIcon__orange}>
-        <IconAfvalPlastic />
       </DatasetIcon>
     ),
     brood: (
