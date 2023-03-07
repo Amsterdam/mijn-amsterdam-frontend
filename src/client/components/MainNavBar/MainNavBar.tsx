@@ -44,7 +44,7 @@ export interface MainNavLinkProps {
 }
 
 function SecondaryLinks() {
-  const { BRP, KVK } = useAppStateGetter();
+  const { BRP, KVK, PROFILE } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
@@ -64,6 +64,7 @@ function SecondaryLinks() {
           person={BRP.content?.persoon}
           company={KVK.content}
           profileType={profileType}
+          profileAttribute={PROFILE.content?.profile.id}
         />
       )}
       <LogoutLink>Uitloggen</LogoutLink>

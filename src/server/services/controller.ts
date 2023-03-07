@@ -23,6 +23,7 @@ import { fetchMyLocation } from './home';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
+import { fetchProfile } from './profile';
 import {
   fetchBelasting,
   fetchErfpacht,
@@ -110,6 +111,7 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const PROFILE = callService(fetchProfile);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -155,17 +157,18 @@ const SERVICES_INDEX = {
   KLACHTEN,
   BEZWAREN,
   NOTIFICATIONS,
+  PROFILE,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = ServicesType;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE'>;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE'>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
 >;
 
 type CommercialServices = Pick<
@@ -223,6 +226,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
+    PROFILE,
   },
   'private-commercial': {
     AFVAL,

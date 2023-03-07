@@ -106,12 +106,14 @@ function PrivateCommercialProfileToggle({
 interface ProfileNameProps {
   person?: BRPData['persoon'] | null;
   company?: KVKData | null;
+  profileAttribute?: string;
   profileType: ProfileType;
 }
 
 export function ProfileName({
   person,
   company,
+  profileAttribute,
   profileType,
 }: ProfileNameProps) {
   const history = useHistory();
@@ -145,9 +147,27 @@ export function ProfileName({
           />
         );
         break;
+      case !!profileAttribute:
+        nameContent = (
+          <Button
+            onClick={() => alert('Klik!')}
+            icon={IconProfile}
+            variant="plain"
+            lean={true}
+            iconSize="24"
+            className={classnames(
+              styles.ProfileLink,
+              styles['ProfileLink--private'],
+              styles['ProfileLink--active']
+            )}
+          >
+            {profileAttribute}
+          </Button>
+        );
+        break;
     }
     return nameContent;
-  }, [person, company, history]);
+  }, [person, company, history, profileAttribute]);
 
   return (
     <span
