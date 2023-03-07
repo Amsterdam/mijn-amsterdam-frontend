@@ -3,7 +3,7 @@ import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
   GarbageFractionCode,
-  GarbageFractionInformationFormatted,
+  GarbageFractionInformationTransformed,
 } from '../../../universal/types';
 import {
   IconAfvalGft,
@@ -39,7 +39,7 @@ function GarbageInfoDetail({ ...props }: InfoDetailProps) {
 }
 
 interface InstructionCTAProps {
-  fraction: GarbageFractionInformationFormatted;
+  fraction: GarbageFractionInformationTransformed;
 }
 
 function InstructionCTA({ fraction }: InstructionCTAProps) {
@@ -52,13 +52,15 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
         {fraction.instructie ? (
           <>
             <br />
-            {fraction.instructie}
+            <InnerHtml>{fraction.instructie}</InnerHtml>
           </>
         ) : null}
       </>
     );
   }
-  return <>{fraction.instructie}</>;
+  return fraction.instructie ? (
+    <InnerHtml el="p">{fraction.instructie}</InnerHtml>
+  ) : null;
 }
 
 interface GarbageFractionIconProps {
@@ -92,7 +94,7 @@ function GarbageFractionIcon({ fractionCode }: GarbageFractionIconProps) {
 }
 
 interface GarbageFractionPanelProps {
-  fraction: GarbageFractionInformationFormatted;
+  fraction: GarbageFractionInformationTransformed;
 }
 
 function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
@@ -121,7 +123,7 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
       )}
       {!!fraction.buitenzetten && (
         <dl>
-          <dt>Buiten zetten</dt>
+          <dt>Buitenzetten</dt>
           <dd>{fraction.buitenzetten}</dd>
         </dl>
       )}
@@ -149,7 +151,7 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
 }
 
 interface GarbageFractionPanelsProps {
-  fractions: GarbageFractionInformationFormatted[];
+  fractions: GarbageFractionInformationTransformed[];
 }
 
 const fractions1 = ['rest', 'ga', 'papier'];
@@ -262,6 +264,9 @@ export default function GarbageInformation() {
 
         {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
           <GarbageFractionPanels fractions={AFVAL.content} />
+        )}
+        {AFVAL.content?.[0]?.stadsdeelAanvulling && (
+          <InnerHtml el="p">{AFVAL.content[0].stadsdeelAanvulling}</InnerHtml>
         )}
         <p>
           <Button

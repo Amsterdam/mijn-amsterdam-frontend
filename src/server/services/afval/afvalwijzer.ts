@@ -1,12 +1,14 @@
+import { LatLngLiteral } from 'leaflet';
 import { AppRoutes } from '../../../universal/config';
 import {
   GarbageFractionCode,
-  GarbageFractionInformationFormatted,
+  GarbageFractionInformationTransformed,
   LinkProps,
 } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers/source-api-request';
 import { sanitizeCmsContent } from '../cms-content';
+import { labels } from './translations';
 
 interface GarbageFractionData {
   straatnaam: string;
@@ -15,11 +17,11 @@ interface GarbageFractionData {
   huisnummertoevoeging: string | null;
   postcode: string;
   woonplaatsnaam: string;
-  afvalwijzerInstructie: null;
-  afvalwijzerPerXWeken: null;
-  afvalwijzerBuitenzettenVanafTot: null;
-  afvalwijzerBuitenzettenVanaf: null;
-  afvalwijzerBuitenzettenTot: null;
+  afvalwijzerInstructie: string | null;
+  afvalwijzerPerXWeken: string | null;
+  afvalwijzerBuitenzettenVanafTot: string | null;
+  afvalwijzerBuitenzettenVanaf: string | null;
+  afvalwijzerBuitenzettenTot: string | null;
   afvalwijzerAfvalkalenderOpmerking: string | null;
   afvalwijzerAfvalkalenderFrequentie: string | null;
   afvalwijzerFractieNaam: string;
@@ -36,6 +38,7 @@ interface GarbageFractionData {
   afvalwijzerBasisroutetypeCode: string | null;
   afvalwijzerButtontekst: string | null;
   afvalwijzerUrl: string | null;
+  gbdBuurtCode: string | null;
 }
 
 interface AFVALSourceData {
@@ -74,88 +77,150 @@ function formatKalenderMelding(
   return null;
 }
 
-function formatTitel(fractionData: GarbageFractionData): string {
-  switch (fractionData.afvalwijzerFractieCode) {
-    case 'Rest':
-      return fractionData.afvalwijzerBasisroutetypeCode === 'THUISOPAFSP'
-        ? 'Gfe/t, textiel, papier/karton, glas en restafval'
-        : 'Restafval';
-    case 'GFT':
-      return 'Groente-, fruit-, etensresten en tuinafval (gfe/t)';
-    case 'Papier':
-      return 'Papier en karton';
-    case 'GA':
-      return 'Grof afval';
+function getAfvalPuntKaartUrl(centroid: LatLngLiteral | null) {
+  const mapUrl = 'https://kaart.amsterdam.nl/afvalpunten/#13/';
+
+  if (centroid) {
+    const location = `${centroid.lat.toFixed(5)}/${centroid.lng.toFixed(5)}`;
+    const center = `${centroid.lat.toFixed(5)},${centroid.lng.toFixed(5)}`;
+
+    return `${mapUrl}${location}/brt/14324///${center}`;
   }
-  return fractionData.afvalwijzerFractieCode;
+
+  return mapUrl;
+}
+
+function getText(text: string | null, fallbackText?: string): string {
+  if (text) {
+    const lbl = labels[text];
+
+    if (lbl) {
+      return lbl.html ?? lbl.text ?? '';
+    }
+
+    return fallbackText ?? text;
+  }
+
+  return fallbackText ?? '';
 }
 
 function getBuurtLink(fractionData: GarbageFractionData): LinkProps {
   return {
     to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"${fractionData.afvalwijzerFractieCode}"%3A1}}}}`,
-    title:
-      fractionData.afvalwijzerWaar ?? 'Bekijk afvalcontainers in mijn buurt',
+    title: getText(fractionData.afvalwijzerWaar),
   };
 }
 
-function formatFraction(
-  fractionData: GarbageFractionData
-): GarbageFractionInformationFormatted {
+function transformFractionData(
+  fractionData: GarbageFractionData,
+  centroid: LatLngLiteral | null
+): GarbageFractionInformationTransformed {
+  const afvalPuntKaartUrl = getAfvalPuntKaartUrl(centroid);
+
+  const formsUrl = 'https://formulieren.amsterdam.nl/TriplEforms/';
+  const addressCode = `${fractionData?.postcode},${fractionData?.huisnummer},${fractionData?.huisletter},${fractionData?.huisnummertoevoeging}`;
+
+  const url = fractionData.afvalwijzerUrl?.startsWith(formsUrl)
+    ? fractionData.afvalwijzerUrl.replace(formsUrl, getText(formsUrl)) +
+      '?GUID=' +
+      addressCode
+    : fractionData.afvalwijzerUrl;
+
+  const ophaaldagen = [
+    fractionData.afvalwijzerOphaaldagen2,
+    fractionData.afvalwijzerPerXWeken,
+  ]
+    .map((s) => (s ? getText(s, '') : ''))
+    .filter((s) => s)
+    .join(', ');
+
+  const instructieSanitized = fractionData.afvalwijzerInstructie2
+    ? sanitizeCmsContent(getText(fractionData.afvalwijzerInstructie2), {
+        allowedTags: ['a'],
+        allowedAttributes: { a: ['href', 'rel'] },
+        exclusiveFilter: () => false,
+      })
+    : null;
+
+  const afvalpuntInstructie =
+    fractionData.afvalwijzerInstructie2 &&
+    fractionData.afvalwijzerUrl?.includes(
+      'https://kaart.amsterdam.nl/afvalpunten'
+    )
+      ? fractionData.afvalwijzerInstructie2.replace(
+          'een Afvalpunt',
+          `<a href="${afvalPuntKaartUrl}" rel="noopener noreferrer">een Afvalpunt</a>`
+        )
+      : fractionData.afvalwijzerInstructie2;
+
+  const stadsdeelRegelsUrl = getText(
+    `particulier-${fractionData.gbdBuurtCode?.charAt(0)}`,
+    ''
+  );
+  const stadsdeelAanvulling = stadsdeelRegelsUrl
+    ? `In uw stadsdeel zijn mogelijk <a href="${stadsdeelRegelsUrl}" rel="noopener noreferrer">aanvullende regels</a> van kracht.`
+    : null;
+
   return {
-    titel: formatTitel(fractionData),
+    titel: getText(fractionData.afvalwijzerFractieCode),
     instructie: fractionData.afvalwijzerInstructie2
-      ? sanitizeCmsContent(fractionData.afvalwijzerInstructie2)
+      ? fractionData.afvalwijzerFractieCode !== 'GA'
+        ? instructieSanitized
+        : afvalpuntInstructie
       : null,
     instructieCTA:
-      fractionData.afvalwijzerButtontekst && fractionData.afvalwijzerUrl
+      fractionData.afvalwijzerButtontekst && url
         ? {
             title: sanitizeCmsContent(fractionData.afvalwijzerButtontekst),
-            to: fractionData.afvalwijzerUrl,
+            to: url,
           }
         : null,
-    ophaaldagen: fractionData.afvalwijzerOphaaldagen ?? null,
-    buitenzetten:
-      (fractionData.afvalwijzerOphaaldagen &&
-        fractionData.afvalwijzerBuitenzettenVanafTot) ??
-      null,
+    ophaaldagen,
+    buitenzetten: ophaaldagen
+      ? getText(fractionData.afvalwijzerBuitenzettenVanafTot)
+      : null,
     waar:
-      !fractionData.afvalwijzerButtontekst && !!fractionData.afvalwijzerUrl
+      fractionData.afvalwijzerWaar &&
+      url &&
+      url === 'https://kaart.amsterdam.nl/afvalcontainers'
         ? getBuurtLink(fractionData)
-        : fractionData.afvalwijzerWaar ?? null,
+        : fractionData.afvalwijzerWaar,
     opmerking: formatKalenderOpmerking(fractionData),
     kalendermelding: formatKalenderMelding(fractionData),
     fractieCode: fractionData.afvalwijzerFractieCode,
+    stadsdeelAanvulling,
   };
 }
 
-export function transformGarbageDataResponse(afvalSourceData: AFVALSourceData) {
-  const GarbageFractionInformationFormatted: GarbageFractionInformationFormatted[] =
-    [];
-
+export function transformGarbageDataResponse(
+  afvalSourceData: AFVALSourceData,
+  latlng: LatLngLiteral | null
+): GarbageFractionInformationTransformed[] {
+  // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
   const garbageFractions = afvalSourceData._embedded.afvalwijzer.filter(
     (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
   );
 
-  for (const fraction of garbageFractions) {
-    switch (fraction.afvalwijzerFractieCode) {
-      case 'Rest':
-      default:
-        GarbageFractionInformationFormatted.push(formatFraction(fraction));
-        break;
-    }
-  }
-
-  return GarbageFractionInformationFormatted;
+  return garbageFractions.map((fractionData) =>
+    transformFractionData(fractionData, latlng)
+  );
 }
 
-export async function fetchAfvalwijzer(requestID: requestID, bagID: string) {
+export async function fetchAfvalwijzer(
+  requestID: requestID,
+  bagID: string,
+  latlng: LatLngLiteral | null
+) {
   const params = {
     bagNummeraanduidingId: bagID,
   };
-  const garbageData = await requestData<GarbageFractionInformationFormatted[]>(
+  const garbageData = await requestData<
+    GarbageFractionInformationTransformed[]
+  >(
     getApiConfig('AFVAL', {
       params,
-      transformResponse: transformGarbageDataResponse,
+      transformResponse: (afvalSourceData: AFVALSourceData) =>
+        transformGarbageDataResponse(afvalSourceData, latlng),
     }),
     requestID
   );

@@ -20,7 +20,7 @@ export type GarbageFractionCode =
   | 'Papier'
   | 'GFT';
 
-export interface GarbageFractionInformationFormatted {
+export interface GarbageFractionInformationTransformed {
   titel: string;
   instructie: string | null;
   instructieCTA: LinkProps | null;
@@ -30,6 +30,7 @@ export interface GarbageFractionInformationFormatted {
   opmerking: string | null;
   kalendermelding: string | null;
   fractieCode: GarbageFractionCode;
+  stadsdeelAanvulling: string | null;
 }
 
 export interface GarbageCenter {
