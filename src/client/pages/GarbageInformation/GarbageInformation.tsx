@@ -200,7 +200,7 @@ export default function GarbageInformation() {
   const inMokum =
     profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
   const isWeesp = address?.woonplaatsNaam === 'Weesp';
-  console.log('address', address, inMokum);
+  const isApiReady = !isLoading(BRP) && !isLoading(KVK);
   return (
     <DetailPage>
       <PageHeading
@@ -271,13 +271,13 @@ export default function GarbageInformation() {
             </>
           }
         />
-        {isWeesp && (
+        {isApiReady && isWeesp && (
           <p className={styles.WeespWarning}>
             In Weesp haalt de GAD het afval op. Kijk op de{' '}
             <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
           </p>
         )}
-        {inMokum && (
+        {isApiReady && inMokum && (
           <>
             {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
               <GarbageFractionPanels fractions={AFVAL.content} />
