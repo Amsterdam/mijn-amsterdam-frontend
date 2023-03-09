@@ -128,7 +128,12 @@
 .UnstyledList {
   @include reset-list-style();
 }
+
 .WeespWarning {
   background-color: $color-support-blue;
-  color: $color-white;
+  padding: 1rem;
+
+  &, a, a:visited,a:hover {
+    color: $color-white;
+  }
 }

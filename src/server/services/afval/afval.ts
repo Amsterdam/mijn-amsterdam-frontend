@@ -22,8 +22,6 @@ export async function fetchAFVAL(
     const primaryLocation = MY_LOCATION.content?.[0];
     const bagID = primaryLocation?.bagNummeraanduidingId;
 
-    console.log('address.address.address', primaryLocation, bagID);
-
     if (!bagID) {
       return apiSuccessResult([]);
     }

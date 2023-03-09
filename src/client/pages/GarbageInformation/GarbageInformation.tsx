@@ -1,6 +1,11 @@
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
-import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
+import {
+  getFullAddress,
+  isError,
+  isLoading,
+  isMokum,
+} from '../../../universal/helpers';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,
@@ -188,10 +193,14 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION, BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
-
+  const address = MY_LOCATION.content?.[0]?.address;
+  const inMokum =
+    profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
+  const isWeesp = address?.woonplaatsNaam === 'Weesp';
+  console.log('address', address, inMokum);
   return (
     <DetailPage>
       <PageHeading
@@ -247,12 +256,7 @@ export default function GarbageInformation() {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
-        <div className={styles.WeespWarning}>
-          <p>
-            In Weesp haalt de GAD het afval op. Kijk op de{' '}
-            <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
-          </p>
-        </div>
+
         <GarbageInfoDetail
           label="Uw adres"
           value={
@@ -267,46 +271,57 @@ export default function GarbageInformation() {
             </>
           }
         />
-
-        {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
-          <GarbageFractionPanels fractions={AFVAL.content} />
+        {isWeesp && (
+          <p className={styles.WeespWarning}>
+            In Weesp haalt de GAD het afval op. Kijk op de{' '}
+            <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
+          </p>
         )}
-        {AFVAL.content?.[0]?.stadsdeelAanvulling && (
-          <InnerHtml el="p">{AFVAL.content[0].stadsdeelAanvulling}</InnerHtml>
-        )}
-        <p>
-          <Button
-            className={styles.ContactLink}
-            onClick={() =>
-              (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
-            }
-          >
-            Klopt de informatie niet? Geef het door
-          </Button>
-        </p>
-        <h3>Afvalcontainers in de buurt</h3>
-        <p>
-          <Linkd
-            href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
-          >
-            Kaart met containers in de buurt
-          </Linkd>
-        </p>
-        <h3>Adressen afvalpunten</h3>
-        <ul className={styles.UnstyledList}>
-          {AFVALPUNTEN.content?.centers.map((item, index) => (
-            <li key={item.title}>
-              <Linkd href={item.website} external={true}>
-                {item.title}
-                {item.distance !== 0 && (
-                  <span className={styles.DistanceToHome}>
-                    +/-{item.distance}KM
-                  </span>
-                )}
+        {inMokum && (
+          <>
+            {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
+              <GarbageFractionPanels fractions={AFVAL.content} />
+            )}
+            {AFVAL.content?.[0]?.stadsdeelAanvulling && (
+              <InnerHtml el="p">
+                {AFVAL.content[0].stadsdeelAanvulling}
+              </InnerHtml>
+            )}
+            <p>
+              <Button
+                className={styles.ContactLink}
+                onClick={() =>
+                  (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
+                }
+              >
+                Klopt de informatie niet? Geef het door
+              </Button>
+            </p>
+            <h3>Afvalcontainers in de buurt</h3>
+            <p>
+              <Linkd
+                href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
+              >
+                Kaart met containers in de buurt
               </Linkd>
-            </li>
-          ))}
-        </ul>
+            </p>
+            <h3>Adressen afvalpunten</h3>
+            <ul className={styles.UnstyledList}>
+              {AFVALPUNTEN.content?.centers.map((item, index) => (
+                <li key={item.title}>
+                  <Linkd href={item.website} external={true}>
+                    {item.title}
+                    {item.distance !== 0 && (
+                      <span className={styles.DistanceToHome}>
+                        +/-{item.distance}KM
+                      </span>
+                    )}
+                  </Linkd>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </PageContent>
     </DetailPage>
   );
