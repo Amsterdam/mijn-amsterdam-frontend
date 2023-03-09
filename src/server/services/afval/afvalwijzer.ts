@@ -144,7 +144,7 @@ function transformFractionData(
 
   const afvalpuntInstructie =
     fractionData.afvalwijzerInstructie2 &&
-    fractionData.afvalwijzerUrl?.includes(
+    fractionData.afvalwijzerUrl?.startsWith(
       'https://kaart.amsterdam.nl/afvalpunten'
     )
       ? fractionData.afvalwijzerInstructie2.replace(
