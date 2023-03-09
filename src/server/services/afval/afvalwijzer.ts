@@ -157,6 +157,7 @@ function transformFractionData(
     `particulier-${fractionData.gbdBuurtCode?.charAt(0)}`,
     ''
   );
+
   const stadsdeelAanvulling = stadsdeelRegelsUrl
     ? `In uw stadsdeel zijn mogelijk <a href="${stadsdeelRegelsUrl}" rel="noopener noreferrer">aanvullende regels</a> van kracht.`
     : null;
@@ -181,8 +182,7 @@ function transformFractionData(
       : null,
     waar:
       fractionData.afvalwijzerWaar &&
-      url &&
-      url === 'https://kaart.amsterdam.nl/afvalcontainers'
+      url?.startsWith('https://kaart.amsterdam.nl/afvalcontainers')
         ? getBuurtLink(fractionData)
         : fractionData.afvalwijzerWaar,
     opmerking: formatKalenderOpmerking(fractionData),

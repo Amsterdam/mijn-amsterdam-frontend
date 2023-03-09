@@ -1,5 +1,121 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<GarbageInformation /> Full page snapshot for Weesp address 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Afval"
+          class="ChapterIcon"
+          fill="black"
+        >
+          Huisvuilkalender.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Afval
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/afval/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over regels voor afval en hergebruik
+        </a>
+        <br />
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Doe een melding als afval is blijven liggen
+        </a>
+      </p>
+      <div
+        class="InfoDetail GarbageInfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Uw adres
+        </h3>
+        <p
+          class="Value"
+        >
+          Amstel 1
+        </p>
+      </div>
+      <p
+        class="WeespWarning"
+      >
+        In Weesp haalt de GAD het afval op. Kijk op de 
+        <a
+          href="https://www.gad.nl/"
+        >
+          website van de GAD
+        </a>
+         hoe dat werkt.
+      </p>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
@@ -97,7 +213,7 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
         <p
           class="Value"
         >
-          Onbekend adres
+          Amstel 1
         </p>
       </div>
       <div
@@ -105,7 +221,135 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
       >
         <div
           class="GarbageFractionPanelsColumn"
-        />
+        >
+          <article
+            class="GarbageFractionPanel"
+          >
+            <h3
+              class="GarbageFractionPanelTitle"
+            >
+              <span
+                class="GarbageFractionIcon"
+              >
+                <svg>
+                  rest-afval.svg
+                </svg>
+              </span>
+              Restafval
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                <p>
+                  In vuilniszak
+                </p>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Ophaaldag
+              </dt>
+              <dd>
+                Maandag en donderdag
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Buitenzetten
+              </dt>
+              <dd>
+                Tussen 06.00 en 07.30 uur
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Waar
+              </dt>
+              <dd>
+                Aan de rand van de stoep of op de vaste plek
+              </dd>
+            </dl>
+          </article>
+          <article
+            class="GarbageFractionPanel"
+          >
+            <h3
+              class="GarbageFractionPanelTitle"
+            >
+              <span
+                class="GarbageFractionIcon"
+              >
+                <svg>
+                  grof-afval.svg
+                </svg>
+              </span>
+              Grof afval
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                <p>
+                  Laat uw grof afval ophalen door een erkend bedrijf
+                </p>
+              </dd>
+            </dl>
+            <div
+              class="GarbageFractionPanelOpmerking"
+            >
+              <div>
+                Of breng het naar 
+                <a
+                  href="https://kaart.amsterdam.nl/afvalpunten"
+                >
+                  een Afvalpunt
+                </a>
+              </div>
+            </div>
+          </article>
+          <article
+            class="GarbageFractionPanel"
+          >
+            <h3
+              class="GarbageFractionPanelTitle"
+            >
+              <span
+                class="GarbageFractionIcon"
+              >
+                <svg>
+                  paper.svg
+                </svg>
+              </span>
+              Papier en karton
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                <p>
+                  In de container voor papier
+                </p>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Waar
+              </dt>
+              <dd>
+                <a
+                  class="Button Button__inline Button__lean Linkd LinkedInline"
+                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Papier\\"%3A1}}}}"
+                >
+                  Kaart met containers in de buurt
+                </a>
+              </dd>
+            </dl>
+          </article>
+        </div>
         <div
           class="GarbageFractionPanelsColumn"
         >
@@ -129,27 +373,16 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
                 Hoe
               </dt>
               <dd>
-                Bij het restafval
-              </dd>
-            </dl>
-            <dl>
-              <dt>
-                Ophaaldag
-              </dt>
-              <dd>
-                maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
+                <p>
+                  Bij het restafval
+                </p>
               </dd>
             </dl>
             <div
               class="GarbageFractionPanelOpmerking"
             >
               <div>
-                Tuinafval kunt u ook laten 
-                <a
-                  href="https://www.amsterdam.nl/tuinafval"
-                >
-                  ophalen.
-                </a>
+                Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
               </div>
             </div>
           </article>
@@ -173,7 +406,9 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
                 Hoe
               </dt>
               <dd>
-                In de container voor glas
+                <p>
+                  In de container voor glas
+                </p>
               </dd>
             </dl>
             <dl>
@@ -190,8 +425,57 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
               </dd>
             </dl>
           </article>
+          <article
+            class="GarbageFractionPanel"
+          >
+            <h3
+              class="GarbageFractionPanelTitle"
+            >
+              <span
+                class="GarbageFractionIcon"
+              >
+                <svg>
+                  textile.svg
+                </svg>
+              </span>
+              Textiel
+            </h3>
+            <dl>
+              <dt>
+                Hoe
+              </dt>
+              <dd>
+                <p>
+                  In de container voor textiel
+                </p>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                Waar
+              </dt>
+              <dd>
+                <a
+                  class="Button Button__inline Button__lean Linkd LinkedInline"
+                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}"
+                >
+                  Kaart met containers in de buurt
+                </a>
+              </dd>
+            </dl>
+          </article>
         </div>
       </div>
+      <p>
+        In uw stadsdeel zijn mogelijk 
+        <a
+          href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum"
+          rel="noopener noreferrer"
+        >
+          aanvullende regels
+        </a>
+         van kracht.
+      </p>
       <p>
         <button
           class="Button Button__secondary ContactLink"

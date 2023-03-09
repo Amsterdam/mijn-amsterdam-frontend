@@ -166,6 +166,7 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
   const fractionsByCode = Object.fromEntries(
     fractions.map((fraction) => [fraction.fractieCode.toLowerCase(), fraction])
   );
+
   return (
     <div className={styles.GarbageFractionPanels}>
       <div className={styles.GarbageFractionPanelsColumn}>
@@ -200,7 +201,8 @@ export default function GarbageInformation() {
   const inMokum =
     profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
   const isWeesp = address?.woonplaatsNaam === 'Weesp';
-  const isApiReady = !isLoading(BRP) && !isLoading(KVK);
+  const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
+
   return (
     <DetailPage>
       <PageHeading
