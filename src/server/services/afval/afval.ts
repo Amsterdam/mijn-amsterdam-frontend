@@ -20,13 +20,13 @@ export async function fetchAfval(
 
   if (MY_LOCATION.status === 'OK') {
     const primaryLocation = MY_LOCATION.content?.[0];
-    const bagID = primaryLocation?.bagNummeraanduidingId;
+    const bagID = primaryLocation?.bagNummeraanduidingId ?? null;
 
     if (!bagID) {
       return apiSuccessResult([]);
     }
 
-    return await fetchAfvalwijzer(requestID, bagID, primaryLocation.latlng);
+    return await fetchAfvalwijzer(requestID, bagID, primaryLocation!.latlng);
   }
 
   return apiDependencyError({ MY_LOCATION });

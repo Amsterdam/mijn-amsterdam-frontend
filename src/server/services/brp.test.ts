@@ -11,13 +11,13 @@ const {
 
 describe('BRP data api + transformation', () => {
   it('should construct a bag search addresss', () => {
-    expect(getBagSearchAddress(adres)).toBe('Burgemeester R\u00f6ellstraat 1');
+    expect(getBagSearchAddress(adres)).toBe('Amstel 1');
   });
 
   it('should construct a complete addresss', () => {
     expect(
       getFullAddress({ ...adres, huisletter: 'X', huisnummertoevoeging: 'h' })
-    ).toBe('Burgemeester R\u00f6ellstraat 1 X h');
+    ).toBe('Amstel 1 X h');
   });
 
   it('should transform the source data', () => {

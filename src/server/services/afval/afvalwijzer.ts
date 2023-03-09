@@ -10,7 +10,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { sanitizeCmsContent } from '../cms-content';
 import { labels } from './translations';
 
-interface GarbageFractionData {
+export interface GarbageFractionData {
   straatnaam: string;
   huisnummer: number;
   huisletter: string | null;
@@ -39,9 +39,10 @@ interface GarbageFractionData {
   afvalwijzerButtontekst: string | null;
   afvalwijzerUrl: string | null;
   gbdBuurtCode: string | null;
+  bagNummeraanduidingId: string | null;
 }
 
-interface AFVALSourceData {
+export interface AFVALSourceData {
   _embedded: {
     afvalwijzer: GarbageFractionData[];
   };
@@ -197,9 +198,10 @@ export function transformGarbageDataResponse(
   latlng: LatLngLiteral | null
 ): GarbageFractionInformationTransformed[] {
   // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
-  const garbageFractions = afvalSourceData._embedded.afvalwijzer.filter(
-    (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
-  );
+  const garbageFractions =
+    afvalSourceData._embedded?.afvalwijzer.filter(
+      (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
+    ) ?? [];
 
   return garbageFractions.map((fractionData) =>
     transformFractionData(fractionData, latlng)
@@ -227,3 +229,12 @@ export async function fetchAfvalwijzer(
 
   return garbageData;
 }
+
+export const exportedForTesting = {
+  formatKalenderOpmerking,
+  formatKalenderMelding,
+  getAfvalPuntKaartUrl,
+  getText,
+  getBuurtLink,
+  transformFractionData,
+};
