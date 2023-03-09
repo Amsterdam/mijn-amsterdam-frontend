@@ -274,12 +274,14 @@ export function transformIncomSpecificationResponse(
   response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
-    jaaropgaven: response.content.jaaropgaven
-      .map(transformIncomeSpecificationItem)
-      .sort(dateSort('datePublished', 'desc')),
-    uitkeringsspecificaties: response.content.uitkeringsspecificaties
-      .map(transformIncomeSpecificationItem)
-      .sort(dateSort('datePublished', 'desc')),
+    jaaropgaven:
+      response.content?.jaaropgaven
+        .map(transformIncomeSpecificationItem)
+        .sort(dateSort('datePublished', 'desc')) ?? [],
+    uitkeringsspecificaties:
+      response.content?.uitkeringsspecificaties
+        .map(transformIncomeSpecificationItem)
+        .sort(dateSort('datePublished', 'desc')) ?? [],
   };
 }
 
