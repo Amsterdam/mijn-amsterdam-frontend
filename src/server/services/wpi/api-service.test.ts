@@ -6,6 +6,7 @@ import {
   fetchBijstandsuitkering,
   FetchConfig,
   fetchRequestProcess,
+  fetchSpecificaties,
   fetchStadspas,
   fetchWpiNotifications,
 } from './api-service';
@@ -615,6 +616,33 @@ describe('wpi/app-service', () => {
             "title": "Nieuwe uitkeringsspecificatie",
           },
         ],
+      }
+    `);
+  });
+
+  test('Service error', async () => {
+    nock(`http://localhost:${BFF_PORT}`)
+      .get('/wpi/uitkering/specificaties-en-jaaropgaven')
+      .reply(401, {
+        status: 'ERROR',
+        content: null,
+      })
+      .get('/wpi/e-aanvragen')
+      .reply(401, {
+        status: 'ERROR',
+        content: null,
+      });
+
+    const specs = await fetchSpecificaties(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
+
+    expect(specs).toMatchInlineSnapshot(`
+      Object {
+        "content": null,
+        "message": "Error: Request failed with status code 401",
+        "status": "ERROR",
       }
     `);
   });
