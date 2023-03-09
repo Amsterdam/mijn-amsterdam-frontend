@@ -247,6 +247,12 @@ export default function GarbageInformation() {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+        <div className={styles.WeespWarning}>
+          <p>
+            In Weesp haalt de GAD het afval op. Kijk op de{' '}
+            <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
+          </p>
+        </div>
         <GarbageInfoDetail
           label="Uw adres"
           value={
