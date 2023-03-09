@@ -1,16 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 import { LinkProps } from './App.types';
 
-export enum Stadsdeel {
-  centrum = 'Centrum',
-  nieuwWest = 'Nieuw-West',
-  noord = 'Noord',
-  oost = 'Oost',
-  west = 'West',
-  zuid = 'Zuid',
-  zuidoost = 'Zuidoost',
-}
-
 export type GarbageFractionCode =
   | 'Textiel'
   | 'Rest'
@@ -44,4 +34,4 @@ export interface GarbageCenter {
   website: string;
 }
 
-export type AFVALPUNTENData = GarbageCenter[];
+export type AfvalPuntenData = GarbageCenter[];

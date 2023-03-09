@@ -7,7 +7,7 @@ import { fetchMyLocation } from '../home';
 import { fetchAfvalwijzer } from './afvalwijzer';
 import { fetchAfvalpunten } from './afvalpunten';
 
-export async function fetchAFVAL(
+export async function fetchAfval(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
@@ -32,7 +32,7 @@ export async function fetchAFVAL(
   return apiDependencyError({ MY_LOCATION });
 }
 
-export async function fetchAFVALPUNTEN(
+export async function fetchAfvalPunten(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType

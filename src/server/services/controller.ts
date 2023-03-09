@@ -9,7 +9,7 @@ import {
   queryParams,
   sendMessage,
 } from '../helpers/app';
-import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
+import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAKTES } from './aktes';
 import { fetchBezwaren } from './bezwaren';
 import { fetchBRP } from './brp';
@@ -94,10 +94,10 @@ const MY_LOCATION = async (requestID: requestID, req: Request) =>
   fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
 
 const AFVAL = async (requestID: requestID, req: Request) =>
-  fetchAFVAL(requestID, await getAuth(req), getProfileType(req));
+  fetchAfval(requestID, await getAuth(req), getProfileType(req));
 
 const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
-  fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
+  fetchAfvalPunten(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
