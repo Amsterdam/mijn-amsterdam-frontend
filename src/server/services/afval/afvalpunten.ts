@@ -83,7 +83,7 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
       const labelTransformed: string = label
         .toLowerCase()
         .replace(/[^a-z]/gi, '');
-      const labelFinal =
+      const labelFinal: string =
         tableLabelTranslation[labelTransformed] || labelTransformed;
       return {
         ...acc,
