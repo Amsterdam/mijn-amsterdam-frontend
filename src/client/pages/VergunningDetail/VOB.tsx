@@ -1,5 +1,4 @@
 import type { Ligplaatsvergunning } from '../../../server/services';
-import { defaultDateFormat } from '../../../universal/helpers';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
 
@@ -9,22 +8,21 @@ export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
       {!!vergunning.location && <Location location={vergunning.location} />}
       <InfoDetail
         label="Soort aanvraag"
         value={vergunning?.requestKind || '-'}
       />
       <InfoDetail label="Reden" value={vergunning?.reason || '-'} />
-      {isAfgehandeld && vergunning.decision === 'Verleend' && (
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
+
+      <InfoDetail
+        label="Soort vaartuig"
+        value={vergunning?.vesselKind || '-'}
+      />
+      <InfoDetail label="Naam vaartuig" value={vergunning?.vesselName || '-'} />
+
+      {isAfgehandeld && (
+        <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
   );
