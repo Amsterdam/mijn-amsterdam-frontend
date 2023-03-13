@@ -139,9 +139,7 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: Vergunning) =>
-      v.caseType === CaseType.VakantieVerhuur ||
-      v.caseType === CaseType.VakantieverhuurVergunningaanvraag
+    (v: Vergunning) => v.caseType === CaseType.VakantieverhuurVergunningaanvraag
   );
 };
 
