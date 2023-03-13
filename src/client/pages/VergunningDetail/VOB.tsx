@@ -9,17 +9,20 @@ export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
-      <InfoDetail
-        label="Soort aanvraag"
-        value={vergunning?.requestKind || '-'}
-      />
-      <InfoDetail label="Reden" value={vergunning?.reason || '-'} />
 
       <InfoDetail
         label="Soort vaartuig"
         value={vergunning?.vesselKind || '-'}
       />
+
       <InfoDetail label="Naam vaartuig" value={vergunning?.vesselName || '-'} />
+
+      <InfoDetail
+        label="Soort aanvraag"
+        value={vergunning?.requestKind || '-'}
+      />
+
+      <InfoDetail label="Reden" value={vergunning?.reason || '-'} />
 
       {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />

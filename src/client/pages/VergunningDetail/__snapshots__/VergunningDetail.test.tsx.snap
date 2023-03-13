@@ -2680,34 +2680,6 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should 
         <h3
           class="Heading Heading__tiny Label"
         >
-          Soort aanvraag
-        </h3>
-        <p
-          class="Value"
-        >
-          Ligplaatsvergunning woonboot
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Reden
-        </h3>
-        <p
-          class="Value"
-        >
-          Nieuwe ligplaats
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
           Soort vaartuig
         </h3>
         <p
@@ -2728,6 +2700,34 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should 
           class="Value"
         >
           Sloepie IX
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort aanvraag
+        </h3>
+        <p
+          class="Value"
+        >
+          Ligplaatsvergunning woonboot
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Reden
+        </h3>
+        <p
+          class="Value"
+        >
+          Nieuwe ligplaats
         </p>
       </div>
     </div>
@@ -2962,34 +2962,6 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
         <h3
           class="Heading Heading__tiny Label"
         >
-          Soort aanvraag
-        </h3>
-        <p
-          class="Value"
-        >
-          Ligplaatsvergunning woonboot
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Reden
-        </h3>
-        <p
-          class="Value"
-        >
-          Nieuwe ligplaats
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
           Soort vaartuig
         </h3>
         <p
@@ -3010,6 +2982,34 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
           class="Value"
         >
           -
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort aanvraag
+        </h3>
+        <p
+          class="Value"
+        >
+          Ligplaatsvergunning woonboot
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Reden
+        </h3>
+        <p
+          class="Value"
+        >
+          Nieuwe ligplaats
         </p>
       </div>
       <div
