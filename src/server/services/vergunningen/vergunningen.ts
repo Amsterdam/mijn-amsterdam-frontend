@@ -198,7 +198,8 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
   caseType: CaseType.VOB;
   requestKind: string | null;
   reason: string | null;
-  dateEnd: string | null;
+  vesselKind: string | null;
+  vesselName: string | null;
 }
 
 export type Vergunning =

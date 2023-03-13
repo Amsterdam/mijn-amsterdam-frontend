@@ -922,7 +922,8 @@
       "processed": false,
       "requestKind": "Ligplaatsvergunning woonboot",
       "reason": "Nieuwe ligplaats",
-      "dateEnd": "2024-01-02T00:00:00"
+      "vesselKind": "Sloep",
+      "vesselName": "Sloepie IX"
     }
   ],
   "status": "OK"
