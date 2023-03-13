@@ -26,6 +26,7 @@ import {
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
+import Bezwaren from './pages/Bezwaren/Bezwaren';
 
 import { default as LandingPage } from './pages/Landing/Landing';
 
@@ -224,12 +225,14 @@ function AppAuthenticated() {
             component={KlachtenDetail}
           />
           <Route path={AppRoutes.KLACHTEN} component={Klachten} />
+          {FeatureToggle.bezwarenActive && (
+            <Route path={AppRoutes.BEZWAREN} component={Bezwaren} />
+          )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={[
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'],
                 AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
               ]}
               component={ToeristischeVerhuurDetail}

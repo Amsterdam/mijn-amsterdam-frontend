@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router';
+import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../universal/config';
 import {
   capitalizeFirstLetter,
@@ -25,6 +25,7 @@ export interface WmoApiItem {
   serviceOrderDate: string | null;
   itemTypeCode: string;
   deliveryType: 'PGB' | 'ZIN' | '';
+  documents: GenericDocument[] | null;
 }
 
 export interface WmoApiData {
@@ -656,10 +657,19 @@ function formatWmoStatusLineItems(
           isVisible: statusItem.isVisible
             ? statusItem?.isVisible(index, wmoItem, today)
             : true,
-          documents: [], // NOTE: To be implemented
+          documents:
+            statusItem.status === 'Besluit'
+              ? wmoItem.documents?.length === 1
+                ? wmoItem.documents?.map((doc) =>
+                    Object.assign(doc, {
+                      url: doc.url,
+                    })
+                  )
+                : []
+              : [],
         };
 
-        if (index === 0) {
+        if (index === 0 && stepData.documents?.length === 0) {
           stepData.altDocumentContent = `<p>
             <strong>
               ${

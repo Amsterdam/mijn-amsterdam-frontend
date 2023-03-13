@@ -119,9 +119,7 @@ export default function Stadspas() {
         <h4>Hoe weet ik of ik een geldige Stadspas heb?</h4>
         <p>
           Hieronder staat het Stadspasnummer van uw actieve pas. Dit pasnummer
-          staat ook op de achterkant van uw pas. Staat er op de achterkant van
-          uw pas een ander nummer? Gooi deze Stadspas dan weg. Deze is niet meer
-          actief.
+          staat ook op de achterkant van uw pas.
         </p>
         <p>
           Bel <a href="tel:020 252 6000">020 252 6000</a> om een nieuwe Stadspas

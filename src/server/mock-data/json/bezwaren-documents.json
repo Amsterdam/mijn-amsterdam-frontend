@@ -1,0 +1,34 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "url": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93",
+      "identificatie": "6171a3ac-78a4-4d38-9ece-09a6798abe93",
+      "bronorganisatie": "test",
+      "creatiedatum": "2022-07-11",
+      "titel": "Concept besluit.pdf",
+      "vertrouwelijkheidaanduiding": "openbaar",
+      "auteur": "Richard Bergmans",
+      "status": "in_bewerking",
+      "formaat": "application/pdf",
+      "taal": "nld",
+      "versie": 0,
+      "beginRegistratie": "2022-07-11T12:00:00+02:00",
+      "bestandsnaam": "Concept besluit.pdf",
+      "inhoud": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93/download",
+      "bestandsomvang": 16384,
+      "link": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93",
+      "beschrijving": "Concept besluit genomen door vakafdeling",
+      "ontvangstdatum": "2022-07-11",
+      "indicatieGebruiksrecht": null,
+      "ondertekening": null,
+      "integriteit": null,
+      "informatieobjecttype": "https://localhost/api/zgw/v1/informatieobjecttypen/b650aae3-fa11-4965-b0ee-297d3b8dad84",
+      "locked": false,
+      "dossiertype": null,
+      "verzenddatum": "2022-07-11"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ export type Chapter =
   | 'BELASTINGEN'
   | 'BURGERZAKEN'
   | 'BUURT'
+  | 'BEZWAREN'
   | 'INKOMEN'
   | 'STADSPAS'
   | 'BRP'
@@ -29,6 +30,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   BELASTINGEN: 'BELASTINGEN',
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
+  BEZWAREN: 'BEZWAREN',
   INKOMEN: 'INKOMEN',
   STADSPAS: 'STADSPAS',
   BRP: 'BRP',
@@ -54,6 +56,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
+  BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
@@ -109,13 +112,11 @@ export const DocumentTitles = {
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
   [AppRoutes.BUURT]: `Mijn buurt`,
+  [AppRoutes.BEZWAREN]: `Bezwaren | overzicht`,
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
-  [AppRoutes[
-    'TOERISTISCHE_VERHUUR/VAKANTIEVERHUUR'
-  ]]: `Vakantieverhuur | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
   ]]: `Vergunning | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,

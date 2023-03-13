@@ -93,6 +93,8 @@ export type SourceApiKey =
   | 'WPI_SPECIFICATIES'
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
+  | 'BEZWAREN_LIST'
+  | 'BEZWAREN_DOCUMENTS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
@@ -129,6 +131,23 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   WPI_STADSPAS: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
+  },
+  BEZWAREN_LIST: {
+    url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
+    method: 'POST',
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_DOCUMENTS: {
+    url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
@@ -336,6 +355,7 @@ const oidcConfigBase: ConfigParams = {
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login' },
+  clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
     rolling: true,

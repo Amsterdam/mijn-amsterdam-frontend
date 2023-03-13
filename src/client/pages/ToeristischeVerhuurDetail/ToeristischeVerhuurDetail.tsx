@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
-import { CaseType } from '../../../universal/types/vergunningen';
 import {
   Alert,
   ChapterIcon,
@@ -12,7 +11,6 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuurDetail.module.scss';
-import VakantieVerhuur from './VakantieVerhuur';
 import VergunningVerhuur from './VergunningVerhuur';
 
 export default function ToeristischVerhuurDetail() {
@@ -36,7 +34,7 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {Vergunning?.title || 'Onbekende toeristische verhuur'}
+        {Vergunning?.title || 'Onbekende vergunning'}
       </PageHeading>
       {(isLoadingApi || hasWarning) && (
         <PageContent className={styles.DetailPageContent}>
@@ -49,9 +47,6 @@ export default function ToeristischVerhuurDetail() {
             <LoadingContent className={styles.LoadingContentInfo} />
           )}
         </PageContent>
-      )}
-      {Vergunning?.caseType === CaseType.VakantieVerhuur && (
-        <VakantieVerhuur vergunning={Vergunning} />
       )}
       {(Vergunning?.title === 'Vergunning vakantieverhuur' ||
         Vergunning?.title === 'Vergunning bed & breakfast') && (
