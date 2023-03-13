@@ -2702,6 +2702,34 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should 
           Nieuwe ligplaats
         </p>
       </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Soort vaartuig
+        </h3>
+        <p
+          class="Value"
+        >
+          Sloep
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Naam vaartuig
+        </h3>
+        <p
+          class="Value"
+        >
+          Sloepie IX
+        </p>
+      </div>
     </div>
     <div
       class="StatusLine VergunningStatus"
@@ -2910,20 +2938,6 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
         </p>
       </div>
       <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Resultaat
-        </h3>
-        <p
-          class="Value"
-        >
-          Verleend
-        </p>
-      </div>
-      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -2976,12 +2990,40 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
         <h3
           class="Heading Heading__tiny Label"
         >
-          Tot en met
+          Soort vaartuig
         </h3>
         <p
           class="Value"
         >
-          02 januari 2025
+          -
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Naam vaartuig
+        </h3>
+        <p
+          class="Value"
+        >
+          -
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="Value"
+        >
+          Verleend
         </p>
       </div>
     </div>
