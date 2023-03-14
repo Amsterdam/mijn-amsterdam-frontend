@@ -66,7 +66,7 @@ export default function Table<T extends ObjectWithOptionalId>({
   titleKey = 'title',
   className,
 }: TableProps<T>) {
-  const defaultDisplayProps = { [titleKey as keyof T]: ' ' } as DisplayProps<T>;
+  const defaultDisplayProps = { [titleKey]: ' ' } as DisplayProps<T>;
   const displayPropsFinal = !displayProps ? defaultDisplayProps : displayProps;
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
