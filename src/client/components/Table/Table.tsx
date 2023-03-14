@@ -26,12 +26,16 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
     if (!item.link?.to) {
       return item;
     }
+
+    let title: string = item[titleKey];
+    if (typeof title !== 'string') {
+      title = 'Onbekend item';
+    }
+
     return {
       ...item,
       [titleKey]: (
-        <Linkd href={item.link.to}>
-          {capitalizeFirstLetter(item[titleKey]) || 'Onbekend item'}
-        </Linkd>
+        <Linkd href={item.link.to}>{capitalizeFirstLetter(title)}</Linkd>
       ),
     };
   });
