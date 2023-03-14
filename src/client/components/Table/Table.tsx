@@ -5,22 +5,22 @@ import {
   entries,
   keys,
 } from '../../../universal/helpers';
-import { LinkProps } from '../../../universal/types';
+import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
-interface ObjectWithOptionalLinkAttr extends Object {
+interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
 }
 
-interface ObjectWithOptionalId extends Object {
+interface ObjectWithOptionalId extends Unshaped {
   id?: number | string;
 }
 
 export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
-  titleKey: keyof T = 'title' as keyof T
+  titleKey: keyof T = 'title'
 ) {
   return items.map((item) => {
     if (!item.link?.to) {
@@ -30,7 +30,7 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
       ...item,
       [titleKey]: (
         <Linkd href={item.link.to}>
-          {capitalizeFirstLetter(item[titleKey] as string) || 'Onbekend item'}
+          {capitalizeFirstLetter(item[titleKey]) || 'Onbekend item'}
         </Linkd>
       ),
     };
@@ -63,12 +63,11 @@ function TdValue({ value }: TdValueProps) {
 export default function Table<T extends ObjectWithOptionalId>({
   items,
   displayProps,
-  titleKey = 'title' as keyof T,
+  titleKey = 'title',
   className,
 }: TableProps<T>) {
-  const displayPropsFinal = !displayProps
-    ? ({ [titleKey]: ' ' } as DisplayProps<T>)
-    : displayProps;
+  const defaultDisplayProps = { [titleKey as keyof T]: ' ' } as DisplayProps<T>;
+  const displayPropsFinal = !displayProps ? defaultDisplayProps : displayProps;
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
   );
