@@ -11,7 +11,7 @@ import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 interface ObjectWithOptionalLinkAttr extends Object {
-  link?: LinkProps | undefined;
+  link?: LinkProps;
 }
 
 interface ObjectWithOptionalId extends Object {
