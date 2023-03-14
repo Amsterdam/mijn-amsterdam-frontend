@@ -457,7 +457,6 @@ Array [
   Object {
     "caseType": "VOB",
     "dateDecision": null,
-    "dateEnd": "2024-01-02T00:00:00",
     "dateRequest": "2023-01-03T00:00:00",
     "dateWorkflowActive": "2023-01-03T00:00:00",
     "decision": null,
@@ -469,6 +468,8 @@ Array [
     "requestKind": "Ligplaatsvergunning woonboot",
     "status": "Ontvangen",
     "title": "Ligplaatsvergunning",
+    "vesselKind": "Sloep",
+    "vesselName": "Sloepie IX",
   },
   Object {
     "caseType": "VOB",
