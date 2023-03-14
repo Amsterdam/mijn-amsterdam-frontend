@@ -1,27 +1,38 @@
-import classnames from 'classnames';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
-import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
-  GarbageCenter,
-  GarbageRetrievalMoment,
+  getFullAddress,
+  isError,
+  isLoading,
+  isMokum,
+} from '../../../universal/helpers';
+import {
+  GarbageFractionCode,
+  GarbageFractionInformationTransformed,
 } from '../../../universal/types';
 import {
+  IconAfvalGft,
+  IconAfvalGlas,
+  IconAfvalGrofAfval,
+  IconAfvalPapier,
+  IconAfvalRest,
+  IconAfvalTextiel,
+} from '../../assets/icons/map';
+import {
   Alert,
+  Button,
   ChapterIcon,
   DetailPage,
-  Heading,
   InfoDetail,
   InnerHtml,
   Linkd,
+  LinkdInline,
   LoadingContent,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
-  SectionCollapsible,
 } from '../../components';
 import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
-import { SectionCollapsibleProps } from '../../components/SectionCollapsible/SectionCollapsible';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -32,99 +43,168 @@ function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
 }
 
-function GarbageCenterInfoDetail({ ...props }: InfoDetailProps) {
-  return <GarbageInfoDetail {...props} labelElement="h4" />;
+interface InstructionCTAProps {
+  fraction: GarbageFractionInformationTransformed;
 }
 
-function GarbageSectionCollapsible({
-  className,
-  ...props
-}: SectionCollapsibleProps) {
+function InstructionCTA({ fraction }: InstructionCTAProps) {
+  if (fraction.instructieCTA) {
+    return (
+      <>
+        <Linkd href={fraction.instructieCTA.to}>
+          {fraction.instructieCTA.title}
+        </Linkd>
+        {fraction.instructie ? (
+          <>
+            <br />
+            <InnerHtml>{fraction.instructie}</InnerHtml>
+          </>
+        ) : null}
+      </>
+    );
+  }
+  return fraction.instructie ? (
+    <InnerHtml el="p">{fraction.instructie}</InnerHtml>
+  ) : null;
+}
+
+interface GarbageFractionIconProps {
+  fractionCode: GarbageFractionCode;
+}
+
+function GarbageFractionIcon({ fractionCode }: GarbageFractionIconProps) {
+  let icon = <IconAfvalRest />;
+  switch (fractionCode.toLowerCase()) {
+    case 'ga':
+      icon = <IconAfvalGrofAfval />;
+      break;
+    case 'glas':
+      icon = <IconAfvalGlas />;
+      break;
+    case 'papier':
+      icon = <IconAfvalPapier />;
+      break;
+    case 'textiel':
+      icon = <IconAfvalTextiel />;
+      break;
+    case 'gft':
+      icon = <IconAfvalGft />;
+      break;
+    default:
+    case 'rest':
+      icon = <IconAfvalRest />;
+      break;
+  }
+  return <span className={styles.GarbageFractionIcon}>{icon}</span>;
+}
+
+interface GarbageFractionPanelProps {
+  fraction: GarbageFractionInformationTransformed;
+}
+
+function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
   return (
-    <SectionCollapsible
-      {...props}
-      className={classnames(styles.GarbageSectionCollapsible, className)}
-    />
+    <article className={styles.GarbageFractionPanel}>
+      <h3 className={styles.GarbageFractionPanelTitle}>
+        <GarbageFractionIcon fractionCode={fraction.fractieCode} />
+        {fraction.titel}
+      </h3>
+      {!!fraction.kalendermelding && (
+        <p className={styles.GarbageFractionPanelHighlight}>
+          <InnerHtml>{fraction.kalendermelding}</InnerHtml>
+        </p>
+      )}
+      <dl>
+        <dt>Hoe</dt>
+        <dd>
+          <InstructionCTA fraction={fraction} />
+        </dd>
+      </dl>
+      {!!fraction.ophaaldagen && (
+        <dl>
+          <dt>Ophaaldag</dt>
+          <dd>{fraction.ophaaldagen}</dd>
+        </dl>
+      )}
+      {!!fraction.buitenzetten && (
+        <dl>
+          <dt>Buitenzetten</dt>
+          <dd>{fraction.buitenzetten}</dd>
+        </dl>
+      )}
+      {!!fraction.waar && (
+        <dl>
+          <dt>Waar</dt>
+          <dd>
+            {typeof fraction.waar === 'object' ? (
+              <LinkdInline href={fraction.waar.to}>
+                {fraction.waar.title}
+              </LinkdInline>
+            ) : (
+              fraction.waar
+            )}
+          </dd>
+        </dl>
+      )}
+      {!!fraction.opmerking && (
+        <div className={styles.GarbageFractionPanelOpmerking}>
+          <InnerHtml>{fraction.opmerking}</InnerHtml>
+        </div>
+      )}
+    </article>
   );
 }
 
-function GarbageCenterItem({ item }: { item: GarbageCenter }) {
+interface GarbageFractionPanelsProps {
+  fractions: GarbageFractionInformationTransformed[];
+}
+
+const fractions1 = ['rest', 'ga', 'papier'];
+const fractions2 = ['gft', 'glas', 'textiel'];
+
+function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
+  const fractionsByCode = Object.fromEntries(
+    fractions.map((fraction) => [fraction.fractieCode.toLowerCase(), fraction])
+  );
+
   return (
-    <>
-      <Heading size="medium" className={styles.AfvalpuntContentHeading}>
-        {item.title}{' '}
-        {item.distance !== 0 && (
-          <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
-        )}
-      </Heading>
-      <GarbageCenterInfoDetail
-        label="Adres"
-        valueWrapperElement="div"
-        value={
-          <InnerHtml el="p" className={styles.NoMargin}>
-            {item.address}
-          </InnerHtml>
-        }
-      />
-      <GarbageCenterInfoDetail
-        label="Telefoon"
-        value={<a href={`tel:${item.phone}`}>{item.phone}</a>}
-      />
-      <GarbageCenterInfoDetail
-        label="E-mail"
-        value={<a href={`mailto:${item.email}`}>{item.email}</a>}
-      />
-      <GarbageCenterInfoDetail
-        label="Meer informatie"
-        value={
-          <Linkd href={item.website} external={true}>
-            Spullen wegbrengen naar een Afvalpunt
-          </Linkd>
-        }
-      />
-    </>
+    <div className={styles.GarbageFractionPanels}>
+      <div className={styles.GarbageFractionPanelsColumn}>
+        {fractions1
+          .filter((fractionCode) => fractionCode in fractionsByCode)
+          .map((fractionCode) => (
+            <GarbageFractionPanel
+              key={fractionCode}
+              fraction={fractionsByCode[fractionCode]}
+            />
+          ))}
+      </div>
+      <div className={styles.GarbageFractionPanelsColumn}>
+        {fractions2
+          .filter((fractionCode) => fractionCode in fractionsByCode)
+          .map((fractionCode) => (
+            <GarbageFractionPanel
+              key={fractionCode}
+              fraction={fractionsByCode[fractionCode]}
+            />
+          ))}
+      </div>
+    </div>
   );
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
-
-  const [restafval, grofvuil] = AFVAL.content || [];
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION, BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
-
-  const garbagePointCollapsible = (
-    id: string,
-    item: GarbageRetrievalMoment
-  ) => (
-    <GarbageSectionCollapsible
-      id={id}
-      isLoading={isLoading(AFVAL)}
-      title={item.title}
-      hasItems={!!AFVAL.content?.length}
-      noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
-    >
-      {!!item.aanbiedwijze && (
-        <GarbageInfoDetail label="Hoe" value={item.aanbiedwijze} />
-      )}
-      {!!item.buitenZetten && (
-        <GarbageInfoDetail label="Buiten zetten" value={item.buitenZetten} />
-      )}
-      {!!item.ophaaldag && (
-        <GarbageInfoDetail label="Ophaaldag" value={item.ophaaldag} />
-      )}
-      {!!item.opmerking && (
-        <GarbageInfoDetail
-          label="Opmerking"
-          valueWrapperElement="div"
-          value={<InnerHtml el="p">{item.opmerking}</InnerHtml>}
-        />
-      )}
-    </GarbageSectionCollapsible>
-  );
+  const address = MY_LOCATION.content?.[0]?.address;
+  const inMokum =
+    profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
+  const isWeesp = address?.woonplaatsNaam === 'Weesp';
+  const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
   return (
-    <DetailPage className={styles.GarbageInformation}>
+    <DetailPage>
       <PageHeading
         backLink={{
           to: AppRoutes.HOME,
@@ -139,11 +219,12 @@ export default function GarbageInformation() {
         {profileType === 'private' && (
           <>
             <p>
-              Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
+              Hieronder vindt u een overzicht van alle huis- en grofvuil
+              voorzieningen rond uw adres.
             </p>
             <p>
               <Linkd href={ExternalUrls.AFVAL} external={true}>
-                De regels voor afval en hergebruik
+                Meer informatie over regels voor afval en hergebruik
               </Linkd>
               <br />
               <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
@@ -177,6 +258,7 @@ export default function GarbageInformation() {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+
         <GarbageInfoDetail
           label="Uw adres"
           value={
@@ -191,42 +273,57 @@ export default function GarbageInformation() {
             </>
           }
         />
-      </PageContent>
-      {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
-      {!!restafval && garbagePointCollapsible('restafval', restafval)}
-      <GarbageSectionCollapsible
-        id="garbageContainersOnMap"
-        title="Afvalcontainers in de buurt"
-      >
-        <GarbageInfoDetail
-          label="Overzicht in uw buurt"
-          value={
-            <Linkd href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]`}>
-              Bekijk de afvalcontainer locaties.
-            </Linkd>
-          }
-        />
-      </GarbageSectionCollapsible>
-      <GarbageSectionCollapsible
-        id="wegbrengen"
-        title="Afvalpunten"
-        isLoading={isLoading(AFVALPUNTEN)}
-        className={styles.Afvalpunten}
-      >
-        {AFVALPUNTEN.content?.centers.map((item, index) => (
-          <GarbageCenterItem key={item.title} item={item} />
-        ))}
-      </GarbageSectionCollapsible>
-      <PageContent>
-        <p>
-          <Linkd
-            className={styles.ContactLink}
-            external={true}
-            href={ExternalUrls.AFVAL_MELDING_FORMULIER}
-          >
-            Kloppen de dagen, tijden of adressen niet? Geef het aan ons door.
-          </Linkd>
-        </p>
+        {isApiReady && isWeesp && (
+          <p className={styles.WeespWarning}>
+            In Weesp haalt de GAD het afval op. Kijk op de{' '}
+            <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
+          </p>
+        )}
+        {isApiReady && inMokum && (
+          <>
+            {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
+              <GarbageFractionPanels fractions={AFVAL.content} />
+            )}
+            {AFVAL.content?.[0]?.stadsdeelAanvulling && (
+              <InnerHtml el="p">
+                {AFVAL.content[0].stadsdeelAanvulling}
+              </InnerHtml>
+            )}
+            <p>
+              <Button
+                className={styles.ContactLink}
+                onClick={() =>
+                  (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
+                }
+              >
+                Klopt de informatie niet? Geef het door
+              </Button>
+            </p>
+            <h3>Afvalcontainers in de buurt</h3>
+            <p>
+              <Linkd
+                href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
+              >
+                Kaart met containers in de buurt
+              </Linkd>
+            </p>
+            <h3>Adressen afvalpunten</h3>
+            <ul className={styles.UnstyledList}>
+              {AFVALPUNTEN.content?.centers.map((item, index) => (
+                <li key={item.title}>
+                  <Linkd href={item.website} external={true}>
+                    {item.title}
+                    {item.distance !== 0 && (
+                      <span className={styles.DistanceToHome}>
+                        +/-{item.distance}KM
+                      </span>
+                    )}
+                  </Linkd>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </PageContent>
     </DetailPage>
   );

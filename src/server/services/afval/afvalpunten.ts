@@ -8,7 +8,7 @@ import {
   getApproximateDistance,
 } from '../../../universal/helpers';
 import { sortAlpha } from '../../../universal/helpers/utils';
-import { AFVALPUNTENData, GarbageCenter } from '../../../universal/types/afval';
+import { AfvalPuntenData, GarbageCenter } from '../../../universal/types/afval';
 import FileCache from '../../helpers/file-cache';
 
 export const cache = new memoryCache.Cache<string, any>();
@@ -83,7 +83,7 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
       const labelTransformed: string = label
         .toLowerCase()
         .replace(/[^a-z]/gi, '');
-      const labelFinal =
+      const labelFinal: string =
         tableLabelTranslation[labelTransformed] || labelTransformed;
       return {
         ...acc,
@@ -161,7 +161,7 @@ const fileCache = new FileCache({
 
 function addApproximateDistance(
   latlng: LatLngLiteral | null,
-  centers: AFVALPUNTENData
+  centers: AfvalPuntenData
 ) {
   return centers
     .map((garbageCenter) => {

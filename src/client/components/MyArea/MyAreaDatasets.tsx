@@ -65,20 +65,11 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   // Align URL and state. Takes URL as primary source of truth.
   useEffect(() => {
     const queryConfig = getQueryConfig(search);
-    const currentZoom = map.getZoom();
-    const currentCenter = map.getCenter();
     const currentBbox = toBoundLiteral(map.getBounds());
-    const zoom = queryConfig?.s
-      ? currentZoom
-      : queryConfig?.zoom || currentZoom;
 
     const bbox = queryConfig?.s
       ? currentBbox
       : queryConfig?.bbox || currentBbox;
-
-    const center = queryConfig?.s
-      ? currentCenter
-      : queryConfig?.center || currentCenter;
 
     const datasetIds = queryConfig?.s
       ? activeDatasetIds
@@ -98,13 +89,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
     if (!isEqual(filters, activeFilters)) {
       setActiveFilterSelection(filters);
-    }
-
-    if (
-      (!isEqual(center, currentCenter) || !isEqual(zoom, currentZoom)) &&
-      isEqual(bbox, currentBbox)
-    ) {
-      map.setView(center, zoom);
     }
 
     if (!isEqual(activeFeature, loadingFeature)) {

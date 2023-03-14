@@ -33,7 +33,7 @@ export const FeatureToggle = {
   bekendmakingenDatasetActive: true,
   evenementenDatasetActive: false,
   klachtenActive: true,
-  bezwarenActive: !IS_AP,
+  bezwarenActive: false,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

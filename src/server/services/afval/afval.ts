@@ -4,10 +4,10 @@ import {
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
-import { fetchAfvalmomenten } from './afvalmomenten';
+import { fetchAfvalwijzer } from './afvalwijzer';
 import { fetchAfvalpunten } from './afvalpunten';
 
-export async function fetchAFVAL(
+export async function fetchAfval(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
@@ -19,19 +19,20 @@ export async function fetchAFVAL(
   );
 
   if (MY_LOCATION.status === 'OK') {
-    const primaryLocation = MY_LOCATION.content?.[0]?.latlng;
+    const primaryLocation = MY_LOCATION.content?.[0];
+    const bagID = primaryLocation?.bagNummeraanduidingId ?? null;
 
-    if (!primaryLocation) {
+    if (!bagID) {
       return apiSuccessResult([]);
     }
 
-    return await fetchAfvalmomenten(requestID, primaryLocation);
+    return await fetchAfvalwijzer(requestID, bagID, primaryLocation!.latlng);
   }
 
   return apiDependencyError({ MY_LOCATION });
 }
 
-export async function fetchAFVALPUNTEN(
+export async function fetchAfvalPunten(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType

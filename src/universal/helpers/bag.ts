@@ -17,21 +17,31 @@ export function extractAddress(rawAddress: string) {
 
 export type BAGSearchAddress = string;
 
+export function getBagResult(
+  results: BAGSourceData['results'] = [],
+  bagSearchAddress: BAGSearchAddress,
+  isWeesp: boolean
+) {
+  const result1 = results.find((result) => {
+    const isWoonplaatsMatch =
+      result.woonplaats === (isWeesp ? 'Weesp' : 'Amsterdam');
+
+    const isAddressMatch = result.adres
+      .toLowerCase()
+      .includes(bagSearchAddress.toLowerCase());
+    return isWoonplaatsMatch && isAddressMatch;
+  });
+
+  return result1;
+}
+
 export function getLatLonByAddress(
   results: BAGSourceData['results'] = [],
   bagSearchAddress: BAGSearchAddress,
   isWeesp: boolean
 ) {
   if (!!results.length) {
-    const result1 = results.find((result) => {
-      const isWoonplaatsMatch =
-        result.woonplaats === (isWeesp ? 'Weesp' : 'Amsterdam');
-
-      const isAddressMatch = result.adres
-        .toLowerCase()
-        .includes(bagSearchAddress.toLowerCase());
-      return isWoonplaatsMatch && isAddressMatch;
-    });
+    const result1 = getBagResult(results, bagSearchAddress, isWeesp);
 
     if (result1 && result1.adres && result1.centroid) {
       const [lng, lat] = result1.centroid;

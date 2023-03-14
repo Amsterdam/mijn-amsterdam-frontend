@@ -3,7 +3,6 @@ import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
 import { decodeToken } from '../helpers/app';
-import AFVAL from './json/afvalophaalgebieden.json';
 import AKTES from './json/aktes.json';
 import BELASTINGEN from './json/belasting.json';
 import BEZWAREN from './json/bezwaren.json';
@@ -185,15 +184,15 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  [String(ApiUrls.AFVAL)]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      return await loadMockApiResponseJson(AFVAL);
-    },
-  },
+  // [String(ApiUrls.AFVAL)]: {
+  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+  //   responseData: async (config: any) => {
+  //     // if (isCommercialUser(config)) {
+  //     //   return 'no-content';
+  //     // }
+  //     return await loadMockApiResponseJson(AFVAL);
+  //   },
+  // },
   [String(ApiUrls.CLEOPATRA)]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
