@@ -171,6 +171,8 @@ export const ApiConfig: ApiDataRequestConfig = {
       ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
     }),
     postponeFetch: !FeatureToggle.belastingApiActive,
+    cancelTimeout: ONE_SECOND_MS * 60,
+    timeout: ONE_SECOND_MS * 90,
   },
   CLEOPATRA: {
     url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
