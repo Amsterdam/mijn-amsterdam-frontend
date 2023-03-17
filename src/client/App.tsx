@@ -11,7 +11,7 @@ import {
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem } from '../universal/config/env';
-import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
+import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
@@ -134,8 +134,9 @@ function AppAuthenticated() {
   const history = useHistory();
   const profileType = useProfileTypeValue();
 
-  const isNoHeroRoute = NoHeroRoutes.some((route) =>
-    matchPath(history.location.pathname, { path: route })
+  const isHeroVisible = !(
+    isUiElementVisible(profileType, 'mijnBuurt') &&
+    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
   );
 
   const redirectAfterLogin = useDeeplinkRedirect();
@@ -148,13 +149,15 @@ function AppAuthenticated() {
 
   return (
     <>
-      <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
+      <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          {isUiElementVisible(profileType, 'mijnBuurt') && (
+            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          )}
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
