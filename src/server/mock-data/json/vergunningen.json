@@ -924,6 +924,22 @@
       "reason": "Nieuwe ligplaats",
       "vesselKind": "Sloep",
       "vesselName": "Sloepie IX"
+    },
+    {
+      "caseType": "VOB",
+      "title": "Ligplaatsvergunning",
+      "identifier": "Z/23/1797716",
+      "dateRequest": "2023-03-09T00:00:00",
+      "dateDecision": null,
+      "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": null,
+      "processed": false,
+      "requestKind": "Ligplaatsvergunning woonboot",
+      "reason": "Nieuwe ligplaats",
+      "vesselKind": "Sloep",
+      "vesselName": "Sloepie XX"
     }
   ],
   "status": "OK"

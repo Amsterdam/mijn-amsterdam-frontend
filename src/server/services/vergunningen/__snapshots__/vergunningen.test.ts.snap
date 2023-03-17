@@ -6,6 +6,18 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-03-09T00:00:00",
+        "description": "Uw aanvraag ligplaatsvergunning is ontvangen.",
+        "id": "vergunning-3229752453-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/vob/3229752453",
+        },
+        "subject": "3229752453",
+        "title": "Aanvraag ligplaatsvergunning ontvangen",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2023-01-03T00:00:00",
         "description": "Uw aanvraag voor een ligplaatsvergunning is in behandeling genomen.",
         "id": "vergunning-513492494-notification",
@@ -454,6 +466,23 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "VOB",
+    "dateDecision": null,
+    "dateRequest": "2023-03-09T00:00:00",
+    "dateWorkflowActive": null,
+    "decision": null,
+    "id": "3229752453",
+    "identifier": "Z/23/1797716",
+    "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+    "processed": false,
+    "reason": "Nieuwe ligplaats",
+    "requestKind": "Ligplaatsvergunning woonboot",
+    "status": "Ontvangen",
+    "title": "Ligplaatsvergunning",
+    "vesselKind": "Sloep",
+    "vesselName": "Sloepie XX",
+  },
   Object {
     "caseType": "VOB",
     "dateDecision": null,
