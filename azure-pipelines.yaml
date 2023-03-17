@@ -39,12 +39,10 @@ parameters:
 variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - group: InfraVariables-o
-      - group: FrontendConfigVariables-o
       - name: dtapName
         value: o
   - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
       - group: InfraVariables-t
-      - group: FrontendConfigVariables-t
       - name: dtapName
         value: t
 
