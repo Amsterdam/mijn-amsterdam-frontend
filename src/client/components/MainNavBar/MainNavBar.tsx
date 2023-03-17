@@ -25,6 +25,7 @@ import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import {
+  isMenuItemVisible,
   mainMenuItemId,
   mainMenuItems,
   MenuItem,
@@ -202,24 +203,26 @@ export default function MainNavBar({
     useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map((item) => {
-      let menuItem = item;
+    return mainMenuItems
+      .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
+      .map((item) => {
+        let menuItem = item;
 
-      // Add dynamic chapter submenu items to the menu
-      if (item.id === mainMenuItemId.CHAPTERS) {
-        menuItem = { ...item, submenuItems: myChapterItems };
-      } else if (
-        menuItem.title === ChapterTitles.BUURT &&
-        profileType !== 'private'
-      ) {
-        menuItem = {
-          ...menuItem,
-          title: termReplace(menuItem.title),
-        };
-      }
+        // Add dynamic chapter submenu items to the menu
+        if (item.id === mainMenuItemId.CHAPTERS) {
+          menuItem = { ...item, submenuItems: myChapterItems };
+        } else if (
+          menuItem.title === ChapterTitles.BUURT &&
+          profileType !== 'private'
+        ) {
+          menuItem = {
+            ...menuItem,
+            title: termReplace(menuItem.title),
+          };
+        }
 
-      return getMenuItem(menuItem);
-    });
+        return getMenuItem(menuItem);
+      });
   }, [myChapterItems, profileType, termReplace]);
 
   return (
