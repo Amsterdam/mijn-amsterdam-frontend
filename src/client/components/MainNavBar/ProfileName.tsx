@@ -149,20 +149,16 @@ export function ProfileName({
         break;
       case !!profileAttribute:
         nameContent = (
-          <Button
-            onClick={() => alert('Klik!')}
-            icon={IconProfile}
-            variant="plain"
-            lean={true}
-            iconSize="24"
+          <span
             className={classnames(
               styles.ProfileLink,
               styles['ProfileLink--private'],
+              styles['ProfileLink--private-attributes'],
               styles['ProfileLink--active']
             )}
           >
-            {profileAttribute}
-          </Button>
+            <IconProfile /> {profileAttribute}
+          </span>
         );
         break;
     }
