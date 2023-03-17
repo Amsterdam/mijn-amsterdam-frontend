@@ -33,6 +33,7 @@ import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -266,38 +267,44 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
-          <IconButton
-            aria-label="Zoeken in mijn amsterdam"
-            className={styles.SearchButton}
-            onClick={() => {
-              setSearchActive(!isSearchActive);
-              trackSearchBarEvent(
-                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
-              );
-            }}
-            icon={isSearchActive ? IconClose : IconSearch}
-          />
-        )}
-      </div>
-      {isDisplayLiveSearch && isSearchActive && (
-        <div className={styles.Search}>
-          <div className={styles.SearchBar}>
-            <div className={styles.SearchBarInner}>
-              <Search
-                onFinish={(reason) => {
-                  setSearchActive(false);
-                  if (reason) {
-                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                  }
-                }}
-                replaceResultUrl={replaceResultUrl}
-              />
-            </div>
-          </div>
+      {isUiElementVisible(profileType, 'search') && (
+        <div className={styles.InfoButtons}>
+          {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
+            <IconButton
+              aria-label="Zoeken in mijn amsterdam"
+              className={styles.SearchButton}
+              onClick={() => {
+                setSearchActive(!isSearchActive);
+                trackSearchBarEvent(
+                  `${
+                    !isSearchActive === false ? 'Sluiten' : 'Openen'
+                  } met button`
+                );
+              }}
+              icon={isSearchActive ? IconClose : IconSearch}
+            />
+          )}
         </div>
       )}
+      {isUiElementVisible(profileType, 'search') &&
+        isDisplayLiveSearch &&
+        isSearchActive && (
+          <div className={styles.Search}>
+            <div className={styles.SearchBar}>
+              <div className={styles.SearchBarInner}>
+                <Search
+                  onFinish={(reason) => {
+                    setSearchActive(false);
+                    if (reason) {
+                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                    }
+                  }}
+                  replaceResultUrl={replaceResultUrl}
+                />
+              </div>
+            </div>
+          </div>
+        )}
     </nav>
   );
 }

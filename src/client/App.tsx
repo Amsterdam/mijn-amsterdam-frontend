@@ -16,6 +16,7 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
+import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -247,7 +248,9 @@ function AppAuthenticated() {
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
-          <Route path={AppRoutes.SEARCH} component={Search} />
+          {isUiElementVisible(profileType, 'search') && (
+            <Route path={AppRoutes.SEARCH} component={Search} />
+          )}
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>
