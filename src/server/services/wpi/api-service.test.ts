@@ -621,7 +621,7 @@ describe('wpi/app-service', () => {
   });
 
   test('Service error', async () => {
-    nock(`http://localhost:${BFF_PORT}`)
+    nock(`http://localhost/remote/api`)
       .get('/wpi/uitkering/specificaties-en-jaaropgaven')
       .reply(401, {
         status: 'ERROR',
