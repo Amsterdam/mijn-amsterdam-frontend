@@ -87,7 +87,7 @@ const requested: NotificationLabels = {
 const inProgress: NotificationLabels = {
   title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
   description: (item) =>
-    `Uw vergunningsaanvraag voor ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
   datePublished: (item) => item.dateRequest,
   link,
 };
@@ -95,7 +95,7 @@ const inProgress: NotificationLabels = {
 const done: NotificationLabels = {
   title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
   description: (item) =>
-    `Uw vergunningsaanvraag voor een ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
   datePublished: (item) => item.dateDecision ?? item.dateRequest,
   link,
 };
@@ -111,7 +111,7 @@ const requestedShort: NotificationLabels = {
 const inProgressShort: NotificationLabels = {
   title: inProgress.title,
   description: (item) =>
-    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+    `Uw aanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
   datePublished: inProgress.datePublished,
   link,
 };
@@ -119,7 +119,7 @@ const inProgressShort: NotificationLabels = {
 const doneShort: NotificationLabels = {
   title: done.title,
   description: (item) =>
-    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+    `Uw aanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
   datePublished: done.datePublished,
   link,
 };
