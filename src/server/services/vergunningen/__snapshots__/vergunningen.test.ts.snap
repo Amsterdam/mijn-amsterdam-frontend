@@ -7,7 +7,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-03-09T00:00:00",
-        "description": "Uw aanvraag ligplaatsvergunning is ontvangen.",
+        "description": "Uw aanvraag voor een ligplaatsvergunning is ontvangen.",
         "id": "vergunning-3229752453-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -19,7 +19,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-01-03T00:00:00",
-        "description": "Uw aanvraag ligplaatsvergunning is in behandeling genomen.",
+        "description": "Uw aanvraag voor een ligplaatsvergunning is in behandeling genomen.",
         "id": "vergunning-513492494-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -31,7 +31,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag splitsingsvergunning is in behandeling genomen.",
+        "description": "Uw aanvraag voor een splitsingsvergunning is in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -43,7 +43,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag onttrekkingsvergunning voor sloop is ontvangen.",
+        "description": "Uw aanvraag voor een onttrekkingsvergunning voor sloop is ontvangen.",
         "id": "vergunning-2377704102-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -55,7 +55,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag samenvoegingsvergunning is in behandeling genomen.",
+        "description": "Uw aanvraag voor een samenvoegingsvergunning is in behandeling genomen.",
         "id": "vergunning-3588461895-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -79,7 +79,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-10-19T00:00:00",
-        "description": "Uw aanvraag ontheffing zwaar verkeer is in behandeling genomen.",
+        "description": "Uw aanvraag voor een ontheffing zwaar verkeer is in behandeling genomen.",
         "id": "vergunning-2318111872-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -91,7 +91,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-10-16T00:00:00",
-        "description": "Uw aanvraag ontheffing zwaar verkeer is ontvangen.",
+        "description": "Uw aanvraag voor een ontheffing zwaar verkeer is ontvangen.",
         "id": "vergunning-1863159343-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -103,7 +103,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-16T00:00:00",
-        "description": "Uw aanvraag geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) is in behandeling genomen.",
+        "description": "Uw aanvraag voor een geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) is in behandeling genomen.",
         "id": "vergunning-504231399-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -115,7 +115,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
-        "description": "Uw aanvraag parkeerontheffingen blauwe zone particulieren is in behandeling genomen.",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone particulieren is in behandeling genomen.",
         "id": "vergunning-2295682720-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -127,7 +127,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
-        "description": "Uw aanvraag parkeerontheffingen blauwe zone bedrijven is in behandeling genomen.",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven is in behandeling genomen.",
         "id": "vergunning-2191426354-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -163,7 +163,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
-        "description": "Uw aanvraag evenement vergunning is in behandeling genomen.",
+        "description": "Uw aanvraag voor een evenement vergunning is in behandeling genomen.",
         "id": "vergunning-3073404626-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -175,7 +175,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
-        "description": "Uw aanvraag evenement vergunning is in behandeling genomen.",
+        "description": "Uw aanvraag voor een evenement vergunning is in behandeling genomen.",
         "id": "vergunning-4081922197-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -187,7 +187,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
-        "description": "Uw aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
+        "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
         "id": "vergunning-2331715774-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -199,7 +199,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
-        "description": "Uw aanvraag vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
         "id": "vergunning-913567999-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -235,7 +235,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
-        "description": "Uw aanvraag (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "description": "Uw aanvraag voor een (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
         "id": "vergunning-333728632-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -401,7 +401,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
-        "description": "Uw aanvraag parkeerontheffingen blauwe zone particulieren is in behandeling genomen.",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone particulieren is in behandeling genomen.",
         "id": "vergunning-2295682720-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -413,7 +413,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
-        "description": "Uw aanvraag parkeerontheffingen blauwe zone bedrijven is in behandeling genomen.",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven is in behandeling genomen.",
         "id": "vergunning-2191426354-notification",
         "link": Object {
           "title": "Bekijk details",

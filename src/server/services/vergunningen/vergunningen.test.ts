@@ -507,7 +507,7 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-23",
-            "description": "Uw aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
+            "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
             "id": "vergunning-1037482200-notification",
             "link": Object {
               "title": "Bekijk details",
@@ -541,7 +541,7 @@ describe('Vergunningen service', () => {
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-20",
-            "description": "Uw aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) is afgehandeld.",
+            "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is afgehandeld.",
             "id": "vergunning-1037482200-notification",
             "link": Object {
               "title": "Bekijk details",
