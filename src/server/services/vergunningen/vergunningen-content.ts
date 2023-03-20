@@ -93,7 +93,7 @@ const inProgress: NotificationLabels = {
 };
 
 const done: NotificationLabels = {
-  title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
+  title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
   description: (item) =>
     `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
   datePublished: (item) => item.dateDecision ?? item.dateRequest,
