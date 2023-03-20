@@ -200,7 +200,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     AKTES,
-    BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
@@ -221,6 +220,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WMO,
     KLACHTEN,
     BEZWAREN,
+    BELASTINGEN,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -232,7 +232,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     BRP,
-    BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
@@ -253,6 +252,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WMO,
     KLACHTEN,
     BEZWAREN,
+    BELASTINGEN,
   },
   commercial: {
     AFVAL,
