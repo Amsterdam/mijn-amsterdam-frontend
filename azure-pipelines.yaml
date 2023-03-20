@@ -39,7 +39,6 @@ parameters:
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
-      serviceConnectionName: $(serviceConnectionName)
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
