@@ -19,6 +19,14 @@ resources:
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/pipeline-fe
 
+variables:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
+      - name: dtapName
+        value: o
+  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+      - name: dtapName
+        value: t
+
 parameters:
   - name: btdBuild
     type: boolean
