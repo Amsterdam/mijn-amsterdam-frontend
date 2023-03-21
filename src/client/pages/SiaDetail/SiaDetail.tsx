@@ -141,7 +141,6 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             <InfoDetailGroup>
-              <InfoDetail label="Categorie" value={SiaItem?.category || '-'} />
               {!!SiaItem?.latlon && (
                 <Location
                   modalTitle="Locatie van de melding"
@@ -149,8 +148,19 @@ export default function SiaDetail() {
                   label={SiaItem?.address}
                 />
               )}
+              <InfoDetail
+                label="Verwerkingstijd"
+                className={styles.Verwerkingstijd}
+                value={
+                  <>
+                    We laten u binnen 5 dagen weten wat we hebben gedaan. En
+                    anders hoort u wanneer wij uw melding kunnen oppakken. We
+                    houden u op de hoogte.
+                  </>
+                }
+              />
             </InfoDetailGroup>
-            <InfoDetailGroup>
+            {/* <InfoDetailGroup>
               <InfoDetail label="Urgentie" value={SiaItem?.priority} />
               {SiaItem?.deadline && (
                 <InfoDetail
@@ -158,7 +168,7 @@ export default function SiaDetail() {
                   value={formatDurationInWords(SiaItem?.deadline)}
                 />
               )}
-            </InfoDetailGroup>
+            </InfoDetailGroup> */}
             <InfoDetailGroup>
               <InfoDetail label="E-mail melder" value={SiaItem?.email || '-'} />
               <InfoDetail
@@ -166,6 +176,7 @@ export default function SiaDetail() {
                 value={SiaItem?.phone || '-'}
               />
             </InfoDetailGroup>
+
             <p className={styles.DetailInfo}>
               U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de
               hoogte wordt gehouden over de voortgang van uw melding. U kunt
