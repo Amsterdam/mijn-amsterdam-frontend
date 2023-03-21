@@ -137,6 +137,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.PARKEREN,
     to: AppRoutes.PARKEREN,
     profileTypes: ['private', 'private-commercial', 'commercial'],
+    isAlwaysVisible: true,
   },
   {
     title: ChapterTitles.KLACHTEN,
