@@ -1,64 +1,57 @@
 import { render, screen } from '@testing-library/react';
 
-import { MemoryRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
-import { useTabletScreen } from '../../hooks/media.hook';
-import MainNavBar from './MainNavBar';
 import userEvent from '@testing-library/user-event';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config';
+import { appStateAtom } from '../../hooks';
+import { useTabletScreen } from '../../hooks/media.hook';
+import MockApp from '../../pages/MockApp';
+import MainNavBar from './MainNavBar';
 
 jest.mock('../../hooks/media.hook');
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useLocation: () => {
-    return { pathname: '/' };
+
+const testState: any = {
+  BRP: {
+    status: 'OK',
+    content: { persoon: { opgemaakteNaam: 'Test van FooBar' } },
   },
-  generatePth: (r: any) => r,
-}));
-jest.mock('./MainNavBar.constants', () => {
-  return {
-    mainMenuItems: [
-      {
-        id: 'TEST-MENU-ITEM',
-        title: 'Test Menu Item',
-        to: '/test/a/path',
-      },
-    ],
-    mainMenuItemId: {
-      'TEST-MENU-ITEM': 'TEST-MENU-ITEM',
-    },
-  };
-});
+  PROFILE: { status: 'OK', content: {} },
+  VERGUNNINGEN: { status: 'OK', content: [{ id: 'test' }] },
+};
 
 describe('<MainNavBar />', () => {
-  it('Renders without crashing', () => {
-    render(
-      <MemoryRouter>
-        <RecoilRoot>
-          <MainNavBar isAuthenticated={true} />
-        </RecoilRoot>
-      </MemoryRouter>
-    );
+  const routeEntry = AppRoutes.HOME;
+  const routePath = AppRoutes.HOME;
 
-    expect(screen.getByText(/Test Menu Item/)).toBeInTheDocument();
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, testState);
+  }
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={() => <MainNavBar isAuthenticated={true} />}
+      initializeState={initializeState}
+    />
+  );
+
+  it('Renders without crashing', () => {
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+
+    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
   });
 
-  describe('Small screen version of <MainNavBar />', () => {
-    it('Renders burger menu on small screens', () => {
-      (useTabletScreen as jest.Mock).mockReturnValue(true);
+  it('Renders burger menu on small screens', () => {
+    (useTabletScreen as jest.Mock).mockReturnValue(true);
 
-      render(
-        <MemoryRouter>
-          <RecoilRoot>
-            <MainNavBar isAuthenticated={true} />
-          </RecoilRoot>
-        </MemoryRouter>
-      );
+    render(<Component />);
 
-      expect(screen.getByText('Test Menu Item')).toBeInTheDocument();
-      expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
-      userEvent.click(screen.getAllByText('Toon navigatie')[0]);
-      expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
-      expect(screen.getByText('Uitloggen')).toBeInTheDocument();
-    });
+    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
+    expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
+    userEvent.click(screen.getAllByText('Toon navigatie')[0]);
+    expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
+    expect(screen.getByText('Uitloggen')).toBeInTheDocument();
   });
 });

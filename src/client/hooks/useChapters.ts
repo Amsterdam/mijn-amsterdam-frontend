@@ -11,9 +11,8 @@ import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 
-export function isChapterActive(
-  item: ChapterMenuItem,
-  {
+export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
+  const {
     WMO,
     WPI_SPECIFICATIES,
     WPI_AANVRAGEN,
@@ -34,8 +33,12 @@ export function isChapterActive(
     KREFIA,
     KLACHTEN,
     BEZWAREN,
-  }: AppState
-) {
+  } = appState;
+
+  if (!(item.id in appState)) {
+    return false;
+  }
+
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {

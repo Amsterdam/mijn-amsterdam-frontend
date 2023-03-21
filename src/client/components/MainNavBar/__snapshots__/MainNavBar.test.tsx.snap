@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainNavBar /> Renders without crashing 1`] = `
+<DocumentFragment>
+  <nav
+    class="MainNavBar"
+  >
+    <div
+      class="LinkContainer"
+      id="MainMenu"
+      style="left: -400px;"
+    >
+      <div
+        class="LogoAndButtonWrapper"
+      >
+        <svg
+          aria-label="Gemeente Amsterdam logo"
+          class="logo"
+          role="img"
+        >
+          logo-amsterdam.svg
+        </svg>
+        <button
+          aria-expanded="false"
+          class="BurgerMenuToggleBtn"
+          id="BurgerMenuToggleBtn"
+        >
+          Toon navigatie
+        </button>
+      </div>
+      <div
+        class="secondaryLinks"
+      >
+        <span
+          class="ProfileName ProfileName--private"
+        >
+          <button
+            class="Button Button__plain Button__lean ProfileLink ProfileLink--private"
+          >
+            <svg
+              aria-hidden="true"
+              class="Icon Icon__left"
+              fill="#000"
+              height="24"
+              width="24"
+            >
+              Profile.svg
+            </svg>
+            Test van FooBar
+          </button>
+        </span>
+        <a
+          class="Button Button__plain Button__lean Linkd LogoutLink"
+          href="/api/v1/auth/logout"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Logout.svg
+          </svg>
+          <span>
+            Uitloggen
+          </span>
+        </a>
+      </div>
+      <a
+        aria-current="page"
+        class="MainNavLink active"
+        href="/"
+      >
+        <span>
+          Home
+        </span>
+      </a>
+      <span
+        class="MainNavSubmenu"
+        data-submenu-id="MIJN_THEMAS"
+      >
+        <button
+          aria-expanded="false"
+          class="SubmenuButton"
+        >
+          <span>
+            Mijn thema's
+          </span>
+        </button>
+        <div
+          aria-hidden="true"
+          class="SubmenuPanel"
+        >
+          <div
+            class="SubmenuItems"
+          >
+            <a
+              class="MainNavSubmenuLink MainNavSubmenuLink"
+              data-chapter-id="BRP"
+              href="/persoonlijke-gegevens"
+            >
+              <span
+                class="SubmenuItemIcon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="#767676"
+                >
+                  MijnGegevens.svg
+                </svg>
+              </span>
+              <span
+                class="SubmenuItemTitle"
+              >
+                Mijn gegevens
+              </span>
+            </a>
+            <a
+              class="MainNavSubmenuLink MainNavSubmenuLink"
+              data-chapter-id="VERGUNNINGEN"
+              href="/vergunningen"
+            >
+              <span
+                class="SubmenuItemIcon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="#767676"
+                >
+                  vergunningen.svg
+                </svg>
+              </span>
+              <span
+                class="SubmenuItemTitle"
+              >
+                Vergunningen
+              </span>
+            </a>
+          </div>
+        </div>
+      </span>
+      <a
+        class="MainNavLink"
+        href="/buurt"
+      >
+        <span>
+          Mijn buurt
+        </span>
+      </a>
+      <a
+        class="MainNavLink"
+        href="/overzicht-updates"
+      >
+        <span>
+          Actueel
+        </span>
+      </a>
+      <a
+        class="MainNavLink"
+        href="/overzicht-tips"
+      >
+        <span>
+          Mijn tips
+        </span>
+      </a>
+    </div>
+    <div
+      class="InfoButtons"
+    >
+      <button
+        aria-label="Zoeken in mijn amsterdam"
+        class="Button Button__plain Button__lean IconButton SearchButton"
+      >
+        <svg
+          aria-hidden="true"
+          class="Icon"
+          fill="black"
+          height="32"
+          width="32"
+        >
+          Search.svg
+        </svg>
+      </button>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

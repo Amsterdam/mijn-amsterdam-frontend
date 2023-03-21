@@ -64,9 +64,9 @@ function SecondaryLinks() {
       {!isError(BRP) && !isError(KVK) && (
         <ProfileName
           person={BRP.content?.persoon}
-          company={KVK.content}
+          company={KVK?.content}
           profileType={profileType}
-          profileAttribute={PROFILE.content?.profile.id}
+          profileAttribute={PROFILE.content?.profile?.id}
         />
       )}
       <LogoutLink>Uitloggen</LogoutLink>
