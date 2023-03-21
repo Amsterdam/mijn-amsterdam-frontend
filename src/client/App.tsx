@@ -30,6 +30,7 @@ import { useUsabilla } from './hooks/useUsabilla';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 
 import { default as LandingPage } from './pages/Landing/Landing';
+import { default as LandingPageYivi } from './pages/Landing/LandingYivi';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -108,6 +109,11 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route
+            exact
+            path={AppRoutes.YIVI_LANDING}
+            component={LandingPageYivi}
+          />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
@@ -140,6 +146,8 @@ function AppAuthenticated() {
   );
 
   const redirectAfterLogin = useDeeplinkRedirect();
+
+  console.log('redirectAfterLogin', redirectAfterLogin);
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {

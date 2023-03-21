@@ -414,6 +414,10 @@ export const oidcConfigEherkenning: ConfigParams = {
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+  routes: {
+    ...oidcConfigBase.routes,
+    postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
+  },
 };
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {

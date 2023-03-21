@@ -44,6 +44,7 @@ export const AppRoutes: Record<string, string> = {
   PARKEREN: '/parkeren',
   KLACHTEN: '/klachten/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  YIVI_LANDING: '/inloggen-met-yivi',
 };
 
 export const AppRoutesRedirect = [
@@ -99,6 +100,8 @@ export const PublicRoutes = [
   AppRoutes.API1_LOGIN,
   AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
+  AppRoutes.YIVI_LANDING,
+  AppRoutes.ROOT,
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(

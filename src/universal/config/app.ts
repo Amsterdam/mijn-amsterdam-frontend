@@ -19,7 +19,7 @@ export const FeatureToggle = {
   sportDatasetsActive: true,
   wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
-  irmaActive: !IS_AP,
+  yiviActive: !IS_PRODUCTION,
   aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,

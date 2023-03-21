@@ -11,7 +11,11 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
 } from './config';
-import { AuthProfile, generateDevSessionCookieValue } from './helpers/app';
+import {
+  AuthProfile,
+  generateDevSessionCookieValue,
+  getAuth,
+} from './helpers/app';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import { countLoggedInVisit } from './services/visitors';
@@ -45,15 +49,26 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    return res.redirect(
-      `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`
-    );
+    const redirectUrl = `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+
+    return res.redirect(redirectUrl);
   }
 );
 
-authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
+authRouterDevelopment.get('/api/v1/dev/auth/logout', async (req, res) => {
+  const auth = await getAuth(req);
+
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+
+  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+
+  switch (auth.profile.authMethod) {
+    case 'yivi':
+      redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
+      break;
+  }
+
+  return res.redirect(redirectUrl);
 });
 
 export const relayDevRouter = express.Router();

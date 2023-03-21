@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -12,11 +11,7 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
-import {
-  LOGIN_URL_DIGID,
-  LOGIN_URL_EHERKENNING,
-  LOGIN_URL_YIVI,
-} from '../../config/api';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
@@ -30,10 +25,10 @@ export default function Landing() {
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
-  const [isRedirectingIrma, setRedirectingIrma] = useState(false);
+  const [isRedirectingYivi, setRedirectingYivi] = useState(false);
 
   const isRedirectingAny =
-    isRedirecting || isRedirectingEherkenning || isRedirectingIrma;
+    isRedirecting || isRedirectingEherkenning || isRedirectingYivi;
 
   return (
     <TextPage>
@@ -85,55 +80,6 @@ export default function Landing() {
             </a>
           </p>
         </div>
-        {FeatureToggle.irmaActive && (
-          <div
-            className={classnames(
-              styles.LoginOption,
-              styles['LoginOption--irma']
-            )}
-          >
-            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
-              Voor particulieren
-            </Heading>
-            <p>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_YIVI}
-                onClick={() => setRedirectingIrma(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  styles['LoginBtn--irma'],
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
-                <span className={styles.LoginLogoWrap}>
-                  <img
-                    src={IrmaLogo}
-                    alt="IRMA logo"
-                    className={styles.LoginLogo}
-                  />
-                </span>
-                <span className={styles.LoginButtonText}>
-                  {isRedirectingIrma
-                    ? 'Bezig met inloggen...'
-                    : 'Inloggen met IRMA'}
-                </span>
-              </a>
-            </p>
-            <Heading size="tiny" el="h4">
-              Hebt u nog geen IRMA? Regel dit dan eerst.
-            </Heading>
-            <p>
-              Ga naar{' '}
-              <a rel="noopener noreferrer" href="https://irma.app">
-                IRMA: een nieuwe manier van inloggen
-              </a>{' '}
-              voor meer informatie.
-            </p>
-          </div>
-        )}
         {FeatureToggle.eherkenningActive && (
           <div
             className={classnames(
