@@ -201,7 +201,7 @@ export const notificationContent: NotificationContent = {
   [CaseType.ERVV]: defaultNotificationLabels.long,
   [CaseType.TVMRVVObject]: defaultNotificationLabels.long,
   [CaseType.EvenementVergunning]: defaultNotificationLabels.short,
-  [CaseType.EvenementMelding]: defaultNotificationLabels.long,
+  [CaseType.EvenementMelding]: defaultNotificationLabels.short,
   [CaseType.Omzettingsvergunning]: defaultNotificationLabels.short,
   [CaseType.AanbiedenDiensten]: defaultNotificationLabels.long,
   [CaseType.Flyeren]: defaultNotificationLabels.long,
