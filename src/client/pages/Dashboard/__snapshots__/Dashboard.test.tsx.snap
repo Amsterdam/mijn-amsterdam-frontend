@@ -342,27 +342,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           </a>
           <a
             class="MainNavSubmenuLink"
-            data-chapter-id="INKOMEN"
-            href="/inkomen"
-          >
-            <span
-              class="SubmenuItemIcon"
-            >
-              <svg
-                aria-hidden="true"
-                fill="#767676"
-              >
-                inkomen.svg
-              </svg>
-            </span>
-            <span
-              class="SubmenuItemTitle"
-            >
-              Inkomen
-            </span>
-          </a>
-          <a
-            class="MainNavSubmenuLink"
             data-chapter-id="MILIEUZONE"
             href=""
             rel="external"
@@ -381,27 +360,6 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               class="SubmenuItemTitle"
             >
               Milieuzone
-            </span>
-          </a>
-          <a
-            class="MainNavSubmenuLink"
-            data-chapter-id="PARKEREN"
-            href="/parkeren"
-          >
-            <span
-              class="SubmenuItemIcon"
-            >
-              <svg
-                aria-hidden="true"
-                fill="#767676"
-              >
-                Car.svg
-              </svg>
-            </span>
-            <span
-              class="SubmenuItemTitle"
-            >
-              Parkeren
             </span>
           </a>
         </div>
