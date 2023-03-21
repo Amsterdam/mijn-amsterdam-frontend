@@ -1,7 +1,10 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+import {
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
+  hasWorkflow,
+} from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { BZB, BZP, Vergunning, VergunningExpirable } from './vergunningen';
 
@@ -88,7 +91,12 @@ const inProgress: NotificationLabels = {
   title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
   description: (item) =>
     `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
-  datePublished: (item) => item.dateRequest,
+  datePublished: (item) =>
+    !hasWorkflow(item.caseType)
+      ? item.dateRequest
+      : item.dateWorkflowActive
+      ? item.dateWorkflowActive
+      : item.dateRequest,
   link,
 };
 

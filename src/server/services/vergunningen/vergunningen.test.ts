@@ -506,7 +506,7 @@ describe('Vergunningen service', () => {
         Array [
           Object {
             "chapter": "VERGUNNINGEN",
-            "datePublished": "2022-09-23",
+            "datePublished": "2022-09-27",
             "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
             "id": "vergunning-1037482200-notification",
             "link": Object {
