@@ -4,7 +4,6 @@ import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/w
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
   Alert,
@@ -43,7 +42,7 @@ export default function Stadspas() {
   const { WPI_STADSPAS } = useAppStateGetter();
   const aanvragen = WPI_STADSPAS.content?.aanvragen;
 
-  const items: StatusLine[] = useMemo(() => {
+  const items = useMemo(() => {
     if (!aanvragen) {
       return [];
     }
@@ -162,7 +161,6 @@ export default function Stadspas() {
           className={styles.SectionCollapsibleFirst}
         >
           <Table
-            titleKey="moreDetail"
             items={stadspasItems}
             displayProps={stadspasDisplayProps}
             className={styles.Table}

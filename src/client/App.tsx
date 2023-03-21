@@ -26,7 +26,6 @@ import {
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
-import Bezwaren from './pages/Bezwaren/Bezwaren';
 
 import { default as LandingPage } from './pages/Landing/Landing';
 
@@ -94,6 +93,11 @@ const VergunningDetail = lazy(
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
+
+const Bezwaren = lazy(() => import('./pages/Bezwaren/Bezwaren'));
+
+const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
+const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -246,6 +250,12 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
+          )}
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes['HORECA/DETAIL']} component={HorecaDetail} />
+          )}
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes.HORECA} component={Horeca} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />

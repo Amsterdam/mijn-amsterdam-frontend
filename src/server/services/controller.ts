@@ -16,6 +16,7 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchMyLocation } from './home';
+import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -89,6 +90,9 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 
+const HORECA = async (requestID: requestID, req: Request) =>
+  fetchHorecaVergunningen(requestID, await getAuth(req), getProfileType(req));
+
 // Location, address, based services
 const MY_LOCATION = async (requestID: requestID, req: Request) =>
   fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
@@ -144,6 +148,7 @@ const SERVICES_INDEX = {
   KLACHTEN,
   BEZWAREN,
   NOTIFICATIONS,
+  HORECA,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -167,6 +172,7 @@ type CommercialServices = Pick<
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
   | 'TOERISTISCHE_VERHUUR'
+  | 'HORECA'
 >;
 
 type ServicesByProfileType = {
@@ -202,6 +208,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KLACHTEN,
     BEZWAREN,
     BELASTINGEN,
+    HORECA,
   },
   'private-commercial': {
     AFVAL,
@@ -228,6 +235,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     KLACHTEN,
     BEZWAREN,
     BELASTINGEN,
+    HORECA,
   },
   commercial: {
     AFVAL,
@@ -242,6 +250,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     VERGUNNINGEN,
+    HORECA,
   },
 };
 
