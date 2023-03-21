@@ -225,6 +225,8 @@ export default function MainNavBar({
       });
   }, [myChapterItems, profileType, termReplace]);
 
+  const isSearchVisible = isUiElementVisible(profileType, 'search');
+
   return (
     <nav className={styles.MainNavBar}>
       {hasBurgerMenu && (
@@ -270,7 +272,7 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      {isUiElementVisible(profileType, 'search') && (
+      {isSearchVisible && (
         <div className={styles.InfoButtons}>
           {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
             <IconButton
@@ -289,25 +291,23 @@ export default function MainNavBar({
           )}
         </div>
       )}
-      {isUiElementVisible(profileType, 'search') &&
-        isDisplayLiveSearch &&
-        isSearchActive && (
-          <div className={styles.Search}>
-            <div className={styles.SearchBar}>
-              <div className={styles.SearchBarInner}>
-                <Search
-                  onFinish={(reason) => {
-                    setSearchActive(false);
-                    if (reason) {
-                      trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                    }
-                  }}
-                  replaceResultUrl={replaceResultUrl}
-                />
-              </div>
+      {isSearchVisible && isDisplayLiveSearch && isSearchActive && (
+        <div className={styles.Search}>
+          <div className={styles.SearchBar}>
+            <div className={styles.SearchBarInner}>
+              <Search
+                onFinish={(reason) => {
+                  setSearchActive(false);
+                  if (reason) {
+                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
+                  }
+                }}
+                replaceResultUrl={replaceResultUrl}
+              />
             </div>
           </div>
-        )}
+        </div>
+      )}
     </nav>
   );
 }
