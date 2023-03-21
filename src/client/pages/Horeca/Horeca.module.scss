@@ -1,0 +1,7 @@
+@import '../../styles/_global.scss';
+
+.Horeca {
+  @include select(PageContent) {
+    padding-bottom: $page-content-bottom-space;
+  }
+}
