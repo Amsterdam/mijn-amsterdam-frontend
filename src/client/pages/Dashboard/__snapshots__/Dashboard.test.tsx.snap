@@ -362,6 +362,27 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               Milieuzone
             </span>
           </a>
+          <a
+            class="MainNavSubmenuLink"
+            data-chapter-id="PARKEREN"
+            href="/parkeren"
+          >
+            <span
+              class="SubmenuItemIcon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="#767676"
+              >
+                Car.svg
+              </svg>
+            </span>
+            <span
+              class="SubmenuItemTitle"
+            >
+              Parkeren
+            </span>
+          </a>
         </div>
       </div>
     </div>
