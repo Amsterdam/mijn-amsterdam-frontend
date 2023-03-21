@@ -1,6 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { getOtapEnvItem, LOCATION_ZOOM } from '../../../universal/config';
+import {
+  DEFAULT_LAT,
+  DEFAULT_LNG,
+  getOtapEnvItem,
+  LOCATION_ZOOM,
+} from '../../../universal/config';
 import {
   extractAddress,
   getLatLonByAddress,
@@ -13,13 +18,20 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
 
 interface LocationProps {
-  location: string | null;
+  location?: string | null;
   label?: string;
+  modalTitle?: string;
+  latlng?: LatLngLiteral;
 }
 
-export function Location({ location, label = 'Locatie' }: LocationProps) {
+export function Location({
+  location = null,
+  latlng,
+  modalTitle,
+  label = 'Locatie',
+}: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
-
+  const [hasLocationData, setHasLocationData] = useState(false);
   const [bagApi, fetchBag] = useDataApi<LatLngLiteral | null>(
     {
       url: '',
@@ -27,6 +39,12 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
     },
     null
   );
+
+  useEffect(() => {
+    if ((location && bagApi.data) || !!latlng) {
+      setHasLocationData(true);
+    }
+  }, [bagApi, location, latlng]);
 
   useEffect(() => {
     if (bagApi.isDirty || location === null) {
@@ -51,8 +69,7 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
         label={label}
         value={
           <>
-            {location || '-'}{' '}
-            {location && (
+            {hasLocationData ? (
               <>
                 <Button
                   className={styles.MapLink}
@@ -63,36 +80,40 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
                   Bekijk op de kaart
                 </Button>
               </>
+            ) : (
+              '-'
             )}
           </>
         }
       />
-      {location && (
-        <Modal
-          isOpen={isLocationModalOpen}
-          onClose={() => setLocationModalOpen(false)}
-          title="Vergunningslocatie"
-          contentWidth="62rem"
-        >
-          <div className={styles.LocationModalInner}>
-            {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
-            {!bagApi.isError && !!bagApi.data ? (
-              <MyAreaLoader
-                showPanels={false}
-                zoom={LOCATION_ZOOM}
-                datasetIds={[]}
-                activeBaseLayerType={BaseLayerType.Aerial}
-                centerMarker={{
-                  latlng: bagApi.data,
-                  label: location,
-                }}
-              />
-            ) : (
-              <p>Adres kan niet getoond worden</p>
-            )}
-          </div>
-        </Modal>
-      )}
+
+      <Modal
+        isOpen={isLocationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+        title={
+          modalTitle ?? label ?? location ?? `${latlng?.lat},${latlng?.lng}`
+        }
+        contentWidth="62rem"
+      >
+        <div className={styles.LocationModalInner}>
+          {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
+          {hasLocationData ? (
+            <MyAreaLoader
+              showPanels={false}
+              zoom={LOCATION_ZOOM}
+              datasetIds={[]}
+              activeBaseLayerType={BaseLayerType.Aerial}
+              centerMarker={{
+                latlng: latlng ??
+                  bagApi.data ?? { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
+                label: label ?? location ?? `${latlng?.lat},${latlng?.lng}`,
+              }}
+            />
+          ) : (
+            <p>Adres kan niet getoond worden</p>
+          )}
+        </div>
+      </Modal>
     </>
   );
 }

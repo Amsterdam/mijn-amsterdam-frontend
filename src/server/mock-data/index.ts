@@ -185,7 +185,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  [ApiUrls.SIA]: {
+  [String(ApiUrls.SIA)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {

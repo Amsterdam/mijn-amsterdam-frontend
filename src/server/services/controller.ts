@@ -107,6 +107,7 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const SIA = callService(fetchSIA);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
@@ -165,7 +166,7 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'NOTIFICATIONS'
   | 'MY_LOCATION'
-  | 'SIA',
+  | 'SIA'
   | 'KVK'
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'

@@ -82,6 +82,8 @@ const KlachtenDetail = lazy(
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
+const Sia = lazy(() => import('./pages/Sia/Sia'));
+const SiaDetail = lazy(() => import('./pages/SiaDetail/SiaDetail'));
 const ToeristischeVerhuur = lazy(
   () => import('./pages/ToeristischeVerhuur/ToeristischeVerhuur')
 );

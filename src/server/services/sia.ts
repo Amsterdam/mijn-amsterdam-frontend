@@ -1,15 +1,13 @@
-import { LatLngTuple } from 'leaflet';
+import { LatLngLiteral, LatLngTuple } from 'leaflet';
 import { generatePath } from 'react-router-dom';
 import { Chapters } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import { defaultDateTimeFormat } from '../../universal/helpers';
-import {
-  apiDependencyError,
-  apiSuccesResult,
-} from '../../universal/helpers/api';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { AuthProfileAndToken } from '../helpers/app';
 
 export interface SIAItem {
   identifier: string;
@@ -24,7 +22,7 @@ export interface SIAItem {
   priority: string;
   deadline: string;
   address: string;
-  latlon: LatLngTuple;
+  latlon: LatLngLiteral;
   email: string;
   phone: string | null;
   link: LinkProps;
@@ -85,7 +83,7 @@ function transformSIAData(responseData: SIASourceData): SIAItem[] {
       deadline: sourceItem.deadline,
       description: sourceItem.description,
       address: sourceItem.address,
-      latlon: sourceItem.latlon,
+      latlon: { lat: sourceItem.latlon[0], lng: sourceItem.latlon[1] },
       email: sourceItem.email,
       phone: sourceItem.phone,
       attachments: sourceItem.attachments,
@@ -100,15 +98,15 @@ function transformSIAData(responseData: SIASourceData): SIAItem[] {
 }
 
 export async function fetchSIA(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await requestData<SIAItem[]>(
     getApiConfig('SIA', {
       transformResponse: transformSIAData,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    requestID,
+    authProfileAndToken
   );
 
   return response;
@@ -140,15 +138,15 @@ function createSIANotification(item: SIAItem) {
   };
 }
 
-export async function fetchSIAGenerated(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+export async function fetchSIANotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const SIA = await fetchSIA(sessionID, passthroughRequestHeaders);
+  const SIA = await fetchSIA(requestID, authProfileAndToken);
   if (SIA.status === 'OK') {
-    return apiSuccesResult({
+    return apiSuccessResult({
       notifications: SIA.content.map(createSIANotification),
     });
   }
-  return apiDependencyError({ SIA });
+  return SIA;
 }

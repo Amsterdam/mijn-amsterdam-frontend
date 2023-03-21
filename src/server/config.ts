@@ -128,6 +128,7 @@ export type SourceApiKey =
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
   | 'KREFIA'
+  | 'SIA'
   | 'KLACHTEN';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
