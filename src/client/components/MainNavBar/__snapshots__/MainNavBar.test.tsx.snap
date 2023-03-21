@@ -138,6 +138,27 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
                 Vergunningen
               </span>
             </a>
+            <a
+              class="MainNavSubmenuLink MainNavSubmenuLink"
+              data-chapter-id="PARKEREN"
+              href="/parkeren"
+            >
+              <span
+                class="SubmenuItemIcon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="#767676"
+                >
+                  Car.svg
+                </svg>
+              </span>
+              <span
+                class="SubmenuItemTitle"
+              >
+                Parkeren
+              </span>
+            </a>
           </div>
         </div>
       </span>
