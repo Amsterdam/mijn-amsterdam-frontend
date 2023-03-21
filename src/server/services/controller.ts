@@ -117,6 +117,7 @@ const PROFILE = callService(fetchProfile);
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const profileType = getProfileType(req);
 
+  // No notifications for this profile type
   if (profileType === 'private-attributes') {
     return apiSuccessResult([]);
   }
