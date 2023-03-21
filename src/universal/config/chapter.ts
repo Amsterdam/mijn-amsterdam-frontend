@@ -18,6 +18,7 @@ export type Chapter =
   | 'ZORG'
   | 'VERGUNNINGEN'
   | 'KVK'
+  | 'SIA'
   | 'TOERISTISCHE_VERHUUR'
   | 'SEARCH'
   | 'SUBSIDIE'
@@ -42,6 +43,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
+  SIA: 'SIA',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   KREFIA: 'KREFIA',
   SEARCH: 'SEARCH',
@@ -69,6 +71,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
+  SIA: 'Meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
@@ -116,6 +119,7 @@ export const DocumentTitles = {
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
+  [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'

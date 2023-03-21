@@ -20,6 +20,8 @@ export const FeatureToggle = {
   wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
+  siaActive: !IS_AP,
+  siaApiActive: !IS_AP,
   aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,

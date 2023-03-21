@@ -194,6 +194,12 @@ function AppAuthenticated() {
               component={InkomenDetailBbz}
             />
           )}
+          {FeatureToggle.siaActive && (
+            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+          )}
+          {FeatureToggle.siaActive && (
+            <Route path={AppRoutes.SIA} component={Sia} />
+          )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route

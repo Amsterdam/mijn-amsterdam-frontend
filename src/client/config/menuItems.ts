@@ -121,6 +121,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
+    title: ChapterTitles.SIA,
+    id: Chapters.SIA,
+    to: AppRoutes.SIA,
+    profileTypes: ['private', 'private-commercial', 'commercial'],
+  },
+  {
     title: ChapterTitles.TOERISTISCHE_VERHUUR,
     id: Chapters.TOERISTISCHE_VERHUUR,
     to: AppRoutes.TOERISTISCHE_VERHUUR,

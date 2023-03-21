@@ -27,6 +27,7 @@ export function isChapterActive(
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
+    SIA,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     MY_LOCATION,
@@ -88,6 +89,12 @@ export function isChapterActive(
         (FeatureToggle.milieuzoneApiActive
           ? MILIEUZONE.content?.isKnown
           : false)
+      );
+
+    case Chapters.SIA:
+      return (
+        !isLoading(SIA) &&
+        (FeatureToggle.siaActive ? SIA.content?.length : false)
       );
 
     case Chapters.AFVAL:

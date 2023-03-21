@@ -181,6 +181,10 @@ export const ApiConfig: ApiDataRequestConfig = {
       key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
     }),
   },
+  SIA: {
+    url: `${BFF_MS_API_BASE_URL}/sia/get`,
+    postponeFetch: !FeatureToggle.siaApiActive,
+  },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
