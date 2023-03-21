@@ -122,7 +122,7 @@ export function ProfileName({
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
-      case (!!person && !company) ||
+      case (profileType === 'private' && !!person && !company) ||
         (!FeatureToggle.profileToggleActive && !!person):
         nameContent = (
           <PrivateProfileName
@@ -163,7 +163,7 @@ export function ProfileName({
         break;
     }
     return nameContent;
-  }, [person, company, history, profileAttribute]);
+  }, [person, company, history, profileAttribute, profileType]);
 
   return (
     <span

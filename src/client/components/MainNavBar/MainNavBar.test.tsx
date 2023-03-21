@@ -5,17 +5,34 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks';
 import { useTabletScreen } from '../../hooks/media.hook';
+import {
+  useProfileType,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 import MockApp from '../../pages/MockApp';
 import MainNavBar from './MainNavBar';
 
 jest.mock('../../hooks/media.hook');
+jest.mock('../../hooks/useProfileType', () => {
+  return {
+    __esModule: true,
+    ...(jest.requireActual('../../hooks/useProfileType') as object),
+    useProfileType: jest.fn(),
+    useProfileTypeValue: jest.fn(),
+  };
+});
 
 const testState: any = {
   BRP: {
     status: 'OK',
     content: { persoon: { opgemaakteNaam: 'Test van FooBar' } },
   },
-  PROFILE: { status: 'OK', content: {} },
+  PROFILE: {
+    status: 'OK',
+    content: {
+      profile: { id: 'test@test.com' },
+    },
+  },
   VERGUNNINGEN: { status: 'OK', content: [{ id: 'test' }] },
 };
 
@@ -37,6 +54,9 @@ describe('<MainNavBar />', () => {
   );
 
   it('Renders without crashing', () => {
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
 
@@ -44,7 +64,10 @@ describe('<MainNavBar />', () => {
   });
 
   it('Renders burger menu on small screens', () => {
-    (useTabletScreen as jest.Mock).mockReturnValue(true);
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+
+    (useTabletScreen as jest.Mock).mockReturnValueOnce(true);
 
     render(<Component />);
 
@@ -53,5 +76,22 @@ describe('<MainNavBar />', () => {
     userEvent.click(screen.getAllByText('Toon navigatie')[0]);
     expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
     expect(screen.getByText('Uitloggen')).toBeInTheDocument();
+  });
+
+  it('Shows/Hides based on profile type', () => {
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+
+    render(<Component />);
+    expect(screen.getByText(/Test\svan\sFooBar/)).toBeInTheDocument();
+
+    (useProfileType as jest.Mock).mockReturnValue([
+      'private-attributes',
+      jest.fn(),
+    ]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private-attributes');
+
+    render(<Component />);
+    expect(screen.getByText(/test@test\.com/)).toBeInTheDocument();
   });
 });
