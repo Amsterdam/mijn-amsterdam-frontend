@@ -25,10 +25,8 @@ export default function Landing() {
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
-  const [isRedirectingYivi, setRedirectingYivi] = useState(false);
 
-  const isRedirectingAny =
-    isRedirecting || isRedirectingEherkenning || isRedirectingYivi;
+  const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
 
   return (
     <TextPage>
