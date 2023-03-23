@@ -5,7 +5,6 @@ import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/w
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { StatusLine } from '../../../universal/types';
 import {
   addTitleLinkComponent,
   Alert,
@@ -65,7 +64,7 @@ export default function Inkomen() {
   const uitkeringsspecificaties =
     wpiSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = wpiSpecificatiesWithDocumentLinks.content?.jaaropgaven;
-  const items: StatusLine[] = useMemo(() => {
+  const items = useMemo(() => {
     if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
     }
@@ -221,11 +220,12 @@ export default function Inkomen() {
             displayProps={specificationsTableDisplayProps}
           />
         )}
-        {uitkeringsspecificaties?.length && uitkeringsspecificaties.length > 3 && (
-          <p className={styles.ShowAllButtonContainer}>
-            <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-          </p>
-        )}
+        {uitkeringsspecificaties?.length &&
+          uitkeringsspecificaties.length > 3 && (
+            <p className={styles.ShowAllButtonContainer}>
+              <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+            </p>
+          )}
       </SectionCollapsible>
 
       <SectionCollapsible

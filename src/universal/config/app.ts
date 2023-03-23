@@ -34,6 +34,7 @@ export const FeatureToggle = {
   evenementenDatasetActive: false,
   klachtenActive: true,
   bezwarenActive: false,
+  horecaActive: !IS_PRODUCTION,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

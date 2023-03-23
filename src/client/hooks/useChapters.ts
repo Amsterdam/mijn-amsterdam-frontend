@@ -33,6 +33,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     KREFIA,
     KLACHTEN,
     BEZWAREN,
+    HORECA,
   } = appState;
 
   if (!(item.id in appState)) {
@@ -151,6 +152,13 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
+      );
+
+    case Chapters.HORECA:
+      return (
+        !isLoading(HORECA) &&
+        !!HORECA?.content?.length &&
+        FeatureToggle.horecaActive
       );
   }
 

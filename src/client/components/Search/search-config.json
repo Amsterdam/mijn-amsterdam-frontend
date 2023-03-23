@@ -32,10 +32,7 @@
       "url": "/klachten",
       "displayTitle": "Ingediende klachten",
       "description": "Hier ziet u een overzicht van uw ingediende klachten.",
-      "keywords": [
-        "Klachten",
-        "Klacht indienen"
-      ]
+      "keywords": ["Klachten", "Klacht indienen"]
     },
     {
       "url": "/burgerzaken",
@@ -58,9 +55,7 @@
         "Document",
         "Reisdocumenten"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/zorg-en-ondersteuning",
@@ -83,9 +78,7 @@
         "Zorgaanvraag",
         "Taxi"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/stadspas",
@@ -112,9 +105,7 @@
         "Bonus",
         "Kind"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/inkomen",
@@ -136,22 +127,14 @@
         "IOAZ",
         "Specificatie"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/inkomen/specificaties/uitkering",
       "displayTitle": "Uikeringsspecificaties",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
-      "keywords": [
-        "Uikeringsspecificaties",
-        "Specificaties",
-        "Uitkering"
-      ],
-      "profileTypes": [
-        "private"
-      ]
+      "keywords": ["Uikeringsspecificaties", "Specificaties", "Uitkering"],
+      "profileTypes": ["private"]
     },
     {
       "url": "/inkomen/specificaties/jaaropgave",
@@ -164,9 +147,7 @@
         "Specificaties",
         "Uitkering"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/overzicht-updates/1",
@@ -209,23 +190,14 @@
         "adres",
         "naam"
       ],
-      "profileTypes": [
-        "private"
-      ]
+      "profileTypes": ["private"]
     },
     {
       "url": "/persoonlijke-gegevens",
       "displayTitle": "Aantal ingeschreven bewoners op mijn adres",
       "description": "Hoeveel personen zijn er ingeschreven op mijn adres.",
-      "keywords": [
-        "Aantal",
-        "bewoners",
-        "ingeschreven",
-        "hoeveel"
-      ],
-      "profileTypes": [
-        "private"
-      ]
+      "keywords": ["Aantal", "bewoners", "ingeschreven", "hoeveel"],
+      "profileTypes": ["private"]
     },
     {
       "url": "/gegevens-handelsregister",
@@ -248,10 +220,7 @@
         "Hoofdvestiging",
         "Functionarissen"
       ],
-      "profileTypes": [
-        "private-commercial",
-        "commercial"
-      ]
+      "profileTypes": ["private-commercial", "commercial"]
     },
     {
       "url": "/buurt",
@@ -271,9 +240,7 @@
       "url": "/overzicht-tips",
       "displayTitle": "(Persoonlijke) Tips",
       "description": "Tips over voorzieningen en activiteiten in Amsterdam.",
-      "keywords": [
-        "Tips"
-      ]
+      "keywords": ["Tips"]
     },
     {
       "url": "/afval",
@@ -314,21 +281,19 @@
       "url": "/vergunningen",
       "displayTitle": "Vergunningen",
       "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
-      "keywords": [
-        "Vergunningen",
-        "Aanvragen",
-        "Vergunning"
-      ]
+      "keywords": ["Vergunningen", "Aanvragen", "Vergunning"]
+    },
+    {
+      "url": "/horeca",
+      "displayTitle": "Horeca",
+      "description": "Hier ziet u een overzicht van uw aanvragen voor Horeca vergunningen en ontheffingen.",
+      "keywords": ["Vergunningen", "Aanvragen", "Vergunning", "Horeca"]
     },
     {
       "url": "/parkeren",
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
-      "keywords": [
-        "Parkeren",
-        "private",
-        "commercial"
-      ]
+      "keywords": ["Parkeren", "private", "commercial"]
     },
     {
       "url": "/toeristische-verhuur",
@@ -356,11 +321,7 @@
         "Afmelden",
         "Landelijk registratienummer"
       ],
-      "profileTypes": [
-        "private",
-        "commercial",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "commercial", "private-commercial"]
     },
     {
       "url": "https://belastingbalie.amsterdam.nl/digid.saml.php?start",
@@ -381,30 +342,19 @@
       "url": "https://mijnsubsidies.amsterdam.nl/loket/",
       "displayTitle": "Subsidies",
       "description": "Een overzicht van uw subsidies.",
-      "keywords": [
-        "Subsidie",
-        "Subsidies"
-      ]
+      "keywords": ["Subsidie", "Subsidies"]
     },
     {
       "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
       "displayTitle": "Erfpacht",
       "description": "Een overzicht van de erfpacht.",
-      "keywords": [
-        "Erfpacht",
-        "Canon",
-        "Afkopen",
-        "Betalen"
-      ]
+      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen"]
     },
     {
       "url": "https://ontheffingen.amsterdam.nl/publiek/aanvragen",
       "displayTitle": "Milieuzone",
       "description": "Een overzicht van milieuzone.",
-      "keywords": [
-        "Milieuzone",
-        "Ontheffing"
-      ]
+      "keywords": ["Milieuzone", "Ontheffing"]
     },
     {
       "url": "/kredietbank-fibu",
@@ -423,94 +373,49 @@
         "kredietbank",
         "budgetbeheer"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]",
       "displayTitle": "Afvalcontainers bij mij in de buurt",
       "description": "Afvalcontainers bij mij in de buurt.",
-      "keywords": [
-        "Afval",
-        "containers",
-        "afvalcontainers"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["Afval", "containers", "afvalcontainers"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Brood%22:1}}}}",
       "displayTitle": "Brood containers bij mij in de buurt",
       "description": "Brood containers bij mij in de buurt.",
-      "keywords": [
-        "Brood",
-        "Broodcontainers",
-        "Brood container"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["Brood", "Broodcontainers", "Brood container"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22GFT%22:1}}}}",
       "displayTitle": "GFT containers bij mij in de buurt",
       "description": "Brood containers bij mij in de buurt.",
-      "keywords": [
-        "GFT",
-        "GFT containers",
-        "GFT-containers"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["GFT", "GFT containers", "GFT-containers"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Glas%22:1}}}}",
       "displayTitle": "Glascontainers bij mij in de buurt",
       "description": "Glascontainers bij mij in de buurt.",
-      "keywords": [
-        "Glas",
-        "Glas containers",
-        "Glascontainer"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["Glas", "Glas containers", "Glascontainer"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Papier%22:1}}}}",
       "displayTitle": "Papiercontainers bij mij in de buurt",
       "description": "Papiercontainers bij mij in de buurt.",
-      "keywords": [
-        "Papier",
-        "Papier containers",
-        "Papiercontainer"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["Papier", "Papier containers", "Papiercontainer"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Rest%22:1}}}}",
       "displayTitle": "Restcontainers bij mij in de buurt",
       "description": "Restcontainers bij mij in de buurt.",
-      "keywords": [
-        "rest",
-        "rest containers",
-        "restcontainer"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "keywords": ["rest", "rest containers", "restcontainer"],
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22fractie_omschrijving%22:{%22values%22:{%22Textiel%22:1}}}}",
@@ -524,10 +429,7 @@
         "kleding container",
         "kledingcontainer"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22afvalcontainers%22]&filters={%22afvalcontainers%22:{%22geadopteerd_ind%22:{%22values%22:{%22Ja%22:1}}}}",
@@ -538,10 +440,7 @@
         "geadopteerde containers",
         "geadopteerdecontainer"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22parkeerzones_uitzondering%22]",
@@ -553,10 +452,7 @@
         "Parkeervergunning",
         "Parkeervergunningen"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22parkeerzones%22]",
@@ -568,52 +464,28 @@
         "Parkeervergunning",
         "Parkeervergunningen"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial"
-      ]
+      "profileTypes": ["private", "private-commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22parkeerzones%22]",
       "displayTitle": "Parkeren bij mij in de buurt",
       "description": "Parkeren bij mij in de buurt",
-      "keywords": [
-        "parkeren",
-        "parkeerzones"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["parkeren", "parkeerzones"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Bouwvergunning%22:1}}}}",
       "displayTitle": "Bouwvergunningen bij mij in de buurt",
       "description": "Bouwvergunningen bij mij in de buurt",
-      "keywords": [
-        "Bouwvergunning",
-        "Bouwvergunningen",
-        "bouw"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Bouwvergunning", "Bouwvergunningen", "bouw"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%Bestemmingsplan%22:1}}}}",
       "displayTitle": "Bestemmingsplannen bij mij in de buurt",
       "description": "Bestemmingsplannnen bij mij in de buurt",
-      "keywords": [
-        "Bestemmingsplan"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Bestemmingsplan"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Evenementenvergunning%22:1}}}}",
@@ -624,326 +496,154 @@
         "evenementenvergunning",
         "evenementenvergunningen"
       ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Kapvergunning%22:1}}}}",
       "displayTitle": "Kapvergunningen bij mij in de buurt",
       "description": "Kapvergunningen bij mij in de buurt",
-      "keywords": [
-        "Kapvergunningen",
-        "Kapvergunning",
-        "Kap"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Kapvergunningen", "Kapvergunning", "Kap"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Milieuvergunning%22:1}}}}",
       "displayTitle": "Milieuvergunningen bij mij in de buurt",
       "description": "Milieuvergunningen bij mij in de buurt",
-      "keywords": [
-        "Milieuvergunningen",
-        "Milieuvergunning",
-        "Millieu"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Milieuvergunningen", "Milieuvergunning", "Millieu"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Omgevingsvergunning%22:1}}}}",
       "displayTitle": "Omgevingsvergunningen bij mij in de buurt",
       "description": "Omgevingsvergunningen bij mij in de buurt",
-      "keywords": [
-        "Omgevingsvergunningen",
-        "Omgevingsvergunning",
-        "Omgeving"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Omgevingsvergunningen", "Omgevingsvergunning", "Omgeving"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Reclamevergunning%22:1}}}}",
       "displayTitle": "Reclamevergunningen bij mij in de buurt",
       "description": "Reclamevergunningen bij mij in de buurt",
-      "keywords": [
-        "Reclamevergunningen",
-        "Reclamevergunning",
-        "Reclame"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Reclamevergunningen", "Reclamevergunning", "Reclame"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Sloopvergunning%22:1}}}}",
       "displayTitle": "Sloopvergunningen bij mij in de buurt",
       "description": "Sloopvergunningen bij mij in de buurt",
-      "keywords": [
-        "sloopvergunningen",
-        "sloopvergunning",
-        "sloop",
-        "slopen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["sloopvergunningen", "sloopvergunning", "sloop", "slopen"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22bekendmakingen%22]&filters={%22bekendmakingen%22:{%22onderwerp%22:{%22values%22:{%22Verordeningen%20en%20reglementen%22:1}}}}",
       "displayTitle": "Verordeningen en regelementen bij mij in de buurt",
       "description": "Verordeningen en regelementen bij mij in de buurt",
-      "keywords": [
-        "Verordeningen",
-        "regelementen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Verordeningen", "regelementen"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22sportaanbieder%22,%22zwembad%22,%22sporthal%22,%22gymzaal%22,%22sportzaal%22,%22openbaresportplek%22,%22hardlooproute%22,%22sportpark%22,%22sportveld%22]",
       "displayTitle": "Sporten bij mij in de buurt",
       "description": "Sporten bij mij in de buurt",
-      "keywords": [
-        "Sporten",
-        "sport"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Sporten", "sport"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22zwembad%22]",
       "displayTitle": "Zwembaden bij mij in de buurt",
       "description": "Zwembaden bij mij in de buurt",
-      "keywords": [
-        "Zwemmen",
-        "Zwembad",
-        "Zwembaden"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Zwemmen", "Zwembad", "Zwembaden"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22sporthal%22]",
       "displayTitle": "Sporthallen bij mij in de buurt",
       "description": "Sporthallen bij mij in de buurt",
-      "keywords": [
-        "sporthal",
-        "sporthallen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["sporthal", "sporthallen"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22gymzaal%22]",
       "displayTitle": "Gymzalen bij mij in de buurt",
       "description": "Gymzalen bij mij in de buurt",
-      "keywords": [
-        "gymzaal",
-        "gymzalen",
-        "gym"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["gymzaal", "gymzalen", "gym"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22sportzaal%22]",
       "displayTitle": "Sportzalen bij mij in de buurt",
       "description": "Sportzalen bij mij in de buurt",
-      "keywords": [
-        "sportzaal",
-        "sportzalen"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["sportzaal", "sportzalen"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22openbaresportplek%22]",
       "displayTitle": "Openbare sportplekken bij mij in de buurt",
       "description": "Openbare sportplekken bij mij in de buurt",
-      "keywords": [
-        "openbare",
-        "openbaar",
-        "sportplek",
-        "sportplekken"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["openbare", "openbaar", "sportplek", "sportplekken"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22hardlooproute%22]",
       "displayTitle": "Hardlooproutes bij mij in de buurt",
       "description": "Hardlooproutes bij mij in de buurt",
-      "keywords": [
-        "hardlopen",
-        "hardlooproutes",
-        "hardlooproute"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["hardlopen", "hardlooproutes", "hardlooproute"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22sportpark%22]",
       "displayTitle": "Sportparken bij mij in de buurt",
       "description": "Sportparken bij mij in de buurt",
-      "keywords": [
-        "sportpark",
-        "sportparken"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["sportpark", "sportparken"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22sportveld%22]",
       "displayTitle": "Sportvelden bij mij in de buurt",
       "description": "Sportvelden bij mij in de buurt",
-      "keywords": [
-        "sportveld",
-        "sportvelden"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["sportveld", "sportvelden"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22wior%22]",
       "displayTitle": "Werkzaamheden bij mij in de buurt",
       "description": "Werkzaamheden bij mij in de buurt",
-      "keywords": [
-        "Werkzaamheden",
-        "Werk",
-        "wior",
-        "Openbare ruimte"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Werkzaamheden", "Werk", "wior", "Openbare ruimte"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22wior%22]&filters={%22wior%22:{%22datumStartUitvoering%22:{%22values%22:{%22Lopende%20werkzaamheden%22:1}}}}",
       "displayTitle": "Lopende Werkzaamheden bij mij in de buurt",
       "description": "Lopende Werkzaamheden bij mij in de buurt",
-      "keywords": [
-        "Werkzaamheden",
-        "Lopende",
-        "wior",
-        "lopendewerkzaamheden"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Werkzaamheden", "Lopende", "wior", "lopendewerkzaamheden"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=[%22meldingenBuurt%22]",
       "displayTitle": "Meldingen bij mij in de buurt",
       "description": "Meldingen bij mij in de buurt",
-      "keywords": [
-        "Meldingen",
-        "melding",
-        "sia",
-        "overlast"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Meldingen", "melding", "sia", "overlast"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     {
       "url": "/buurt?datasetIds=%5B%22sportaanbieder%22%5D&filters=%7B%22sportaanbieder%22%3A%7B%22indicatieStadspas%22%3A%7B%22values%22%3A%7B%22Ja%22%3A1%7D%7D%7D%7D",
       "displayTitle": "Sporten met stadspas",
       "description": "Sporten met stadspas",
-      "keywords": [
-        "Stadspas",
-        "sporten",
-        "pas",
-        "sport"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["Stadspas", "sporten", "pas", "sport"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     }
   ],
   "apiSearchConfigs": {
     "WPI_AANVRAGEN": {
-      "keywordsGeneratedFromProps": [
-        "title",
-        "decision",
-        "about"
-      ]
+      "keywordsGeneratedFromProps": ["title", "decision", "about"]
     },
     "WPI_TOZO": {
-      "keywordsGeneratedFromProps": [
-        "title",
-        "decision",
-        "about"
-      ]
+      "keywordsGeneratedFromProps": ["title", "decision", "about"]
     },
     "WPI_TONK": {
-      "keywordsGeneratedFromProps": [
-        "title",
-        "decision",
-        "about"
-      ]
+      "keywordsGeneratedFromProps": ["title", "decision", "about"]
     },
     "WPI_BBZ": {
-      "keywordsGeneratedFromProps": [
-        "title",
-        "decision",
-        "about"
-      ]
+      "keywordsGeneratedFromProps": ["title", "decision", "about"]
     },
     "VERGUNNINGEN": {
       "keywordsGeneratedFromProps": [
@@ -954,22 +654,12 @@
         "identifier",
         "description"
       ],
-      "keywords": [
-        "vergunningsaanvraag"
-      ],
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ]
+      "keywords": ["vergunningsaanvraag"],
+      "profileTypes": ["private", "private-commercial", "commercial"]
     },
     "TOERISTISCHE_VERHUUR": {
       "isEnabled": true,
-      "profileTypes": [
-        "private",
-        "private-commercial",
-        "commercial"
-      ],
+      "profileTypes": ["private", "private-commercial", "commercial"],
       "keywordsGeneratedFromProps": [
         "caseType",
         "title",
@@ -1014,11 +704,16 @@
       ]
     },
     "KLACHTEN": {
-      "keywords": [
-        "omschrijving",
-        "gewensteOplossing",
-        "onderwerp",
-        "locatie"
+      "keywords": ["omschrijving", "gewensteOplossing", "onderwerp", "locatie"]
+    },
+    "HORECA": {
+      "keywordsGeneratedFromProps": [
+        "caseType",
+        "title",
+        "status",
+        "decision",
+        "identifier",
+        "description"
       ]
     }
   }
