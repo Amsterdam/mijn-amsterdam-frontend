@@ -1,7 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
 import { omit } from '../../universal/helpers';
-import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
   getAuth,
@@ -16,9 +20,11 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchMyLocation } from './home';
+import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
+import { fetchProfile } from './profile';
 import {
   fetchBelasting,
   fetchErfpacht,
@@ -90,6 +96,9 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 
+const HORECA = async (requestID: requestID, req: Request) =>
+  fetchHorecaVergunningen(requestID, await getAuth(req), getProfileType(req));
+
 // Location, address, based services
 const MY_LOCATION = async (requestID: requestID, req: Request) =>
   fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
@@ -107,17 +116,26 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const PROFILE = callService(fetchProfile);
 const SIA = callService(fetchSIA);
 
 // Special services that aggeragates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
-  (
+const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+  const profileType = getProfileType(req);
+
+  // No notifications for this profile type
+  if (profileType === 'private-attributes') {
+    return apiSuccessResult([]);
+  }
+
+  return (
     await fetchTipsAndNotifications(
       requestID,
       await getAuth(req),
       getProfileType(req)
     )
   ).NOTIFICATIONS;
+};
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
@@ -146,6 +164,8 @@ const SERVICES_INDEX = {
   KLACHTEN,
   BEZWAREN,
   NOTIFICATIONS,
+  PROFILE,
+  HORECA,
   SIA,
 };
 
@@ -153,8 +173,12 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = ServicesType;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE'>;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE'>;
+type PrivateServicesAttributeBased = Pick<
+  ServiceMap,
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
+>;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -171,10 +195,12 @@ type CommercialServices = Pick<
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
   | 'TOERISTISCHE_VERHUUR'
+  | 'HORECA'
 >;
 
 type ServicesByProfileType = {
   private: PrivateServices;
+  'private-attributes': PrivateServicesAttributeBased;
   'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
@@ -201,12 +227,19 @@ export const servicesByProfileType: ServicesByProfileType = {
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
-    SIA,
     VERGUNNINGEN,
     WMO,
     KLACHTEN,
     BEZWAREN,
     BELASTINGEN,
+    HORECA,
+  },
+  'private-attributes': {
+    CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
+    NOTIFICATIONS,
+    PROFILE,
+    SIA,
   },
   'private-commercial': {
     AFVAL,
@@ -228,12 +261,12 @@ export const servicesByProfileType: ServicesByProfileType = {
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
-    SIA,
     VERGUNNINGEN,
     WMO,
     KLACHTEN,
     BEZWAREN,
     BELASTINGEN,
+    HORECA,
   },
   commercial: {
     AFVAL,
@@ -247,8 +280,8 @@ export const servicesByProfileType: ServicesByProfileType = {
     MILIEUZONE,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
-    SIA,
     VERGUNNINGEN,
+    HORECA,
   },
 };
 
@@ -259,6 +292,7 @@ export const servicesTipsByProfileType = {
     servicesByProfileType.private,
     tipsOmit as Array<keyof PrivateServices>
   ),
+  'private-attributes': servicesByProfileType['private-attributes'],
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
     tipsOmit as Array<keyof PrivateCommercialServices>
@@ -272,7 +306,11 @@ export const servicesTipsByProfileType = {
 function loadServices(
   requestID: requestID,
   req: Request,
-  serviceMap: PrivateServices | CommercialServices | PrivateCommercialServices,
+  serviceMap:
+    | PrivateServices
+    | CommercialServices
+    | PrivateCommercialServices
+    | PrivateServicesAttributeBased,
   filterIds: requestID[] = []
 ) {
   return Object.entries(serviceMap)

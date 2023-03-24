@@ -11,11 +11,12 @@ import {
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem } from '../universal/config/env';
-import { AppRoutesRedirect, NoHeroRoutes } from '../universal/config/routes';
+import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
+import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -26,9 +27,9 @@ import {
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
-import Bezwaren from './pages/Bezwaren/Bezwaren';
 
 import { default as LandingPage } from './pages/Landing/Landing';
+import { default as LandingPageYivi } from './pages/Landing/LandingYivi';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -97,6 +98,11 @@ const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
+const Bezwaren = lazy(() => import('./pages/Bezwaren/Bezwaren'));
+
+const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
+const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
+
 function AppNotAuthenticated() {
   useDeeplinkEntry();
 
@@ -109,6 +115,11 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route
+            exact
+            path={AppRoutes.YIVI_LANDING}
+            component={LandingPageYivi}
+          />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
@@ -135,8 +146,9 @@ function AppAuthenticated() {
   const history = useHistory();
   const profileType = useProfileTypeValue();
 
-  const isNoHeroRoute = NoHeroRoutes.some((route) =>
-    matchPath(history.location.pathname, { path: route })
+  const isHeroVisible = !(
+    isUiElementVisible(profileType, 'mijnBuurt') &&
+    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
   );
 
   const redirectAfterLogin = useDeeplinkRedirect();
@@ -149,13 +161,15 @@ function AppAuthenticated() {
 
   return (
     <>
-      <MainHeader isAuthenticated={true} isHeroVisible={!isNoHeroRoute} />
+      <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          {isUiElementVisible(profileType, 'mijnBuurt') && (
+            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          )}
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -255,7 +269,15 @@ function AppAuthenticated() {
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
-          <Route path={AppRoutes.SEARCH} component={Search} />
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes['HORECA/DETAIL']} component={HorecaDetail} />
+          )}
+          {FeatureToggle.horecaActive && (
+            <Route path={AppRoutes.HORECA} component={Horeca} />
+          )}
+          {isUiElementVisible(profileType, 'search') && (
+            <Route path={AppRoutes.SEARCH} component={Search} />
+          )}
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>

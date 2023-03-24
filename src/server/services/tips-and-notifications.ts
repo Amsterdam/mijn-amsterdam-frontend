@@ -22,6 +22,7 @@ import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchSIANotifications } from './sia';
+import { fetchHorecaNotifications } from './horeca';
 
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -85,6 +86,7 @@ async function fetchServicesNotifications(
     const [
       milieuzoneNotificationsResult,
       vergunningenNotificationsResult,
+      horecaNotificationsResult,
       erfpachtNotificationsResult,
       maintenanceNotifications,
       subsidieNotificationsResult,
@@ -93,6 +95,7 @@ async function fetchServicesNotifications(
     ] = await Promise.allSettled([
       fetchMilieuzoneNotifications(requestID, authProfileAndToken),
       fetchVergunningenNotifications(requestID, authProfileAndToken),
+      fetchHorecaNotifications(requestID, authProfileAndToken),
       fetchErfpachtNotifications(requestID, authProfileAndToken),
       fetchSubsidieNotifications(requestID, authProfileAndToken),
       fetchMaintenanceNotificationsDashboard(requestID),
@@ -120,10 +123,12 @@ async function fetchServicesNotifications(
       toeristischeVerhuurNotificationsResult
     );
     const siaNotifications = getSettledResult(siaNotificationsResult);
+    const horecaNotificaties = getSettledResult(horecaNotificationsResult);
 
     return getTipsAndNotificationsFromApiResults([
       milieuzoneNotifications,
       vergunningenNotifications,
+      horecaNotificaties,
       erfpachtNotifications,
       subsidieNotifications,
       maintenanceNotificationsResult,
@@ -146,6 +151,7 @@ async function fetchServicesNotifications(
     fetchWpiNotificationsResult,
     klachtenNotificationsResult,
     siaNotificationsResult,
+    horecaNotificationsResult,
   ] = await Promise.allSettled([
     fetchBrpNotifications(requestID, authProfileAndToken),
     fetchBelastingNotifications(requestID, authProfileAndToken),
@@ -160,6 +166,7 @@ async function fetchServicesNotifications(
     fetchWpiNotifications(requestID, authProfileAndToken),
     fetchKlachtenNotifications(requestID, authProfileAndToken),
     fetchSIANotifications(requestID, authProfileAndToken),
+    fetchHorecaNotifications(requestID, authProfileAndToken),
   ]);
 
   const brpNotifications = getSettledResult(brpNotificationsResult);
@@ -183,6 +190,7 @@ async function fetchServicesNotifications(
   const wpiNotifications = getSettledResult(fetchWpiNotificationsResult);
   const klachtenNotifications = getSettledResult(klachtenNotificationsResult);
   const siaNotifications = getSettledResult(siaNotificationsResult);
+  const horecaNotificaties = getSettledResult(horecaNotificationsResult);
 
   return getTipsAndNotificationsFromApiResults([
     brpNotifications,
@@ -198,6 +206,7 @@ async function fetchServicesNotifications(
     wpiNotifications,
     klachtenNotifications,
     siaNotifications,
+    horecaNotificaties,
   ]);
 }
 

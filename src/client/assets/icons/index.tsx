@@ -51,4 +51,5 @@ export { ReactComponent as IconToeristischeVerhuur } from './toeristische-verhuu
 export { ReactComponent as IconVergunningen } from './vergunningen.svg';
 export { ReactComponent as IconWior } from './wior.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
+export { ReactComponent as IconHoreca } from './iconHoreca.svg';
 export { ReactComponent as IconSiaMeldingen } from './siameldingen.svg';

@@ -25,6 +25,7 @@ import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import {
+  isMenuItemVisible,
   mainMenuItemId,
   mainMenuItems,
   MenuItem,
@@ -33,6 +34,7 @@ import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -44,7 +46,7 @@ export interface MainNavLinkProps {
 }
 
 function SecondaryLinks() {
-  const { BRP, KVK } = useAppStateGetter();
+  const { BRP, KVK, PROFILE } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
@@ -62,8 +64,9 @@ function SecondaryLinks() {
       {!isError(BRP) && !isError(KVK) && (
         <ProfileName
           person={BRP.content?.persoon}
-          company={KVK.content}
+          company={KVK?.content}
           profileType={profileType}
+          profileAttribute={PROFILE.content?.profile?.id}
         />
       )}
       <LogoutLink>Uitloggen</LogoutLink>
@@ -200,25 +203,29 @@ export default function MainNavBar({
     useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map((item) => {
-      let menuItem = item;
+    return mainMenuItems
+      .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
+      .map((item) => {
+        let menuItem = item;
 
-      // Add dynamic chapter submenu items to the menu
-      if (item.id === mainMenuItemId.CHAPTERS) {
-        menuItem = { ...item, submenuItems: myChapterItems };
-      } else if (
-        menuItem.title === ChapterTitles.BUURT &&
-        profileType !== 'private'
-      ) {
-        menuItem = {
-          ...menuItem,
-          title: termReplace(menuItem.title),
-        };
-      }
+        // Add dynamic chapter submenu items to the menu
+        if (item.id === mainMenuItemId.CHAPTERS) {
+          menuItem = { ...item, submenuItems: myChapterItems };
+        } else if (
+          menuItem.title === ChapterTitles.BUURT &&
+          profileType !== 'private'
+        ) {
+          menuItem = {
+            ...menuItem,
+            title: termReplace(menuItem.title),
+          };
+        }
 
-      return getMenuItem(menuItem);
-    });
+        return getMenuItem(menuItem);
+      });
   }, [myChapterItems, profileType, termReplace]);
+
+  const isSearchVisible = isUiElementVisible(profileType, 'search');
 
   return (
     <nav className={styles.MainNavBar}>
@@ -265,22 +272,26 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
-          <IconButton
-            aria-label="Zoeken in mijn amsterdam"
-            className={styles.SearchButton}
-            onClick={() => {
-              setSearchActive(!isSearchActive);
-              trackSearchBarEvent(
-                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
-              );
-            }}
-            icon={isSearchActive ? IconClose : IconSearch}
-          />
-        )}
-      </div>
-      {isDisplayLiveSearch && isSearchActive && (
+      {isSearchVisible && (
+        <div className={styles.InfoButtons}>
+          {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
+            <IconButton
+              aria-label="Zoeken in mijn amsterdam"
+              className={styles.SearchButton}
+              onClick={() => {
+                setSearchActive(!isSearchActive);
+                trackSearchBarEvent(
+                  `${
+                    !isSearchActive === false ? 'Sluiten' : 'Openen'
+                  } met button`
+                );
+              }}
+              icon={isSearchActive ? IconClose : IconSearch}
+            />
+          )}
+        </div>
+      )}
+      {isSearchVisible && isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>

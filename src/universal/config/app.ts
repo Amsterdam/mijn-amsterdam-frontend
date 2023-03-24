@@ -22,6 +22,7 @@ export const FeatureToggle = {
   irmaActive: !IS_AP,
   siaActive: !IS_AP,
   siaApiActive: !IS_AP,
+  yiviActive: !IS_PRODUCTION,
   aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
@@ -36,6 +37,7 @@ export const FeatureToggle = {
   evenementenDatasetActive: false,
   klachtenActive: true,
   bezwarenActive: false,
+  horecaActive: !IS_PRODUCTION,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

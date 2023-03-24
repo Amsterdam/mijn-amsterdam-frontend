@@ -8,6 +8,7 @@ type MainMenuId = Chapter | 'MIJN_THEMAS';
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
   submenuItems?: ChapterMenuItem[];
+  profileTypes?: ProfileType[];
 }
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
@@ -41,6 +42,7 @@ export const mainMenuItems: MenuItem[] = [
     title: MenuItemTitles.BUURT,
     id: mainMenuItemId.BUURT,
     to: generatePath(AppRoutes.BUURT),
+    profileTypes: ['private', 'private-commercial', 'commercial'],
   },
   {
     title: MenuItemTitles.NOTIFICATIONS,
@@ -53,3 +55,13 @@ export const mainMenuItems: MenuItem[] = [
     to: generatePath(AppRoutes.TIPS),
   },
 ];
+
+export function isMenuItemVisible(
+  profileType: ProfileType,
+  menuItem: MenuItem
+) {
+  if (Array.isArray(menuItem.profileTypes)) {
+    return menuItem.profileTypes.includes(profileType);
+  }
+  return true;
+}

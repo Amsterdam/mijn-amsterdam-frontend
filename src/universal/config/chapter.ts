@@ -24,6 +24,7 @@ export type Chapter =
   | 'SUBSIDIE'
   | 'PARKEREN'
   | 'KLACHTEN'
+  | 'HORECA'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -50,6 +51,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   SUBSIDIE: 'SUBSIDIE',
   PARKEREN: 'PARKEREN',
   KLACHTEN: 'KLACHTEN',
+  HORECA: 'HORECA',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -77,6 +79,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   SEARCH: 'Zoeken',
   PARKEREN: 'Parkeren',
   KLACHTEN: 'Klachten',
+  HORECA: 'Horeca',
 };
 
 export const DocumentTitleMain = 'Mijn Amsterdam';
@@ -135,4 +138,6 @@ export const DocumentTitles = {
   [AppRoutes.PARKEREN]: 'Parkeren',
   [AppRoutes.KLACHTEN]: 'Klachten',
   [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
+  [AppRoutes.HORECA]: 'Horeca',
+  [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
 };
