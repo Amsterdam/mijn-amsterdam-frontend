@@ -183,7 +183,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   SIA: {
-    url: `${BFF_MS_API_BASE_URL}/sia/get`,
+    url: `${BFF_MS_API_BASE_URL}/signals/v1/private/signals/`,
     postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
@@ -320,6 +320,7 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
+  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

@@ -21,7 +21,7 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchSIANotifications } from './sia';
+import { fetchSignalNotifications } from './sia';
 import { fetchHorecaNotifications } from './horeca';
 
 export function getTipsAndNotificationsFromApiResults(
@@ -105,7 +105,7 @@ async function fetchServicesNotifications(
         new Date(),
         'commercial'
       ),
-      fetchSIANotifications(requestID, authProfileAndToken),
+      fetchSignalNotifications(requestID, authProfileAndToken),
     ]);
 
     const milieuzoneNotifications = getSettledResult(
@@ -165,7 +165,7 @@ async function fetchServicesNotifications(
     fetchWiorNotifications(requestID, authProfileAndToken, profileType),
     fetchWpiNotifications(requestID, authProfileAndToken),
     fetchKlachtenNotifications(requestID, authProfileAndToken),
-    fetchSIANotifications(requestID, authProfileAndToken),
+    fetchSignalNotifications(requestID, authProfileAndToken),
     fetchHorecaNotifications(requestID, authProfileAndToken),
   ]);
 

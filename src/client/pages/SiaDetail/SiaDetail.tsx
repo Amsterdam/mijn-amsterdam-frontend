@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { SIAItem } from '../../../server/services/sia';
+import { SiaAttachment, SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
@@ -26,6 +26,20 @@ import StatusLine, {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './SiaDetail.module.scss';
 import { Location } from '../VergunningDetail/Location';
+import { BFF_API_BASE_URL } from '../../config/api';
+
+// Gemeld
+// In afwachting van behandeling
+// In behandeling
+// On hold
+// Ingepland
+// Afgehandeld
+// Geannuleerd
+// Heropend
+// Extern: verzoek tot afhandeling
+// Reactie gevraagd
+// Reactie ontvangen
+// Doorgezet naar extern
 
 function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -76,9 +90,22 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
 export default function SiaDetail() {
   const { SIA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
-  const SiaItem = SIA.content?.find((item) => item.identifier === id);
-  const noContent = !isLoading(SIA) && !SiaItem;
+  const SiaItem = SIA.content?.find((item) => item.id === id);
   const statusLineItems = useSiaMeldingStatusLineItems(SiaItem);
+
+  const [attachments, setAttachments] = useState<SiaAttachment[]>([]);
+
+  useEffect(() => {
+    if (!!SiaItem?.hasAttachments) {
+      fetch(`${BFF_API_BASE_URL}/services/signals/${SiaItem.id}/attachments`, {
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setAttachments(responseJson);
+        });
+    }
+  }, [SiaItem]);
 
   return (
     <DetailPage>
@@ -94,7 +121,7 @@ export default function SiaDetail() {
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
-        {(isError(SIA) || noContent) && (
+        {isError(SIA) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -102,27 +129,27 @@ export default function SiaDetail() {
         {isLoading(SIA) && (
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
-        {!isLoading(SIA) && (
+        {!isLoading(SIA) && !!SiaItem && (
           <>
             <InfoDetailGroup>
               <InfoDetail
                 label="Status"
-                value={SiaItem?.status || 'Ontvangen'}
+                value={SiaItem.status || 'Ontvangen'}
               />
               <InfoDetail
                 label="Meldingsnummer"
-                value={SiaItem?.identifier || '-'}
+                value={SiaItem.identifier || '-'}
               />
             </InfoDetailGroup>
             <InfoDetail
               label="Omschrijving"
-              value={SiaItem?.description || '-'}
+              value={SiaItem.description || '-'}
             />
             <InfoDetailGroup>
               <InfoDetail
                 label="Ontvangen op"
                 value={
-                  SiaItem?.datePublished
+                  SiaItem.datePublished
                     ? defaultDateFormat(SiaItem.datePublished)
                     : '-'
                 }
@@ -131,9 +158,9 @@ export default function SiaDetail() {
                 label="Datum overlast"
                 value={
                   <>
-                    {SiaItem?.dateIncidentStart &&
+                    {SiaItem.dateIncidentStart &&
                       defaultDateFormat(SiaItem.dateIncidentStart)}
-                    {SiaItem?.dateIncidentEnd && (
+                    {SiaItem.dateIncidentEnd && (
                       <> &mdash; {defaultDateFormat(SiaItem.dateIncidentEnd)}</>
                     )}
                   </>
@@ -141,11 +168,11 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             <InfoDetailGroup>
-              {!!SiaItem?.latlon && (
+              {!!SiaItem.latlon && (
                 <Location
                   modalTitle="Locatie van de melding"
                   latlng={SiaItem.latlon}
-                  label={SiaItem?.address}
+                  label={SiaItem.address}
                 />
               )}
               <InfoDetail
@@ -161,20 +188,17 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             {/* <InfoDetailGroup>
-              <InfoDetail label="Urgentie" value={SiaItem?.priority} />
-              {SiaItem?.deadline && (
+              <InfoDetail label="Urgentie" value={SiaItem.priority} />
+              {SiaItem.deadline && (
                 <InfoDetail
                   label="Verwerkingstijd"
-                  value={formatDurationInWords(SiaItem?.deadline)}
+                  value={formatDurationInWords(SiaItem.deadline)}
                 />
               )}
             </InfoDetailGroup> */}
             <InfoDetailGroup>
-              <InfoDetail label="E-mail melder" value={SiaItem?.email || '-'} />
-              <InfoDetail
-                label="Telefoonnummer"
-                value={SiaItem?.phone || '-'}
-              />
+              <InfoDetail label="E-mail melder" value={SiaItem.email || '-'} />
+              <InfoDetail label="Telefoonnummer" value={SiaItem.phone || '-'} />
             </InfoDetailGroup>
 
             <p className={styles.DetailInfo}>
@@ -194,17 +218,17 @@ export default function SiaDetail() {
                 Maak een nieuwe melding
               </LinkdInline>
             </p>
-            {!!SiaItem?.attachments.length && (
+            {!!attachments.length && (
               <InfoDetail
                 valueWrapperElement="div"
                 label="Foto's"
                 value={
                   <div className={styles.Images}>
-                    {SiaItem.attachments.map((photo, index) => (
+                    {attachments.map((attachment, index) => (
                       <div key={index} className={styles.ImgContainer}>
                         <img
                           className={styles.Img}
-                          src={photo}
+                          src={attachment.url}
                           alt="Bijgevoegde foto"
                         />
                       </div>

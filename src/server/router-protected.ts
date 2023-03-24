@@ -13,6 +13,7 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
+import { fetchSignalAttachments } from './services/sia';
 
 export const router = express.Router();
 
@@ -78,4 +79,17 @@ router.use(
       return proxyReqOpts;
     },
   })
+);
+
+router.get(
+  BffEndpoints.SIA_ATTACHMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const attachmentsResponse = await fetchSignalAttachments(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+    return res.send(attachmentsResponse.content);
+  }
 );

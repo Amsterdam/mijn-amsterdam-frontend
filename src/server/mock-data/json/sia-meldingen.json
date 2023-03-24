@@ -1,41 +1,123 @@
 {
-  "content": [
-    {
-      "category": "Fietswrak",
-      "datePublished": "2021-03-02",
-      "dateModified": "2021-03-02",
-      "dateClosed": null,
-      "dateIncidentStart": "2021-03-02",
-      "dateIncidentEnd": "2021-03-02",
-      "status": "Gemeld",
-      "deadline": "2021-03-12",
-      "priority": "normal",
-      "description": "Er staat een fiets al meer dan een jaar op deze plek, met lekke banden etc.",
-      "identifier": "SIA-09786",
-      "address": "Bilderdijkstraat 157-3 1053KP Amsterdam",
-      "latlon": [52.3717228,4.8927377],
-      "email": "j.vandergroenen@gmail.com",
-      "phone": "0612312345",
-      "attachments": ["data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==", "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="]
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:8000/signals/v1/private/signals/"
     },
-    {
-      "category": "Bouwwerkzaamheden",
-      "datePublished": "2021-03-02",
-      "dateModified": "2021-03-02",
-      "dateClosed": "2021-03-02",
-      "dateIncidentStart": "2021-03-02",
-      "dateIncidentEnd": "2021-03-02",
-      "status": "Afgesloten",
-      "deadline": "2021-03-12",
-      "priority": "high",
-      "description": "Ze zijn al 2 jaar aan het boren, ik ben het spuugzat!",
-      "identifier": "SIA-123123",
-      "address": "Bilderdijkstraat 157-3 1053KP Amsterdam",
-      "latlon": [52.3717228,4.8927377],
-      "email": "j.vandergroenen@gmail.com",
-      "phone": "0612312345",
-      "attachments": []
+    "next": {
+      "href": "http://127.0.0.1:8000/signals/v1/private/signals/?page=2"
+    },
+    "previous": {
+      "href": null
     }
-  ],
-  "status": "OK"
+  },
+  "count": 10,
+  "results": [
+    {
+      "_links": {
+        "_link": {
+          "self": {
+            "href": "http://127.0.0.1:8000/signals/v1/private/signals/1"
+          }
+        }
+      },
+      "_display": "1 - m - E17a - 2020-01-01 00:00:00.000000+00:00",
+      "category": {
+        "sub": "Overlast terrassen",
+        "sub_slug": "overlast-terrassen",
+        "main": "Overlast Bedrijven en Horeca",
+        "main_slug": "overlast-bedrijven-en-horeca",
+        "category_url": "http://127.0.0.1:8000/signals/v1/public/terms/categories/overlast-bedrijven-en-horeca/sub_categories/overlast-terrassen",
+        "departments": "VTH",
+        "created_by": null,
+        "text": null,
+        "deadline": "2023-03-24T08:46:38.342Z",
+        "deadline_factor_3": "2023-03-24T08:46:38.342Z"
+      },
+      "id": 1,
+      "signal_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "has_attachments": true,
+      "location": {
+        "stadsdeel": "E",
+        "buurt_code": "E17a",
+        "address": {
+          "postcode": "1053KP",
+          "huisletter": "",
+          "huisnummer": "157",
+          "woonplaats": "Amsterdam",
+          "openbare_ruimte": "Bilderdijkstraat",
+          "huisnummer_toevoeging": "3"
+        },
+        "address_text": "Bilderdijkstraat 157-3 1053KP Amsterdam",
+        "geometrie": {
+          "type": "Point",
+          "coordinates": [
+            4.87170696258545,
+            52.36805320057393
+          ]
+        },
+        "extra_properties": {}
+      },
+      "status": {
+        "text": null,
+        "state": "m",
+        "target_api": "sigmax",
+        "extra_properties": {},
+        "created_by": "test@test.com",
+        "created_at": "2020-01-01T00:00:00+00:00"
+      },
+      "reporter": {
+        "email": "test@test.com",
+        "phone": "",
+        "sharing_allowed": false,
+        "allows_contact": true
+      },
+      "priority": {
+        "priority": "normal",
+        "created_by": "test@test.com"
+      },
+      "notes": [
+        {
+          "text": "Automatische e-mail bij registratie van de melding is verzonden aan de melder.",
+          "created_by": "test@test.com"
+        },
+        {
+          "text": "De statusupdate is per e-mail verzonden aan de melder",
+          "created_by": "test@test.com"
+        }
+      ],
+      "type": {
+        "code": "SIG",
+        "created_at": "2020-01-01T00:00:00+00:00",
+        "created_by": "test@test.com"
+      },
+      "directing_departments": [
+        {
+          "id": 1,
+          "code": "ASC",
+          "name": "Actie service centrum",
+          "is_intern": false
+        }
+      ],
+      "source": "Telefoon – ASC",
+      "text": "Het cafe op de hoek maakt enorme herrie",
+      "text_extra": null,
+      "created_at": "2020-01-01T00:00:00+00:00",
+      "updated_at": "2020-01-01T00:00:00+00:00",
+      "incident_date_start": "2020-01-01T00:00:00+00:00",
+      "incident_date_end": "2022-01-01T00:00:00+00:00",
+      "operational_date": "2022-01-01T00:00:00+00:00",
+      "has_parent": true,
+      "has_children": true,
+      "extra_properties": "string",
+      "routing_departments": [
+        {
+          "id": 1,
+          "code": "ASC",
+          "name": "Actie service centrum",
+          "is_intern": false
+        }
+      ],
+      "assigned_user_email": "user@example.com"
+    }
+  ]
 }

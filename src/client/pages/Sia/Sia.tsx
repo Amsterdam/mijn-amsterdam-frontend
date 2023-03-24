@@ -9,7 +9,6 @@ import {
   ChapterIcon,
   Linkd,
   MaintenanceNotifications,
-  // Linkd,
   PageContent,
   PageHeading,
   SectionCollapsible,

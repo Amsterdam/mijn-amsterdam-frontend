@@ -44,7 +44,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSIA } from './sia';
+import { fetchSignals } from './sia';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -116,8 +116,8 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
-const SIA = callService(fetchSIA);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -173,11 +173,11 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE'>;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE' | 'SIA'>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE' | 'SIA'
 >;
 
 type CommercialServices = Pick<
@@ -190,7 +190,6 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'NOTIFICATIONS'
   | 'MY_LOCATION'
-  | 'SIA'
   | 'KVK'
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
@@ -200,7 +199,6 @@ type CommercialServices = Pick<
 
 type ServicesByProfileType = {
   private: PrivateServices;
-  'private-attributes': PrivateServicesAttributeBased;
   'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
