@@ -20,7 +20,6 @@ import {
 import {
   apiUrlEntries,
   ApiUrlEntries,
-  ApiUrls,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
@@ -153,10 +152,15 @@ export async function requestData<T>(
     );
   }
 
-  if (requestConfig.hasBearerToken && authProfileAndToken?.token) {
-    requestConfig.headers = Object.assign(requestConfig?.headers ?? {}, {
-      Authorization: `Bearer ${authProfileAndToken.token}`,
-    });
+  // Shortcut to passing the JWT from authentication along with the request
+  if (requestConfig.passthroughOIDCToken && authProfileAndToken?.token) {
+    const headers = requestConfig?.headers ?? {};
+    requestConfig.headers = Object.assign(
+      {
+        Authorization: `Bearer ${authProfileAndToken.token}`,
+      },
+      headers
+    );
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';

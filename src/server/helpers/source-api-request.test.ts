@@ -22,10 +22,10 @@ describe('requestData.ts', () => {
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
-
+  const TOKEN = 'xxxxx';
   const AUTH_PROFILE_AND_TOKEN: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxxx' },
-    token: 'xxxxx',
+    token: TOKEN,
   };
 
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
@@ -182,5 +182,55 @@ describe('requestData.ts', () => {
       'unknown'
     );
     expect(findApiByRequestUrl(entries, 'http://get')).toBe('unknown');
+  });
+
+  test('By default Bearer token is not passed', async () => {
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(
+      false
+    );
+    expect(axiosRequestSpy.mock.calls[0][0].headers).toBeUndefined();
+  });
+
+  test('OIDC Bearer token _is_ passed', async () => {
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+        passthroughOIDCToken: true,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
+    expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
+      Authorization: `Bearer ${TOKEN}`,
+    });
+  });
+
+  test('OIDC Bearer token _is_ passed _and_ overridden', async () => {
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+        passthroughOIDCToken: true,
+        headers: {
+          Authorization: 'Bearer ababababab',
+        },
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
+    expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
+      Authorization: `Bearer ababababab`,
+    });
   });
 });

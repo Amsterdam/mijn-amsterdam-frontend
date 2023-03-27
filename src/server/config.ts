@@ -72,7 +72,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * In this case we can use a cacheKey. Be sure this key is unique to the visitor. The for example the requestID parameter can be used.
    */
   cacheKey?: string;
-  hasBearerToken?: boolean;
+  passthroughOIDCToken?: boolean;
 
   combinePaginatedResults?: <T>(
     responseData: any,
@@ -98,7 +98,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   method: 'get',
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
-  hasBearerToken: true,
+  passthroughOIDCToken: false,
   page: 1,
   maximumAmountOfPages: 0,
 };
@@ -135,18 +135,23 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
+    passthroughOIDCToken: true,
   },
   WPI_E_AANVRAGEN: {
     url: `${BFF_MS_API_BASE_URL}/wpi/e-aanvragen`,
+    passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
     url: `${BFF_MS_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
     url: `${BFF_MS_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    passthroughOIDCToken: true,
   },
   WPI_STADSPAS: {
     url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
+    passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
@@ -184,6 +189,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
+    passthroughOIDCToken: true,
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
@@ -208,7 +214,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
-  BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp` },
+  BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp`, passthroughOIDCToken: true },
   AKTES: {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
@@ -222,6 +228,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   KVK: {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
+    passthroughOIDCToken: true,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: process.env.BFF_LVV_API_URL,
@@ -237,6 +244,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   KREFIA: {
     url: `${BFF_MS_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
+    passthroughOIDCToken: true,
   },
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
