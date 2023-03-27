@@ -188,7 +188,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   SIA: {
-    url: `${BFF_MS_API_BASE_URL}/signals/v1/private/signals/`,
+    url: `${process.env.BFF_SIA_BASE_URL}/private/signals/`,
     postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {

@@ -102,7 +102,10 @@ export const PRISTINE_APPSTATE: AppState = {
     { profileTypes: ['private', 'private-commercial'] }
   ),
 
-  SIA: apiPristineResult([]),
+  SIA: apiPristineResult([], {
+    profileTypes: ['private-attributes'],
+    isActive: FeatureToggle.siaActive,
+  }),
   HORECA: apiPristineResult([]),
 };
 

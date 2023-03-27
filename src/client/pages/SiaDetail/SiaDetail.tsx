@@ -142,6 +142,7 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             <InfoDetail
+              className={styles.NoPadding}
               label="Omschrijving"
               value={SiaItem.description || '-'}
             />
@@ -177,7 +178,7 @@ export default function SiaDetail() {
               )}
               <InfoDetail
                 label="Verwerkingstijd"
-                className={styles.Verwerkingstijd}
+                className={styles.NoPadding}
                 value={
                   <>
                     We laten u binnen 5 dagen weten wat we hebben gedaan. En

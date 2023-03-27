@@ -114,7 +114,7 @@ export default function Sia() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={siaActual}
         />
@@ -134,7 +134,7 @@ export default function Sia() {
       >
         <Table
           className={styles.Table}
-          titleKey="caseType"
+          titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
           items={siaPrevious}
         />

@@ -174,10 +174,17 @@ export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE' | 'SIA'>;
+type PrivateCommercialServices = Omit<
+  ServicesType,
+  'AKTES' | 'PROFILE' | 'SIA'
+>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE' | 'SIA'
+  | 'CMS_CONTENT'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'NOTIFICATIONS'
+  | 'PROFILE'
+  | 'SIA'
 >;
 
 type CommercialServices = Pick<
@@ -200,6 +207,7 @@ type CommercialServices = Pick<
 type ServicesByProfileType = {
   private: PrivateServices;
   'private-commercial': PrivateCommercialServices;
+  'private-attributes': PrivateServicesAttributeBased;
   commercial: CommercialServices;
 };
 

@@ -242,8 +242,6 @@ export async function requestData<T>(
     const shouldCaptureMessage =
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    console.log('ERRORRRRRR', error);
-
     const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
     const errorMessage = error?.response?.data?.message || error.toString();
 

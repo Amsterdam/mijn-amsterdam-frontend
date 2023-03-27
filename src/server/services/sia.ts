@@ -2,19 +2,12 @@ import { LatLngLiteral } from 'leaflet';
 import { generatePath } from 'react-router-dom';
 import { Chapters } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
-import { defaultDateTimeFormat } from '../../universal/helpers';
-import {
-  apiDependencyError,
-  apiErrorResult,
-  ApiResponse,
-  apiSuccessResult,
-} from '../../universal/helpers/api';
-import { LinkProps } from '../../universal/types/App.types';
+import { defaultDateTimeFormat, getFullAddress } from '../../universal/helpers';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
+import { LinkProps, StatusLineItem } from '../../universal/types/App.types';
 import { BFF_MS_API_BASE_URL, getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
-import memoize from 'memoizee';
-import axios from 'axios';
 
 type StatusStateChoice =
   | 'm'
@@ -106,7 +99,7 @@ interface Address {
   stadsdeel: string;
   postcode: string;
   huisletter: string;
-  huisnummer: number;
+  huisnummer: string;
   woonplaats: string;
   openbare_ruimte: string;
   huisnummer_toevoeging: string;
@@ -161,17 +154,6 @@ interface SignalsSourceData {
   results: SignalPrivate[];
 }
 
-// function transformSIANotifications(notifications?: MyNotification[]) {
-//   const notificationsTransformed = Array.isArray(notifications)
-//     ? notifications.map((notification) => ({
-//         ...notification,
-//         chapter: Chapters.SIA,
-//       }))
-//     : [];
-
-//   return notificationsTransformed;
-// }
-
 function getSignalStatus(sourceItem: SignalPrivate): string {
   return STATUS_CHOICES_API[sourceItem.status.state];
 }
@@ -195,10 +177,23 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
       // priority: sourceItem.priority,
       // deadline: sourceItem.deadline,
       description: sourceItem.text,
-      address: sourceItem.location.address_text,
+      address: sourceItem.location.address
+        ? getFullAddress(
+            {
+              straatnaam: sourceItem.location.address.openbare_ruimte,
+              woonplaatsNaam: sourceItem.location.address.woonplaats,
+              huisletter: sourceItem.location.address.huisletter,
+              huisnummer: sourceItem.location.address.huisnummer,
+              huisnummertoevoeging:
+                sourceItem.location.address.huisnummer_toevoeging,
+              postcode: sourceItem.location.address.postcode,
+            },
+            true
+          )
+        : 'Onbekend adres',
       latlon: {
-        lat: sourceItem.location.geometrie.coordinates[0],
-        lng: sourceItem.location.geometrie.coordinates[1],
+        lat: sourceItem.location.geometrie.coordinates[1],
+        lng: sourceItem.location.geometrie.coordinates[0],
       },
       email: sourceItem.reporter.email,
       phone: sourceItem.reporter.phone,
@@ -217,15 +212,18 @@ interface TokenResponse {
   access_token: string;
 }
 
-async function _getAccessToken(requestID: requestID) {
-  const tokenResponse = await axios.post(
-    'https://iam.amsterdam.nl/auth/realms/datapunt-ad-acc/protocol/openid-connect/token',
-    `grant_type=client_credentials&client_id=signalsAPI&client_secret=${process.env.BFF_KEYCLOAK_CLIENT_SECRET}`
-  );
-  return tokenResponse;
-}
+async function getAccessToken(requestID: requestID) {
+  const data = `grant_type=client_credentials&client_id=${process.env.BFF_SIA_IAM_CLIENT_ID}&client_secret=${process.env.BFF_SIA_IAM_CLIENT_SECRET}`;
 
-const getAccessToken = memoize(_getAccessToken);
+  return requestData<TokenResponse>(
+    {
+      method: 'post',
+      url: `${process.env.BFF_SIA_IAM_TOKEN_ENDPOINT}`,
+      data,
+    },
+    requestID
+  );
+}
 
 export async function fetchSignals(
   requestID: requestID,
@@ -233,27 +231,26 @@ export async function fetchSignals(
 ) {
   const queryParams = {
     contact_details: 'email',
-    reporter_email: 'ali.kaya@amsterdam.nl',
+    // reporter_email: 'ali.kaya@amsterdam.nl',
   };
 
   const accessTokenResponse = await getAccessToken(requestID);
 
-  if (accessTokenResponse.data?.access_token) {
+  if (accessTokenResponse.status === 'OK') {
+    const requestConfig = getApiConfig('SIA', {
+      transformResponse: transformSIAData,
+      params: queryParams,
+      headers: {
+        Authorization: `Bearer ${accessTokenResponse.content.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
     const response = await requestData<SIAItem[]>(
-      getApiConfig('SIA', {
-        url: 'https://api.data.amsterdam.nl/signals/v1/private/signals/',
-        transformResponse: transformSIAData,
-        params: queryParams,
-        headers: {
-          Authorization: `Bearer ${accessTokenResponse.data.access_token}`,
-          'Content-Type': 'application/json',
-        },
-      }),
+      requestConfig,
       requestID,
       authProfileAndToken
     );
-
-    console.log('response.', response);
 
     return response;
   }
@@ -298,6 +295,33 @@ export async function fetchSignalAttachments(
   apiConfig.url = `${apiConfig.url}${signalId}/attachments`;
 
   const response = await requestData<SiaAttachment[]>(
+    apiConfig,
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
+}
+
+interface SiaStatusResponse {}
+
+function transformSiaStatusResponse(
+  response: SiaStatusResponse
+): StatusLineItem[] {
+  return [];
+}
+
+export async function fetchSignalHistory(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  signalId: string
+) {
+  const apiConfig = getApiConfig('SIA', {
+    transformResponse: transformSiaStatusResponse,
+  });
+  apiConfig.url = `${apiConfig.url}${signalId}/history`;
+
+  const response = await requestData<StatusLineItem[]>(
     apiConfig,
     requestID,
     authProfileAndToken
