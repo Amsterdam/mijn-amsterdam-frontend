@@ -21,6 +21,7 @@ interface LocationProps {
   location?: string | null;
   label?: string;
   modalTitle?: string;
+  text?: string;
   latlng?: LatLngLiteral;
 }
 
@@ -28,6 +29,7 @@ export function Location({
   location = null,
   latlng,
   modalTitle,
+  text,
   label = 'Locatie',
 }: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
@@ -71,6 +73,7 @@ export function Location({
           <>
             {hasLocationData ? (
               <>
+                {!!text && <>{text}</>}
                 <Button
                   className={styles.MapLink}
                   variant="inline"

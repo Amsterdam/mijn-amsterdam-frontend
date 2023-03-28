@@ -4,8 +4,8 @@ import { Chapters } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import { defaultDateTimeFormat, getFullAddress } from '../../universal/helpers';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
-import { LinkProps, StatusLineItem } from '../../universal/types/App.types';
-import { BFF_MS_API_BASE_URL, getApiConfig } from '../config';
+import { LinkProps } from '../../universal/types/App.types';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 
@@ -178,7 +178,12 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
       status: getSignalStatus(sourceItem),
       // priority: sourceItem.priority,
       // deadline: sourceItem.deadline,
-      description: sourceItem.text,
+      description:
+        sourceItem.text +
+        `U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte wordt gehouden over de voortgang van uw melding. U kunt deze gegevens hier niet meer wijzigen. 12 maanden na ontvangst van uw melding worden deze gegevens automatisch verwijderd uit ons systeem.
+
+Wilt u informatie toevoegen? Of is het probleem nog niet opgelost?
+Maak een nieuwe melding`,
       address: sourceItem.location.address
         ? getFullAddress(
             {

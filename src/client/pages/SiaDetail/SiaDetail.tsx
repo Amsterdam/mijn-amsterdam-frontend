@@ -26,6 +26,7 @@ import { LinkdInline } from '../../components/Button/Button';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import StatusLine from '../../components/StatusLine/StatusLine';
 import { BFF_API_BASE_URL } from '../../config/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -178,7 +179,7 @@ export default function SiaDetail() {
             <InfoDetail
               className={styles.NoPadding}
               label="Omschrijving"
-              value={SiaItem.description || '-'}
+              value={<TextClamp>{SiaItem.description || '-'}</TextClamp>}
             />
             <InfoDetailGroup>
               <InfoDetail
@@ -207,7 +208,8 @@ export default function SiaDetail() {
                 <Location
                   modalTitle="Locatie van de melding"
                   latlng={SiaItem.latlon}
-                  label={SiaItem.address}
+                  label="Adres"
+                  text={SiaItem.address}
                 />
               )}
               <InfoDetail
