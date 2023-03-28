@@ -152,7 +152,8 @@ export async function requestData<T>(
     );
   }
 
-  // Shortcut to passing the JWT from authentication along with the request
+  // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
+  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
   if (requestConfig.passthroughOIDCToken && authProfileAndToken?.token) {
     const headers = requestConfig?.headers ?? {};
     requestConfig.headers = Object.assign(
