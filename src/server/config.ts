@@ -72,6 +72,10 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * In this case we can use a cacheKey. Be sure this key is unique to the visitor. The for example the requestID parameter can be used.
    */
   cacheKey?: string;
+  /**
+   * If true the token passed via `authProfileAndToken` will be sent via { Authorization: `Bearer ${authProfileAndToken.token}` } with the request.
+   * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
+   */
   passthroughOIDCToken?: boolean;
 
   combinePaginatedResults?: <T>(
