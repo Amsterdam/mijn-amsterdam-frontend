@@ -123,6 +123,7 @@ export const DocumentTitles = {
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
+  [AppRoutes['SIA/DETAIL']]: `Melding detail | ${ChapterTitles.SIA}`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'

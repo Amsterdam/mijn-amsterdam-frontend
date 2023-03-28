@@ -333,6 +333,7 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
+  SIA_HISTORY: '/services/signals/:id/history',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

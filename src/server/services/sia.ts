@@ -127,6 +127,7 @@ interface Location {
 
 export interface SignalPrivate {
   id: string;
+  id_display: string;
   signal_id: string;
   category: Category;
   has_attachments: boolean;
@@ -159,13 +160,14 @@ function getSignalStatus(sourceItem: SignalPrivate): string {
 }
 
 function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
+  // console.log((responseData.results[0] as any)._links);
   const signals = responseData.results ?? [];
   return signals.map((sourceItem: SignalPrivate) => {
     const dateClosed = '';
-    const identifier = `SIG-${sourceItem.id}`;
+    const identifier = sourceItem.id_display;
 
     return {
-      id: sourceItem.signal_id,
+      id: String(sourceItem.id),
       identifier,
       // category: sourceItem.category.main,
       datePublished: sourceItem.created_at,
@@ -200,7 +202,7 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
       hasAttachments: sourceItem.has_attachments,
       link: {
         to: generatePath(AppRoutes['SIA/DETAIL'], {
-          id: sourceItem.signal_id,
+          id: sourceItem.id,
         }),
         title: `SIA Melding ${identifier}`,
       },
@@ -284,12 +286,12 @@ export interface SiaAttachment {
 }
 
 function transformSiaAttachmentsResponse(response: SiaAttachmentResponse) {
-  if (!Array.isArray(response)) {
+  if (!Array.isArray(response.results)) {
     return [];
   }
   return response.results.map((attachment) => {
     return {
-      url: `${BFF_MS_API_BASE_URL}${attachment.location}`,
+      url: attachment.location,
       isImage: attachment.is_image,
     };
   });
@@ -314,18 +316,45 @@ export async function fetchSignalAttachments(
       authProfileAndToken
     );
 
+    console.log('response.content', response.content);
+
     return response;
   }
 
   return apiErrorResult('Could not get access token', null);
 }
 
-interface SiaStatusResponse {}
+export interface SiaSignalHistory {
+  identifier: string;
+  when: string; // date,
+  what: string; // 'CREATE_NOTE'
+  action: string; // 'Notitie toegevoegd:',
+  description: string; // 'Bijlage toegevoegd door melder: Koelkast_op_straat_bij_DICT.jpeg',
+  who: string; // 'Signalen systeem';
+  _signal: number; // id of the signal
+}
 
-function transformSiaStatusResponse(
-  response: SiaStatusResponse
-): StatusLineItem[] {
-  return [];
+export interface SiaSignalStatusHistory {
+  datePublished: string;
+  key: StatusKey;
+  status: StatusValue;
+  description: string;
+}
+
+function transformSiaStatusResponse(response: SiaSignalHistory[]) {
+  // return response;
+  return response.map((historyEntry) => {
+    return {
+      // id: historyEntry.identifier,
+      status: historyEntry.action,
+      key: historyEntry.what,
+      datePublished: historyEntry.when,
+      description: historyEntry.description,
+      // documents: [],
+      // isActive: false,
+      // isChecked: true,
+    };
+  });
 }
 
 export async function fetchSignalHistory(
@@ -337,8 +366,9 @@ export async function fetchSignalHistory(
 
   if (requestConfig !== null) {
     requestConfig.url = `${requestConfig.url}${signalId}/history`;
+    console.log('url:', requestConfig.url);
 
-    const response = await requestData<StatusLineItem[]>(
+    const response = await requestData<SiaSignalStatusHistory[]>(
       {
         ...requestConfig,
         transformResponse: transformSiaStatusResponse,

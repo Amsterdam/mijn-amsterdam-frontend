@@ -13,7 +13,7 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import { fetchSignalAttachments } from './services/sia';
+import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
 
 export const router = express.Router();
 
@@ -99,3 +99,19 @@ router.get(
     return res.send(attachmentsResponse);
   }
 );
+
+router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
+  const authProfileAndToken = await getAuth(req);
+
+  const attachmentsResponse = await fetchSignalHistory(
+    res.locals.requestID,
+    authProfileAndToken,
+    req.params.id
+  );
+
+  if (attachmentsResponse.status === 'ERROR') {
+    res.status(500);
+  }
+
+  return res.send(attachmentsResponse);
+});

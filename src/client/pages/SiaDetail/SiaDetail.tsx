@@ -1,13 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { SiaAttachment, SIAItem } from '../../../server/services/sia';
+import { atom, RecoilState, useRecoilState } from 'recoil';
+import {
+  SiaAttachment,
+  SIAItem,
+  SiaSignalStatusHistory,
+} from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
+  apiPristineResult,
+  ApiResponse,
   defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { formatDurationInWords } from '../../../universal/helpers/date';
 import {
   Alert,
   ChapterIcon,
@@ -20,13 +26,11 @@ import { LinkdInline } from '../../components/Button/Button';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import StatusLine, {
-  StatusLineItem,
-} from '../../components/StatusLine/StatusLine';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './SiaDetail.module.scss';
-import { Location } from '../VergunningDetail/Location';
+import StatusLine from '../../components/StatusLine/StatusLine';
 import { BFF_API_BASE_URL } from '../../config/api';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { Location } from '../VergunningDetail/Location';
+import styles from './SiaDetail.module.scss';
 
 // Gemeld
 // In afwachting van behandeling
@@ -41,81 +45,104 @@ import { BFF_API_BASE_URL } from '../../config/api';
 // Reactie ontvangen
 // Doorgezet naar extern
 
-function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
-  const statusLineItems: StatusLineItem[] = useMemo(() => {
-    if (!SiaItem) {
-      return [];
-    }
+function getSiaMeldingStatusLineItems(
+  SiaItem: SIAItem | undefined,
+  history: ApiResponse<SiaSignalStatusHistory[]>
+) {
+  if (!SiaItem) {
+    return [];
+  }
 
-    const isPending = SiaItem.status === 'Gemeld';
-    const isDone = SiaItem.status === 'Afgesloten';
-    const isInProgress = SiaItem.status === 'Ingepland';
-    return [
-      {
-        id: 'item-1',
-        status: 'Gemeld',
-        datePublished: SiaItem.datePublished,
-        description: '',
-        documents: [],
-        isActive: isPending,
-        isChecked: true,
-      },
-      {
-        id: 'item-2',
-        status: 'Ingepland',
-        datePublished:
-          isInProgress && !isDone && SiaItem.dateModified
-            ? SiaItem.dateModified
-            : '',
-        description: '',
-        documents: [],
-        isActive: isInProgress,
-        isChecked: isDone || isInProgress,
-      },
-      {
-        id: 'item-3',
-        status: 'Afgesloten',
-        datePublished: isDone ? SiaItem.dateClosed || '' : '',
-        description: '',
-        documents: [],
-        isActive: isDone,
-        isChecked: isDone,
-      },
-    ];
-  }, [SiaItem]);
+  const isPending = SiaItem.status === 'Gemeld';
+  const isDone = SiaItem.status === 'Afgesloten';
+  const isInProgress = SiaItem.status === 'Ingepland';
+  const statusLineItems = [
+    {
+      id: 'item-1',
+      status: 'Gemeld',
+      datePublished: SiaItem.datePublished,
+      description: '',
+      documents: [],
+      isActive: isPending,
+      isChecked: true,
+    },
+    {
+      id: 'item-2',
+      status: 'Ingepland',
+      datePublished:
+        isInProgress && !isDone && SiaItem.dateModified
+          ? SiaItem.dateModified
+          : '',
+      description: '',
+      documents: [],
+      isActive: isInProgress,
+      isChecked: isDone || isInProgress,
+    },
+    {
+      id: 'item-3',
+      status: 'Afgesloten',
+      datePublished: isDone ? SiaItem.dateClosed || '' : '',
+      description: '',
+      documents: [],
+      isActive: isDone,
+      isChecked: isDone,
+    },
+  ];
 
   return statusLineItems;
+}
+
+const statusHistoryAtom = atom<
+  Record<string, ApiResponse<SiaSignalStatusHistory[]>>
+>({
+  key: 'siaStatusHistoryAtom',
+  default: {},
+});
+
+const attachmentsAtom = atom<Record<string, ApiResponse<SiaAttachment[]>>>({
+  key: 'siaAttachmentsAtom',
+  default: {},
+});
+
+function useAdditionalDataById<T extends ApiResponse<any>>(
+  id: string,
+  url: string,
+  atom: RecoilState<Record<string, T>>
+): T {
+  const [data, setData] = useRecoilState(atom);
+  const isDataFetched = id in data;
+
+  useEffect(() => {
+    if (!isDataFetched) {
+      fetch(url, {
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setData((data) => Object.assign({}, data, { [id]: responseJson }));
+        });
+    }
+  }, [url, id, setData, isDataFetched]);
+
+  return data[id] ?? apiPristineResult(null);
 }
 
 export default function SiaDetail() {
   const { SIA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const SiaItem = SIA.content?.find((item) => item.id === id);
-  const statusLineItems = useSiaMeldingStatusLineItems(SiaItem);
 
-  const [isAttachmentsFetched, setIsAttachmentsFetched] =
-    useState<boolean>(false);
-  const [attachments, setAttachments] = useState<SiaAttachment[]>([]);
-  const [attachmentsError, setAttachmentsError] = useState<string>('');
+  const attachments = useAdditionalDataById(
+    id,
+    `${BFF_API_BASE_URL}/services/signals/${id}/attachments`,
+    attachmentsAtom
+  );
 
-  useEffect(() => {
-    if (!!SiaItem?.hasAttachments && !isAttachmentsFetched) {
-      fetch(`${BFF_API_BASE_URL}/services/signals/${SiaItem.id}/attachments`, {
-        credentials: 'include',
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.status === 'OK') {
-            setAttachments(responseJson);
-          } else {
-            setAttachmentsError(responseJson.message);
-          }
-        })
-        .finally(() => {
-          setIsAttachmentsFetched(true);
-        });
-    }
-  }, [SiaItem, isAttachmentsFetched]);
+  const history = useAdditionalDataById(
+    id,
+    `${BFF_API_BASE_URL}/services/signals/${id}/history`,
+    statusHistoryAtom
+  );
 
   return (
     <DetailPage>
@@ -229,13 +256,13 @@ export default function SiaDetail() {
                 Maak een nieuwe melding
               </LinkdInline>
             </p>
-            {!!attachments.length && (
+            {!!attachments.content?.length && (
               <InfoDetail
                 valueWrapperElement="div"
                 label="Foto's"
                 value={
                   <div className={styles.Images}>
-                    {attachments.map((attachment, index) => (
+                    {attachments.content.map((attachment, index) => (
                       <div key={index} className={styles.ImgContainer}>
                         <img
                           className={styles.Img}
@@ -248,7 +275,7 @@ export default function SiaDetail() {
                 }
               />
             )}
-            {!!attachmentsError && (
+            {attachments.status === 'ERROR' && (
               <Alert type="warning">
                 <p>We kunnen op dit moment geen bijlages laten zien.</p>
               </Alert>
@@ -256,11 +283,18 @@ export default function SiaDetail() {
           </>
         )}
       </PageContent>
-      {!!statusLineItems.length && (
+
+      {history.status === 'ERROR' && (
+        <Alert type="warning">
+          <p>We kunnen op dit moment geen volledige historie laten zien.</p>
+        </Alert>
+      )}
+
+      {!isLoading(SIA) && !!SiaItem && (
         <StatusLine
           className={styles.SiaStatus}
           trackCategory="SiaMeldingen detail / status"
-          items={statusLineItems}
+          items={getSiaMeldingStatusLineItems(SiaItem, history)}
           showToggleMore={false}
           id={`sia-detail-${id}`}
         />
