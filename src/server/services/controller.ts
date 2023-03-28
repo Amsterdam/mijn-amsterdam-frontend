@@ -9,13 +9,14 @@ import {
   queryParams,
   sendMessage,
 } from '../helpers/app';
-import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
+import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAKTES } from './aktes';
 import { fetchBezwaren } from './bezwaren';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchMyLocation } from './home';
+import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -89,15 +90,18 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 
+const HORECA = async (requestID: requestID, req: Request) =>
+  fetchHorecaVergunningen(requestID, await getAuth(req), getProfileType(req));
+
 // Location, address, based services
 const MY_LOCATION = async (requestID: requestID, req: Request) =>
   fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
 
 const AFVAL = async (requestID: requestID, req: Request) =>
-  fetchAFVAL(requestID, await getAuth(req), getProfileType(req));
+  fetchAfval(requestID, await getAuth(req), getProfileType(req));
 
 const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
-  fetchAFVALPUNTEN(requestID, await getAuth(req), getProfileType(req));
+  fetchAfvalPunten(requestID, await getAuth(req), getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
@@ -144,6 +148,7 @@ const SERVICES_INDEX = {
   KLACHTEN,
   BEZWAREN,
   NOTIFICATIONS,
+  HORECA,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -167,6 +172,7 @@ type CommercialServices = Pick<
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
   | 'TOERISTISCHE_VERHUUR'
+  | 'HORECA'
 >;
 
 type ServicesByProfileType = {
@@ -181,7 +187,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     AKTES,
-    BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
@@ -202,12 +207,13 @@ export const servicesByProfileType: ServicesByProfileType = {
     WMO,
     KLACHTEN,
     BEZWAREN,
+    BELASTINGEN,
+    HORECA,
   },
   'private-commercial': {
     AFVAL,
     AFVALPUNTEN,
     BRP,
-    BELASTINGEN,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
@@ -228,6 +234,8 @@ export const servicesByProfileType: ServicesByProfileType = {
     WMO,
     KLACHTEN,
     BEZWAREN,
+    BELASTINGEN,
+    HORECA,
   },
   commercial: {
     AFVAL,
@@ -242,6 +250,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     VERGUNNINGEN,
+    HORECA,
   },
 };
 

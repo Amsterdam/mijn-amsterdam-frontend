@@ -29,6 +29,7 @@ const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
   CaseType.Onttrekkingsvergunning,
   CaseType.OnttrekkingsvergunningSloop,
   CaseType.VormenVanWoonruimte,
+  CaseType.VOB,
 ];
 
 const CASE_TYPES_WITH_WORKFLOW = [
@@ -40,6 +41,7 @@ const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.OnttrekkingsvergunningSloop,
   CaseType.VormenVanWoonruimte,
   CaseType.Splitsingsvergunning,
+  CaseType.VOB,
 ];
 
 export const woonVergunningTypes = [

@@ -228,7 +228,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
-    url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
+    url: `${BFF_DATAPUNT_API_BASE_URL}/v1/afvalwijzer/afvalwijzer/`,
   },
   KVK: {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,

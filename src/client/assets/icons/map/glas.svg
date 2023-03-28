@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Glascontainer</title>
-    <g transform="translate(5.000000, 1.000000)">
-      <path d="M6,13 C6,14 4.99667359,14 4.99667359,14 L1,14 C0.805541996,14 4.61295713e-09,13.8708496 4.61295713e-09,13 L4.61295713e-09,12 L4,12 L4,7.001 L4.61295713e-09,7.00183105 L4.61295713e-09,5.00183105 C4.61295713e-09,4 2,4 2,3 L2,-4.54747351e-13 L4,-4.54747351e-13 L4,3 C4,4 6,4 6,5.00183105 L6,13 Z M3,8 L3,11 L0,11 L0,8 L3,8 Z"></path>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
+  xml:space="preserve" width="28" height="28">
+  <title>Glas</title>
+  <circle cx="12" cy="12" r="12" style="fill: rgb(255, 230, 0);"></circle>
+  <g transform="translate(9.000000, 4.000000)">
+    <rect id="Rectangle" x="-8.8817842e-16" y="7.86" width="2.25" height="4.38"></rect>
+    <path
+      d="M4.14,4.09 L4.14,0 L1.45,0 L1.45,4.09 C0.57,4.54 0,5.47 0,6.51 L0,7.36 L2.75,7.36 L2.75,12.74 L0,12.74 L0,14.45 C0,14.95 0.41,15.36 0.91,15.36 L4.67,15.36 C5.17,15.36 5.58,14.95 5.58,14.45 L5.58,6.51 C5.58,5.47 5.01,4.54 4.14,4.09 Z"></path>
+  </g>
 </svg>

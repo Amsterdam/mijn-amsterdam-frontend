@@ -44,6 +44,8 @@ export const AppRoutes: Record<string, string> = {
   PARKEREN: '/parkeren',
   KLACHTEN: '/klachten/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  HORECA: '/horeca/:page?',
+  'HORECA/DETAIL': '/horeca/:title/:id',
 };
 
 export const AppRoutesRedirect = [

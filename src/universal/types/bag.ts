@@ -5,6 +5,7 @@ export interface BAGSourceData {
     centroid: LatLngTuple;
     adres: string;
     woonplaats: string;
+    landelijk_id: string | null;
     [key: string]: any;
   }>;
 }
