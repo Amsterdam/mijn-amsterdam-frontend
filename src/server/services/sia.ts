@@ -246,7 +246,7 @@ export async function fetchSignals(
 ) {
   const queryParams = {
     contact_details: 'email',
-    // reporter_email: 'ali.kaya@amsterdam.nl',
+    // reporter_email: authProfileAndToken.profile.id,
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
@@ -343,18 +343,21 @@ export interface SiaSignalStatusHistory {
 
 function transformSiaStatusResponse(response: SiaSignalHistory[]) {
   // return response;
-  return response.map((historyEntry) => {
-    return {
-      // id: historyEntry.identifier,
-      status: historyEntry.action,
-      key: historyEntry.what,
-      datePublished: historyEntry.when,
-      description: historyEntry.description,
-      // documents: [],
-      // isActive: false,
-      // isChecked: true,
-    };
-  });
+  console.log(response);
+  return response
+    .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
+    .map((historyEntry) => {
+      return {
+        // id: historyEntry.identifier,
+        status: historyEntry.action,
+        key: historyEntry.what,
+        datePublished: historyEntry.when,
+        description: historyEntry.description,
+        // documents: [],
+        // isActive: false,
+        // isChecked: true,
+      };
+    });
 }
 
 export async function fetchSignalHistory(

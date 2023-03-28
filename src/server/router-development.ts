@@ -35,7 +35,7 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userId = `xxx-${authMethod}-xxx`;
+    const userId = process.env.BFF_PROFILE_DEV_ID ?? `xxx-${authMethod}-xxx`;
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId

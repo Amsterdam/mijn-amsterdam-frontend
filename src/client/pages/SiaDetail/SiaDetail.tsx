@@ -49,45 +49,42 @@ function getSiaMeldingStatusLineItems(
   SiaItem: SIAItem | undefined,
   history: ApiResponse<SiaSignalStatusHistory[]>
 ) {
+  console.log('SiaItem:', SiaItem);
   if (!SiaItem) {
     return [];
   }
 
-  const isPending = SiaItem.status === 'Gemeld';
-  const isDone = SiaItem.status === 'Afgesloten';
-  const isInProgress = SiaItem.status === 'Ingepland';
-  const statusLineItems = [
-    {
-      id: 'item-1',
-      status: 'Gemeld',
-      datePublished: SiaItem.datePublished,
-      description: '',
-      documents: [],
-      isActive: isPending,
-      isChecked: true,
-    },
-    {
-      id: 'item-2',
-      status: 'Ingepland',
-      datePublished:
-        isInProgress && !isDone && SiaItem.dateModified
-          ? SiaItem.dateModified
-          : '',
-      description: '',
-      documents: [],
-      isActive: isInProgress,
-      isChecked: isDone || isInProgress,
-    },
-    {
+  // const isPending = SiaItem.status === 'Gemeld';
+  // const isDone = SiaItem.status === 'Afgesloten';
+  // const isInProgress = SiaItem.status === 'Ingepland';
+  const statusLineItems = (history.content ?? []).map(
+    (historyItem, index, all) => {
+      return {
+        id: 'item-' + historyItem.key,
+        status: historyItem.status.split(':')[1],
+        datePublished: historyItem.datePublished,
+        description: historyItem.description,
+        documents: [],
+        isActive: index === all.length - 1,
+        isChecked: true,
+      };
+    }
+  );
+
+  if (
+    statusLineItems.length &&
+    statusLineItems[statusLineItems.length - 1].status !== 'Afgehandeld'
+  ) {
+    statusLineItems.push({
       id: 'item-3',
-      status: 'Afgesloten',
-      datePublished: isDone ? SiaItem.dateClosed || '' : '',
+      status: 'Afgehandeld',
+      datePublished: '',
       description: '',
       documents: [],
-      isActive: isDone,
-      isChecked: isDone,
-    },
-  ];
+      isActive: false,
+      isChecked: false,
+    });
+  }
 
   return statusLineItems;
 }
@@ -263,13 +260,17 @@ export default function SiaDetail() {
                 value={
                   <div className={styles.Images}>
                     {attachments.content.map((attachment, index) => (
-                      <div key={index} className={styles.ImgContainer}>
+                      <a
+                        href={attachment.url}
+                        key={index}
+                        className={styles.ImgContainer}
+                      >
                         <img
                           className={styles.Img}
                           src={attachment.url}
                           alt="Bijgevoegde foto"
                         />
-                      </div>
+                      </a>
                     ))}
                   </div>
                 }
