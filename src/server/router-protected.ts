@@ -85,11 +85,17 @@ router.get(
   BffEndpoints.SIA_ATTACHMENTS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
+
     const attachmentsResponse = await fetchSignalAttachments(
       res.locals.requestID,
       authProfileAndToken,
       req.params.id
     );
-    return res.send(attachmentsResponse.content);
+
+    if (attachmentsResponse.status === 'ERROR') {
+      res.status(500);
+    }
+
+    return res.send(attachmentsResponse);
   }
 );

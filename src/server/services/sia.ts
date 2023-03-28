@@ -225,6 +225,19 @@ async function getAccessToken(requestID: requestID) {
   );
 }
 
+async function getSiaRequestConfig(requestID: requestID) {
+  const accessTokenResponse = await getAccessToken(requestID);
+  if (accessTokenResponse.status === 'OK') {
+    return getApiConfig('SIA', {
+      headers: {
+        Authorization: `Bearer ${accessTokenResponse.content.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+  return null;
+}
+
 export async function fetchSignals(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
@@ -234,20 +247,15 @@ export async function fetchSignals(
     // reporter_email: 'ali.kaya@amsterdam.nl',
   };
 
-  const accessTokenResponse = await getAccessToken(requestID);
+  const requestConfig = await getSiaRequestConfig(requestID);
 
-  if (accessTokenResponse.status === 'OK') {
-    const requestConfig = getApiConfig('SIA', {
-      transformResponse: transformSIAData,
-      params: queryParams,
-      headers: {
-        Authorization: `Bearer ${accessTokenResponse.content.access_token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
+  if (requestConfig !== null) {
     const response = await requestData<SIAItem[]>(
-      requestConfig,
+      {
+        ...requestConfig,
+        transformResponse: transformSIAData,
+        params: queryParams,
+      },
       requestID,
       authProfileAndToken
     );
@@ -276,6 +284,9 @@ export interface SiaAttachment {
 }
 
 function transformSiaAttachmentsResponse(response: SiaAttachmentResponse) {
+  if (!Array.isArray(response)) {
+    return [];
+  }
   return response.results.map((attachment) => {
     return {
       url: `${BFF_MS_API_BASE_URL}${attachment.location}`,
@@ -289,18 +300,24 @@ export async function fetchSignalAttachments(
   authProfileAndToken: AuthProfileAndToken,
   signalId: string
 ) {
-  const apiConfig = getApiConfig('SIA', {
-    transformResponse: transformSiaAttachmentsResponse,
-  });
-  apiConfig.url = `${apiConfig.url}${signalId}/attachments`;
+  const requestConfig = await getSiaRequestConfig(requestID);
 
-  const response = await requestData<SiaAttachment[]>(
-    apiConfig,
-    requestID,
-    authProfileAndToken
-  );
+  if (requestConfig !== null) {
+    requestConfig.url = `${requestConfig.url}${signalId}/attachments`;
 
-  return response;
+    const response = await requestData<SiaAttachment[]>(
+      {
+        ...requestConfig,
+        transformResponse: transformSiaAttachmentsResponse,
+      },
+      requestID,
+      authProfileAndToken
+    );
+
+    return response;
+  }
+
+  return apiErrorResult('Could not get access token', null);
 }
 
 interface SiaStatusResponse {}
@@ -316,18 +333,24 @@ export async function fetchSignalHistory(
   authProfileAndToken: AuthProfileAndToken,
   signalId: string
 ) {
-  const apiConfig = getApiConfig('SIA', {
-    transformResponse: transformSiaStatusResponse,
-  });
-  apiConfig.url = `${apiConfig.url}${signalId}/history`;
+  const requestConfig = await getSiaRequestConfig(requestID);
 
-  const response = await requestData<StatusLineItem[]>(
-    apiConfig,
-    requestID,
-    authProfileAndToken
-  );
+  if (requestConfig !== null) {
+    requestConfig.url = `${requestConfig.url}${signalId}/history`;
 
-  return response;
+    const response = await requestData<StatusLineItem[]>(
+      {
+        ...requestConfig,
+        transformResponse: transformSiaStatusResponse,
+      },
+      requestID,
+      authProfileAndToken
+    );
+
+    return response;
+  }
+
+  return apiErrorResult('Could not get access token', null);
 }
 
 function createSIANotification(item: SIAItem) {

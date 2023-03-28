@@ -93,19 +93,29 @@ export default function SiaDetail() {
   const SiaItem = SIA.content?.find((item) => item.id === id);
   const statusLineItems = useSiaMeldingStatusLineItems(SiaItem);
 
+  const [isAttachmentsFetched, setIsAttachmentsFetched] =
+    useState<boolean>(false);
   const [attachments, setAttachments] = useState<SiaAttachment[]>([]);
+  const [attachmentsError, setAttachmentsError] = useState<string>('');
 
   useEffect(() => {
-    if (!!SiaItem?.hasAttachments) {
+    if (!!SiaItem?.hasAttachments && !isAttachmentsFetched) {
       fetch(`${BFF_API_BASE_URL}/services/signals/${SiaItem.id}/attachments`, {
         credentials: 'include',
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          setAttachments(responseJson);
+          if (responseJson.status === 'OK') {
+            setAttachments(responseJson);
+          } else {
+            setAttachmentsError(responseJson.message);
+          }
+        })
+        .finally(() => {
+          setIsAttachmentsFetched(true);
         });
     }
-  }, [SiaItem]);
+  }, [SiaItem, isAttachmentsFetched]);
 
   return (
     <DetailPage>
@@ -237,6 +247,11 @@ export default function SiaDetail() {
                   </div>
                 }
               />
+            )}
+            {!!attachmentsError && (
+              <Alert type="warning">
+                <p>We kunnen op dit moment geen bijlages laten zien.</p>
+              </Alert>
             )}
           </>
         )}
