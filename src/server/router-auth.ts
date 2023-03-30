@@ -95,7 +95,7 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
 
 router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=yivi',
+    returnTo: process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT,
     authorizationParams: {
       redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
     },
