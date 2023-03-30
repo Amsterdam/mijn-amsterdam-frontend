@@ -288,7 +288,7 @@ export async function fetchSignals(
 ) {
   const queryParams = {
     contact_details: 'email',
-    // reporter_email: authProfileAndToken.profile.id,
+    reporter_email: authProfileAndToken.profile.id,
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
