@@ -21,14 +21,14 @@ type StatusStateChoice =
   | 'h'
   | 'o'
   | 'a'
-  | 'reopened'
-  | 'closure requested'
+  // | 'reopened'
+  // | 'closure requested'
   | 'ingepland'
   | 'reaction requested'
   | 'reaction received'
-  | 'reopen requested'
-  | 'ready to send'
-  | 'forward to external';
+  | 'reopen requested';
+// | 'ready to send';
+// | 'forward to external'
 
 // See also: https://github.com/Amsterdam/signals/blob/main/app/signals/apps/signals/workflow.py
 // Internal statusses
@@ -38,18 +38,26 @@ const BEHANDELING: StatusStateChoice = 'b';
 const ON_HOLD: StatusStateChoice = 'h';
 const AFGEHANDELD: StatusStateChoice = 'o';
 const GEANNULEERD: StatusStateChoice = 'a';
-const HEROPEND: StatusStateChoice = 'reopened';
-const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
+// const HEROPEND: StatusStateChoice = 'reopened';
+// const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
 const VERZOEK_TOT_HEROPENEN: StatusStateChoice = 'reopen requested';
 const INGEPLAND: StatusStateChoice = 'ingepland';
 const REACTIE_GEVRAAGD: StatusStateChoice = 'reaction requested';
 const REACTIE_ONTVANGEN: StatusStateChoice = 'reaction received';
-const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
-const TE_VERZENDEN: StatusStateChoice = 'ready to send';
+// const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
+// const TE_VERZENDEN: StatusStateChoice = 'ready to send';
 
 const MA_OPEN = 'Open';
 const MA_CLOSED = 'Afgesloten';
+const MA_REPLY_REQUESTED = 'Reactie gevraagd';
+const MA_REPLY_RECEIVED = 'Reactie ontvangen';
 
+const MA_STATUS_ALLOWED = [
+  MA_OPEN,
+  MA_REPLY_REQUESTED,
+  MA_REPLY_RECEIVED,
+  MA_CLOSED,
+];
 // Choices for the API/Serializer layer. Users that can change the state via the API are only allowed
 // to use one of the following choices.
 const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
@@ -63,13 +71,13 @@ const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
   [GEANNULEERD]: MA_CLOSED,
   [VERZOEK_TOT_HEROPENEN]: MA_CLOSED,
 
-  [REACTIE_GEVRAAGD]: 'Reactie gevraagd',
-  [REACTIE_ONTVANGEN]: 'Reactie ontvangen',
+  [REACTIE_GEVRAAGD]: MA_REPLY_REQUESTED,
+  [REACTIE_ONTVANGEN]: MA_REPLY_RECEIVED,
 
-  [HEROPEND]: 'Heropend', // ??
-  [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
-  [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
-  [TE_VERZENDEN]: 'Extern: te verzenden', // ??
+  // [HEROPEND]: 'Heropend', // ??
+  // [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
+  // [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
+  // [TE_VERZENDEN]: 'Extern: te verzenden', // ??
 };
 
 type StatusKey = keyof typeof STATUS_CHOICES_MA;
@@ -81,15 +89,15 @@ const STATUS_CHOICES_API: Record<StatusValue, StatusKey> = {
   'In behandeling': BEHANDELING,
   'On hold': ON_HOLD,
   Ingepland: INGEPLAND,
-  'Extern: te verzenden': TE_VERZENDEN,
+  // 'Extern: te verzenden': TE_VERZENDEN,
   Afgehandeld: AFGEHANDELD,
   Geannuleerd: GEANNULEERD,
-  Heropend: HEROPEND,
-  'Extern: verzoek tot afhandeling': VERZOEK_TOT_AFHANDELING,
+  // Heropend: HEROPEND,
+  // 'Extern: verzoek tot afhandeling': VERZOEK_TOT_AFHANDELING,
   'Verzoek tot heropenen': VERZOEK_TOT_HEROPENEN,
   'Reactie gevraagd': REACTIE_GEVRAAGD,
   'Reactie ontvangen': REACTIE_ONTVANGEN,
-  'Doorgezet naar extern': DOORGEZET_NAAR_EXTERN,
+  // 'Doorgezet naar extern': DOORGEZET_NAAR_EXTERN,
 };
 
 export interface SIAItem {
@@ -410,8 +418,10 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
         s[statusEntry.status] = true;
         statusUpdates.push(statusEntry);
       }
-    } else {
+    } else if (MA_STATUS_ALLOWED.includes(statusEntry.status)) {
       statusUpdates.push(statusEntry);
+    } else {
+      // discard
     }
   }
 
