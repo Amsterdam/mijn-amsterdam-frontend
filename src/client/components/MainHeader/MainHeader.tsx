@@ -6,7 +6,7 @@ import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-a
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';
 import { isUiElementVisible } from '../../config/app';
-import { useProfileType, useProfileTypeValue } from '../../hooks';
+import { useProfileTypeValue } from '../../hooks';
 import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
@@ -14,6 +14,7 @@ import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import Heading from '../Heading/Heading';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
+import MainNavBarSimple from '../MainNavBar/MainNavBarSimple';
 import styles from './MainHeader.module.scss';
 
 export interface MainHeaderProps {
@@ -32,6 +33,7 @@ export default function MainHeader({
   const location = useLocation();
   const isPhonescreen = usePhoneScreen();
   const profileType = useProfileTypeValue();
+  const showSimpleNavbar = isUiElementVisible(profileType, 'MainNavBarSimple');
 
   return (
     <header className={styles.header}>
@@ -67,8 +69,11 @@ export default function MainHeader({
           )}
         </span>
       </div>
-      {isAuthenticated && isUiElementVisible(profileType, 'MainNavBar') && (
+      {isAuthenticated && !showSimpleNavbar && (
         <MainNavBar isAuthenticated={isAuthenticated} />
+      )}
+      {isAuthenticated && showSimpleNavbar && (
+        <MainNavBarSimple isAuthenticated={isAuthenticated} />
       )}
       {isAuthenticated && hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />

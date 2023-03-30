@@ -16,7 +16,6 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -163,7 +162,7 @@ function AppAuthenticated() {
               <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
             )}
             {FeatureToggle.siaActive && (
-              <Route path={AppRoutes.SIA} component={Sia} />
+              <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
             )}
             <Route component={NotFound} />
           </Switch>

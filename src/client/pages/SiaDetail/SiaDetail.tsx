@@ -152,7 +152,7 @@ export default function SiaDetail() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: AppRoutes.SIA,
+          to: AppRoutes.ROOT,
           title: ChapterTitles.SIA,
         }}
         isLoading={isLoading(SIA)}

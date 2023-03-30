@@ -12,14 +12,14 @@ export const PLACEHOLDER_IMAGE_URL =
 export { ExternalUrls, Colors } from '../../universal/config/app';
 
 interface UiElementConfig {
-  MainNavBar: boolean;
+  MainNavBarSimple: boolean;
 }
 
 type UiElementConfigByProfileType = Record<ProfileType, UiElementConfig | null>;
 
 const uiElementConfigByProfileType: UiElementConfigByProfileType = {
   'private-attributes': {
-    MainNavBar: false,
+    MainNavBarSimple: true,
   },
   private: null,
   'private-commercial': null,
