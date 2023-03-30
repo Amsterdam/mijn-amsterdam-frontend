@@ -62,7 +62,7 @@ function getSiaMeldingStatusLineItems(
     (historyItem, index, all) => {
       return {
         id: 'item-' + historyItem.key,
-        status: historyItem.status.split(':')[1],
+        status: historyItem.status.split(':')[1] || historyItem.status,
         datePublished: historyItem.datePublished,
         description: historyItem.description,
         documents: [],
@@ -74,11 +74,11 @@ function getSiaMeldingStatusLineItems(
 
   if (
     statusLineItems.length &&
-    statusLineItems[statusLineItems.length - 1].status !== 'Afgehandeld'
+    statusLineItems[statusLineItems.length - 1].status !== 'Afgesloten'
   ) {
     statusLineItems.push({
       id: 'item-3',
-      status: 'Afgehandeld',
+      status: 'Afgesloten',
       datePublished: '',
       description: '',
       documents: [],
@@ -299,7 +299,11 @@ export default function SiaDetail() {
                   <DocumentList
                     documents={otherAttachments.map((attachment, i) => {
                       return {
-                        title: `${attachment.url.split('.')[1]} Bijlage ${i}`,
+                        title: `${attachment.url
+                          .split('?')[0]
+                          .split('.')
+                          .pop()
+                          ?.toLocaleUpperCase()} Bijlage`,
                         url: attachment.url,
                         id: `${i}-`,
                         datePublished: SiaItem.datePublished,

@@ -21,15 +21,13 @@ import styles from './Sia.module.scss';
 const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
   category: 'Categorie',
-  address: 'Adres',
-  datePublished: 'Melding ontvangen',
+  datePublished: 'Ontvangen op',
 };
 
 const DISPLAY_PROPS_HISTORY = {
   identifier: 'Meldingsnummer',
   category: 'Categorie',
-  address: 'Adres',
-  dateClosed: 'Melding afgehandeld',
+  dateClosed: 'Afgesloten op',
 };
 
 export default function Sia() {
@@ -122,7 +120,7 @@ export default function Sia() {
       <SectionCollapsible
         id="SectionCollapsible-sia-previous"
         title="Afgesloten meldingen"
-        noItemsMessage="U hebt geen afgesloten meldingen."
+        noItemsMessage="U hebt geen Afgesloten meldingen."
         hasItems={!!siaPrevious.length}
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}

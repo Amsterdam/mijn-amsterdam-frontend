@@ -1,8 +1,13 @@
+import { stat } from 'fs';
 import { LatLngLiteral } from 'leaflet';
 import { generatePath } from 'react-router-dom';
 import { Chapters } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
-import { defaultDateTimeFormat, getFullAddress } from '../../universal/helpers';
+import {
+  dateSort,
+  defaultDateTimeFormat,
+  getFullAddress,
+} from '../../universal/helpers';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
@@ -21,6 +26,8 @@ type StatusStateChoice =
   | 'ingepland'
   | 'reaction requested'
   | 'reaction received'
+  | 'reopen requested'
+  | 'ready to send'
   | 'forward to external';
 
 // See also: https://github.com/Amsterdam/signals/blob/main/app/signals/apps/signals/workflow.py
@@ -33,34 +40,62 @@ const AFGEHANDELD: StatusStateChoice = 'o';
 const GEANNULEERD: StatusStateChoice = 'a';
 const HEROPEND: StatusStateChoice = 'reopened';
 const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
+const VERZOEK_TOT_HEROPENEN: StatusStateChoice = 'reopen requested';
 const INGEPLAND: StatusStateChoice = 'ingepland';
 const REACTIE_GEVRAAGD: StatusStateChoice = 'reaction requested';
 const REACTIE_ONTVANGEN: StatusStateChoice = 'reaction received';
 const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
+const TE_VERZENDEN: StatusStateChoice = 'ready to send';
+
+const MA_OPEN = 'Open';
+const MA_CLOSED = 'Afgesloten';
 
 // Choices for the API/Serializer layer. Users that can change the state via the API are only allowed
 // to use one of the following choices.
-const STATUS_CHOICES_API: Record<StatusStateChoice, string> = {
-  [GEMELD]: 'Gemeld',
-  [AFWACHTING]: 'In afwachting van behandeling',
-  [BEHANDELING]: 'In behandeling',
-  [ON_HOLD]: 'On hold',
-  [INGEPLAND]: 'Ingepland',
-  [AFGEHANDELD]: 'Afgehandeld',
-  [GEANNULEERD]: 'Geannuleerd',
-  [HEROPEND]: 'Heropend',
-  [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling',
+const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
+  [GEMELD]: MA_OPEN,
+  [AFWACHTING]: MA_OPEN,
+  [BEHANDELING]: MA_OPEN,
+  [ON_HOLD]: MA_OPEN,
+  [INGEPLAND]: MA_OPEN,
+
+  [AFGEHANDELD]: MA_CLOSED,
+  [GEANNULEERD]: MA_CLOSED,
+  [VERZOEK_TOT_HEROPENEN]: MA_CLOSED,
+
   [REACTIE_GEVRAAGD]: 'Reactie gevraagd',
   [REACTIE_ONTVANGEN]: 'Reactie ontvangen',
-  [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern',
+
+  [HEROPEND]: 'Heropend', // ??
+  [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
+  [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
+  [TE_VERZENDEN]: 'Extern: te verzenden', // ??
 };
 
-type StatusKey = keyof typeof STATUS_CHOICES_API;
-type StatusValue = (typeof STATUS_CHOICES_API)[StatusKey];
+type StatusKey = keyof typeof STATUS_CHOICES_MA;
+type StatusValue = (typeof STATUS_CHOICES_MA)[StatusKey];
+
+const STATUS_CHOICES_API: Record<StatusValue, StatusKey> = {
+  Gemeld: GEMELD,
+  'In afwachting van behandeling': AFWACHTING,
+  'In behandeling': BEHANDELING,
+  'On hold': ON_HOLD,
+  Ingepland: INGEPLAND,
+  'Extern: te verzenden': TE_VERZENDEN,
+  Afgehandeld: AFGEHANDELD,
+  Geannuleerd: GEANNULEERD,
+  Heropend: HEROPEND,
+  'Extern: verzoek tot afhandeling': VERZOEK_TOT_AFHANDELING,
+  'Verzoek tot heropenen': VERZOEK_TOT_HEROPENEN,
+  'Reactie gevraagd': REACTIE_GEVRAAGD,
+  'Reactie ontvangen': REACTIE_ONTVANGEN,
+  'Doorgezet naar extern': DOORGEZET_NAAR_EXTERN,
+};
 
 export interface SIAItem {
   id: string;
   identifier: string;
+  category: string;
   datePublished: string; // DateCreated //
   dateModified: string; // Derive from state update
   dateClosed: string | null; // Derive from state===closed?
@@ -153,24 +188,30 @@ interface SignalsSourceData {
 }
 
 function getSignalStatus(sourceItem: SignalPrivate): string {
-  return STATUS_CHOICES_API[sourceItem.status.state];
+  return (
+    STATUS_CHOICES_MA[sourceItem.status.state] ??
+    sourceItem.status.state_display
+  );
 }
 
 function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
   const signals = responseData.results ?? [];
+
   return signals.map((sourceItem: SignalPrivate) => {
-    const dateClosed = '';
+    const status = getSignalStatus(sourceItem);
+    const dateClosed = status === 'Afgesloten' ? sourceItem.updated_at : '';
     const identifier = sourceItem.id_display;
 
     return {
       id: String(sourceItem.id),
       identifier,
+      category: sourceItem.category.main,
       datePublished: sourceItem.created_at,
       dateModified: sourceItem.updated_at,
       dateClosed,
       dateIncidentStart: sourceItem.incident_date_start,
       dateIncidentEnd: sourceItem.incident_date_end ?? null,
-      status: getSignalStatus(sourceItem),
+      status,
       description: sourceItem.text,
       address: sourceItem.location.address
         ? getFullAddress(
@@ -239,7 +280,7 @@ export async function fetchSignals(
 ) {
   const queryParams = {
     contact_details: 'email',
-    reporter_email: authProfileAndToken.profile.id,
+    // reporter_email: authProfileAndToken.profile.id,
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
@@ -333,16 +374,48 @@ export interface SiaSignalStatusHistory {
 }
 
 function transformSiaStatusResponse(response: SiaSignalHistory[]) {
-  return response
+  const history = [...response].sort(dateSort('when', 'asc'));
+
+  const transformed = history
     .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
     .map((historyEntry) => {
+      // Extract readable status string
+      const statusValue = historyEntry.action.split(':')[1] as StatusValue;
+
+      // Find the matching statusKey
+      const statusKey = STATUS_CHOICES_API[statusValue.trim()];
+
+      // Translate statusVlaue to one for display and aggregation in MA
+      const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
+
       return {
-        status: historyEntry.action,
+        status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
         description: historyEntry.description,
-      };
+      } as SiaSignalStatusHistory;
     });
+
+  const s: Record<string, boolean> = {
+    [MA_OPEN]: false,
+    [MA_CLOSED]: false,
+  };
+
+  const statusUpdates = [];
+
+  for (const statusEntry of transformed) {
+    const hit = s[statusEntry.status];
+    if (hit !== undefined) {
+      if (hit === false) {
+        s[statusEntry.status] = true;
+        statusUpdates.push(statusEntry);
+      }
+    } else {
+      statusUpdates.push(statusEntry);
+    }
+  }
+
+  return statusUpdates;
 }
 
 export async function fetchSignalHistory(
