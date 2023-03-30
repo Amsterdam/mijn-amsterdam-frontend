@@ -300,8 +300,9 @@ export default function SiaDetail() {
                           .pop()
                           ?.toLocaleUpperCase()} Bijlage`,
                         url: attachment.url,
-                        id: `${i}-`,
+                        id: `${i}`,
                         datePublished: SiaItem.datePublished,
+                        external: true,
                       };
                     })}
                   />
