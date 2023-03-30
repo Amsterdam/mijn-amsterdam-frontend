@@ -21,12 +21,24 @@
   margin-bottom: 1rem;
 }
 
+.ImgContainer {
+  margin-left: 1rem;
+  width: 33.3%;
+  
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
 .Img {
-  display: block;
   width: 100%;
   height: auto;
 }
 
+.ImageDetails [class^='InfoDetail_Value'] {
+  padding-right: 0;
+}
+
 .NoPadding p {
-  padding: 0;
+    padding: 0;
 }

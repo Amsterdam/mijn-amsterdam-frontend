@@ -18,6 +18,7 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
+  DocumentList,
   LoadingContent,
   PageContent,
   PageHeading,
@@ -141,6 +142,11 @@ export default function SiaDetail() {
     statusHistoryAtom
   );
 
+  const imageAttachments =
+    attachments.content?.filter((attachment) => attachment.isImage) ?? [];
+  const otherAttachments =
+    attachments.content?.filter((attachment) => !attachment.isImage) ?? [];
+
   return (
     <DetailPage>
       <PageHeading
@@ -258,26 +264,48 @@ export default function SiaDetail() {
                 Maak een nieuwe melding
               </LinkdInline>
             </p>
-            {!!attachments.content?.length && (
+            {!!imageAttachments.length && (
               <InfoDetail
                 valueWrapperElement="div"
                 label="Foto's"
+                className={styles.ImageDetails}
                 value={
                   <div className={styles.Images}>
-                    {attachments.content.map((attachment, index) => (
-                      <a
-                        href={attachment.url}
-                        key={index}
-                        className={styles.ImgContainer}
-                      >
-                        <img
-                          className={styles.Img}
-                          src={attachment.url}
-                          alt="Bijgevoegde foto"
-                        />
-                      </a>
-                    ))}
+                    {imageAttachments
+                      .filter((attachment) => attachment.isImage)
+                      .map((attachment, index) => (
+                        <a
+                          href={attachment.url}
+                          key={index}
+                          className={styles.ImgContainer}
+                        >
+                          <img
+                            className={styles.Img}
+                            src={attachment.url}
+                            alt="Bijgevoegde foto"
+                          />
+                        </a>
+                      ))}
                   </div>
+                }
+              />
+            )}
+            {!!otherAttachments.length && (
+              <InfoDetail
+                valueWrapperElement="div"
+                label="Overige bijlages"
+                className={styles.ImageDetails}
+                value={
+                  <DocumentList
+                    documents={otherAttachments.map((attachment, i) => {
+                      return {
+                        title: `${attachment.url.split('.')[1]} Bijlage ${i}`,
+                        url: attachment.url,
+                        id: `${i}-`,
+                        datePublished: SiaItem.datePublished,
+                      };
+                    })}
+                  />
                 }
               />
             )}
