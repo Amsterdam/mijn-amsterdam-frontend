@@ -185,7 +185,7 @@ export default function SiaDetail() {
               className={styles.NoPadding}
               label="Omschrijving"
               value={
-                <TextClamp maxHeight="20px">
+                <TextClamp tagName="span">
                   {SiaItem.description || '-'}
                 </TextClamp>
               }

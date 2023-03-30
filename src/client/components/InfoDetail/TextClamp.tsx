@@ -1,12 +1,5 @@
 import classNames from 'classnames';
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import styles from './TextClamp.module.scss';
 
 interface TextClampProps {
@@ -32,9 +25,12 @@ export function TextClamp({
     if (typeof hasOverflow === 'boolean' || !domNode) {
       return;
     }
-
+    console.log(
+      domNode.getBoundingClientRect().height,
+      parseInt(maxHeight, 10)
+    );
     setHasOverflow(
-      domNode.getBoundingClientRect().height > parseInt(maxHeight, 10)
+      domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) > 10
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
