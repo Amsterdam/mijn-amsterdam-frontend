@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
+import {
+  AppRoutes,
+  ChapterTitles,
+  IS_ACCEPTANCE,
+  IS_PRODUCTION,
+} from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
@@ -79,7 +84,12 @@ export default function Sia() {
             Meer informatie
           </Linkd>
           <br />
-          <Linkd external={true} href="https://meldingen.amsterdam.nl">
+          <Linkd
+            external={true}
+            href={`https://${
+              !IS_PRODUCTION ? 'acc.' : ''
+            }meldingen.amsterdam.nl`}
+          >
             Doe een melding
           </Linkd>
         </p>
