@@ -1,5 +1,12 @@
 import classNames from 'classnames';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styles from './TextClamp.module.scss';
 
 interface TextClampProps {
@@ -16,35 +23,55 @@ export function TextClamp({
   startClamped = true,
 }: TextClampProps) {
   const WrapperEL = tagName;
-  const contentRef = useRef<HTMLElement>(null);
   const [isClamped, setIsClamped] = useState<boolean>(startClamped);
-  const [hasOverflow, setHasOverflow] = useState(true);
+  const [hasOverflow, setHasOverflow] = useState<boolean | undefined>(
+    undefined
+  );
 
-  useEffect(() => {
-    if (
-      contentRef.current &&
-      contentRef.current.getBoundingClientRect().height >
-        parseInt(maxHeight, 10)
-    ) {
-      setHasOverflow(true);
+  const callBackRef = useCallback((domNode) => {
+    if (typeof hasOverflow === 'boolean' || !domNode) {
+      return;
     }
-  }, [maxHeight]);
+
+    setHasOverflow(
+      domNode.getBoundingClientRect().height > parseInt(maxHeight, 10)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleClamp = () => {
     setIsClamped((isClamped) => !isClamped);
   };
 
-  if (!hasOverflow) {
+  if (hasOverflow === false) {
     return <>{children}</>;
   }
 
   return (
     <WrapperEL
-      className={classNames(styles.TextClamp, isClamped && styles.isClamped)}
-      onClick={() => toggleClamp()}
+      className={classNames(
+        styles.TextClamp,
+        hasOverflow && isClamped && styles.isClamped,
+        hasOverflow && styles.hasOverflow
+      )}
       style={{ ['--maxHeight' as string]: maxHeight }}
     >
-      {children}
+      <span ref={callBackRef} className={styles.textWrap}>
+        {children}
+      </span>
+      {hasOverflow && (
+        <button
+          onClick={() => toggleClamp()}
+          className={classNames(
+            styles.ReadMoreButton,
+            isClamped && styles.isClamped
+          )}
+        >
+          <span className={styles.label}>
+            Toon {isClamped ? 'alle tekst' : 'minder'}
+          </span>
+        </button>
+      )}
     </WrapperEL>
   );
 }

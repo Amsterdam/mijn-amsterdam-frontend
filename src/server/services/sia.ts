@@ -160,7 +160,6 @@ function getSignalStatus(sourceItem: SignalPrivate): string {
 }
 
 function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
-  // console.log((responseData.results[0] as any)._links);
   const signals = responseData.results ?? [];
   return signals.map((sourceItem: SignalPrivate) => {
     const dateClosed = '';
@@ -178,12 +177,7 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
       status: getSignalStatus(sourceItem),
       // priority: sourceItem.priority,
       // deadline: sourceItem.deadline,
-      description:
-        sourceItem.text +
-        `U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte wordt gehouden over de voortgang van uw melding. U kunt deze gegevens hier niet meer wijzigen. 12 maanden na ontvangst van uw melding worden deze gegevens automatisch verwijderd uit ons systeem.
-
-Wilt u informatie toevoegen? Of is het probleem nog niet opgelost?
-Maak een nieuwe melding`,
+      description: sourceItem.text,
       address: sourceItem.location.address
         ? getFullAddress(
             {

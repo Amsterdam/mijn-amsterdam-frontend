@@ -179,7 +179,11 @@ export default function SiaDetail() {
             <InfoDetail
               className={styles.NoPadding}
               label="Omschrijving"
-              value={<TextClamp>{SiaItem.description || '-'}</TextClamp>}
+              value={
+                <TextClamp maxHeight="20px">
+                  {SiaItem.description || '-'}
+                </TextClamp>
+              }
             />
             <InfoDetailGroup>
               <InfoDetail
