@@ -20,7 +20,7 @@ export const FeatureToggle = {
   wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
-  siaActive: !IS_AP,
+  siaActive: !IS_PRODUCTION,
   siaApiActive: !IS_AP,
   yiviActive: !IS_PRODUCTION,
   aktesActive: !IS_AP,
