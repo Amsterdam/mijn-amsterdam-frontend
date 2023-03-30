@@ -294,6 +294,8 @@ export async function fetchSignals(
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
+    console.debug('requestConfig', requestConfig);
+
     const response = await requestData<SIAItem[]>(
       {
         ...requestConfig,
