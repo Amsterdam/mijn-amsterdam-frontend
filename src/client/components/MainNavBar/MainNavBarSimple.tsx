@@ -3,11 +3,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 
-import { AppRoutes, FeatureToggle } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
-import { IconClose, IconSearch } from '../../assets/icons';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
@@ -16,13 +15,11 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
-import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import {
