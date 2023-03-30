@@ -21,7 +21,7 @@ export const FeatureToggle = {
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_AP,
   siaActive: !IS_PRODUCTION,
-  siaApiActive: !IS_AP,
+  siaApiActive: !IS_PRODUCTION,
   yiviActive: !IS_PRODUCTION,
   aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
