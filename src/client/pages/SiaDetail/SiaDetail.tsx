@@ -166,6 +166,11 @@ export default function SiaDetail() {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
+        {!isLoading(SIA) && !SiaItem && (
+          <Alert type="info">
+            <p>We kunnen dit item niet vinden.</p>
+          </Alert>
+        )}
         {isLoading(SIA) && (
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
