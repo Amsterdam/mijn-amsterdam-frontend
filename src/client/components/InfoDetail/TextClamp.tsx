@@ -2,6 +2,9 @@ import classNames from 'classnames';
 import { ReactNode, useCallback, useState } from 'react';
 import styles from './TextClamp.module.scss';
 
+// The difference between maxHeight and actualHeight should be at least this number in pixels
+const TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD = 10;
+
 interface TextClampProps {
   children: ReactNode;
   tagName?: keyof JSX.IntrinsicElements;
@@ -30,7 +33,8 @@ export function TextClamp({
       parseInt(maxHeight, 10)
     );
     setHasOverflow(
-      domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) > 10
+      domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) >
+        TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
