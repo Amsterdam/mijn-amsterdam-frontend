@@ -12,18 +12,14 @@ export const PLACEHOLDER_IMAGE_URL =
 export { ExternalUrls, Colors } from '../../universal/config/app';
 
 interface UiElementConfig {
-  search: boolean;
-  persoonlijkeTips: boolean;
-  mijnBuurt: boolean;
+  MainNavBar: boolean;
 }
 
 type UiElementConfigByProfileType = Record<ProfileType, UiElementConfig | null>;
 
 const uiElementConfigByProfileType: UiElementConfigByProfileType = {
   'private-attributes': {
-    search: false,
-    persoonlijkeTips: false,
-    mijnBuurt: false,
+    MainNavBar: false,
   },
   private: null,
   'private-commercial': null,

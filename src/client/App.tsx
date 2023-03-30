@@ -145,12 +145,6 @@ function AppAuthenticated() {
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
-
-  const isHeroVisible = !(
-    isUiElementVisible(profileType, 'mijnBuurt') &&
-    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
-  );
-
   const redirectAfterLogin = useDeeplinkRedirect();
 
   useEffect(() => {
@@ -158,6 +152,30 @@ function AppAuthenticated() {
       history.push(redirectAfterLogin);
     }
   }, [redirectAfterLogin, history]);
+
+  if (profileType === 'private-attributes') {
+    return (
+      <>
+        <MainHeader isAuthenticated={true} isHeroVisible={true} />
+        <div className={styles.App} id="skip-to-id-AppContent">
+          <Switch>
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes.SIA} component={Sia} />
+            )}
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+        <MainFooter isAuthenticated={true} />
+      </>
+    );
+  }
+
+  const isHeroVisible = !matchPath(history.location.pathname, {
+    path: AppRoutes.BUURT,
+  });
 
   return (
     <>
@@ -167,9 +185,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          {isUiElementVisible(profileType, 'mijnBuurt') && (
-            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          )}
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -209,12 +225,6 @@ function AppAuthenticated() {
               path={AppRoutes['INKOMEN/BBZ']}
               component={InkomenDetailBbz}
             />
-          )}
-          {FeatureToggle.siaActive && (
-            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
-          )}
-          {FeatureToggle.siaActive && (
-            <Route path={AppRoutes.SIA} component={Sia} />
           )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.STADSPAS} component={Stadspas} />
@@ -275,9 +285,7 @@ function AppAuthenticated() {
           {FeatureToggle.horecaActive && (
             <Route path={AppRoutes.HORECA} component={Horeca} />
           )}
-          {isUiElementVisible(profileType, 'search') && (
-            <Route path={AppRoutes.SEARCH} component={Search} />
-          )}
+          <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>

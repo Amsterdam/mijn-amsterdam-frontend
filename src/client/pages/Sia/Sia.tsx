@@ -61,14 +61,7 @@ export default function Sia() {
 
   return (
     <OverviewPage className={styles.Sia}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(SIA)}
-        icon={<ChapterIcon />}
-      >
+      <PageHeading isLoading={isLoading(SIA)} icon={<ChapterIcon />}>
         {ChapterTitles.SIA}
       </PageHeading>
       <PageContent>

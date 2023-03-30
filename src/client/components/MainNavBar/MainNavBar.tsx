@@ -8,6 +8,7 @@ import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
+import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
@@ -33,8 +34,6 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -225,8 +224,6 @@ export default function MainNavBar({
       });
   }, [myChapterItems, profileType, termReplace]);
 
-  const isSearchVisible = isUiElementVisible(profileType, 'search');
-
   return (
     <nav className={styles.MainNavBar}>
       {hasBurgerMenu && (
@@ -272,26 +269,24 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      {isSearchVisible && (
-        <div className={styles.InfoButtons}>
-          {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
-            <IconButton
-              aria-label="Zoeken in mijn amsterdam"
-              className={styles.SearchButton}
-              onClick={() => {
-                setSearchActive(!isSearchActive);
-                trackSearchBarEvent(
-                  `${
-                    !isSearchActive === false ? 'Sluiten' : 'Openen'
-                  } met button`
-                );
-              }}
-              icon={isSearchActive ? IconClose : IconSearch}
-            />
-          )}
-        </div>
-      )}
-      {isSearchVisible && isDisplayLiveSearch && isSearchActive && (
+
+      <div className={styles.InfoButtons}>
+        {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
+          <IconButton
+            aria-label="Zoeken in mijn amsterdam"
+            className={styles.SearchButton}
+            onClick={() => {
+              setSearchActive(!isSearchActive);
+              trackSearchBarEvent(
+                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
+              );
+            }}
+            icon={isSearchActive ? IconClose : IconSearch}
+          />
+        )}
+      </div>
+
+      {isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>

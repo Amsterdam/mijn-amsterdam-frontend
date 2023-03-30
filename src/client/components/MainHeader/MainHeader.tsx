@@ -5,6 +5,8 @@ import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';
+import { isUiElementVisible } from '../../config/app';
+import { useProfileType, useProfileTypeValue } from '../../hooks';
 import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
@@ -29,6 +31,7 @@ export default function MainHeader({
   const hasErrors = !!errors.length;
   const location = useLocation();
   const isPhonescreen = usePhoneScreen();
+  const profileType = useProfileTypeValue();
 
   return (
     <header className={styles.header}>
@@ -64,7 +67,9 @@ export default function MainHeader({
           )}
         </span>
       </div>
-      {isAuthenticated && <MainNavBar isAuthenticated={isAuthenticated} />}
+      {isAuthenticated && isUiElementVisible(profileType, 'MainNavBar') && (
+        <MainNavBar isAuthenticated={isAuthenticated} />
+      )}
       {isAuthenticated && hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
