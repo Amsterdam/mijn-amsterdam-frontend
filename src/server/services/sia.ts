@@ -315,8 +315,6 @@ export async function fetchSignalAttachments(
       authProfileAndToken
     );
 
-    console.log('response.content', response.content);
-
     return response;
   }
 
@@ -368,7 +366,6 @@ export async function fetchSignalHistory(
 
   if (requestConfig !== null) {
     requestConfig.url = `${requestConfig.url}${signalId}/history`;
-    console.log('url:', requestConfig.url);
 
     const response = await requestData<SiaSignalStatusHistory[]>(
       {

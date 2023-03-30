@@ -50,7 +50,6 @@ function getSiaMeldingStatusLineItems(
   SiaItem: SIAItem | undefined,
   history: ApiResponse<SiaSignalStatusHistory[]>
 ) {
-  console.log('SiaItem:', SiaItem);
   if (!SiaItem) {
     return [];
   }
