@@ -1,33 +1,16 @@
-import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 
-import { AppRoutes } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
-import MainNavSubmenu, {
-  MainNavSubmenuLink,
-} from '../MainNavSubmenu/MainNavSubmenu';
-import { SearchEntry } from '../Search/searchConfig';
-import { useSearchOnPage } from '../Search/useSearch';
-import {
-  isMenuItemVisible,
-  mainMenuItemId,
-  mainMenuItems,
-  MenuItem,
-} from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
@@ -70,63 +53,6 @@ function SecondaryLinks() {
   );
 }
 
-function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
-  return (
-    <NavLink exact={true} to={to} className={styles.MainNavLink} {...rest}>
-      <span>{children}</span>
-    </NavLink>
-  );
-}
-
-function getMenuItem(item: MenuItem) {
-  if (Array.isArray(item.submenuItems)) {
-    return (
-      <MainNavSubmenu key={item.id} title={item.title} id={item.id}>
-        {item.submenuItems.map(({ id, to, title, rel }) => {
-          return (
-            <MainNavSubmenuLink
-              key={id}
-              className={styles.MainNavSubmenuLink}
-              title={title}
-              to={to}
-              rel={rel}
-              Icon={ChapterIcons[id]}
-              data-chapter-id={id}
-            />
-          );
-        })}
-      </MainNavSubmenu>
-    );
-  }
-
-  return (
-    <MainNavLink key={item.id} to={item.to} title={item.title}>
-      {item.title}
-    </MainNavLink>
-  );
-}
-
-interface BurgerButtonProps {
-  isActive: boolean;
-  toggleBurgerMenu: (isActive: boolean) => void;
-}
-
-function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
-  return (
-    <button
-      id={BurgerMenuToggleBtnId}
-      className={classnames(
-        styles.BurgerMenuToggleBtn,
-        isActive && styles.BurgerMenuToggleBtnOpen
-      )}
-      aria-expanded={isActive}
-      onClick={() => toggleBurgerMenu(!isActive)}
-    >
-      {isActive ? 'Verberg' : 'Toon'} navigatie
-    </button>
-  );
-}
-
 function isTargetWithinMenu(target: any) {
   const LinkContainer = document.getElementById(LinkContainerId);
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
@@ -142,19 +68,10 @@ export default function MainNavBar({
   isAuthenticated: boolean;
 }) {
   const hasBurgerMenu = useTabletScreen();
-  const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const profileType = useProfileTypeValue();
-  const {
-    isSearchActive,
-    setSearchActive,
-    trackSearchBarEvent,
-    isDisplayLiveSearch,
-  } = useSearchOnPage();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -191,35 +108,8 @@ export default function MainNavBar({
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
-  const replaceResultUrl = useCallback((result: SearchEntry) => {
-    return result.url.startsWith(AppRoutes.BUURT);
-  }, []);
-
-  const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
+  const { linkContainerAnimationProps } =
     useBurgerMenuAnimation(isBurgerMenuVisible);
-
-  const menuItemsComposed = useMemo(() => {
-    return mainMenuItems
-      .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
-      .map((item) => {
-        let menuItem = item;
-
-        // Add dynamic chapter submenu items to the menu
-        if (item.id === mainMenuItemId.CHAPTERS) {
-          menuItem = { ...item, submenuItems: myChapterItems };
-        } else if (
-          menuItem.title === ChapterTitles.BUURT &&
-          profileType !== 'private'
-        ) {
-          menuItem = {
-            ...menuItem,
-            title: termReplace(menuItem.title),
-          };
-        }
-
-        return getMenuItem(menuItem);
-      });
-  }, [myChapterItems, profileType, termReplace]);
 
   return (
     <nav className={styles.MainNavBar}>
