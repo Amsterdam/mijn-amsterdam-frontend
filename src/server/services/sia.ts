@@ -61,7 +61,6 @@ type StatusValue = (typeof STATUS_CHOICES_API)[StatusKey];
 export interface SIAItem {
   id: string;
   identifier: string;
-  // category: string;
   datePublished: string; // DateCreated //
   dateModified: string; // Derive from state update
   dateClosed: string | null; // Derive from state===closed?
@@ -69,8 +68,6 @@ export interface SIAItem {
   dateIncidentEnd: string | null;
   status: StatusValue;
   description: string;
-  // priority: string;
-  // deadline: string;
   address: string;
   latlon: LatLngLiteral;
   email: string;
@@ -168,15 +165,12 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
     return {
       id: String(sourceItem.id),
       identifier,
-      // category: sourceItem.category.main,
       datePublished: sourceItem.created_at,
       dateModified: sourceItem.updated_at,
       dateClosed,
       dateIncidentStart: sourceItem.incident_date_start,
       dateIncidentEnd: sourceItem.incident_date_end ?? null,
       status: getSignalStatus(sourceItem),
-      // priority: sourceItem.priority,
-      // deadline: sourceItem.deadline,
       description: sourceItem.text,
       address: sourceItem.location.address
         ? getFullAddress(
@@ -245,7 +239,7 @@ export async function fetchSignals(
 ) {
   const queryParams = {
     contact_details: 'email',
-    // reporter_email: authProfileAndToken.profile.id,
+    reporter_email: authProfileAndToken.profile.id,
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
@@ -324,10 +318,10 @@ export async function fetchSignalAttachments(
 export interface SiaSignalHistory {
   identifier: string;
   when: string; // date,
-  what: string; // 'CREATE_NOTE'
-  action: string; // 'Notitie toegevoegd:',
-  description: string; // 'Bijlage toegevoegd door melder: Koelkast_op_straat_bij_DICT.jpeg',
-  who: string; // 'Signalen systeem';
+  what: string; // e.g 'CREATE_NOTE'
+  action: string; // e.g 'Notitie toegevoegd:',
+  description: string; // e.g 'Bijlage toegevoegd door melder: Koelkast_op_straat_bij_DICT.jpeg',
+  who: string; // e.g 'Signalen systeem';
   _signal: number; // id of the signal
 }
 
@@ -339,20 +333,14 @@ export interface SiaSignalStatusHistory {
 }
 
 function transformSiaStatusResponse(response: SiaSignalHistory[]) {
-  // return response;
-  console.log(response);
   return response
     .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
     .map((historyEntry) => {
       return {
-        // id: historyEntry.identifier,
         status: historyEntry.action,
         key: historyEntry.what,
         datePublished: historyEntry.when,
         description: historyEntry.description,
-        // documents: [],
-        // isActive: false,
-        // isChecked: true,
       };
     });
 }
