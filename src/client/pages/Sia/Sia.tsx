@@ -51,11 +51,11 @@ export default function Sia() {
     return addTitleLinkComponent(items, 'identifier');
   }, [SIA.content]);
 
-  const siaPrevious = useMemo(() => {
+  const siaClosed = useMemo(() => {
     return sia.filter((vergunning) => vergunning.status === 'Afgesloten');
   }, [sia]);
 
-  const siaActual = useMemo(() => {
+  const siaOpen = useMemo(() => {
     return sia.filter((vergunning) => vergunning.status !== 'Afgesloten');
   }, [sia]);
 
@@ -101,7 +101,7 @@ export default function Sia() {
         id="SectionCollapsible-sia-actual"
         title="Openstaande meldingen"
         noItemsMessage="U hebt geen openstaande meldingen."
-        hasItems={!!siaActual.length}
+        hasItems={!!siaOpen.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(SIA)}
@@ -114,14 +114,14 @@ export default function Sia() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
-          items={siaActual}
+          items={siaOpen}
         />
       </SectionCollapsible>
       <SectionCollapsible
         id="SectionCollapsible-sia-previous"
         title="Afgesloten meldingen"
         noItemsMessage="U hebt geen Afgesloten meldingen."
-        hasItems={!!siaPrevious.length}
+        hasItems={!!siaClosed.length}
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}
         isLoading={isLoading(SIA)}
@@ -134,7 +134,7 @@ export default function Sia() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
-          items={siaPrevious}
+          items={siaClosed}
         />
       </SectionCollapsible>
     </OverviewPage>

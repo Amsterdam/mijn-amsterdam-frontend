@@ -181,6 +181,7 @@ export default function SiaDetail() {
                 value={SiaItem.identifier || '-'}
               />
             </InfoDetailGroup>
+
             <InfoDetail
               className={styles.NoPadding}
               label="Omschrijving"
@@ -190,6 +191,7 @@ export default function SiaDetail() {
                 </TextClamp>
               }
             />
+
             <InfoDetailGroup>
               <InfoDetail
                 label="Ontvangen op"
@@ -212,6 +214,7 @@ export default function SiaDetail() {
                 }
               />
             </InfoDetailGroup>
+
             <InfoDetailGroup>
               {!!SiaItem.latlon && (
                 <Location
@@ -233,15 +236,7 @@ export default function SiaDetail() {
                 }
               />
             </InfoDetailGroup>
-            {/* <InfoDetailGroup>
-              <InfoDetail label="Urgentie" value={SiaItem.priority} />
-              {SiaItem.deadline && (
-                <InfoDetail
-                  label="Verwerkingstijd"
-                  value={formatDurationInWords(SiaItem.deadline)}
-                />
-              )}
-            </InfoDetailGroup> */}
+
             <InfoDetailGroup>
               <InfoDetail label="E-mail melder" value={SiaItem.email || '-'} />
               <InfoDetail label="Telefoonnummer" value={SiaItem.phone || '-'} />

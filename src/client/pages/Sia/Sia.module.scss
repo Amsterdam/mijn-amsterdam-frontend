@@ -13,13 +13,13 @@
 
 .Table {
   tr td:nth-child(1) {
-    width: 20%;
+    width: 15%;
   }
   tr td:nth-child(2) {
-    width: 20%;
+    width: 40%;
   }
   tr td:nth-child(3) {
-    width: 40%;
+    width: 20%;
   }
 
   @include mq-tablet() {
