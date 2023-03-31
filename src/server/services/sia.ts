@@ -14,7 +14,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 
-type StatusStateChoice =
+export type StatusStateChoice =
   | 'm'
   | 'i'
   | 'b'
@@ -190,9 +190,10 @@ export interface SignalPrivate {
   // directing_departments: DirectingDepartment[];
 }
 
-interface SignalsSourceData {
+export interface SignalsSourceData {
   count: number;
   results: SignalPrivate[];
+  [key: string]: any;
 }
 
 function getSignalStatus(sourceItem: SignalPrivate): string {
@@ -294,8 +295,6 @@ export async function fetchSignals(
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    console.debug('requestConfig', requestConfig);
-
     const response = await requestData<SIAItem[]>(
       {
         ...requestConfig,
@@ -317,11 +316,13 @@ interface SiaAttachmentSource {
   is_image: boolean;
   created_at: string;
   created_by: string;
+  [key: string]: any;
 }
 
-interface SiaAttachmentResponse {
+export interface SiaAttachmentResponse {
   count: number;
   results: SiaAttachmentSource[];
+  [key: string]: any;
 }
 
 export interface SiaAttachment {
@@ -330,7 +331,7 @@ export interface SiaAttachment {
 }
 
 function transformSiaAttachmentsResponse(response: SiaAttachmentResponse) {
-  if (!Array.isArray(response.results)) {
+  if (!Array.isArray(response?.results)) {
     return [];
   }
   return response.results.map((attachment) => {
@@ -371,7 +372,7 @@ export interface SiaSignalHistory {
   when: string; // date,
   what: string; // e.g 'CREATE_NOTE'
   action: string; // e.g 'Notitie toegevoegd:',
-  description: string; // e.g 'Bijlage toegevoegd door melder: Koelkast_op_straat_bij_DICT.jpeg',
+  description: string | null; // e.g 'Bijlage toegevoegd door melder: Koelkast_op_straat_bij_DICT.jpeg',
   who: string; // e.g 'Signalen systeem';
   _signal: number; // id of the signal
 }
@@ -402,29 +403,27 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description: historyEntry.description,
+        description:
+          statusKey === REACTIE_GEVRAAGD || statusKey === REACTIE_ONTVANGEN
+            ? historyEntry.description
+            : '',
       } as SiaSignalStatusHistory;
-    });
+    })
+    .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
 
-  const s: Record<string, boolean> = {
-    [MA_OPEN]: false,
-    [MA_CLOSED]: false,
-  };
+  const statusUpdates: SiaSignalStatusHistory[] = [];
 
-  const statusUpdates = [];
+  let prevState: SiaSignalStatusHistory['status'] | '' = '';
 
   for (const statusEntry of transformed) {
-    const hit = s[statusEntry.status];
-    if (hit !== undefined) {
-      if (hit === false) {
-        s[statusEntry.status] = true;
-        statusUpdates.push(statusEntry);
-      }
-    } else if (MA_STATUS_ALLOWED.includes(statusEntry.status)) {
+    if (statusEntry.status !== prevState) {
       statusUpdates.push(statusEntry);
     } else {
-      // discard
+      // Update state to latest action that represents it
+      statusUpdates[statusUpdates.length - 1].datePublished =
+        statusEntry.datePublished;
     }
+    prevState = statusEntry.status;
   }
 
   return statusUpdates;
@@ -487,3 +486,13 @@ export async function fetchSignalNotifications(
 ) {
   return apiSuccessResult([]);
 }
+
+export const forTesting = {
+  transformSiaAttachmentsResponse,
+  transformSiaStatusResponse,
+  transformSIAData,
+  createSIANotification,
+  getSiaRequestConfig,
+  getSignalStatus,
+  STATUS_CHOICES_MA,
+};

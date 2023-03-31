@@ -28,10 +28,6 @@ export function TextClamp({
     if (typeof hasOverflow === 'boolean' || !domNode) {
       return;
     }
-    console.log(
-      domNode.getBoundingClientRect().height,
-      parseInt(maxHeight, 10)
-    );
     setHasOverflow(
       domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) >
         TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD
