@@ -5,6 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import {
   addLinks,
+  horecaVergunningTypes,
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,
   VergunningenSourceData,
@@ -22,7 +23,10 @@ const testState: any = {
         vergunningenData as VergunningenSourceData
       ).filter(
         (vergunning) =>
-          !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType)
+          ![
+            ...toeristischeVerhuurVergunningTypes,
+            ...horecaVergunningTypes,
+          ].includes(vergunning.caseType)
       ),
       AppRoutes['VERGUNNINGEN/DETAIL']
     ),

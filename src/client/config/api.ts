@@ -75,6 +75,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   KREFIA: 'Kredietbank & FIBU',
   KLACHTEN: 'Ingediende klachten',
   BEZWAREN: 'Ingediende bezwaren',
+  HORECA: 'Horeca vergunningen',
 };
 
 export function createErrorDisplayData(
