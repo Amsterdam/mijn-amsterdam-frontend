@@ -14,6 +14,7 @@ export interface ChapterMenuItem extends LinkProps {
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+  appStateKeys?: string[];
 }
 
 const myChaptersMenuItems: ChapterMenuItem[] = [
@@ -95,6 +96,13 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     profileTypes: ['private', 'private-commercial'],
+    appStateKeys: [
+      'WPI_SPECIFICATIES',
+      'WPI_AANVRAGEN',
+      'WPI_TOZO',
+      'WPI_TONK',
+      'WPI_BBZ',
+    ],
   },
   {
     title: ChapterTitles.STADSPAS,

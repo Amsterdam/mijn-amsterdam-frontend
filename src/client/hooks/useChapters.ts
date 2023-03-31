@@ -16,7 +16,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     WMO,
     WPI_SPECIFICATIES,
     WPI_AANVRAGEN,
-    WPI_STADSPAS,
+    STADSPAS,
     WPI_TOZO,
     WPI_TONK,
     WPI_BBZ,
@@ -36,7 +36,11 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     HORECA,
   } = appState;
 
-  if (!(item.id in appState) && item.hasAppStateValue !== false) {
+  if (
+    !(item.id in appState) &&
+    !(item.appStateKeys && item.appStateKeys.some((key) => key in appState)) &&
+    item.hasAppStateValue !== false
+  ) {
     return false;
   }
 
@@ -52,6 +56,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
       const hasBbz = !!WPI_BBZ?.content?.length;
       const hasJaaropgaven = !!jaaropgaven?.length;
       const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
+
       return (
         !(
           isLoading(WPI_AANVRAGEN) &&
