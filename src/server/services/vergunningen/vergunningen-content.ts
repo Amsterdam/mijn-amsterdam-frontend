@@ -1,7 +1,10 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+import {
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
+  hasWorkflow,
+} from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { BZB, BZP, Vergunning, VergunningExpirable } from './vergunningen';
 
@@ -87,15 +90,20 @@ const requested: NotificationLabels = {
 const inProgress: NotificationLabels = {
   title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
   description: (item) =>
-    `Uw vergunningsaanvraag voor ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
-  datePublished: (item) => item.dateRequest,
+    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+  datePublished: (item) =>
+    !hasWorkflow(item.caseType)
+      ? item.dateRequest
+      : item.dateWorkflowActive
+      ? item.dateWorkflowActive
+      : item.dateRequest,
   link,
 };
 
 const done: NotificationLabels = {
-  title: (item) => `Aanvraag ${item.title?.toLocaleLowerCase()} afgehandeld`,
+  title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
   description: (item) =>
-    `Uw vergunningsaanvraag voor een ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
   datePublished: (item) => item.dateDecision ?? item.dateRequest,
   link,
 };
@@ -103,7 +111,7 @@ const done: NotificationLabels = {
 const requestedShort: NotificationLabels = {
   title: requested.title,
   description: (item) =>
-    `Uw aanvraag ${item.title.toLocaleLowerCase()} is ontvangen.`,
+    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is ontvangen.`,
   datePublished: requested.datePublished,
   link,
 };
@@ -201,7 +209,7 @@ export const notificationContent: NotificationContent = {
   [CaseType.ERVV]: defaultNotificationLabels.long,
   [CaseType.TVMRVVObject]: defaultNotificationLabels.long,
   [CaseType.EvenementVergunning]: defaultNotificationLabels.short,
-  [CaseType.EvenementMelding]: defaultNotificationLabels.long,
+  [CaseType.EvenementMelding]: defaultNotificationLabels.short,
   [CaseType.Omzettingsvergunning]: defaultNotificationLabels.short,
   [CaseType.AanbiedenDiensten]: defaultNotificationLabels.long,
   [CaseType.Flyeren]: defaultNotificationLabels.long,

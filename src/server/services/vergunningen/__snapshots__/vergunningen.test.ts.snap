@@ -7,7 +7,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-03-09T00:00:00",
-        "description": "Uw aanvraag ligplaatsvergunning is ontvangen.",
+        "description": "Uw aanvraag voor een ligplaatsvergunning is ontvangen.",
         "id": "vergunning-3229752453-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -43,7 +43,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
-        "description": "Uw aanvraag onttrekkingsvergunning voor sloop is ontvangen.",
+        "description": "Uw aanvraag voor een onttrekkingsvergunning voor sloop is ontvangen.",
         "id": "vergunning-2377704102-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -66,8 +66,8 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-10-27T00:00:00",
-        "description": "Uw vergunningsaanvraag voor vormen van woonruimte is in behandeling genomen.",
+        "datePublished": "2022-11-01T00:00:00",
+        "description": "Uw vergunningsaanvraag vormen van woonruimte is in behandeling genomen.",
         "id": "vergunning-4289555340-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -78,7 +78,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-10-19T00:00:00",
+        "datePublished": "2022-10-21",
         "description": "Uw aanvraag voor een ontheffing zwaar verkeer is in behandeling genomen.",
         "id": "vergunning-2318111872-notification",
         "link": Object {
@@ -91,7 +91,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-10-16T00:00:00",
-        "description": "Uw aanvraag ontheffing zwaar verkeer is ontvangen.",
+        "description": "Uw aanvraag voor een ontheffing zwaar verkeer is ontvangen.",
         "id": "vergunning-1863159343-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -139,7 +139,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-01-17T00:00:00",
-        "description": "Uw vergunningsaanvraag voor aanbieden van diensten is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag aanbieden van diensten is in behandeling genomen.",
         "id": "vergunning-3407608046-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -151,7 +151,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-10-17",
-        "description": "Uw vergunningsaanvraag voor evenement melding is in behandeling genomen.",
+        "description": "Uw aanvraag voor een evenement melding is in behandeling genomen.",
         "id": "vergunning-4187042164-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -186,7 +186,7 @@ Object {
       },
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2021-09-28",
+        "datePublished": "2021-10-08",
         "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
         "id": "vergunning-2331715774-notification",
         "link": Object {
@@ -199,7 +199,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
-        "description": "Uw aanvraag vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
         "id": "vergunning-913567999-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -211,7 +211,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-09-03",
-        "description": "Uw vergunningsaanvraag voor e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling genomen.",
         "id": "vergunning-3105266233-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -223,7 +223,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-04-07",
-        "description": "Uw vergunningsaanvraag voor vaste parkeerplaats voor gehandicapten (gpp) is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag vaste parkeerplaats voor gehandicapten (gpp) is in behandeling genomen.",
         "id": "vergunning-260384730-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -235,7 +235,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
-        "description": "Uw aanvraag (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "description": "Uw aanvraag voor een (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
         "id": "vergunning-333728632-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -247,7 +247,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
-        "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3607535691-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -259,7 +259,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24",
-        "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3276988108-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -271,7 +271,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-07-01",
-        "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-2804017741-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -283,7 +283,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
-        "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-1324498924-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -295,7 +295,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3452781026-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -307,7 +307,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2872491299-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -319,7 +319,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3490212832-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -331,7 +331,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2909923105-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -343,7 +343,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3706696166-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -355,7 +355,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-25",
-        "description": "Uw vergunningsaanvraag voor een tijdelijke verkeersmaatregel is afgehandeld.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-976898368-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -367,7 +367,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-06-08T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2594256166-notification",
         "link": Object {
           "title": "Bekijk details",
@@ -379,7 +379,7 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2020-05-03T00:00:00",
-        "description": "Uw vergunningsaanvraag voor tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3468041544-notification",
         "link": Object {
           "title": "Bekijk details",
