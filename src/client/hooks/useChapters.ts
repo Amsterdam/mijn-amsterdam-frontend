@@ -36,7 +36,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     HORECA,
   } = appState;
 
-  if (!(item.id in appState)) {
+  if (!(item.id in appState) && item.hasAppStateValue !== false) {
     return false;
   }
 
@@ -175,6 +175,19 @@ export function useChapterMenuItems() {
   return chaptersByProfileType[profileType] || [];
 }
 
+export function getChapterMenuItemsAppState(
+  appState: AppState,
+  chapterItems: ChapterMenuItem[]
+) {
+  return chapterItems
+    .filter(
+      ({ isAlwaysVisible, hasAppStateValue }) =>
+        isAlwaysVisible !== true && hasAppStateValue !== false
+    )
+    .map(({ id }) => appState[id as keyof AppState])
+    .filter((apiState) => !!apiState);
+}
+
 export function useChapters(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
@@ -184,20 +197,21 @@ export function useChapters(): ChaptersState {
     return item.isAlwaysVisible || isChapterActive(item, appState);
   });
 
+  const chapterItemsWithAppState = getChapterMenuItemsAppState(
+    appState,
+    chapterItems
+  );
+
   return useMemo(
     () => ({
       items,
       isLoading:
         !!appState &&
-        chapterItems
-          .filter(({ isAlwaysVisible }) => !isAlwaysVisible)
-          .map(({ id }) => appState[id as keyof AppState])
-          .filter((apiState) => !!apiState)
-          .some((apiState) => {
-            const apiStateTyped = apiState as ApiResponse<any>;
-            return isLoading(apiStateTyped) && !isError(apiStateTyped);
-          }),
+        chapterItemsWithAppState.some((apiState) => {
+          const apiStateTyped = apiState as ApiResponse<any>;
+          return isLoading(apiStateTyped) && !isError(apiStateTyped);
+        }),
     }),
-    [items, chapterItems, appState]
+    [items, appState, chapterItemsWithAppState]
   );
 }

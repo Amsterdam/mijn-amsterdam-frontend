@@ -13,6 +13,7 @@ export interface ChapterMenuItem extends LinkProps {
   id: Chapter;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
+  hasAppStateValue?: boolean;
 }
 
 const myChaptersMenuItems: ChapterMenuItem[] = [
@@ -137,7 +138,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.PARKEREN,
     to: AppRoutes.PARKEREN,
     profileTypes: ['private', 'private-commercial', 'commercial'],
-    isAlwaysVisible: true,
+    hasAppStateValue: false,
   },
   {
     title: ChapterTitles.KLACHTEN,
