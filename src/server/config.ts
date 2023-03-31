@@ -202,6 +202,8 @@ export const ApiConfig: ApiDataRequestConfig = {
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       'private-commercial':
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
+      'private-attributes':
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
     },
@@ -304,6 +306,7 @@ export const RelayPathsAllowed = {
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
+export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
 
 export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
 export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
@@ -331,6 +334,7 @@ export const BffEndpoints = {
   AUTH_BASE_SSO,
   AUTH_BASE_SSO_DIGID,
   AUTH_BASE_SSO_EHERKENNING,
+  AUTH_BASE_YIVI,
 
   // Digid
   AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
@@ -344,13 +348,20 @@ export const BffEndpoints = {
   AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
   AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
 
+  // YIVI
+  AUTH_CALLBACK_YIVI: BFF_OIDC_BASE_URL + AUTH_BASE_YIVI + AUTH_CALLBACK,
+  AUTH_LOGIN_YIVI: AUTH_BASE_YIVI + AUTH_LOGIN,
+  AUTH_LOGOUT_YIVI: AUTH_BASE_YIVI + AUTH_LOGOUT,
+
   // Application specific urls
   AUTH_CHECK: `${AUTH_BASE}/check`,
   AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
   AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
+  AUTH_CHECK_YIVI: `${AUTH_BASE_YIVI}/check`,
   AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
   AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
   AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
+  AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
 
@@ -412,9 +423,15 @@ export const oidcConfigEherkenning: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
 };
 
+export const oidcConfigYivi: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+};
+
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
   digid: 'sub',
+  yivi: 'sub',
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
@@ -423,6 +440,9 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   },
   get digid() {
     return oidcConfigDigid.clientID;
+  },
+  get yivi() {
+    return oidcConfigYivi.clientID;
   },
 };
 

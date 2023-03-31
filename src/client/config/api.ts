@@ -27,6 +27,7 @@ export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
 }/eherkenning/login`;
+export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL + AUTH_PATH}/yivi/login`;
 
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
 

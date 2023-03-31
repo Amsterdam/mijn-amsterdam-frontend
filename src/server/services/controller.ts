@@ -1,7 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
 import { omit } from '../../universal/helpers';
-import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
   getAuth,
@@ -20,6 +24,7 @@ import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
+import { fetchProfile } from './profile';
 import {
   fetchBelasting,
   fetchErfpacht,
@@ -110,16 +115,25 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const PROFILE = callService(fetchProfile);
 
 // Special services that aggeragates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (requestID: requestID, req: Request) =>
-  (
+const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+  const profileType = getProfileType(req);
+
+  // No notifications for this profile type
+  if (profileType === 'private-attributes') {
+    return apiSuccessResult([]);
+  }
+
+  return (
     await fetchTipsAndNotifications(
       requestID,
       await getAuth(req),
       getProfileType(req)
     )
   ).NOTIFICATIONS;
+};
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
@@ -148,6 +162,7 @@ const SERVICES_INDEX = {
   KLACHTEN,
   BEZWAREN,
   NOTIFICATIONS,
+  PROFILE,
   HORECA,
 };
 
@@ -155,8 +170,12 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = ServicesType;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE'>;
+type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE'>;
+type PrivateServicesAttributeBased = Pick<
+  ServiceMap,
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
+>;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -177,6 +196,7 @@ type CommercialServices = Pick<
 
 type ServicesByProfileType = {
   private: PrivateServices;
+  'private-attributes': PrivateServicesAttributeBased;
   'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
@@ -209,6 +229,12 @@ export const servicesByProfileType: ServicesByProfileType = {
     BEZWAREN,
     BELASTINGEN,
     HORECA,
+  },
+  'private-attributes': {
+    CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
+    NOTIFICATIONS,
+    PROFILE,
   },
   'private-commercial': {
     AFVAL,
@@ -261,6 +287,7 @@ export const servicesTipsByProfileType = {
     servicesByProfileType.private,
     tipsOmit as Array<keyof PrivateServices>
   ),
+  'private-attributes': servicesByProfileType['private-attributes'],
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
     tipsOmit as Array<keyof PrivateCommercialServices>
@@ -274,7 +301,11 @@ export const servicesTipsByProfileType = {
 function loadServices(
   requestID: requestID,
   req: Request,
-  serviceMap: PrivateServices | CommercialServices | PrivateCommercialServices,
+  serviceMap:
+    | PrivateServices
+    | CommercialServices
+    | PrivateCommercialServices
+    | PrivateServicesAttributeBased,
   filterIds: requestID[] = []
 ) {
   return Object.entries(serviceMap)

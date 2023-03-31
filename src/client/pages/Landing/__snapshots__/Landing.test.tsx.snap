@@ -96,7 +96,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           <a
             class="LoginBtn LoginBtn--irma"
-            href="/"
+            href="/api/v1/auth/yivi/login"
             rel="noopener noreferrer"
             role="button"
           >

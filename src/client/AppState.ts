@@ -80,6 +80,9 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private', 'private-commercial'],
   }),
+  PROFILE: apiPristineResult(null, {
+    profileTypes: ['private-attributes'],
+  }),
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],

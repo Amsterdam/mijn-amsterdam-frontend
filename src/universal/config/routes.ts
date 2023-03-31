@@ -147,5 +147,3 @@ export const CustomTrackingUrls: {
 
   [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
 };
-
-export const NoHeroRoutes = [AppRoutes.BUURT];
