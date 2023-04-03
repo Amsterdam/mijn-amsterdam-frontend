@@ -6,8 +6,9 @@ import {
   transformGarbageDataResponse,
 } from './afvalwijzer';
 
-const dateStr = new Date().toISOString();
-const dateTimeStr = new Date().getTime();
+const today = new Date();
+const dateStr = today.toISOString();
+const dateTimeStr = today.getTime();
 
 describe('Afvalwijzer service', () => {
   beforeAll(() => {
