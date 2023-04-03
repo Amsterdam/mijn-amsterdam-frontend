@@ -3,8 +3,6 @@ import {
   hasHistoricDate,
   isServiceDeliveryStarted,
   WmoApiItem,
-} from '.';
-import {
   isServiceDeliveryActive,
   isServiceDeliveryStopped,
   transformWmoResponse,

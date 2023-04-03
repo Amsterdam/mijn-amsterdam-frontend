@@ -1,5 +1,8 @@
-import { MyTip } from '../../universal/types';
-import * as controller from './controller';
+import { MyTip } from '../../universal/types/App.types';
+import {
+  servicesTipsByProfileType,
+  getTipsFromServiceResults,
+} from './controller';
 
 const MOCK_SOURCE_TIP: MyTip = {
   audience: ['persoonlijk'],
@@ -37,8 +40,8 @@ jest.mock('./tips-and-notifications', () => ({
 }));
 
 describe('controller', () => {
-  const servicesPrivate = controller.servicesTipsByProfileType.private;
-  const servicesCommercial = controller.servicesTipsByProfileType.commercial;
+  const servicesPrivate = servicesTipsByProfileType.private;
+  const servicesCommercial = servicesTipsByProfileType.commercial;
 
   beforeAll(() => {
     jest
@@ -47,7 +50,7 @@ describe('controller', () => {
   });
 
   beforeEach(() => {
-    controller.servicesTipsByProfileType.private = {
+    servicesTipsByProfileType.private = {
       BRP: async () => {
         return {
           content: {
@@ -59,7 +62,7 @@ describe('controller', () => {
       },
     };
 
-    controller.servicesTipsByProfileType.commercial = {
+    servicesTipsByProfileType.commercial = {
       KVK: async () => {
         return {
           content: {
@@ -80,13 +83,13 @@ describe('controller', () => {
   });
 
   afterAll(() => {
-    controller.servicesTipsByProfileType.private = servicesPrivate;
-    controller.servicesTipsByProfileType.commercial = servicesCommercial;
+    servicesTipsByProfileType.private = servicesPrivate;
+    servicesTipsByProfileType.commercial = servicesCommercial;
     jest.useRealTimers();
   });
 
   test('Only persoonlijke tips, not opted-in', async () => {
-    const results = await controller.getTipsFromServiceResults('xx12xx', {
+    const results = await getTipsFromServiceResults('xx12xx', {
       query: {
         optin: 'false',
         profileType: 'private',
@@ -102,7 +105,7 @@ describe('controller', () => {
   });
 
   test('Only zakelijke tips, not opted-in', async () => {
-    const results = await controller.getTipsFromServiceResults('xx12xx', {
+    const results = await getTipsFromServiceResults('xx12xx', {
       query: {
         optin: 'false',
         profileType: 'commercial',
@@ -120,7 +123,7 @@ describe('controller', () => {
   });
 
   test('Only persoonlijke tips, opted-in', async () => {
-    const results = await controller.getTipsFromServiceResults('xx12xx2', {
+    const results = await getTipsFromServiceResults('xx12xx2', {
       query: {
         optin: 'true',
         profileType: 'private',

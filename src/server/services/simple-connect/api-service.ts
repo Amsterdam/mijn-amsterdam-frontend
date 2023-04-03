@@ -1,3 +1,4 @@
+import { AxiosResponseTransformer } from 'axios';
 import { Chapter } from '../../../universal/config';
 import {
   ApiResponse,
@@ -14,9 +15,9 @@ export interface ApiPatternResponseA {
   notifications?: MyNotification[];
 }
 
-function transformApiResponseDefault(
+const transformApiResponseDefault: AxiosResponseTransformer = (
   response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
-) {
+) => {
   if (
     response !== null &&
     typeof response === 'object' &&
@@ -26,18 +27,19 @@ function transformApiResponseDefault(
     return response.content;
   }
   return response;
-}
+};
 
 export async function fetchService<T extends ApiPatternResponseA>(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false
 ): Promise<ApiResponse<T | null>> {
+  const transformResponse = [transformApiResponseDefault].concat(
+    apiConfig.transformResponse ?? []
+  );
   const apiConfigMerged: DataRequestConfig = {
     ...apiConfig,
-    transformResponse: [transformApiResponseDefault].concat(
-      apiConfig.transformResponse || []
-    ),
+    transformResponse,
   };
 
   const response = await requestData<T>(apiConfigMerged, requestID);
