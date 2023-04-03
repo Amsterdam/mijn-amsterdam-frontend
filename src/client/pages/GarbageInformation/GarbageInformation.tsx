@@ -51,7 +51,10 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <Linkd href={fraction.instructieCTA.to}>
+        <Linkd
+          href={fraction.instructieCTA.to}
+          external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
+        >
           {fraction.instructieCTA.title}
         </Linkd>
         {fraction.instructie ? (
@@ -137,7 +140,10 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
           <dt>Waar</dt>
           <dd>
             {typeof fraction.waar === 'object' ? (
-              <LinkdInline href={fraction.waar.to}>
+              <LinkdInline
+                href={fraction.waar.to}
+                external={!fraction.waar.to.startsWith(AppRoutes.BUURT)}
+              >
                 {fraction.waar.title}
               </LinkdInline>
             ) : (
