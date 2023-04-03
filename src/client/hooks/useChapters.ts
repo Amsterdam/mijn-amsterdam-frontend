@@ -36,10 +36,6 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     HORECA,
   } = appState;
 
-  if (!(item.id in appState) && item.hasAppStateValue !== false) {
-    return false;
-  }
-
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
@@ -52,6 +48,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
       const hasBbz = !!WPI_BBZ?.content?.length;
       const hasJaaropgaven = !!jaaropgaven?.length;
       const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
+
       return (
         !(
           isLoading(WPI_AANVRAGEN) &&
@@ -81,7 +78,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     case Chapters.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
-        FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
+        FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
           ? BELASTINGEN.content?.isKnown
           : true;
       return !isLoading(BELASTINGEN) && belastingenActive;

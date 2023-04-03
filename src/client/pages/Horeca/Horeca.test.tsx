@@ -5,7 +5,7 @@ import {
   addLinks,
   transformVergunningenData,
   VergunningenSourceData,
-} from '../../../server/services';
+} from '../../../server/services/vergunningen/vergunningen';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { AppRoutes } from '../../../universal/config';
 import { horecaOptions } from '../../../server/services/horeca';

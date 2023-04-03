@@ -18,11 +18,11 @@ import {
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import {
-  apiUrlEntries,
   ApiUrlEntries,
   BFF_REQUEST_CACHE_ENABLED,
-  DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
+  DataRequestConfig,
+  apiUrlEntries,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { AuthProfileAndToken } from './app';
@@ -106,7 +106,7 @@ function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
   // parse link header and get value of rel="next" url
   const links = headers.link.split(',');
   const next = links.find(
-    (link) => link.includes('rel="next"') && link.includes(';')
+    (link: string) => link.includes('rel="next"') && link.includes(';')
   );
   if (next === undefined) {
     throw new Error('Something went wrong while parsing the link header.');
@@ -212,7 +212,8 @@ export async function requestData<T>(
       response.headers?.link?.includes('rel="next"') &&
       typeof requestConfig.combinePaginatedResults === 'function'
     ) {
-      const nextUrl = getNextUrlFromLinkHeader(response.headers);
+      const headers = response.headers;
+      const nextUrl = getNextUrlFromLinkHeader(headers as AxiosResponseHeaders);
 
       const newRequest = {
         ...requestConfig,
