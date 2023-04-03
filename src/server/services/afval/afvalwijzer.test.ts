@@ -6,13 +6,25 @@ import {
   transformGarbageDataResponse,
 } from './afvalwijzer';
 
+const dateStr = new Date().toISOString();
+const dateTimeStr = new Date().getTime();
+
 describe('Afvalwijzer service', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(dateTimeStr);
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   test('formatKalenderMelding', () => {
     const fractionData: Partial<GarbageFractionData> = {
       afvalwijzerAfvalkalenderMelding:
         'Kerstbomen kun je van 2 t/m 13 januari kwijt op een <a href="https://kaart.amsterdam.nl/ophaalpunten-kerstbomen-2023">inleverplek in de buurt</a>',
-      afvalwijzerAfvalkalenderVan: new Date().toISOString(),
-      afvalwijzerAfvalkalenderTot: new Date().toISOString(),
+      afvalwijzerAfvalkalenderVan: dateStr,
+      afvalwijzerAfvalkalenderTot: dateStr,
     };
     expect(
       exportedForTesting.formatKalenderMelding(
@@ -27,8 +39,8 @@ describe('Afvalwijzer service', () => {
     const fractionData: Partial<GarbageFractionData> = {
       afvalwijzerAfvalkalenderMelding:
         '<p>dingen <a class="test" tabindex href="https://amsterdam.nl">test</a></p>',
-      afvalwijzerAfvalkalenderVan: new Date().toISOString(),
-      afvalwijzerAfvalkalenderTot: new Date().toISOString(),
+      afvalwijzerAfvalkalenderVan: dateStr,
+      afvalwijzerAfvalkalenderTot: dateStr,
     };
     expect(
       exportedForTesting.formatKalenderMelding(
