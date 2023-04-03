@@ -119,7 +119,15 @@ function transformFractionData(
   const afvalPuntKaartUrl = getAfvalPuntKaartUrl(centroid);
 
   const formsUrl = 'https://formulieren.amsterdam.nl/TriplEforms/';
-  const addressCode = `${fractionData?.postcode},${fractionData?.huisnummer},${fractionData?.huisletter},${fractionData?.huisnummertoevoeging}`;
+  let addressCode = `${fractionData.postcode},${fractionData.huisnummer}`;
+
+  if (fractionData.huisletter) {
+    addressCode = `${addressCode},${fractionData.huisletter}`;
+  }
+
+  if (fractionData.huisnummertoevoeging) {
+    addressCode = `${addressCode},${fractionData.huisnummertoevoeging}`;
+  }
 
   const url = fractionData.afvalwijzerUrl?.startsWith(formsUrl)
     ? fractionData.afvalwijzerUrl.replace(formsUrl, getText(formsUrl)) +
@@ -198,9 +206,22 @@ export function transformGarbageDataResponse(
   latlng: LatLngLiteral | null
 ): GarbageFractionInformationTransformed[] {
   // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
+  console.log(
+    'afvalSourceData._embedded?.afvalwijzer',
+    afvalSourceData._embedded?.afvalwijzer
+  );
+  // NOTE: Black box business logic
+  const heeftThuisAfspraakRouteCodeInResultaten =
+    afvalSourceData._embedded?.afvalwijzer.some(
+      (info) => info.afvalwijzerBasisroutetypeCode === 'THUISAFSPR'
+    );
   const garbageFractions =
     afvalSourceData._embedded?.afvalwijzer.filter(
-      (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
+      (fraction) =>
+        fraction.afvalwijzerFractieCode !== 'Plastic' &&
+        (!heeftThuisAfspraakRouteCodeInResultaten ||
+          fraction.afvalwijzerBasisroutetypeCode === 'THUISAFSPR' ||
+          fraction.afvalwijzerBasisroutetypeCode === 'GROFAFSPR')
     ) ?? [];
 
   return garbageFractions.map((fractionData) =>
