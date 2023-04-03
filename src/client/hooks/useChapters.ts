@@ -16,7 +16,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     WMO,
     WPI_SPECIFICATIES,
     WPI_AANVRAGEN,
-    STADSPAS,
+    WPI_STADSPAS,
     WPI_TOZO,
     WPI_TONK,
     WPI_BBZ,
@@ -35,14 +35,6 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     BEZWAREN,
     HORECA,
   } = appState;
-
-  if (
-    !(item.id in appState) &&
-    !(item.appStateKeys && item.appStateKeys.some((key) => key in appState)) &&
-    item.hasAppStateValue !== false
-  ) {
-    return false;
-  }
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
@@ -86,7 +78,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     case Chapters.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
-        FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
+        FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
           ? BELASTINGEN.content?.isKnown
           : true;
       return !isLoading(BELASTINGEN) && belastingenActive;
