@@ -33,6 +33,27 @@ describe('Horeca service', () => {
       Array [
         Object {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+          "dateEnd": "2025-01-02T00:00:00",
+          "dateProcessed": "2022-12-01T00:00:00",
+          "dateRequest": "2022-11-20T00:00:00",
+          "dateStart": "2023-11-01T00:00:00",
+          "dateStartPermit": "2023-11-02T00:00:00",
+          "dateWorkflowActive": "2022-11-25T00:00:00",
+          "decision": null,
+          "id": "334568232",
+          "identifier": "Z/23/1808827",
+          "link": Object {
+            "title": "Bekijk hoe het met uw aanvraag staat",
+            "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232",
+          },
+          "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+          "numberOfPermits": 10,
+          "processed": false,
+          "status": "Ontvangen",
+          "title": "Horeca vergunning exploitatie Horecabedrijf",
+        },
+        Object {
+          "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateEnd": "2024-01-02T00:00:00",
           "dateProcessed": "2022-11-01T00:00:00",
           "dateRequest": "2022-10-20T00:00:00",
