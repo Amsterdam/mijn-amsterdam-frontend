@@ -55,8 +55,8 @@ export default function Horeca() {
       </PageHeading>
       <PageContent>
         <p>
-          Hier ziet u een overzicht van uw aanvragen voor Horeca vergunningen en
-          ontheffingen.
+          Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen
+          bij gemeente Amsterdam.
         </p>
         {isError(HORECA) && (
           <Alert type="warning">
