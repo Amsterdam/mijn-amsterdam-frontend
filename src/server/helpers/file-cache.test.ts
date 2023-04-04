@@ -22,6 +22,7 @@ describe('FileCache', () => {
     const fileCache = new FileCache({
       name: 'test',
       triesUntilConsiderdStale: 2,
+      cacheTimeMinutes: -1, // Dont expire
     });
 
     const data = 'test-data';
