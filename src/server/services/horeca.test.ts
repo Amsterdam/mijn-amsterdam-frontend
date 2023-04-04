@@ -28,7 +28,7 @@ describe('Horeca service', () => {
   it('should return only horeca vergunningen', async () => {
     const result = await fetchHorecaVergunningen('x', authProfileAndToken);
 
-    expect(result.content.length).toEqual(1);
+    expect(result.content.length).toEqual(2);
     expect(result.content).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -64,15 +64,27 @@ describe('Horeca service', () => {
         "notifications": Array [
           Object {
             "chapter": "VERGUNNINGEN",
-            "datePublished": "2022-10-20T00:00:00",
+            "datePublished": "2022-11-25T00:00:00",
             "description": "Uw aanvraag voor een horeca vergunning exploitatie horecabedrijf is in behandeling genomen.",
+            "id": "vergunning-334568232-notification",
+            "link": Object {
+              "title": "Bekijk details",
+              "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232",
+            },
+            "subject": "334568232",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf in behandeling",
+          },
+          Object {
+            "chapter": "VERGUNNINGEN",
+            "datePublished": "2022-10-20T00:00:00",
+            "description": "Uw aanvraag voor een horeca vergunning exploitatie horecabedrijf is ontvangen.",
             "id": "vergunning-3209922248-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/3209922248",
             },
             "subject": "3209922248",
-            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf in behandeling",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf ontvangen",
           },
         ],
       }

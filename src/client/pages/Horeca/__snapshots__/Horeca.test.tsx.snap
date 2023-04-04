@@ -233,7 +233,7 @@ exports[`<Horeca /> Matches the Full Page snapshot 1`] = `
           <p
             class="NoItemsMessage"
           >
-            U heeft nog geen horeca vergunningen.
+            U heeft nog geen toegekende horeca vergunningen.
           </p>
         </div>
       </div>

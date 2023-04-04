@@ -67,7 +67,7 @@ export default function Horeca() {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Lopende aanvragen"
-        noItemsMessage="U heeft nog geen horeca vergunningen."
+        noItemsMessage="U heeft geen horeca vergunningen in aanvraag."
         startCollapsed={false}
         hasItems={!!lopendeVergunningen?.length}
         isLoading={isLoading(HORECA)}
@@ -82,7 +82,7 @@ export default function Horeca() {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Eerdere aanvragen"
-        noItemsMessage="U heeft nog geen horeca vergunningen."
+        noItemsMessage="U heeft nog geen toegekende horeca vergunningen."
         startCollapsed={false}
         hasItems={!!afgerondeVergunningen?.length}
         isLoading={isLoading(HORECA)}
