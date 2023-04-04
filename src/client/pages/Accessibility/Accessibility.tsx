@@ -90,6 +90,13 @@ export default function Accessibility() {
           >
             volledige toegankelijkheidsverklaring
           </LinkdInline>
+          . Lees hier de resultaten van het meest{' '}
+          <LinkdInline
+            external={true}
+            href="/2020127%20Rapport%20WCAG%20audit%20Mijn%20Amsterdam.pdf"
+          >
+            recente toegankelijkheidsonderzoek
+          </LinkdInline>
           .
         </p>
       </PageContent>
