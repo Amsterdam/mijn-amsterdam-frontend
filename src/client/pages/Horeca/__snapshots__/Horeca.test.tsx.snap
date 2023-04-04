@@ -68,7 +68,7 @@ exports[`<Horeca /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Horeca vergunningen
+           Lopende aanvragen
         </button>
       </h3>
       <div
@@ -104,6 +104,53 @@ exports[`<Horeca /> Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/23/1808827
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Horeca vergunning exploitatie Horecabedrijf
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    20 november 2022
+                  </span>
+                </td>
+              </tr>
               <tr
                 class="TableRow"
               >
@@ -153,6 +200,41 @@ exports[`<Horeca /> Matches the Full Page snapshot 1`] = `
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Eerdere aanvragen
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U heeft nog geen horeca vergunningen.
+          </p>
         </div>
       </div>
     </section>
