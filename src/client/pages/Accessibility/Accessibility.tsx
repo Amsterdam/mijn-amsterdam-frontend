@@ -79,7 +79,7 @@ export default function Accessibility() {
           . Lees hier de resultaten van het meest{' '}
           <LinkdInline
             external={true}
-            href="/2020127%20Rapport%20WCAG%20audit%20Mijn%20Amsterdam.pdf"
+            href="/20211127%20Rapportage%20Audit%20Mijn%20Amsterdam%20Digitaal%20Toegankelijk%20WCAG-EM.pdf"
           >
             recente toegankelijkheidsonderzoek
           </LinkdInline>
