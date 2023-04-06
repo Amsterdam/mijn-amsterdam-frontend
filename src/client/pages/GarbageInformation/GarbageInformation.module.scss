@@ -129,6 +129,15 @@
   @include reset-list-style();
 }
 
+.WoonFunctieWaarschuwing {
+  font-size: 1.6rem;
+}
+
+.AdresWeergave {
+  padding: 0;
+  margin: 0;
+}
+
 .WeespWarning {
   background-color: $color-support-blue;
   padding: 1rem;

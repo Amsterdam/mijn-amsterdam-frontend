@@ -40,6 +40,7 @@ export interface GarbageFractionData {
   afvalwijzerUrl: string | null;
   gbdBuurtCode: string | null;
   bagNummeraanduidingId: string | null;
+  gebruiksdoelWoonfunctie: boolean;
 }
 
 export interface AFVALSourceData {
@@ -198,6 +199,7 @@ function transformFractionData(
     kalendermelding: formatKalenderMelding(fractionData),
     fractieCode: fractionData.afvalwijzerFractieCode,
     stadsdeelAanvulling,
+    gebruiksdoelWoonfunctie: fractionData.gebruiksdoelWoonfunctie,
   };
 }
 
@@ -206,11 +208,7 @@ export function transformGarbageDataResponse(
   latlng: LatLngLiteral | null
 ): GarbageFractionInformationTransformed[] {
   // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
-  console.log(
-    'afvalSourceData._embedded?.afvalwijzer',
-    afvalSourceData._embedded?.afvalwijzer
-  );
-  // NOTE: Black box business logic
+  // NOTE: Black box business logic extracted from afvalwijzer source-code from amsterdam.nl/afvalwijzer
   const heeftThuisAfspraakRouteCodeInResultaten =
     afvalSourceData._embedded?.afvalwijzer.some(
       (info) => info.afvalwijzerBasisroutetypeCode === 'THUISAFSPR'
