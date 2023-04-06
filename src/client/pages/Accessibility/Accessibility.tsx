@@ -58,20 +58,6 @@ export default function Accessibility() {
         </ul>
 
         <Heading el="h3" size="small">
-          Voor deze onderdelen geldt WCAG status C
-        </Heading>
-        <ul>
-          <li>Mijn Erfpacht</li>
-          <li>Kredietbank</li>
-          <li>Milieuzone</li>
-        </ul>
-        <p>
-          WCAG status C betekent dat wij de eerste stappen hebben gezet om deze
-          onderdelen toegankelijk te maken. We hebben onderzoek ingepland. Na
-          dit onderzoek gaan we de onderdelen zo snel mogelijk volledig
-          toegankelijk maken.
-        </p>
-        <Heading el="h3" size="small">
           Toegankelijkheidsverklaring
         </Heading>
         <p>
@@ -93,7 +79,7 @@ export default function Accessibility() {
           . Lees hier de resultaten van het meest{' '}
           <LinkdInline
             external={true}
-            href="/2020127%20Rapport%20WCAG%20audit%20Mijn%20Amsterdam.pdf"
+            href="/20211127%20Rapportage%20Audit%20Mijn%20Amsterdam%20Digitaal%20Toegankelijk%20WCAG-EM.pdf"
           >
             recente toegankelijkheidsonderzoek
           </LinkdInline>

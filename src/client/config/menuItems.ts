@@ -149,7 +149,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.HORECA,
     id: Chapters.HORECA,
-    to: generatePath(AppRoutes.HORECA, { page: 1 }),
+    to: generatePath(AppRoutes.HORECA),
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
 ];
