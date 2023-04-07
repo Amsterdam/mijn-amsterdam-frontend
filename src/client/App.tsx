@@ -29,6 +29,7 @@ import { useUsabilla } from './hooks/useUsabilla';
 
 import { default as LandingPage } from './pages/Landing/Landing';
 import { default as LandingPageYivi } from './pages/Landing/LandingYivi';
+import { default as InfoPageYivi } from './pages/Landing/InfoPageYivi';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -121,6 +122,7 @@ function AppNotAuthenticated() {
             path={AppRoutes.YIVI_LANDING}
             component={LandingPageYivi}
           />
+          <Route exact path={AppRoutes.YIVI_INFO} component={InfoPageYivi} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
