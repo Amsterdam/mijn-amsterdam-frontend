@@ -6,6 +6,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import SiaDetail from './SiaDetail';
 import nock from 'nock';
+import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 
 const SIA_ITEM = {
   id: '12420',
@@ -55,7 +56,7 @@ describe('<SiaDetail />', () => {
       .reply(200, {
         content: [
           {
-            url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==',
+            url: PLACEHOLDER_IMAGE_URL,
             isImage: true,
           },
         ],
