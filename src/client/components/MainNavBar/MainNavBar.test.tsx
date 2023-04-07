@@ -78,15 +78,12 @@ describe('<MainNavBar />', () => {
     expect(screen.getByText('Uitloggen')).toBeInTheDocument();
   });
 
-  it('Shows/Hides  Search based on profile type', () => {
+  it('Shows different ID based on profile type', () => {
     (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
     (useProfileTypeValue as jest.Mock).mockReturnValue('private');
 
     const view = render(<Component />);
     expect(screen.getByText(/Test\svan\sFooBar/)).toBeInTheDocument();
-    expect(
-      screen.getByLabelText('Zoeken in mijn amsterdam')
-    ).toBeInTheDocument();
 
     (useProfileType as jest.Mock).mockReturnValue([
       'private-attributes',
@@ -97,9 +94,5 @@ describe('<MainNavBar />', () => {
     view.rerender(<Component />);
 
     expect(screen.getByText(/test@test\.com/)).toBeInTheDocument();
-
-    expect(
-      screen.queryByLabelText('Zoeken in mijn amsterdam')
-    ).not.toBeInTheDocument();
   });
 });
