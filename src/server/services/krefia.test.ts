@@ -1,12 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
-import { fetchKrefiaNotifications } from '.';
-
 import { jsonCopy, omit } from '../../universal/helpers';
 import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import KrefiaData from '../mock-data/json/krefia.json';
-import { fetchKrefia, fetchSource } from './krefia';
+import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = jsonCopy(KrefiaData);

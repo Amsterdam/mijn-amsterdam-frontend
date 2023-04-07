@@ -25,7 +25,7 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
       >
         <a
           class="Button Button__plain Button__lean Linkd BackLink"
-          href="/horeca/1"
+          href="/horeca/"
         >
           <svg
             aria-hidden="true"
@@ -94,7 +94,7 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
         class="List"
       >
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
           style="display: block;"
         >
           <div
@@ -105,10 +105,10 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="ConnectLine ConnectLine--start"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -138,7 +138,7 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
+          class="ListItem"
           style="display: block;"
         >
           <div
@@ -149,10 +149,10 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="ConnectLine"
               />
               <span
-                class="Checkmark Checkmark--active"
+                class="Checkmark"
               />
             </div>
             <div

@@ -7,7 +7,7 @@ import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import {
   transformVergunningenData,
   VergunningenSourceData,
-} from '../../../server/services';
+} from '../../../server/services/vergunningen/vergunningen';
 import { horecaOptions } from '../../../server/services/horeca';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks';
