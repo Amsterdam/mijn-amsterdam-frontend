@@ -44,7 +44,7 @@ export interface MainNavLinkProps {
   title: string;
 }
 
-function SecondaryLinks() {
+export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
