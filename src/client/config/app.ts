@@ -21,9 +21,15 @@ const uiElementConfigByProfileType: UiElementConfigByProfileType = {
   'private-attributes': {
     MainNavBarSimple: true,
   },
-  private: null,
-  'private-commercial': null,
-  commercial: null,
+  private: {
+    MainNavBarSimple: false,
+  },
+  'private-commercial': {
+    MainNavBarSimple: false,
+  },
+  commercial: {
+    MainNavBarSimple: false,
+  },
 };
 
 export function isUiElementVisible(
