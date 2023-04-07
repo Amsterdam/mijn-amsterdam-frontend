@@ -1,7 +1,5 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle } from '../../../universal/config';
-import YiviLogo from '../../assets/images/irma_logo.jpg';
 import {
   Heading,
   LinkdInline,
@@ -14,6 +12,7 @@ import { LOGIN_URL_YIVI } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
+import { ReactComponent as YiviLogo } from './yivi-logo.svg';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -27,69 +26,83 @@ export default function Landing() {
 
   return (
     <TextPage>
-      <PageHeading className={styles.Heading}>
-        Welkom op Mijn Amsterdam
-      </PageHeading>
+      <PageHeading className={styles.Heading}>Inloggen met Yivi</PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         <p>
-          Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
-          Amsterdam.
+          De gemeente Amsterdam vindt het belangrijk dat u veilig en eenvoudig
+          online alles kunt regelen met de gemeente en dat u inzicht heeft welke
+          persoonsgegevens u uitwisselt en met wie. Dit kunt u doen met Yivi.
         </p>
-        <MaintenanceNotifications
-          fromApiDirectly={true}
-          page="landingspagina"
-        />
-        {FeatureToggle.yiviActive && (
-          <div
-            className={classnames(
-              styles.LoginOption,
-              styles['LoginOption--yivi']
-            )}
-          >
-            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
-              Voor particulieren
-            </Heading>
-            <p>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_YIVI}
-                onClick={() => setRedirectingYivi(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  styles['LoginBtn--yivi'],
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
-                <span className={styles.LoginLogoWrap}>
-                  <img
-                    src={YiviLogo}
-                    alt="YIVI logo"
-                    className={styles.LoginLogo}
-                  />
-                </span>
-                <span className={styles.LoginButtonText}>
-                  {isRedirectingYivi
-                    ? 'Bezig met inloggen...'
-                    : 'Inloggen met YIVI'}
-                </span>
-              </a>
-            </p>
-            <Heading size="tiny" el="h4">
-              Hebt u nog geen YIVI? Regel dit dan eerst.
-            </Heading>
-            <p>
-              Ga naar{' '}
-              <a rel="noopener noreferrer" href="https://yivi.app">
-                YIVI: een nieuwe manier van inloggen
-              </a>{' '}
-              voor meer informatie.
-            </p>
-          </div>
-        )}
+        <p>
+          Gemeente Amsterdam doet een proef met Yivi. Kijk voor meer informatie
+          over de proef en Yivi bij{' '}
+          <LinkdInline href="" external>
+            Melding openbare ruimte volgen via Mijn Amsterdam.
+          </LinkdInline>
+        </p>
+        <MaintenanceNotifications fromApiDirectly={true} page="yivisignalen" />
 
-        <Heading size="tiny" el="h4">
+        <div
+          className={classnames(
+            styles.LoginOption,
+            styles['LoginOption--yivi']
+          )}
+        >
+          <Heading className={styles.LoginOptionHeading} size="large" el="h3">
+            Mijn meldingen openbare ruimte bekijken
+          </Heading>
+          <p>
+            U kunt met Yivi inloggen in Mijn Amsterdam en uitsluitend uw
+            meldingen openbare ruimte volgen (u deelt uw e-mail).
+          </p>
+          <p>
+            <a
+              ref={loginButton}
+              role="button"
+              href={LOGIN_URL_YIVI}
+              onClick={() => setRedirectingYivi(true)}
+              rel="noopener noreferrer"
+              className={classnames(
+                styles.LoginBtn,
+                styles['LoginBtn--yivi'],
+                isRedirectingAny && styles.LoginBtnDisabled
+              )}
+            >
+              <span className={styles.YiviLogoWrap}>
+                <YiviLogo />
+              </span>
+              <span className={styles.LoginButtonText}>
+                {isRedirectingYivi
+                  ? 'Bezig met inloggen...'
+                  : 'Inloggen met YIVI'}
+              </span>
+            </a>
+          </p>
+          <p>
+            Login met DigiD voor de volledige versie van{' '}
+            <LinkdInline href={process.env.BFF_FRONTEND_URL}>
+              Mijn Amsterdam
+            </LinkdInline>
+            .
+          </p>
+          <Heading size="medium" el="h4">
+            Heeft u nog geen YIVI?
+          </Heading>
+          <p>
+            Heeft u nog geen Yivi?{' '}
+            <LinkdInline href="https://yivi.app" external>
+              Download Yivi
+            </LinkdInline>{' '}
+            (gratis), kies een pincode en voer je e-mailadres in als
+            beveiliging.
+            <br />
+            Voeg tenslotte het e-mailadres toe dat u gebruikt heeft bij uw
+            melding openbare ruimte. Persoons- en adresgegevens hoeft u niet toe
+            te voegen.
+          </p>
+        </div>
+
+        <Heading size="medium" el="h4">
           Vragen over Mijn Amsterdam?
         </Heading>
         <p className={styles.FaqInfo}>
