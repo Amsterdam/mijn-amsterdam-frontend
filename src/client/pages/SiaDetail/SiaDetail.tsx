@@ -34,19 +34,6 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { Location } from '../VergunningDetail/Location';
 import styles from './SiaDetail.module.scss';
 
-// Gemeld
-// In afwachting van behandeling
-// In behandeling
-// On hold
-// Ingepland
-// Afgehandeld
-// Geannuleerd
-// Heropend
-// Extern: verzoek tot afhandeling
-// Reactie gevraagd
-// Reactie ontvangen
-// Doorgezet naar extern
-
 function getSiaMeldingStatusLineItems(
   SiaItem: SIAItem | undefined,
   history: ApiResponse<SiaSignalStatusHistory[]>
@@ -55,14 +42,11 @@ function getSiaMeldingStatusLineItems(
     return [];
   }
 
-  // const isPending = SiaItem.status === 'Gemeld';
-  // const isDone = SiaItem.status === 'Afgesloten';
-  // const isInProgress = SiaItem.status === 'Ingepland';
   const statusLineItems = (history.content ?? []).map(
     (historyItem, index, all) => {
       return {
         id: 'item-' + historyItem.key,
-        status: historyItem.status.split(':')[1] || historyItem.status,
+        status: historyItem.status,
         datePublished: historyItem.datePublished,
         description: historyItem.description,
         documents: [],
@@ -72,6 +56,18 @@ function getSiaMeldingStatusLineItems(
     }
   );
 
+  // Add "dummy" statuses so we can show a process flow.
+  if (!statusLineItems.length) {
+    statusLineItems.push({
+      id: 'item-1',
+      status: 'Open',
+      datePublished: SiaItem.datePublished,
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
   if (
     statusLineItems.length &&
     statusLineItems[statusLineItems.length - 1].status !== 'Afgesloten'
