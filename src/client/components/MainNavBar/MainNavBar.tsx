@@ -60,12 +60,7 @@ export function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      <span
-        className={classnames(
-          styles['secondaryLinks-inner'],
-          styles[`secondaryLinks--${profileType}`]
-        )}
-      >
+      <span className={styles['secondaryLinks-inner']}>
         {!isError(BRP) && !isError(KVK) && (
           <ProfileName
             person={BRP.content?.persoon}
