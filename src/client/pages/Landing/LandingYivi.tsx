@@ -13,6 +13,7 @@ import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ReactComponent as YiviLogo } from './yivi-logo.svg';
+import { AppRoutes } from '../../../universal/config';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -36,7 +37,7 @@ export default function Landing() {
         <p>
           Gemeente Amsterdam doet een proef met Yivi. Kijk voor meer informatie
           over de proef en Yivi bij{' '}
-          <LinkdInline href="" external>
+          <LinkdInline href={AppRoutes.YIVI_INFO}>
             Melding openbare ruimte volgen via Mijn Amsterdam.
           </LinkdInline>
         </p>
