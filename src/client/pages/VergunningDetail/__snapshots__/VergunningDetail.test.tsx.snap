@@ -87,7 +87,7 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 7 1082 PP Amsterdam 
+          Gustav Mahlerlaan 7 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -368,7 +368,7 @@ exports[`<VergunningDetail /> <AanbiedenDiensten /> should match the full page s
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 7 1082 PP Amsterdam 
+          Gustav Mahlerlaan 7 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -825,7 +825,7 @@ exports[`<VergunningDetail /> <EvenementMelding /> should match the full page sn
         <p
           class="Value"
         >
-          Amstel 1 1011PN Amsterdam 
+          Amstel 1 1011PN Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -1101,7 +1101,7 @@ exports[`<VergunningDetail /> <Flyeren /> should match the full page snapshot 1`
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 10 1082 PP Amsterdam 
+          Gustav Mahlerlaan 10 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -1377,7 +1377,7 @@ exports[`<VergunningDetail /> <GPP /> should match the full page snapshot 1`] = 
         <p
           class="Value"
         >
-          Amstel 1 1017AB Amsterdam 
+          Amstel 1 1017AB Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -2666,7 +2666,7 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - In behandeling should 
         <p
           class="Value"
         >
-          J.J. Cremerplein 54I 1054 TM Amsterdam 
+          J.J. Cremerplein 54I 1054 TM Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -2948,7 +2948,7 @@ exports[`<VergunningDetail /> Ligplaatsvergunning (VOB) - Verleend should match 
         <p
           class="Value"
         >
-          J.J. Cremerplein 54I 1054 TM Amsterdam 
+          J.J. Cremerplein 54I 1054 TM Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -3249,7 +3249,7 @@ exports[`<VergunningDetail /> Nachtwerkontheffing should match the full page sna
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 10 1082 PP Amsterdam 
+          Gustav Mahlerlaan 10 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -3475,7 +3475,7 @@ exports[`<VergunningDetail /> Onttrekkingsvergunning voor sloop - In behandeling
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 14 1082 PP Amsterdam 
+          Gustav Mahlerlaan 14 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -3696,7 +3696,7 @@ exports[`<VergunningDetail /> Samenvoegingsvergunning - In behandeling should ma
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 14 1082 PP Amsterdam 
+          Gustav Mahlerlaan 14 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -3927,7 +3927,7 @@ exports[`<VergunningDetail /> Splitsingsvergunning - In behandeling should match
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 7 1082 PP Amsterdam 
+          Gustav Mahlerlaan 7 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -4153,7 +4153,7 @@ exports[`<VergunningDetail /> VormenVanWoonruimte - In behandeling should match 
         <p
           class="Value"
         >
-          Gustav Mahlerlaan 14 1082 PP Amsterdam 
+          Gustav Mahlerlaan 14 1082 PP Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >

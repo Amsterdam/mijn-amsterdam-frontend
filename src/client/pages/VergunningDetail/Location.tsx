@@ -18,19 +18,25 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
 
 interface LocationProps {
+  // The address for determining latlng
   location?: string | null;
+  // Label for InfoDetail
   label?: string;
+  // Title of the Modal
   modalTitle?: string;
+  // Text content above the "Modal open" link
   text?: string;
+  // Explicit latlng
   latlng?: LatLngLiteral;
 }
 
 export function Location({
+  // Addres
   location = null,
   latlng,
   modalTitle,
   text,
-  label = 'Locatie',
+  label,
 }: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const [hasLocationData, setHasLocationData] = useState(false);
@@ -43,7 +49,7 @@ export function Location({
   );
 
   useEffect(() => {
-    if ((location && bagApi.data) || !!latlng) {
+    if (!!location || !!latlng) {
       setHasLocationData(true);
     }
   }, [bagApi, location, latlng]);
@@ -68,12 +74,13 @@ export function Location({
     <>
       <InfoDetail
         className={styles.LocationInfo}
-        label={label}
+        label={label ?? 'Locatie'}
         value={
           <>
             {hasLocationData ? (
               <>
                 {!!text && <>{text}</>}
+                {!text && !!location && <>{location}</>}
                 <Button
                   className={styles.MapLink}
                   variant="inline"
@@ -93,9 +100,7 @@ export function Location({
       <Modal
         isOpen={isLocationModalOpen}
         onClose={() => setLocationModalOpen(false)}
-        title={
-          modalTitle ?? label ?? location ?? `${latlng?.lat},${latlng?.lng}`
-        }
+        title={modalTitle ?? label ?? 'Locatie'}
         contentWidth="62rem"
       >
         <div className={styles.LocationModalInner}>
