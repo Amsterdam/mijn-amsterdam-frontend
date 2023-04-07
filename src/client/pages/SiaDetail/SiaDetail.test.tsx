@@ -1,35 +1,31 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import SiaDetail from './SiaDetail';
+import nock from 'nock';
 
-const SIA_ITEM_ID = 'SIA-09786';
 const SIA_ITEM = {
-  identifier: SIA_ITEM_ID,
-  category: 'Fietswrak',
-  datePublished: '2021-03-02',
-  dateSubject: '2021-03-02',
-  dateModified: '2021-03-02',
-  dateClosed: '2021-03-02',
-  description:
-    'Er staat een fiets al meer dan een jaar op deze plek, met lekke banden etc.',
-  status: 'Gemeld',
-  latlon: [52.3717228, 4.8927377],
-  email: 'j.vandergroenen@gmail.com',
-  phone: '0612312345',
-  attachments: [
-    'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
-    'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
-  ],
-  latlng: [52.3717228, 4.8927377],
-  link: {
-    to: '/meldingen/detail/SIA-09786',
-    title: 'SIA Melding SIA-09786',
-  },
+  id: '12420',
+  identifier: 'SIG-12420',
+  category: 'Overlast in de openbare ruimte',
+  datePublished: '2023-03-30T14:07:49.344646+02:00',
+  dateModified: '2023-03-30T14:07:50.171638+02:00',
+  dateClosed: '',
+  dateIncidentStart: '2023-03-30T14:07:48+02:00',
+  dateIncidentEnd: null,
+  status: 'Open',
+  description: 'Er ligt een oude fiets in de straat!!!',
+  address: 'Dingermans 73\n1053XX Amsterdam',
+  latlon: { lat: 52.4, lng: 4.9 },
+  email: 'dingermans@amsterdam.nl',
+  phone: '065656565656',
+  hasAttachments: true,
+  link: { to: '/meldingen/detail/12420', title: 'SIA Melding SIG-12420' },
 };
+
 const testState: any = {
   SIA: {
     status: 'OK',
@@ -44,8 +40,55 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<SiaDetail />', () => {
   (window as any).scrollTo = jest.fn();
 
+  beforeAll(() => {
+    // Disable real http requests.
+    // All requests should be mocked.
+    nock.disableNetConnect();
+  });
+
+  let historyFetch: nock.Scope | null = null;
+  let attachmentsFetch: nock.Scope | null = null;
+
+  beforeEach(() => {
+    attachmentsFetch = nock('http://localhost')
+      .get('/api/v1/services/signals/12420/attachments')
+      .reply(200, {
+        content: [
+          {
+            url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==',
+            isImage: true,
+          },
+        ],
+        status: 'OK',
+      });
+
+    historyFetch = nock('http://localhost')
+      .get('/api/v1/services/signals/12420/history')
+      .reply(200, {
+        content: [
+          {
+            status: 'Open',
+            key: 'UPDATE_STATUS',
+            datePublished: '2023-03-30T14:07:49.400270+02:00',
+            description: '',
+          },
+          {
+            status: 'Reactie verzonden',
+            key: 'REACTIE_VERZONDEN',
+            datePublished: '2023-03-31T14:07:49.400270+02:00',
+            description: '',
+          },
+        ],
+        status: 'OK',
+      });
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
   const routeEntry = generatePath(AppRoutes['SIA/DETAIL'], {
-    id: SIA_ITEM_ID,
+    id: SIA_ITEM.id,
   });
 
   const routePath = AppRoutes['SIA/DETAIL'];
@@ -59,16 +102,24 @@ describe('<SiaDetail />', () => {
     />
   );
 
-  it('Happy view', () => {
+  it('Happy view', async () => {
     render(<Component />);
+    await waitFor(() => {
+      expect([
+        historyFetch?.isDone(),
+        attachmentsFetch?.isDone(),
+      ]).toStrictEqual([true, true]);
+    });
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
     expect(
-      screen.getByText(`Meldingsnummer ${SIA_ITEM_ID}`)
+      screen.getByText(`Meldingsnummer ${SIA_ITEM.identifier}`)
     ).toBeInTheDocument();
     expect(screen.getByText(SIA_ITEM.email)).toBeInTheDocument();
     expect(screen.getByText(SIA_ITEM.phone)).toBeInTheDocument();
     expect(screen.getAllByText(SIA_ITEM.status)).toHaveLength(2); // one in body, one in status line
     expect(screen.getByText(SIA_ITEM.description)).toBeInTheDocument();
-    expect(screen.getByText(SIA_ITEM.category)).toBeInTheDocument();
+    expect(screen.queryByText(SIA_ITEM.category)).not.toBeInTheDocument();
+    expect(screen.getByText(`Foto's`)).toBeInTheDocument();
+    expect(screen.getByText(`Reactie verzonden`)).toBeInTheDocument();
   });
 });

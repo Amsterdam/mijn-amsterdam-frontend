@@ -118,7 +118,7 @@ export default function Sia() {
       <SectionCollapsible
         id="SectionCollapsible-sia-previous"
         title="Afgesloten meldingen"
-        noItemsMessage="U hebt geen Afgesloten meldingen."
+        noItemsMessage="U hebt geen afgesloten meldingen."
         hasItems={!!siaClosed.length}
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}

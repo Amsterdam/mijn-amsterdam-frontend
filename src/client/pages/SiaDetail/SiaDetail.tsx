@@ -111,7 +111,9 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
       fetch(url, {
         credentials: 'include',
       })
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((responseJson) => {
           setData((data) => Object.assign({}, data, { [id]: responseJson }));
         });
