@@ -25,7 +25,7 @@ jest.mock('../../hooks/useProfileType', () => {
 const testState: any = {
   BRP: {
     status: 'OK',
-    content: { persoon: { opgemaakteNaam: 'Test van FooBar' } },
+    content: { persoon: { opgemaakteNaam: 'Test van FooBar', mokum: true } },
   },
   PROFILE: {
     status: 'OK',
