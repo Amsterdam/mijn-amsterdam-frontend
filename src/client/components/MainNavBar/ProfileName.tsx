@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import type { KVKData } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
@@ -118,6 +118,17 @@ export function ProfileName({
 }: ProfileNameProps) {
   const history = useHistory();
   const isAppStateReady = useAppStateReady();
+
+  const [appStateFirstLoad, setAppStateFirstLoad] = useState<undefined | true>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (isAppStateReady) {
+      setAppStateFirstLoad(true);
+    }
+  }, [isAppStateReady]);
+
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
@@ -166,17 +177,15 @@ export function ProfileName({
   }, [person, company, history, profileAttribute, profileType]);
 
   return (
-    <span
-      className={classnames(
-        styles.ProfileName,
-        styles[`ProfileName--${profileType}`]
-      )}
-    >
-      {isAppStateReady ? (
-        nameContent
+    <>
+      {appStateFirstLoad === true ? (
+        <>{nameContent}</>
       ) : (
-        <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+        <LoadingContent
+          barConfig={[['15rem', '1rem', '0']]}
+          className={styles.ProfileLinkLoader}
+        />
       )}
-    </span>
+    </>
   );
 }

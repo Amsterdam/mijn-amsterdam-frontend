@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import { IconLogout } from '../../assets/icons';
 import { LOGOUT_URL } from '../../config/api';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
-import Linkd from '../Button/Button';
-import styles from './LogoutLink.module.scss';
+import { ButtonBody, buttonStyle } from '../Button/Button';
+import styles from './ProfileName.module.scss';
 
 interface LogoutLinkProps {
   children: ComponentChildren;
@@ -12,19 +13,25 @@ interface LogoutLinkProps {
 export default function LogoutLink({ children }: LogoutLinkProps) {
   const session = useSessionValue();
   return (
-    <Linkd
+    <a
       onClick={(event) => {
         event.preventDefault();
         session.logout();
         return false;
       }}
-      lean={true}
-      className={styles.LogoutLink}
-      icon={IconLogout}
+      className={classNames(
+        buttonStyle({
+          lean: true,
+          isDisabled: false,
+          variant: 'plain',
+          className: classNames(styles.ProfileLink, styles.LogoutLink),
+        })
+      )}
       href={LOGOUT_URL}
-      external={true}
     >
-      <span>{children}</span>
-    </Linkd>
+      <ButtonBody iconPosition="left" icon={IconLogout}>
+        {children}
+      </ButtonBody>
+    </a>
   );
 }

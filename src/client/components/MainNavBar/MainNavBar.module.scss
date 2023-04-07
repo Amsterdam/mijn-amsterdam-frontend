@@ -1,5 +1,6 @@
 @import '../../styles/_global.scss';
 
+.MainNavBarSimple,
 .MainNavBar {
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
@@ -11,6 +12,8 @@
 }
 
 @media print {
+
+  .MainNavBarSimple,
   .MainNavBar {
     display: none;
   }
@@ -20,7 +23,9 @@
   @include centered-max;
   display: flex;
   background-color: $color-neutral-grey1;
+}
 
+.MainNavBar .LinkContainer {
   @include mq-tablet() {
     display: -ms-grid;
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
@@ -95,31 +100,26 @@
     -ms-grid-row: 20;
     grid-row: 20;
 
-    > a {
-      &,
-      &:hover {
-        border-top: 0.1rem solid $color-neutral-grey2;
-      }
-      font-size: 1.5rem;
-      margin: 0;
-      padding-left: 1.6rem;
-      border-top: 0.1rem solid $color-neutral-grey2;
-      display: block;
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
-    }
-
     @include select(ButtonLink_ButtonLink) {
       padding-left: 1.6rem;
+
       // Remove the icons from the links
       &,
       &:hover {
         background-image: none;
       }
+
       svg {
         display: none;
       }
     }
+  }
+}
+
+.MainNavBarSimple .secondaryLinks {
+  @include mq-tablet() {
+    position: static;
+    display: flex;
   }
 }
 
@@ -145,6 +145,25 @@
   }
 }
 
+.secondaryLinks-inner {
+  margin-left: 3.3rem;
+  margin-right: 2.8rem;
+
+  @include mq-tablet() {
+    display: block;
+    margin: 0;
+    padding: 1rem 2rem 1rem 1.6rem;
+    border-top: 0.1rem solid $color-neutral-grey2;
+  }
+}
+
+.HR {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  margin-top: -5rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
 .InfoButtons {
   height: $main-header-navbar-height;
   position: absolute;
@@ -166,12 +185,12 @@
     }
   }
 
-  > * {
+  >* {
     font-weight: 500;
     color: $color-black;
     font-size: 1.8rem;
 
-    + * {
+    +* {
       margin-left: 2rem;
     }
   }
@@ -190,7 +209,7 @@
 }
 
 .secondaryLinks {
-  *[class*='FontEnlarger_FontEnlarger__'] + [class*='LogoutLink'] {
+  *[class*='FontEnlarger_FontEnlarger__']+[class*='LogoutLink'] {
     margin-left: 3rem;
   }
 }
@@ -207,6 +226,7 @@
 
 .MainNavSubmenuLink {
   margin-bottom: 1rem;
+
   @include mq-tablet() {
     margin-bottom: 0;
   }
@@ -237,9 +257,11 @@
 .SearchBar {
   padding: 2.6rem;
   background-color: $color-neutral-grey1;
+
   @include mq-tablet() {
     padding: 0;
     background-color: $color-white;
+
     @include select('Search_SearchBar') {
       form {
         padding: 1rem;
@@ -270,7 +292,7 @@
 
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
-  > button {
+  >button {
     background-position: right;
     margin-left: 0px;
     margin-top: -12px;

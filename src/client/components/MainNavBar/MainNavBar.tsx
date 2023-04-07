@@ -18,7 +18,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LogoutLink from '../LogoutLink/LogoutLink';
+import LogoutLink from './LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
@@ -60,15 +60,23 @@ export function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      {!isError(BRP) && !isError(KVK) && (
-        <ProfileName
-          person={BRP.content?.persoon}
-          company={KVK?.content}
-          profileType={profileType}
-          profileAttribute={PROFILE.content?.profile?.id}
-        />
-      )}
-      <LogoutLink>Uitloggen</LogoutLink>
+      <span
+        className={classnames(
+          styles['secondaryLinks-inner'],
+          styles[`secondaryLinks--${profileType}`]
+        )}
+      >
+        {!isError(BRP) && !isError(KVK) && (
+          <ProfileName
+            person={BRP.content?.persoon}
+            company={KVK?.content}
+            profileType={profileType}
+            profileAttribute={PROFILE.content?.profile?.id}
+          />
+        )}
+        <LogoutLink>Uitloggen</LogoutLink>
+        {!isDesktopScreen && <div className={styles.HR} />}
+      </span>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function MainNavBar({
   isAuthenticated: boolean;
 }) {
   return (
-    <nav className={styles.MainNavBar}>
+    <nav className={styles.MainNavBarSimple}>
       {isAuthenticated && (
         <>
           <div id={LinkContainerId} className={styles.LinkContainer}>
@@ -21,7 +21,6 @@ export default function MainNavBar({
                 className={styles.logo}
               />
             </div>
-
             <SecondaryLinks />
           </div>
         </>
