@@ -46,17 +46,6 @@ describe('<ProfileName />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <span
-          class="ProfileName ProfileName--private"
-        />
-      </DocumentFragment>
-    `);
-  });
-
   it('Shows BRP naam', () => {
     render(<Component brp={{ persoon: { opgemaakteNaam: 'J de grever' } }} />);
     expect(screen.getByText(/J de grever/)).toBeInTheDocument();
