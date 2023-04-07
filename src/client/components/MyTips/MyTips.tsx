@@ -233,9 +233,7 @@ export default function MyTips({
         className
       )}
     >
-      {isUiElementVisible(profileType, 'persoonlijkeTips') && showHeader && (
-        <TipsOptInHeader showTipsPageLink={!!items.length} />
-      )}
+      {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
       <div className={styles.TipScrollContainer}>
         <ul
           className={classnames(
