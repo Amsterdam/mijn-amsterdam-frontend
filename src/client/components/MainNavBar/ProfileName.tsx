@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import type { KVKData } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
