@@ -91,6 +91,15 @@ const testHistory: SiaSignalHistory[] = [
     _signal: 123123123,
   },
   {
+    identifier: 'UPDATE_STATUS_243372',
+    when: '2023-03-22T11:45:15.024700+01:00',
+    what: 'UPDATE_STATUS',
+    action: 'Status gewijzigd naar: Gemeld',
+    description: null,
+    who: 'Signalen systeem',
+    _signal: 123123123,
+  },
+  {
     identifier: 'UPDATE_STATUS_24681',
     when: '2023-03-22T11:48:10.750252+01:00',
     what: 'UPDATE_STATUS',
@@ -287,7 +296,7 @@ describe('sia service', () => {
           "status": "Open",
         },
         Object {
-          "datePublished": "2023-03-22T11:44:29.032811+01:00",
+          "datePublished": "2023-03-22T11:45:15.024700+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
           "status": "Reactie gevraagd",

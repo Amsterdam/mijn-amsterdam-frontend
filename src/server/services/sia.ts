@@ -396,7 +396,7 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Find the matching statusKey
       const statusKey = STATUS_CHOICES_API[statusValue.trim()];
 
-      // Translate statusVlaue to one for display and aggregation in MA
+      // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
       return {
@@ -413,17 +413,49 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
 
   const statusUpdates: SiaSignalStatusHistory[] = [];
 
-  let prevState: SiaSignalStatusHistory['status'] | '' = '';
+  /**
+   * Status history is compacted from:
+   *
+   * Open
+   * Reactie gevraagd
+   * Reactie ontvangen
+   * Open
+   * Closed
+   * Open
+   * Open
+   * Reactie gevraagd
+   * Reactie ontvangen
+   * Open
+   * Closed
+   *
+   * TO:
+   *
+   * Open
+   * Reactie gevraagd
+   * Reactie ontvangen
+   * Closed
+   * Open
+   * Reactie gevraagd
+   * Reactie ontvangen
+   * Open
+   * Closed
+   */
+
+  let prevOpenClosedState: SiaSignalStatusHistory['status'] | '' = '';
 
   for (const statusEntry of transformed) {
-    if (statusEntry.status !== prevState) {
+    if ([MA_REPLY_REQUESTED, MA_REPLY_RECEIVED].includes(statusEntry.status)) {
+      // Do not aggregate these statusses
       statusUpdates.push(statusEntry);
+    } else if (prevOpenClosedState !== statusEntry.status) {
+      // Prevent Open/Closed states from being "doubled"
+      statusUpdates.push(statusEntry);
+      prevOpenClosedState = statusEntry.status;
     } else {
       // Update state to latest action that represents it
       statusUpdates[statusUpdates.length - 1].datePublished =
         statusEntry.datePublished;
     }
-    prevState = statusEntry.status;
   }
 
   return statusUpdates;
