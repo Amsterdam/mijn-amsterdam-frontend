@@ -28,9 +28,30 @@ describe('Horeca service', () => {
   it('should return only horeca vergunningen', async () => {
     const result = await fetchHorecaVergunningen('x', authProfileAndToken);
 
-    expect(result.content.length).toEqual(1);
+    expect(result.content.length).toEqual(2);
     expect(result.content).toMatchInlineSnapshot(`
       Array [
+        Object {
+          "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+          "dateEnd": "2025-01-02T00:00:00",
+          "dateProcessed": "2022-12-01T00:00:00",
+          "dateRequest": "2022-11-20T00:00:00",
+          "dateStart": "2023-11-01T00:00:00",
+          "dateStartPermit": "2023-11-02T00:00:00",
+          "dateWorkflowActive": "2022-11-25T00:00:00",
+          "decision": null,
+          "id": "334568232",
+          "identifier": "Z/23/1808827",
+          "link": Object {
+            "title": "Bekijk hoe het met uw aanvraag staat",
+            "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232",
+          },
+          "location": "J.J. Cremerplein 54I 1054 TM Amsterdam",
+          "numberOfPermits": 10,
+          "processed": false,
+          "status": "Ontvangen",
+          "title": "Horeca vergunning exploitatie Horecabedrijf",
+        },
         Object {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateEnd": "2024-01-02T00:00:00",
@@ -64,15 +85,27 @@ describe('Horeca service', () => {
         "notifications": Array [
           Object {
             "chapter": "VERGUNNINGEN",
-            "datePublished": "2022-10-20T00:00:00",
+            "datePublished": "2022-11-25T00:00:00",
             "description": "Uw aanvraag voor een horeca vergunning exploitatie horecabedrijf is in behandeling genomen.",
+            "id": "vergunning-334568232-notification",
+            "link": Object {
+              "title": "Bekijk details",
+              "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232",
+            },
+            "subject": "334568232",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf in behandeling",
+          },
+          Object {
+            "chapter": "VERGUNNINGEN",
+            "datePublished": "2022-10-20T00:00:00",
+            "description": "Uw aanvraag voor een horeca vergunning exploitatie horecabedrijf is ontvangen.",
             "id": "vergunning-3209922248-notification",
             "link": Object {
               "title": "Bekijk details",
               "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/3209922248",
             },
             "subject": "3209922248",
-            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf in behandeling",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf ontvangen",
           },
         ],
       }

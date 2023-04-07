@@ -11,7 +11,6 @@ import {
   PageHeading,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks';
-import { HORECA_PAGE_SIZE } from '../Horeca/Horeca';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 
@@ -19,9 +18,7 @@ export default function HorecaDetail() {
   const { HORECA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const Vergunning = HORECA.content?.find((item) => item.id === id);
-  const vergunningIndex = (HORECA.content || []).findIndex(
-    (vergunning) => vergunning.id === id
-  );
+
   const isLoadingContent = isLoading(HORECA);
   const noContent = !isLoadingContent && !Vergunning;
 
@@ -30,12 +27,7 @@ export default function HorecaDetail() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: generatePath(AppRoutes.HORECA, {
-            page:
-              vergunningIndex > 0
-                ? Math.ceil((vergunningIndex + 1) / HORECA_PAGE_SIZE)
-                : 1,
-          }),
+          to: generatePath(AppRoutes.HORECA),
           title: ChapterTitles.HORECA,
         }}
         isLoading={isLoadingContent}
