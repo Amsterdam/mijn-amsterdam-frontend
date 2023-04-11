@@ -9,6 +9,7 @@ export { ReactComponent as IconAVG } from './AVG-verzoeken.svg';
 export { ReactComponent as IconBelastingen } from './belastingen.svg';
 export { ReactComponent as IconMyNotifications } from './Bell.svg';
 export { ReactComponent as IconBurgerZaken } from './burgerzaken.svg';
+export { ReactComponent as IconBezwaren } from './icon-bezwaren.svg';
 export { ReactComponent as IconParkeren } from './Car.svg';
 export { ReactComponent as IconCheckmark } from './Checkmark.svg';
 export { ReactComponent as IconChevronLeft } from './Chevron-Left.svg';

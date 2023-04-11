@@ -91,6 +91,7 @@ export const mockDataConfig: MockDataConfig = {
   [String(ApiUrls.BEZWAREN_LIST)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
+    method: 'post',
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';

@@ -1,41 +1,15 @@
-import { ApiResponse } from '../../universal/helpers';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
-import { AuthProfileAndToken } from '../helpers/app';
-
-export interface BezwaarData {
-  // Ontvangstdatum
-  registratiedatum: string;
-  // Bezwaarnummer
-  identificatie: string;
-  // Onderwerp ???
-  omschrijving: string | null;
-  // Specificatie ???
-  toelichting: string | null;
-  // Status tekst
-  status: string | null;
-  // Status datum ???
-  // Datum intrekking ???
-  // Primair besluit ??? kenmerken.resultaattekst?
-  // Datum primair besluit ??? kenmerken.besluitdatum?
-  // Documentnr/URL ???
-  // Resultaat ????
-  // Afhandeldatum ????
-}
-
-export interface BezwarenSourceResponse<T> {
-  count: number;
-  next: string;
-  previous: string;
-  results: T[];
-}
-
-export interface BezwaarDocumentData {
-  titel: string;
-  beschrijving: string;
-  registratiedatum: string;
-  inhoud: string;
-}
+import { ApiResponse, defaultDateFormat } from '../../../universal/helpers';
+import { getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
+import {
+  Bezwaar,
+  BezwaarSourceData,
+  BezwaarDocumentData,
+  BezwarenSourceResponse,
+  Kenmerk,
+  kenmerkKey,
+} from './types';
 
 const ID_ATTRIBUTE = 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 
@@ -70,12 +44,33 @@ export async function fetchBezwarenDocuments(
   return bezwarenDocumentsResponse;
 }
 
+function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
+  const set = kenmerken.find((k) => k.kenmerk === kenmerk);
+
+  if (!set) {
+    return null;
+  }
+
+  return set.bron;
+}
+
 function transformBezwarenResults(
-  response: BezwarenSourceResponse<BezwaarData[]>
-) {
+  response: BezwarenSourceResponse<BezwaarSourceData>
+): Bezwaar[] {
   const results = response.results;
   if (Array.isArray(results)) {
-    return results;
+    return results.map((bron) => {
+      return {
+        uuid: bron.uuid,
+        ontvangstdatum: defaultDateFormat(bron.startdatum),
+        bezwaarnummer: bron.identificatie,
+        omschrijving: bron.omschrijving,
+        toelichting: bron.toelichting,
+        status: getKenmerkValue(bron.kenmerken, 'statustekst'),
+        datumbesluit: getKenmerkValue(bron.kenmerken, 'besluitdatum'), // Kenmerken zijn anders geformateerd, dateFormat is daardoor niet nodig.
+        einddatum: !!bron.einddatum ? defaultDateFormat(bron.einddatum) : '',
+      };
+    });
   }
   return [];
 }
@@ -83,7 +78,7 @@ function transformBezwarenResults(
 export async function fetchBezwaren(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<BezwaarData[] | null>> {
+): Promise<ApiResponse<Bezwaar[] | null>> {
   const requestBody = JSON.stringify({
     [ID_ATTRIBUTE]:
       process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
@@ -99,7 +94,7 @@ export async function fetchBezwaren(
     transformResponse: transformBezwarenResults,
   });
 
-  const bezwarenResponse = await requestData<BezwaarData[]>(
+  const bezwarenResponse = await requestData<Bezwaar[]>(
     requestConfig,
     requestID
   );
