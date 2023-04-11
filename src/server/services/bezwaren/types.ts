@@ -1,3 +1,5 @@
+import { LinkProps } from '../../../universal/types';
+
 export type kenmerkKey =
   | 'statustekst'
   | 'statusdatum'
@@ -43,6 +45,10 @@ export type Bezwaar = {
   status: string | null;
   datumbesluit: string | null;
   einddatum: string | null;
+  primairbesluit: string | null;
+  primairbesluitdatum: string | null;
+  resultaat: string | null;
+  link: LinkProps;
 };
 
 export interface BezwarenSourceResponse<T> {
