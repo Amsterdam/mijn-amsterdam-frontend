@@ -19,7 +19,6 @@ import {
 import { countLoggedInVisit } from './services/visitors';
 
 export const router = express.Router();
-
 export const isAuthenticated =
   () =>
   async (
@@ -67,6 +66,7 @@ router.use(
     return res.send(req.oidc.isAuthenticated());
   }
 );
+
 router.use(
   BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
   attemptSilentLogin(),
@@ -86,7 +86,7 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
 
 router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning',
+    returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
     authorizationParams: {
       redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
     },
@@ -95,7 +95,7 @@ router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
 
 router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
   return res.oidc.login({
-    returnTo: process.env.BFF_FRONTEND_URL + '?authMethod=yivi',
+    returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
     authorizationParams: {
       redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
     },
@@ -108,6 +108,22 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
     countLoggedInVisit(auth.profile.id);
   }
   return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
+});
+
+router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
+  const auth = await getAuth(req);
+  if (auth.profile.id) {
+    countLoggedInVisit(auth.profile.id, 'yivi');
+  }
+  return res.redirect(`${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`);
+});
+
+router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
+  const auth = await getAuth(req);
+  if (auth.profile.id) {
+    countLoggedInVisit(auth.profile.id, 'eherkenning');
+  }
+  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning');
 });
 
 router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {

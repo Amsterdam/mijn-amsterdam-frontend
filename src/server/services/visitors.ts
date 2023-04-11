@@ -22,7 +22,7 @@ const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
 
 const queries = {
-  countLogin: `INSERT INTO ${tableNameLoginCount} (uid) VALUES ($1) RETURNING id`,
+  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
   totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
   uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
@@ -39,9 +39,13 @@ function hashUserId(userID: string, salt = SALT) {
   return shasum.digest('hex');
 }
 
-export function countLoggedInVisit(userID: string) {
+export function countLoggedInVisit(
+  userID: string,
+  authMethod: AuthMethod = 'digid'
+) {
   const userIDHashed = hashUserId(userID);
-  return query(queries.countLogin, [userIDHashed]);
+  console.log(queries.countLogin, userIDHashed, authMethod);
+  return query(queries.countLogin, [userIDHashed, authMethod]);
 }
 
 export async function loginStats(req: Request, res: Response) {
