@@ -269,21 +269,19 @@ export default function SiaDetail() {
                 className={styles.ImageDetails}
                 value={
                   <div className={styles.Images}>
-                    {imageAttachments
-                      .filter((attachment) => attachment.isImage)
-                      .map((attachment, index) => (
-                        <a
-                          href={attachment.url}
-                          key={index}
-                          className={styles.ImgContainer}
-                        >
-                          <img
-                            className={styles.Img}
-                            src={attachment.url}
-                            alt="Bijgevoegde foto"
-                          />
-                        </a>
-                      ))}
+                    {imageAttachments.map((attachment, index) => (
+                      <a
+                        href={attachment.url}
+                        key={index}
+                        className={styles.ImgContainer}
+                      >
+                        <img
+                          className={styles.Img}
+                          src={attachment.url}
+                          alt="Bijgevoegde foto"
+                        />
+                      </a>
+                    ))}
                   </div>
                 }
               />
