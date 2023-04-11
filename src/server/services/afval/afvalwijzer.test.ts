@@ -105,6 +105,7 @@ describe('Afvalwijzer service', () => {
       bagNummeraanduidingId: '0363200012145295',
       gbdBuurtCode: 'AF09',
       afvalwijzerButtontekst: 'Hej klik',
+      gebruiksdoelWoonfunctie: false,
     };
     const centroid: LatLngLiteral = {
       lat: 5.123456789,
@@ -119,6 +120,7 @@ describe('Afvalwijzer service', () => {
       Object {
         "buitenzetten": "Tussen 06.00 en 07.30 uur",
         "fractieCode": "GA",
+        "gebruiksdoelWoonfunctie": false,
         "instructie": "In vuilniszak",
         "instructieCTA": Object {
           "title": "Hej klik",
@@ -163,6 +165,7 @@ describe('Afvalwijzer service', () => {
         bagNummeraanduidingId: '0363200012145295',
         gbdBuurtCode: 'AF09',
         afvalwijzerButtontekst: 'Hej klik',
+        gebruiksdoelWoonfunctie: true,
       },
     ];
 
@@ -176,6 +179,7 @@ describe('Afvalwijzer service', () => {
         Object {
           "buitenzetten": null,
           "fractieCode": "Textiel",
+          "gebruiksdoelWoonfunctie": undefined,
           "instructie": null,
           "instructieCTA": null,
           "kalendermelding": null,
@@ -188,6 +192,7 @@ describe('Afvalwijzer service', () => {
         Object {
           "buitenzetten": "Tussen 06.00 en 07.30 uur",
           "fractieCode": "GA",
+          "gebruiksdoelWoonfunctie": true,
           "instructie": "In vuilniszak",
           "instructieCTA": Object {
             "title": "Hej klik",
