@@ -33,6 +33,7 @@ export const AppRoutes: Record<string, string> = {
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
   BEZWAREN: '/bezwaren',
+  'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',

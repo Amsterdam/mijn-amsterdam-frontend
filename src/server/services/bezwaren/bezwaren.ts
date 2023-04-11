@@ -1,3 +1,4 @@
+import { generatePath } from 'react-router-dom';
 import { ApiResponse, defaultDateFormat } from '../../../universal/helpers';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -10,6 +11,7 @@ import {
   Kenmerk,
   kenmerkKey,
 } from './types';
+import { AppRoutes } from '../../../universal/config';
 
 const ID_ATTRIBUTE = 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 
@@ -68,7 +70,16 @@ function transformBezwarenResults(
         toelichting: bron.toelichting,
         status: getKenmerkValue(bron.kenmerken, 'statustekst'),
         datumbesluit: getKenmerkValue(bron.kenmerken, 'besluitdatum'), // Kenmerken zijn anders geformateerd, dateFormat is daardoor niet nodig.
-        einddatum: !!bron.einddatum ? defaultDateFormat(bron.einddatum) : '',
+        einddatum: !!bron.einddatum ? defaultDateFormat(bron.einddatum) : null,
+        primairbesluit: getKenmerkValue(bron.kenmerken, 'besluitnr'),
+        primairbesluitdatum: getKenmerkValue(bron.kenmerken, 'besluitdatum'),
+        resultaat: getKenmerkValue(bron.kenmerken, 'resultaattekst'),
+        link: {
+          title: 'Bekijk details',
+          to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+            uuid: bron.uuid,
+          }),
+        },
       };
     });
   }

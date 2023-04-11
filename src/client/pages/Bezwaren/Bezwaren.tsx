@@ -6,6 +6,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import styles from './Bezwaren.module.scss';
 
@@ -28,11 +29,11 @@ const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const ingediendeBezwaren =
-    BEZWAREN.content?.filter((b) => b.status !== '') ?? [];
+  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'bezwaarnummer');
 
-  const afgehandeldeBezwaren =
-    BEZWAREN.content?.filter((b) => b.status === '') ?? [];
+  const ingediendeBezwaren = items.filter((b) => b.status !== '') ?? [];
+
+  const afgehandeldeBezwaren = items.filter((b) => b.status === '') ?? [];
 
   return (
     <OverviewPage>

@@ -99,6 +99,9 @@ const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
 const Bezwaren = lazy(() => import('./pages/Bezwaren/Bezwaren'));
+const BezwarenDetail = lazy(
+  () => import('./pages/BezwarenDetail/BezwarenDetail')
+);
 
 const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
 const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
@@ -271,6 +274,12 @@ function AppAuthenticated() {
             component={KlachtenDetail}
           />
           <Route path={AppRoutes.KLACHTEN} component={Klachten} />
+          {FeatureToggle.bezwarenActive && (
+            <Route
+              path={AppRoutes['BEZWAREN/DETAIL']}
+              component={BezwarenDetail}
+            />
+          )}
           {FeatureToggle.bezwarenActive && (
             <Route path={AppRoutes.BEZWAREN} component={Bezwaren} />
           )}
