@@ -19,14 +19,12 @@ export default function LogoutLink({ children }: LogoutLinkProps) {
         session.logout();
         return false;
       }}
-      className={classNames(
-        buttonStyle({
-          lean: true,
-          isDisabled: false,
-          variant: 'plain',
-          className: classNames(styles.ProfileLink, styles.LogoutLink),
-        })
-      )}
+      className={buttonStyle({
+        lean: true,
+        isDisabled: false,
+        variant: 'plain',
+        className: classNames(styles.ProfileLink, styles.LogoutLink),
+      })}
       href={LOGOUT_URL}
     >
       <ButtonBody iconPosition="left" icon={IconLogout}>
