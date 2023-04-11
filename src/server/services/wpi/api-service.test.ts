@@ -281,7 +281,6 @@ describe('wpi/app-service', () => {
         status: 'OK',
         content: {
           adminNumber: '123123123',
-          ownerType: 'hoofdpashouder',
           stadspassen: [],
         },
       });
@@ -408,7 +407,6 @@ describe('wpi/app-service', () => {
         status: 'OK',
         content: {
           adminNumber: '123123123',
-          ownerType: 'kind',
           stadspassen: [
             {
               id: 200771,
