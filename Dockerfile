@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.15.0 as build-deps
+FROM node:current-buster as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
@@ -97,7 +97,7 @@ COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/n
 # Bff Web server image (Acceptance, Production)
 ########################################################################################################################
 ########################################################################################################################
-FROM node:16.13.0 as deploy-ap-bff
+FROM node:current-buster as deploy-ap-bff
 
 ENV BFF_ENV=production
 ENV TZ=Europe/Amsterdam
