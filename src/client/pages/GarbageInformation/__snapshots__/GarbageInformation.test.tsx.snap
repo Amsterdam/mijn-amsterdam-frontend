@@ -94,11 +94,31 @@ exports[`<GarbageInformation /> Full page snapshot for Weesp address 1`] = `
         >
           Uw adres
         </h3>
-        <p
+        <div
           class="Value"
         >
-          Amstel 1
-        </p>
+          <p
+            class="AdresWeergave"
+          >
+            Amstel 1
+          </p>
+          <p
+            class="WoonFunctieWaarschuwing"
+          >
+            <strong>
+              Dit is geen woonadres.
+            </strong>
+             Klopt dit niet? 
+            <a
+              class="Button Button__inline Button__lean Linkd LinkedInline"
+              href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+              rel="external noopener noreferrer"
+            >
+              Geef het door
+            </a>
+            .
+          </p>
+        </div>
       </div>
       <p
         class="WeespWarning"
@@ -210,11 +230,31 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
         >
           Uw adres
         </h3>
-        <p
+        <div
           class="Value"
         >
-          Amstel 1
-        </p>
+          <p
+            class="AdresWeergave"
+          >
+            Amstel 1
+          </p>
+          <p
+            class="WoonFunctieWaarschuwing"
+          >
+            <strong>
+              Dit is geen woonadres.
+            </strong>
+             Klopt dit niet? 
+            <a
+              class="Button Button__inline Button__lean Linkd LinkedInline"
+              href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+              rel="external noopener noreferrer"
+            >
+              Geef het door
+            </a>
+            .
+          </p>
+        </div>
       </div>
       <div
         class="GarbageFractionPanels"

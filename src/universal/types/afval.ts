@@ -21,6 +21,7 @@ export interface GarbageFractionInformationTransformed {
   kalendermelding: string | null;
   fractieCode: GarbageFractionCode;
   stadsdeelAanvulling: string | null;
+  gebruiksdoelWoonfunctie: boolean;
 }
 
 export interface GarbageCenter {

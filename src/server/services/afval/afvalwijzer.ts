@@ -40,6 +40,7 @@ export interface GarbageFractionData {
   afvalwijzerUrl: string | null;
   gbdBuurtCode: string | null;
   bagNummeraanduidingId: string | null;
+  gebruiksdoelWoonfunctie: boolean;
 }
 
 export interface AFVALSourceData {
@@ -119,7 +120,15 @@ function transformFractionData(
   const afvalPuntKaartUrl = getAfvalPuntKaartUrl(centroid);
 
   const formsUrl = 'https://formulieren.amsterdam.nl/TriplEforms/';
-  const addressCode = `${fractionData?.postcode},${fractionData?.huisnummer},${fractionData?.huisletter},${fractionData?.huisnummertoevoeging}`;
+  let addressCode = `${fractionData.postcode},${fractionData.huisnummer}`;
+
+  if (fractionData.huisletter) {
+    addressCode = `${addressCode},${fractionData.huisletter}`;
+  }
+
+  if (fractionData.huisnummertoevoeging) {
+    addressCode = `${addressCode},${fractionData.huisnummertoevoeging}`;
+  }
 
   const url = fractionData.afvalwijzerUrl?.startsWith(formsUrl)
     ? fractionData.afvalwijzerUrl.replace(formsUrl, getText(formsUrl)) +
@@ -190,6 +199,7 @@ function transformFractionData(
     kalendermelding: formatKalenderMelding(fractionData),
     fractieCode: fractionData.afvalwijzerFractieCode,
     stadsdeelAanvulling,
+    gebruiksdoelWoonfunctie: fractionData.gebruiksdoelWoonfunctie,
   };
 }
 
@@ -198,9 +208,18 @@ export function transformGarbageDataResponse(
   latlng: LatLngLiteral | null
 ): GarbageFractionInformationTransformed[] {
   // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
+  // NOTE: Black box business logic extracted from afvalwijzer source-code from amsterdam.nl/afvalwijzer
+  const heeftThuisAfspraakRouteCodeInResultaten =
+    afvalSourceData._embedded?.afvalwijzer.some(
+      (info) => info.afvalwijzerBasisroutetypeCode === 'THUISAFSPR'
+    );
   const garbageFractions =
     afvalSourceData._embedded?.afvalwijzer.filter(
-      (fraction) => fraction.afvalwijzerFractieCode !== 'Plastic'
+      (fraction) =>
+        fraction.afvalwijzerFractieCode !== 'Plastic' &&
+        (!heeftThuisAfspraakRouteCodeInResultaten ||
+          fraction.afvalwijzerBasisroutetypeCode === 'THUISAFSPR' ||
+          fraction.afvalwijzerBasisroutetypeCode === 'GROFAFSPR')
     ) ?? [];
 
   return garbageFractions.map((fractionData) =>

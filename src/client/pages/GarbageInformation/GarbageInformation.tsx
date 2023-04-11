@@ -51,7 +51,10 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <Linkd href={fraction.instructieCTA.to}>
+        <Linkd
+          href={fraction.instructieCTA.to}
+          external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
+        >
           {fraction.instructieCTA.title}
         </Linkd>
         {fraction.instructie ? (
@@ -137,7 +140,10 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
           <dt>Waar</dt>
           <dd>
             {typeof fraction.waar === 'object' ? (
-              <LinkdInline href={fraction.waar.to}>
+              <LinkdInline
+                href={fraction.waar.to}
+                external={!fraction.waar.to.startsWith(AppRoutes.BUURT)}
+              >
                 {fraction.waar.title}
               </LinkdInline>
             ) : (
@@ -261,14 +267,32 @@ export default function GarbageInformation() {
 
         <GarbageInfoDetail
           label="Uw adres"
+          valueWrapperElement="div"
           value={
             <>
-              {MY_LOCATION.content?.[0]?.address ? (
-                getFullAddress(MY_LOCATION.content?.[0].address)
-              ) : isLoading(MY_LOCATION) ? (
-                <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-              ) : (
-                'Onbekend adres'
+              <p className={styles.AdresWeergave}>
+                {MY_LOCATION.content?.[0]?.address ? (
+                  getFullAddress(MY_LOCATION.content?.[0].address)
+                ) : isLoading(MY_LOCATION) ? (
+                  <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+                ) : (
+                  'Onbekend adres'
+                )}
+              </p>
+              {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
+              {AFVAL.content?.some(
+                (fractionData) => !fractionData.gebruiksdoelWoonfunctie
+              ) && (
+                <p className={styles.WoonFunctieWaarschuwing}>
+                  <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
+                  <LinkdInline
+                    external
+                    href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+                  >
+                    Geef het door
+                  </LinkdInline>
+                  .
+                </p>
               )}
             </>
           }
