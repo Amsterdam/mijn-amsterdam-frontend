@@ -115,6 +115,5 @@ export interface WpiStadspasTransaction {
 
 export interface WpiStadspasResponseData {
   stadspassen: WpiStadspas[];
-  ownerType: 'kind' | 'hoofdpashouder' | 'partner';
   adminNumber: string;
 }

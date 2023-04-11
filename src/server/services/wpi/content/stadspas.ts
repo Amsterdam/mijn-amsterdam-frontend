@@ -158,7 +158,6 @@ export function getAanvraagNotifications(
 }
 
 export function getBudgetNotifications(
-  ownerType: WpiStadspasResponseData['ownerType'],
   stadspassen: WpiStadspasResponseData['stadspassen']
 ) {
   const notifications: MyNotification[] = [];
@@ -189,7 +188,9 @@ export function getBudgetNotifications(
   );
 
   const needsNotification = !!stadspas;
-  const isParent = ownerType !== 'kind';
+  const isParent = stadspassen.some(
+    (pas) => pas.owner !== stadspassen[0].owner
+  );
   const now = new Date();
 
   if (

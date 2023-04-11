@@ -10,7 +10,6 @@ const testState: any = {
   WPI_STADSPAS: {
     content: {
       adminNumber: '123123123',
-      ownerType: 'hoofdpashouder',
       stadspassen: [
         {
           budgets: [

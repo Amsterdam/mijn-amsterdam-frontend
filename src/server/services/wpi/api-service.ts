@@ -200,7 +200,6 @@ export async function fetchStadspas(
     {
       aanvragen,
       stadspassen,
-      ownerType: stadspasResult.content?.ownerType,
       adminNumber: stadspasResult.content?.adminNumber,
     },
     getFailedDependencies({
@@ -324,9 +323,8 @@ export async function fetchWpiNotifications(
           notifications.push(...aanvraagNotifications);
         }
       }
-      if (content.ownerType && content.stadspassen?.length) {
+      if (content.stadspassen?.length) {
         const budgetNotifications = getStadspasBudgetNotifications(
-          content.ownerType,
           content.stadspassen
         );
 
