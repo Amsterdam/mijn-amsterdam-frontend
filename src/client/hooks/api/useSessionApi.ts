@@ -89,14 +89,12 @@ export function useSessionApi() {
       isLoading,
       isDirty,
       isPristine,
-      refetch: () =>
+      refetch: () => {
         fetch({
-          url:
-            sessionData.authMethod === 'eherkenning'
-              ? AUTH_API_URL_EHERKENNING
-              : AUTH_API_URL_DIGID,
+          url: AUTH_API_URL,
           postpone: false,
-        }),
+        });
+      },
       logout: () => logoutSession(),
     }));
   }, [

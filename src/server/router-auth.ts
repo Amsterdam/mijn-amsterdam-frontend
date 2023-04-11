@@ -111,7 +111,8 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
+  const auth = await getAuth(req);
+  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'eherkenning') {
     return res.send(
       apiSuccessResult({
         isAuthenticated: true,
@@ -125,7 +126,8 @@ router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
+  const auth = await getAuth(req);
+  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'digid') {
     return res.send(
       apiSuccessResult({
         isAuthenticated: true,
@@ -139,7 +141,8 @@ router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_CHECK_YIVI, async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
+  const auth = await getAuth(req);
+  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'yivi') {
     return res.send(
       apiSuccessResult({
         isAuthenticated: true,
