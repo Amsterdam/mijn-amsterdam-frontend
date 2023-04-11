@@ -20,7 +20,7 @@
     }
   }
 
-  &:hover {
+  &:hover:not(.ProfileLink--private-attributes) {
     color: $color-primary-red;
     border-bottom-color: $color-primary-red;
     text-decoration: none;
