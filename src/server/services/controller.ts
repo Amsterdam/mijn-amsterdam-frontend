@@ -16,7 +16,7 @@ import {
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAKTES } from './aktes';
 import { fetchAVG } from './avg/avg';
-import { fetchBezwaren } from './bezwaren';
+import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';

@@ -1,27 +1,94 @@
-import { Page, PageContent, PageHeading, Table } from '../../components';
+import {
+  ChapterIcon,
+  Linkd,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
 import styles from './Bezwaren.module.scss';
 
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config';
 
-const DISPLAY_PROPS_BEZWAREN = {
-  identificatie: 'ID',
-  omschrijving: 'Omschrijving',
-  registratiedatum: 'Ingestuurd op',
+const DISPLAY_PROPS_BEZWAREN_LOPEND = {
+  bezwaarnummer: 'Nummer',
+  ontvangstdatum: 'Ontvangstdatum',
+  omschrijving: 'Onderwerp',
+};
+
+const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
+  bezwaarnummer: 'Nummer',
+  datumbesluit: 'Datum besluit',
+  omschrijving: 'Onderwerp',
 };
 
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
+  const ingediendeBezwaren =
+    BEZWAREN.content?.filter((b) => b.status !== '') ?? [];
+
+  const afgehandeldeBezwaren =
+    BEZWAREN.content?.filter((b) => b.status === '') ?? [];
+
   return (
-    <Page>
-      <PageHeading>Bezwaren</PageHeading>
+    <OverviewPage>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={isLoading(BEZWAREN)}
+        icon={<ChapterIcon />}
+      >
+        Bezwaren
+      </PageHeading>
       <PageContent>
-        <Table
-          className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN}
-          items={BEZWAREN.content ?? []}
-        />
+        <p>Hier ziet u een overzicht van uw ingediende bezwaren.</p>
+        <p>
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+          >
+            Meer informatie over Bezwaar maken
+          </Linkd>
+        </p>
+
+        <SectionCollapsible
+          id="SectionCollapsible-complaints"
+          title="Ingediende bezwaren"
+          noItemsMessage="U heeft nog geen bezwaren ingediend."
+          startCollapsed={false}
+          hasItems={!!ingediendeBezwaren?.length}
+          isLoading={isLoading(BEZWAREN)}
+          className={styles.SectionCollapsibleFirst}
+        >
+          <Table
+            className={styles.DocumentsTable}
+            displayProps={DISPLAY_PROPS_BEZWAREN_LOPEND}
+            items={ingediendeBezwaren}
+          />
+        </SectionCollapsible>
+
+        <SectionCollapsible
+          id="SectionCollapsible-complaints"
+          title="Afgehandelde bezwaren"
+          noItemsMessage="U heeft nog geen afgehandelde bezwaren."
+          startCollapsed={false}
+          hasItems={!!afgehandeldeBezwaren?.length}
+          isLoading={isLoading(BEZWAREN)}
+          className={styles.SectionCollapsibleFirst}
+        >
+          <Table
+            className={styles.DocumentsTable}
+            displayProps={DISPLAY_PROPS_BEZWAREN_AFGEROND}
+            items={afgehandeldeBezwaren}
+          />
+        </SectionCollapsible>
       </PageContent>
-    </Page>
+    </OverviewPage>
   );
 }
