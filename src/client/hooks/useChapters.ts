@@ -11,9 +11,8 @@ import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 
-export function isChapterActive(
-  item: ChapterMenuItem,
-  {
+export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
+  const {
     WMO,
     WPI_SPECIFICATIES,
     WPI_AANVRAGEN,
@@ -34,8 +33,9 @@ export function isChapterActive(
     KREFIA,
     KLACHTEN,
     BEZWAREN,
-  }: AppState
-) {
+    HORECA,
+  } = appState;
+
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
@@ -48,6 +48,7 @@ export function isChapterActive(
       const hasBbz = !!WPI_BBZ?.content?.length;
       const hasJaaropgaven = !!jaaropgaven?.length;
       const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
+
       return (
         !(
           isLoading(WPI_AANVRAGEN) &&
@@ -77,7 +78,7 @@ export function isChapterActive(
     case Chapters.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
-        FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
+        FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
           ? BELASTINGEN.content?.isKnown
           : true;
       return !isLoading(BELASTINGEN) && belastingenActive;
@@ -149,6 +150,13 @@ export function isChapterActive(
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
       );
+
+    case Chapters.HORECA:
+      return (
+        !isLoading(HORECA) &&
+        !!HORECA?.content?.length &&
+        FeatureToggle.horecaActive
+      );
   }
 
   return false;
@@ -164,6 +172,19 @@ export function useChapterMenuItems() {
   return chaptersByProfileType[profileType] || [];
 }
 
+export function getChapterMenuItemsAppState(
+  appState: AppState,
+  chapterItems: ChapterMenuItem[]
+) {
+  return chapterItems
+    .filter(
+      ({ isAlwaysVisible, hasAppStateValue }) =>
+        isAlwaysVisible !== true && hasAppStateValue !== false
+    )
+    .map(({ id }) => appState[id as keyof AppState])
+    .filter((apiState) => !!apiState);
+}
+
 export function useChapters(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
@@ -173,20 +194,21 @@ export function useChapters(): ChaptersState {
     return item.isAlwaysVisible || isChapterActive(item, appState);
   });
 
+  const chapterItemsWithAppState = getChapterMenuItemsAppState(
+    appState,
+    chapterItems
+  );
+
   return useMemo(
     () => ({
       items,
       isLoading:
         !!appState &&
-        chapterItems
-          .filter(({ isAlwaysVisible }) => !isAlwaysVisible)
-          .map(({ id }) => appState[id as keyof AppState])
-          .filter((apiState) => !!apiState)
-          .some((apiState) => {
-            const apiStateTyped = apiState as ApiResponse<any>;
-            return isLoading(apiStateTyped) && !isError(apiStateTyped);
-          }),
+        chapterItemsWithAppState.some((apiState) => {
+          const apiStateTyped = apiState as ApiResponse<any>;
+          return isLoading(apiStateTyped) && !isError(apiStateTyped);
+        }),
     }),
-    [items, chapterItems, appState]
+    [items, appState, chapterItemsWithAppState]
   );
 }

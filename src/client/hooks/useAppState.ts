@@ -197,6 +197,12 @@ export function isAppStateReady(
   pristineAppState: AppState,
   profileType: ProfileType
 ) {
+  const isLegacyProfileType = [
+    'private',
+    'private-commercial',
+    'commercial',
+  ].includes(profileType);
+
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {
       const key = appStateKey as keyof AppState;
@@ -205,8 +211,8 @@ export function isAppStateReady(
       ] as unknown as ApiPristineResponse<any>;
 
       const isProfileMatch =
-        !stateConfig?.profileTypes?.length ||
-        stateConfig.profileTypes.includes(profileType);
+        (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
+        stateConfig?.profileTypes?.includes(profileType);
 
       if (!stateConfig) {
         Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);

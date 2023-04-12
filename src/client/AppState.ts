@@ -80,6 +80,9 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private', 'private-commercial'],
   }),
+  PROFILE: apiPristineResult(null, {
+    profileTypes: ['private-attributes'],
+  }),
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],
@@ -98,6 +101,8 @@ export const PRISTINE_APPSTATE: AppState = {
     { aantal: 0, klachten: [] },
     { profileTypes: ['private', 'private-commercial'] }
   ),
+
+  HORECA: apiPristineResult([]),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

@@ -3,7 +3,7 @@
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:latest as build-deps
+FROM node:current-buster as build-deps
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true

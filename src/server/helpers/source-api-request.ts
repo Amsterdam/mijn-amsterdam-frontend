@@ -18,12 +18,11 @@ import {
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import {
-  apiUrlEntries,
   ApiUrlEntries,
-  ApiUrls,
   BFF_REQUEST_CACHE_ENABLED,
-  DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
+  DataRequestConfig,
+  apiUrlEntries,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { AuthProfileAndToken } from './app';
@@ -107,7 +106,7 @@ function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
   // parse link header and get value of rel="next" url
   const links = headers.link.split(',');
   const next = links.find(
-    (link) => link.includes('rel="next"') && link.includes(';')
+    (link: string) => link.includes('rel="next"') && link.includes(';')
   );
   if (next === undefined) {
     throw new Error('Something went wrong while parsing the link header.');
@@ -153,10 +152,16 @@ export async function requestData<T>(
     );
   }
 
-  if (requestConfig.hasBearerToken && authProfileAndToken?.token) {
-    requestConfig.headers = Object.assign(requestConfig?.headers ?? {}, {
-      Authorization: `Bearer ${authProfileAndToken.token}`,
-    });
+  // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
+  // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
+  if (requestConfig.passthroughOIDCToken && authProfileAndToken?.token) {
+    const headers = requestConfig?.headers ?? {};
+    requestConfig.headers = Object.assign(
+      {
+        Authorization: `Bearer ${authProfileAndToken.token}`,
+      },
+      headers
+    );
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
@@ -211,7 +216,8 @@ export async function requestData<T>(
       response.headers?.link?.includes('rel="next"') &&
       typeof requestConfig.combinePaginatedResults === 'function'
     ) {
-      const nextUrl = getNextUrlFromLinkHeader(response.headers);
+      const headers = response.headers;
+      const nextUrl = getNextUrlFromLinkHeader(headers as AxiosResponseHeaders);
 
       const newRequest = {
         ...requestConfig,

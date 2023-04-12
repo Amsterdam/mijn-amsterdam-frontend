@@ -1,64 +1,105 @@
 import { render, screen } from '@testing-library/react';
 
-import { MemoryRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
-import { useTabletScreen } from '../../hooks/media.hook';
-import MainNavBar from './MainNavBar';
 import userEvent from '@testing-library/user-event';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config';
+import { appStateAtom } from '../../hooks';
+import { useTabletScreen } from '../../hooks/media.hook';
+import {
+  useProfileType,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
+import MockApp from '../../pages/MockApp';
+import MainNavBar from './MainNavBar';
 
 jest.mock('../../hooks/media.hook');
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useLocation: () => {
-    return { pathname: '/' };
-  },
-  generatePth: (r: any) => r,
-}));
-jest.mock('./MainNavBar.constants', () => {
+jest.mock('../../hooks/useProfileType', () => {
   return {
-    mainMenuItems: [
-      {
-        id: 'TEST-MENU-ITEM',
-        title: 'Test Menu Item',
-        to: '/test/a/path',
-      },
-    ],
-    mainMenuItemId: {
-      'TEST-MENU-ITEM': 'TEST-MENU-ITEM',
-    },
+    __esModule: true,
+    ...(jest.requireActual('../../hooks/useProfileType') as object),
+    useProfileType: jest.fn(),
+    useProfileTypeValue: jest.fn(),
   };
 });
 
-describe('<MainNavBar />', () => {
-  it('Renders without crashing', () => {
-    render(
-      <MemoryRouter>
-        <RecoilRoot>
-          <MainNavBar isAuthenticated={true} />
-        </RecoilRoot>
-      </MemoryRouter>
-    );
+const testState: any = {
+  BRP: {
+    status: 'OK',
+    content: { persoon: { opgemaakteNaam: 'Test van FooBar', mokum: true } },
+  },
+  PROFILE: {
+    status: 'OK',
+    content: {
+      profile: { id: 'test@test.com' },
+    },
+  },
+  VERGUNNINGEN: { status: 'OK', content: [{ id: 'test' }] },
+};
 
-    expect(screen.getByText(/Test Menu Item/)).toBeInTheDocument();
+describe('<MainNavBar />', () => {
+  const routeEntry = AppRoutes.HOME;
+  const routePath = AppRoutes.HOME;
+
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, testState);
+  }
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={() => <MainNavBar isAuthenticated={true} />}
+      initializeState={initializeState}
+    />
+  );
+
+  it('Renders without crashing', () => {
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+
+    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
   });
 
-  describe('Small screen version of <MainNavBar />', () => {
-    it('Renders burger menu on small screens', () => {
-      (useTabletScreen as jest.Mock).mockReturnValue(true);
+  it('Renders burger menu on small screens', () => {
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
 
-      render(
-        <MemoryRouter>
-          <RecoilRoot>
-            <MainNavBar isAuthenticated={true} />
-          </RecoilRoot>
-        </MemoryRouter>
-      );
+    (useTabletScreen as jest.Mock).mockReturnValueOnce(true);
 
-      expect(screen.getByText('Test Menu Item')).toBeInTheDocument();
-      expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
-      userEvent.click(screen.getAllByText('Toon navigatie')[0]);
-      expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
-      expect(screen.getByText('Uitloggen')).toBeInTheDocument();
-    });
+    render(<Component />);
+
+    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
+    expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
+    userEvent.click(screen.getAllByText('Toon navigatie')[0]);
+    expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
+    expect(screen.getByText('Uitloggen')).toBeInTheDocument();
+  });
+
+  it('Shows/Hides  Search based on profile type', () => {
+    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+
+    const view = render(<Component />);
+    expect(screen.getByText(/Test\svan\sFooBar/)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Zoeken in mijn amsterdam')
+    ).toBeInTheDocument();
+
+    (useProfileType as jest.Mock).mockReturnValue([
+      'private-attributes',
+      jest.fn(),
+    ]);
+    (useProfileTypeValue as jest.Mock).mockReturnValue('private-attributes');
+
+    view.rerender(<Component />);
+
+    expect(screen.getByText(/test@test\.com/)).toBeInTheDocument();
+
+    expect(
+      screen.queryByLabelText('Zoeken in mijn amsterdam')
+    ).not.toBeInTheDocument();
   });
 });

@@ -26,6 +26,7 @@ describe('BAG service', () => {
 
     expect(formatBAGData(bagData as any, address)).toStrictEqual({
       address,
+      bagNummeraanduidingId: '0363200000126446',
       latlng: {
         lat: 52.37873183842775,
         lng: 4.891968036478453,
@@ -39,6 +40,7 @@ describe('BAG service', () => {
 
     expect(formatBAGData(bagData as any, address)).toStrictEqual({
       address,
+      bagNummeraanduidingId: undefined,
       latlng: null,
     });
   });
@@ -63,6 +65,7 @@ describe('BAG service', () => {
       status: 'OK',
       content: {
         address,
+        bagNummeraanduidingId: undefined,
         latlng: null,
       },
     });

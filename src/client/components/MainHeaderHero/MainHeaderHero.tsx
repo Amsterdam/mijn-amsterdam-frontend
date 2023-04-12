@@ -27,7 +27,7 @@ function imgUrl(
 function useHeroSrc() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
-  const isCommercialHeader = profileType !== 'private';
+  const isCommercialHeader = profileType.includes('commercial');
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,

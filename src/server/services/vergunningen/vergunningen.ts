@@ -31,6 +31,10 @@ export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
 > = [CaseType.VakantieverhuurVergunningaanvraag, CaseType.BBVergunning];
 
+export const horecaVergunningTypes: Array<VergunningBase['caseType']> = [
+  CaseType.ExploitatieHorecabedrijf,
+];
+
 export interface VergunningBase {
   caseType: CaseType;
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -194,11 +198,21 @@ export interface Splitsingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Splitsingsvergunning;
 }
 
+export interface ExploitatieHorecabedrijf extends VergunningWithLocation {
+  caseType: CaseType.ExploitatieHorecabedrijf;
+  dateStart: string | null;
+  dateEnd: string | null;
+  dateStartPermit: string | null;
+  dateProcessed: string | null;
+  numberOfPermits: string | null;
+}
+
 export interface Ligplaatsvergunning extends VergunningWithLocation {
   caseType: CaseType.VOB;
   requestKind: string | null;
   reason: string | null;
-  dateEnd: string | null;
+  vesselKind: string | null;
+  vesselName: string | null;
 }
 
 export type Vergunning =
@@ -222,7 +236,10 @@ export type Vergunning =
   | OnttrekkingsvergunningSloop
   | VormenVanWoonruimte
   | Splitsingsvergunning
-  | Ligplaatsvergunning;
+  | Ligplaatsvergunning
+  | ExploitatieHorecabedrijf;
+
+export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
 export type VergunningenSourceData = {
   content?: Vergunning[];
@@ -277,8 +294,12 @@ export function fetchAllVergunningen(
 
 const vergunningOptionsDefault: VergunningOptions = {
   appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: (vergunning) =>
-    !toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+  filter: (
+    vergunning: Vergunning
+  ): vergunning is VakantieverhuurVergunningaanvraag | HorecaVergunningen =>
+    ![...toeristischeVerhuurVergunningTypes, ...horecaVergunningTypes].includes(
+      vergunning.caseType
+    ),
 };
 
 export function addLinks(

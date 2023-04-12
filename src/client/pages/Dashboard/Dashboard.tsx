@@ -19,6 +19,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
 import { ChapterMenuItem } from '../../config/menuItems';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
+import { isUiElementVisible } from '../../config/app';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -70,7 +71,7 @@ export default function Dashboard() {
     if (history.location.search) {
       history.replace(history.location.pathname);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -99,8 +100,9 @@ export default function Dashboard() {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-        {!isPhoneScreen && <MyAreaDashboard />}
-
+        {isUiElementVisible(profileType, 'mijnBuurt') && !isPhoneScreen && (
+          <MyAreaDashboard />
+        )}
         <MyTips
           isLoading={isLoading(TIPS)}
           items={tipItems}

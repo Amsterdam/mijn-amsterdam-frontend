@@ -44,6 +44,8 @@ export const AppRoutes: Record<string, string> = {
   PARKEREN: '/parkeren',
   KLACHTEN: '/klachten/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  HORECA: '/horeca/',
+  'HORECA/DETAIL': '/horeca/:title/:id',
 };
 
 export const AppRoutesRedirect = [
@@ -145,5 +147,3 @@ export const CustomTrackingUrls: {
 
   [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
 };
-
-export const NoHeroRoutes = [AppRoutes.BUURT];

@@ -7,6 +7,8 @@ export const entries = Object.entries as <T>(
   o: T
 ) => [Extract<keyof T, string>, T[keyof T]][];
 
+export const keys = Object.keys as <T>(o: T) => (keyof T)[];
+
 // Repeating conditions for accessible keyboard event
 export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
   return (event: KeyboardEvent<T> | MouseEvent<T>) => {

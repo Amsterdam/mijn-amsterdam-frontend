@@ -106,12 +106,14 @@ function PrivateCommercialProfileToggle({
 interface ProfileNameProps {
   person?: BRPData['persoon'] | null;
   company?: KVKData | null;
+  profileAttribute?: string;
   profileType: ProfileType;
 }
 
 export function ProfileName({
   person,
   company,
+  profileAttribute,
   profileType,
 }: ProfileNameProps) {
   const history = useHistory();
@@ -120,7 +122,7 @@ export function ProfileName({
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
-      case (!!person && !company) ||
+      case (profileType === 'private' && !!person && !company) ||
         (!FeatureToggle.profileToggleActive && !!person):
         nameContent = (
           <PrivateProfileName
@@ -145,9 +147,23 @@ export function ProfileName({
           />
         );
         break;
+      case !!profileAttribute:
+        nameContent = (
+          <span
+            className={classnames(
+              styles.ProfileLink,
+              styles['ProfileLink--private'],
+              styles['ProfileLink--private-attributes'],
+              styles['ProfileLink--active']
+            )}
+          >
+            <IconProfile /> {profileAttribute}
+          </span>
+        );
+        break;
     }
     return nameContent;
-  }, [person, company, history]);
+  }, [person, company, history, profileAttribute, profileType]);
 
   return (
     <span

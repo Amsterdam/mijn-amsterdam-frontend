@@ -9,6 +9,7 @@ import { apiErrorResult } from '../../universal/helpers';
 import {
   oidcConfigDigid,
   oidcConfigEherkenning,
+  oidcConfigYivi,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -27,8 +28,8 @@ export function decodeToken(idToken: string) {
 }
 
 export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid';
-  profileType: 'private' | 'private-commercial' | 'commercial';
+  authMethod: 'eherkenning' | 'digid' | 'yivi';
+  profileType: ProfileType;
   id?: string;
 }
 
@@ -40,6 +41,10 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
     case oidcConfigEherkenning.clientID:
       authMethod = 'eherkenning';
       profileType = 'commercial';
+      break;
+    case oidcConfigYivi.clientID:
+      authMethod = 'yivi';
+      profileType = 'private';
       break;
     case oidcConfigDigid.clientID:
     default:

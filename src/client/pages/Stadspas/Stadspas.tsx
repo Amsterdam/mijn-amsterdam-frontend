@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
+import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -38,6 +39,14 @@ const decisionsDisplayProps = {
   displayDateStart: 'Datum aanvraag',
   displayDateEnd: 'Datum besluit',
 };
+
+function multipleOwners(stadspassen: WpiStadspas[] | undefined) {
+  if (stadspassen === undefined) {
+    return false;
+  }
+
+  return stadspassen.some((pas) => pas.owner !== stadspassen[0].owner);
+}
 
 export default function Stadspas() {
   const { WPI_STADSPAS } = useAppStateGetter();
@@ -125,12 +134,13 @@ export default function Stadspas() {
           Bel <a href="tel:020 252 6000">020 252 6000</a> om een nieuwe Stadspas
           aan te vragen.
         </p>
-        {!isLoadingStadspas && WPI_STADSPAS.content?.ownerType !== 'kind' && (
-          <p>
-            Hebt u kinderen of een partner met een Stadspas? Dan ziet u
-            hieronder ook hun Stadspassen.
-          </p>
-        )}
+        {!isLoadingStadspas &&
+          multipleOwners(WPI_STADSPAS.content?.stadspassen) && (
+            <p>
+              Hebt u kinderen of een partner met een Stadspas? Dan ziet u
+              hieronder ook hun Stadspassen.
+            </p>
+          )}
         <p>
           Let op. Hebt u een Stadspas met blauwe ruit? Dan ziet u deze hier
           niet.

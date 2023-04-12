@@ -100,9 +100,10 @@ export default function MyArea({
     secondaryLocationMarkers,
   } = useMapLocations(centerMarker, zoom);
 
+  // NOTE: Alos sets the zoom level / center passed via url
   useSetMapCenterAtLocation(
     mapInstance,
-    zoom,
+    mapZoom,
     customLocationMarker,
     homeLocationMarker
   );

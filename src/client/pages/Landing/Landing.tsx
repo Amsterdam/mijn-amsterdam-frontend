@@ -1,14 +1,9 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import {
-  FeatureToggle,
-  IS_AP,
-  OTAP_ENV,
-  testAccounts,
-} from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config';
+import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
   Heading,
   LinkdInline,
@@ -17,7 +12,11 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_EHERKENNING,
+  LOGIN_URL_YIVI,
+} from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
@@ -130,7 +129,7 @@ export default function Landing() {
               <a
                 ref={loginButton}
                 role="button"
-                href="/"
+                href={LOGIN_URL_YIVI}
                 onClick={() => setRedirectingIrma(true)}
                 rel="noopener noreferrer"
                 className={classnames(

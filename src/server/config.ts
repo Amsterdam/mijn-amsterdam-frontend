@@ -54,7 +54,11 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * In this case we can use a cacheKey. Be sure this key is unique to the visitor. The for example the requestID parameter can be used.
    */
   cacheKey?: string;
-  hasBearerToken?: boolean;
+  /**
+   * If true the token passed via `authProfileAndToken` will be sent via { Authorization: `Bearer ${authProfileAndToken.token}` } with the request.
+   * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
+   */
+  passthroughOIDCToken?: boolean;
   debugRequestConfig?: boolean;
 
   combinePaginatedResults?: <T>(
@@ -81,7 +85,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   method: 'get',
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
-  hasBearerToken: true,
+  passthroughOIDCToken: false,
   page: 1,
   maximumAmountOfPages: 0,
 };
@@ -119,18 +123,23 @@ export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
     url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
     debugRequestConfig: true,
+    passthroughOIDCToken: true,
   },
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
+    passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    passthroughOIDCToken: true,
   },
   WPI_STADSPAS: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
+    passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
@@ -167,6 +176,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   VERGUNNINGEN: {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
+    passthroughOIDCToken: true,
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
@@ -175,6 +185,8 @@ export const ApiConfig: ApiDataRequestConfig = {
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       'private-commercial':
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
+      'private-attributes':
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:
         'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
     },
@@ -191,7 +203,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
-  BRP: { url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp` },
+  BRP: { url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`, passthroughOIDCToken: true },
   AKTES: {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
@@ -205,6 +217,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   KVK: {
     url: `${process.env.BFF_MKS_API_BASE_URL}/brp/hr`,
+    passthroughOIDCToken: true,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: process.env.BFF_LVV_API_URL,
@@ -272,6 +285,7 @@ export const RelayPathsAllowed = {
 export const AUTH_BASE = `${BFF_BASE_PATH}/auth`;
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
+export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
 
 export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
 export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
@@ -299,6 +313,7 @@ export const BffEndpoints = {
   AUTH_BASE_SSO,
   AUTH_BASE_SSO_DIGID,
   AUTH_BASE_SSO_EHERKENNING,
+  AUTH_BASE_YIVI,
 
   // Digid
   AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
@@ -312,13 +327,20 @@ export const BffEndpoints = {
   AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
   AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
 
+  // YIVI
+  AUTH_CALLBACK_YIVI: BFF_OIDC_BASE_URL + AUTH_BASE_YIVI + AUTH_CALLBACK,
+  AUTH_LOGIN_YIVI: AUTH_BASE_YIVI + AUTH_LOGIN,
+  AUTH_LOGOUT_YIVI: AUTH_BASE_YIVI + AUTH_LOGOUT,
+
   // Application specific urls
   AUTH_CHECK: `${AUTH_BASE}/check`,
   AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
   AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
+  AUTH_CHECK_YIVI: `${AUTH_BASE_YIVI}/check`,
   AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
   AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
   AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
+  AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
 
@@ -380,6 +402,11 @@ export const oidcConfigEherkenning: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
 };
 
+export const oidcConfigYivi: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+};
+
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
   digid: 'sub',
@@ -391,6 +418,9 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   },
   get digid() {
     return oidcConfigDigid.clientID;
+  },
+  get yivi() {
+    return oidcConfigYivi.clientID;
   },
 };
 

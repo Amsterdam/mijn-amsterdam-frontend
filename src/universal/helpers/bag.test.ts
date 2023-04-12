@@ -16,31 +16,37 @@ describe('getLatLonByAddress', () => {
         adres: 'Herengracht 23-1',
         centroid: [4.891968036478453, 52.37873183842775],
         woonplaats: 'Amsterdam',
+        landelijk_id: 'xxx1',
       },
       {
         adres: 'Herengracht 23-2',
         centroid: [4.891968036478453, 52.37873183842775],
         woonplaats: 'Amsterdam',
+        landelijk_id: 'xxx2',
       },
       {
         adres: 'Herengracht 23-H',
         centroid: [4.891968036478453, 52.37873183842775],
         woonplaats: 'Amsterdam',
+        landelijk_id: 'xxx3',
       },
       {
         adres: 'Herengracht 23',
         centroid: [5.039817231849981, 52.30885683238395],
         woonplaats: 'Weesp',
+        landelijk_id: 'xxx4',
       },
       {
         adres: 'Herengracht 231a',
         centroid: [5.03863916842061, 52.30886128545404],
         woonplaats: 'Weesp',
+        landelijk_id: 'xxx5',
       },
       {
         adres: 'Nieuwe Herengracht 23-1',
         centroid: [4.902795334609859, 52.36631966746123],
         woonplaats: 'Amsterdam',
+        landelijk_id: 'xxx6',
       },
     ],
   };
