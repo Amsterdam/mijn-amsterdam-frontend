@@ -174,8 +174,6 @@ export async function loginStats(req: Request, res: Response) {
 
   const uniqueLoginsResult = await query(uniqueQuery, params);
 
-  console.log(uniqueLoginsResult);
-
   if (uniqueLoginsResult?.rowCount) {
     uniqueLogins = uniqueLoginsResult.rowCount;
   }
