@@ -46,7 +46,6 @@ export function countLoggedInVisit(
   authMethod: AuthMethod = 'digid'
 ) {
   const userIDHashed = hashUserId(userID);
-  console.log(queries.countLogin, userIDHashed, authMethod);
   return query(queries.countLogin, [userIDHashed, authMethod]);
 }
 
