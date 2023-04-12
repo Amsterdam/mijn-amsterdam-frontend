@@ -122,13 +122,8 @@ function transformFractionData(
   const formsUrl = 'https://formulieren.amsterdam.nl/TriplEforms/';
   let addressCode = `${fractionData.postcode},${fractionData.huisnummer}`;
 
-  if (fractionData.huisletter) {
-    addressCode = `${addressCode},${fractionData.huisletter}`;
-  }
-
-  if (fractionData.huisnummertoevoeging) {
-    addressCode = `${addressCode},${fractionData.huisnummertoevoeging}`;
-  }
+  addressCode = `${addressCode},${fractionData.huisletter ?? ''}`;
+  addressCode = `${addressCode},${fractionData.huisnummertoevoeging ?? ''}`;
 
   const url = fractionData.afvalwijzerUrl?.startsWith(formsUrl)
     ? fractionData.afvalwijzerUrl.replace(formsUrl, getText(formsUrl)) +
