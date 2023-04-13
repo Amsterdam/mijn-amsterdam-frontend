@@ -52,16 +52,6 @@ COPY src /build-space/src
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
-# Env parameters will be passed to React Build via the .env.xxxx files
-ARG MA_OTAP_ENV=development
-ENV MA_OTAP_ENV=$MA_OTAP_ENV
-
-ARG MA_BFF_API_URL=/
-ENV MA_BFF_API_URL=$MA_BFF_API_URL
-
-ARG MA_BFF_AUTH_PATH=/auth
-ENV MA_BFF_AUTH_PATH=$MA_BFF_AUTH_PATH
-
 ARG REACT_APP_ADO_BUILD_ID=0
 ENV REACT_APP_ADO_BUILD_ID=$REACT_APP_ADO_BUILD_ID
 
@@ -148,13 +138,9 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-o
 
-ENV MA_OTAP_ENV=development
-COPY --from=build-app-bff /build-space/.env.bff.development /app/.env.bff.development
 CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-t
 
-ENV MA_OTAP_ENV=test
-COPY --from=build-app-bff /build-space/.env.bff.test /app/.env.bff.test
 COPY files /app/files
 CMD /usr/local/bin/docker-entrypoint-bff.sh

@@ -18,7 +18,7 @@ export const BFFApiUrls = {
 };
 
 // Urls directly used from front-end
-export const AUTH_PATH = process.env.REACT_APP_BFF_AUTH_PATH || '/auth';
+export const AUTH_PATH = '/auth';
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
