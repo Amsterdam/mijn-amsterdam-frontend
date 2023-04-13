@@ -52,6 +52,9 @@ COPY src /build-space/src
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
+ARG REACT_APP_OTAP_ENV=production
+ENV REACT_APP_OTAP_ENV=$REACT_APP_OTAP_ENV
+
 ARG REACT_APP_ADO_BUILD_ID=0
 ENV REACT_APP_ADO_BUILD_ID=$REACT_APP_ADO_BUILD_ID
 
