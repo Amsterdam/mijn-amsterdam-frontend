@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import { getOtapEnvItem, IS_AP, OTAP_ENV } from '../universal/config/env';
 
-if (process.env.NODE_ENV !== 'test') {
-  const ENV_FILE = `.env.bff.${OTAP_ENV}`;
+if (OTAP_ENV === 'development') {
+  const ENV_FILE = '.env.local';
   console.debug(`trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);

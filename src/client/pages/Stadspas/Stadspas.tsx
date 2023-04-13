@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../../../server/services/wpi/config';
+import type { WpiStadspas } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { StatusLine } from '../../../universal/types';
 import {
-  addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
@@ -16,6 +14,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
@@ -52,7 +51,7 @@ export default function Stadspas() {
   const { WPI_STADSPAS } = useAppStateGetter();
   const aanvragen = WPI_STADSPAS.content?.aanvragen;
 
-  const items: StatusLine[] = useMemo(() => {
+  const items = useMemo(() => {
     if (!aanvragen) {
       return [];
     }
@@ -172,7 +171,6 @@ export default function Stadspas() {
           className={styles.SectionCollapsibleFirst}
         >
           <Table
-            titleKey="moreDetail"
             items={stadspasItems}
             displayProps={stadspasDisplayProps}
             className={styles.Table}

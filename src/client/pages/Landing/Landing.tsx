@@ -1,6 +1,11 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle } from '../../../universal/config';
+import {
+  FeatureToggle,
+  IS_TAP,
+  OTAP_ENV,
+  testAccounts,
+} from '../../../universal/config';
 import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
@@ -23,7 +28,7 @@ import styles from './Landing.module.scss';
 
 let loginUrlDigid = LOGIN_URL_DIGID;
 
-if (!IS_AP) {
+if (!IS_TAP) {
   loginUrlDigid += '/dev';
 }
 

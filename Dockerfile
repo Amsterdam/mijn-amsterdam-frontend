@@ -42,11 +42,6 @@ COPY tsconfig.bff.json /build-space/
 # Front-end env files
 COPY .env.production /build-space/
 
-# BFF env files
-COPY .env.bff.development /build-space/
-COPY .env.bff.test /build-space/
-#COPY .env.bff.acceptance /build-space/
-
 COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
 COPY src /build-space/src
 

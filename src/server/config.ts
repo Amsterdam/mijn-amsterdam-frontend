@@ -35,7 +35,7 @@ export const BFF_REQUEST_CACHE_ENABLED =
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-export const BFF_BASE_PATH = process.env.BFF_BASE_PATH || '/api/v1';
+export const BFF_BASE_PATH = '/api/v1';
 export const BFF_PUBLIC_URL = `${
   process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
 }`;
@@ -203,7 +203,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
-  BRP: { url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`, passthroughOIDCToken: true },
+  BRP: {
+    url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`,
+    passthroughOIDCToken: true,
+  },
   AKTES: {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
@@ -410,6 +413,7 @@ export const oidcConfigYivi: ConfigParams = {
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
   digid: 'sub',
+  yivi: 'sub',
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
