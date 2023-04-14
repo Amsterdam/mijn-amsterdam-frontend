@@ -363,7 +363,7 @@ export async function fetchSignalsListByStatus(
 
   const queryParams = {
     contact_details: 'email',
-    // reporter_email: authProfileAndToken.profile.id,
+    reporter_email: authProfileAndToken.profile.id,
     page: params.page,
     status: statusList,
     page_size: params.pageSize,
