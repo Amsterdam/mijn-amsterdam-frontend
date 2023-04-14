@@ -136,7 +136,11 @@ export default function Vergunningen() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
-          items={vergunningenPrevious}
+          items={vergunningenPrevious.slice(0, 3)}
+        />
+        <PageTableCutoffLink
+          count={vergunningenPrevious.length}
+          appRouteWithPageParam={AppRoutes.VERGUNNINGEN_EERDER}
         />
       </SectionCollapsible>
       {hasActualGPK && (
