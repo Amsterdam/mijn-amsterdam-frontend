@@ -17,7 +17,6 @@ import {
   Table,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
-import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
@@ -112,11 +111,7 @@ export default function Vergunningen() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
-          items={vergunningenActual.slice(0, 3)}
-        />
-        <PageTableCutoffLink
-          count={vergunningenActual.length}
-          appRouteWithPageParam={AppRoutes.VERGUNNINGEN_LOPEND}
+          items={vergunningenActual}
         />
       </SectionCollapsible>
       <SectionCollapsible
@@ -136,11 +131,7 @@ export default function Vergunningen() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
-          items={vergunningenPrevious.slice(0, 3)}
-        />
-        <PageTableCutoffLink
-          count={vergunningenPrevious.length}
-          appRouteWithPageParam={AppRoutes.VERGUNNINGEN_EERDER}
+          items={vergunningenPrevious}
         />
       </SectionCollapsible>
       {hasActualGPK && (
