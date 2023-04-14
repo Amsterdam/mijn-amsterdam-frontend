@@ -17,6 +17,7 @@ import {
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
+import { useParams } from 'react-router-dom';
 
 const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
@@ -33,11 +34,26 @@ const DISPLAY_PROPS_HISTORY = {
 export default function Sia() {
   const { SIA } = useAppStateGetter();
 
-  const sia: SIAItem[] = useMemo(() => {
-    if (!SIA.content?.length) {
+  const siaOpen: SIAItem[] = useMemo(() => {
+    if (!SIA.content?.open?.items.length) {
       return [];
     }
-    const items: SIAItem[] = SIA.content
+    const items: SIAItem[] = SIA.content.open.items
+      .filter((x) => x)
+      .map((item) => {
+        return {
+          ...item,
+          datePublished: defaultDateTimeFormat(item.datePublished),
+        };
+      });
+    return addTitleLinkComponent(items, 'identifier');
+  }, [SIA.content]);
+
+  const siaClosed: SIAItem[] = useMemo(() => {
+    if (!SIA.content?.afgesloten?.items.length) {
+      return [];
+    }
+    const items: SIAItem[] = SIA.content.afgesloten.items
       .filter((x) => x)
       .map((item) => {
         return {
@@ -50,14 +66,6 @@ export default function Sia() {
       });
     return addTitleLinkComponent(items, 'identifier');
   }, [SIA.content]);
-
-  const siaClosed = useMemo(() => {
-    return sia.filter((vergunning) => vergunning.status === 'Afgesloten');
-  }, [sia]);
-
-  const siaOpen = useMemo(() => {
-    return sia.filter((vergunning) => vergunning.status !== 'Afgesloten');
-  }, [sia]);
 
   return (
     <OverviewPage className={styles.Sia}>

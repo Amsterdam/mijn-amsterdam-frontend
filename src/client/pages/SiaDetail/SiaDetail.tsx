@@ -126,7 +126,12 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
 export default function SiaDetail() {
   const { SIA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
-  const SiaItem = SIA.content?.find((item) => item.id === id);
+
+  const allSiaItems = [
+    ...(SIA.content?.open?.items ?? []),
+    ...(SIA.content?.afgesloten?.items ?? []),
+  ];
+  const SiaItem = allSiaItems.find((item) => item.id === id);
 
   const attachments = useAdditionalDataById(
     id,

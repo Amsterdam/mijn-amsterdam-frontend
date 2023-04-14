@@ -332,8 +332,11 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
+
+  // Signalen endpoints
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
   SIA_HISTORY: '/services/signals/:id/history',
+  SIA_LIST: '/services/signals/:status/:page',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

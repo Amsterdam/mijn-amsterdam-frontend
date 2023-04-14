@@ -13,6 +13,9 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { sub } from 'date-fns';
+import memoizee from 'memoizee';
+import qs from 'qs';
 
 export type StatusStateChoice =
   | 'm'
@@ -203,10 +206,10 @@ function getSignalStatus(sourceItem: SignalPrivate): string {
   );
 }
 
-function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
+function transformSIAData(responseData: SignalsSourceData): SiaResponse {
   const signals = responseData.results ?? [];
 
-  return signals.map((sourceItem: SignalPrivate) => {
+  const items = signals.map((sourceItem: SignalPrivate) => {
     const status = getSignalStatus(sourceItem);
     const dateClosed = status === 'Afgesloten' ? sourceItem.updated_at : '';
     const identifier = sourceItem.id_display;
@@ -251,6 +254,12 @@ function transformSIAData(responseData: SignalsSourceData): SIAItem[] {
       },
     };
   });
+
+  return {
+    total: responseData.count,
+    items,
+    pageSize: 50,
+  };
 }
 
 interface TokenResponse {
@@ -270,7 +279,7 @@ async function getAccessToken(requestID: requestID) {
   );
 }
 
-async function getSiaRequestConfig(requestID: requestID) {
+async function _getSiaRequestConfig(requestID: requestID) {
   const accessTokenResponse = await getAccessToken(requestID);
   if (accessTokenResponse.status === 'OK') {
     return getApiConfig('SIA', {
@@ -283,23 +292,97 @@ async function getSiaRequestConfig(requestID: requestID) {
   return null;
 }
 
+const getSiaRequestConfig = memoizee(_getSiaRequestConfig);
+
+interface SiaResponse {
+  total: number;
+  pageSize: number;
+  items: SIAItem[];
+}
+
+interface SiaResponseOverview {
+  open: SiaResponse;
+  afgesloten: SiaResponse;
+}
+
+interface SiaRequestParams {
+  page: string;
+  pageSize: string;
+  status: 'open' | 'afgesloten';
+}
+
+function createStatusListRequestParamValue(
+  status: SiaRequestParams['status']
+): StatusStateChoice[] {
+  switch (status) {
+    default:
+    case 'open':
+      return Object.entries(STATUS_CHOICES_MA)
+        .filter(([k, s]) => s !== MA_CLOSED)
+        .map(([k]) => k) as StatusStateChoice[];
+
+    case 'afgesloten':
+      return Object.entries(STATUS_CHOICES_MA)
+        .filter(([k, s]) => s === MA_CLOSED)
+        .map(([k]) => k) as StatusStateChoice[];
+  }
+}
+
 export async function fetchSignals(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const open = await fetchSignalsListByStatus(requestID, authProfileAndToken, {
+    status: 'open',
+    page: '1',
+    pageSize: '4',
+  });
+
+  const afgesloten = await fetchSignalsListByStatus(
+    requestID,
+    authProfileAndToken,
+    {
+      status: 'afgesloten',
+      page: '1',
+      pageSize: '4',
+    }
+  );
+
+  return apiSuccessResult({
+    open: open.content,
+    afgesloten: afgesloten.content,
+  });
+}
+
+export async function fetchSignalsListByStatus(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  params: SiaRequestParams = { status: 'open', page: '1', pageSize: '20' }
+) {
+  const statusList: StatusStateChoice[] = createStatusListRequestParamValue(
+    params.status
+  );
+
   const queryParams = {
     contact_details: 'email',
     reporter_email: authProfileAndToken.profile.id,
+    page: params.page,
+    status: statusList,
+    page_size: params.pageSize,
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    const response = await requestData<SIAItem[]>(
+    const response = await requestData<SiaResponse>(
       {
         ...requestConfig,
         transformResponse: transformSIAData,
         params: queryParams,
+
+        // https://github.com/axios/axios/issues/604#issuecomment-321460450
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: 'repeat' }),
       },
       requestID,
       authProfileAndToken

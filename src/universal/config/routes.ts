@@ -20,7 +20,7 @@ export const AppRoutes: Record<string, string> = {
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
 
-  SIA: '/meldingen',
+  SIA: '/meldingen/:page?',
   'SIA/DETAIL': '/meldingen/detail/:id',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
