@@ -85,6 +85,8 @@ const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
 const Sia = lazy(() => import('./pages/Sia/Sia'));
 const SiaDetail = lazy(() => import('./pages/SiaDetail/SiaDetail'));
+const SiaListClosed = lazy(() => import('./pages/Sia/SiaListClosed'));
+const SiaListOpen = lazy(() => import('./pages/Sia/SiaListOpen'));
 const ToeristischeVerhuur = lazy(
   () => import('./pages/ToeristischeVerhuur/ToeristischeVerhuur')
 );
@@ -165,12 +167,11 @@ function AppAuthenticated() {
         <MainHeader isAuthenticated={true} isHeroVisible={true} />
         <div className={styles.App} id="skip-to-id-AppContent">
           <Switch>
-            {FeatureToggle.siaActive && (
-              <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
-            )}
-            {FeatureToggle.siaActive && (
-              <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
-            )}
+            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+            <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
+            <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
+            <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
+
             <Route component={NotFound} />
           </Switch>
         </div>

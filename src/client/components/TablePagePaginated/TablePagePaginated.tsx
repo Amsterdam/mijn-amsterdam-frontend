@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { Chapter } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
-import { AppState } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -14,11 +12,7 @@ import {
   Section,
   Table,
 } from '../../components';
-import {
-  addTitleLinkComponent,
-  TableProps,
-} from '../../components/Table/Table';
-import { useAppStateGetter } from '../../hooks';
+import { TableProps } from '../../components/Table/Table';
 import styles from './TablePagePaginated.module.scss';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -48,20 +42,23 @@ export function PageTableCutoffLink({
 }
 
 interface PageTablePaginatedProps {
-  stateKey: keyof AppState;
+  items: object[];
   pageSize?: number;
   chapter?: Chapter;
   appRoute: string;
   appRouteBack: string;
   listTitle: string;
   title: string;
-  displayProps: TableProps['displayProps'];
+  displayProps: TableProps<object>['displayProps'];
   mapFn?: (item: any) => any;
-  titleKey: string;
+  filterFn?: (item: any) => any;
+  titleKey?: string;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 export function PageTablePaginated({
-  stateKey,
+  items,
   chapter,
   listTitle,
   title,
@@ -69,24 +66,10 @@ export function PageTablePaginated({
   appRouteBack,
   pageSize = DEFAULT_PAGE_SIZE,
   displayProps,
-  mapFn,
   titleKey,
+  isLoading,
+  isError,
 }: PageTablePaginatedProps) {
-  const ITEMS = useAppStateGetter()[stateKey];
-  const items: any = useMemo(() => {
-    if (!Array.isArray(ITEMS.content) || !ITEMS.content.length) {
-      return [];
-    }
-
-    let items = ITEMS.content;
-
-    if (mapFn) {
-      items = ITEMS.content.map(mapFn);
-    }
-
-    return addTitleLinkComponent(items, titleKey);
-  }, [ITEMS.content, mapFn, titleKey]);
-
   const history = useHistory();
 
   const { page = '1' } = useParams<{
@@ -114,12 +97,12 @@ export function PageTablePaginated({
       <PageHeading
         icon={<ChapterIcon chapter={chapter} />}
         backLink={{ to: appRouteBack, title: 'Overzicht' }}
-        isLoading={isLoading(ITEMS)}
+        isLoading={isLoading}
       >
         {title}
       </PageHeading>
       <PageContent>
-        {isError(ITEMS) && (
+        {isError && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

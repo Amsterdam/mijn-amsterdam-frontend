@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import { LatLngLiteral } from 'leaflet';
 import { generatePath } from 'react-router-dom';
 import { Chapters } from '../../universal/config';
@@ -13,7 +12,6 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
-import { sub } from 'date-fns';
 import memoizee from 'memoizee';
 import qs from 'qs';
 
@@ -335,7 +333,7 @@ export async function fetchSignals(
   const open = await fetchSignalsListByStatus(requestID, authProfileAndToken, {
     status: 'open',
     page: '1',
-    pageSize: '4',
+    pageSize: '100',
   });
 
   const afgesloten = await fetchSignalsListByStatus(
@@ -344,7 +342,7 @@ export async function fetchSignals(
     {
       status: 'afgesloten',
       page: '1',
-      pageSize: '4',
+      pageSize: '100',
     }
   );
 
@@ -365,7 +363,7 @@ export async function fetchSignalsListByStatus(
 
   const queryParams = {
     contact_details: 'email',
-    reporter_email: authProfileAndToken.profile.id,
+    // reporter_email: authProfileAndToken.profile.id,
     page: params.page,
     status: statusList,
     page_size: params.pageSize,

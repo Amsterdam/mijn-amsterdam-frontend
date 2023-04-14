@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
-import { ChapterTitles, IS_PRODUCTION } from '../../../universal/config/index';
+import {
+  AppRoutes,
+  ChapterTitles,
+  IS_PRODUCTION,
+} from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
@@ -17,15 +21,15 @@ import {
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
-import { useParams } from 'react-router-dom';
+import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 
-const DISPLAY_PROPS = {
+export const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
   category: 'Categorie',
   datePublished: 'Ontvangen op',
 };
 
-const DISPLAY_PROPS_HISTORY = {
+export const DISPLAY_PROPS_HISTORY = {
   identifier: 'Meldingsnummer',
   category: 'Categorie',
   dateClosed: 'Afgesloten op',
@@ -60,7 +64,7 @@ export default function Sia() {
           ...item,
           datePublished: defaultDateTimeFormat(item.datePublished),
           dateClosed: item.dateClosed
-            ? defaultDateTimeFormat(item.datePublished)
+            ? defaultDateTimeFormat(item.dateClosed)
             : null,
         };
       });
@@ -120,7 +124,11 @@ export default function Sia() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
-          items={siaOpen}
+          items={siaOpen.slice(0, 3)}
+        />
+        <PageTableCutoffLink
+          count={siaOpen.length}
+          appRouteWithPageParam={AppRoutes.SIA_OPEN}
         />
       </SectionCollapsible>
       <SectionCollapsible
@@ -140,7 +148,11 @@ export default function Sia() {
           className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS_HISTORY}
-          items={siaClosed}
+          items={siaClosed.slice(0, 3)}
+        />
+        <PageTableCutoffLink
+          count={siaClosed.length}
+          appRouteWithPageParam={AppRoutes.SIA_CLOSED}
         />
       </SectionCollapsible>
     </OverviewPage>
