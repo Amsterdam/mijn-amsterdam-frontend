@@ -117,6 +117,7 @@ export type SourceApiKey =
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_STATUS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
@@ -170,6 +171,15 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BEZWAREN_DOCUMENTS: {
     url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_STATUS: {
+    // /zgw/v1/statussen?zaak=https://amsterdam-test.octopus.nl/zgw/v1/zaken/
+    url: ``,
     headers: {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',

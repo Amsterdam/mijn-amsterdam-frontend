@@ -48,7 +48,23 @@ export type Bezwaar = {
   primairbesluit: string | null;
   primairbesluitdatum: string | null;
   resultaat: string | null;
+  statussen: BezwaarStatus[];
   link: LinkProps;
+};
+
+export type BezwaarStatus = {
+  uuid: string;
+  datum: string;
+  statustoelichting: string;
+};
+
+export type BezwaarSourceStatus = {
+  url: string;
+  uuid: string;
+  zaak: string;
+  statustype: string;
+  datumStatusGezet: string;
+  statustoelichting: string;
 };
 
 export interface BezwarenSourceResponse<T> {
