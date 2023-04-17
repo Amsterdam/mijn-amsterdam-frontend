@@ -1,5 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { ApiResponse, defaultDateFormat } from '../../../universal/helpers';
+import {
+  ApiResponse,
+  defaultDateFormat,
+  getSettledResult,
+} from '../../../universal/helpers';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -10,6 +14,8 @@ import {
   BezwarenSourceResponse,
   Kenmerk,
   kenmerkKey,
+  BezwaarStatus,
+  BezwaarSourceStatus,
 } from './types';
 import { AppRoutes } from '../../../universal/config';
 
@@ -56,32 +62,41 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
   return set.bron;
 }
 
-function transformBezwarenResults(
+async function transformBezwarenResults(
   response: BezwarenSourceResponse<BezwaarSourceData>
-): Bezwaar[] {
+): Promise<PromiseSettledResult<Bezwaar>[]> {
   const results = response.results;
   if (Array.isArray(results)) {
-    return results.map((bron) => {
-      return {
-        uuid: bron.uuid,
-        ontvangstdatum: defaultDateFormat(bron.startdatum),
-        bezwaarnummer: bron.identificatie,
-        omschrijving: bron.omschrijving,
-        toelichting: bron.toelichting,
-        status: getKenmerkValue(bron.kenmerken, 'statustekst'),
-        datumbesluit: getKenmerkValue(bron.kenmerken, 'besluitdatum'), // Kenmerken zijn anders geformateerd, dateFormat is daardoor niet nodig.
-        einddatum: !!bron.einddatum ? defaultDateFormat(bron.einddatum) : null,
-        primairbesluit: getKenmerkValue(bron.kenmerken, 'besluitnr'),
-        primairbesluitdatum: getKenmerkValue(bron.kenmerken, 'besluitdatum'),
-        resultaat: getKenmerkValue(bron.kenmerken, 'resultaattekst'),
-        link: {
-          title: 'Bekijk details',
-          to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
-            uuid: bron.uuid,
-          }),
-        },
-      };
-    });
+    return Promise.allSettled(
+      results.map(async (bron) => {
+        const statussen: BezwaarStatus[] = await fetchBezwaarStatus(bron.uuid);
+
+        const bezwaar: Bezwaar = {
+          uuid: bron.uuid,
+          ontvangstdatum: defaultDateFormat(bron.startdatum),
+          bezwaarnummer: bron.identificatie,
+          omschrijving: bron.omschrijving,
+          toelichting: bron.toelichting,
+          status: getKenmerkValue(bron.kenmerken, 'statustekst'),
+          statussen,
+          datumbesluit: getKenmerkValue(bron.kenmerken, 'besluitdatum'), // Kenmerken zijn anders geformateerd, dateFormat is daardoor niet nodig.
+          einddatum: !!bron.einddatum
+            ? defaultDateFormat(bron.einddatum)
+            : null,
+          primairbesluit: getKenmerkValue(bron.kenmerken, 'besluitnr'),
+          primairbesluitdatum: getKenmerkValue(bron.kenmerken, 'besluitdatum'),
+          resultaat: getKenmerkValue(bron.kenmerken, 'resultaattekst'),
+          link: {
+            title: 'Bekijk details',
+            to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+              uuid: bron.uuid,
+            }),
+          },
+        };
+
+        return bezwaar;
+      })
+    );
   }
   return [];
 }
@@ -102,7 +117,7 @@ export async function fetchBezwaren(
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
     data: requestBody,
     params,
-    transformResponse: transformBezwarenResults,
+    transformResponse: async (res) => await transformBezwarenResults(res),
   });
 
   const bezwarenResponse = await requestData<Bezwaar[]>(
@@ -111,4 +126,43 @@ export async function fetchBezwaren(
   );
 
   return bezwarenResponse;
+}
+
+function transformBezwaarStatus(
+  response: BezwarenSourceResponse<BezwaarSourceStatus>
+): BezwaarStatus[] {
+  const results = response.results;
+  if (Array.isArray(results)) {
+    return results.map((result) => ({
+      uuid: result.uuid,
+      datum: result.datumStatusGezet,
+      statustoelichting: result.statustoelichting,
+    }));
+  }
+
+  return [];
+}
+
+export async function fetchBezwaarStatus(
+  zaakUUID: string
+): Promise<BezwaarStatus[]> {
+  const params = {
+    zaak: zaakUUID,
+  };
+
+  const requestConfig = getApiConfig('BEZWAREN_STATUS', {
+    params,
+    transformResponse: transformBezwaarStatus,
+  });
+
+  const bezwarenStatusResponse = await requestData<BezwaarStatus[]>(
+    requestConfig,
+    zaakUUID
+  );
+
+  if (bezwarenStatusResponse.status === 'OK') {
+    return bezwarenStatusResponse.content;
+  }
+
+  return [];
 }

@@ -11,16 +11,11 @@ import {
 } from '../../components';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
+import BezwarenStatusLines from './BezwarenStatusLines';
 
 const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
   const { uuid } = useParams<{ uuid: string }>();
-
-  console.log(
-    uuid,
-    BEZWAREN.content,
-    BEZWAREN.content?.find((b) => b.uuid === uuid)
-  );
 
   const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid);
 
@@ -72,6 +67,9 @@ const BezwarenDetail = () => {
           </>
         )}
       </PageContent>
+      {!!bezwaar && (
+        <BezwarenStatusLines id={bezwaar.uuid} statussen={bezwaar.statussen} />
+      )}
     </DetailPage>
   );
 };
