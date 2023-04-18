@@ -160,10 +160,18 @@ function AppAuthenticated() {
         <MainHeader isAuthenticated={true} isHeroVisible={true} />
         <div className={styles.App} id="skip-to-id-AppContent">
           <Switch>
-            <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
-            <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
-            <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
-            <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
+            )}
 
             <Route component={NotFound} />
           </Switch>
