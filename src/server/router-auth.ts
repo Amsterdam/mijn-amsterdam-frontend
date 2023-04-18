@@ -125,13 +125,14 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
 });
 
 if (FeatureToggle.eherkenningActive) {
-
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
     const auth = await getAuth(req);
     if (auth.profile.id) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
-    return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning');
+    return res.redirect(
+      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+    );
   });
   router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
     const auth = await getAuth(req);
