@@ -19,6 +19,12 @@ export const AppRoutes: Record<string, string> = {
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
+
+  SIA: '/meldingen',
+  SIA_OPEN: '/meldingen/open/:page?',
+  SIA_CLOSED: '/meldingen/afgesloten/:page?',
+  'SIA/DETAIL': '/meldingen/detail/:id',
+
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
@@ -46,6 +52,7 @@ export const AppRoutes: Record<string, string> = {
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
   HORECA: '/horeca/',
   'HORECA/DETAIL': '/horeca/:title/:id',
+  YIVI_LANDING: '/inloggen-met-yivi',
 };
 
 export const AppRoutesRedirect = [
@@ -101,6 +108,8 @@ export const PublicRoutes = [
   AppRoutes.API1_LOGIN,
   AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
+  AppRoutes.YIVI_LANDING,
+  AppRoutes.ROOT,
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(

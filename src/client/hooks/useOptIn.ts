@@ -1,8 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { useCookie, cookieAtom, COOKIE_OPTIN } from './useCookie';
 import { useRecoilValue } from 'recoil';
-import { isUiElementVisible } from '../config/app';
-import { useProfileTypeValue } from './useProfileType';
+import { cookieAtom, COOKIE_OPTIN, useCookie } from './useCookie';
 
 export interface OptIn {
   isOptIn: boolean;
@@ -11,15 +9,9 @@ export interface OptIn {
 }
 
 export function useOptIn(): OptIn {
-  const profileType = useProfileTypeValue();
   const [isOptInCookie, setOptInCookie] = useCookie(COOKIE_OPTIN, {
     path: '/',
   });
-
-  const isPersonalizedTipsEnabled = isUiElementVisible(
-    profileType,
-    'persoonlijkeTips'
-  );
 
   const optIn = useCallback(() => {
     setOptInCookie('yes');
@@ -31,21 +23,13 @@ export function useOptIn(): OptIn {
 
   return useMemo(() => {
     return {
-      isOptIn: isPersonalizedTipsEnabled && isOptInCookie === 'yes',
+      isOptIn: isOptInCookie === 'yes',
       optIn,
       optOut,
     };
-  }, [isOptInCookie, optIn, optOut, isPersonalizedTipsEnabled]);
+  }, [isOptInCookie, optIn, optOut]);
 }
 
 export function useOptInValue() {
-  const profileType = useProfileTypeValue();
-  const isPersonalizedTipsEnabled = isUiElementVisible(
-    profileType,
-    'persoonlijkeTips'
-  );
-  return (
-    useRecoilValue(cookieAtom)[COOKIE_OPTIN] === 'yes' &&
-    isPersonalizedTipsEnabled
-  );
+  return useRecoilValue(cookieAtom)[COOKIE_OPTIN] === 'yes';
 }

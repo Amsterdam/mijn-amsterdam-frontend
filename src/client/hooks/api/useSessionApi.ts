@@ -6,12 +6,7 @@ import {
   ApiErrorResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import {
-  AUTH_API_URL,
-  AUTH_API_URL_DIGID,
-  AUTH_API_URL_EHERKENNING,
-  LOGOUT_URL,
-} from '../../config/api';
+import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
@@ -89,14 +84,12 @@ export function useSessionApi() {
       isLoading,
       isDirty,
       isPristine,
-      refetch: () =>
+      refetch: () => {
         fetch({
-          url:
-            sessionData.authMethod === 'eherkenning'
-              ? AUTH_API_URL_EHERKENNING
-              : AUTH_API_URL_DIGID,
+          url: AUTH_API_URL,
           postpone: false,
-        }),
+        });
+      },
       logout: () => logoutSession(),
     }));
   }, [

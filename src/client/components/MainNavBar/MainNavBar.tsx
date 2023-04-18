@@ -8,6 +8,7 @@ import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
+import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
@@ -17,7 +18,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LogoutLink from '../LogoutLink/LogoutLink';
+import LogoutLink from './LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
@@ -33,7 +34,6 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
@@ -45,7 +45,7 @@ export interface MainNavLinkProps {
   title: string;
 }
 
-function SecondaryLinks() {
+export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
@@ -61,15 +61,18 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      {!isError(BRP) && !isError(KVK) && (
-        <ProfileName
-          person={BRP.content?.persoon}
-          company={KVK?.content}
-          profileType={profileType}
-          profileAttribute={PROFILE.content?.profile?.id}
-        />
-      )}
-      <LogoutLink>Uitloggen</LogoutLink>
+      <span className={styles['secondaryLinks-inner']}>
+        {!isError(BRP) && !isError(KVK) && (
+          <ProfileName
+            person={BRP.content?.persoon}
+            company={KVK?.content}
+            profileType={profileType}
+            profileAttribute={PROFILE.content?.profile?.id}
+          />
+        )}
+        <LogoutLink>Uitloggen</LogoutLink>
+        {!isDesktopScreen && <div className={styles.HR} />}
+      </span>
     </div>
   );
 }
@@ -202,7 +205,15 @@ export default function MainNavBar({
   const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
     useBurgerMenuAnimation(isBurgerMenuVisible);
 
+  const isSimpleNavBarEnabled = isUiElementVisible(
+    profileType,
+    'MainNavBarSimple'
+  );
+
   const menuItemsComposed = useMemo(() => {
+    if (isSimpleNavBarEnabled) {
+      return [];
+    }
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
       .map((item) => {
@@ -223,9 +234,7 @@ export default function MainNavBar({
 
         return getMenuItem(menuItem);
       });
-  }, [myChapterItems, profileType, termReplace]);
-
-  const isSearchVisible = isUiElementVisible(profileType, 'search');
+  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
 
   return (
     <nav className={styles.MainNavBar}>
@@ -261,10 +270,12 @@ export default function MainNavBar({
                 className={styles.logo}
               />
 
-              <BurgerButton
-                isActive={!!isBurgerMenuVisible}
-                toggleBurgerMenu={toggleBurgerMenu}
-              />
+              {hasBurgerMenu && (
+                <BurgerButton
+                  isActive={!!isBurgerMenuVisible}
+                  toggleBurgerMenu={toggleBurgerMenu}
+                />
+              )}
             </div>
 
             <SecondaryLinks />
@@ -272,7 +283,8 @@ export default function MainNavBar({
           </animated.div>
         </>
       )}
-      {isSearchVisible && (
+
+      {!isSimpleNavBarEnabled && (
         <div className={styles.InfoButtons}>
           {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
             <IconButton
@@ -291,7 +303,8 @@ export default function MainNavBar({
           )}
         </div>
       )}
-      {isSearchVisible && isDisplayLiveSearch && isSearchActive && (
+
+      {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>

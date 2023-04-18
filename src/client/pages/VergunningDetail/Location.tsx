@@ -1,6 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { getOtapEnvItem, LOCATION_ZOOM } from '../../../universal/config';
+import {
+  DEFAULT_LAT,
+  DEFAULT_LNG,
+  getOtapEnvItem,
+  LOCATION_ZOOM,
+} from '../../../universal/config';
 import {
   extractAddress,
   getLatLonByAddress,
@@ -13,13 +18,28 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
 
 interface LocationProps {
-  location: string | null;
+  // The address for determining latlng
+  location?: string | null;
+  // Label for InfoDetail
   label?: string;
+  // Title of the Modal
+  modalTitle?: string;
+  // Text content above the "Modal open" link
+  text?: string;
+  // Explicit latlng
+  latlng?: LatLngLiteral;
 }
 
-export function Location({ location, label = 'Locatie' }: LocationProps) {
+export function Location({
+  // Addres
+  location = null,
+  latlng,
+  modalTitle,
+  text,
+  label,
+}: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
-
+  const [hasLocationData, setHasLocationData] = useState(false);
   const [bagApi, fetchBag] = useDataApi<LatLngLiteral | null>(
     {
       url: '',
@@ -27,6 +47,12 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
     },
     null
   );
+
+  useEffect(() => {
+    if (!!location || !!latlng) {
+      setHasLocationData(true);
+    }
+  }, [bagApi, location, latlng]);
 
   useEffect(() => {
     if (bagApi.isDirty || location === null) {
@@ -48,12 +74,13 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
     <>
       <InfoDetail
         className={styles.LocationInfo}
-        label={label}
+        label={label ?? 'Locatie'}
         value={
           <>
-            {location || '-'}{' '}
-            {location && (
+            {hasLocationData ? (
               <>
+                {!!text && <>{text}</>}
+                {!text && !!location && <>{location}</>}
                 <Button
                   className={styles.MapLink}
                   variant="inline"
@@ -63,36 +90,38 @@ export function Location({ location, label = 'Locatie' }: LocationProps) {
                   Bekijk op de kaart
                 </Button>
               </>
+            ) : (
+              '-'
             )}
           </>
         }
       />
-      {location && (
-        <Modal
-          isOpen={isLocationModalOpen}
-          onClose={() => setLocationModalOpen(false)}
-          title="Vergunningslocatie"
-          contentWidth="62rem"
-        >
-          <div className={styles.LocationModalInner}>
-            {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
-            {!bagApi.isError && !!bagApi.data ? (
-              <MyAreaLoader
-                showPanels={false}
-                zoom={LOCATION_ZOOM}
-                datasetIds={[]}
-                activeBaseLayerType={BaseLayerType.Aerial}
-                centerMarker={{
-                  latlng: bagApi.data,
-                  label: location,
-                }}
-              />
-            ) : (
-              <p>Adres kan niet getoond worden</p>
-            )}
-          </div>
-        </Modal>
-      )}
+
+      <Modal
+        isOpen={isLocationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+        title={modalTitle ?? label ?? 'Locatie'}
+        contentWidth="62rem"
+      >
+        <div className={styles.LocationModalInner}>
+          {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
+          {hasLocationData ? (
+            <MyAreaLoader
+              showPanels={false}
+              zoom={LOCATION_ZOOM}
+              datasetIds={[]}
+              activeBaseLayerType={BaseLayerType.Aerial}
+              centerMarker={{
+                latlng: latlng ??
+                  bagApi.data ?? { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
+                label: label ?? location ?? `${latlng?.lat},${latlng?.lng}`,
+              }}
+            />
+          ) : (
+            <p>Adres kan niet getoond worden</p>
+          )}
+        </div>
+      </Modal>
     </>
   );
 }

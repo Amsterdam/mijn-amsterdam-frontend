@@ -16,7 +16,6 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -29,6 +28,7 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 
 import { default as LandingPage } from './pages/Landing/Landing';
+import { default as LandingPageYivi } from './pages/Landing/LandingYivi';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -82,6 +82,10 @@ const KlachtenDetail = lazy(
 const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
+const Sia = lazy(() => import('./pages/Sia/Sia'));
+const SiaDetail = lazy(() => import('./pages/SiaDetail/SiaDetail'));
+const SiaListClosed = lazy(() => import('./pages/Sia/SiaListClosed'));
+const SiaListOpen = lazy(() => import('./pages/Sia/SiaListOpen'));
 const ToeristischeVerhuur = lazy(
   () => import('./pages/ToeristischeVerhuur/ToeristischeVerhuur')
 );
@@ -112,6 +116,11 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route
+            exact
+            path={AppRoutes.YIVI_LANDING}
+            component={LandingPageYivi}
+          />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
@@ -137,12 +146,6 @@ function AppAuthenticated() {
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
-
-  const isHeroVisible = !(
-    isUiElementVisible(profileType, 'mijnBuurt') &&
-    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
-  );
-
   const redirectAfterLogin = useDeeplinkRedirect();
 
   useEffect(() => {
@@ -150,6 +153,37 @@ function AppAuthenticated() {
       history.push(redirectAfterLogin);
     }
   }, [redirectAfterLogin, history]);
+
+  if (profileType === 'private-attributes') {
+    return (
+      <>
+        <MainHeader isAuthenticated={true} isHeroVisible={true} />
+        <div className={styles.App} id="skip-to-id-AppContent">
+          <Switch>
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
+            )}
+            {FeatureToggle.siaActive && (
+              <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
+            )}
+
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+        <MainFooter isAuthenticated={true} />
+      </>
+    );
+  }
+
+  const isHeroVisible = !matchPath(history.location.pathname, {
+    path: AppRoutes.BUURT,
+  });
 
   return (
     <>
@@ -159,9 +193,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          {isUiElementVisible(profileType, 'mijnBuurt') && (
-            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          )}
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -262,9 +294,6 @@ function AppAuthenticated() {
             <Route path={AppRoutes.HORECA} component={Horeca} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
-          {isUiElementVisible(profileType, 'search') && (
-            <Route path={AppRoutes.SEARCH} component={Search} />
-          )}
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>

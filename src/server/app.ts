@@ -34,13 +34,15 @@ import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 
 const sentryOptions: Sentry.NodeOptions = {
-  dsn: getOtapEnvItem('bffSentryDsn'),
-  environment: OTAP_ENV,
-  debug: OTAP_ENV === 'development',
+  dsn: process.env.BFF_SENTRY_DSN,
+  environment: ENV,
+  debug: isDevelopment,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (OTAP_ENV === 'development') {
+    if (isDevelopment) {
       console.log(hint);
+    }
+    if (!process.env.BFF_SENTRY_DSN) {
       return null;
     }
     return event;

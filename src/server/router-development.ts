@@ -12,10 +12,13 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
 } from './config';
-import { AuthProfile } from './helpers/app';
-import { generateDevSessionCookieValue } from './helpers/app.development';
-import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
+import {
+  AuthProfile,
+  generateDevSessionCookieValue,
+  getAuth,
+} from './helpers/app';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import { countLoggedInVisit } from './services/visitors';
 
 export const authRouterDevelopment = express.Router();
@@ -28,7 +31,9 @@ authRouterDevelopment.get(
         new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
       ),
       httpOnly: true,
-      sameSite: false,
+      path: '/',
+      secure: false, // Not secure for local development
+      sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
     const userId = testAccounts[req.params.user] ?? DEV_USER_ID;
@@ -45,15 +50,32 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    return res.redirect(
-      `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`
-    );
+    let redirectUrl = `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+
+    switch (req.params.authMethod) {
+      case 'yivi':
+        redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`;
+        break;
+    }
+
+    return res.redirect(redirectUrl);
   }
 );
 
-authRouterDevelopment.get('/api/v1/dev/auth/logout', (req, res) => {
+authRouterDevelopment.get('/api/v1/dev/auth/logout', async (req, res) => {
+  const auth = await getAuth(req);
+
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+
+  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+
+  switch (auth.profile.authMethod) {
+    case 'yivi':
+      redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
+      break;
+  }
+
+  return res.redirect(redirectUrl);
 });
 
 export const relayDevRouter = express.Router();

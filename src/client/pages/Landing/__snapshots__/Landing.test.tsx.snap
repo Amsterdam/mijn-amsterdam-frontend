@@ -86,53 +86,6 @@ exports[`<Landing /> Renders without crashing 1`] = `
         </p>
       </div>
       <div
-        class="LoginOption LoginOption--irma"
-      >
-        <h3
-          class="Heading Heading__tiny LoginOptionHeading"
-        >
-          Voor particulieren
-        </h3>
-        <p>
-          <a
-            class="LoginBtn LoginBtn--irma"
-            href="/api/v1/auth/yivi/login"
-            rel="noopener noreferrer"
-            role="button"
-          >
-            <span
-              class="LoginLogoWrap"
-            >
-              <img
-                alt="IRMA logo"
-                class="LoginLogo"
-                src="irma_logo.jpg"
-              />
-            </span>
-            <span
-              class="LoginButtonText"
-            >
-              Inloggen met IRMA
-            </span>
-          </a>
-        </p>
-        <h4
-          class="Heading Heading__tiny"
-        >
-          Hebt u nog geen IRMA? Regel dit dan eerst.
-        </h4>
-        <p>
-          Ga naar 
-          <a
-            href="https://irma.app"
-            rel="noopener noreferrer"
-          >
-            IRMA: een nieuwe manier van inloggen
-          </a>
-           voor meer informatie.
-        </p>
-      </div>
-      <div
         class="LoginOption LoginOption--eherkenning"
       >
         <h3

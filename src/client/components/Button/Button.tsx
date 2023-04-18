@@ -54,7 +54,7 @@ interface PositionedIconProps {
   iconFill?: string;
 }
 
-function buttonStyle({
+export function buttonStyle({
   lean,
   isDisabled,
   variant,
@@ -87,7 +87,7 @@ function PositionedIcon({
   );
 }
 
-function ButtonBody({
+export function ButtonBody({
   icon,
   iconSize,
   iconPosition,
