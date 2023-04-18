@@ -40,7 +40,7 @@ const sentryOptions: Sentry.NodeOptions = {
   debug: isDevelopment,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (!getOtapEnvItem('bffSentryDsn')) {
+    if (!process.env.BFF_SENTRY_DSN && isDevelopment) {
       console.log(hint);
     }
     if (!process.env.BFF_SENTRY_DSN) {
