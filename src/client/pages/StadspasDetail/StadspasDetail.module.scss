@@ -8,7 +8,7 @@
 .DetailPageContent {
   margin-bottom: 5rem;
 
-  + .PageContentStadspasInfo {
+  +.PageContentStadspasInfo {
     border-top: 0.1rem solid $color-neutral-grey2;
   }
 }
@@ -53,8 +53,7 @@
     height: 6.5rem;
   }
 
-  > li {
-    flex: 1 1 auto;
+  >li {
     padding-top: 3.5rem;
 
     @include mq-tablet {
@@ -77,6 +76,7 @@
     padding-left: 2.4rem;
     font-weight: bold;
     white-space: nowrap;
+
     // Legend color
     &:before {
       content: '';
@@ -95,6 +95,7 @@
         background-color: $color-support-warning;
       }
     }
+
     &:after {
       background-color: $color-support-warning;
     }
@@ -102,6 +103,8 @@
 
   .AmountLeft {
     margin-left: 0.2rem;
+    flex-grow: 1;
+
     .Label {
       text-align: right;
       right: 0;
@@ -118,6 +121,7 @@
         text-align: left;
       }
     }
+
     &:after {
       background-color: $color-neutral-grey4;
     }

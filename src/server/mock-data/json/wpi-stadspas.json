@@ -29,7 +29,7 @@
             "description": "eenmalig extra kindtegoed",
             "code": "AMS_test_extra0/3_21/22",
             "budgetAssigned": 25,
-            "budgetBalance": 25,
+            "budgetBalance": 12,
             "urlTransactions": "/wpi/stadspas/transacties/xxxxxxxxxxxxxxxxx1234",
             "dateEnd": "2022-07-31T21:59:59.000Z"
           },
@@ -37,7 +37,7 @@
             "description": "kindtegoed",
             "code": "AMS_test_21/22",
             "budgetAssigned": 25,
-            "budgetBalance": 25,
+            "budgetBalance": 5,
             "urlTransactions": "/wpi/stadspas/transacties/xxxxxxxxxxxxxxxxx1234",
             "dateEnd": "2022-08-31T21:59:59.000Z"
           }
@@ -54,7 +54,7 @@
             "description": "kindtegoed",
             "code": "AMS_test_21/22_12/14",
             "budgetAssigned": 150,
-            "budgetBalance": 150,
+            "budgetBalance": 12,
             "urlTransactions": "/wpi/stadspas/transacties/xxxxxxxxxxxxxxxxx1234",
             "dateEnd": "2022-07-31T21:59:59.000Z"
           },
@@ -62,7 +62,7 @@
             "description": "eenmalig extra kindtegoed",
             "code": "AMS_test_extra4/14_21/22",
             "budgetAssigned": 35,
-            "budgetBalance": 35,
+            "budgetBalance": 22,
             "urlTransactions": "/wpi/stadspas/transacties/xxxxxxxxxxxxxxxxx1234",
             "dateEnd": "2022-07-31T21:59:59.000Z"
           }
