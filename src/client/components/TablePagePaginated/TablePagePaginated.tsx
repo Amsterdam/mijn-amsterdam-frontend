@@ -33,7 +33,7 @@ export function PageTableCutoffLink({
   params,
 }: PageTableCutoffLinkProps) {
   const showLink = count > cutOffAt;
-  console.log('showLink', showLink, count, cutOffAt);
+
   return showLink ? (
     <p className={styles.ShowAllButtonContainer}>
       <Linkd href={generatePath(appRouteWithPageParam, params)}>{label}</Linkd>

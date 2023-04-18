@@ -94,9 +94,9 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
 
     case Chapters.SIA:
       const hasSiaItems =
-        !!SIA.content?.open?.items.length ||
-        !!SIA.content?.afgesloten?.items.length;
-      return !isLoading(SIA) && (FeatureToggle.siaActive ? hasSiaItems : false);
+        !!SIA?.content?.open?.items.length ||
+        !!SIA?.content?.afgesloten?.items.length;
+      return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
 
     case Chapters.AFVAL:
       return (

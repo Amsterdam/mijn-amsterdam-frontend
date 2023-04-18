@@ -30,7 +30,7 @@ const SIA_ITEM = {
 const testState: any = {
   SIA: {
     status: 'OK',
-    content: [SIA_ITEM],
+    content: { open: { items: [SIA_ITEM] }, afgesloten: { items: [] } },
   },
 };
 
