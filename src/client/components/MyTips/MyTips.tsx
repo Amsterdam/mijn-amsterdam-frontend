@@ -4,7 +4,7 @@ import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { isExternalUrl } from '../../../universal/helpers';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
-import { isUiElementVisible, PLACEHOLDER_IMAGE_URL } from '../../config/app';
+import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 import { usePhoneScreen } from '../../hooks';
 import {
   trackItemClick,
@@ -233,9 +233,7 @@ export default function MyTips({
         className
       )}
     >
-      {isUiElementVisible(profileType, 'persoonlijkeTips') && showHeader && (
-        <TipsOptInHeader showTipsPageLink={!!items.length} />
-      )}
+      {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
       <div className={styles.TipScrollContainer}>
         <ul
           className={classnames(

@@ -132,73 +132,84 @@ async function fetchServicesNotifications(
     ]);
   }
 
-  const [
-    brpNotificationsResult,
-    belastingNotificationsResult,
-    milieuzoneNotificationsResult,
-    vergunningenNotificationsResult,
-    erfpachtNotificationsResult,
-    subsidieNotificationsResult,
-    maintenanceNotificationsResult,
-    toeristischeVerhuurNotificationsResult,
-    fetchKrefiaNotificationsResult,
-    fetchWiorNotificationsResult,
-    fetchWpiNotificationsResult,
-    klachtenNotificationsResult,
-    horecaNotificationsResult,
-  ] = await Promise.allSettled([
-    fetchBrpNotifications(requestID, authProfileAndToken),
-    fetchBelastingNotifications(requestID, authProfileAndToken),
-    fetchMilieuzoneNotifications(requestID, authProfileAndToken),
-    fetchVergunningenNotifications(requestID, authProfileAndToken),
-    fetchErfpachtNotifications(requestID, authProfileAndToken),
-    fetchSubsidieNotifications(requestID, authProfileAndToken),
-    fetchMaintenanceNotificationsDashboard(requestID),
-    fetchToeristischeVerhuurNotifications(requestID, authProfileAndToken),
-    fetchKrefiaNotifications(requestID, authProfileAndToken),
-    fetchWiorNotifications(requestID, authProfileAndToken, profileType),
-    fetchWpiNotifications(requestID, authProfileAndToken),
-    fetchKlachtenNotifications(requestID, authProfileAndToken),
-    fetchHorecaNotifications(requestID, authProfileAndToken),
-  ]);
+  if (profileType === 'private' || profileType === 'private-commercial') {
+    const [
+      brpNotificationsResult,
+      belastingNotificationsResult,
+      milieuzoneNotificationsResult,
+      vergunningenNotificationsResult,
+      erfpachtNotificationsResult,
+      subsidieNotificationsResult,
+      maintenanceNotificationsResult,
+      toeristischeVerhuurNotificationsResult,
+      fetchKrefiaNotificationsResult,
+      fetchWiorNotificationsResult,
+      fetchWpiNotificationsResult,
+      klachtenNotificationsResult,
+      horecaNotificationsResult,
+    ] = await Promise.allSettled([
+      fetchBrpNotifications(requestID, authProfileAndToken),
+      fetchBelastingNotifications(requestID, authProfileAndToken),
+      fetchMilieuzoneNotifications(requestID, authProfileAndToken),
+      fetchVergunningenNotifications(requestID, authProfileAndToken),
+      fetchErfpachtNotifications(requestID, authProfileAndToken),
+      fetchSubsidieNotifications(requestID, authProfileAndToken),
+      fetchMaintenanceNotificationsDashboard(requestID),
+      fetchToeristischeVerhuurNotifications(requestID, authProfileAndToken),
+      fetchKrefiaNotifications(requestID, authProfileAndToken),
+      fetchWiorNotifications(requestID, authProfileAndToken, profileType),
+      fetchWpiNotifications(requestID, authProfileAndToken),
+      fetchKlachtenNotifications(requestID, authProfileAndToken),
+      fetchHorecaNotifications(requestID, authProfileAndToken),
+    ]);
 
-  const brpNotifications = getSettledResult(brpNotificationsResult);
-  const belastingNotifications = getSettledResult(belastingNotificationsResult);
-  const milieuzoneNotifications = getSettledResult(
-    milieuzoneNotificationsResult
-  );
-  const vergunningenNotifications = getSettledResult(
-    vergunningenNotificationsResult
-  );
-  const erfpachtNotifications = getSettledResult(erfpachtNotificationsResult);
-  const subsidieNotifications = getSettledResult(subsidieNotificationsResult);
-  const maintenanceNotifications = getSettledResult(
-    maintenanceNotificationsResult
-  );
-  const toeristischeVerhuurNotifications = getSettledResult(
-    toeristischeVerhuurNotificationsResult
-  );
-  const krefiaNotifications = getSettledResult(fetchKrefiaNotificationsResult);
-  const wiorNotifications = getSettledResult(fetchWiorNotificationsResult);
-  const wpiNotifications = getSettledResult(fetchWpiNotificationsResult);
-  const klachtenNotifications = getSettledResult(klachtenNotificationsResult);
-  const horecaNotificaties = getSettledResult(horecaNotificationsResult);
+    const brpNotifications = getSettledResult(brpNotificationsResult);
+    const belastingNotifications = getSettledResult(
+      belastingNotificationsResult
+    );
+    const milieuzoneNotifications = getSettledResult(
+      milieuzoneNotificationsResult
+    );
+    const vergunningenNotifications = getSettledResult(
+      vergunningenNotificationsResult
+    );
+    const erfpachtNotifications = getSettledResult(erfpachtNotificationsResult);
+    const subsidieNotifications = getSettledResult(subsidieNotificationsResult);
+    const maintenanceNotifications = getSettledResult(
+      maintenanceNotificationsResult
+    );
+    const toeristischeVerhuurNotifications = getSettledResult(
+      toeristischeVerhuurNotificationsResult
+    );
+    const krefiaNotifications = getSettledResult(
+      fetchKrefiaNotificationsResult
+    );
+    const wiorNotifications = getSettledResult(fetchWiorNotificationsResult);
+    const wpiNotifications = getSettledResult(fetchWpiNotificationsResult);
+    const klachtenNotifications = getSettledResult(klachtenNotificationsResult);
+    const horecaNotificaties = getSettledResult(horecaNotificationsResult);
 
-  return getTipsAndNotificationsFromApiResults([
-    brpNotifications,
-    belastingNotifications,
-    milieuzoneNotifications,
-    vergunningenNotifications,
-    erfpachtNotifications,
-    subsidieNotifications,
-    maintenanceNotifications,
-    toeristischeVerhuurNotifications,
-    krefiaNotifications,
-    wiorNotifications,
-    wpiNotifications,
-    klachtenNotifications,
-    horecaNotificaties,
-  ]);
+    return getTipsAndNotificationsFromApiResults([
+      brpNotifications,
+      belastingNotifications,
+      milieuzoneNotifications,
+      vergunningenNotifications,
+      erfpachtNotifications,
+      subsidieNotifications,
+      maintenanceNotifications,
+      toeristischeVerhuurNotifications,
+      krefiaNotifications,
+      wiorNotifications,
+      wpiNotifications,
+      klachtenNotifications,
+      horecaNotificaties,
+    ]);
+  }
+
+  return {
+    NOTIFICATIONS: apiSuccessResult([]),
+    TIPS: apiSuccessResult([]),
+  };
 }
 
 export const fetchTipsAndNotifications = memoize(fetchServicesNotifications, {

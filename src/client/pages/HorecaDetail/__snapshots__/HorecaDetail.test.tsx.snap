@@ -73,7 +73,7 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
         <p
           class="Value"
         >
-          J.J. Cremerplein 54I 1054 TM Amsterdam 
+          J.J. Cremerplein 54I 1054 TM Amsterdam
           <button
             class="Button Button__inline Button__lean MapLink"
           >

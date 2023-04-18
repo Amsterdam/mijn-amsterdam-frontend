@@ -20,19 +20,12 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
         >
           logo-amsterdam.svg
         </svg>
-        <button
-          aria-expanded="false"
-          class="BurgerMenuToggleBtn"
-          id="BurgerMenuToggleBtn"
-        >
-          Toon navigatie
-        </button>
       </div>
       <div
         class="secondaryLinks"
       >
         <span
-          class="ProfileName ProfileName--private"
+          class="secondaryLinks-inner"
         >
           <button
             class="Button Button__plain Button__lean ProfileLink ProfileLink--private"
@@ -48,25 +41,25 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
             </svg>
             Test van FooBar
           </button>
-        </span>
-        <a
-          class="Button Button__plain Button__lean Linkd LogoutLink"
-          href="/api/v1/auth/logout"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
+          <a
+            class="Button Button__plain Button__lean ProfileLink LogoutLink"
+            href="/api/v1/auth/logout"
           >
-            Logout.svg
-          </svg>
-          <span>
+            <svg
+              aria-hidden="true"
+              class="Icon Icon__left"
+              fill="#000"
+              height="14px"
+              width="14px"
+            >
+              Logout.svg
+            </svg>
             Uitloggen
-          </span>
-        </a>
+          </a>
+          <div
+            class="HR"
+          />
+        </span>
       </div>
       <a
         aria-current="page"

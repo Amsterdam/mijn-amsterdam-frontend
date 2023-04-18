@@ -46,7 +46,7 @@ type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
 export interface TableProps<T> {
   items: T[];
   className?: string;
-  titleKey?: keyof T;
+  titleKey?: keyof T | string;
   displayProps?: DisplayProps<T>;
 }
 

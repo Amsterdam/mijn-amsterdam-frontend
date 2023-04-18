@@ -16,6 +16,8 @@ import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
+import SIA from './json/sia-meldingen.json';
+import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
@@ -182,6 +184,24 @@ export const mockDataConfig: MockDataConfig = {
       //   return 'no-content';
       // }
       return await loadMockApiResponseJson(SUBSIDIE);
+    },
+  },
+  // [String(ApiUrls.SIA)]: {
+  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+  //   responseData: async (config: any) => {
+  //     // if (isCommercialUser(config)) {
+  //     //   return await loadMockApiResponseJson(MILIEUZONE);
+  //     // }
+  //     return await loadMockApiResponseJson(SIA);
+  //   },
+  // },
+  [`${ApiUrls.SIA}3fa85f64-5717-4562-b3fc-2c963f66afa6/attachments`]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(MILIEUZONE);
+      // }
+      return await loadMockApiResponseJson(SIA_ATTACHMENTS);
     },
   },
   // [String(ApiUrls.AFVAL)]: {
