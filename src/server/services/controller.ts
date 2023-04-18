@@ -62,9 +62,7 @@ function getServiceMap(profileType: ProfileType) {
 }
 
 function getServiceTipsMap(profileType: ProfileType) {
-  return (
-    servicesTipsByProfileType[profileType] || servicesTipsByProfileType.private
-  );
+  return servicesTipsByProfileType[profileType] ?? {};
 }
 
 /**
@@ -298,7 +296,7 @@ export const servicesTipsByProfileType = {
     servicesByProfileType.private,
     tipsOmit as Array<keyof PrivateServices>
   ),
-  'private-attributes': servicesByProfileType['private-attributes'],
+  'private-attributes': {},
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
     tipsOmit as Array<keyof PrivateCommercialServices>
