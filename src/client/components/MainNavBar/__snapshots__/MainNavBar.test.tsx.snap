@@ -20,13 +20,6 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
         >
           logo-amsterdam.svg
         </svg>
-        <button
-          aria-expanded="false"
-          class="BurgerMenuToggleBtn"
-          id="BurgerMenuToggleBtn"
-        >
-          Toon navigatie
-        </button>
       </div>
       <div
         class="secondaryLinks"

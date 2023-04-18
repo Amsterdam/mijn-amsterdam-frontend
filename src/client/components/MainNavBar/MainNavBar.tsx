@@ -284,7 +284,7 @@ export default function MainNavBar({
         </>
       )}
 
-      {!isUiElementVisible(profileType, 'MainNavBarSimple') && (
+      {!isSimpleNavBarEnabled && (
         <div className={styles.InfoButtons}>
           {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
             <IconButton
@@ -304,7 +304,7 @@ export default function MainNavBar({
         </div>
       )}
 
-      {isDisplayLiveSearch && isSearchActive && (
+      {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>

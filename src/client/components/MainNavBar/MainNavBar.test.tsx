@@ -66,8 +66,7 @@ describe('<MainNavBar />', () => {
   it('Renders burger menu on small screens', () => {
     (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
     (useProfileTypeValue as jest.Mock).mockReturnValue('private');
-
-    (useTabletScreen as jest.Mock).mockReturnValueOnce(true);
+    (useTabletScreen as jest.Mock).mockReturnValue(true);
 
     render(<Component />);
 
