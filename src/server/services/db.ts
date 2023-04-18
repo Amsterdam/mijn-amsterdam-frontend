@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
-import { Pool, ClientConfig, Client } from 'pg';
-import { IS_AP, IS_PRODUCTION } from '../../universal/config';
+import { ClientConfig, Pool } from 'pg';
+import { IS_PRODUCTION } from '../../universal/config';
 
 export const pgDbConfig: ClientConfig = {
   host: process.env.DB_HOST,
@@ -21,7 +21,7 @@ export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE ??
   (IS_PRODUCTION ? 'prod_login_count' : 'acc_login_count');
 
-const tableQuery = `
+const createTableQuery = `
 -- Sequence and defined type
 CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
 
@@ -29,14 +29,23 @@ CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
 CREATE TABLE IF NOT EXISTS "public"."${tableNameLoginCount}" (
     "id" int4 NOT NULL DEFAULT nextval('${tableNameLoginCount}_id_seq'::regclass),
     "uid" varchar(100) NOT NULL,
+    "authMethod" varchar(100) NOT NULL,
     "date_created" timestamp NOT NULL DEFAULT now(),
     PRIMARY KEY ("id")
 );
 `;
 
+const alterTableQuery1 = `
+  ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
+  ADD IF NOT EXISTS "authMethod" VARCHAR(100);
+`;
+
 if (IS_PRODUCTION) {
-  (function createTable() {
-    pool.query(tableQuery, (err, res) => {
+  (function setupTable() {
+    pool.query(createTableQuery, (err, res) => {
+      console.log(err, res);
+    });
+    pool.query(alterTableQuery1, (err, res) => {
       console.log(err, res);
     });
   })();

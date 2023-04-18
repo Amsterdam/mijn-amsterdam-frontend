@@ -1,3 +1,21 @@
+h1
+  code= tableNameLoginCount
+    if authMethodSelected
+      span :#{authMethodSelected}
+    else 
+      span :all
+
+nav
+  a(href=`/api/v1/status/logins`) all
+  | #{' '} | #{' '}
+  a(href=`/api/v1/status/logins/digid`) digid
+  | #{' '} | #{' '}
+  a(href=`/api/v1/status/logins/eherkenning`) eherkenning
+  | #{' '} | #{' '}
+  a(href=`/api/v1/status/logins/yivi`) yivi
+<hr/>
+nav
+  a(href)
 nav
   each range in ranges
     a(href=`?dateStart=${range.dateStart}&dateEnd=${range.dateEnd}`) #{range.label}
