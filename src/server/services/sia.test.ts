@@ -346,40 +346,44 @@ describe('sia service', () => {
   });
 
   test('transformSIAData - Open', () => {
-    const attachments = forTesting.transformSIAData(siaResponse);
+    const siaItems = forTesting.transformSIAData(siaResponse);
 
-    expect(attachments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "address": "Eerste Tuindwarsstraat 1  2V
+    expect(siaItems).toMatchInlineSnapshot(`
+      Object {
+        "items": Array [
+          Object {
+            "address": "Eerste Tuindwarsstraat 1  2V
       1015RT Amsterdam",
-          "category": "Overig",
-          "dateClosed": "",
-          "dateIncidentEnd": null,
-          "dateIncidentStart": "2023-03-30T14:04:43+02:00",
-          "dateModified": "2023-03-30T14:04:44.660889+02:00",
-          "datePublished": "2023-03-30T14:04:43.764584+02:00",
-          "description": "Grab the snapshot and use set to mutate state immediately, and call getLoadable with the query and parameter to fire the request. The order between set and getLoadable does not matter because whaleInfoQuery already calls the query with the necessary parameter. The set guarantees a mutation to the whale id when the component re-renders.
+            "category": "Overig",
+            "dateClosed": "",
+            "dateIncidentEnd": null,
+            "dateIncidentStart": "2023-03-30T14:04:43+02:00",
+            "dateModified": "2023-03-30T14:04:44.660889+02:00",
+            "datePublished": "2023-03-30T14:04:43.764584+02:00",
+            "description": "Grab the snapshot and use set to mutate state immediately, and call getLoadable with the query and parameter to fire the request. The order between set and getLoadable does not matter because whaleInfoQuery already calls the query with the necessary parameter. The set guarantees a mutation to the whale id when the component re-renders.
 
       To prove this pre-fetch works, set a breakpoint in whaleInfoQuery right as fetch gets called. Examine the call stack and look for CurrentWhaleTypes at the bottom of the stack — this executes the onClick event. If it happens to be CurrentWhalePick, the request fired at re-render and not in the click event.
 
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
-          "email": "hela.hola@amsterdam.nl",
-          "hasAttachments": true,
-          "id": "12419",
-          "identifier": "SIG-12419",
-          "latlon": Object {
-            "lat": 52.37778548459913,
-            "lng": 4.883837264102948,
+            "email": "hela.hola@amsterdam.nl",
+            "hasAttachments": true,
+            "id": "12419",
+            "identifier": "SIG-12419",
+            "latlon": Object {
+              "lat": 52.37778548459913,
+              "lng": 4.883837264102948,
+            },
+            "link": Object {
+              "title": "SIA Melding SIG-12419",
+              "to": "/meldingen/detail/12419",
+            },
+            "phone": "065656565656",
+            "status": "Open",
           },
-          "link": Object {
-            "title": "SIA Melding SIG-12419",
-            "to": "/meldingen/detail/12419",
-          },
-          "phone": "065656565656",
-          "status": "Open",
-        },
-      ]
+        ],
+        "pageSize": 50,
+        "total": 3,
+      }
     `);
   });
 
@@ -391,37 +395,41 @@ describe('sia service', () => {
     const attachments = forTesting.transformSIAData(siaResponseCopy);
 
     expect(attachments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "address": "Eerste Tuindwarsstraat 1  2V
+      Object {
+        "items": Array [
+          Object {
+            "address": "Eerste Tuindwarsstraat 1  2V
       1015RT Amsterdam",
-          "category": "Overig",
-          "dateClosed": "2023-03-30T14:04:44.660889+02:00",
-          "dateIncidentEnd": null,
-          "dateIncidentStart": "2023-03-30T14:04:43+02:00",
-          "dateModified": "2023-03-30T14:04:44.660889+02:00",
-          "datePublished": "2023-03-30T14:04:43.764584+02:00",
-          "description": "Grab the snapshot and use set to mutate state immediately, and call getLoadable with the query and parameter to fire the request. The order between set and getLoadable does not matter because whaleInfoQuery already calls the query with the necessary parameter. The set guarantees a mutation to the whale id when the component re-renders.
+            "category": "Overig",
+            "dateClosed": "2023-03-30T14:04:44.660889+02:00",
+            "dateIncidentEnd": null,
+            "dateIncidentStart": "2023-03-30T14:04:43+02:00",
+            "dateModified": "2023-03-30T14:04:44.660889+02:00",
+            "datePublished": "2023-03-30T14:04:43.764584+02:00",
+            "description": "Grab the snapshot and use set to mutate state immediately, and call getLoadable with the query and parameter to fire the request. The order between set and getLoadable does not matter because whaleInfoQuery already calls the query with the necessary parameter. The set guarantees a mutation to the whale id when the component re-renders.
 
       To prove this pre-fetch works, set a breakpoint in whaleInfoQuery right as fetch gets called. Examine the call stack and look for CurrentWhaleTypes at the bottom of the stack — this executes the onClick event. If it happens to be CurrentWhalePick, the request fired at re-render and not in the click event.
 
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
-          "email": "hela.hola@amsterdam.nl",
-          "hasAttachments": true,
-          "id": "12419",
-          "identifier": "SIG-12419",
-          "latlon": Object {
-            "lat": 52.37778548459913,
-            "lng": 4.883837264102948,
+            "email": "hela.hola@amsterdam.nl",
+            "hasAttachments": true,
+            "id": "12419",
+            "identifier": "SIG-12419",
+            "latlon": Object {
+              "lat": 52.37778548459913,
+              "lng": 4.883837264102948,
+            },
+            "link": Object {
+              "title": "SIA Melding SIG-12419",
+              "to": "/meldingen/detail/12419",
+            },
+            "phone": "065656565656",
+            "status": "Afgesloten",
           },
-          "link": Object {
-            "title": "SIA Melding SIG-12419",
-            "to": "/meldingen/detail/12419",
-          },
-          "phone": "065656565656",
-          "status": "Afgesloten",
-        },
-      ]
+        ],
+        "pageSize": 50,
+        "total": 3,
+      }
     `);
   });
 
