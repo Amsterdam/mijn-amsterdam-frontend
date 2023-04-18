@@ -1,9 +1,14 @@
 /* eslint-disable import/first */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-import { getOtapEnvItem, IS_AP, OTAP_ENV } from '../universal/config/env';
+import {
+  IS_AP,
+  IS_DEVELOPMENT,
+  IS_TAP,
+  OTAP_ENV,
+} from '../universal/config/env';
 
-if (OTAP_ENV === 'development') {
+if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
   console.debug(`trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
@@ -26,7 +31,7 @@ import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
-import { BffEndpoints, BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
+import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, corsOptions } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
@@ -35,11 +40,11 @@ import { router as publicRouter } from './router-public';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: process.env.BFF_SENTRY_DSN,
-  environment: ENV,
-  debug: isDevelopment,
+  environment: OTAP_ENV,
+  debug: IS_DEVELOPMENT,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (isDevelopment) {
+    if (IS_DEVELOPMENT) {
       console.log(hint);
     }
     if (!process.env.BFF_SENTRY_DSN) {
@@ -103,12 +108,15 @@ app.get(
   }
 );
 
-// Public routes
-app.use(authRouter);
+// Public routes Voor Test - Acceptance - Development
+if (IS_TAP) {
+  app.use(authRouter);
+}
+
 app.use(BFF_BASE_PATH, publicRouter);
 
 // Development routing for mock data
-if (!IS_AP) {
+if (IS_DEVELOPMENT) {
   app.use(authRouterDevelopment);
   app.use(relayDevRouter);
 }

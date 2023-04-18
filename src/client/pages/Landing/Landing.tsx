@@ -1,7 +1,10 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle } from '../../../universal/config';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
+import {
+  FeatureToggle,
+  OTAP_ENV,
+  testAccounts,
+} from '../../../universal/config';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -18,10 +21,6 @@ import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 
 let loginUrlDigid = LOGIN_URL_DIGID;
-
-if (!IS_TAP) {
-  loginUrlDigid += '/dev';
-}
 
 function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
   return (

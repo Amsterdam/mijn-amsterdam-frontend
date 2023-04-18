@@ -12,19 +12,16 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
 } from './config';
-import {
-  AuthProfile,
-  generateDevSessionCookieValue,
-  getAuth,
-} from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import { AuthProfile, getAuth } from './helpers/app';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
+import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
+import { generateDevSessionCookieValue } from './helpers/app.development';
 
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/api/v1/dev/auth/:authMethod/login/:user',
+  '/api/v1/auth/:authMethod/login/:user',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -62,7 +59,7 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get('/api/v1/dev/auth/logout', async (req, res) => {
+authRouterDevelopment.get('/api/v1/auth/logout', async (req, res) => {
   const auth = await getAuth(req);
 
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
