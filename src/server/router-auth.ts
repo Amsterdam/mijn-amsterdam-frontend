@@ -41,31 +41,10 @@ export const isAuthenticated =
 
 router.use(nocache);
 
-// Enable OIDC
+/**
+ * DIGID Oidc config
+ */
 router.use(BffEndpoints.AUTH_BASE_DIGID, auth(oidcConfigDigid));
-
-if (FeatureToggle.eherkenningActive) {
-  router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
-}
-
-if (FeatureToggle.yiviActive) {
-  router.use(BffEndpoints.AUTH_BASE_YIVI, auth(oidcConfigYivi));
-}
-
-router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
-  const authMethod = req.query.authMethod;
-
-  switch (authMethod) {
-    case 'digid':
-      return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
-    case 'eherkenning':
-      return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
-    default: {
-      // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
-      return res.redirect(`${process.env.BFF_FRONTEND_URL}?sso=1`);
-    }
-  }
-});
 
 router.use(
   BffEndpoints.AUTH_BASE_SSO_DIGID,
@@ -74,16 +53,6 @@ router.use(
     return res.send(req.oidc.isAuthenticated());
   }
 );
-
-if (FeatureToggle.eherkenningActive) {
-  router.use(
-    BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
-    attemptSilentLogin(),
-    (req, res, next) => {
-      return res.send(req.oidc.isAuthenticated());
-    }
-  );
-}
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   return res.oidc.login({
@@ -94,27 +63,20 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
   });
 });
 
-if (FeatureToggle.eherkenningActive) {
-  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
-      },
-    });
-  });
-}
-
-if (FeatureToggle.yiviActive) {
-  router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
-      },
-    });
-  });
-}
+router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
+  const auth = await getAuth(req);
+  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'digid') {
+    return res.send(
+      apiSuccessResult({
+        isAuthenticated: true,
+        profileType: 'private',
+        authMethod: 'digid',
+      })
+    );
+  }
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+  return sendUnauthorized(res);
+});
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   const auth = await getAuth(req);
@@ -124,7 +86,29 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
 });
 
+/**
+ * EHerkenning Oidc config
+ */
 if (FeatureToggle.eherkenningActive) {
+  router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
+
+  router.use(
+    BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
+    attemptSilentLogin(),
+    (req, res, next) => {
+      return res.send(req.oidc.isAuthenticated());
+    }
+  );
+
+  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
+    return res.oidc.login({
+      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
+      authorizationParams: {
+        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+      },
+    });
+  });
+
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
     const auth = await getAuth(req);
     if (auth.profile.id) {
@@ -134,6 +118,7 @@ if (FeatureToggle.eherkenningActive) {
       process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
     );
   });
+
   router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
     const auth = await getAuth(req);
     if (
@@ -153,22 +138,21 @@ if (FeatureToggle.eherkenningActive) {
   });
 }
 
-router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
-  const auth = await getAuth(req);
-  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'digid') {
-    return res.send(
-      apiSuccessResult({
-        isAuthenticated: true,
-        profileType: 'private',
-        authMethod: 'digid',
-      })
-    );
-  }
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  return sendUnauthorized(res);
-});
-
+/**
+ * YIVI Oidc config
+ */
 if (FeatureToggle.yiviActive) {
+  router.use(BffEndpoints.AUTH_BASE_YIVI, auth(oidcConfigYivi));
+
+  router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
+    return res.oidc.login({
+      returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
+      authorizationParams: {
+        redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
+      },
+    });
+  });
+
   router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
     const auth = await getAuth(req);
     if (auth.profile.id) {
@@ -192,6 +176,21 @@ if (FeatureToggle.yiviActive) {
     return sendUnauthorized(res);
   });
 }
+
+router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
+  const authMethod = req.query.authMethod;
+
+  switch (authMethod) {
+    case 'digid':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+    case 'eherkenning':
+      return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+    default: {
+      // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
+      return res.redirect(`${process.env.BFF_FRONTEND_URL}?sso=1`);
+    }
+  }
+});
 
 // AuthMethod agnostic endpoints
 router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
