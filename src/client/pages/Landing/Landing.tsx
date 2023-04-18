@@ -1,10 +1,6 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import {
-  FeatureToggle,
-  OTAP_ENV,
-  testAccounts,
-} from '../../../universal/config';
+import { FeatureToggle, OTAP_ENV } from '../../../universal/config';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -19,6 +15,7 @@ import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
+import { testAccounts } from '../../../universal/config/auth.development';
 
 let loginUrlDigid = LOGIN_URL_DIGID;
 

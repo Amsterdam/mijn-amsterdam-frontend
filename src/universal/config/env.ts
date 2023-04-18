@@ -82,16 +82,3 @@ const otapServerEnv: OtapEnv = {
 export function getOtapEnvItem<K extends keyof EnvVars>(key: K) {
   return otapServerEnv[OTAP_ENV] && otapServerEnv[OTAP_ENV][key];
 }
-
-export const DEV_USER_ID =
-  process.env.BFF_PROFILE_DEV_ID ?? 'dev-user-id-default';
-// accounts in  a string: foo=1234,bar=8098
-export const testAccounts = (
-  process.env.REACT_APP_TEST_ACCOUNTS || `dev=${DEV_USER_ID}`
-)
-  .split(',')
-  .reduce((acc, value) => {
-    const [userName, userId] = value.trim().split('=');
-    acc[userName] = userId;
-    return acc;
-  }, {} as Record<string, string>);

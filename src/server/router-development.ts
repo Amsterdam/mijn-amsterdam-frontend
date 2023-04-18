@@ -5,7 +5,6 @@ import express, {
   Response,
 } from 'express';
 import path from 'path';
-import { DEV_USER_ID, testAccounts } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -18,6 +17,7 @@ import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
+import { testAccounts } from '../universal/config/auth.development';
 
 export const authRouterDevelopment = express.Router();
 
@@ -35,7 +35,7 @@ authRouterDevelopment.get(
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
     const userName = req.params.user ?? Object.keys(testAccounts)[0];
-    const userId = testAccounts[userName] ?? DEV_USER_ID;
+    const userId = testAccounts[userName];
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId
