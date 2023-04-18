@@ -11,8 +11,9 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
+  profileTypeByAuthMethod,
 } from './config';
-import { AuthProfile, getAuth } from './helpers/app';
+import { AuthProfile, getAuth, sendUnauthorized } from './helpers/app';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
@@ -21,7 +22,7 @@ import { generateDevSessionCookieValue } from './helpers/app.development';
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/api/v1/auth/:authMethod/login/:user',
+  '/api/v1/auth/:authMethod/login/:user?',
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -33,7 +34,8 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userId = testAccounts[req.params.user] ?? DEV_USER_ID;
+    const userName = req.params.user ?? Object.keys(testAccounts)[0];
+    const userId = testAccounts[userName] ?? DEV_USER_ID;
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId
@@ -56,6 +58,29 @@ authRouterDevelopment.get(
     }
 
     return res.redirect(redirectUrl);
+  }
+);
+
+authRouterDevelopment.get(
+  '/api/v1/auth/:authMethod/check',
+  async (req, res) => {
+    const auth = await getAuth(req);
+    const authMethodParam = req.params.authMethod as AuthMethod;
+    if (
+      !!auth.token &&
+      auth.profile.authMethod === authMethodParam &&
+      !!profileTypeByAuthMethod?.[authMethodParam]?.length
+    ) {
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType: profileTypeByAuthMethod[authMethodParam][0], // NOTE: Private-Commercial Not implemented
+          authMethod: authMethodParam,
+        })
+      );
+    }
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
   }
 );
 

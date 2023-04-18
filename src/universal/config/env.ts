@@ -29,6 +29,7 @@ export const IS_TEST = OTAP_ENV === 'test';
 export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
 export const IS_PRODUCTION = OTAP_ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
+export const IS_OT = IS_DEVELOPMENT || IS_TEST;
 export const IS_TAP = IS_TEST || IS_ACCEPTANCE || IS_PRODUCTION;
 
 const otapServerEnv: OtapEnv = {
@@ -82,7 +83,8 @@ export function getOtapEnvItem<K extends keyof EnvVars>(key: K) {
   return otapServerEnv[OTAP_ENV] && otapServerEnv[OTAP_ENV][key];
 }
 
-export const DEV_USER_ID = '1234567890';
+export const DEV_USER_ID =
+  process.env.BFF_PROFILE_DEV_ID ?? 'dev-user-id-default';
 // accounts in  a string: foo=1234,bar=8098
 export const testAccounts = (
   process.env.REACT_APP_TEST_ACCOUNTS || `dev=${DEV_USER_ID}`

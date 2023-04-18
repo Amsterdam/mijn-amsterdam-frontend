@@ -4,6 +4,7 @@ import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
   IS_DEVELOPMENT,
+  IS_OT,
   IS_TAP,
   OTAP_ENV,
 } from '../universal/config/env';
@@ -35,6 +36,7 @@ import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, corsOptions } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
+import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 
@@ -108,18 +110,29 @@ app.get(
   }
 );
 
-// Public routes Voor Test - Acceptance - Development
-if (IS_TAP) {
-  app.use(authRouter);
+////////////////////////////////////////////////////////////////////////
+///// [ACCEPTANCE - PRODUCTION]
+///// Public routes Voor Test - Acceptance - Development
+////////////////////////////////////////////////////////////////////////
+if (IS_AP && !IS_OT) {
+  app.use(oidcRouter);
 }
 
 app.use(BFF_BASE_PATH, publicRouter);
 
-// Development routing for mock data
-if (IS_DEVELOPMENT) {
+////////////////////////////////////////////////////////////////////////
+///// [DEVELOPMENT - TEST]
+///// Development routing for mock data
+////////////////////////////////////////////////////////////////////////
+if (IS_OT && !IS_TAP) {
   app.use(authRouterDevelopment);
   app.use(relayDevRouter);
 }
+
+////////////////////////////////////////////////////////////////////////
+///// Generic Router Method for All environments
+////////////////////////////////////////////////////////////////////////
+app.use(authRouter);
 
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
@@ -148,9 +161,7 @@ app.use((req: Request, res: Response) => {
 
 const server = app.listen(BFF_PORT, () => {
   console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${
-      OTAP_ENV === 'development'
-    }]`
+    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
   );
 });
 

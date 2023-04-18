@@ -434,6 +434,12 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
   yivi: 'sub',
 };
 
+export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
+  digid: ['private', 'private-commercial'],
+  eherkenning: ['commercial'],
+  yivi: ['private-attributes'],
+};
+
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get eherkenning() {
     return oidcConfigEherkenning.clientID;

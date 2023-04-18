@@ -6,7 +6,7 @@ import {
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { getAuth, isProtectedRoute } from './helpers/app';
-import { isAuthenticated } from './router-auth';
+import { isAuthenticated } from './router-oidc';
 import {
   loadServicesAll,
   loadServicesSSE,
