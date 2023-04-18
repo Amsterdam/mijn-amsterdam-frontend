@@ -299,8 +299,8 @@ interface SiaResponse {
 }
 
 interface SiaResponseOverview {
-  open: SiaResponse;
-  afgesloten: SiaResponse;
+  open: SiaResponse | null;
+  afgesloten: SiaResponse | null;
 }
 
 interface SiaRequestParams {
@@ -346,7 +346,7 @@ export async function fetchSignals(
     }
   );
 
-  return apiSuccessResult({
+  return apiSuccessResult<SiaResponseOverview>({
     open: open.content,
     afgesloten: afgesloten.content,
   });
