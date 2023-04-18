@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { AppRoutes } from '../../../universal/config';
 import {
   Heading,
   LinkdInline,
@@ -10,18 +11,11 @@ import {
 } from '../../components';
 import { LOGIN_URL_YIVI } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
-import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ReactComponent as YiviLogo } from './yivi-logo.svg';
-import { AppRoutes } from '../../../universal/config';
 
 export default function Landing() {
   const loginButton = useRef(null);
-
-  useEffect(() => {
-    trackPageView('Landing Yivi', document.location.pathname + 'landing');
-  }, []);
-
   const [isRedirectingYivi, setRedirectingYivi] = useState(false);
   const isRedirectingAny = isRedirectingYivi;
 
