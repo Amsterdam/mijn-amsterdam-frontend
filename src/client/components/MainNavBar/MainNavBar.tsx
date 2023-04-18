@@ -34,6 +34,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
+import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -204,7 +205,15 @@ export default function MainNavBar({
   const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
     useBurgerMenuAnimation(isBurgerMenuVisible);
 
+  const isSimpleNavBarEnabled = isUiElementVisible(
+    profileType,
+    'MainNavBarSimple'
+  );
+
   const menuItemsComposed = useMemo(() => {
+    if (isSimpleNavBarEnabled) {
+      return [];
+    }
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
       .map((item) => {
@@ -225,7 +234,7 @@ export default function MainNavBar({
 
         return getMenuItem(menuItem);
       });
-  }, [myChapterItems, profileType, termReplace]);
+  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
 
   return (
     <nav className={styles.MainNavBar}>
@@ -261,10 +270,12 @@ export default function MainNavBar({
                 className={styles.logo}
               />
 
-              <BurgerButton
-                isActive={!!isBurgerMenuVisible}
-                toggleBurgerMenu={toggleBurgerMenu}
-              />
+              {hasBurgerMenu && (
+                <BurgerButton
+                  isActive={!!isBurgerMenuVisible}
+                  toggleBurgerMenu={toggleBurgerMenu}
+                />
+              )}
             </div>
 
             <SecondaryLinks />
@@ -273,21 +284,25 @@ export default function MainNavBar({
         </>
       )}
 
-      <div className={styles.InfoButtons}>
-        {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
-          <IconButton
-            aria-label="Zoeken in mijn amsterdam"
-            className={styles.SearchButton}
-            onClick={() => {
-              setSearchActive(!isSearchActive);
-              trackSearchBarEvent(
-                `${!isSearchActive === false ? 'Sluiten' : 'Openen'} met button`
-              );
-            }}
-            icon={isSearchActive ? IconClose : IconSearch}
-          />
-        )}
-      </div>
+      {!isUiElementVisible(profileType, 'MainNavBarSimple') && (
+        <div className={styles.InfoButtons}>
+          {FeatureToggle.isSearchEnabled && isDisplayLiveSearch && (
+            <IconButton
+              aria-label="Zoeken in mijn amsterdam"
+              className={styles.SearchButton}
+              onClick={() => {
+                setSearchActive(!isSearchActive);
+                trackSearchBarEvent(
+                  `${
+                    !isSearchActive === false ? 'Sluiten' : 'Openen'
+                  } met button`
+                );
+              }}
+              icon={isSearchActive ? IconClose : IconSearch}
+            />
+          )}
+        </div>
+      )}
 
       {isDisplayLiveSearch && isSearchActive && (
         <div className={styles.Search}>

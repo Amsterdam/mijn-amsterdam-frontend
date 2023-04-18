@@ -14,7 +14,6 @@ import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import Heading from '../Heading/Heading';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
-import MainNavBarSimple from '../MainNavBar/MainNavBarSimple';
 import styles from './MainHeader.module.scss';
 
 export interface MainHeaderProps {
@@ -32,8 +31,6 @@ export default function MainHeader({
   const hasErrors = !!errors.length;
   const location = useLocation();
   const isPhonescreen = usePhoneScreen();
-  const profileType = useProfileTypeValue();
-  const showSimpleNavbar = isUiElementVisible(profileType, 'MainNavBarSimple');
 
   return (
     <header className={styles.header}>
@@ -69,12 +66,7 @@ export default function MainHeader({
           )}
         </span>
       </div>
-      {isAuthenticated && !showSimpleNavbar && (
-        <MainNavBar isAuthenticated={isAuthenticated} />
-      )}
-      {isAuthenticated && showSimpleNavbar && (
-        <MainNavBarSimple isAuthenticated={isAuthenticated} />
-      )}
+      {isAuthenticated && <MainNavBar isAuthenticated={isAuthenticated} />}
       {isAuthenticated && hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
