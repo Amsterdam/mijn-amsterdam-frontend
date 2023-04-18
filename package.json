@@ -117,6 +117,7 @@
     "prettier": "^2.5.1",
     "proj4": "^2.7.5",
     "pug": "^3.0.2",
+    "qs": "^6.11.1",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.0.4",
     "react-dom": "^17.0.2",

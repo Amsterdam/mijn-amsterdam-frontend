@@ -132,6 +132,7 @@ export type SourceApiKey =
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
   | 'KREFIA'
+  | 'SIA'
   | 'KLACHTEN';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
@@ -189,6 +190,10 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
       key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
     }),
+  },
+  SIA: {
+    url: `${process.env.BFF_SIA_BASE_URL}/private/signals/`,
+    postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
     url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
@@ -328,6 +333,11 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
 
+  // Signalen endpoints
+  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
+  SIA_HISTORY: '/services/signals/:id/history',
+  SIA_LIST: '/services/signals/:status/:page',
+
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
@@ -425,7 +435,12 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
+  idpLogout: false, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+  routes: {
+    ...oidcConfigBase.routes,
+    postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
+  },
 };
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {

@@ -12,22 +12,24 @@ export const PLACEHOLDER_IMAGE_URL =
 export { ExternalUrls, Colors } from '../../universal/config/app';
 
 interface UiElementConfig {
-  search: boolean;
-  persoonlijkeTips: boolean;
-  mijnBuurt: boolean;
+  MainNavBarSimple: boolean;
 }
 
 type UiElementConfigByProfileType = Record<ProfileType, UiElementConfig | null>;
 
 const uiElementConfigByProfileType: UiElementConfigByProfileType = {
   'private-attributes': {
-    search: false,
-    persoonlijkeTips: false,
-    mijnBuurt: false,
+    MainNavBarSimple: true,
   },
-  private: null,
-  'private-commercial': null,
-  commercial: null,
+  private: {
+    MainNavBarSimple: false,
+  },
+  'private-commercial': {
+    MainNavBarSimple: false,
+  },
+  commercial: {
+    MainNavBarSimple: false,
+  },
 };
 
 export function isUiElementVisible(

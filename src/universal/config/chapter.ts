@@ -18,6 +18,7 @@ export type Chapter =
   | 'ZORG'
   | 'VERGUNNINGEN'
   | 'KVK'
+  | 'SIA'
   | 'TOERISTISCHE_VERHUUR'
   | 'SEARCH'
   | 'SUBSIDIE'
@@ -43,6 +44,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
+  SIA: 'SIA',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   KREFIA: 'KREFIA',
   SEARCH: 'SEARCH',
@@ -70,7 +72,10 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
+  VERGUNNINGEN_LOPEND: 'Vergunningen',
+  VERGUNNINGEN_EERDER: 'Vergunningen',
   KVK: 'Mijn onderneming',
+  SIA: 'Meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
@@ -110,6 +115,8 @@ export const DocumentTitles = {
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
+  [AppRoutes.VERGUNNINGEN_LOPEND]: `${ChapterTitles.VERGUNNINGEN} lopende aanvragen`,
+  [AppRoutes.VERGUNNINGEN_EERDER]: `${ChapterTitles.VERGUNNINGEN} eerdere aanvragen`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
@@ -119,6 +126,8 @@ export const DocumentTitles = {
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
+  [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
+  [AppRoutes['SIA/DETAIL']]: `Melding detail | ${ChapterTitles.SIA}`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'

@@ -26,6 +26,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
+    SIA,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     MY_LOCATION,
@@ -90,6 +91,12 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           ? MILIEUZONE.content?.isKnown
           : false)
       );
+
+    case Chapters.SIA:
+      const hasSiaItems =
+        !!SIA?.content?.open?.items.length ||
+        !!SIA?.content?.afgesloten?.items.length;
+      return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
 
     case Chapters.AFVAL:
       return (

@@ -1,8 +1,8 @@
 /* eslint-disable import/first */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 
+import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 const isDevelopment = ENV === 'development';
 const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
 
@@ -35,13 +35,15 @@ import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 
 const sentryOptions: Sentry.NodeOptions = {
-  dsn: getOtapEnvItem('bffSentryDsn'),
+  dsn: process.env.BFF_SENTRY_DSN,
   environment: ENV,
   debug: isDevelopment,
   autoSessionTracking: false,
   beforeSend(event, hint) {
     if (isDevelopment) {
       console.log(hint);
+    }
+    if (!process.env.BFF_SENTRY_DSN) {
       return null;
     }
     return event;
