@@ -5,8 +5,6 @@ import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';
-import { isUiElementVisible } from '../../config/app';
-import { useProfileTypeValue } from '../../hooks';
 import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
