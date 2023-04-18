@@ -5,7 +5,6 @@ import {
   matchPath,
   Redirect,
   Route,
-  RouteComponentProps,
   Switch,
   useHistory,
 } from 'react-router-dom';
@@ -97,12 +96,6 @@ const VergunningDetail = lazy(
   () => import('./pages/VergunningDetail/VergunningDetail')
 );
 const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
-const VergunningenLopend = lazy(
-  () => import('./pages/Vergunningen/VergunningenLopend')
-);
-const VergunningenEerder = lazy(
-  () => import('./pages/Vergunningen/VergunningenEerder')
-);
 const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
 const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
 
@@ -254,14 +247,6 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
-          <Route
-            path={AppRoutes.VERGUNNINGEN_LOPEND}
-            component={VergunningenLopend}
-          />
-          <Route
-            path={AppRoutes.VERGUNNINGEN_EERDER}
-            component={VergunningenEerder}
-          />
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
             component={VergunningDetail}
