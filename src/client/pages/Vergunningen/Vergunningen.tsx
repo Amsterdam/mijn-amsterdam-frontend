@@ -20,13 +20,13 @@ import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
-const DISPLAY_PROPS = {
+export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   dateRequest: 'Aangevraagd',
 };
 
-const DISPLAY_PROPS_HISTORY = {
+export const DISPLAY_PROPS_HISTORY = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   decision: 'Resultaat',

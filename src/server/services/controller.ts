@@ -44,6 +44,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchSignals } from './sia';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -61,9 +62,7 @@ function getServiceMap(profileType: ProfileType) {
 }
 
 function getServiceTipsMap(profileType: ProfileType) {
-  return (
-    servicesTipsByProfileType[profileType] || servicesTipsByProfileType.private
-  );
+  return servicesTipsByProfileType[profileType] ?? {};
 }
 
 /**
@@ -115,6 +114,7 @@ const ERFPACHT = callService(fetchErfpacht);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
+const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 
 // Special services that aggeragates NOTIFICATIONS from various services
@@ -164,17 +164,25 @@ const SERVICES_INDEX = {
   NOTIFICATIONS,
   PROFILE,
   HORECA,
+  SIA,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE'>;
-type PrivateCommercialServices = Omit<ServicesType, 'AKTES' | 'PROFILE'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
+type PrivateCommercialServices = Omit<
+  ServicesType,
+  'AKTES' | 'PROFILE' | 'SIA'
+>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
+  | 'CMS_CONTENT'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'NOTIFICATIONS'
+  | 'PROFILE'
+  | 'SIA'
 >;
 
 type CommercialServices = Pick<
@@ -196,8 +204,8 @@ type CommercialServices = Pick<
 
 type ServicesByProfileType = {
   private: PrivateServices;
-  'private-attributes': PrivateServicesAttributeBased;
   'private-commercial': PrivateCommercialServices;
+  'private-attributes': PrivateServicesAttributeBased;
   commercial: CommercialServices;
 };
 
@@ -235,6 +243,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
     PROFILE,
+    SIA,
   },
   'private-commercial': {
     AFVAL,
@@ -287,7 +296,7 @@ export const servicesTipsByProfileType = {
     servicesByProfileType.private,
     tipsOmit as Array<keyof PrivateServices>
   ),
-  'private-attributes': servicesByProfileType['private-attributes'],
+  'private-attributes': {},
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
     tipsOmit as Array<keyof PrivateCommercialServices>

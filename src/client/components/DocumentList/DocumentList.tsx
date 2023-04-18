@@ -60,7 +60,7 @@ export function DocumentLink({
       }
       setLoading(true);
 
-      if (!('fetch' in window)) {
+      if (!('fetch' in window) || document?.external) {
         downloadFile(document);
         return;
       }

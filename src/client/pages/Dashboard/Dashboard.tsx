@@ -11,15 +11,14 @@ import {
   PageHeading,
 } from '../../components';
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
+import { ChapterMenuItem } from '../../config/menuItems';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
-import { ChapterMenuItem } from '../../config/menuItems';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
-import { isUiElementVisible } from '../../config/app';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -100,9 +99,7 @@ export default function Dashboard() {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-        {isUiElementVisible(profileType, 'mijnBuurt') && !isPhoneScreen && (
-          <MyAreaDashboard />
-        )}
+        {!isPhoneScreen && <MyAreaDashboard />}
         <MyTips
           isLoading={isLoading(TIPS)}
           items={tipItems}
