@@ -12,7 +12,7 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
-import memoizee from 'memoizee';
+import memoize from 'memoizee';
 import qs from 'qs';
 
 export type StatusStateChoice =
@@ -290,7 +290,7 @@ async function _getSiaRequestConfig(requestID: requestID) {
   return null;
 }
 
-const getSiaRequestConfig = memoizee(_getSiaRequestConfig);
+const getSiaRequestConfig = memoize(_getSiaRequestConfig);
 
 interface SiaResponse {
   total: number;

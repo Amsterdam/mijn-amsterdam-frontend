@@ -108,6 +108,7 @@ const InfoPageYivi = lazy(() => import('./pages/Landing/InfoPageYivi'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
+  usePageChange(false);
 
   return (
     <>
@@ -145,7 +146,7 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   useAppStateRemote();
   useTipsApi();
-  usePageChange();
+  usePageChange(true);
 
   const history = useHistory();
   const profileType = useProfileTypeValue();

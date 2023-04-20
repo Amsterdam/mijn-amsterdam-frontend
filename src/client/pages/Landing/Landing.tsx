@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
@@ -13,16 +13,10 @@ import {
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
-import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 
 export default function Landing() {
   const loginButton = useRef(null);
-
-  useEffect(() => {
-    trackPageView('Landing', document.location.pathname + 'landing');
-  }, []);
-
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
 
