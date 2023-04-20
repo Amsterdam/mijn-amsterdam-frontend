@@ -10,6 +10,7 @@ import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import Linkd, { Button, ButtonStyles } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
+import { IS_ACCEPTANCE } from '../../../universal/config';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -21,7 +22,9 @@ import styles from './AutoLogoutDialog.module.scss';
  * be found in App.tsx.
  */
 const ONE_MINUTE_SECONDS = 60;
-const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(12.5 * ONE_MINUTE_SECONDS); // Adds a little request delay margin (30s)
+const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(
+  (IS_ACCEPTANCE ? 2 : 12.5) * ONE_MINUTE_SECONDS
+); // Adds a little request delay margin (30s)
 const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 
 const SESSION_RENEW_INTERVAL_SECONDS = 300;
