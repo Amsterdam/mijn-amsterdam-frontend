@@ -86,13 +86,6 @@ export default function Sia() {
         <p>
           <Linkd
             external={true}
-            href="https://www.amsterdam.nl/wonen-leefomgeving/melding-openbare-ruimte-en-overlast/"
-          >
-            Meer informatie
-          </Linkd>
-          <br />
-          <Linkd
-            external={true}
             href={`https://${
               !IS_PRODUCTION ? 'acc.' : ''
             }meldingen.amsterdam.nl`}
