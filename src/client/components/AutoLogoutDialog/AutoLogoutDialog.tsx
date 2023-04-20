@@ -127,10 +127,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const timeInactive = useMemo(() => {
-    return formattedTimeFromSeconds(maxCount);
-  }, [maxCount]);
-
   if (!isOpen) {
     return null;
   }
@@ -144,8 +140,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     >
       <div className={styles.AutoLogoutDialog}>
         <p>
-          U bent langer dan {timeInactive} minuten niet actief geweest op Mijn
-          Amsterdam.
+          U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
+          geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
           <CountDownTimer
