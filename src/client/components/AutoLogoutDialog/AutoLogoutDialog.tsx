@@ -10,7 +10,6 @@ import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import Linkd, { Button, ButtonStyles } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
-import { IS_ACCEPTANCE } from '../../../universal/config';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
