@@ -85,7 +85,7 @@ export default function Landing() {
           </Heading>
           <p>
             Heeft u nog geen Yivi?{' '}
-            <LinkdInline href="https://yivi.app" external>
+            <LinkdInline href="https://www.yivi.app/download" external>
               Download Yivi
             </LinkdInline>{' '}
             (gratis), kies een pincode en voer je e-mailadres in als
@@ -103,8 +103,8 @@ export default function Landing() {
         <p className={styles.FaqInfo}>
           Kijk bij{' '}
           <LinkdInline
-            external={true}
-            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+            external
+            href="https://www.amsterdam.nl/veelgevraagd/?caseid=%7Bfbeab9ad-81e4-4fee-9dfc-3fd62eb92719%7D"
           >
             veelgestelde vragen over Mijn Amsterdam
           </LinkdInline>

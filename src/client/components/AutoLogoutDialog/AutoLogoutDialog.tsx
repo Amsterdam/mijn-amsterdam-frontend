@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
