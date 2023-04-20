@@ -75,7 +75,7 @@ export default function Landing() {
           </p>
           <p>
             Login met DigiD voor de volledige versie van{' '}
-            <LinkdInline href={process.env.BFF_FRONTEND_URL}>
+            <LinkdInline external href={process.env.BFF_FRONTEND_URL}>
               Mijn Amsterdam
             </LinkdInline>
             .
