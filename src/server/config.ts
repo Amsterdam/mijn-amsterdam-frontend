@@ -418,7 +418,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path AUTH_BASE_EHERKENNING
+    callback: AUTH_CALLBACK, // Relative to the Router path
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
@@ -435,7 +435,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
-  idpLogout: false, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
+  idpLogout: true, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   routes: {
     ...oidcConfigBase.routes,
