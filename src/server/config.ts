@@ -435,7 +435,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
-  idpLogout: true, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
+  idpLogout: false,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   routes: {
     ...oidcConfigBase.routes,
