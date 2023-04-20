@@ -163,6 +163,5 @@ export const DocumentTitles: Record<
   [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-  [AppRoutes.YIVI_INFO]: 'Meldingen volgen met Yivi',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met Yivi',
 };

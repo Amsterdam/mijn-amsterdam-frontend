@@ -104,7 +104,6 @@ const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
 const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 
 const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
-const InfoPageYivi = lazy(() => import('./pages/Landing/InfoPageYivi'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -124,7 +123,6 @@ function AppNotAuthenticated() {
             path={AppRoutes.YIVI_LANDING}
             component={LandingPageYivi}
           />
-          <Route exact path={AppRoutes.YIVI_INFO} component={InfoPageYivi} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {

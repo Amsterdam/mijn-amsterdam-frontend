@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
-import { AppRoutes } from '../../../universal/config';
 import {
   Heading,
   LinkdInline,
@@ -20,22 +19,16 @@ export default function Landing() {
 
   return (
     <TextPage>
-      <PageHeading className={styles.Heading}>Inloggen met Yivi</PageHeading>
+      <PageHeading className={styles.Heading}>
+        Melding openbare ruimte volgen
+      </PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         <p>
-          De gemeente Amsterdam vindt het belangrijk dat u veilig en eenvoudig
-          online alles kunt regelen met de gemeente en dat u inzicht heeft welke
-          persoonsgegevens u uitwisselt en met wie. Dit kunt u doen met Yivi.
-        </p>
-        <p>
-          Gemeente Amsterdam doet een proef met Yivi. Kijk voor meer informatie
-          over de proef en Yivi bij{' '}
-          <LinkdInline href={AppRoutes.YIVI_INFO}>
-            Melding openbare ruimte volgen via Mijn Amsterdam.
-          </LinkdInline>
+          U heeft een melding openbare ruimte gedaan. En u wilt weten wat er met
+          uw melding gebeurt. In Mijn Amsterdam kunt u uw melding bekijken. Dit
+          is een proef van de gemeente Amsterdam.
         </p>
         <MaintenanceNotifications fromApiDirectly={true} page="yivisignalen" />
-
         <div
           className={classnames(
             styles.LoginOption,
@@ -43,11 +36,13 @@ export default function Landing() {
           )}
         >
           <Heading className={styles.LoginOptionHeading} size="large" el="h3">
-            Mijn meldingen openbare ruimte bekijken
+            Inloggen met Yivi
           </Heading>
           <p>
-            U kunt met Yivi inloggen in Mijn Amsterdam en uitsluitend uw
-            meldingen openbare ruimte volgen (u deelt uw e-mail).
+            Wij maken voor deze proef gebruik van de app Yivi. U kunt met Yivi
+            inloggen zonder onnodige gegevens met ons te delen. Het enige dat
+            nodig is, is het e-mailadres dat u heeft opgegeven bij het doen van
+            de melding.
           </p>
           <p>
             <a
@@ -73,6 +68,16 @@ export default function Landing() {
             </a>
           </p>
           <p>
+            Kijk voor meer informatie over de proef en Yivi bij{' '}
+            <LinkdInline
+              external
+              href="https://www.amsterdam.nl/veelgevraagd/?caseid=%7Bfbeab9ad-81e4-4fee-9dfc-3fd62eb92719%7D"
+            >
+              Melding openbare ruimte volgen
+            </LinkdInline>
+            .
+          </p>
+          <p>
             Login met DigiD voor de volledige versie van{' '}
             <LinkdInline external href={process.env.BFF_FRONTEND_URL}>
               Mijn Amsterdam
@@ -80,19 +85,12 @@ export default function Landing() {
             .
           </p>
           <Heading size="medium" el="h4">
-            Heeft u nog geen YIVI?
+            Download Yivi
           </Heading>
           <p>
-            Heeft u nog geen Yivi?{' '}
             <LinkdInline href="https://www.yivi.app/download" external>
-              Download Yivi
-            </LinkdInline>{' '}
-            (gratis), kies een pincode en voer je e-mailadres in als
-            beveiliging.
-            <br />
-            Voeg tenslotte het e-mailadres toe dat u gebruikt heeft bij uw
-            melding openbare ruimte. Persoons- en adresgegevens hoeft u niet toe
-            te voegen.
+              Download gratis de Yivi-app
+            </LinkdInline>
           </p>
         </div>
 
@@ -103,7 +101,7 @@ export default function Landing() {
           Kijk bij{' '}
           <LinkdInline
             external
-            href="https://www.amsterdam.nl/veelgevraagd/?caseid=%7Bfbeab9ad-81e4-4fee-9dfc-3fd62eb92719%7D"
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B68422ECA-8C56-43EC-A9AA-B3DF190B5077%7D"
           >
             veelgestelde vragen over Mijn Amsterdam
           </LinkdInline>
