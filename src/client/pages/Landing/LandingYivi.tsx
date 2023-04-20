@@ -10,7 +10,6 @@ import {
   TextPage,
 } from '../../components';
 import { LOGIN_URL_YIVI } from '../../config/api';
-import { ExternalUrls } from '../../config/app';
 import styles from './Landing.module.scss';
 import { ReactComponent as YiviLogo } from './yivi-logo.svg';
 
