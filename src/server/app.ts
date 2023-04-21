@@ -5,7 +5,6 @@ import {
   IS_AP,
   IS_DEVELOPMENT,
   IS_OT,
-  IS_TAP,
   OTAP_ENV,
 } from '../universal/config/env';
 
@@ -124,7 +123,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// [DEVELOPMENT - TEST]
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
-if (IS_OT && !IS_TAP) {
+if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
   app.use(relayDevRouter);
 }
