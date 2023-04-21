@@ -1,4 +1,5 @@
 import { LinkProps } from '../../../universal/types';
+import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
 
 export type Klacht = {
   inbehandelingSinds: string;
@@ -11,10 +12,6 @@ export type Klacht = {
   link: LinkProps;
 };
 
-export type SmileFieldValue = {
-  value: string | null;
-};
-
 export type SmileKlacht = {
   klacht_inbehandeling: SmileFieldValue;
   klacht_datumontvangstklacht: SmileFieldValue;
@@ -25,10 +22,7 @@ export type SmileKlacht = {
   klacht_locatieadres: SmileFieldValue;
 };
 
-export interface SmileSourceResponse {
-  rowcount: number;
-  List: SmileKlacht[];
-}
+export type SmileKlachtenReponse = SmileSourceResponse<SmileKlacht>;
 
 export interface KlachtenResponse {
   aantal: number;

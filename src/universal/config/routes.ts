@@ -57,6 +57,8 @@ export const AppRoutes: Record<string, string> = {
   HORECA: '/horeca/',
   'HORECA/DETAIL': '/horeca/:title/:id',
   YIVI_LANDING: '/inloggen-met-yivi',
+  AVG: '/avg',
+  'AVG/DETAIL': '/avg/verzoek/:id',
 };
 
 export const AppRoutesRedirect = [

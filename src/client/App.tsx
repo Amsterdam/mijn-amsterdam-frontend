@@ -16,6 +16,7 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
+import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
@@ -104,6 +105,8 @@ const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
 const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 
 const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
+const AVG = lazy(() => import('./pages/AVG/AVG'));
+const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -148,6 +151,12 @@ function AppAuthenticated() {
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
+
+  const isHeroVisible = !(
+    isUiElementVisible(profileType, 'mijnBuurt') &&
+    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
+  );
+
   const redirectAfterLogin = useDeeplinkRedirect();
 
   useEffect(() => {
@@ -183,10 +192,6 @@ function AppAuthenticated() {
     );
   }
 
-  const isHeroVisible = !matchPath(history.location.pathname, {
-    path: AppRoutes.BUURT,
-  });
-
   return (
     <>
       <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
@@ -195,7 +200,9 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          {isUiElementVisible(profileType, 'mijnBuurt') && (
+            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+          )}
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -295,7 +302,17 @@ function AppAuthenticated() {
           {FeatureToggle.horecaActive && (
             <Route path={AppRoutes.HORECA} component={Horeca} />
           )}
+          {FeatureToggle.avgActive && (
+            <Route path={AppRoutes['AVG/DETAIL']} component={AVGDetail} />
+          )}
+          {FeatureToggle.avgActive && (
+            <Route path={AppRoutes.AVG} component={AVG} />
+          )}
+
           <Route path={AppRoutes.SEARCH} component={Search} />
+          {isUiElementVisible(profileType, 'search') && (
+            <Route path={AppRoutes.SEARCH} component={Search} />
+          )}
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>

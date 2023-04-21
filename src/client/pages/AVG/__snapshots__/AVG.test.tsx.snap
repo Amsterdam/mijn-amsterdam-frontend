@@ -1,0 +1,527 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AVG thema pagina Matches the Full Page snapshot when API gives no result 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage AVG"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="AVG persoonsgegevens"
+          class="ChapterIcon"
+          fill="black"
+        >
+          AVG-verzoeken.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          AVG persoonsgegevens
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende AVG verzoeken.
+      </p>
+    </div>
+    <section
+      class="SectionCollapsible SectionCollapsibleFirst"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Lopende verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U heeft nog geen AVG verzoeken ingediend.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Afgehandelde verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U heeft nog geen AVG verzoeken ingediend.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVG thema pagina Matches the Full Page snapshot when there are no requests 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage AVG"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="AVG persoonsgegevens"
+          class="ChapterIcon"
+          fill="black"
+        >
+          AVG-verzoeken.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          AVG persoonsgegevens
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende AVG verzoeken.
+      </p>
+    </div>
+    <section
+      class="SectionCollapsible SectionCollapsibleFirst"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Lopende verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U heeft nog geen AVG verzoeken ingediend.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Afgehandelde verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U heeft nog geen AVG verzoeken ingediend.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVG thema pagina Matches the Full Page snapshot when there are requests 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage AVG"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="AVG persoonsgegevens"
+          class="ChapterIcon"
+          fill="black"
+        >
+          AVG-verzoeken.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          AVG persoonsgegevens
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende AVG verzoeken.
+      </p>
+    </div>
+    <section
+      class="SectionCollapsible SectionCollapsibleFirst"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Lopende verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Nummer
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Onderwerp
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Nummer:
+                  </span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/avg/verzoek/1"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    1
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    06 maart 2023
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Onderwerp:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Afgehandelde verzoeken
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Nummer
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Onderwerp
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Nummer:
+                  </span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/avg/verzoek/223"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    223
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    09 maart 2022
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Onderwerp:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</DocumentFragment>
+`;
