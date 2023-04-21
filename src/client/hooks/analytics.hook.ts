@@ -73,7 +73,7 @@ function _trackPageView(
   let href = url || document.location.href;
 
   if (IS_AP && !href.startsWith('http')) {
-    href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
+    href = `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn.amsterdam.nl${href}`;
   }
 
   const payload: TrackPageViewParams = {

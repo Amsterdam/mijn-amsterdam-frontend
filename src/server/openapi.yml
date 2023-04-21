@@ -9,7 +9,7 @@ info:
     email: datapunt@amsterdam.nl
 servers:
   - url: https://mijn.amsterdam.n/api/v1
-  - url: https://mijn.acc.amsterdam.n/api/v1
+  - url: https://acc.mijn.amsterdam.n/api/v1
   - url: http://localhost:5000/api/v1
 paths:
   /auth/digid/login:
