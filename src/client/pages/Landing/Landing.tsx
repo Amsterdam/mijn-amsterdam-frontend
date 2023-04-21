@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle, OTAP_ENV } from '../../../universal/config';
+import { FeatureToggle, IS_OT } from '../../../universal/config';
+import { testAccounts } from '../../../universal/config/auth.development';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -15,9 +16,13 @@ import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
-import { testAccounts } from '../../../universal/config/auth.development';
 
 let loginUrlDigid = LOGIN_URL_DIGID;
+
+if (IS_OT) {
+  const [firstUserName] = Object.keys(testAccounts);
+  loginUrlDigid += `/${firstUserName}`;
+}
 
 function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
   return (
@@ -30,7 +35,7 @@ function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
           }
         >
           {Object.keys(testAccounts).map((userName) => (
-            <option>{userName}</option>
+            <option key={userName}>{userName}</option>
           ))}
         </select>
       </label>
@@ -47,9 +52,7 @@ export default function Landing() {
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
-
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
-
   const [loginUrl, setLoginUrl] = useState(loginUrlDigid);
 
   return (
@@ -72,10 +75,8 @@ export default function Landing() {
               Voor particulieren en eenmanszaken
             </Heading>
           )}
+          {IS_OT && <TestAccountSelect onSelect={(url) => setLoginUrl(url)} />}
           <p>
-            {OTAP_ENV === 'test' && (
-              <TestAccountSelect onSelect={(url) => setLoginUrl(url)} />
-            )}
             <a
               ref={loginButton}
               role="button"
