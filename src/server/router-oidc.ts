@@ -191,3 +191,27 @@ router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
     }
   }
 });
+
+router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
+  if (hasSessionCookie(req)) {
+    const auth = await getAuth(req);
+
+    let redirectUrl = '';
+
+    switch (auth.profile.authMethod) {
+      case 'eherkenning':
+        redirectUrl = BffEndpoints.AUTH_LOGOUT_EHERKENNING;
+        break;
+      case 'digid':
+        redirectUrl = BffEndpoints.AUTH_LOGOUT_DIGID;
+        break;
+      case 'yivi':
+        redirectUrl = BffEndpoints.AUTH_LOGOUT_YIVI;
+        break;
+    }
+
+    return res.redirect(redirectUrl);
+  }
+
+  return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+});
