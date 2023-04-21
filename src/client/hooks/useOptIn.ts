@@ -9,15 +9,9 @@ export interface OptIn {
 }
 
 export function useOptIn(): OptIn {
-  const profileType = useProfileTypeValue();
   const [isOptInCookie, setOptInCookie] = useCookie(COOKIE_OPTIN, {
     path: '/',
   });
-
-  const isPersonalizedTipsEnabled = isUiElementVisible(
-    profileType,
-    'persoonlijkeTips'
-  );
 
   const optIn = useCallback(() => {
     setOptInCookie('yes');
@@ -37,13 +31,5 @@ export function useOptIn(): OptIn {
 }
 
 export function useOptInValue() {
-  const profileType = useProfileTypeValue();
-  const isPersonalizedTipsEnabled = isUiElementVisible(
-    profileType,
-    'persoonlijkeTips'
-  );
-  return (
-    useRecoilValue(cookieAtom)[COOKIE_OPTIN] === 'yes' &&
-    isPersonalizedTipsEnabled
-  );
+  return useRecoilValue(cookieAtom)[COOKIE_OPTIN] === 'yes';
 }

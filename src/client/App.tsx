@@ -151,12 +151,6 @@ function AppAuthenticated() {
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
-
-  const isHeroVisible = !(
-    isUiElementVisible(profileType, 'mijnBuurt') &&
-    matchPath(history.location.pathname, { path: AppRoutes.BUURT })
-  );
-
   const redirectAfterLogin = useDeeplinkRedirect();
 
   useEffect(() => {
@@ -192,6 +186,10 @@ function AppAuthenticated() {
     );
   }
 
+  const isHeroVisible = !matchPath(history.location.pathname, {
+    path: AppRoutes.BUURT,
+  });
+
   return (
     <>
       <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
@@ -200,9 +198,9 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          {isUiElementVisible(profileType, 'mijnBuurt') && (
-            <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          )}
+
+          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -310,9 +308,7 @@ function AppAuthenticated() {
           )}
 
           <Route path={AppRoutes.SEARCH} component={Search} />
-          {isUiElementVisible(profileType, 'search') && (
-            <Route path={AppRoutes.SEARCH} component={Search} />
-          )}
+
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>
