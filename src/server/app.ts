@@ -103,7 +103,7 @@ app.use(function (req, res, next) {
 });
 
 app.get(
-  BffEndpoints.STATUS_HEALTH,
+  [BffEndpoints.STATUS_HEALTH, BffEndpoints.STATUS_HEALTH2],
   (req: Request, res: Response, next: NextFunction) => {
     return res.json({ status: 'OK', otapEnv: OTAP_ENV });
   }

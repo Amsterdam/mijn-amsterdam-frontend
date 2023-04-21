@@ -1,8 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
+import { pick } from '../universal/helpers/utils';
 import {
-  BffEndpoints,
   BFF_MS_API_BASE_URL,
+  BffEndpoints,
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { getAuth, isProtectedRoute } from './helpers/app';
@@ -15,10 +16,8 @@ import {
 import {
   fetchSignalAttachments,
   fetchSignalHistory,
-  fetchSignals,
   fetchSignalsListByStatus,
 } from './services/sia';
-import { pick } from '../universal/helpers/utils';
 
 export const router = express.Router();
 

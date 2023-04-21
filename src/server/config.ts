@@ -365,6 +365,8 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/bff/status/health',
+  STATUS_HEALTH2: '/status/health',
+  STATUS_ENV: '/status/env',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [

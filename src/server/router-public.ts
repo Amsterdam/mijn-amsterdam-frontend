@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { DATASETS, getDatasetCategoryId } from '../universal/config';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers';
+import { DATASETS, IS_OT, getDatasetCategoryId } from '../universal/config';
+import { ApiResponse, apiSuccessResult, jsonCopy } from '../universal/helpers';
 import { BffEndpoints } from './config';
 import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
@@ -148,4 +148,11 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     }),
     loginStats
   );
+
+  if (IS_OT) {
+    router.get(BffEndpoints.STATUS_ENV, (req: Request, res: Response) => {
+      const env = jsonCopy(process.env);
+      return res.send(env);
+    });
+  }
 }
