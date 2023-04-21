@@ -51,6 +51,24 @@ exports[`AVG thema pagina Matches the Full Page snapshot when API gives no resul
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
       </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/privacy/loket/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Loket persoonsgegevens gemeente Amsterdam
+        </a>
+      </p>
     </div>
     <section
       class="SectionCollapsible SectionCollapsibleFirst"
@@ -177,6 +195,24 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are no reque
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
       </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/privacy/loket/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Loket persoonsgegevens gemeente Amsterdam
+        </a>
+      </p>
     </div>
     <section
       class="SectionCollapsible SectionCollapsibleFirst"
@@ -302,6 +338,24 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
     >
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/privacy/loket/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Loket persoonsgegevens gemeente Amsterdam
+        </a>
       </p>
     </div>
     <section
