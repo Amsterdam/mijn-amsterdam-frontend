@@ -197,9 +197,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -305,9 +303,7 @@ function AppAuthenticated() {
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes.AVG} component={AVG} />
           )}
-
           <Route path={AppRoutes.SEARCH} component={Search} />
-
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route component={NotFound} />
         </Switch>
