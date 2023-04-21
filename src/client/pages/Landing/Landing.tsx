@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -12,11 +11,7 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
-import {
-  LOGIN_URL_DIGID,
-  LOGIN_URL_EHERKENNING,
-  LOGIN_URL_YIVI,
-} from '../../config/api';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import styles from './Landing.module.scss';
 

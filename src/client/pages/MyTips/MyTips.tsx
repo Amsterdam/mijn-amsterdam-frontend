@@ -17,8 +17,6 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { isUiElementVisible } from '../../config/app';
-import { useProfileTypeValue } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useOptIn } from '../../hooks/useOptIn';
 import styles from './MyTips.module.scss';
@@ -30,11 +28,11 @@ interface OptInPageContentProps {
 function OptInPageContent({ children }: OptInPageContentProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { isOptIn } = useOptIn();
-  const profileType = useProfileTypeValue();
+
   return (
     <PageContent>
       <p>
-        {isUiElementVisible(profileType, 'persoonlijkeTips') ? (
+        {isOptIn ? (
           <>
             {!isOptIn ? (
               <>

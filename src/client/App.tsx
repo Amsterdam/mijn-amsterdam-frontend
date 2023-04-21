@@ -16,7 +16,6 @@ import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { isUiElementVisible } from './config/app';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
