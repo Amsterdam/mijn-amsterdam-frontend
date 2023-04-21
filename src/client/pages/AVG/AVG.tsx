@@ -3,6 +3,7 @@ import { defaultDateFormat, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ChapterIcon,
+  Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -56,6 +57,11 @@ const AVG = () => {
       </PageHeading>
       <PageContent>
         <p>Hier ziet u een overzicht van uw ingediende AVG verzoeken.</p>
+        <p>
+          <Linkd external={true} href="https://www.amsterdam.nl/privacy/loket/">
+            Loket persoonsgegevens gemeente Amsterdam
+          </Linkd>
+        </p>
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-complaints"

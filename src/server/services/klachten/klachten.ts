@@ -27,9 +27,7 @@ function getDataForKlachten(bsn: string, page: number) {
   );
   data.append(
     'filters',
-    "klacht.ff03='" +
-      bsn +
-      "'  AND klacht.datumontvangstklacht > Session.NOW[-1,year]"
+    `klacht.ff03='${bsn}' AND klacht.datumontvangstklacht > Session.NOW[-1,year]`
   );
   data.append('pagesize', DEFAULT_PAGE_SIZE);
   data.append('page', page);

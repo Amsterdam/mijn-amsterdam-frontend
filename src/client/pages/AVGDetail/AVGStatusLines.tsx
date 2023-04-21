@@ -100,7 +100,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         datePublished: request.opschortenGestartOp || '',
         description: '',
         documents: [],
-        isActive: true,
+        isActive: !isDone,
         isChecked: true,
       });
       break;
@@ -112,7 +112,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         datePublished: request.opschortenGestartOp || '',
         description: '',
         documents: [],
-        isActive: true,
+        isActive: false,
         isChecked: true,
       });
 
@@ -122,7 +122,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         datePublished: request.datumInBehandeling || '',
         description: '',
         documents: [],
-        isActive: false,
+        isActive: !isDone,
         isChecked: true,
       });
       break;

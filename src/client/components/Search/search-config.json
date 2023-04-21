@@ -710,10 +710,16 @@
       ]
     },
     "KLACHTEN": {
-      "keywords": ["type", "thema"]
+      "keywords": ["omschrijving", "gewensteOplossing", "onderwerp", "locatie"]
     },
     "AVG": {
-      "keywords": []
+      "keywords": [
+        "id",
+        "omschrijving",
+        "gewensteOplossing",
+        "onderwerp",
+        "locatie"
+      ]
     },
     "HORECA": {
       "keywordsGeneratedFromProps": [
