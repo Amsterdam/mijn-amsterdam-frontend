@@ -435,7 +435,6 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
-  idpLogout: false,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   authorizationParams: { prompt: 'login', max_age: 0 },
   routes: {
