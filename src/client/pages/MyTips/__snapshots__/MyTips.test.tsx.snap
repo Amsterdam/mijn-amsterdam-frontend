@@ -52,7 +52,13 @@ exports[`<MyTips /> Matches the Full Page snapshot 1`] = `
       class="PageContent"
     >
       <p>
-        U ziet nu algemene tips over voorzieningen en activiteiten in Amsterdam.
+        U ziet nu algemene tips over voorzieningen en activiteiten in Amsterdam. Op basis van uw informatie die bij de gemeente bekend is kunnen we u ook informatie tonen die beter bij uw persoonlijke situatie past.
+        <button
+          aria-expanded="false"
+          class="Button Button__secondary OptInOutToggleButton"
+        >
+          Maak tips persoonlijk
+        </button>
       </p>
     </div>
     <div
