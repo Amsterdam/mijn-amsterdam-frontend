@@ -37,7 +37,7 @@ function getDataForKlachten(bsn: string, page: number) {
 }
 
 // Temporary translation table see MIJN-4781
-function complaintsSubjectParser(subject: string | null): string {
+function klachtSubjectParser(subject: string | null): string {
   if (!subject) {
     return '';
   }
