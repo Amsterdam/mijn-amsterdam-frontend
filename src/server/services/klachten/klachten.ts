@@ -76,7 +76,7 @@ export function transformKlachtenResponse(
       ),
       omschrijving: klacht?.klacht_omschrijving.value || '',
       gewensteOplossing: klacht?.klacht_gewensteoplossing.value,
-      onderwerp: complaintsSubjectParser(klacht?.klacht_klachtonderwerp.value),
+      onderwerp: klachtSubjectParser(klacht?.klacht_klachtonderwerp.value),
       locatie: klacht?.klacht_locatieadres.value,
       link: {
         to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
