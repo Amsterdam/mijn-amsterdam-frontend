@@ -36,10 +36,6 @@ export const BFF_REQUEST_CACHE_ENABLED =
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
-export const BFF_PUBLIC_URL = `${
-  process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
-}`;
-
 export const BFF_MS_API_BASE_URL = `${process.env.BFF_MS_API_BASE_URL}`;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
