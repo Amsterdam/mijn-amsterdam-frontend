@@ -53,8 +53,10 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
       break;
   }
 
+  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[authMethod](tokenData);
+
   return {
-    id: tokenData[OIDC_TOKEN_ID_ATTRIBUTE[authMethod]],
+    id: tokenData[idAttr],
     authMethod,
     profileType,
   };
@@ -198,7 +200,7 @@ const getJWKSKey = memoize(async () => {
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
-  const verificationOptions = {} as any;
+  const verificationOptions: jose.JWT.VerifyOptions = { ignoreNbf: true };
 
   if (OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED) {
     // NOTE: Use this for added security

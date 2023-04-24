@@ -41,10 +41,13 @@ function enableMockAdapter() {
   // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
   const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
 
-  entries(mockDataConfig).forEach(
-    async ([
-      url,
-      {
+  entries(mockDataConfig).forEach(async ([url, config]) => {
+    if (!Array.isArray(config)) {
+      config = [config];
+    }
+
+    config.forEach(
+      ({
         status,
         responseData,
         method = 'get',
@@ -53,35 +56,35 @@ function enableMockAdapter() {
         headers,
         params,
         pathReg,
-      },
-    ]) => {
-      const onMethod = `on${capitalizeFirstLetter(method)}`;
+      }) => {
+        const onMethod = `on${capitalizeFirstLetter(method)}`;
 
-      let matchUrl: string | RegExp = pathReg || url;
+        let matchUrl: string | RegExp = pathReg || url;
 
-      if (typeof url === 'string' && url.includes('/:')) {
-        const [basePath] = url.split('/:');
-        matchUrl = new RegExp(`${basePath}/*`);
+        if (typeof url === 'string' && url.includes('/:')) {
+          const [basePath] = url.split('/:');
+          matchUrl = new RegExp(`${basePath}/*`);
+        }
+
+        const req = mock[onMethod](matchUrl, params);
+        if (networkError) {
+          req.networkError();
+        } else {
+          req.reply(async (...args: any[]) => {
+            const data = await resolveWithDelay(
+              delay,
+              await responseData(...args)
+            );
+            return [
+              typeof status === 'function' ? status(...args) : status,
+              data,
+              headers,
+            ];
+          });
+        }
       }
-
-      const req = mock[onMethod](matchUrl, params);
-      if (networkError) {
-        req.networkError();
-      } else {
-        req.reply(async (...args: any[]) => {
-          const data = await resolveWithDelay(
-            delay,
-            await responseData(...args)
-          );
-          return [
-            typeof status === 'function' ? status(...args) : status,
-            data,
-            headers,
-          ];
-        });
-      }
-    }
-  );
+    );
+  });
 }
 
 if (!IS_AP && process.env.BFF_ENABLE_MOCK_ADAPTER === 'true') {

@@ -5,6 +5,7 @@ export {
 } from '@amsterdam/asc-assets';
 export { ReactComponent as IconAlert } from './Alert.svg';
 export { ReactComponent as IconArrowRrimaryWhite } from './Arrow__primary-white.svg';
+export { ReactComponent as IconAVG } from './AVG-verzoeken.svg';
 export { ReactComponent as IconBelastingen } from './belastingen.svg';
 export { ReactComponent as IconMyNotifications } from './Bell.svg';
 export { ReactComponent as IconBurgerZaken } from './burgerzaken.svg';

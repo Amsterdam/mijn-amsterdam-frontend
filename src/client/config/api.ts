@@ -73,6 +73,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   KLACHTEN: 'Ingediende klachten',
   BEZWAREN: 'Ingediende bezwaren',
   HORECA: 'Horeca vergunningen',
+  AVG: 'Ingediende AVG verzoeken',
 };
 
 export function createErrorDisplayData(

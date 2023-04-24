@@ -38,6 +38,8 @@ export const FeatureToggle = {
   klachtenActive: true,
   bezwarenActive: false,
   horecaActive: !IS_PRODUCTION,
+  avgActive: !IS_PRODUCTION,
+  ehKetenmachtigingActive: !IS_PRODUCTION,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

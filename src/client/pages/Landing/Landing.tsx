@@ -1,7 +1,6 @@
 import classnames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
-import { FeatureToggle, IS_OT } from '../../../universal/config';
-import { testAccounts } from '../../../universal/config/auth.development';
+import { useRef, useState } from 'react';
+import { FeatureToggle } from '../../../universal/config';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
@@ -14,46 +13,14 @@ import {
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
-import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
-
-let loginUrlDigid = LOGIN_URL_DIGID;
-
-if (IS_OT) {
-  const [firstUserName] = Object.keys(testAccounts);
-  loginUrlDigid += `/${firstUserName}`;
-}
-
-function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
-  return (
-    <div className={styles.TestAccountSelect}>
-      <label>
-        <span>Login met account</span>
-        <select
-          onChange={(event) =>
-            onSelect(LOGIN_URL_DIGID + '/' + event.target.value)
-          }
-        >
-          {Object.keys(testAccounts).map((userName) => (
-            <option key={userName}>{userName}</option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
 
 export default function Landing() {
   const loginButton = useRef(null);
-
-  useEffect(() => {
-    trackPageView('Landing', document.location.pathname + 'landing');
-  }, []);
-
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
+
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
-  const [loginUrl, setLoginUrl] = useState(loginUrlDigid);
 
   return (
     <TextPage>
@@ -75,12 +42,11 @@ export default function Landing() {
               Voor particulieren en eenmanszaken
             </Heading>
           )}
-          {IS_OT && <TestAccountSelect onSelect={(url) => setLoginUrl(url)} />}
           <p>
             <a
               ref={loginButton}
               role="button"
-              href={loginUrl}
+              href={LOGIN_URL_DIGID}
               onClick={() => setRedirecting(true)}
               rel="noopener noreferrer"
               className={classnames(
@@ -147,9 +113,7 @@ export default function Landing() {
               <a rel="noopener noreferrer" href="https://eherkenning.nl">
                 eherkenning.nl
               </a>{' '}
-              voor meer informatie.<br></br>
-              Voorlopig is inloggen met een Ketenmachtiging voor eHerkenning
-              (niveau 3) nog niet mogelijk. We werken aan een oplossing.
+              voor meer informatie.
             </p>
           </div>
         )}

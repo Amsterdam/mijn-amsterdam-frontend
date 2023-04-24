@@ -105,12 +105,14 @@ describe('<SiaDetail />', () => {
 
   it('Happy view', async () => {
     render(<Component />);
+
     await waitFor(() => {
-      expect([
+      return expect([
         historyFetch?.isDone(),
         attachmentsFetch?.isDone(),
       ]).toStrictEqual([true, true]);
     });
+
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
     expect(
       screen.getByText(`Meldingsnummer ${SIA_ITEM.identifier}`)

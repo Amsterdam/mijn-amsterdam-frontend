@@ -10,7 +10,7 @@ import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_TAP } from '../universal/config/env';
-
+import { TokenData } from './helpers/app';
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
     if (name) {
@@ -245,7 +245,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
-  KLACHTEN: {
+  ENABLEU_2_SMILE: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
   },
@@ -286,7 +286,7 @@ export const RelayPathsAllowed = {
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
 };
 
-export const AUTH_BASE = `${BFF_BASE_PATH}/auth`;
+export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
 export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
@@ -400,7 +400,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path AUTH_BASE_EHERKENNING
+    callback: AUTH_CALLBACK, // Relative to the Router path
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
@@ -417,19 +417,58 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
-  idpLogout: false, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+  authorizationParams: { prompt: 'login', max_age: 0 },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
   },
 };
 
+// Op 1.13 met ketenmachtiging
+export const EH_ATTR_INTERMEDIATE_PRIMARY_ID =
+  'urn:etoegang:core:LegalSubjectID';
+export const EH_ATTR_INTERMEDIATE_SECONDARY_ID =
+  'urn:etoegang:1.9:IntermediateEntityID:KvKnr';
+
+// 1.13 inlog zonder ketenmachtiging:
+export const EH_ATTR_PRIMARY_ID = 'urn:etoegang:core:LegalSubjectID';
+
+// < 1.13 id
+export const EH_ATTR_PRIMARY_ID_LEGACY =
+  'urn:etoegang:1.9:EntityConcernedID:KvKnr';
+
+export const DIGID_ATTR_PRIMARY = 'sub';
+export const YIVI_ATTR_PRIMARY = 'sub';
+
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
-  eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
-  digid: 'sub',
-  yivi: 'sub',
+  eherkenning: (tokenData: TokenData) => {
+    if (FeatureToggle.ehKetenmachtigingActive) {
+      if (
+        EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
+        EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData
+      ) {
+        return EH_ATTR_INTERMEDIATE_PRIMARY_ID;
+      }
+
+      if (EH_ATTR_PRIMARY_ID in tokenData) {
+        return EH_ATTR_PRIMARY_ID;
+      }
+    }
+
+    // Attr Prior to 1.13
+    return EH_ATTR_PRIMARY_ID_LEGACY;
+  },
+  digid: () => DIGID_ATTR_PRIMARY,
+  yivi: () => YIVI_ATTR_PRIMARY,
 };
+
+export const DEV_TOKEN_ID_ATTRIBUTE = {
+  eherkenning: EH_ATTR_PRIMARY_ID,
+  digid: DIGID_ATTR_PRIMARY,
+  yivi: YIVI_ATTR_PRIMARY,
+};
+
 
 export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
   digid: ['private', 'private-commercial'],
