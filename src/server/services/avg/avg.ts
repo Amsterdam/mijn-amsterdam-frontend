@@ -33,6 +33,7 @@ function getDataForAVG(bsn: string) {
     'avgverzoek_datuminbehandeling',
     'avgverzoek_werkelijkeeinddatum',
     'avgverzoek_omschrijvingvanonderwerp',
+    'avgverzoek_statusavgverzoek_alias',
   ].join(', ');
 
   data.append('columns', columns);
