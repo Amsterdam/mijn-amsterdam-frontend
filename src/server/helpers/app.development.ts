@@ -5,7 +5,7 @@ import {
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
-  OIDC_TOKEN_ID_ATTRIBUTE,
+  DEV_TOKEN_ID_ATTRIBUTE,
 } from '../config';
 import type { AuthProfile } from './app';
 
@@ -36,7 +36,7 @@ export function getPublicKeyForDevelopment() {
 function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   const idToken = jose.JWT.sign(
     {
-      [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
       aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
     },
     getPrivateKeyForDevelopment(),

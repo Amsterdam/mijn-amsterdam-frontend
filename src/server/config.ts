@@ -112,7 +112,7 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'KLACHTEN';
+  | 'ENABLEU_2_SMILE';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -468,7 +468,6 @@ export const DEV_TOKEN_ID_ATTRIBUTE = {
   digid: DIGID_ATTR_PRIMARY,
   yivi: YIVI_ATTR_PRIMARY,
 };
-
 
 export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
   digid: ['private', 'private-commercial'],
