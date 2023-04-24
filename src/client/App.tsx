@@ -104,6 +104,8 @@ const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
 const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 
 const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
+const AVG = lazy(() => import('./pages/AVG/AVG'));
+const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -294,6 +296,12 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.horecaActive && (
             <Route path={AppRoutes.HORECA} component={Horeca} />
+          )}
+          {FeatureToggle.avgActive && (
+            <Route path={AppRoutes['AVG/DETAIL']} component={AVGDetail} />
+          )}
+          {FeatureToggle.avgActive && (
+            <Route path={AppRoutes.AVG} component={AVG} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
