@@ -22,6 +22,7 @@ import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchHorecaNotifications } from './horeca';
+import { fetchAVGNotifications } from './avg/avg';
 
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -147,6 +148,7 @@ async function fetchServicesNotifications(
       fetchWpiNotificationsResult,
       klachtenNotificationsResult,
       horecaNotificationsResult,
+      avgNotificationsResult,
     ] = await Promise.allSettled([
       fetchBrpNotifications(requestID, authProfileAndToken),
       fetchBelastingNotifications(requestID, authProfileAndToken),
@@ -161,6 +163,7 @@ async function fetchServicesNotifications(
       fetchWpiNotifications(requestID, authProfileAndToken),
       fetchKlachtenNotifications(requestID, authProfileAndToken),
       fetchHorecaNotifications(requestID, authProfileAndToken),
+      fetchAVGNotifications(requestID, authProfileAndToken),
     ]);
 
     const brpNotifications = getSettledResult(brpNotificationsResult);
@@ -188,6 +191,7 @@ async function fetchServicesNotifications(
     const wpiNotifications = getSettledResult(fetchWpiNotificationsResult);
     const klachtenNotifications = getSettledResult(klachtenNotificationsResult);
     const horecaNotificaties = getSettledResult(horecaNotificationsResult);
+    const avgNotificaties = getSettledResult(avgNotificationsResult);
 
     return getTipsAndNotificationsFromApiResults([
       brpNotifications,
@@ -203,6 +207,7 @@ async function fetchServicesNotifications(
       wpiNotifications,
       klachtenNotifications,
       horecaNotificaties,
+      avgNotificaties,
     ]);
   }
 

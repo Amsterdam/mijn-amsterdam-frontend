@@ -5,13 +5,14 @@ import FormData from 'form-data';
 import { AuthProfileAndToken } from './../../helpers/app';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { Klacht, KlachtenResponse, SmileSourceResponse } from './types';
+import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { Chapters } from '../../../universal/config';
+import { smileDateParser } from '../smile/smile-helpers';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -20,15 +21,21 @@ function getDataForKlachten(bsn: string, page: number) {
   data.append('username', process.env.BFF_SMILE_USERNAME);
   data.append('password', process.env.BFF_SMILE_PASSWORD);
   data.append('function', 'readKlacht');
-  data.append(
-    'columns',
-    'klacht_id, klacht_klachtonderwerp, klacht_datumontvangstklacht,klacht_locatieadres, klacht_omschrijving,klacht_gewensteoplossing,klacht_inbehandeling'
-  );
+  const columns = [
+    'klacht_id',
+    'klacht_klachtonderwerp',
+    'klacht_datumontvangstklacht',
+    'klacht_locatieadres',
+    'klacht_omschrijving',
+    'klacht_gewensteoplossing',
+    'klacht_inbehandeling',
+  ].join(', ');
+
+  data.append('columns', columns);
+
   data.append(
     'filters',
-    "klacht.ff03='" +
-      bsn +
-      "'  AND klacht.datumontvangstklacht > Session.NOW[-1,year]"
+    `klacht.ff03='${bsn}' AND klacht.datumontvangstklacht > Session.NOW[-1,year]`
   );
   data.append('pagesize', DEFAULT_PAGE_SIZE);
   data.append('page', page);
@@ -37,23 +44,8 @@ function getDataForKlachten(bsn: string, page: number) {
   return data;
 }
 
-/**
- * The smile API provides dates in different formats.
- * This function aims to normalize them into a Date object.
- * @param smileDate
- * @returns
- */
-function smileDateParser(smileDate: string): string {
-  const datePart = smileDate.split(' ')[0];
-  const dateInParts = datePart.split('-');
-
-  return new Date(
-    `${dateInParts[2]}-${dateInParts[1]}-${dateInParts[0]}`
-  ).toISOString();
-}
-
 // Temporary translation table see MIJN-4781
-function smileSubjectParser(subject: string | null): string {
+function klachtSubjectParser(subject: string | null): string {
   if (!subject) {
     return '';
   }
@@ -70,7 +62,7 @@ function smileSubjectParser(subject: string | null): string {
 }
 
 export function transformKlachtenResponse(
-  data: SmileSourceResponse
+  data: SmileKlachtenReponse
 ): KlachtenResponse {
   if (!Array.isArray(data?.List)) {
     return {
@@ -92,7 +84,7 @@ export function transformKlachtenResponse(
       ),
       omschrijving: klacht?.klacht_omschrijving.value || '',
       gewensteOplossing: klacht?.klacht_gewensteoplossing.value,
-      onderwerp: smileSubjectParser(klacht?.klacht_klachtonderwerp.value),
+      onderwerp: klachtSubjectParser(klacht?.klacht_klachtonderwerp.value),
       locatie: klacht?.klacht_locatieadres.value,
       link: {
         to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
@@ -133,10 +125,11 @@ async function fetchKlachten(
   const data = getDataForKlachten(authProfileAndToken.profile.id!, page);
 
   return requestData<KlachtenResponse>(
-    getApiConfig('KLACHTEN', {
+    getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
+      cacheKey: 'klachten',
     }),
     requestID
   );

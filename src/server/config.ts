@@ -134,7 +134,7 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'KLACHTEN';
+  | 'ENABLEU_2_SMILE';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -271,7 +271,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
-  KLACHTEN: {
+  ENABLEU_2_SMILE: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
     httpsAgent: new https.Agent({

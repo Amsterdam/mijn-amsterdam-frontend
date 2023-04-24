@@ -2,6 +2,7 @@ import { Chapter, Chapters } from '../../universal/config';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAlert,
+  IconAVG,
   IconBelastingen,
   IconBurgerZaken,
   IconErfpacht,
@@ -28,6 +29,7 @@ import {
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.AFVAL]: IconGarbage,
+  [Chapters.AVG]: IconAVG,
   [Chapters.BELASTINGEN]: IconBelastingen,
   [Chapters.BURGERZAKEN]: IconBurgerZaken,
   [Chapters.BUURT]: IconWior,

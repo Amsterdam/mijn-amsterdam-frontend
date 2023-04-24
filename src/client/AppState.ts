@@ -121,6 +121,8 @@ export const PRISTINE_APPSTATE: AppState = {
     }
   ),
   HORECA: apiPristineResult([]),
+
+  AVG: apiPristineResult(null, { isActive: FeatureToggle.avgActive }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';
