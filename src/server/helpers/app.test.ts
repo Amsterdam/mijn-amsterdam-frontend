@@ -21,8 +21,16 @@ import {
 } from './app';
 import { cache } from './source-api-request';
 
-const { oidcConfigDigid, oidcConfigEherkenning, OIDC_SESSION_COOKIE_NAME } =
-  config;
+const {
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  OIDC_SESSION_COOKIE_NAME,
+  EH_ATTR_PRIMARY_ID,
+  EH_ATTR_INTERMEDIATE_PRIMARY_ID,
+  EH_ATTR_INTERMEDIATE_SECONDARY_ID,
+  DIGID_ATTR_PRIMARY,
+  EH_ATTR_PRIMARY_ID_LEGACY,
+} = config;
 
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -75,11 +83,9 @@ describe('server/helpers/app', () => {
       }
     `);
 
-    expect(
-      (await decodeOIDCToken(result.token))[
-        config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning
-      ]
-    ).toBe('123-eherkenning-321');
+    const tokenData = await decodeOIDCToken(result.token);
+    const attr = config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning(tokenData);
+    expect(tokenData[attr]).toBe('123-eherkenning-321');
   });
 
   test('getAuth.digid', async () => {
@@ -112,8 +118,9 @@ describe('server/helpers/app', () => {
   test('getAuthProfile', () => {
     {
       const profile = getAuthProfile({
+        sub: '-unused-',
         aud: 'test1',
-        [config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning]: 'EHERKENNING-KVK',
+        [EH_ATTR_PRIMARY_ID]: 'EHERKENNING-KVK',
       } as TokenData);
 
       expect(profile).toStrictEqual({
@@ -126,7 +133,7 @@ describe('server/helpers/app', () => {
     {
       const profile = getAuthProfile({
         aud: 'test2',
-        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
+        [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
       } as TokenData);
 
       expect(profile).toStrictEqual({
@@ -139,13 +146,56 @@ describe('server/helpers/app', () => {
     {
       const profile = getAuthProfile({
         aud: 'test_x',
-        [config.OIDC_TOKEN_ID_ATTRIBUTE.digid]: 'DIGID-BSN',
+        [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        sub: '',
+        aud: 'test1',
+        [EH_ATTR_PRIMARY_ID]: 'EH-KVK1',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: 'EH-KVK1',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        sub: '',
+        aud: 'test1',
+        [EH_ATTR_PRIMARY_ID_LEGACY]: 'EH-KVK1',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: 'EH-KVK1',
+      });
+    }
+
+    {
+      const profile = getAuthProfile({
+        sub: '',
+        aud: 'test1',
+        [EH_ATTR_INTERMEDIATE_PRIMARY_ID]: 'EH-KVK1',
+        [EH_ATTR_INTERMEDIATE_SECONDARY_ID]: 'EH-KVK2',
+      } as TokenData);
+
+      expect(profile).toStrictEqual({
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: 'EH-KVK1',
       });
     }
   });
