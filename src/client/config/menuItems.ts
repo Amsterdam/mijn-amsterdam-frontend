@@ -4,7 +4,7 @@ import {
   Chapter,
   Chapters,
   ChapterTitles,
-  IS_ACCEPTANCE,
+  FeatureToggle,
 } from '../../universal/config';
 import { LinkProps } from '../../universal/types/App.types';
 import { termReplace } from '../hooks/useTermReplacement';
@@ -94,8 +94,10 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.INKOMEN,
     id: Chapters.INKOMEN,
-    to: IS_ACCEPTANCE ? `${ExternalUrls.SSO_SVWI}` : AppRoutes.INKOMEN,
-    rel: IS_ACCEPTANCE ? 'external' : undefined,
+    to: FeatureToggle.svwiLinkActive
+      ? `${ExternalUrls.SSO_SVWI}`
+      : AppRoutes.INKOMEN,
+    rel: FeatureToggle.svwiLinkActive ? 'external' : undefined,
     profileTypes: ['private', 'private-commercial'],
   },
   {
