@@ -23,4 +23,6 @@ type ProfileType =
   | 'private-commercial'
   | 'commercial';
 
+type AuthMethod = 'digid' | 'eherkenning' | 'yivi';
+
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;

@@ -53,7 +53,7 @@ const otapServerEnv: OtapEnv = {
     analyticsId: 'e63312c0-0efe-4c4f-bba1-3ca1f05374a8',
     analyticsUrlBase: 'https://dap.amsterdam.nl/',
     sentryDsn:
-      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
+      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
@@ -68,7 +68,7 @@ const otapServerEnv: OtapEnv = {
     analyticsId: 'f558164e-e388-49e0-864e-5f172552789c',
     analyticsUrlBase: 'https://dap.amsterdam.nl/',
     sentryDsn:
-      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
+      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
