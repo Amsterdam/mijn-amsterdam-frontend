@@ -84,6 +84,7 @@ export const ExternalUrls = {
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
+  SSO_SVWI: getOtapEnvItem('ssoSvwi'),
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
