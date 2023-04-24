@@ -113,9 +113,7 @@ export default function Landing() {
               <a rel="noopener noreferrer" href="https://eherkenning.nl">
                 eherkenning.nl
               </a>{' '}
-              voor meer informatie.<br></br>
-              Voorlopig is inloggen met een Ketenmachtiging voor eHerkenning
-              (niveau 3) nog niet mogelijk. We werken aan een oplossing.
+              voor meer informatie.
             </p>
           </div>
         )}
