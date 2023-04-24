@@ -1,5 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { DATASETS, IS_OT, getDatasetCategoryId } from '../universal/config';
+import {
+  DATASETS,
+  IS_OT,
+  OTAP_ENV,
+  getDatasetCategoryId,
+} from '../universal/config';
 import { ApiResponse, apiSuccessResult, jsonCopy } from '../universal/helpers';
 import { BffEndpoints } from './config';
 import { queryParams } from './helpers/app';
@@ -156,3 +161,10 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     });
   }
 }
+
+router.get(
+  BffEndpoints.STATUS_HEALTH,
+  (req: Request, res: Response, next: NextFunction) => {
+    return res.json({ status: 'OK', otapEnv: OTAP_ENV });
+  }
+);

@@ -360,14 +360,12 @@ export const BffEndpoints = {
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
-  STATUS_HEALTH: '/bff/status/health',
-  STATUS_HEALTH2: '/status/health',
+  STATUS_HEALTH: '/status/health',
   STATUS_ENV: '/status/env',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
