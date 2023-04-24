@@ -21,6 +21,7 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
+  DEV_TOKEN_ID_ATTRIBUTE,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -52,8 +53,10 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
       break;
   }
 
+  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[authMethod](tokenData);
+
   return {
-    id: tokenData[OIDC_TOKEN_ID_ATTRIBUTE[authMethod]],
+    id: tokenData[idAttr],
     authMethod,
     profileType,
   };
@@ -257,7 +260,7 @@ function getPublicKeyForDevelopment() {
 function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   const idToken = jose.JWT.sign(
     {
-      [OIDC_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
       aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
     },
     getPrivateKeyForDevelopment(),
