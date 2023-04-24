@@ -367,6 +367,7 @@ export const BffEndpoints = {
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
+  BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
