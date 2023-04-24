@@ -23,7 +23,6 @@ export type AVGRequest = {
 
 export type SmileAvgResponse = SmileSourceResponse<SmileAVGRequest>;
 
-// TODO: Verify we indeed get SmileFieldValue's
 export type SmileAVGRequest = {
   avgverzoek_id: SmileFieldValue;
   avgverzoek_statusavgverzoek_alias: SmileFieldValue;
