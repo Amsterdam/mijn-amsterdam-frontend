@@ -263,6 +263,7 @@ const Labels: {
         'DBS',
         'KVB',
         'WMH',
+        'AWBG',
       ],
     },
     statusItems: [
@@ -336,8 +337,9 @@ const Labels: {
         'KVB',
         'MAO',
         'WMH',
+        'AWBG',
       ],
-      '': ['AO2', 'AO5', 'DBS', 'KVB', 'WMH'],
+      '': ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
     },
     statusItems: [
       {
@@ -357,6 +359,7 @@ const Labels: {
                 ${
                   data.isActual &&
                   [
+                    'AWBG',
                     'WMH',
                     'AO1',
                     'AO2',
