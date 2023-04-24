@@ -10,6 +10,7 @@ import fs from 'fs';
 import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { TokenData } from './helpers/app';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
 const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
@@ -446,10 +447,46 @@ export const oidcConfigYivi: ConfigParams = {
   },
 };
 
+// Op 1.13 met ketenmachtiging
+export const EH_ATTR_INTERMEDIATE_PRIMARY_ID =
+  'urn:etoegang:core:LegalSubjectID';
+export const EH_ATTR_INTERMEDIATE_SECONDARY_ID =
+  'urn:etoegang:1.9:IntermediateEntityID:KvKnr';
+
+// 1.13 inlog zonder ketenmachtiging:
+export const EH_ATTR_PRIMARY_ID = 'urn:etoegang:core:LegalSubjectID';
+
+// < 1.13 id
+export const EH_ATTR_PRIMARY_ID_LEGACY =
+  'urn:etoegang:1.9:EntityConcernedID:KvKnr';
+
+export const DIGID_ATTR_PRIMARY = 'sub';
+export const YIVI_ATTR_PRIMARY = 'sub';
+
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
-  eherkenning: 'urn:etoegang:1.9:EntityConcernedID:KvKnr',
-  digid: 'sub',
-  yivi: 'sub',
+  eherkenning: (tokenData: TokenData) => {
+    if (
+      EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
+      EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData
+    ) {
+      return EH_ATTR_INTERMEDIATE_PRIMARY_ID;
+    }
+
+    if (EH_ATTR_PRIMARY_ID in tokenData) {
+      return EH_ATTR_PRIMARY_ID;
+    }
+
+    // Attr Prior to 1.13
+    return EH_ATTR_PRIMARY_ID_LEGACY;
+  },
+  digid: () => DIGID_ATTR_PRIMARY,
+  yivi: () => YIVI_ATTR_PRIMARY,
+};
+
+export const DEV_TOKEN_ID_ATTRIBUTE = {
+  eherkenning: EH_ATTR_PRIMARY_ID,
+  digid: DIGID_ATTR_PRIMARY,
+  yivi: YIVI_ATTR_PRIMARY,
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
