@@ -1,4 +1,4 @@
-import { IS_ACCEPTANCE } from '../../universal/config';
+import { IS_ACCEPTANCE } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';

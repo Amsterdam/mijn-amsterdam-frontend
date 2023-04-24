@@ -30,7 +30,7 @@ export default function SiaListClosed() {
       listTitle="Alle afgesloten meldingen"
       title="Meldingen"
       appRoute={AppRoutes.SIA_CLOSED}
-      appRouteBack={AppRoutes.SIA}
+      appRouteBack={AppRoutes.ROOT}
       displayProps={DISPLAY_PROPS_HISTORY}
       chapter={Chapters.SIA}
       titleKey="identifier"

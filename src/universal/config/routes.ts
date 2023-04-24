@@ -1,5 +1,9 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_EHERKENNING,
+} from '../../client/config/api';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
@@ -103,6 +107,11 @@ export const AppRoutesRedirect = [
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
 ];
 
+export const ExcludePageViewTrackingUrls = [
+  LOGIN_URL_DIGID,
+  LOGIN_URL_EHERKENNING,
+];
+
 export const PublicRoutes = [
   AppRoutes.API_LOGIN,
   AppRoutes.API1_LOGIN,
@@ -118,8 +127,13 @@ export const PrivateRoutes = Object.values(AppRoutes).filter(
 
 type AppRoute = keyof typeof AppRoutes;
 
+export interface TrackingConfig {
+  profileType: ProfileType;
+  isAuthenticated: boolean;
+}
+
 export const CustomTrackingUrls: {
-  [key: AppRoute]: (match: Match) => string;
+  [key: AppRoute]: (match: Match, trackingConfig: TrackingConfig) => string;
 } = {
   [AppRoutes['VERGUNNINGEN/DETAIL']]: (match) => {
     return `/vergunning/${match.params?.title}`;
@@ -145,14 +159,25 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
 
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
-    '/toeristische-verhuur/vergunning',
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
     '/toeristische-verhuur/vergunning/bed-and-breakfast',
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]: () =>
     '/toeristische-verhuur/vergunning/vakantieverhuur',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
+    '/toeristische-verhuur/vergunning',
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes.ROOT]: () => 'https://mijn.amsterdam.nl/home',
+  [AppRoutes['SIA/DETAIL']]: () => '/yivi/meldingen/detail',
+  [AppRoutes.SIA_CLOSED]: (match) =>
+    `/yivi/meldingen/afgesloten/${match.params?.page ?? 1}`,
+  [AppRoutes.SIA_OPEN]: (match) =>
+    `/yivi/meldingen/open/${match.params?.page ?? 1}`,
+  [AppRoutes.SIA]: () => '/yivi/meldingen',
+
+  [AppRoutes.ROOT]: (match, { profileType, isAuthenticated }) =>
+    profileType === 'private-attributes'
+      ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
+        `/yivi/meldingen`
+      : `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };

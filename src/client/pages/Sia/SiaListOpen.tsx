@@ -27,7 +27,7 @@ export default function SiaListClosed() {
       listTitle="Alle open meldingen"
       title="Meldingen"
       appRoute={AppRoutes.SIA_OPEN}
-      appRouteBack={AppRoutes.SIA}
+      appRouteBack={AppRoutes.ROOT}
       displayProps={DISPLAY_PROPS}
       chapter={Chapters.SIA}
       titleKey="identifier"

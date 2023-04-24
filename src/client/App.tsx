@@ -28,7 +28,6 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 
 import { default as LandingPage } from './pages/Landing/Landing';
-import { default as LandingPageYivi } from './pages/Landing/LandingYivi';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -104,8 +103,11 @@ const Bezwaren = lazy(() => import('./pages/Bezwaren/Bezwaren'));
 const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
 const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 
+const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
+
 function AppNotAuthenticated() {
   useDeeplinkEntry();
+  usePageChange(false);
 
   return (
     <>
@@ -142,7 +144,7 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   useAppStateRemote();
   useTipsApi();
-  usePageChange();
+  usePageChange(true);
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
