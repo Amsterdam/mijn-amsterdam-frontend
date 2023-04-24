@@ -164,8 +164,6 @@ exports[`<Landing /> Renders without crashing 1`] = `
             eherkenning.nl
           </a>
            voor meer informatie.
-          <br />
-          Voorlopig is inloggen met een Ketenmachtiging voor eHerkenning (niveau 3) nog niet mogelijk. We werken aan een oplossing.
         </p>
       </div>
       <h4

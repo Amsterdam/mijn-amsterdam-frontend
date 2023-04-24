@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import { useDebouncedCallback } from 'use-debounce';
 import { ChapterTitles } from '../../../universal/config';
@@ -39,7 +38,6 @@ const Notification = ({
   const [isReadyForAnimation, setReadyForAnimation] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [isCollapsed, toggleCollapsed] = useState(!smallVariant);
-  const history = useHistory();
   const profileType = useProfileTypeValue();
   const contentDimensions = useContentDimensions(contentRef);
 
@@ -63,10 +61,6 @@ const Notification = ({
   };
 
   const heightAnimSpring = useSpring(heightAnim);
-
-  function showNotification(id: string, to: string) {
-    history.push(to);
-  }
 
   const isLinkExternal =
     (!!notification.link?.to && !isInteralUrl(notification.link.to)) ||
@@ -157,10 +151,6 @@ const Notification = ({
                     );
                     if (notification.customLink?.callback) {
                       notification.customLink.callback();
-                      return false;
-                    }
-                    if (notification.link && !isLinkExternal) {
-                      showNotification(notification.id, notification.link.to);
                       return false;
                     }
                   }}

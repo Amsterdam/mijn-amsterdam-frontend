@@ -38,6 +38,7 @@ export const FeatureToggle = {
   klachtenActive: true,
   bezwarenActive: false,
   horecaActive: !IS_PRODUCTION,
+  avgActive: !IS_PRODUCTION,
   svwiLinkActive: IS_ACCEPTANCE,
 };
 
