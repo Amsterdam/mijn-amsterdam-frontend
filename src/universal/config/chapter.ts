@@ -25,6 +25,8 @@ export type Chapter =
   | 'PARKEREN'
   | 'KLACHTEN'
   | 'HORECA'
+  | 'KREFIA'
+  | 'AVG'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -52,6 +54,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   PARKEREN: 'PARKEREN',
   KLACHTEN: 'KLACHTEN',
   HORECA: 'HORECA',
+  AVG: 'AVG',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -82,6 +85,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   PARKEREN: 'Parkeren',
   KLACHTEN: 'Klachten',
   HORECA: 'Horeca',
+  AVG: 'AVG persoonsgegevens',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -164,4 +168,6 @@ export const DocumentTitles: Record<
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met Yivi',
+  [AppRoutes.AVG]: 'AVG Verzoeken',
+  [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
 };

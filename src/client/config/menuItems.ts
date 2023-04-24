@@ -160,6 +160,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: generatePath(AppRoutes.HORECA),
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
+  {
+    title: ChapterTitles.AVG,
+    id: Chapters.AVG,
+    to: generatePath(AppRoutes.AVG, { page: 1 }),
+    profileTypes: ['private', 'private-commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
