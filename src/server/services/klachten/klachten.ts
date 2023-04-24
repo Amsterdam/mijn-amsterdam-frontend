@@ -21,6 +21,18 @@ function getDataForKlachten(bsn: string, page: number) {
   data.append('username', process.env.BFF_SMILE_USERNAME);
   data.append('password', process.env.BFF_SMILE_PASSWORD);
   data.append('function', 'readKlacht');
+  const columns = [
+    'klacht_id',
+    'klacht_klachtonderwerp',
+    'klacht_datumontvangstklacht',
+    'klacht_locatieadres',
+    'klacht_omschrijving',
+    'klacht_gewensteoplossing',
+    'klacht_inbehandeling',
+  ].join(', ');
+
+  data.append('columns', columns);
+
   data.append(
     'columns',
     'klacht_id, klacht_klachtonderwerp, klacht_datumontvangstklacht,klacht_locatieadres, klacht_omschrijving,klacht_gewensteoplossing,klacht_inbehandeling'
