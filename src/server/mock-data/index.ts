@@ -4,6 +4,7 @@ import { ApiUrls, oidcConfigEherkenning } from '../config';
 // The JSON files represent the data output of the MA Python api's.
 import { decodeToken } from '../helpers/app';
 import AKTES from './json/aktes.json';
+import AVG from './json/avg.json';
 import BELASTINGEN from './json/belasting.json';
 import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
@@ -62,10 +63,10 @@ interface DataConfigObject {
   delay?: number;
   networkError?: boolean;
   headers?: Record<string, string>;
-  params?: Record<string, string>;
+  params?: Record<string, string | ((actual: any) => void)>;
   pathReg?: RegExp;
 }
-type MockDataConfig = Record<string, DataConfigObject>;
+type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
   [String(ApiUrls.BELASTINGEN)]: {
@@ -287,11 +288,30 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(KREFIA);
     },
   },
-  [String(ApiUrls.KLACHTEN)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    method: 'post',
-    responseData: async (config: any) => {
-      return await loadMockApiResponseJson(KLACHTEN);
+  [String(ApiUrls.ENABLEU_2_SMILE)]: [
+    {
+      status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+      method: 'post',
+      responseData: async (config: any) => {
+        return await loadMockApiResponseJson(KLACHTEN);
+      },
+      params: {
+        asymmetricMatch: function (actual: any) {
+          return actual.getBuffer().toString().includes('readKlacht');
+        },
+      },
     },
-  },
+    {
+      status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+      method: 'post',
+      responseData: async (config: any) => {
+        return await loadMockApiResponseJson(AVG);
+      },
+      params: {
+        asymmetricMatch: function (actual: any) {
+          return actual.getBuffer().toString().includes('readAVGverzoek');
+        },
+      },
+    },
+  ],
 };

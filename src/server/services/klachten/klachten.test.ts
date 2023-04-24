@@ -20,7 +20,7 @@ describe('Klachten', () => {
     token: 'abc123',
   };
 
-  ApiConfig.KLACHTEN.postponeFetch = false;
+  ApiConfig.ENABLEU_2_SMILE.postponeFetch = false;
 
   afterAll(() => {
     // Enable http requests.

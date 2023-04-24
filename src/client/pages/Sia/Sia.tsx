@@ -80,17 +80,10 @@ export default function Sia() {
         <p>
           U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte
           wordt gehouden over de voortgang van uw melding. U kunt deze gegevens
-          hier niet meer wijzigen. 12 maanden na ontvangst van uw melding worden
-          deze gegevens automatisch verwijderd uit ons systeem.
+          hier niet meer wijzigen. 12 maanden na afhandeling van uw melding
+          worden deze gegevens automatisch verwijderd uit ons systeem.
         </p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/wonen-leefomgeving/melding-openbare-ruimte-en-overlast/"
-          >
-            Meer informatie
-          </Linkd>
-          <br />
           <Linkd
             external={true}
             href={`https://${

@@ -1,4 +1,4 @@
-import { AppRoutes } from './routes';
+import { AppRoutes, TrackingConfig } from './routes';
 
 // Within the team we call these Themes
 export type Chapter =
@@ -25,6 +25,8 @@ export type Chapter =
   | 'PARKEREN'
   | 'KLACHTEN'
   | 'HORECA'
+  | 'KREFIA'
+  | 'AVG'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -52,6 +54,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   PARKEREN: 'PARKEREN',
   KLACHTEN: 'KLACHTEN',
   HORECA: 'HORECA',
+  AVG: 'AVG',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -82,14 +85,33 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   PARKEREN: 'Parkeren',
   KLACHTEN: 'Klachten',
   HORECA: 'Horeca',
+  AVG: 'AVG persoonsgegevens',
 };
 
+export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
-export const DocumentTitles = {
-  [AppRoutes.ROOT]: 'Home | Dashboard',
+export const DocumentTitles: Record<
+  string,
+  string | ((config: TrackingConfig) => string)
+> = {
+  [AppRoutes.ROOT]: (config) => {
+    switch (true) {
+      case config.profileType === 'private-attributes' &&
+        config.isAuthenticated:
+        return 'Home | Meldingen overzicht';
+      case config.profileType === 'private-attributes' &&
+        !config.isAuthenticated:
+        return 'Landing | Inloggen met yivi';
+      case config.profileType !== 'private-attributes' &&
+        config.isAuthenticated:
+        return 'Home | Dashboard';
+      default:
+        return 'Landing';
+    }
+  },
   [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} overzicht`,
   [AppRoutes[
     'BURGERZAKEN/ID-KAART'
@@ -115,8 +137,6 @@ export const DocumentTitles = {
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
-  [AppRoutes.VERGUNNINGEN_LOPEND]: `${ChapterTitles.VERGUNNINGEN} lopende aanvragen`,
-  [AppRoutes.VERGUNNINGEN_EERDER]: `${ChapterTitles.VERGUNNINGEN} eerdere aanvragen`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
@@ -128,6 +148,8 @@ export const DocumentTitles = {
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
   [AppRoutes['SIA/DETAIL']]: `Melding detail | ${ChapterTitles.SIA}`,
+  [AppRoutes.SIA_OPEN]: `Meldingen | Openstaande meldingen`,
+  [AppRoutes.SIA_CLOSED]: `Meldingen | Afgesloten meldingen`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
@@ -145,4 +167,7 @@ export const DocumentTitles = {
   [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
+  [AppRoutes.YIVI_LANDING]: 'Inloggen met Yivi',
+  [AppRoutes.AVG]: 'AVG Verzoeken',
+  [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
 };

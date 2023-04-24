@@ -15,6 +15,7 @@ import {
 } from '../helpers/app';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAKTES } from './aktes';
+import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
@@ -116,6 +117,7 @@ const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
 const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
+const AVG = callService(fetchAVG);
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -165,6 +167,7 @@ const SERVICES_INDEX = {
   PROFILE,
   HORECA,
   SIA,
+  AVG,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -204,8 +207,8 @@ type CommercialServices = Pick<
 
 type ServicesByProfileType = {
   private: PrivateServices;
-  'private-commercial': PrivateCommercialServices;
   'private-attributes': PrivateServicesAttributeBased;
+  'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
 
@@ -237,6 +240,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BEZWAREN,
     BELASTINGEN,
     HORECA,
+    AVG,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -271,6 +275,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BEZWAREN,
     BELASTINGEN,
     HORECA,
+    AVG,
   },
   commercial: {
     AFVAL,

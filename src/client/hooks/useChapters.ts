@@ -35,7 +35,8 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     KLACHTEN,
     BEZWAREN,
     HORECA,
-  } = appState;
+    AVG,
+  }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
@@ -163,6 +164,13 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
+      );
+
+    case Chapters.AVG:
+      return (
+        !isLoading(AVG) &&
+        !!AVG?.content?.verzoeken?.length &&
+        FeatureToggle.avgActive
       );
   }
 

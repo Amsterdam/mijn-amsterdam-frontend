@@ -9,6 +9,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { getOtapEnvItem } from '../../universal/config';
 import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { useSessionStorage } from './storage.hook';
+import memoize from 'memoizee';
 
 let PiwikInstance: PiwikTracker;
 
@@ -27,7 +28,7 @@ enum CustomDimensionId {
 }
 
 function profileTypeDimension(profileType: ProfileType) {
-  return { id: CustomDimensionId.ProfileType, value: profileType };
+  return { id: CustomDimensionId.ProfileType, value: profileType as string };
 }
 
 function userCityDimension(userCity: string) {
@@ -64,7 +65,7 @@ export function trackEventWithCustomDimension(
   return PiwikInstance && PiwikInstance.trackEvent(payloadFinal);
 }
 
-export function trackPageView(
+function _trackPageView(
   title?: string,
   url?: string,
   customDimensions?: CustomDimension[]
@@ -72,7 +73,7 @@ export function trackPageView(
   let href = url || document.location.href;
 
   if (IS_AP && !href.startsWith('http')) {
-    href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
+    href = `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn.amsterdam.nl${href}`;
   }
 
   const payload: TrackPageViewParams = {
@@ -84,16 +85,22 @@ export function trackPageView(
   return PiwikInstance && PiwikInstance.trackPageView(payload);
 }
 
+export const trackPageView = memoize(_trackPageView, {
+  length: 2,
+  max: 1,
+});
+
 export function trackPageViewWithCustomDimension(
   title: string,
   url: string,
   profileType: ProfileType,
-  userCity: string
+  userCity?: string
 ) {
-  return trackPageView(title, url, [
-    profileTypeDimension(profileType),
-    userCityDimension(userCity),
-  ]);
+  const dimensions = [profileTypeDimension(profileType)];
+  if (userCity) {
+    dimensions.push(userCityDimension(userCity));
+  }
+  return trackPageView(title, url, dimensions);
 }
 
 export function trackLink(url: string) {

@@ -133,7 +133,7 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'KLACHTEN';
+  | 'ENABLEU_2_SMILE';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -270,7 +270,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
-  KLACHTEN: {
+  ENABLEU_2_SMILE: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
     httpsAgent: new https.Agent({
@@ -356,11 +356,14 @@ export const BffEndpoints = {
   AUTH_CALLBACK_EHERKENNING:
     BFF_OIDC_BASE_URL + AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
   AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
+  AUTH_LOGIN_EHERKENNING_LANDING:
+    AUTH_BASE_EHERKENNING + AUTH_LOGIN + '/landing',
   AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
 
   // YIVI
   AUTH_CALLBACK_YIVI: BFF_OIDC_BASE_URL + AUTH_BASE_YIVI + AUTH_CALLBACK,
   AUTH_LOGIN_YIVI: AUTH_BASE_YIVI + AUTH_LOGIN,
+  AUTH_LOGIN_YIVI_LANDING: AUTH_BASE_YIVI + AUTH_LOGIN + '/landing',
   AUTH_LOGOUT_YIVI: AUTH_BASE_YIVI + AUTH_LOGOUT,
 
   // Application specific urls
@@ -378,7 +381,7 @@ export const BffEndpoints = {
   CMS_CONTENT: '/services/cms',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
-  LOGIN_STATS: '/status/logins',
+  LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/bff/status/health',
 };
 
@@ -418,7 +421,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path AUTH_BASE_EHERKENNING
+    callback: AUTH_CALLBACK, // Relative to the Router path
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
 };
@@ -435,8 +438,8 @@ export const oidcConfigEherkenning: ConfigParams = {
 
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
-  idpLogout: false, // Non-standard OIDC implementation of Attribute based login so we don't have remote session.
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
+  authorizationParams: { prompt: 'login', max_age: 0 },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,

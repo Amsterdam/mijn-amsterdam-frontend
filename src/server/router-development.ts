@@ -41,7 +41,7 @@ authRouterDevelopment.get(
       userId
     );
 
-    countLoggedInVisit(userId);
+    countLoggedInVisit(userId, authMethod);
 
     res.cookie(
       OIDC_SESSION_COOKIE_NAME,

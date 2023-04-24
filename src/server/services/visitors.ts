@@ -22,9 +22,11 @@ const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
 
 const queries = {
-  countLogin: `INSERT INTO ${tableNameLoginCount} (uid) VALUES ($1) RETURNING id`,
-  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
+  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
+  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 };
@@ -39,9 +41,12 @@ function hashUserId(userID: string, salt = SALT) {
   return shasum.digest('hex');
 }
 
-export function countLoggedInVisit(userID: string) {
+export function countLoggedInVisit(
+  userID: string,
+  authMethod: AuthMethod = 'digid'
+) {
   const userIDHashed = hashUserId(userID);
-  return query(queries.countLogin, [userIDHashed]);
+  return query(queries.countLogin, [userIDHashed, authMethod]);
 }
 
 export async function loginStats(req: Request, res: Response) {
@@ -50,6 +55,13 @@ export async function loginStats(req: Request, res: Response) {
       'Supply database credentials and enable your Datapunt VPN to use this view locally.'
     );
   }
+
+  let authMethodSelected = '';
+
+  if (['yivi', 'eherkenning', 'digid'].includes(req.params.authMethod)) {
+    authMethodSelected = req.params.authMethod;
+  }
+
   const today = new Date();
   const dateEndday = format(today, QUERY_DATE_FORMAT);
   const ranges = [
@@ -142,17 +154,24 @@ export async function loginStats(req: Request, res: Response) {
     dateEnd = req.query.dateEnd as string;
   }
 
-  const totalLoginsResult = await query(queries.totalLogins, [
-    `[${dateStart}, ${dateEnd}]`,
-  ]);
+  let params = [`[${dateStart}, ${dateEnd}]`];
+  let totalQuery = queries.totalLoginsAll;
+  let uniqueQuery = queries.uniqueLoginsAll;
+
+  // Refine select statement with an authMethod type
+  if (authMethodSelected) {
+    totalQuery = queries.totalLogins;
+    uniqueQuery = queries.uniqueLogins;
+    params.push(authMethodSelected);
+  }
+
+  const totalLoginsResult = await query(totalQuery, params);
 
   if (totalLoginsResult?.rowCount) {
     totalLogins = parseInt(totalLoginsResult.rows[0].count, 10);
   }
 
-  const uniqueLoginsResult = await query(queries.uniqueLogins, [
-    `[${dateStart}, ${dateEnd}]`,
-  ]);
+  const uniqueLoginsResult = await query(uniqueQuery, params);
 
   if (uniqueLoginsResult?.rowCount) {
     uniqueLogins = uniqueLoginsResult.rowCount;
@@ -167,5 +186,7 @@ export async function loginStats(req: Request, res: Response) {
     dateEnd,
     ranges,
     defaultDateFormat,
+    tableNameLoginCount,
+    authMethodSelected,
   });
 }
