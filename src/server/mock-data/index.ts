@@ -8,6 +8,7 @@ import AVG from './json/avg.json';
 import BELASTINGEN from './json/belasting.json';
 import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
+import BEZWAREN_STATUS from './json/bezwaren-status.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -109,6 +110,16 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
+    },
+  },
+  [String(ApiUrls.BEZWAREN_STATUS)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN_STATUS);
     },
   },
   [String(ApiUrls.AKTES)]: {
