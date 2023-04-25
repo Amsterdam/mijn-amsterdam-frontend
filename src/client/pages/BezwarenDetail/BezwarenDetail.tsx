@@ -12,6 +12,8 @@ import {
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 import BezwarenStatusLines from './BezwarenStatusLines';
+import { DocumentLink } from '../../components/DocumentList/DocumentList';
+import styles from './BezwarenDetail.module.scss';
 
 const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
@@ -45,11 +47,14 @@ const BezwarenDetail = () => {
               label="Nummer van uw bezwaar"
               value={bezwaar?.bezwaarnummer}
             />
-            <InfoDetail label="Onderwerp" value={bezwaar?.omschrijving} />
+            {bezwaar?.omschrijving && (
+              <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
+            )}
             <InfoDetail label="Ontvangen op" value={bezwaar?.ontvangstdatum} />
-            <InfoDetail label="Specificatie" value={bezwaar?.toelichting} />
+            {bezwaar?.toelichting && (
+              <InfoDetail label="Specificatie" value={bezwaar.toelichting} />
+            )}
 
-            {/* Besluit waartegen u bezwaar maakt, datum */}
             <InfoDetailGroup>
               <InfoDetail
                 label="Besluit waartegen u bezwaar maakt"
@@ -58,11 +63,49 @@ const BezwarenDetail = () => {
               <InfoDetail label="Datum" value={bezwaar?.primairbesluitdatum} />
             </InfoDetailGroup>
 
-            {!!bezwaar?.einddatum && (
-              <InfoDetail
-                label="Resultaat bezwaar"
-                value={bezwaar?.resultaat}
-              />
+            {bezwaar?.documenten?.length && bezwaar?.documenten?.length > 0 && (
+              <>
+                <InfoDetailGroup>
+                  <InfoDetail
+                    valueWrapperElement="div"
+                    label={`Document${
+                      bezwaar.documenten.length > 1 ? 'en' : ''
+                    }`}
+                    value={
+                      <ul className={styles.documentlist}>
+                        {bezwaar.documenten.map((document) => (
+                          <li key={`document-link-${document.id}`}>
+                            <DocumentLink
+                              document={document}
+                              label={document.titel}
+                              trackPath={() =>
+                                `bezwaar/document/${document.titel}`
+                              }
+                            ></DocumentLink>
+                          </li>
+                        ))}
+                      </ul>
+                    }
+                  />
+                  <InfoDetail
+                    valueWrapperElement="div"
+                    label="Datum"
+                    value={
+                      <ul className={styles.documentlist}>
+                        {bezwaar.documenten.map((document) => (
+                          <li key={`document-date-${document.id}`}>
+                            {document.datePublished}
+                          </li>
+                        ))}
+                      </ul>
+                    }
+                  />
+                </InfoDetailGroup>
+              </>
+            )}
+
+            {!!bezwaar?.einddatum && bezwaar?.resultaat && (
+              <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
             )}
           </>
         )}

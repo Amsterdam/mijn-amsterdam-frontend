@@ -178,8 +178,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
-    // /zgw/v1/statussen?zaak=https://amsterdam-test.octopus.nl/zgw/v1/zaken/
-    url: ``,
+    url: `${process.env.BFF_BEZWAREN_STATUS_ENDPOINT}`,
     headers: {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',

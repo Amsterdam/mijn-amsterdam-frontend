@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types';
+import { GenericDocument, LinkProps } from '../../../universal/types';
 
 export type kenmerkKey =
   | 'statustekst'
@@ -49,6 +49,7 @@ export type Bezwaar = {
   primairbesluitdatum: string | null;
   resultaat: string | null;
   statussen: BezwaarStatus[];
+  documenten: GenericDocument[];
   link: LinkProps;
 };
 
@@ -74,9 +75,19 @@ export interface BezwarenSourceResponse<T> {
   results: T[];
 }
 
-export interface BezwaarDocumentData {
+export interface BezwaarDocument {
   titel: string;
   beschrijving: string;
   registratiedatum: string;
-  inhoud: string;
+}
+
+export interface BezwaarSourceDocument {
+  url: string;
+  uuid: string;
+  informatieobject: string;
+  zaak: string;
+  aardRelatieWeergave: string;
+  titel: string;
+  beschrijving: string;
+  registratiedatum: string;
 }
