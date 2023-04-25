@@ -133,7 +133,6 @@ async function enrichBezwaarResponse(
     | ApiSuccessResponse<Bezwaar[]>
 ) {
   if (bezwarenResponse.status !== 'OK') {
-    console.log('enrichBezwaarResponse', bezwarenResponse.status);
     return [];
   }
 
@@ -152,8 +151,6 @@ async function enrichBezwaarResponse(
 
   const content = await Promise.allSettled(enrichtedList);
   const results = content.map((res) => getSettledResult(res));
-
-  console.log('results', results);
 
   return results.filter(isNotErrorResponse);
 }
@@ -183,8 +180,6 @@ export async function fetchBezwaren(
   );
 
   const enrichedResponse = await enrichBezwaarResponse(bezwarenResponse);
-
-  console.log('enrichedResponse', enrichedResponse);
 
   return apiSuccessResult(enrichedResponse);
 }
