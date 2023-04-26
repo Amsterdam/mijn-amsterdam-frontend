@@ -245,8 +245,6 @@ export async function fetchBezwarenNotifications(
       ? bezwaren.content.map(createBezwaarNotification)
       : [];
 
-    console.log('notifications', notifications);
-
     return apiSuccessResult({
       notifications,
     });
