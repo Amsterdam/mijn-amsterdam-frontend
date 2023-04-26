@@ -30,10 +30,10 @@ export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
   const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'bezwaarnummer');
-
-  const ingediendeBezwaren = items.filter((b) => b.status !== '') ?? [];
-
-  const afgehandeldeBezwaren = items.filter((b) => b.status === '') ?? [];
+  const ingediendeBezwaren =
+    items.filter((bezwaar) => bezwaar.einddatum === null) ?? [];
+  const afgehandeldeBezwaren =
+    items.filter((bezwaar) => bezwaar.einddatum !== null) ?? [];
 
   return (
     <OverviewPage>
