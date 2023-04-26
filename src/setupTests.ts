@@ -32,3 +32,9 @@ process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = 'http://localhost';
 process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = 'http://localhost/token';
 process.env.BFF_LOOD_API_URL = 'http://localhost';
+process.env.BFF_BEZWAREN_LIST_ENDPOINT =
+  'http://localhost/BFF_BEZWAREN_LIST_ENDPOINT';
+process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT =
+  'http://localhost/BFF_BEZWAREN_DOCUMENTS_ENDPOINT';
+process.env.BFF_BEZWAREN_STATUS_ENDPOINT =
+  'http://localhost/BFF_BEZWAREN_STATUS_ENDPOINT';
