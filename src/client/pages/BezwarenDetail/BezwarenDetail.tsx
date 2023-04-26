@@ -1,6 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useAppStateGetter } from '../../hooks';
-import { isError, isLoading } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  isError,
+  isLoading,
+} from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -50,18 +54,30 @@ const BezwarenDetail = () => {
             {bezwaar?.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
             )}
-            <InfoDetail label="Ontvangen op" value={bezwaar?.ontvangstdatum} />
+            {bezwaar?.ontvangstdatum && (
+              <InfoDetail
+                label="Ontvangen op"
+                value={defaultDateFormat(bezwaar.ontvangstdatum)}
+              />
+            )}
             {bezwaar?.toelichting && (
               <InfoDetail label="Specificatie" value={bezwaar.toelichting} />
             )}
 
-            <InfoDetailGroup>
-              <InfoDetail
-                label="Besluit waartegen u bezwaar maakt"
-                value={bezwaar?.primairbesluit}
-              />
-              <InfoDetail label="Datum" value={bezwaar?.primairbesluitdatum} />
-            </InfoDetailGroup>
+            {bezwaar?.primairbesluit && bezwaar?.primairbesluitdatum && (
+              <InfoDetailGroup>
+                <InfoDetail
+                  label="Besluit waartegen u bezwaar maakt"
+                  value={bezwaar.primairbesluit}
+                />
+                <InfoDetail
+                  label="Datum"
+                  value={defaultDateFormat(
+                    new Date(bezwaar.primairbesluitdatum)
+                  )}
+                />
+              </InfoDetailGroup>
+            )}
 
             {bezwaar?.documenten?.length && bezwaar?.documenten?.length > 0 && (
               <>

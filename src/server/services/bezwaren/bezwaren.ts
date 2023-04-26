@@ -4,6 +4,7 @@ import {
   ApiPostponeResponse,
   ApiResponse,
   ApiSuccessResponse,
+  apiDependencyError,
   apiSuccessResult,
   defaultDateFormat,
   getSettledResult,
@@ -21,10 +22,13 @@ import {
   BezwaarSourceStatus,
   BezwaarSourceDocument,
 } from './types';
-import { AppRoutes } from '../../../universal/config';
-import { GenericDocument } from '../../../universal/types';
+import { AppRoutes, Chapters } from '../../../universal/config';
+import { GenericDocument, MyNotification } from '../../../universal/types';
 
-const ID_ATTRIBUTE = 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
+const ID_ATTRIBUTE = (authProfileAndToken: AuthProfileAndToken) =>
+  authProfileAndToken.profile.profileType === 'commercial'
+    ? 'rol__betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId'
+    : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 
 function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
@@ -64,13 +68,13 @@ export async function fetchBezwarenDocuments(
 }
 
 function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
-  const set = kenmerken.find((k) => k.kenmerk === kenmerk);
+  const gevondenKenmerk = kenmerken.find((k) => k.kenmerk === kenmerk);
 
-  if (!set) {
+  if (!gevondenKenmerk) {
     return null;
   }
 
-  return set.bron;
+  return gevondenKenmerk.bron;
 }
 
 function transformBezwarenResults(
@@ -85,20 +89,20 @@ function transformBezwarenResults(
       );
 
       const bezwaar: Bezwaar = {
+        identificatie: bezwaarBron.identificatie,
         uuid: bezwaarBron.uuid,
-        ontvangstdatum: defaultDateFormat(bezwaarBron.startdatum),
+        ontvangstdatum: bezwaarBron.startdatum,
         bezwaarnummer: bezwaarBron.identificatie,
         omschrijving: bezwaarBron.omschrijving,
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
         statussen: [],
-        datumbesluit:
-          besluitdatum === null
-            ? null
-            : defaultDateFormat(new Date(besluitdatum)),
-        einddatum: !!bezwaarBron.einddatum
-          ? defaultDateFormat(bezwaarBron.einddatum)
-          : null,
+        datumbesluit: besluitdatum === null ? null : besluitdatum,
+        datumIntrekking: getKenmerkValue(
+          bezwaarBron.kenmerken,
+          'datumintrekking'
+        ),
+        einddatum: !!bezwaarBron.einddatum ? bezwaarBron.einddatum : null,
         primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
         primairbesluitdatum: getKenmerkValue(
           bezwaarBron.kenmerken,
@@ -160,7 +164,7 @@ export async function fetchBezwaren(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Bezwaar[] | null>> {
   const requestBody = JSON.stringify({
-    [ID_ATTRIBUTE]:
+    [ID_ATTRIBUTE(authProfileAndToken)]:
       process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
   });
 
@@ -228,4 +232,56 @@ export async function fetchBezwaarStatus(
   }
 
   return [];
+}
+
+export async function fetchBezwarenNotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
+
+  if (bezwaren.status === 'OK') {
+    const notifications: MyNotification[] = Array.isArray(bezwaren.content)
+      ? bezwaren.content.map(createBezwaarNotification)
+      : [];
+
+    console.log('notifications', notifications);
+
+    return apiSuccessResult({
+      notifications,
+    });
+  }
+
+  return apiDependencyError({ bezwaren });
+}
+
+function createBezwaarNotification(bezwaar: Bezwaar) {
+  const isDone = !!bezwaar.einddatum;
+  const isWithdrawn = !!bezwaar.datumIntrekking;
+
+  const notification: MyNotification = {
+    chapter: Chapters.BEZWAREN,
+    id: bezwaar.identificatie,
+    title: 'Bezwaar ontvangen',
+    description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
+    datePublished: bezwaar.ontvangstdatum,
+    link: {
+      to: bezwaar.link.to,
+      title: 'Bekijk details',
+    },
+  };
+
+  if (isDone) {
+    notification.title = 'Bezwaar afgehandeld';
+    notification.description = `Er is een besluit over uw bezwaar ${bezwaar.identificatie}.`;
+    notification.datePublished = bezwaar.einddatum!;
+  }
+
+  if (isWithdrawn) {
+    notification.title = 'Bezwaar ingetrokken';
+    notification.description = `U hebt uw bezwaar ${bezwaar.identificatie} ingetrokken.`;
+    notification.datePublished = bezwaar.datumIntrekking!;
+  }
+
+  return notification;
 }
