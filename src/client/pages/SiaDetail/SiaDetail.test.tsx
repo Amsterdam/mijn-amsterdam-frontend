@@ -99,7 +99,7 @@ describe('<SiaDetail />', () => {
   );
 
   it('Happy view', async () => {
-    render(<Component />);
+    const { rerender } = render(<Component />);
 
     await waitFor(() => {
       return expect([
@@ -107,6 +107,8 @@ describe('<SiaDetail />', () => {
         attachmentsFetch!.isDone(),
       ]).toStrictEqual([true, true]);
     });
+
+    rerender(<Component />);
 
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
     expect(
