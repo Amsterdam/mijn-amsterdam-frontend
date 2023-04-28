@@ -47,42 +47,37 @@ describe('<SiaDetail />', () => {
     nock.disableNetConnect();
   });
 
-  let historyFetch: nock.Scope | null = null;
-  let attachmentsFetch: nock.Scope | null = null;
+  let attachmentsFetch: nock.Scope = nock('http://localhost')
+    .get('/api/v1/services/signals/12420/attachments')
+    .reply(200, {
+      content: [
+        {
+          url: PLACEHOLDER_IMAGE_URL,
+          isImage: true,
+        },
+      ],
+      status: 'OK',
+    });
 
-  beforeEach(() => {
-    attachmentsFetch = nock('http://localhost')
-      .get('/api/v1/services/signals/12420/attachments')
-      .reply(200, {
-        content: [
-          {
-            url: PLACEHOLDER_IMAGE_URL,
-            isImage: true,
-          },
-        ],
-        status: 'OK',
-      });
-
-    historyFetch = nock('http://localhost')
-      .get('/api/v1/services/signals/12420/history')
-      .reply(200, {
-        content: [
-          {
-            status: 'Open',
-            key: 'UPDATE_STATUS',
-            datePublished: '2023-03-30T14:07:49.400270+02:00',
-            description: '',
-          },
-          {
-            status: 'Reactie verzonden',
-            key: 'REACTIE_VERZONDEN',
-            datePublished: '2023-03-31T14:07:49.400270+02:00',
-            description: '',
-          },
-        ],
-        status: 'OK',
-      });
-  });
+  let historyFetch: nock.Scope = nock('http://localhost')
+    .get('/api/v1/services/signals/12420/history')
+    .reply(200, {
+      content: [
+        {
+          status: 'Open',
+          key: 'UPDATE_STATUS',
+          datePublished: '2023-03-30T14:07:49.400270+02:00',
+          description: '',
+        },
+        {
+          status: 'Reactie verzonden',
+          key: 'REACTIE_VERZONDEN',
+          datePublished: '2023-03-31T14:07:49.400270+02:00',
+          description: '',
+        },
+      ],
+      status: 'OK',
+    });
 
   afterEach(() => {
     nock.cleanAll();
@@ -108,8 +103,8 @@ describe('<SiaDetail />', () => {
 
     await waitFor(() => {
       return expect([
-        historyFetch?.isDone(),
-        attachmentsFetch?.isDone(),
+        historyFetch!.isDone(),
+        attachmentsFetch!.isDone(),
       ]).toStrictEqual([true, true]);
     });
 
