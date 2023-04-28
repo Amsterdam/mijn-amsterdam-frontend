@@ -27,8 +27,10 @@ const release = `mijnamsterdam-frontend@${
 }`;
 console.info('App version: ' + release);
 
+const sentryDSN = getOtapEnvItem('sentryDsn');
+
 Sentry.init({
-  dsn: getOtapEnvItem('sentryDsn'),
+  dsn: sentryDSN,
   environment: ENV,
   debug: ENV === 'development',
   ignoreErrors: [
@@ -41,8 +43,11 @@ Sentry.init({
   beforeSend(event, hint) {
     if (ENV === 'development') {
       console.log(hint);
+    }
+    if (!sentryDSN) {
       return null;
     }
+
     return event;
   },
 });
