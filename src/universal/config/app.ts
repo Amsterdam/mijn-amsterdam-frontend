@@ -40,6 +40,7 @@ export const FeatureToggle = {
   horecaActive: !IS_PRODUCTION,
   avgActive: !IS_PRODUCTION,
   svwiLinkActive: IS_ACCEPTANCE,
+  ehKetenmachtigingActive: !IS_PRODUCTION,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

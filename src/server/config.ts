@@ -465,15 +465,17 @@ export const YIVI_ATTR_PRIMARY = 'sub';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
-    if (
-      EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
-      EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData
-    ) {
-      return EH_ATTR_INTERMEDIATE_PRIMARY_ID;
-    }
+    if (FeatureToggle.ehKetenmachtigingActive) {
+      if (
+        EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
+        EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData
+      ) {
+        return EH_ATTR_INTERMEDIATE_PRIMARY_ID;
+      }
 
-    if (EH_ATTR_PRIMARY_ID in tokenData) {
-      return EH_ATTR_PRIMARY_ID;
+      if (EH_ATTR_PRIMARY_ID in tokenData) {
+        return EH_ATTR_PRIMARY_ID;
+      }
     }
 
     // Attr Prior to 1.13
