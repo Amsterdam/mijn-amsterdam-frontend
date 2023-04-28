@@ -165,9 +165,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     method: 'POST',
     httpsAgent: new https.Agent({
       cert: IS_TAP
-        ? getCertificateSync(process.env.BFF_CLEOPATRA_PUBLIC_CERT)
+        ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT)
         : [],
-      key: IS_TAP ? getCertificateSync(process.env.BFF_CLEOPATRA_KEY) : [],
+      key: IS_TAP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
     }),
   },
   SIA: {
