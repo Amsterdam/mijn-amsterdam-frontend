@@ -16,7 +16,7 @@ const DEV_KEY = {
 
 const keystore = jose.JWK.createKeyStore();
 let certContent = '';
-let path = process.env.BFF_CLEOPATRA_PUB_KEY;
+let path = process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT;
 
 try {
   if (IS_AP && path) {
