@@ -32,8 +32,10 @@ console.info(
   process.env.REACT_APP_ADO_BUILD_ID ?? '0'
 );
 
+const sentryDSN = getOtapEnvItem('sentryDsn');
+
 Sentry.init({
-  dsn: getOtapEnvItem('sentryDsn'),
+  dsn: sentryDSN,
   environment: OTAP_ENV,
   debug: OTAP_ENV === 'development',
   ignoreErrors: [
@@ -46,6 +48,8 @@ Sentry.init({
   beforeSend(event, hint) {
     if (OTAP_ENV === 'development') {
       console.log(hint);
+    }
+    if (!sentryDSN) {
       return null;
     }
     return event;
