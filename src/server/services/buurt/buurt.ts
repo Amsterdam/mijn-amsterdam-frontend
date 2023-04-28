@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { IS_AP } from '../../../universal/config/env';
+import { IS_TAP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -55,7 +55,7 @@ export async function fetchDataset(
   params: { [key: string]: any } = {},
   pruneCache: boolean = false
 ) {
-  const cacheTimeMinutes = IS_AP
+  const cacheTimeMinutes = IS_TAP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
     : CACHE_VALUE_NO_EXPIRE;
 

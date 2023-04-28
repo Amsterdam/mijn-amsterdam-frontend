@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
-import { IS_AP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -163,7 +163,7 @@ function transformFooterResponse(responseData: any) {
 
 const fileCache = new FileCache({
   name: 'cms-content',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
 async function getGeneralPage(
@@ -274,7 +274,7 @@ export async function fetchCMSCONTENT(
 
 const searchFileCache = new FileCache({
   name: 'search-config',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
 export async function fetchSearchConfig(
@@ -283,13 +283,13 @@ export async function fetchSearchConfig(
 ) {
   const config = searchFileCache.getKey('CONFIG');
 
-  if (IS_AP && config?.content && query?.cache !== 'renew') {
+  if (IS_TAP && config?.content && query?.cache !== 'renew') {
     return Promise.resolve(config);
   }
 
   let dataRequest;
 
-  if (!IS_AP) {
+  if (!IS_TAP) {
     dataRequest = new Promise((resolve, reject) => {
       fs.readFile(
         path.join(

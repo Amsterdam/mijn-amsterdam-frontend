@@ -2,7 +2,7 @@ import flatCache from 'flat-cache';
 import fs from 'fs';
 import path from 'path';
 import { createHash } from 'node:crypto';
-import { IS_AP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 
 interface FileCacheProps {
   name: string;
@@ -16,7 +16,7 @@ const EXT = 'flat-cache.json';
 
 export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
 
-function fileName(name: string, isProd: boolean = IS_AP) {
+function fileName(name: string, isProd: boolean = IS_TAP) {
   const cacheName = isProd ? `prod.${name}` : `dev.${name}`;
   return `${cacheName}.${EXT}`;
 }
@@ -125,7 +125,7 @@ export default class FileCache {
     this.hashes = [];
   }
 
-  getKeyStale(key: string, isProd: boolean = IS_AP) {
+  getKeyStale(key: string, isProd: boolean = IS_TAP) {
     return flatCache.load(fileName(this.name_, isProd), this.path).getKey(key)
       ?.data;
   }

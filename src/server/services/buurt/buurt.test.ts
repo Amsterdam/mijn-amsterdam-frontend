@@ -125,7 +125,7 @@ jest.mock('../../helpers/source-api-request');
 jest.mock('../../helpers/file-cache');
 jest.mock('../../../universal/config/env', () => {
   return {
-    IS_AP: true,
+    IS_TAP: true,
     getOtapEnvItem: (key: string) => key,
   };
 });

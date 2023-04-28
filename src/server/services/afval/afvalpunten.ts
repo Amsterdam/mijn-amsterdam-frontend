@@ -1,7 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 import memoryCache from 'memory-cache';
 import scrapeIt from 'scrape-it';
-import { IS_AP } from '../../../universal/config';
+import { IS_TAP } from '../../../universal/config';
 import {
   apiSuccessResult,
   ApiSuccessResponse,
@@ -156,7 +156,7 @@ async function scrapeAfvalpuntGeoLocations() {
 
 const fileCache = new FileCache({
   name: 'afvalpunten',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
 function addApproximateDistance(

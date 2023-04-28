@@ -10,7 +10,7 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_AP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { query, tableNameLoginCount } from './db';
 
@@ -50,7 +50,7 @@ export function countLoggedInVisit(
 }
 
 export async function loginStats(req: Request, res: Response) {
-  if (!IS_AP && !process.env.BFF_LOGIN_COUNT_TABLE) {
+  if (!IS_TAP && !process.env.BFF_LOGIN_COUNT_TABLE) {
     return res.send(
       'Supply database credentials and enable your Datapunt VPN to use this view locally.'
     );
