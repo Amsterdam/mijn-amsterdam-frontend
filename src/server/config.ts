@@ -531,3 +531,25 @@ export const DEV_JWK_PRIVATE: any = {
   dq: '2xIAK4NTjrOw12hfCcCkChOAIisertsEZIYeVwbunx9Gr1gvtyk7YoCvoUNsFfLlZAjFTvnUqODlpiJptx7P4WzTu04oPon9hjg6Ze4FSb7VGbTuaEbNJfNuP_AaBXoO8BpceG2tjZm4Wzr3ivUja-5q9E73ld44ezdeKuX-cGE',
   n: '0CXtOrsyIGkhhJ_sHzGbyK9U6sug4HdjdSNaq-FVbFFO_OeAaS8NvzM7DJXkZvmvZ7HNIPdlRk0-TCELmbOGK1RlddQZA_iic9DePydxloNJIWmUVI5GK1T84PxhjnMfBAD3SWPdTZ0zG1IubAjUJT4nwl0uVdzp0-LixbmKPQU87dqA1jt7ZuC73M55oZAyi1e2fzvgdxWyM7-NyvkZqwG2eGoDQ3SNb0rArlHTgdsLf1YsGPxn1wN3bSjhrq6af4fCnB5UVRb-r3g4NN_VJxBOc2xGDDoOgaPW9XW-BhSefc2hqRjTwtjaGiZFLdEuZdcq_mUB-AHc0YYD3_4VXw',
 };
+
+export const securityHeaders = {
+  'Permissions-Policy':
+    'geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()',
+  'Referrer-Policy': 'same-origin',
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'X-Frame-Options': 'Deny',
+  'X-Content-Type-Options': 'nosniff',
+  'Content-Security-Policy': `
+    default-src 'none';
+    connect-src 'none';
+    script-src 'none';
+    img-src 'none';
+    frame-src 'none';
+    style-src 'none';
+    font-src 'none';
+    manifest-src 'none';
+    object-src 'none';
+    frame-ancestors 'none';
+    require-trusted-types-for 'script'
+  `.replace(/\n/g, ''),
+};
