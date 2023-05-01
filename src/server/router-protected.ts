@@ -137,7 +137,7 @@ router.get(
       res.status(500);
     }
 
-    return res.send(documentResponse);
+    return res.send(documentResponse.content);
   }
 );
 
