@@ -50,8 +50,8 @@ const TE_VERZENDEN: StatusStateChoice = 'ready to send';
 
 const MA_OPEN = 'Open';
 const MA_CLOSED = 'Afgesloten';
-const MA_REPLY_REQUESTED = 'Reactie gevraagd';
-const MA_REPLY_RECEIVED = 'Reactie ontvangen';
+const MA_REPLY_REQUESTED = 'Vraag aan u verstuurd';
+const MA_REPLY_RECEIVED = 'Antwoord van u ontvangen';
 
 const MA_STATUS_ALLOWED = [
   MA_OPEN,
