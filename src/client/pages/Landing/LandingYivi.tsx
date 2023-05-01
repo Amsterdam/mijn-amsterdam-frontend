@@ -63,7 +63,7 @@ export default function Landing() {
               <span className={styles.LoginButtonText}>
                 {isRedirectingYivi
                   ? 'Bezig met inloggen...'
-                  : 'Inloggen met YIVI'}
+                  : 'Inloggen met Yivi'}
               </span>
             </a>
           </p>
