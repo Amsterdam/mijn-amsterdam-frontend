@@ -1,4 +1,4 @@
-import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from './env';
+import { getOtapEnvItem, IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -39,6 +39,7 @@ export const FeatureToggle = {
   bezwarenActive: false,
   horecaActive: !IS_PRODUCTION,
   avgActive: !IS_PRODUCTION,
+  svwiLinkActive: IS_ACCEPTANCE,
   ehKetenmachtigingActive: !IS_PRODUCTION,
 };
 
@@ -86,6 +87,7 @@ export const ExternalUrls = {
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
+  SSO_SVWI: getOtapEnvItem('ssoSvwi'),
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
