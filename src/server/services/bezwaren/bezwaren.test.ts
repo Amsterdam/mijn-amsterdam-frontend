@@ -1,12 +1,17 @@
 import nock from 'nock';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchBezwaren, fetchBezwarenNotifications } from './bezwaren';
+import {
+  fetchBezwaarDocument,
+  fetchBezwaren,
+  fetchBezwarenNotifications,
+} from './bezwaren';
 import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
 import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
 import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
 
 describe('Bezwaren', () => {
   const requestId = '456';
+  const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
 
   const profileAndToken: AuthProfileAndToken = {
     profile: {
@@ -41,7 +46,9 @@ describe('Bezwaren', () => {
         .reply(200, bezwarenDocumenten)
         .get((uri) => uri.includes('/statussen'))
         .times(4)
-        .reply(200, bezwarenStatus);
+        .reply(200, bezwarenStatus)
+        .get(`/enkelvoudiginformatieobjecten/${documentId}/download`)
+        .reply(200, 'wat-document-data');
     });
 
     it('should return data in expected format', async () => {
@@ -108,6 +115,19 @@ describe('Bezwaren', () => {
           "status": "OK",
         }
       `);
+    });
+
+    it('should be possible to download a document', async () => {
+      const documentResponse = await fetchBezwaarDocument(
+        requestId,
+        profileAndToken,
+        documentId
+      );
+
+      //@ts-ignore
+      expect(documentResponse?.message).toEqual(undefined);
+      expect(documentResponse.status).toEqual('OK');
+      expect(documentResponse.content).toEqual('wat-document-data');
     });
   });
 });

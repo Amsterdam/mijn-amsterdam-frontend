@@ -32,6 +32,10 @@ function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
     : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 }
 
+function getZaakUrl(zaakId: string) {
+  return `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`;
+}
+
 function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): GenericDocument[] {
@@ -52,7 +56,7 @@ export async function fetchBezwarenDocuments(
 ): Promise<GenericDocument[] | null> {
   const params = {
     // We need to pass the entire url as query parameter
-    zaak: `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`,
+    zaak: getZaakUrl(zaakId),
   };
 
   const bezwarenDocumentsResponse = await requestData<GenericDocument[]>(
@@ -213,11 +217,9 @@ function transformBezwaarStatus(
   return [];
 }
 
-export async function fetchBezwaarStatus(
-  zaakUUID: string
-): Promise<BezwaarStatus[]> {
+async function fetchBezwaarStatus(zaakId: string): Promise<BezwaarStatus[]> {
   const params = {
-    zaak: `${process.env.BFF_BEZWAREN_API}/zaken/${zaakUUID}`,
+    zaak: getZaakUrl(zaakId),
   };
 
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
@@ -227,7 +229,7 @@ export async function fetchBezwaarStatus(
 
   const bezwarenStatusResponse = await requestData<BezwaarStatus[]>(
     requestConfig,
-    zaakUUID
+    zaakId
   );
 
   if (bezwarenStatusResponse.status === 'OK') {
@@ -260,7 +262,7 @@ export async function fetchBezwaarDocument(
 
   const requestConfig = getApiConfig('BEZWAREN_DOCUMENT');
   requestConfig.url = generatePath(
-    process.env.BFF_BEZWAREN_DOCUMENT_ENDPOINT ?? '',
+    `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
     { id: document }
   );
 
