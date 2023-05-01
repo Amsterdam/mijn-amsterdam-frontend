@@ -99,15 +99,15 @@ const attachmentsAtom = atom<Record<string, ApiResponse<SiaAttachment[]>>>({
 });
 
 function useAdditionalDataById<T extends ApiResponse<any>>(
-  id: string,
   url: string,
-  atom: RecoilState<Record<string, T>>
+  atom: RecoilState<Record<string, T>>,
+  id?: string
 ): T {
   const [data, setData] = useRecoilState(atom);
-  const isDataFetched = id in data;
+  const isDataFetched = !!id && id in data;
 
   useEffect(() => {
-    if (!isDataFetched) {
+    if (!isDataFetched && id) {
       fetch(url, {
         credentials: 'include',
       })
@@ -120,7 +120,11 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
     }
   }, [url, id, setData, isDataFetched]);
 
-  return data[id] ?? apiPristineResult(null);
+  if (id && isDataFetched) {
+    return data[id];
+  }
+
+  return apiPristineResult(null) as T;
 }
 
 export default function SiaDetail() {
@@ -131,18 +135,18 @@ export default function SiaDetail() {
     ...(SIA.content?.open?.items ?? []),
     ...(SIA.content?.afgesloten?.items ?? []),
   ];
-  const SiaItem = allSiaItems.find((item) => item.id === id);
+  const SiaItem = allSiaItems.find((item) => item.identifier === id);
 
   const attachments = useAdditionalDataById(
-    id,
-    `${BFF_API_BASE_URL}/services/signals/${id}/attachments`,
-    attachmentsAtom
+    `${BFF_API_BASE_URL}/services/signals/${SiaItem?.id}/attachments`,
+    attachmentsAtom,
+    SiaItem?.id
   );
 
   const history = useAdditionalDataById(
-    id,
-    `${BFF_API_BASE_URL}/services/signals/${id}/history`,
-    statusHistoryAtom
+    `${BFF_API_BASE_URL}/services/signals/${SiaItem?.id}/history`,
+    statusHistoryAtom,
+    SiaItem?.id
   );
 
   const imageAttachments =

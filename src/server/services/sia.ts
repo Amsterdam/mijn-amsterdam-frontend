@@ -14,6 +14,9 @@ import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import memoize from 'memoizee';
 import qs from 'qs';
+import { decrypt, encrypt } from '../../universal/helpers/encrypt-decrypt';
+
+const encryptionKey = String(process.env.BFF_GENERAL_ENCRYPTION_KEY);
 
 export type StatusStateChoice =
   | 'm'
@@ -212,8 +215,10 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
     const dateClosed = status === 'Afgesloten' ? sourceItem.updated_at : '';
     const identifier = sourceItem.id_display;
 
+    const [signalIdEncrypted] = encrypt(String(sourceItem.id), encryptionKey);
+
     return {
-      id: String(sourceItem.id),
+      id: signalIdEncrypted,
       identifier,
       category: sourceItem.category.main,
       datePublished: sourceItem.created_at,
@@ -246,7 +251,7 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
       hasAttachments: sourceItem.has_attachments,
       link: {
         to: generatePath(AppRoutes['SIA/DETAIL'], {
-          id: sourceItem.id,
+          id: identifier,
         }),
         title: `SIA Melding ${identifier}`,
       },
@@ -386,6 +391,8 @@ export async function fetchSignalsListByStatus(
       authProfileAndToken
     );
 
+    console.log(response);
+
     return response;
   }
 
@@ -426,12 +433,14 @@ function transformSiaAttachmentsResponse(response: SiaAttachmentResponse) {
 export async function fetchSignalAttachments(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  signalId: string
+  signalIdEncrypted: string
 ) {
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    requestConfig.url = `${requestConfig.url}${signalId}/attachments`;
+    const signalIdDencrypted = decrypt(signalIdEncrypted, encryptionKey);
+
+    requestConfig.url = `${requestConfig.url}${signalIdDencrypted}/attachments`;
 
     const response = await requestData<SiaAttachment[]>(
       {
@@ -545,12 +554,14 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
 export async function fetchSignalHistory(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  signalId: string
+  signalIdEncrypted: string
 ) {
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    requestConfig.url = `${requestConfig.url}${signalId}/history`;
+    const signalIdDecrypted = decrypt(signalIdEncrypted, encryptionKey);
+
+    requestConfig.url = `${requestConfig.url}${signalIdDecrypted}/history`;
 
     const response = await requestData<SiaSignalStatusHistory[]>(
       {

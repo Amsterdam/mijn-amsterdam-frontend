@@ -299,7 +299,7 @@ describe('sia service', () => {
           "datePublished": "2023-03-22T11:45:15.024700+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
-          "status": "Reactie gevraagd",
+          "status": "Vraag aan u verstuurd",
         },
         Object {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",
@@ -311,7 +311,7 @@ describe('sia service', () => {
           "datePublished": "2023-03-23T11:44:29.032811+01:00",
           "description": "U heeft het voor elkaar!",
           "key": "UPDATE_STATUS",
-          "status": "Reactie ontvangen",
+          "status": "Antwoord van u ontvangen",
         },
         Object {
           "datePublished": "2023-03-27T09:43:15.024700+01:00",
@@ -367,7 +367,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "12419",
+            "id": "hVWUbuuNyYFifJmm-GlLDGA50g0Gy7Y3TgNAGUfiQnM",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -375,7 +375,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/12419",
+              "to": "/meldingen/detail/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Open",
@@ -413,7 +413,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "12419",
+            "id": "p6mCa7fEYoTQfhwJzkZwSDKvAltLDvzIrfdMBWZIDYA",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -421,7 +421,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/12419",
+              "to": "/meldingen/detail/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Afgesloten",

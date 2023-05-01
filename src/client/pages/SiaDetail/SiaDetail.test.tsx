@@ -9,7 +9,7 @@ import nock from 'nock';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 
 const SIA_ITEM = {
-  id: '12420',
+  id: 'xbcdefgh',
   identifier: 'SIG-12420',
   category: 'Overlast in de openbare ruimte',
   datePublished: '2023-03-30T14:07:49.344646+02:00',
@@ -24,7 +24,7 @@ const SIA_ITEM = {
   email: 'dingermans@amsterdam.nl',
   phone: '065656565656',
   hasAttachments: true,
-  link: { to: '/meldingen/detail/12420', title: 'SIA Melding SIG-12420' },
+  link: { to: '/meldingen/detail/SIG-12420', title: 'SIA Melding SIG-12420' },
 };
 
 const testState: any = {
@@ -52,7 +52,7 @@ describe('<SiaDetail />', () => {
 
   beforeEach(() => {
     attachmentsFetch = nock('http://localhost')
-      .get('/api/v1/services/signals/12420/attachments')
+      .get('/api/v1/services/signals/xbcdefgh/attachments')
       .reply(200, {
         content: [
           {
@@ -64,7 +64,7 @@ describe('<SiaDetail />', () => {
       });
 
     historyFetch = nock('http://localhost')
-      .get('/api/v1/services/signals/12420/history')
+      .get('/api/v1/services/signals/xbcdefgh/history')
       .reply(200, {
         content: [
           {
@@ -89,7 +89,7 @@ describe('<SiaDetail />', () => {
   });
 
   const routeEntry = generatePath(AppRoutes['SIA/DETAIL'], {
-    id: SIA_ITEM.id,
+    id: SIA_ITEM.identifier,
   });
 
   const routePath = AppRoutes['SIA/DETAIL'];

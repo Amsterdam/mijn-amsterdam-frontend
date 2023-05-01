@@ -1,27 +1,22 @@
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
-import {
-  AppRoutes,
-  ChapterTitles,
-  IS_PRODUCTION,
-} from '../../../universal/config/index';
+import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
-  addTitleLinkComponent,
   Alert,
   ChapterIcon,
-  Linkd,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
+import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
-import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 
 export const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
