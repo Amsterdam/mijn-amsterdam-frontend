@@ -22,7 +22,7 @@ export type StatusStateChoice =
   | 'h'
   | 'o'
   | 'a'
-  // | 'reopened'
+  | 'reopened'
   // | 'closure requested'
   | 'ingepland'
   | 'reaction requested'
@@ -39,7 +39,7 @@ const BEHANDELING: StatusStateChoice = 'b';
 const ON_HOLD: StatusStateChoice = 'h';
 const AFGEHANDELD: StatusStateChoice = 'o';
 const GEANNULEERD: StatusStateChoice = 'a';
-// const HEROPEND: StatusStateChoice = 'reopened';
+const HEROPEND: StatusStateChoice = 'reopened';
 // const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
 const VERZOEK_TOT_HEROPENEN: StatusStateChoice = 'reopen requested';
 const INGEPLAND: StatusStateChoice = 'ingepland';
@@ -75,7 +75,7 @@ const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
   [REACTIE_GEVRAAGD]: MA_REPLY_REQUESTED,
   [REACTIE_ONTVANGEN]: MA_REPLY_RECEIVED,
 
-  // [HEROPEND]: 'Heropend', // ??
+  [HEROPEND]: MA_OPEN,
   // [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
   // [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
   // [TE_VERZENDEN]: 'Extern: te verzenden', // ??
