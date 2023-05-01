@@ -5,6 +5,7 @@ import {
   ApiResponse,
   ApiSuccessResponse,
   apiDependencyError,
+  apiErrorResult,
   apiSuccessResult,
   defaultDateFormat,
   getSettledResult,
@@ -25,10 +26,11 @@ import {
 import { AppRoutes, Chapters } from '../../../universal/config';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 
-const ID_ATTRIBUTE = (authProfileAndToken: AuthProfileAndToken) =>
-  authProfileAndToken.profile.profileType === 'commercial'
+function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
+  return authProfileAndToken.profile.profileType === 'commercial'
     ? 'rol__betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId'
     : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
+}
 
 function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
@@ -49,7 +51,8 @@ export async function fetchBezwarenDocuments(
   zaakId: string
 ): Promise<GenericDocument[] | null> {
   const params = {
-    zaak: zaakId,
+    // We need to pass the entire url as query parameter
+    zaak: `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`,
   };
 
   const bezwarenDocumentsResponse = await requestData<GenericDocument[]>(
@@ -164,7 +167,7 @@ export async function fetchBezwaren(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Bezwaar[] | null>> {
   const requestBody = JSON.stringify({
-    [ID_ATTRIBUTE(authProfileAndToken)]:
+    [getIdAttribute(authProfileAndToken)]:
       process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
   });
 
@@ -214,7 +217,7 @@ export async function fetchBezwaarStatus(
   zaakUUID: string
 ): Promise<BezwaarStatus[]> {
   const params = {
-    zaak: zaakUUID,
+    zaak: `${process.env.BFF_BEZWAREN_API}/zaken/${zaakUUID}`,
   };
 
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
@@ -232,6 +235,36 @@ export async function fetchBezwaarStatus(
   }
 
   return [];
+}
+
+export async function fetchBezwaarDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  document: string
+) {
+  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
+  const documentIds =
+    bezwaren.content === null
+      ? []
+      : bezwaren.content
+          ?.map((b) => b.documenten)
+          .flat()
+          .map((d) => d.id);
+
+  if (
+    documentIds.length === 0 ||
+    documentIds.find((documentId) => documentId === document) === undefined
+  ) {
+    return apiErrorResult('Unknown document', null);
+  }
+
+  const requestConfig = getApiConfig('BEZWAREN_DOCUMENT');
+  requestConfig.url = generatePath(
+    process.env.BFF_BEZWAREN_DOCUMENT_ENDPOINT ?? '',
+    { id: document }
+  );
+
+  return requestData<string>(requestConfig, requestID);
 }
 
 export async function fetchBezwarenNotifications(

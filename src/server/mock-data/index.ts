@@ -20,7 +20,7 @@ import LOODMETINGEN from './json/loodmetingen.json';
 import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
-import SIA from './json/sia-meldingen.json';
+// import SIA from './json/sia-meldingen.json';
 import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';

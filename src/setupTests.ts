@@ -38,3 +38,4 @@ process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT =
   'http://localhost/BFF_BEZWAREN_DOCUMENTS_ENDPOINT';
 process.env.BFF_BEZWAREN_STATUS_ENDPOINT =
   'http://localhost/BFF_BEZWAREN_STATUS_ENDPOINT';
+process.env.BFF_BEZWAREN_API = 'http://localhost';
