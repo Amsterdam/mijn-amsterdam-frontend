@@ -116,6 +116,7 @@ export type SourceApiKey =
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
+  | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
   | 'BEZWAREN_STATUS'
   | 'CLEOPATRA'
@@ -161,7 +162,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
-    url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/zaken/_zoek`,
     method: 'POST',
     headers: {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
@@ -169,8 +170,16 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
+  BEZWAREN_DOCUMENT: {
+    url: `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
+    headers: {
+      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/zaakinformatieobjecten`,
     headers: {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
@@ -178,7 +187,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
-    url: `${process.env.BFF_BEZWAREN_STATUS_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/statussen`,
     headers: {
       Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
@@ -347,6 +356,9 @@ export const BffEndpoints = {
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
   SIA_HISTORY: '/services/signals/:id/history',
   SIA_LIST: '/services/signals/:status/:page',
+
+  // Bezwaren
+  BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

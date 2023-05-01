@@ -34,12 +34,12 @@ describe('Bezwaren', () => {
   describe('fetch bezwaren', () => {
     beforeEach(() => {
       nock('http://localhost')
-        .post(`/BFF_BEZWAREN_LIST_ENDPOINT?page=1`)
+        .post(`/zaken/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
-        .get('/BFF_BEZWAREN_DOCUMENTS_ENDPOINT')
+        .get((uri) => uri.includes('/zaakinformatieobjecten'))
         .times(4)
         .reply(200, bezwarenDocumenten)
-        .get('/BFF_BEZWAREN_STATUS_ENDPOINT')
+        .get((uri) => uri.includes('/statussen'))
         .times(4)
         .reply(200, bezwarenStatus);
     });
@@ -49,97 +49,7 @@ describe('Bezwaren', () => {
 
       expect(bezwarenApiResponse.count).toEqual(res.content?.length);
 
-      expect(res).toMatchInlineSnapshot(`
-        Object {
-          "content": Array [
-            Object {
-              "bezwaarnummer": "BI.21.014121.001",
-              "datumIntrekking": null,
-              "datumbesluit": "01-05-2021",
-              "documenten": Array [],
-              "einddatum": null,
-              "identificatie": "BI.21.014121.001",
-              "link": Object {
-                "title": "Bekijk details",
-                "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
-              },
-              "omschrijving": "Korte omschrijving van het bezwaar",
-              "ontvangstdatum": "2023-04-25",
-              "primairbesluit": "F2021.0008",
-              "primairbesluitdatum": "01-05-2021",
-              "resultaat": "Niet-ontvankelijk",
-              "status": null,
-              "statussen": Array [],
-              "toelichting": "Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.",
-              "uuid": "68cdd171-b4fd-44cc-a4d3-06b77341f20a",
-            },
-            Object {
-              "bezwaarnummer": "JB.22.000076.001",
-              "datumIntrekking": null,
-              "datumbesluit": "03-03-2021",
-              "documenten": Array [],
-              "einddatum": null,
-              "identificatie": "JB.22.000076.001",
-              "link": Object {
-                "title": "Bekijk details",
-                "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
-              },
-              "omschrijving": null,
-              "ontvangstdatum": "2023-04-03",
-              "primairbesluit": "TESTRB003",
-              "primairbesluitdatum": "03-03-2021",
-              "resultaat": "Gegrond",
-              "status": null,
-              "statussen": Array [],
-              "toelichting": "",
-              "uuid": "9804b064-90a3-43b0-bc7c-924f9939888d",
-            },
-            Object {
-              "bezwaarnummer": "ZAAK2",
-              "datumIntrekking": null,
-              "datumbesluit": null,
-              "documenten": Array [],
-              "einddatum": null,
-              "identificatie": "ZAAK2",
-              "link": Object {
-                "title": "Bekijk details",
-                "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
-              },
-              "omschrijving": "Online bezwaar",
-              "ontvangstdatum": "2022-11-04",
-              "primairbesluit": null,
-              "primairbesluitdatum": null,
-              "resultaat": null,
-              "status": null,
-              "statussen": Array [],
-              "toelichting": "Met toelichting",
-              "uuid": "cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
-            },
-            Object {
-              "bezwaarnummer": "ZAAK3",
-              "datumIntrekking": null,
-              "datumbesluit": "2023-01-03",
-              "documenten": Array [],
-              "einddatum": "2023-01-04",
-              "identificatie": "ZAAK3",
-              "link": Object {
-                "title": "Bekijk details",
-                "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
-              },
-              "omschrijving": "Online bezwaar",
-              "ontvangstdatum": "2022-11-04",
-              "primairbesluit": null,
-              "primairbesluitdatum": "2023-01-03",
-              "resultaat": null,
-              "status": null,
-              "statussen": Array [],
-              "toelichting": "Met toelichting",
-              "uuid": "956541b6-7a25-4132-9592-0a509bc7ace0",
-            },
-          ],
-          "status": "OK",
-        }
-      `);
+      expect(res).toMatchSnapshot();
     });
 
     it('should return the right notifications', async () => {

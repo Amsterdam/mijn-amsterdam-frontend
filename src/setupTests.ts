@@ -27,9 +27,4 @@ process.env.BFF_SMILE_PASSWORD = 'testpwd2';
 process.env.BFF_SISA_ENCRYPTION_KEY = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = 'http://localhost/remote/subsidies/api/';
-process.env.BFF_BEZWAREN_LIST_ENDPOINT =
-  'http://localhost/BFF_BEZWAREN_LIST_ENDPOINT';
-process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT =
-  'http://localhost/BFF_BEZWAREN_DOCUMENTS_ENDPOINT';
-process.env.BFF_BEZWAREN_STATUS_ENDPOINT =
-  'http://localhost/BFF_BEZWAREN_STATUS_ENDPOINT';
+process.env.BFF_BEZWAREN_API = 'http://localhost';
