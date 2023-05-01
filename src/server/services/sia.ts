@@ -23,13 +23,13 @@ export type StatusStateChoice =
   | 'o'
   | 'a'
   | 'reopened'
-  // | 'closure requested'
+  | 'closure requested'
   | 'ingepland'
   | 'reaction requested'
   | 'reaction received'
-  | 'reopen requested';
-// | 'ready to send';
-// | 'forward to external'
+  | 'reopen requested'
+  | 'ready to send'
+  | 'forward to external';
 
 // See also: https://github.com/Amsterdam/signals/blob/main/app/signals/apps/signals/workflow.py
 // Internal statusses
@@ -40,13 +40,13 @@ const ON_HOLD: StatusStateChoice = 'h';
 const AFGEHANDELD: StatusStateChoice = 'o';
 const GEANNULEERD: StatusStateChoice = 'a';
 const HEROPEND: StatusStateChoice = 'reopened';
-// const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
+const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
 const VERZOEK_TOT_HEROPENEN: StatusStateChoice = 'reopen requested';
 const INGEPLAND: StatusStateChoice = 'ingepland';
 const REACTIE_GEVRAAGD: StatusStateChoice = 'reaction requested';
 const REACTIE_ONTVANGEN: StatusStateChoice = 'reaction received';
-// const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
-// const TE_VERZENDEN: StatusStateChoice = 'ready to send';
+const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
+const TE_VERZENDEN: StatusStateChoice = 'ready to send';
 
 const MA_OPEN = 'Open';
 const MA_CLOSED = 'Afgesloten';
@@ -76,9 +76,9 @@ const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
   [REACTIE_ONTVANGEN]: MA_REPLY_RECEIVED,
 
   [HEROPEND]: MA_OPEN,
-  // [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
-  // [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
-  // [TE_VERZENDEN]: 'Extern: te verzenden', // ??
+  [DOORGEZET_NAAR_EXTERN]: MA_OPEN,
+  [VERZOEK_TOT_AFHANDELING]: MA_OPEN,
+  [TE_VERZENDEN]: MA_OPEN,
 };
 
 type StatusKey = keyof typeof STATUS_CHOICES_MA;
