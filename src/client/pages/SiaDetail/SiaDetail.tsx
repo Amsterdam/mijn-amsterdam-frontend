@@ -251,13 +251,6 @@ export default function SiaDetail() {
             </InfoDetailGroup>
 
             <p className={styles.DetailInfo}>
-              U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de
-              hoogte wordt gehouden over de voortgang van uw melding. U kunt
-              deze gegevens hier niet meer wijzigen. 12 maanden na ontvangst van
-              uw melding worden deze gegevens automatisch verwijderd uit ons
-              systeem.
-            </p>
-            <p className={styles.DetailInfo}>
               Wilt u informatie toevoegen? Of is het probleem nog niet opgelost?
               <br />
               <LinkdInline
