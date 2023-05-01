@@ -78,20 +78,9 @@ export default function Sia() {
       </PageHeading>
       <PageContent>
         <p>
-          U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte
-          wordt gehouden over de voortgang van uw melding. U kunt deze gegevens
-          hier niet meer wijzigen. 12 maanden na afhandeling van uw melding
-          worden deze gegevens automatisch verwijderd uit ons systeem.
-        </p>
-        <p>
-          <Linkd
-            external={true}
-            href={`https://${
-              !IS_PRODUCTION ? 'acc.' : ''
-            }meldingen.amsterdam.nl`}
-          >
-            Doe een melding
-          </Linkd>
+          Hieronder ziet u uw openstaande meldingen. En u ziet meldingen die de
+          afgelopen 12 maanden zijn afgesloten. Klik op het meldingsnummer voor
+          meer informatie over de melding.
         </p>
         <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (
