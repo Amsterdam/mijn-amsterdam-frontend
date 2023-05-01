@@ -104,12 +104,12 @@ export const DocumentTitles: Record<
         return 'Home | Meldingen overzicht';
       case config.profileType === 'private-attributes' &&
         !config.isAuthenticated:
-        return 'Landing | Inloggen met yivi';
+        return 'Inloggen met yivi | Mijn Amsterdam';
       case config.profileType !== 'private-attributes' &&
         config.isAuthenticated:
         return 'Home | Dashboard';
       default:
-        return 'Landing';
+        return 'Inloggen | Mijn Amsterdam';
     }
   },
   [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} overzicht`,
