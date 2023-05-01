@@ -120,11 +120,13 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-          <Route
-            exact
-            path={AppRoutes.YIVI_LANDING}
-            component={LandingPageYivi}
-          />
+          {FeatureToggle.yiviActive && (
+            <Route
+              exact
+              path={AppRoutes.YIVI_LANDING}
+              component={LandingPageYivi}
+            />
+          )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
