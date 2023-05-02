@@ -59,6 +59,7 @@ export const AppRoutes: Record<string, string> = {
   YIVI_LANDING: '/inloggen-met-yivi',
   AVG: '/avg',
   'AVG/DETAIL': '/avg/verzoek/:id',
+  BFF_500_ERROR: '/server-error-500',
 };
 
 export const AppRoutesRedirect = [

@@ -106,6 +106,7 @@ const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
 const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
 const AVG = lazy(() => import('./pages/AVG/AVG'));
 const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
+const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -128,6 +129,7 @@ function AppNotAuthenticated() {
             />
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
@@ -178,7 +180,7 @@ function AppAuthenticated() {
             {FeatureToggle.siaActive && (
               <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
             )}
-
+            <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
             <Route component={NotFound} />
           </Switch>
         </div>
@@ -307,6 +309,7 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
+          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />
         </Switch>
       </div>
