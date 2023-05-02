@@ -245,7 +245,8 @@ export type Vergunning =
   | VormenVanWoonruimte
   | Splitsingsvergunning
   | Ligplaatsvergunning
-  | ExploitatieHorecabedrijf;
+  | ExploitatieHorecabedrijf
+  | RVVHeleStad;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
