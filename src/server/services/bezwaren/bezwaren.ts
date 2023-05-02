@@ -10,7 +10,12 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
-import { getApiConfig } from '../../config';
+import {
+  BFF_BASE_PATH,
+  BFF_PUBLIC_URL,
+  BffEndpoints,
+  getApiConfig,
+} from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -45,7 +50,10 @@ function transformBezwarenDocumentsResults(
       id: uuid,
       title: titel,
       datePublished: defaultDateFormat(registratiedatum),
-      url: '#',
+      url: `${BFF_PUBLIC_URL}${BFF_BASE_PATH}${generatePath(
+        BffEndpoints.BEZWAREN_ATTACHMENTS,
+        { id: uuid }
+      )}`,
     }));
   }
   return [];
