@@ -21,4 +21,5 @@ export enum CaseType {
   Splitsingsvergunning = 'Splitsingsvergunning',
   VOB = 'VOB',
   ExploitatieHorecabedrijf = 'Horeca vergunning exploitatie Horecabedrijf',
+  RVVHeleStad = 'RVV - Hele stad',
 }
