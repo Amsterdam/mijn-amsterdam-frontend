@@ -104,6 +104,9 @@ export const ExternalUrls = {
   KREFIA: getOtapEnvItem('krefiaDirectLink'),
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
   STADSPAS: 'https://www.amsterdam.nl/stadspas',
+
+  DIGID_AANVRAGEN:
+    'https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
