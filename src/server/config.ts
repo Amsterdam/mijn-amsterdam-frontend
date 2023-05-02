@@ -41,7 +41,7 @@ export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_PUBLIC_URL = `${
-  process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
+  process.env.BFF_PUBLIC_URL || `http://${BFF_HOST}:${BFF_PORT}`
 }`;
 
 const BFF_MS_API_HOST = IS_PRODUCTION
@@ -325,6 +325,7 @@ export const RelayPathsAllowed = {
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
+  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
 
 export const AUTH_BASE = '/api/v1/auth';
