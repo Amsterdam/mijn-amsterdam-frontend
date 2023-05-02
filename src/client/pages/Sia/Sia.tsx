@@ -6,6 +6,7 @@ import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
   Alert,
   ChapterIcon,
+  LinkdInline,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
@@ -17,6 +18,8 @@ import { OverviewPage } from '../../components/Page/Page';
 import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
+import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
+import classNames from 'classnames';
 
 export const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
@@ -76,6 +79,22 @@ export default function Sia() {
           Hieronder ziet u uw openstaande meldingen. En u ziet meldingen die de
           afgelopen 12 maanden zijn afgesloten. Klik op het meldingsnummer voor
           meer informatie over de melding.
+        </p>
+        <p>
+          <a
+            className={classNames(styles.SurveyThumbs, styles.SurveyThumbsUp)}
+            href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=positief"
+            rel="noopener noreferrer"
+          >
+            <ThumbsUp /> Positief
+          </a>
+          <a
+            className={classNames(styles.SurveyThumbs, styles.SurveyThumbsDown)}
+            href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=negatief"
+            rel="noopener noreferrer"
+          >
+            <ThumbsDown /> Negatief
+          </a>
         </p>
         <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (
