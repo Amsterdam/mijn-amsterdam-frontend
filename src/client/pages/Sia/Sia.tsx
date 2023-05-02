@@ -1,3 +1,5 @@
+import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
+import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
@@ -6,7 +8,6 @@ import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
   Alert,
   ChapterIcon,
-  LinkdInline,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
@@ -18,8 +19,6 @@ import { OverviewPage } from '../../components/Page/Page';
 import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
-import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
-import classNames from 'classnames';
 
 export const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
