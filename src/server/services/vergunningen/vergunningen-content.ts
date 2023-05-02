@@ -222,5 +222,5 @@ export const notificationContent: NotificationContent = {
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
   [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
   [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.short,
-  [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.long,
+  [CaseType.RVVHeleStad]: defaultNotificationLabels.short,
 };
