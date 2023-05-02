@@ -263,20 +263,19 @@ export default function MainNavBar({
             className={styles.LinkContainer}
             style={linkContainerAnimationProps}
           >
-            <div className={styles.LogoAndButtonWrapper}>
-              <AmsterdamLogo
-                role="img"
-                aria-label="Gemeente Amsterdam logo"
-                className={styles.logo}
-              />
-
-              {hasBurgerMenu && (
+            {hasBurgerMenu && (
+              <div className={styles.LogoAndButtonWrapper}>
+                <AmsterdamLogo
+                  role="img"
+                  aria-label="Gemeente Amsterdam logo"
+                  className={styles.logo}
+                />
                 <BurgerButton
                   isActive={!!isBurgerMenuVisible}
                   toggleBurgerMenu={toggleBurgerMenu}
                 />
-              )}
-            </div>
+              </div>
+            )}
 
             <SecondaryLinks />
             {menuItemsComposed}
