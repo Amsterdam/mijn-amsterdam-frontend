@@ -1,3 +1,4 @@
+import nock from 'nock';
 import { jsonCopy } from '../../universal/helpers';
 import {
   forTesting,
@@ -5,7 +6,19 @@ import {
   SiaSignalHistory,
   SignalPrivate,
   StatusStateChoice,
+  fetchSignalAttachments,
 } from './sia';
+
+const SIGNAL_ID_ENCRYPTED = 'xxxxxxxxxx-encrypted-xxxxxxxxxxx';
+const SIGNAL_ID_DECRYPTED = 'x1x2x3x4x5x';
+
+jest.mock('../../universal/helpers/encrypt-decrypt', () => {
+  return {
+    ...jest.requireActual('../../universal/helpers/encrypt-decrypt'),
+    encrypt: (value: string) => [SIGNAL_ID_ENCRYPTED],
+    decrypt: () => SIGNAL_ID_DECRYPTED,
+  };
+});
 
 const testHistory: SiaSignalHistory[] = [
   {
@@ -367,7 +380,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "hVWUbuuNyYFifJmm-GlLDGA50g0Gy7Y3TgNAGUfiQnM",
+            "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -413,7 +426,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "p6mCa7fEYoTQfhwJzkZwSDKvAltLDvzIrfdMBWZIDYA",
+            "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -444,6 +457,39 @@ describe('sia service', () => {
       expect(
         forTesting.getSignalStatus(signalMock(key as StatusStateChoice))
       ).toBe(value);
+    });
+  });
+
+  test('fetch signal attachments', async () => {
+    nock('http://localhost').post('/token').reply(200, 'token');
+    nock('http://localhost')
+      .get(`/private/signals/${SIGNAL_ID_DECRYPTED}/attachments`)
+      .reply(200, {
+        results: [
+          { location: '/1', is_image: false },
+          { location: '/2', is_image: true },
+        ],
+      });
+
+    const response = await fetchSignalAttachments(
+      'xx-request-id-xx',
+      {
+        token: '',
+        profile: {
+          id: 'hm',
+          authMethod: 'yivi',
+          profileType: 'private-attributes',
+        },
+      },
+      SIGNAL_ID_ENCRYPTED
+    );
+
+    expect(response).toStrictEqual({
+      content: [
+        { url: '/1', isImage: false },
+        { url: '/2', isImage: true },
+      ],
+      status: 'OK',
     });
   });
 });
