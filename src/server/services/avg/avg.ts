@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -100,13 +100,13 @@ export async function fetchAVG(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForAVG(authProfileAndToken.profile.id!);
-
   return requestData<AVGResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
       cacheKey: 'avg',
+      postponeFetch: !FeatureToggle.avgActive,
     }),
     requestID
   );
