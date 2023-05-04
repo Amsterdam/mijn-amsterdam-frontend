@@ -77,10 +77,6 @@ export default function Landing() {
             </LinkdInline>
             .
           </p>
-          <p>
-            Login met DigiD voor de volledige versie van{' '}
-            <LinkdInline href="/">Mijn Amsterdam</LinkdInline>.
-          </p>
           <Heading size="medium" el="h4">
             Download Yivi
           </Heading>
