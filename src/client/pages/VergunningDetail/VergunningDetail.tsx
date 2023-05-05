@@ -34,6 +34,7 @@ import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { Woonvergunningen } from './Woonvergunningen';
 import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
+import { RvvHeleStad } from './RvvHeleStad';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -106,6 +107,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.VOB && (
               <VOB vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.RVVHeleStad && (
+              <RvvHeleStad vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (
