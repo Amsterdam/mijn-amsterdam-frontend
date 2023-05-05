@@ -972,6 +972,20 @@
       "dateStartPermit": "2023-11-02T00:00:00",
       "dateProcessed": "2022-12-01T00:00:00",
       "numberOfPermits": 10
+    },
+    {
+      "caseType": "RVV - Hele stad",
+      "title": "RVV-verkeersontheffing",
+      "identifier": "Z/23/1809938",
+      "dateRequest": "2023-04-20T00:00:00",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2023-04-25T00:00:00",
+      "processed": false,
+      "dateStart": "2023-11-01T00:00:00",
+      "dateEnd": "2025-01-02T00:00:00",
+      "dateProcessed": null,
+      "licencePlates": "YY-123-A, ZZ-122-A"
     }
   ],
   "status": "OK"
