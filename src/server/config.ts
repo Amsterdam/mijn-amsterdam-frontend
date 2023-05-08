@@ -70,7 +70,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   /**
    * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
    * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey. Be sure this key is unique to the visitor. The for example the requestID parameter can be used.
+   * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! The for example the requestID parameter can be used.
    */
   cacheKey?: string;
   /**
