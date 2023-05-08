@@ -40,7 +40,7 @@ process.env.BFF_BEZWAREN_STATUS_ENDPOINT =
   'http://localhost/BFF_BEZWAREN_STATUS_ENDPOINT';
 process.env.BFF_BEZWAREN_API = 'http://localhost';
 
-process.env.BEZWAREN_USER = 'BEZWAREN_USER';
-process.env.BEZWAREN_EMAIL = 'BEZWAREN_EMAIL';
-process.env.BEZWAREN_EMPLOYEE_ID = '1';
-process.env.BEZWAREN_TOKEN_KEY = 'BEZWAREN_JWT_KEY';
+process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';
+process.env.BFF_BEZWAREN_EMAIL = 'BEZWAREN_EMAIL';
+process.env.BFF_BEZWAREN_EMPLOYEE_ID = '1';
+process.env.BFF_BEZWAREN_TOKEN_KEY = 'BEZWAREN_JWT_KEY';
