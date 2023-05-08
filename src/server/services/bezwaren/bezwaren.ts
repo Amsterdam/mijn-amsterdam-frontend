@@ -373,8 +373,9 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
       process.env.BEZWAREN_TOKEN_KEY ?? '',
       {
         algorithm: 'HS256',
-        // @ts-ignore
-        type: 'JWT',
+        header: {
+          typ: 'JWT',
+        },
       }
     ),
   };
