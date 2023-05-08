@@ -1,4 +1,9 @@
-import { Chapter, Chapters } from '../../universal/config';
+import {
+  Chapter,
+  Chapters,
+  IS_ACCEPTANCE,
+  IS_PRODUCTION,
+} from '../../universal/config';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAlert,
@@ -25,6 +30,7 @@ import {
   IconParkeren,
   IconKlachten,
   IconHoreca,
+  IconWPI,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -33,7 +39,7 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.BELASTINGEN]: IconBelastingen,
   [Chapters.BURGERZAKEN]: IconBurgerZaken,
   [Chapters.BUURT]: IconWior,
-  [Chapters.INKOMEN]: IconInkomen,
+  [Chapters.INKOMEN]: IS_ACCEPTANCE ? IconWPI : IconInkomen,
   [Chapters.STADSPAS]: IconStadspas,
   [Chapters.BRP]: IconMijnGegevens,
   [Chapters.MILIEUZONE]: IconMilieuzone,
