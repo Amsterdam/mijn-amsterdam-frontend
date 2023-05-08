@@ -1,9 +1,4 @@
-import {
-  Chapter,
-  Chapters,
-  IS_ACCEPTANCE,
-  IS_PRODUCTION,
-} from '../../universal/config';
+import { Chapter, Chapters, IS_ACCEPTANCE } from '../../universal/config';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAlert,
