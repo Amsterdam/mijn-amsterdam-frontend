@@ -213,4 +213,13 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('RVV hele stad - In behandeling', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/1809938" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });
