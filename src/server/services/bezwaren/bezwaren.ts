@@ -1,3 +1,4 @@
+import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import {
   ApiErrorResponse,
@@ -60,7 +61,8 @@ function transformBezwarenDocumentsResults(
 }
 
 export async function fetchBezwarenDocuments(
-  zaakId: string
+  zaakId: string,
+  authProfileAndToken: AuthProfileAndToken
 ): Promise<GenericDocument[] | null> {
   const params = {
     // We need to pass the entire url as query parameter
@@ -71,6 +73,7 @@ export async function fetchBezwarenDocuments(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
       transformResponse: transformBezwarenDocumentsResults,
+      headers: getBezwarenApiHeaders(authProfileAndToken),
     }),
     zaakId
   );
@@ -149,15 +152,20 @@ async function enrichBezwaarResponse(
   bezwarenResponse:
     | ApiPostponeResponse
     | ApiErrorResponse<null>
-    | ApiSuccessResponse<Bezwaar[]>
+    | ApiSuccessResponse<Bezwaar[]>,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   if (bezwarenResponse.status !== 'OK') {
     return [];
   }
 
   const enrichtedList = bezwarenResponse.content.map(async (bezwaar) => {
-    const statussen: BezwaarStatus[] = await fetchBezwaarStatus(bezwaar.uuid);
-    const documenten = (await fetchBezwarenDocuments(bezwaar.uuid)) ?? [];
+    const statussen: BezwaarStatus[] = await fetchBezwaarStatus(
+      bezwaar.uuid,
+      authProfileAndToken
+    );
+    const documenten =
+      (await fetchBezwarenDocuments(bezwaar.uuid, authProfileAndToken)) ?? [];
 
     const enrichedBezwaar: Bezwaar = {
       ...bezwaar,
@@ -191,6 +199,7 @@ export async function fetchBezwaren(
     data: requestBody,
     params,
     transformResponse: transformBezwarenResults,
+    headers: getBezwarenApiHeaders(authProfileAndToken),
   });
 
   const bezwarenResponse = await requestData<Bezwaar[]>(
@@ -198,7 +207,10 @@ export async function fetchBezwaren(
     requestID
   );
 
-  const enrichedResponse = await enrichBezwaarResponse(bezwarenResponse);
+  const enrichedResponse = await enrichBezwaarResponse(
+    bezwarenResponse,
+    authProfileAndToken
+  );
 
   return apiSuccessResult(enrichedResponse);
 }
@@ -225,7 +237,10 @@ function transformBezwaarStatus(
   return [];
 }
 
-async function fetchBezwaarStatus(zaakId: string): Promise<BezwaarStatus[]> {
+async function fetchBezwaarStatus(
+  zaakId: string,
+  authProfileAndToken: AuthProfileAndToken
+): Promise<BezwaarStatus[]> {
   const params = {
     zaak: getZaakUrl(zaakId),
   };
@@ -233,6 +248,7 @@ async function fetchBezwaarStatus(zaakId: string): Promise<BezwaarStatus[]> {
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
     params,
     transformResponse: transformBezwaarStatus,
+    headers: getBezwarenApiHeaders(authProfileAndToken),
   });
 
   const bezwarenStatusResponse = await requestData<BezwaarStatus[]>(
@@ -268,7 +284,9 @@ export async function fetchBezwaarDocument(
     return apiErrorResult('Unknown document', null);
   }
 
-  const requestConfig = getApiConfig('BEZWAREN_DOCUMENT');
+  const requestConfig = getApiConfig('BEZWAREN_DOCUMENT', {
+    headers: getBezwarenApiHeaders(authProfileAndToken),
+  });
   requestConfig.url = generatePath(
     `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
     { id: document }
@@ -325,4 +343,39 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   }
 
   return notification;
+}
+
+function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
+  const tokenData = {
+    'Unique-name': process.env.BEZWAREN_EMAIL,
+    Actort: process.env.BEZWAREN_USER,
+    Email: process.env.BEZWAREN_EMAIL,
+    UserId: process.env.BEZWAREN_USER,
+    UserLogin: process.env.BEZWAREN_EMAIL,
+    MedewerkerId: process.env.BEZWAREN_EMPLOYEE_ID,
+    Role: '',
+    NameIdentifier: '',
+  };
+
+  if (authProfileAndToken.profile.authMethod === 'digid') {
+    tokenData.Role = 'natuurlijk_persoon';
+    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+  }
+
+  if (authProfileAndToken.profile.authMethod === 'eherkenning') {
+    tokenData.Role = 'niet_natuurlijk_persoon';
+    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+  }
+
+  return {
+    Authorization: jose.JWT.sign(
+      tokenData,
+      process.env.BEZWAREN_TOKEN_KEY ?? '',
+      {
+        algorithm: 'HS256',
+        // @ts-ignore
+        type: 'JWT',
+      }
+    ),
+  };
 }

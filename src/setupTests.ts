@@ -28,3 +28,8 @@ process.env.BFF_SISA_ENCRYPTION_KEY = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = 'http://localhost/remote/subsidies/api/';
 process.env.BFF_BEZWAREN_API = 'http://localhost';
+
+process.env.BEZWAREN_USER = 'BEZWAREN_USER';
+process.env.BEZWAREN_EMAIL = 'BEZWAREN_EMAIL';
+process.env.BEZWAREN_EMPLOYEE_ID = '1';
+process.env.BEZWAREN_TOKEN_KEY = 'BEZWAREN_JWT_KEY';
