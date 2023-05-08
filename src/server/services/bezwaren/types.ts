@@ -14,22 +14,22 @@ export interface BezwaarSourceData {
   uuid: string;
   // Ontvangstdatum
   registratiedatum: string;
+
   // Bezwaarnummer
   identificatie: string;
+
   // Onderwerp
   omschrijving: string | null;
+
   // Specificatie
   toelichting: string | null;
+
   // Status tekst
   status: string | null;
-  // Status datum ???
-  // Datum intrekking ???
-  // Primair besluit ??? kenmerken.resultaattekst?
+
+  // Datum primair besluit
   datumprimairbesluit: string | null;
-  // Datum primair besluit ??? kenmerken.besluitdatum?
-  // Documentnr/URL ???
-  // Resultaat ????
-  // Afhandeldatum ????
+
   startdatum: string;
 
   einddatum: string | null;
