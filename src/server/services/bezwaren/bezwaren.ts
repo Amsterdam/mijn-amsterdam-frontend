@@ -347,12 +347,12 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 
 function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const tokenData = {
-    'Unique-name': process.env.BEZWAREN_EMAIL,
-    Actort: process.env.BEZWAREN_USER,
-    Email: process.env.BEZWAREN_EMAIL,
-    UserId: process.env.BEZWAREN_USER,
-    UserLogin: process.env.BEZWAREN_EMAIL,
-    MedewerkerId: process.env.BEZWAREN_EMPLOYEE_ID,
+    'Unique-name': process.env.BFF_BEZWAREN_EMAIL,
+    Actort: process.env.BBFF_EZWAREN_USER,
+    Email: process.env.BFF_BEZWAREN_EMAIL,
+    UserId: process.env.BFF_BEZWAREN_USER,
+    UserLogin: process.env.BFF_BEZWAREN_EMAIL,
+    MedewerkerId: process.env.BFF_BEZWAREN_EMPLOYEE_ID,
     Role: '',
     NameIdentifier: '',
   };
@@ -370,7 +370,7 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   return {
     Authorization: jose.JWT.sign(
       tokenData,
-      process.env.BEZWAREN_TOKEN_KEY ?? '',
+      process.env.BFF_BEZWAREN_TOKEN_KEY ?? '',
       {
         algorithm: 'HS256',
         header: {
