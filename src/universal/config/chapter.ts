@@ -147,9 +147,10 @@ export const DocumentTitles: Record<
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
-  [AppRoutes['SIA/DETAIL']]: `Melding detail | ${ChapterTitles.SIA}`,
-  [AppRoutes.SIA_OPEN]: `Meldingen | Openstaande meldingen`,
-  [AppRoutes.SIA_CLOSED]: `Meldingen | Afgesloten meldingen`,
+  [AppRoutes['SIA/DETAIL/OPEN']]: `Melding open | ${ChapterTitles.SIA}`,
+  [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ChapterTitles.SIA}`,
+  [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
+  [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'

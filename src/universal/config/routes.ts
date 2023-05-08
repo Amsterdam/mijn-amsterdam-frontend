@@ -25,9 +25,10 @@ export const AppRoutes: Record<string, string> = {
   STADSPAS: '/stadspas',
 
   SIA: '/meldingen',
-  SIA_OPEN: '/meldingen/open/:page?',
-  SIA_CLOSED: '/meldingen/afgesloten/:page?',
-  'SIA/DETAIL': '/meldingen/detail/:id',
+  SIA_OPEN: '/alle-open-meldingen/:page?',
+  SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
+  'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
+  'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
 
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
@@ -171,16 +172,16 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['SIA/DETAIL']]: () => '/yivi/meldingen/detail',
+  [AppRoutes['SIA/DETAIL/OPEN']]: () => '/yivi/open-melding',
+  [AppRoutes['SIA/DETAIL/CLOSED']]: () => '/yivi/afgesloten-melding',
   [AppRoutes.SIA_CLOSED]: (match) =>
-    `/yivi/meldingen/afgesloten/${match.params?.page ?? 1}`,
+    `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
   [AppRoutes.SIA_OPEN]: (match) =>
-    `/yivi/meldingen/open/${match.params?.page ?? 1}`,
-  [AppRoutes.SIA]: () => '/yivi/meldingen',
+    `/yivi/alle-open-meldingen/pagina-${match.params?.page ?? 1}`,
 
   [AppRoutes.ROOT]: (match, { profileType, isAuthenticated }) =>
     profileType === 'private-attributes'
       ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
-        `/yivi/meldingen`
+        `/yivi/meldingen-overzicht`
       : `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };

@@ -169,7 +169,13 @@ function AppAuthenticated() {
         <div className={styles.App} id="skip-to-id-AppContent">
           <Switch>
             {FeatureToggle.siaActive && (
-              <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+              <Route
+                path={[
+                  AppRoutes['SIA/DETAIL/CLOSED'],
+                  AppRoutes['SIA/DETAIL/OPEN'],
+                ]}
+                component={SiaDetail}
+              />
             )}
             {FeatureToggle.siaActive && (
               <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />

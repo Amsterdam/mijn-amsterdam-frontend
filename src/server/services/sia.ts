@@ -217,8 +217,11 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
     const status = getSignalStatus(sourceItem);
     const dateClosed = status === MA_CLOSED ? sourceItem.updated_at : '';
     const identifier = sourceItem.id_display;
-
     const [signalIdEncrypted] = encrypt(String(sourceItem.id), encryptionKey);
+    const route =
+      status === MA_CLOSED
+        ? AppRoutes['SIA/DETAIL/CLOSED']
+        : AppRoutes['SIA/DETAIL/OPEN'];
 
     return {
       id: signalIdEncrypted,
@@ -253,7 +256,7 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
       phone: sourceItem.reporter.phone,
       hasAttachments: sourceItem.has_attachments,
       link: {
-        to: generatePath(AppRoutes['SIA/DETAIL'], {
+        to: generatePath(route, {
           id: identifier,
         }),
         title: `SIA Melding ${identifier}`,

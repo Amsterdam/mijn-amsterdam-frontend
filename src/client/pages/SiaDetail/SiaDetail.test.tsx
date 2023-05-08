@@ -88,11 +88,11 @@ describe('<SiaDetail />', () => {
     nock.cleanAll();
   });
 
-  const routeEntry = generatePath(AppRoutes['SIA/DETAIL'], {
+  const routeEntry = generatePath(AppRoutes['SIA/DETAIL/OPEN'], {
     id: SIA_ITEM.identifier,
   });
 
-  const routePath = AppRoutes['SIA/DETAIL'];
+  const routePath = AppRoutes['SIA/DETAIL/OPEN'];
 
   const Component = () => (
     <MockApp
