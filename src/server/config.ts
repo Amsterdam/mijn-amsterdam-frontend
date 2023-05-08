@@ -431,7 +431,9 @@ const oidcConfigBase: ConfigParams = {
       nonce: string;
     };
 
-    const authVerification = JSON.parse(req.cookies.auth_verification);
+    const authVerification = JSON.parse(
+      req.cookies.auth_verification.split('.')[0]
+    );
 
     if (claims.nonce !== authVerification.nonce) {
       throw new Error(`Nonce invalid`);
