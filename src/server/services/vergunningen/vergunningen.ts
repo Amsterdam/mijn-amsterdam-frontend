@@ -178,6 +178,14 @@ export interface ZwaarVerkeer extends VergunningBase {
   dateEnd: string | null;
 }
 
+export interface RVVHeleStad extends VergunningBase {
+  caseType: CaseType.RVVHeleStad;
+  licencePlates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  dateProcessed: string | null;
+}
+
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Samenvoegingsvergunning;
 }
@@ -237,7 +245,8 @@ export type Vergunning =
   | VormenVanWoonruimte
   | Splitsingsvergunning
   | Ligplaatsvergunning
-  | ExploitatieHorecabedrijf;
+  | ExploitatieHorecabedrijf
+  | RVVHeleStad;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 

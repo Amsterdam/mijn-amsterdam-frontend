@@ -43,6 +43,7 @@ const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.Splitsingsvergunning,
   CaseType.VOB,
   CaseType.ExploitatieHorecabedrijf,
+  CaseType.RVVHeleStad,
 ];
 
 export const woonVergunningTypes = [
