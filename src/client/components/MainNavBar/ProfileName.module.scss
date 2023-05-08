@@ -11,7 +11,7 @@
   max-width: 20rem;
   position: relative;
 
-  + .ProfileLink {
+  +.ProfileLink {
     margin-left: 3.3rem;
 
     @include mq-tablet() {
@@ -43,6 +43,10 @@
       height: 2.4rem;
     }
   }
+}
+
+.IconProfile {
+  transform: translateY(-0.4rem);
 }
 
 .ProfileLink--active {
