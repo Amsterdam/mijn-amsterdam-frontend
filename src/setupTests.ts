@@ -39,3 +39,8 @@ process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT =
 process.env.BFF_BEZWAREN_STATUS_ENDPOINT =
   'http://localhost/BFF_BEZWAREN_STATUS_ENDPOINT';
 process.env.BFF_BEZWAREN_API = 'http://localhost';
+
+process.env.BEZWAREN_USER = 'BEZWAREN_USER';
+process.env.BEZWAREN_EMAIL = 'BEZWAREN_EMAIL';
+process.env.BEZWAREN_EMPLOYEE_ID = '1';
+process.env.BEZWAREN_TOKEN_KEY = 'BEZWAREN_JWT_KEY';
