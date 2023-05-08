@@ -78,7 +78,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           Ga naar 
           <a
-            href="https://www.digid.nl/aanvragen"
+            href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
             rel="noopener noreferrer"
           >
             DigiD aanvragen

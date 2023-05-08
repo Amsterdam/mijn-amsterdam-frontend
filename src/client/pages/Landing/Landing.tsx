@@ -67,7 +67,7 @@ export default function Landing() {
           </Heading>
           <p>
             Ga naar{' '}
-            <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen">
+            <a rel="noopener noreferrer" href={ExternalUrls.DIGID_AANVRAGEN}>
               DigiD aanvragen
             </a>
           </p>
