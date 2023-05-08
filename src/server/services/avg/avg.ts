@@ -105,7 +105,7 @@ export async function fetchAVG(
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: 'avg',
+      cacheKey: `avg-${requestID}`,
       postponeFetch: !FeatureToggle.avgActive,
     }),
     requestID
