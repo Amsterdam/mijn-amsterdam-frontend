@@ -13,7 +13,6 @@ import Heading from '../Heading/Heading';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
 import { AltDocumentContent, StatusLineItem } from './StatusLine.types';
-import { TextClamp } from '../InfoDetail/TextClamp';
 
 // Types used to be in this file
 export * from './StatusLine.types';
@@ -58,9 +57,7 @@ export function StatusLinePanelDescription({
 }: StatusLinePanelDescriptionProps) {
   return (
     <StatusLinePanel name="description">
-      <TextClamp>
-        <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
-      </TextClamp>
+      <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
     </StatusLinePanel>
   );
 }
