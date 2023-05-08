@@ -79,6 +79,12 @@ export default function Sia() {
           afgelopen 12 maanden zijn afgesloten. Klik op het meldingsnummer voor
           meer informatie over de melding.
         </p>
+        <h3>Wat vindt u van Yivi?</h3>
+        <p>
+          Uw meldingen volgen met de app Yivi is een proef. Wij willen graag
+          weten wat u hiervan vindt. Vul daarom hier de vragenlijst in. Het
+          invullen duurt 3 minuten.
+        </p>
         <p>
           <a
             className={classNames(styles.SurveyThumbs, styles.SurveyThumbsUp)}
