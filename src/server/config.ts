@@ -165,7 +165,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_BEZWAREN_API}/zaken/_zoek`,
     method: 'POST',
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
@@ -173,7 +172,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BEZWAREN_DOCUMENT: {
     url: `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
@@ -181,7 +179,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BEZWAREN_DOCUMENTS: {
     url: `${process.env.BFF_BEZWAREN_API}/zaakinformatieobjecten`,
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
@@ -189,7 +186,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BEZWAREN_STATUS: {
     url: `${process.env.BFF_BEZWAREN_API}/statussen`,
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
