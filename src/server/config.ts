@@ -11,6 +11,7 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 import { TokenData } from './helpers/app';
+import jose, { JWE, JWK, JWKS } from 'jose';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
 const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
@@ -424,6 +425,23 @@ const oidcConfigBase: ConfigParams = {
     logout: AUTH_LOGOUT,
     callback: AUTH_CALLBACK, // Relative to the Router path
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
+  },
+  afterCallback: (req, res, session) => {
+    const claims = jose.JWT.decode(session.id_token) as {
+      nonce: string;
+    };
+
+    const authVerification = JSON.parse(req.cookies.auth_verification);
+
+    if (claims.nonce !== authVerification.nonce) {
+      throw new Error(`Nonce invalid`);
+    }
+
+    if (req.query.state !== authVerification.state) {
+      throw new Error(`State invalid`);
+    }
+
+    return session;
   },
 };
 
