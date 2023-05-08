@@ -316,7 +316,7 @@ describe('sia service', () => {
         },
         Object {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",
-          "description": "",
+          "description": "testen mijn meldingen",
           "key": "UPDATE_STATUS",
           "status": "Afgesloten",
         },
