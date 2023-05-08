@@ -129,7 +129,7 @@ async function fetchKlachten(
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: 'klachten',
+      cacheKey: `klachten-${requestID}`,
     }),
     requestID
   );
