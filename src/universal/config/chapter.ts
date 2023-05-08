@@ -167,7 +167,7 @@ export const DocumentTitles: Record<
   [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-  [AppRoutes.YIVI_LANDING]: 'Inloggen met Yivi',
+  [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.AVG]: 'AVG Verzoeken',
   [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
 };
