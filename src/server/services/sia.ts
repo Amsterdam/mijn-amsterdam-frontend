@@ -489,14 +489,17 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
+      const hasVisibleDescription = [
+        REACTIE_GEVRAAGD,
+        REACTIE_ONTVANGEN,
+        AFGEHANDELD,
+      ].includes(statusKey);
+
       return {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description:
-          statusKey === REACTIE_GEVRAAGD || statusKey === REACTIE_ONTVANGEN
-            ? historyEntry.description
-            : '',
+        description: hasVisibleDescription ? historyEntry.description : '',
       } as SiaSignalStatusHistory;
     })
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
