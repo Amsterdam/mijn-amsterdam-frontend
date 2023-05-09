@@ -135,7 +135,8 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'ENABLEU_2_SMILE';
+  | 'ENABLEU_2_SMILE'
+  | 'LOOD_365';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -278,6 +279,12 @@ export const ApiConfig: ApiDataRequestConfig = {
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
+  },
+  LOOD_365: {
+    url: `${process.env.BFF_LOOD_API_URL}/api/data/v9.2/be_getrequestdetails`,
+    method: 'POST',
+    // TODO: Might need a token here.
+    postponeFetch: !FeatureToggle.loodActive,
   },
 };
 
