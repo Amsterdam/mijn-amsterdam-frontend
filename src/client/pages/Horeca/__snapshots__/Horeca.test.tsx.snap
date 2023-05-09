@@ -230,11 +230,80 @@ exports[`<Horeca /> Matches the Full Page snapshot 1`] = `
         <div
           class="PanelInner"
         >
-          <p
-            class="NoItemsMessage"
+          <table
+            class="Table"
           >
-            U heeft nog geen toegekende horeca vergunningen.
-          </p>
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Kenmerk
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Resultaat
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/horeca/horeca-vergunning-exploitatie-horecabedrijf/1234418712"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Z/23/1984708
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Horeca vergunning exploitatie Horecabedrijf
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
