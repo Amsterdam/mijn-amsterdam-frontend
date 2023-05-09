@@ -29,7 +29,7 @@ import {
   BezwaarSourceStatus,
   BezwaarSourceDocument,
 } from './types';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Chapters, IS_ACCEPTANCE } from '../../../universal/config';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
@@ -51,10 +51,11 @@ function transformBezwarenDocumentsResults(
       id: uuid,
       title: titel,
       datePublished: defaultDateFormat(registratiedatum),
-      url: `${BFF_PUBLIC_URL}${BFF_BASE_PATH}${generatePath(
-        BffEndpoints.BEZWAREN_ATTACHMENTS,
-        { id: uuid }
-      )}`,
+      url: `${
+        IS_ACCEPTANCE
+          ? process.env.REACT_APP_BFF_API_URL_ACC
+          : process.env.REACT_APP_BFF_API_URL
+      }${generatePath(BffEndpoints.BEZWAREN_ATTACHMENTS, { id: uuid })}`,
     }));
   }
   return [];
