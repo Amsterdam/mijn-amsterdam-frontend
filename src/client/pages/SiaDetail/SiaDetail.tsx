@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { atom, RecoilState, useRecoilState } from 'recoil';
 import {
   SiaAttachment,
