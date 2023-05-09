@@ -592,10 +592,10 @@ describe('wpi/app-service', () => {
           Object {
             "chapter": "INKOMEN",
             "datePublished": "2022-01-05T00:00:00+01:00",
-            "description": "Uw jaaropgave 2021 staat voor u klaar.",
+            "description": "Uw Jaaropgave 2022 staat voor u klaar.",
             "id": "nieuwe-jaaropgave",
             "link": Object {
-              "download": "2022-01-05-Jaaropgave 2022",
+              "download": "2022-08-01-Jaaropgave 2022",
               "title": "Bekijk jaaropgave",
               "to": "http://localhost/bff/api/v1/relay/wpi/document?id=660000000010024&isBulk=False&isDms=False",
             },

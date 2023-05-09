@@ -36,9 +36,7 @@ function transformIncomeSpecificationNotification(
       datePublished: item.datePublished,
       chapter: Chapters.INKOMEN,
       title: 'Nieuwe jaaropgave',
-      description: `Uw jaaropgave ${
-        parseInt(dateFormat(item.datePublished, 'yyyy'), 10) - 1
-      } staat voor u klaar.`,
+      description: `Uw ${item.title} staat voor u klaar.`,
       link: {
         to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
         title: 'Bekijk jaaropgave',

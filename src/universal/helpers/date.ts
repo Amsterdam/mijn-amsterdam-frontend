@@ -63,7 +63,6 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: any, b: any) => {
     const c = parseISO(a[sortKey]);
     const d = parseISO(b[sortKey]);
-
     // @ts-ignore
     return direction === 'asc' ? c - d : d - c;
   };
