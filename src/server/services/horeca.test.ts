@@ -28,9 +28,31 @@ describe('Horeca service', () => {
   it('should return only horeca vergunningen', async () => {
     const result = await fetchHorecaVergunningen('x', authProfileAndToken);
 
-    expect(result.content.length).toEqual(2);
+    expect(result.content.length).toEqual(3);
     expect(result.content).toMatchInlineSnapshot(`
       Array [
+        Object {
+          "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+          "dateDecision": "2023-04-28",
+          "dateEnd": "2023-06-21",
+          "dateProcessed": "2023-04-28",
+          "dateRequest": "2023-04-26",
+          "dateStart": null,
+          "dateWorkflowActive": "2023-04-27",
+          "decision": "Verleend",
+          "description": "Nieuwe aanvraag, alcohol vrij, Het restotje, Berkelstraat  1",
+          "documentsUrl": "/decosjoin/listdocuments/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
+          "id": "1234418712",
+          "identifier": "Z/23/1984708",
+          "link": Object {
+            "title": "Bekijk hoe het met uw aanvraag staat",
+            "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/1234418712",
+          },
+          "location": "Berkelstraat 1 1078CT",
+          "processed": true,
+          "status": "Afgehandeld",
+          "title": "Horeca vergunning exploitatie Horecabedrijf",
+        },
         Object {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateEnd": "2025-01-02T00:00:00",
@@ -83,6 +105,18 @@ describe('Horeca service', () => {
     expect(result.content).toMatchInlineSnapshot(`
       Object {
         "notifications": Array [
+          Object {
+            "chapter": "VERGUNNINGEN",
+            "datePublished": "2023-04-28",
+            "description": "Uw aanvraag voor een horeca vergunning exploitatie horecabedrijf is afgehandeld.",
+            "id": "vergunning-1234418712-notification",
+            "link": Object {
+              "title": "Bekijk details",
+              "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/1234418712",
+            },
+            "subject": "1234418712",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf afgehandeld",
+          },
           Object {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-11-25T00:00:00",
