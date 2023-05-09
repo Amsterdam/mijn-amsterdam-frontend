@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { atom, RecoilState, useRecoilState } from 'recoil';
 import {
   SiaAttachment,
@@ -130,6 +130,7 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
 export default function SiaDetail() {
   const { SIA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
 
   const allSiaItems = [
     ...(SIA.content?.open?.items ?? []),
@@ -234,6 +235,8 @@ export default function SiaDetail() {
                   latlng={SiaItem.latlon}
                   label="Adres"
                   text={SiaItem.address}
+                  trackPageViewTitle={`Locatie Popup | Melding open ${SiaItem.identifier}`}
+                  trackPageViewUrl={`${location.pathname}/locatie-popup`}
                 />
               )}
               <InfoDetail

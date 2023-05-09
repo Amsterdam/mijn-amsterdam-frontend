@@ -171,4 +171,5 @@ export const DocumentTitles: Record<
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.AVG]: 'AVG Verzoeken',
   [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
+  [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
 };
