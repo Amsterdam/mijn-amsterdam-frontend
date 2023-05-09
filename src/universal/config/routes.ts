@@ -172,8 +172,10 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['SIA/DETAIL/OPEN']]: () => '/yivi/open-melding',
-  [AppRoutes['SIA/DETAIL/CLOSED']]: () => '/yivi/afgesloten-melding',
+  [AppRoutes['SIA/DETAIL/OPEN']]: (match) =>
+    `/yivi/open-melding/${match.params?.id}`,
+  [AppRoutes['SIA/DETAIL/CLOSED']]: (match) =>
+    `/yivi/afgesloten-melding/${match.params?.id}`,
   [AppRoutes.SIA_CLOSED]: (match) =>
     `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
   [AppRoutes.SIA_OPEN]: (match) =>
