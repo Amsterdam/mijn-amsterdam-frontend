@@ -94,13 +94,21 @@ export function usePageChange(isAuthenticated: boolean) {
       if (documentTitle !== NOT_FOUND_TITLE) {
         trackPageViewWithCustomDimension(
           termReplace(trackingTitle),
-          getCustomTrackingUrl(location.pathname, tackingConfig),
+          getCustomTrackingUrl(location.pathname, tackingConfig) +
+            location.search,
           profileType,
           userCity
         );
       }
     }
-  }, [location.pathname, termReplace, profileType, userCity, isAuthenticated]);
+  }, [
+    location.pathname,
+    location.search,
+    termReplace,
+    profileType,
+    userCity,
+    isAuthenticated,
+  ]);
 }
 
 function getCustomTrackingUrl(
