@@ -2,7 +2,11 @@ import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
+import {
+  AppRoutes,
+  ChapterTitles,
+  Chapters,
+} from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
@@ -70,7 +74,10 @@ export default function Sia() {
 
   return (
     <OverviewPage className={styles.Sia}>
-      <PageHeading isLoading={isLoading(SIA)} icon={<ChapterIcon />}>
+      <PageHeading
+        isLoading={false}
+        icon={<ChapterIcon chapter={Chapters.SIA} />}
+      >
         {ChapterTitles.SIA}
       </PageHeading>
       <PageContent>

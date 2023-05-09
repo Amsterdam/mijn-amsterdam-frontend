@@ -42,6 +42,7 @@ export default function ChapterIcon({
       label = ChapterTitles[matchChapter];
     }
   }
+
   const Icon = ChapterIcons[matchChapter] || IconBurgerZaken;
 
   return (
