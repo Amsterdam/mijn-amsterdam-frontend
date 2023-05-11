@@ -88,9 +88,8 @@ export default function Sia() {
         </p>
         <h3>Wat vindt u van Yivi?</h3>
         <p>
-          Uw meldingen volgen met de app Yivi is een proef. Wij willen graag
-          weten wat u hiervan vindt. Vul daarom hier de vragenlijst in. Het
-          invullen duurt 3 minuten.
+          Geef uw mening, maak een keuze hieronder. Beantwoord daarna een aantal
+          vragen. Dat duurt ongeveer 3 minuten.
         </p>
         <p>
           <a
