@@ -17,6 +17,7 @@ import qs from 'qs';
 import { decrypt, encrypt } from '../../universal/helpers/encrypt-decrypt';
 
 const encryptionKey = String(process.env.BFF_GENERAL_ENCRYPTION_KEY);
+const MAG_AGE_MS = 1000 * 60; // 1 minute
 
 export type StatusStateChoice =
   | 'm'
@@ -301,7 +302,9 @@ async function _getSiaRequestConfig(requestID: requestID) {
   return null;
 }
 
-const getSiaRequestConfig = memoize(_getSiaRequestConfig);
+const getSiaRequestConfig = memoize(_getSiaRequestConfig, {
+  maxAge: MAG_AGE_MS,
+});
 
 interface SiaResponse {
   total: number;
