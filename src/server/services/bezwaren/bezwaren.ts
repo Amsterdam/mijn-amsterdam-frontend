@@ -186,30 +186,26 @@ async function fetchBezwaarStatus(
 export async function fetchBezwaarDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  document: string
+  documentId: string
 ) {
+  // For additional security, first re-fetch users bezwaren and check of the requested doc id is present in one.
   const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
   const documentIds =
-    bezwaren.content === null
-      ? []
-      : bezwaren.content
-          ?.map((b) => b.documenten)
-          .flat()
-          .map((d) => d.id);
+    bezwaren.content?.flatMap((b) => b.documenten).map((d) => d.id) ?? [];
 
-  if (
-    documentIds.length === 0 ||
-    documentIds.find((documentId) => documentId === document) === undefined
-  ) {
+  const hasRequestedDocument = !!documentIds.find((id) => id === documentId);
+
+  if (!hasRequestedDocument) {
     return apiErrorResult('Unknown document', null);
   }
 
   const requestConfig = getApiConfig('BEZWAREN_DOCUMENT', {
     headers: getBezwarenApiHeaders(authProfileAndToken),
   });
+
   requestConfig.url = generatePath(
     `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
-    { id: document }
+    { id: documentId }
   );
 
   return requestData<string>(requestConfig, requestID);
