@@ -95,7 +95,7 @@ export function usePageChange(isAuthenticated: boolean) {
         trackPageViewWithCustomDimension(
           termReplace(trackingTitle),
           getCustomTrackingUrl(location.pathname, tackingConfig) +
-            location.search,
+            (location.search ?? ''),
           profileType,
           userCity
         );
