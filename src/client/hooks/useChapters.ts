@@ -67,6 +67,9 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           hasUitkeringsspecificaties)
       );
 
+    case Chapters.INKOMEN_SVWI:
+      return isAmsterdam && FeatureToggle.svwiLinkActive;
+
     case Chapters.STADSPAS:
       const hasStadspas =
         !!WPI_STADSPAS?.content?.stadspassen?.length ||

@@ -8,6 +8,7 @@ export type Chapter =
   | 'BUURT'
   | 'BEZWAREN'
   | 'INKOMEN'
+  | 'INKOMEN_SVWI'
   | 'STADSPAS'
   | 'BRP'
   | 'MILIEUZONE'
@@ -36,6 +37,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   BUURT: 'BUURT',
   BEZWAREN: 'BEZWAREN',
   INKOMEN: 'INKOMEN',
+  INKOMEN_SVWI: 'INKOMEN_SVWI',
   STADSPAS: 'STADSPAS',
   BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
@@ -65,6 +67,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   BUURT: 'Mijn buurt',
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
+  INKOMEN_SVWI: 'Werk & Inkomen SVWI',
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',

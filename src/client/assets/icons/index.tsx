@@ -28,6 +28,7 @@ export { ReactComponent as IconHome } from './home.svg';
 export { ReactComponent as IconGarbage } from './Huisvuilkalender.svg';
 export { ReactComponent as IconInfo } from './Info.svg';
 export { ReactComponent as IconInkomen } from './inkomen.svg';
+export { ReactComponent as IconInkomenSVWI } from './inkomen-svwi.svg';
 export { ReactComponent as IconKlachten } from './IconKlachten.svg';
 export { ReactComponent as IconKrefia } from './krefia.svg';
 export { ReactComponent as IconLogout } from './Logout.svg';
