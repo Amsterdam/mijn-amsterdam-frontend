@@ -532,8 +532,8 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Prevent Open/Closed states from being "doubled"
       statusUpdates.push(statusEntry);
       prevOpenClosedState = statusEntry.status;
-    } else {
-      // Update state to latest action that represents it
+    } else if (prevOpenClosedState !== MA_OPEN) {
+      // Update the last non-open state date to the one that represents it
       statusUpdates[statusUpdates.length - 1].datePublished =
         statusEntry.datePublished;
     }
