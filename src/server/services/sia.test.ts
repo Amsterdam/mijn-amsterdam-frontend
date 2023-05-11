@@ -59,7 +59,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'CREATE_NOTE_13093',
-    when: '2023-03-22T09: 43: 15.414041+01: 00',
+    when: '2023-03-22T09:43:15.414041+01:00',
     what: 'CREATE_NOTE',
     action: 'Notitie toegevoegd:',
     description:
@@ -69,7 +69,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_TYPE_ASSIGNMENT_12536',
-    when: '2023-03-22T09: 43: 15.058718+01: 00',
+    when: '2023-03-22T09:43:15.058718+01:00',
     what: 'UPDATE_TYPE_ASSIGNMENT',
     action: 'Type gewijzigd naar: Melding',
     description: null,
@@ -78,7 +78,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_PRIORITY_14210',
-    when: '2023-03-22T09: 43: 15.048786+01: 00',
+    when: '2023-03-22T09:43:15.048786+01:00',
     what: 'UPDATE_PRIORITY',
     action: 'Urgentie gewijzigd naar: Normaal',
     description: null,
@@ -87,7 +87,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_CATEGORY_ASSIGNMENT_19321',
-    when: '2023-03-22T09: 43: 15.041899+01: 00',
+    when: '2023-03-22T09:43:15.041899+01:00',
     what: 'UPDATE_CATEGORY_ASSIGNMENT',
     action: 'Categorie gewijzigd naar: Overig afval',
     description: null,
@@ -123,7 +123,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_STATUS_24680',
-    when: '2023-03-22T11: 47: 32.549606+01: 00',
+    when: '2023-03-22T11:47:32.549606+01:00',
     what: 'UPDATE_STATUS',
     action: 'Status gewijzigd naar: Heropend',
     description: 'testen mijn meldingen',
@@ -303,13 +303,13 @@ describe('sia service', () => {
     expect(history).toMatchInlineSnapshot(`
       Array [
         Object {
-          "datePublished": "2023-03-22T11:44:04.889572+01:00",
+          "datePublished": "2023-03-22T09:43:15.024700+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
         Object {
-          "datePublished": "2023-03-22T11:45:15.024700+01:00",
+          "datePublished": "2023-03-22T11:44:29.032811+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
           "status": "Vraag aan u verstuurd",
@@ -388,7 +388,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/SIG-12419",
+              "to": "/detail-open-melding/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Open",
@@ -434,7 +434,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/SIG-12419",
+              "to": "/detail-afgesloten-melding/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Afgesloten",
