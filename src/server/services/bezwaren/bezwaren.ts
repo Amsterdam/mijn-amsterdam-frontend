@@ -112,12 +112,12 @@ function transformBezwarenResults(
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
         statussen: [],
-        datumbesluit: besluitdatum === null ? null : besluitdatum,
+        datumbesluit: besluitdatum,
         datumIntrekking: getKenmerkValue(
           bezwaarBron.kenmerken,
           'datumintrekking'
         ),
-        einddatum: !!bezwaarBron.einddatum ? bezwaarBron.einddatum : null,
+        einddatum: bezwaarBron.einddatum,
         primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
         primairbesluitdatum: getKenmerkValue(
           bezwaarBron.kenmerken,
