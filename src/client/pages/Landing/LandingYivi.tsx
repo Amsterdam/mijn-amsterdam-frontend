@@ -86,19 +86,6 @@ export default function Landing() {
             </LinkdInline>
           </p>
         </div>
-
-        <Heading size="medium" el="h4">
-          Vragen over Mijn Amsterdam?
-        </Heading>
-        <p className={styles.FaqInfo}>
-          Kijk bij{' '}
-          <LinkdInline
-            external
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B68422ECA-8C56-43EC-A9AA-B3DF190B5077%7D"
-          >
-            veelgestelde vragen over Mijn Amsterdam
-          </LinkdInline>
-        </p>
       </PageContent>
     </TextPage>
   );
