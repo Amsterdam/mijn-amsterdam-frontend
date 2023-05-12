@@ -64,13 +64,13 @@ function transformBezwarenDocumentsResults(
 export async function fetchBezwarenDocuments(
   zaakId: string,
   authProfileAndToken: AuthProfileAndToken
-): Promise<GenericDocument[] | null> {
+) {
   const params = {
     // We need to pass the entire url as query parameter
     zaak: getZaakUrl(zaakId),
   };
 
-  const bezwarenDocumentsResponse = await requestData<GenericDocument[]>(
+  const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
       transformResponse: transformBezwarenDocumentsResults,
@@ -79,11 +79,7 @@ export async function fetchBezwarenDocuments(
     zaakId
   );
 
-  if (bezwarenDocumentsResponse.status === 'OK') {
-    return bezwarenDocumentsResponse.content;
-  }
-
-  return null;
+  return bezwarenDocumentsResponse;
 }
 
 function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
@@ -116,12 +112,12 @@ function transformBezwarenResults(
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
         statussen: [],
-        datumbesluit: besluitdatum === null ? null : besluitdatum,
+        datumbesluit: besluitdatum,
         datumIntrekking: getKenmerkValue(
           bezwaarBron.kenmerken,
           'datumintrekking'
         ),
-        einddatum: !!bezwaarBron.einddatum ? bezwaarBron.einddatum : null,
+        einddatum: bezwaarBron.einddatum,
         primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
         primairbesluitdatum: getKenmerkValue(
           bezwaarBron.kenmerken,
@@ -141,79 +137,6 @@ function transformBezwarenResults(
     });
   }
   return [];
-}
-
-function isNotErrorResponse(
-  item: ApiErrorResponse<null> | Bezwaar
-): item is Bezwaar {
-  return item.status !== 'ERROR';
-}
-
-async function enrichBezwaarResponse(
-  bezwarenResponse:
-    | ApiPostponeResponse
-    | ApiErrorResponse<null>
-    | ApiSuccessResponse<Bezwaar[]>,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  if (bezwarenResponse.status !== 'OK') {
-    return [];
-  }
-
-  const enrichtedList = bezwarenResponse.content.map(async (bezwaar) => {
-    const statussen: BezwaarStatus[] = await fetchBezwaarStatus(
-      bezwaar.uuid,
-      authProfileAndToken
-    );
-    const documenten =
-      (await fetchBezwarenDocuments(bezwaar.uuid, authProfileAndToken)) ?? [];
-
-    const enrichedBezwaar: Bezwaar = {
-      ...bezwaar,
-      statussen,
-      documenten,
-    };
-
-    return enrichedBezwaar;
-  });
-
-  const content = await Promise.allSettled(enrichtedList);
-  const results = content.map((res) => getSettledResult(res));
-
-  return results.filter(isNotErrorResponse);
-}
-
-export async function fetchBezwaren(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<Bezwaar[] | null>> {
-  const requestBody = JSON.stringify({
-    [getIdAttribute(authProfileAndToken)]:
-      process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
-  });
-
-  const params = {
-    page: 1,
-  };
-
-  const requestConfig = getApiConfig('BEZWAREN_LIST', {
-    data: requestBody,
-    params,
-    transformResponse: transformBezwarenResults,
-    headers: getBezwarenApiHeaders(authProfileAndToken),
-  });
-
-  const bezwarenResponse = await requestData<Bezwaar[]>(
-    requestConfig,
-    requestID
-  );
-
-  const enrichedResponse = await enrichBezwaarResponse(
-    bezwarenResponse,
-    authProfileAndToken
-  );
-
-  return apiSuccessResult(enrichedResponse);
 }
 
 function transformBezwaarStatus(
@@ -241,7 +164,7 @@ function transformBezwaarStatus(
 async function fetchBezwaarStatus(
   zaakId: string,
   authProfileAndToken: AuthProfileAndToken
-): Promise<BezwaarStatus[]> {
+) {
   const params = {
     zaak: getZaakUrl(zaakId),
   };
@@ -257,43 +180,126 @@ async function fetchBezwaarStatus(
     zaakId
   );
 
-  if (bezwarenStatusResponse.status === 'OK') {
-    return bezwarenStatusResponse.content;
-  }
-
-  return [];
+  return bezwarenStatusResponse;
 }
 
 export async function fetchBezwaarDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  document: string
+  documentId: string
 ) {
+  // For additional security, first re-fetch users bezwaren and check of the requested doc id is present in one.
   const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
   const documentIds =
-    bezwaren.content === null
-      ? []
-      : bezwaren.content
-          ?.map((b) => b.documenten)
-          .flat()
-          .map((d) => d.id);
+    bezwaren.content?.flatMap((b) => b.documenten).map((d) => d.id) ?? [];
 
-  if (
-    documentIds.length === 0 ||
-    documentIds.find((documentId) => documentId === document) === undefined
-  ) {
+  const hasRequestedDocument = !!documentIds.find((id) => id === documentId);
+
+  if (!hasRequestedDocument) {
     return apiErrorResult('Unknown document', null);
   }
 
   const requestConfig = getApiConfig('BEZWAREN_DOCUMENT', {
     headers: getBezwarenApiHeaders(authProfileAndToken),
   });
+
   requestConfig.url = generatePath(
     `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
-    { id: document }
+    { id: documentId }
   );
 
   return requestData<string>(requestConfig, requestID);
+}
+
+async function enrichBezwaarResponse(
+  bezwarenResponse: ApiSuccessResponse<Bezwaar[]>,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const rs = [];
+
+  // Go through the list of returned bezwaren and use the uuid property to call other api's
+  for (const bezwaar of bezwarenResponse.content) {
+    // non-blocking fetch of statusses
+    const statussenPromise = fetchBezwaarStatus(
+      bezwaar.uuid,
+      authProfileAndToken
+    );
+
+    // non-blocking fetch of documents
+    const documentenPromise = fetchBezwarenDocuments(
+      bezwaar.uuid,
+      authProfileAndToken
+    );
+
+    // combine all the data into one promise per bezwaar
+    rs.push(
+      Promise.all([
+        Promise.resolve(bezwaar),
+        statussenPromise,
+        documentenPromise,
+      ]).then((results) => apiSuccessResult(results))
+    );
+  }
+
+  // Wait for all the promises to settle
+  const results = await Promise.allSettled(rs);
+  const enrichedBezwaren: Bezwaar[] = [];
+
+  for (const result of results) {
+    const settledResult = getSettledResult(result);
+
+    if (settledResult.status === 'OK') {
+      const [bezwaar, { content: statusses }, { content: documents }] =
+        settledResult.content;
+
+      // Combine the results
+      const enrichedBezwaar: Bezwaar = {
+        ...bezwaar,
+        statussen: statusses ?? [],
+        documenten: documents ?? [],
+      };
+
+      enrichedBezwaren.push(enrichedBezwaar);
+    }
+  }
+
+  // Always return success regardless of potential errors in the additional api calls. These errors will be captured and sent to Sentry, not bugging the customer.
+  // In this case at least the bezwaar is visible (possibly without status and/or documents)
+  return apiSuccessResult(enrichedBezwaren);
+}
+
+export async function fetchBezwaren(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const requestBody = JSON.stringify({
+    [getIdAttribute(authProfileAndToken)]:
+      process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
+  });
+
+  const params = {
+    page: 1,
+  };
+
+  const requestConfig = getApiConfig('BEZWAREN_LIST', {
+    data: requestBody,
+    params,
+    transformResponse: transformBezwarenResults,
+    headers: getBezwarenApiHeaders(authProfileAndToken),
+  });
+
+  const bezwarenResponse = await requestData<Bezwaar[]>(
+    requestConfig,
+    requestID
+  );
+
+  // If the main call to bezwaren is ok, proceed.
+  if (bezwarenResponse.status === 'OK') {
+    return enrichBezwaarResponse(bezwarenResponse, authProfileAndToken);
+  }
+
+  // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
+  return bezwarenResponse;
 }
 
 export async function fetchBezwarenNotifications(
