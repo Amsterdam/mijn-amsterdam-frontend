@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import {
   DATASETS,
   IS_OT,
+  IS_TEST,
   OTAP_ENV,
   getDatasetCategoryId,
 } from '../universal/config';
@@ -168,3 +169,10 @@ router.get(
     return res.json({ status: 'OK', otapEnv: OTAP_ENV });
   }
 );
+
+if (IS_TEST) {
+  router.get('/whatismyip', (req, res) => {
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    return res.send(ip);
+  });
+}
