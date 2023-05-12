@@ -1,3 +1,4 @@
+import nock from 'nock';
 import { jsonCopy } from '../../universal/helpers';
 import {
   forTesting,
@@ -5,7 +6,19 @@ import {
   SiaSignalHistory,
   SignalPrivate,
   StatusStateChoice,
+  fetchSignalAttachments,
 } from './sia';
+
+const SIGNAL_ID_ENCRYPTED = 'xxxxxxxxxx-encrypted-xxxxxxxxxxx';
+const SIGNAL_ID_DECRYPTED = 'x1x2x3x4x5x';
+
+jest.mock('../../universal/helpers/encrypt-decrypt', () => {
+  return {
+    ...jest.requireActual('../../universal/helpers/encrypt-decrypt'),
+    encrypt: (value: string) => [SIGNAL_ID_ENCRYPTED],
+    decrypt: () => SIGNAL_ID_DECRYPTED,
+  };
+});
 
 const testHistory: SiaSignalHistory[] = [
   {
@@ -46,7 +59,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'CREATE_NOTE_13093',
-    when: '2023-03-22T09: 43: 15.414041+01: 00',
+    when: '2023-03-22T09:43:15.414041+01:00',
     what: 'CREATE_NOTE',
     action: 'Notitie toegevoegd:',
     description:
@@ -56,7 +69,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_TYPE_ASSIGNMENT_12536',
-    when: '2023-03-22T09: 43: 15.058718+01: 00',
+    when: '2023-03-22T09:43:15.058718+01:00',
     what: 'UPDATE_TYPE_ASSIGNMENT',
     action: 'Type gewijzigd naar: Melding',
     description: null,
@@ -65,7 +78,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_PRIORITY_14210',
-    when: '2023-03-22T09: 43: 15.048786+01: 00',
+    when: '2023-03-22T09:43:15.048786+01:00',
     what: 'UPDATE_PRIORITY',
     action: 'Urgentie gewijzigd naar: Normaal',
     description: null,
@@ -74,7 +87,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_CATEGORY_ASSIGNMENT_19321',
-    when: '2023-03-22T09: 43: 15.041899+01: 00',
+    when: '2023-03-22T09:43:15.041899+01:00',
     what: 'UPDATE_CATEGORY_ASSIGNMENT',
     action: 'Categorie gewijzigd naar: Overig afval',
     description: null,
@@ -110,7 +123,7 @@ const testHistory: SiaSignalHistory[] = [
   },
   {
     identifier: 'UPDATE_STATUS_24680',
-    when: '2023-03-22T11: 47: 32.549606+01: 00',
+    when: '2023-03-22T11:47:32.549606+01:00',
     what: 'UPDATE_STATUS',
     action: 'Status gewijzigd naar: Heropend',
     description: 'testen mijn meldingen',
@@ -290,20 +303,20 @@ describe('sia service', () => {
     expect(history).toMatchInlineSnapshot(`
       Array [
         Object {
-          "datePublished": "2023-03-22T11:44:04.889572+01:00",
+          "datePublished": "2023-03-22T09:43:15.024700+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
         Object {
-          "datePublished": "2023-03-22T11:45:15.024700+01:00",
+          "datePublished": "2023-03-22T11:44:29.032811+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
-          "status": "Reactie gevraagd",
+          "status": "Vraag aan u verstuurd",
         },
         Object {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",
-          "description": "",
+          "description": "testen mijn meldingen",
           "key": "UPDATE_STATUS",
           "status": "Afgesloten",
         },
@@ -311,7 +324,7 @@ describe('sia service', () => {
           "datePublished": "2023-03-23T11:44:29.032811+01:00",
           "description": "U heeft het voor elkaar!",
           "key": "UPDATE_STATUS",
-          "status": "Reactie ontvangen",
+          "status": "Antwoord van u ontvangen",
         },
         Object {
           "datePublished": "2023-03-27T09:43:15.024700+01:00",
@@ -367,7 +380,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "12419",
+            "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -375,7 +388,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/12419",
+              "to": "/detail-open-melding/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Open",
@@ -413,7 +426,7 @@ describe('sia service', () => {
       Swapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
             "email": "hela.hola@amsterdam.nl",
             "hasAttachments": true,
-            "id": "12419",
+            "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
             "latlon": Object {
               "lat": 52.37778548459913,
@@ -421,7 +434,7 @@ describe('sia service', () => {
             },
             "link": Object {
               "title": "SIA Melding SIG-12419",
-              "to": "/meldingen/detail/12419",
+              "to": "/detail-afgesloten-melding/SIG-12419",
             },
             "phone": "065656565656",
             "status": "Afgesloten",
@@ -444,6 +457,39 @@ describe('sia service', () => {
       expect(
         forTesting.getSignalStatus(signalMock(key as StatusStateChoice))
       ).toBe(value);
+    });
+  });
+
+  test('fetch signal attachments', async () => {
+    nock('http://localhost').post('/token').reply(200, 'token');
+    nock('http://localhost')
+      .get(`/private/signals/${SIGNAL_ID_DECRYPTED}/attachments`)
+      .reply(200, {
+        results: [
+          { location: '/1', is_image: false },
+          { location: '/2', is_image: true },
+        ],
+      });
+
+    const response = await fetchSignalAttachments(
+      'xx-request-id-xx',
+      {
+        token: '',
+        profile: {
+          id: 'hm',
+          authMethod: 'yivi',
+          profileType: 'private-attributes',
+        },
+      },
+      SIGNAL_ID_ENCRYPTED
+    );
+
+    expect(response).toStrictEqual({
+      content: [
+        { url: '/1', isImage: false },
+        { url: '/2', isImage: true },
+      ],
+      status: 'OK',
     });
   });
 });

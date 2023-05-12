@@ -25,9 +25,10 @@ export const AppRoutes: Record<string, string> = {
   STADSPAS: '/stadspas',
 
   SIA: '/meldingen',
-  SIA_OPEN: '/meldingen/open/:page?',
-  SIA_CLOSED: '/meldingen/afgesloten/:page?',
-  'SIA/DETAIL': '/meldingen/detail/:id',
+  SIA_OPEN: '/alle-open-meldingen/:page?',
+  SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
+  'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
+  'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
 
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
@@ -59,6 +60,7 @@ export const AppRoutes: Record<string, string> = {
   YIVI_LANDING: '/inloggen-met-yivi',
   AVG: '/avg',
   'AVG/DETAIL': '/avg/verzoek/:id',
+  BFF_500_ERROR: '/server-error-500',
 };
 
 export const AppRoutesRedirect = [
@@ -120,6 +122,9 @@ export const PublicRoutes = [
   AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.YIVI_LANDING,
+  AppRoutes.BFF_500_ERROR,
+  AppRoutes.ACCESSIBILITY,
+  AppRoutes.GENERAL_INFO,
   AppRoutes.ROOT,
 ];
 
@@ -170,16 +175,18 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['SIA/DETAIL']]: () => '/yivi/meldingen/detail',
+  [AppRoutes['SIA/DETAIL/OPEN']]: (match) =>
+    `/yivi/open-melding/${match.params?.id}`,
+  [AppRoutes['SIA/DETAIL/CLOSED']]: (match) =>
+    `/yivi/afgesloten-melding/${match.params?.id}`,
   [AppRoutes.SIA_CLOSED]: (match) =>
-    `/yivi/meldingen/afgesloten/${match.params?.page ?? 1}`,
+    `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
   [AppRoutes.SIA_OPEN]: (match) =>
-    `/yivi/meldingen/open/${match.params?.page ?? 1}`,
-  [AppRoutes.SIA]: () => '/yivi/meldingen',
+    `/yivi/alle-open-meldingen/pagina-${match.params?.page ?? 1}`,
 
   [AppRoutes.ROOT]: (match, { profileType, isAuthenticated }) =>
     profileType === 'private-attributes'
       ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
-        `/yivi/meldingen`
+        `/yivi/meldingen-overzicht`
       : `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };

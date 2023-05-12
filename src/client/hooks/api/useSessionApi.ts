@@ -75,8 +75,8 @@ export function useSessionApi() {
   const logoutSession = useCallback(() => {
     clearSessionStorage();
     clearDeeplinkEntry();
-    window.location.href = LOGOUT_URL;
-  }, []);
+    window.location.href = `${LOGOUT_URL}?authMethod=${sessionData.authMethod}`;
+  }, [sessionData.authMethod]);
 
   useEffect(() => {
     setSession(() => ({

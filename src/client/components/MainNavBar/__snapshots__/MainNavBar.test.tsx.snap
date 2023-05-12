@@ -11,17 +11,6 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
       style="left: -400px;"
     >
       <div
-        class="LogoAndButtonWrapper"
-      >
-        <svg
-          aria-label="Gemeente Amsterdam logo"
-          class="logo"
-          role="img"
-        >
-          logo-amsterdam.svg
-        </svg>
-      </div>
-      <div
         class="secondaryLinks"
       >
         <span

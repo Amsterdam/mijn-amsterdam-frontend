@@ -122,7 +122,10 @@ export const PRISTINE_APPSTATE: AppState = {
   ),
   HORECA: apiPristineResult([]),
 
-  AVG: apiPristineResult(null, { isActive: FeatureToggle.avgActive }),
+  AVG: apiPristineResult(null, {
+    isActive: FeatureToggle.avgActive,
+    profileTypes: ['private', 'private-commercial'],
+  }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

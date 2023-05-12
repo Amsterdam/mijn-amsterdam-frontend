@@ -63,7 +63,7 @@ export default function Landing() {
               <span className={styles.LoginButtonText}>
                 {isRedirectingYivi
                   ? 'Bezig met inloggen...'
-                  : 'Inloggen met YIVI'}
+                  : 'Inloggen met Yivi'}
               </span>
             </a>
           </p>
@@ -77,13 +77,6 @@ export default function Landing() {
             </LinkdInline>
             .
           </p>
-          <p>
-            Login met DigiD voor de volledige versie van{' '}
-            <LinkdInline external href={process.env.BFF_FRONTEND_URL}>
-              Mijn Amsterdam
-            </LinkdInline>
-            .
-          </p>
           <Heading size="medium" el="h4">
             Download Yivi
           </Heading>
@@ -93,19 +86,6 @@ export default function Landing() {
             </LinkdInline>
           </p>
         </div>
-
-        <Heading size="medium" el="h4">
-          Vragen over Mijn Amsterdam?
-        </Heading>
-        <p className={styles.FaqInfo}>
-          Kijk bij{' '}
-          <LinkdInline
-            external
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B68422ECA-8C56-43EC-A9AA-B3DF190B5077%7D"
-          >
-            veelgestelde vragen over Mijn Amsterdam
-          </LinkdInline>
-        </p>
       </PageContent>
     </TextPage>
   );
