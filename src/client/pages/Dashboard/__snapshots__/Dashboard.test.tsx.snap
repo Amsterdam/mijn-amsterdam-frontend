@@ -343,7 +343,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <a
             class="MainNavSubmenuLink"
             data-chapter-id="INKOMEN_SVWI"
-            href="undefined"
+            href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
             rel="external"
           >
             <span

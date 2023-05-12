@@ -102,7 +102,7 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
             <a
               class="MainNavSubmenuLink MainNavSubmenuLink"
               data-chapter-id="INKOMEN_SVWI"
-              href="undefined"
+              href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
               rel="external"
             >
               <span
