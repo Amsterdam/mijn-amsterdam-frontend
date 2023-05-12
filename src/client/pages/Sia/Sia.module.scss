@@ -38,3 +38,48 @@
     }
   }
 }
+
+.SurveyThumbs {
+
+  display: inline-flex;
+  text-decoration: none;
+  font-weight: bold;
+
+  +.SurveyThumbs {
+    margin-left: 2rem;
+  }
+
+  // height: 2rem;
+  svg {
+    height: 2rem;
+    margin-right: .5rem;
+  }
+}
+
+.SurveyThumbsUp {
+
+  &:hover,
+  &:visited,
+  & {
+    color: $color-support-darkgreen;
+  }
+
+  svg {
+    fill: $color-support-darkgreen;
+    transform: translateY(-4px);
+  }
+}
+
+.SurveyThumbsDown {
+
+  &:hover,
+  &:visited,
+  & {
+    color: $color-primary-red;
+  }
+
+  svg {
+    fill: $color-primary-red;
+    transform: translateY(3px);
+  }
+}

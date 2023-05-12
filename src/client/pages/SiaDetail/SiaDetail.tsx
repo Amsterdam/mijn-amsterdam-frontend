@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { atom, RecoilState, useRecoilState } from 'recoil';
 import {
   SiaAttachment,
@@ -99,15 +99,15 @@ const attachmentsAtom = atom<Record<string, ApiResponse<SiaAttachment[]>>>({
 });
 
 function useAdditionalDataById<T extends ApiResponse<any>>(
-  id: string,
   url: string,
-  atom: RecoilState<Record<string, T>>
+  atom: RecoilState<Record<string, T>>,
+  id?: string
 ): T {
   const [data, setData] = useRecoilState(atom);
-  const isDataFetched = id in data;
+  const isDataFetched = !!id && id in data;
 
   useEffect(() => {
-    if (!isDataFetched) {
+    if (!isDataFetched && id) {
       fetch(url, {
         credentials: 'include',
       })
@@ -120,29 +120,34 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
     }
   }, [url, id, setData, isDataFetched]);
 
-  return data[id] ?? apiPristineResult(null);
+  if (id && isDataFetched) {
+    return data[id];
+  }
+
+  return apiPristineResult(null) as T;
 }
 
 export default function SiaDetail() {
   const { SIA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
 
   const allSiaItems = [
     ...(SIA.content?.open?.items ?? []),
     ...(SIA.content?.afgesloten?.items ?? []),
   ];
-  const SiaItem = allSiaItems.find((item) => item.id === id);
+  const SiaItem = allSiaItems.find((item) => item.identifier === id);
 
   const attachments = useAdditionalDataById(
-    id,
-    `${BFF_API_BASE_URL}/services/signals/${id}/attachments`,
-    attachmentsAtom
+    `${BFF_API_BASE_URL}/services/signals/${SiaItem?.id}/attachments`,
+    attachmentsAtom,
+    SiaItem?.id
   );
 
   const history = useAdditionalDataById(
-    id,
-    `${BFF_API_BASE_URL}/services/signals/${id}/history`,
-    statusHistoryAtom
+    `${BFF_API_BASE_URL}/services/signals/${SiaItem?.id}/history`,
+    statusHistoryAtom,
+    SiaItem?.id
   );
 
   const imageAttachments =
@@ -230,6 +235,8 @@ export default function SiaDetail() {
                   latlng={SiaItem.latlon}
                   label="Adres"
                   text={SiaItem.address}
+                  trackPageViewTitle={`Locatie Popup | Melding open ${SiaItem.identifier}`}
+                  trackPageViewUrl={`${location.pathname}/locatie-popup`}
                 />
               )}
               <InfoDetail
@@ -250,13 +257,6 @@ export default function SiaDetail() {
               <InfoDetail label="Telefoonnummer" value={SiaItem.phone || '-'} />
             </InfoDetailGroup>
 
-            <p className={styles.DetailInfo}>
-              U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de
-              hoogte wordt gehouden over de voortgang van uw melding. U kunt
-              deze gegevens hier niet meer wijzigen. 12 maanden na ontvangst van
-              uw melding worden deze gegevens automatisch verwijderd uit ons
-              systeem.
-            </p>
             <p className={styles.DetailInfo}>
               Wilt u informatie toevoegen? Of is het probleem nog niet opgelost?
               <br />

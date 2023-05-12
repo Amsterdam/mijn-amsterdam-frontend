@@ -14,6 +14,10 @@ import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import memoize from 'memoizee';
 import qs from 'qs';
+import { decrypt, encrypt } from '../../universal/helpers/encrypt-decrypt';
+
+const encryptionKey = String(process.env.BFF_GENERAL_ENCRYPTION_KEY);
+const MAG_AGE_MS = 1000 * 60; // 1 minute
 
 export type StatusStateChoice =
   | 'm'
@@ -22,14 +26,14 @@ export type StatusStateChoice =
   | 'h'
   | 'o'
   | 'a'
-  // | 'reopened'
-  // | 'closure requested'
+  | 'reopened'
+  | 'closure requested'
   | 'ingepland'
   | 'reaction requested'
   | 'reaction received'
-  | 'reopen requested';
-// | 'ready to send';
-// | 'forward to external'
+  | 'reopen requested'
+  | 'ready to send'
+  | 'forward to external';
 
 // See also: https://github.com/Amsterdam/signals/blob/main/app/signals/apps/signals/workflow.py
 // Internal statusses
@@ -39,19 +43,22 @@ const BEHANDELING: StatusStateChoice = 'b';
 const ON_HOLD: StatusStateChoice = 'h';
 const AFGEHANDELD: StatusStateChoice = 'o';
 const GEANNULEERD: StatusStateChoice = 'a';
-// const HEROPEND: StatusStateChoice = 'reopened';
-// const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
+const HEROPEND: StatusStateChoice = 'reopened';
+const VERZOEK_TOT_AFHANDELING: StatusStateChoice = 'closure requested';
 const VERZOEK_TOT_HEROPENEN: StatusStateChoice = 'reopen requested';
 const INGEPLAND: StatusStateChoice = 'ingepland';
 const REACTIE_GEVRAAGD: StatusStateChoice = 'reaction requested';
 const REACTIE_ONTVANGEN: StatusStateChoice = 'reaction received';
-// const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
-// const TE_VERZENDEN: StatusStateChoice = 'ready to send';
+const DOORGEZET_NAAR_EXTERN: StatusStateChoice = 'forward to external';
+const TE_VERZENDEN: StatusStateChoice = 'ready to send';
 
 const MA_OPEN = 'Open';
 const MA_CLOSED = 'Afgesloten';
-const MA_REPLY_REQUESTED = 'Reactie gevraagd';
-const MA_REPLY_RECEIVED = 'Reactie ontvangen';
+const MA_REPLY_REQUESTED = 'Vraag aan u verstuurd';
+const MA_REPLY_RECEIVED = 'Antwoord van u ontvangen';
+
+type MaStatusOpen = typeof MA_OPEN;
+type MaStatusClosed = typeof MA_CLOSED;
 
 const MA_STATUS_ALLOWED = [
   MA_OPEN,
@@ -75,10 +82,10 @@ const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
   [REACTIE_GEVRAAGD]: MA_REPLY_REQUESTED,
   [REACTIE_ONTVANGEN]: MA_REPLY_RECEIVED,
 
-  // [HEROPEND]: 'Heropend', // ??
-  // [DOORGEZET_NAAR_EXTERN]: 'Doorgezet naar extern', // ??
-  // [VERZOEK_TOT_AFHANDELING]: 'Extern: verzoek tot afhandeling', // ??
-  // [TE_VERZENDEN]: 'Extern: te verzenden', // ??
+  [HEROPEND]: MA_OPEN,
+  [DOORGEZET_NAAR_EXTERN]: MA_OPEN,
+  [VERZOEK_TOT_AFHANDELING]: MA_OPEN,
+  [TE_VERZENDEN]: MA_OPEN,
 };
 
 type StatusKey = keyof typeof STATUS_CHOICES_MA;
@@ -90,15 +97,15 @@ const STATUS_CHOICES_API: Record<StatusValue, StatusKey> = {
   'In behandeling': BEHANDELING,
   'On hold': ON_HOLD,
   Ingepland: INGEPLAND,
-  // 'Extern: te verzenden': TE_VERZENDEN,
+  'Extern: te verzenden': TE_VERZENDEN,
   Afgehandeld: AFGEHANDELD,
   Geannuleerd: GEANNULEERD,
-  // Heropend: HEROPEND,
-  // 'Extern: verzoek tot afhandeling': VERZOEK_TOT_AFHANDELING,
+  Heropend: HEROPEND,
+  'Extern: verzoek tot afhandeling': VERZOEK_TOT_AFHANDELING,
   'Verzoek tot heropenen': VERZOEK_TOT_HEROPENEN,
   'Reactie gevraagd': REACTIE_GEVRAAGD,
   'Reactie ontvangen': REACTIE_ONTVANGEN,
-  // 'Doorgezet naar extern': DOORGEZET_NAAR_EXTERN,
+  'Doorgezet naar extern': DOORGEZET_NAAR_EXTERN,
 };
 
 export interface SIAItem {
@@ -209,11 +216,16 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
 
   const items = signals.map((sourceItem: SignalPrivate) => {
     const status = getSignalStatus(sourceItem);
-    const dateClosed = status === 'Afgesloten' ? sourceItem.updated_at : '';
+    const dateClosed = status === MA_CLOSED ? sourceItem.updated_at : '';
     const identifier = sourceItem.id_display;
+    const [signalIdEncrypted] = encrypt(String(sourceItem.id), encryptionKey);
+    const route =
+      status === MA_CLOSED
+        ? AppRoutes['SIA/DETAIL/CLOSED']
+        : AppRoutes['SIA/DETAIL/OPEN'];
 
     return {
-      id: String(sourceItem.id),
+      id: signalIdEncrypted,
       identifier,
       category: sourceItem.category.main,
       datePublished: sourceItem.created_at,
@@ -245,8 +257,8 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
       phone: sourceItem.reporter.phone,
       hasAttachments: sourceItem.has_attachments,
       link: {
-        to: generatePath(AppRoutes['SIA/DETAIL'], {
-          id: sourceItem.id,
+        to: generatePath(route, {
+          id: identifier,
         }),
         title: `SIA Melding ${identifier}`,
       },
@@ -290,7 +302,9 @@ async function _getSiaRequestConfig(requestID: requestID) {
   return null;
 }
 
-const getSiaRequestConfig = memoize(_getSiaRequestConfig);
+const getSiaRequestConfig = memoize(_getSiaRequestConfig, {
+  maxAge: MAG_AGE_MS,
+});
 
 interface SiaResponse {
   total: number;
@@ -306,56 +320,29 @@ interface SiaResponseOverview {
 interface SiaRequestParams {
   page: string;
   pageSize: string;
-  status: 'open' | 'afgesloten';
+  status: MaStatusOpen | MaStatusClosed;
 }
 
 function createStatusListRequestParamValue(
   status: SiaRequestParams['status']
 ): StatusStateChoice[] {
   switch (status) {
-    default:
-    case 'open':
+    case MA_OPEN:
       return Object.entries(STATUS_CHOICES_MA)
         .filter(([k, s]) => s !== MA_CLOSED)
         .map(([k]) => k) as StatusStateChoice[];
 
-    case 'afgesloten':
+    case MA_CLOSED:
       return Object.entries(STATUS_CHOICES_MA)
         .filter(([k, s]) => s === MA_CLOSED)
         .map(([k]) => k) as StatusStateChoice[];
   }
 }
 
-export async function fetchSignals(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const open = await fetchSignalsListByStatus(requestID, authProfileAndToken, {
-    status: 'open',
-    page: '1',
-    pageSize: '100',
-  });
-
-  const afgesloten = await fetchSignalsListByStatus(
-    requestID,
-    authProfileAndToken,
-    {
-      status: 'afgesloten',
-      page: '1',
-      pageSize: '100',
-    }
-  );
-
-  return apiSuccessResult<SiaResponseOverview>({
-    open: open.content,
-    afgesloten: afgesloten.content,
-  });
-}
-
 export async function fetchSignalsListByStatus(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  params: SiaRequestParams = { status: 'open', page: '1', pageSize: '20' }
+  params: SiaRequestParams = { status: MA_OPEN, page: '1', pageSize: '20' }
 ) {
   const statusList: StatusStateChoice[] = createStatusListRequestParamValue(
     params.status
@@ -392,6 +379,29 @@ export async function fetchSignalsListByStatus(
   return apiErrorResult('Could not get access token', null);
 }
 
+export async function fetchSignals(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const [open, afgesloten] = await Promise.all([
+    fetchSignalsListByStatus(requestID, authProfileAndToken, {
+      status: MA_OPEN,
+      page: '1',
+      pageSize: '100',
+    }),
+    fetchSignalsListByStatus(requestID, authProfileAndToken, {
+      status: MA_CLOSED,
+      page: '1',
+      pageSize: '100',
+    }),
+  ]);
+
+  return apiSuccessResult<SiaResponseOverview>({
+    open: open.content,
+    afgesloten: afgesloten.content,
+  });
+}
+
 interface SiaAttachmentSource {
   location: string;
   is_image: boolean;
@@ -426,12 +436,14 @@ function transformSiaAttachmentsResponse(response: SiaAttachmentResponse) {
 export async function fetchSignalAttachments(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  signalId: string
+  signalIdEncrypted: string
 ) {
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    requestConfig.url = `${requestConfig.url}${signalId}/attachments`;
+    const signalIdDencrypted = decrypt(signalIdEncrypted, encryptionKey);
+
+    requestConfig.url = `${requestConfig.url}${signalIdDencrypted}/attachments`;
 
     const response = await requestData<SiaAttachment[]>(
       {
@@ -480,14 +492,17 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
+      const hasVisibleDescription = [
+        REACTIE_GEVRAAGD,
+        REACTIE_ONTVANGEN,
+        AFGEHANDELD,
+      ].includes(statusKey);
+
       return {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description:
-          statusKey === REACTIE_GEVRAAGD || statusKey === REACTIE_ONTVANGEN
-            ? historyEntry.description
-            : '',
+        description: hasVisibleDescription ? historyEntry.description : '',
       } as SiaSignalStatusHistory;
     })
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
@@ -545,12 +560,14 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
 export async function fetchSignalHistory(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  signalId: string
+  signalIdEncrypted: string
 ) {
   const requestConfig = await getSiaRequestConfig(requestID);
 
   if (requestConfig !== null) {
-    requestConfig.url = `${requestConfig.url}${signalId}/history`;
+    const signalIdDecrypted = decrypt(signalIdEncrypted, encryptionKey);
+
+    requestConfig.url = `${requestConfig.url}${signalIdDecrypted}/history`;
 
     const response = await requestData<SiaSignalStatusHistory[]>(
       {

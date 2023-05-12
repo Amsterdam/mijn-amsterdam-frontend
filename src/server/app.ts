@@ -27,7 +27,13 @@ import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, corsOptions } from './config';
+import {
+  BFF_BASE_PATH,
+  BFF_PORT,
+  BffEndpoints,
+  corsOptions,
+  securityHeaders,
+} from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
@@ -85,8 +91,12 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(compression());
 
-// Generate request id
 app.use(requestID);
+
+app.use((req, res, next) => {
+  res.set(securityHeaders);
+  next();
+});
 
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {
@@ -126,9 +136,7 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  // @ts-ignore
-  const responseData = apiErrorResult(err.toString(), null, res.sentry);
-  return res.status(500).json(responseData);
+  return res.redirect(`${process.env.BFF_FRONTEND_URL}/server-error-500`);
 });
 
 app.use((req: Request, res: Response) => {

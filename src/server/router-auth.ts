@@ -239,25 +239,25 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
-  if (hasSessionCookie(req)) {
+  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+  let authMethodRequested = req.query.authMethod;
+
+  if (hasSessionCookie(req) && !authMethodRequested) {
     const auth = await getAuth(req);
-
-    let redirectUrl = '';
-
-    switch (auth.profile.authMethod) {
-      case 'eherkenning':
-        redirectUrl = BffEndpoints.AUTH_LOGOUT_EHERKENNING;
-        break;
-      case 'digid':
-        redirectUrl = BffEndpoints.AUTH_LOGOUT_DIGID;
-        break;
-      case 'yivi':
-        redirectUrl = BffEndpoints.AUTH_LOGOUT_YIVI;
-        break;
-    }
-
-    return res.redirect(redirectUrl);
+    authMethodRequested = auth.profile.authMethod;
   }
 
-  return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+  switch (authMethodRequested) {
+    case 'eherkenning':
+      redirectUrl = BffEndpoints.AUTH_LOGOUT_EHERKENNING;
+      break;
+    case 'digid':
+      redirectUrl = BffEndpoints.AUTH_LOGOUT_DIGID;
+      break;
+    case 'yivi':
+      redirectUrl = BffEndpoints.AUTH_LOGOUT_YIVI;
+      break;
+  }
+
+  return res.redirect(redirectUrl);
 });

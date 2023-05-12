@@ -150,9 +150,10 @@ export const DocumentTitles: Record<
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
-  [AppRoutes['SIA/DETAIL']]: `Melding detail | ${ChapterTitles.SIA}`,
-  [AppRoutes.SIA_OPEN]: `Meldingen | Openstaande meldingen`,
-  [AppRoutes.SIA_CLOSED]: `Meldingen | Afgesloten meldingen`,
+  [AppRoutes['SIA/DETAIL/OPEN']]: `Melding open | ${ChapterTitles.SIA}`,
+  [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ChapterTitles.SIA}`,
+  [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
+  [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
@@ -170,7 +171,8 @@ export const DocumentTitles: Record<
   [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-  [AppRoutes.YIVI_LANDING]: 'Inloggen met Yivi',
+  [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.AVG]: 'AVG Verzoeken',
   [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
+  [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
 };
