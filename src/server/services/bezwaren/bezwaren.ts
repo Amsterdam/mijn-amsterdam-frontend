@@ -346,7 +346,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const tokenData = {
     'Unique-name': process.env.BFF_BEZWAREN_EMAIL,
-    Actort: process.env.BBFF_EZWAREN_USER,
+    Actort: process.env.BFF_BEZWAREN_USER,
     Email: process.env.BFF_BEZWAREN_EMAIL,
     UserId: process.env.BFF_BEZWAREN_USER,
     UserLogin: process.env.BFF_BEZWAREN_EMAIL,
