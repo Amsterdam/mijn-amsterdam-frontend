@@ -265,8 +265,7 @@ export async function fetchBezwaren(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBody = JSON.stringify({
-    [getIdAttribute(authProfileAndToken)]:
-      process.env.BFF_BEZWAREN_TEST_BSN ?? authProfileAndToken.profile.id,
+    [getIdAttribute(authProfileAndToken)]: authProfileAndToken.profile.id,
   });
 
   const params = {
