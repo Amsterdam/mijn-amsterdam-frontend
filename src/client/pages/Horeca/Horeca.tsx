@@ -23,6 +23,12 @@ const DISPLAY_PROPS_HORECA = {
   dateRequest: 'Aangevraagd',
 };
 
+const DISPLAY_PROPS_HORECA_EERDER = {
+  identifier: 'Kenmerk',
+  title: 'Soort vergunning',
+  decision: 'Resultaat',
+};
+
 export const HORECA_PAGE_SIZE = 20;
 
 export default function Horeca() {
@@ -90,7 +96,7 @@ export default function Horeca() {
       >
         <Table
           items={afgerondeVergunningen}
-          displayProps={DISPLAY_PROPS_HORECA}
+          displayProps={DISPLAY_PROPS_HORECA_EERDER}
           titleKey="identifier"
         />
       </SectionCollapsible>
