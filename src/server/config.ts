@@ -11,9 +11,7 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
-
-const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
-const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
+import jose from 'jose';
 
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
