@@ -101,6 +101,28 @@ exports[`<MainNavBar /> Renders without crashing 1`] = `
             </a>
             <a
               class="MainNavSubmenuLink MainNavSubmenuLink"
+              data-chapter-id="INKOMEN_SVWI"
+              href="undefined"
+              rel="external"
+            >
+              <span
+                class="SubmenuItemIcon"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="#767676"
+                >
+                  inkomen-svwi.svg
+                </svg>
+              </span>
+              <span
+                class="SubmenuItemTitle"
+              >
+                Werk & Inkomen SVWI
+              </span>
+            </a>
+            <a
+              class="MainNavSubmenuLink MainNavSubmenuLink"
               data-chapter-id="VERGUNNINGEN"
               href="/vergunningen"
             >

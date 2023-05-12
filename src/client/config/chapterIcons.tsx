@@ -1,4 +1,4 @@
-import { Chapter, Chapters, IS_ACCEPTANCE } from '../../universal/config';
+import { Chapter, Chapters } from '../../universal/config';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAlert,
@@ -9,6 +9,7 @@ import {
   IconGarbage,
   IconHomeCommercial,
   IconInkomen,
+  IconInkomenSVWI,
   IconMijnGegevens,
   IconMilieuzone,
   IconMyNotifications,
@@ -25,7 +26,6 @@ import {
   IconParkeren,
   IconKlachten,
   IconHoreca,
-  IconWPI,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -34,7 +34,8 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.BELASTINGEN]: IconBelastingen,
   [Chapters.BURGERZAKEN]: IconBurgerZaken,
   [Chapters.BUURT]: IconWior,
-  [Chapters.INKOMEN]: IS_ACCEPTANCE ? IconWPI : IconInkomen,
+  [Chapters.INKOMEN]: IconInkomen,
+  [Chapters.INKOMEN_SVWI]: IconInkomenSVWI,
   [Chapters.STADSPAS]: IconStadspas,
   [Chapters.BRP]: IconMijnGegevens,
   [Chapters.MILIEUZONE]: IconMilieuzone,

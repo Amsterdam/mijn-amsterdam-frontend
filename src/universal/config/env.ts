@@ -45,6 +45,7 @@ const otapServerEnv: OtapEnv = {
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
+    ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
   test: {
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
