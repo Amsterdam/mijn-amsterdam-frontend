@@ -31,7 +31,12 @@ import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT, corsOptions } from './config';
+import {
+  BFF_BASE_PATH,
+  BFF_PORT,
+  corsOptions,
+  securityHeaders,
+} from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
