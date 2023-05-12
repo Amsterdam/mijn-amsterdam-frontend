@@ -6,6 +6,18 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-04-25T00:00:00",
+        "description": "Uw aanvraag voor een rvv-verkeersontheffing is in behandeling genomen.",
+        "id": "vergunning-1656544835-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-hele-stad/1656544835",
+        },
+        "subject": "1656544835",
+        "title": "Aanvraag rvv-verkeersontheffing in behandeling",
+      },
+      Object {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2023-03-09T00:00:00",
         "description": "Uw aanvraag voor een ligplaatsvergunning is ontvangen.",
         "id": "vergunning-3229752453-notification",
@@ -466,6 +478,43 @@ Object {
 
 exports[`Vergunningen service should format data correctly 1`] = `
 Array [
+  Object {
+    "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+    "dateDecision": "2023-04-28",
+    "dateEnd": "2023-06-21",
+    "dateProcessed": "2023-04-28",
+    "dateRequest": "2023-04-26",
+    "dateStart": null,
+    "dateWorkflowActive": "2023-04-27",
+    "decision": "Verleend",
+    "description": "Nieuwe aanvraag, alcohol vrij, Het restotje, Berkelstraat  1",
+    "documentsUrl": "/decosjoin/listdocuments/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
+    "id": "1234418712",
+    "identifier": "Z/23/1984708",
+    "link": Object {
+      "title": "Bekijk hoe het met uw aanvraag staat",
+      "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/1234418712",
+    },
+    "location": "Berkelstraat 1 1078CT",
+    "processed": true,
+    "status": "Afgehandeld",
+    "title": "Horeca vergunning exploitatie Horecabedrijf",
+  },
+  Object {
+    "caseType": "RVV - Hele stad",
+    "dateEnd": "2025-01-02T00:00:00",
+    "dateProcessed": null,
+    "dateRequest": "2023-04-20T00:00:00",
+    "dateStart": "2023-11-01T00:00:00",
+    "dateWorkflowActive": "2023-04-25T00:00:00",
+    "decision": null,
+    "id": "1656544835",
+    "identifier": "Z/23/1809938",
+    "licencePlates": "YY-123-A, ZZ-122-A",
+    "processed": false,
+    "status": "Ontvangen",
+    "title": "RVV-verkeersontheffing",
+  },
   Object {
     "caseType": "VOB",
     "dateDecision": null,
