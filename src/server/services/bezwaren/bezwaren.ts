@@ -1,9 +1,6 @@
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import {
-  ApiErrorResponse,
-  ApiPostponeResponse,
-  ApiResponse,
   ApiSuccessResponse,
   apiDependencyError,
   apiErrorResult,
@@ -11,12 +8,7 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
-import {
-  BFF_BASE_PATH,
-  BFF_PUBLIC_URL,
-  BffEndpoints,
-  getApiConfig,
-} from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -188,7 +180,7 @@ export async function fetchBezwaarDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  // For additional security, first re-fetch users bezwaren and check of the requested doc id is present in one.
+  // For additional security, first re-fetch users bezwaren and check if the requested doc id is present in one.
   const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
   const documentIds =
     bezwaren.content?.flatMap((b) => b.documenten).map((d) => d.id) ?? [];
