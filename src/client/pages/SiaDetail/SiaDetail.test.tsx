@@ -9,7 +9,7 @@ import nock from 'nock';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 
 const SIA_ITEM = {
-  id: '12420',
+  id: 'xbcdefgh',
   identifier: 'SIG-12420',
   category: 'Overlast in de openbare ruimte',
   datePublished: '2023-03-30T14:07:49.344646+02:00',
@@ -24,7 +24,7 @@ const SIA_ITEM = {
   email: 'dingermans@amsterdam.nl',
   phone: '065656565656',
   hasAttachments: true,
-  link: { to: '/meldingen/detail/12420', title: 'SIA Melding SIG-12420' },
+  link: { to: '/meldingen/detail/SIG-12420', title: 'SIA Melding SIG-12420' },
 };
 
 const testState: any = {
@@ -47,47 +47,52 @@ describe('<SiaDetail />', () => {
     nock.disableNetConnect();
   });
 
-  let attachmentsFetch: nock.Scope = nock('http://localhost')
-    .get('/api/v1/services/signals/12420/attachments')
-    .reply(200, {
-      content: [
-        {
-          url: PLACEHOLDER_IMAGE_URL,
-          isImage: true,
-        },
-      ],
-      status: 'OK',
-    });
+  let historyFetch: nock.Scope | null = null;
+  let attachmentsFetch: nock.Scope | null = null;
 
-  let historyFetch: nock.Scope = nock('http://localhost')
-    .get('/api/v1/services/signals/12420/history')
-    .reply(200, {
-      content: [
-        {
-          status: 'Open',
-          key: 'UPDATE_STATUS',
-          datePublished: '2023-03-30T14:07:49.400270+02:00',
-          description: '',
-        },
-        {
-          status: 'Reactie verzonden',
-          key: 'REACTIE_VERZONDEN',
-          datePublished: '2023-03-31T14:07:49.400270+02:00',
-          description: '',
-        },
-      ],
-      status: 'OK',
-    });
+  beforeEach(() => {
+    attachmentsFetch = nock('http://localhost')
+      .get('/api/v1/services/signals/xbcdefgh/attachments')
+      .reply(200, {
+        content: [
+          {
+            url: PLACEHOLDER_IMAGE_URL,
+            isImage: true,
+          },
+        ],
+        status: 'OK',
+      });
+
+    historyFetch = nock('http://localhost')
+      .get('/api/v1/services/signals/xbcdefgh/history')
+      .reply(200, {
+        content: [
+          {
+            status: 'Open',
+            key: 'UPDATE_STATUS',
+            datePublished: '2023-03-30T14:07:49.400270+02:00',
+            description: '',
+          },
+          {
+            status: 'Reactie verzonden',
+            key: 'REACTIE_VERZONDEN',
+            datePublished: '2023-03-31T14:07:49.400270+02:00',
+            description: '',
+          },
+        ],
+        status: 'OK',
+      });
+  });
 
   afterEach(() => {
     nock.cleanAll();
   });
 
-  const routeEntry = generatePath(AppRoutes['SIA/DETAIL'], {
-    id: SIA_ITEM.id,
+  const routeEntry = generatePath(AppRoutes['SIA/DETAIL/OPEN'], {
+    id: SIA_ITEM.identifier,
   });
 
-  const routePath = AppRoutes['SIA/DETAIL'];
+  const routePath = AppRoutes['SIA/DETAIL/OPEN'];
 
   const Component = () => (
     <MockApp
@@ -103,8 +108,8 @@ describe('<SiaDetail />', () => {
 
     await waitFor(() => {
       return expect([
-        historyFetch!.isDone(),
-        attachmentsFetch!.isDone(),
+        historyFetch?.isDone(),
+        attachmentsFetch?.isDone(),
       ]).toStrictEqual([true, true]);
     });
 

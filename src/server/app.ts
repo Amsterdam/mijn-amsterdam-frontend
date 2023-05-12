@@ -47,8 +47,6 @@ const sentryOptions: Sentry.NodeOptions = {
   beforeSend(event, hint) {
     if (IS_DEVELOPMENT) {
       console.log(hint);
-    }
-    if (!process.env.BFF_SENTRY_DSN) {
       return null;
     }
     return event;
@@ -92,6 +90,11 @@ app.use(compression());
 
 // Generate request id
 app.use(requestID);
+
+app.use((req, res, next) => {
+  res.set(securityHeaders);
+  next();
+});
 
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {

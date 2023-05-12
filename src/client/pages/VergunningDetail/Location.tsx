@@ -16,6 +16,7 @@ import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './VergunningDetail.module.scss';
+import { trackPageView } from '../../hooks';
 
 interface LocationProps {
   // The address for determining latlng
@@ -28,6 +29,10 @@ interface LocationProps {
   text?: string;
   // Explicit latlng
   latlng?: LatLngLiteral;
+  // Custom tracking url
+  trackPageViewUrl?: string;
+  // Custom tracking title
+  trackPageViewTitle?: string;
 }
 
 export function Location({
@@ -37,6 +42,8 @@ export function Location({
   modalTitle,
   text,
   label,
+  trackPageViewUrl,
+  trackPageViewTitle,
 }: LocationProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const [hasLocationData, setHasLocationData] = useState(false);
@@ -68,7 +75,20 @@ export function Location({
           getLatLonByAddress(response?.results, address, isWeesp),
       });
     }
-  }, [isLocationModalOpen, location, fetchBag, bagApi.isDirty]);
+  }, [
+    isLocationModalOpen,
+    location,
+    fetchBag,
+    bagApi.isDirty,
+    trackPageViewTitle,
+    trackPageViewUrl,
+  ]);
+
+  useEffect(() => {
+    if (isLocationModalOpen && trackPageViewTitle && trackPageViewUrl) {
+      trackPageView(`${trackPageViewTitle}`, trackPageViewUrl);
+    }
+  }, [isLocationModalOpen, trackPageViewTitle, trackPageViewUrl]);
 
   return (
     <>

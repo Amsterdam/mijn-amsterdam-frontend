@@ -1,27 +1,28 @@
+import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
+import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
 import {
   AppRoutes,
   ChapterTitles,
-  IS_PRODUCTION,
+  Chapters,
 } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
-  addTitleLinkComponent,
   Alert,
   ChapterIcon,
-  Linkd,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
+import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
-import { PageTableCutoffLink } from '../../components/TablePagePaginated/TablePagePaginated';
 
 export const DISPLAY_PROPS = {
   identifier: 'Meldingsnummer',
@@ -73,25 +74,38 @@ export default function Sia() {
 
   return (
     <OverviewPage className={styles.Sia}>
-      <PageHeading isLoading={isLoading(SIA)} icon={<ChapterIcon />}>
+      <PageHeading
+        isLoading={false}
+        icon={<ChapterIcon chapter={Chapters.SIA} />}
+      >
         {ChapterTitles.SIA}
       </PageHeading>
       <PageContent>
         <p>
-          U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte
-          wordt gehouden over de voortgang van uw melding. U kunt deze gegevens
-          hier niet meer wijzigen. 12 maanden na afhandeling van uw melding
-          worden deze gegevens automatisch verwijderd uit ons systeem.
+          Hieronder ziet u uw openstaande meldingen. En u ziet meldingen die de
+          afgelopen 12 maanden zijn afgesloten. Klik op het meldingsnummer voor
+          meer informatie over de melding.
+        </p>
+        <h3>Wat vindt u van Yivi?</h3>
+        <p>
+          Geef uw mening, maak een keuze hieronder. Beantwoord daarna een aantal
+          vragen. Dat duurt ongeveer 3 minuten.
         </p>
         <p>
-          <Linkd
-            external={true}
-            href={`https://${
-              !IS_PRODUCTION ? 'acc.' : ''
-            }meldingen.amsterdam.nl`}
+          <a
+            className={classNames(styles.SurveyThumbs, styles.SurveyThumbsUp)}
+            href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=positief"
+            rel="noopener noreferrer"
           >
-            Doe een melding
-          </Linkd>
+            <ThumbsUp /> Positief
+          </a>
+          <a
+            className={classNames(styles.SurveyThumbs, styles.SurveyThumbsDown)}
+            href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=negatief"
+            rel="noopener noreferrer"
+          >
+            <ThumbsDown /> Negatief
+          </a>
         </p>
         <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (

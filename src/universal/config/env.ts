@@ -44,6 +44,7 @@ const otapServerEnv: OtapEnv = {
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
+    ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
   test: {
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
@@ -62,7 +63,7 @@ const otapServerEnv: OtapEnv = {
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
-    ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht  ',
+    ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
   production: {
     analyticsId: 'f558164e-e388-49e0-864e-5f172552789c',

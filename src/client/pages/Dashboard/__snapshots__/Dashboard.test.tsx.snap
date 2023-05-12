@@ -342,6 +342,28 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           </a>
           <a
             class="MainNavSubmenuLink"
+            data-chapter-id="INKOMEN_SVWI"
+            href="undefined"
+            rel="external"
+          >
+            <span
+              class="SubmenuItemIcon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="#767676"
+              >
+                inkomen-svwi.svg
+              </svg>
+            </span>
+            <span
+              class="SubmenuItemTitle"
+            >
+              Werk & Inkomen SVWI
+            </span>
+          </a>
+          <a
+            class="MainNavSubmenuLink"
             data-chapter-id="INKOMEN"
             href="/inkomen"
           >

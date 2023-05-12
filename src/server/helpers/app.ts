@@ -200,7 +200,9 @@ const getJWKSKey = memoize(async () => {
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
-  const verificationOptions: jose.JWT.VerifyOptions = { ignoreNbf: true };
+  const verificationOptions: jose.JWT.VerifyOptions = {
+    clockTolerance: '2 minutes',
+  };
 
   if (OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED) {
     // NOTE: Use this for added security

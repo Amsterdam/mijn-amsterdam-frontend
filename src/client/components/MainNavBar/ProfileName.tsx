@@ -168,7 +168,7 @@ export function ProfileName({
               styles['ProfileLink--active']
             )}
           >
-            <IconProfile /> {profileAttribute}
+            <IconProfile className={styles.IconProfile} /> {profileAttribute}
           </span>
         );
         break;
