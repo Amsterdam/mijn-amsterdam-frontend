@@ -169,10 +169,3 @@ router.get(
     return res.json({ status: 'OK', otapEnv: OTAP_ENV });
   }
 );
-
-if (IS_TEST) {
-  router.get('/whatismyip', (req, res) => {
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    return res.send(ip);
-  });
-}
