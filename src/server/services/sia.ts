@@ -354,7 +354,7 @@ export async function fetchSignalsListByStatus(
     page: params.page,
     status: statusList,
     page_size: params.pageSize,
-    kind: 'signal', // NOTE: Alléén hoofdmeldingen tonen op MA
+    kind: ['signal', 'parent_signal'], // NOTE: Alléén hoofdmeldingen tonen op MA
   };
 
   const requestConfig = await getSiaRequestConfig(requestID);
