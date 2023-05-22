@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import {
   add,
   format,
+  parseISO,
   startOfMonth,
   startOfQuarter,
   startOfWeek,
@@ -12,7 +13,7 @@ import {
 import { Request, Response } from 'express';
 import { IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { query, tableNameLoginCount } from './db';
+import { query, queryGET, tableNameLoginCount } from './db';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -22,11 +23,11 @@ const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
 
 const queries = {
-  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
-  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
+  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
+  totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? AND auth_method = ?`,
+  totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ?`,
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(uid) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 };
@@ -123,26 +124,37 @@ export async function loginStats(req: Request, res: Response) {
     };
   });
 
-  const dateMinResult = await query(queries.dateMinAll);
-  const dateMaxResult = await query(queries.dateMaxAll);
+  const dateMinResult = (await queryGET(queries.dateMinAll)) as {
+    date_min: string;
+  };
+
+  const dateMaxResult = (await queryGET(queries.dateMaxAll)) as {
+    date_max: string;
+  };
 
   let dateMin: Date | null = null;
   let dateMax: Date | null = null;
 
-  if (dateMinResult?.rowCount) {
-    dateMin = dateMinResult.rows[0].date_min;
+  if (dateMinResult) {
+    dateMin = parseISO(dateMinResult.date_min);
   }
 
-  if (dateMaxResult?.rowCount) {
-    dateMax = dateMaxResult.rows[0].date_max;
+  if (dateMaxResult) {
+    dateMax = parseISO(dateMaxResult.date_max);
   }
 
   let dateStart: string = dateMin
     ? format(dateMin, QUERY_DATE_FORMAT)
     : dateEndday;
+
   let dateEnd: string = dateMax
     ? format(dateMax, QUERY_DATE_FORMAT)
     : dateEndday;
+
+  if (dateStart === dateEnd) {
+    dateEnd = format(add(parseISO(dateEnd), { days: 1 }), QUERY_DATE_FORMAT);
+  }
+
   let totalLogins = 0;
   let uniqueLogins = 0;
 
@@ -154,7 +166,7 @@ export async function loginStats(req: Request, res: Response) {
     dateEnd = req.query.dateEnd as string;
   }
 
-  let params = [`[${dateStart}, ${dateEnd}]`];
+  let params: Array<string | Date> = [dateStart, dateEnd];
   let totalQuery = queries.totalLoginsAll;
   let uniqueQuery = queries.uniqueLoginsAll;
 
@@ -165,16 +177,22 @@ export async function loginStats(req: Request, res: Response) {
     params.push(authMethodSelected);
   }
 
-  const totalLoginsResult = await query(totalQuery, params);
+  const totalLoginsResult = (await queryGET(totalQuery, params)) as {
+    count: number;
+  };
 
-  if (totalLoginsResult?.rowCount) {
-    totalLogins = parseInt(totalLoginsResult.rows[0].count, 10);
+  console.log('\n\n', totalLoginsResult, '\n\n');
+
+  if (totalLoginsResult) {
+    totalLogins = totalLoginsResult.count;
   }
 
-  const uniqueLoginsResult = await query(uniqueQuery, params);
+  const uniqueLoginsResult = (await queryGET(uniqueQuery, params)) as {
+    count: number;
+  };
 
-  if (uniqueLoginsResult?.rowCount) {
-    uniqueLogins = uniqueLoginsResult.rowCount;
+  if (uniqueLoginsResult) {
+    uniqueLogins = uniqueLoginsResult.count;
   }
 
   return res.render('login-count', {

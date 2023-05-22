@@ -1,0 +1,6 @@
+CREATE TABLE login_count (
+    "id" INTEGER PRIMARY KEY,
+    "uid" VARCHAR(100) NOT NULL,
+    "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
+    "auth_method" VARCHAR(100) DEFAULT NULL
+);
