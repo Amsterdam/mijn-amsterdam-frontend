@@ -78,7 +78,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BEZWAREN: 'Ingediende bezwaren',
   HORECA: 'Horeca vergunningen',
   AVG: 'Ingediende AVG verzoeken',
-  BODEM: 'Bodem',
+  BODEM: 'Bodem: loodmetingen',
 };
 
 export function createErrorDisplayData(
