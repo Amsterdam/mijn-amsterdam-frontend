@@ -127,7 +127,7 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private', 'private-commercial'],
   }),
 
-  BODEM: apiPristineResult(null, { isActive: FeatureToggle.loodActive }),
+  BODEM: apiPristineResult(null, { isActive: FeatureToggle.bodemActive }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

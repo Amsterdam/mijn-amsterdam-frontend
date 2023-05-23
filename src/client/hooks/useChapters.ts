@@ -181,7 +181,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
       return (
         !isLoading(BODEM) &&
         !!BODEM?.content?.metingen?.length &&
-        FeatureToggle.loodActive
+        FeatureToggle.bodemActive
       );
   }
 

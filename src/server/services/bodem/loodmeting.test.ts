@@ -308,7 +308,7 @@ describe('Loodmeting', () => {
       );
 
       expect(response.content?.filename).toEqual(
-        'Rapportage Lood in de bodem-check Admiraal De Ruijterweg 457 1055MG Amsterdam.pdf'
+        'Rapportage Lood in de bodem-check Weesperplein 8 1018XA Amsterdam.pdf'
       );
       expect(response.content?.documentbody.length).toEqual(8796);
     });

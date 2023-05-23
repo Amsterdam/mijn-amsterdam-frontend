@@ -88,7 +88,7 @@ export default function Bodem() {
         title="Lopende aanvragen"
         noItemsMessage="U heeft nog geen loodmetingen aangevraagd."
         startCollapsed={false}
-        hasItems={!!loodMetingen?.length}
+        hasItems={!!lopendeAanvragen?.length}
         isLoading={isLoading(BODEM)}
         track={{
           category: 'Loodmetingen overzicht / Lopende aanvragen',
@@ -103,7 +103,7 @@ export default function Bodem() {
         title="Eerdere aanvragen"
         noItemsMessage="U hebt geen eerdere aanvragen."
         startCollapsed={false}
-        hasItems={!!loodMetingen?.length}
+        hasItems={!!afgerondeAanvragen?.length}
         isLoading={isLoading(BODEM)}
         track={{
           category: 'Loodmetingen overzicht / Eerdere aanvragen',

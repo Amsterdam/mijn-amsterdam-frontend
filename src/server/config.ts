@@ -284,7 +284,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_LOOD_API_URL}`,
     method: 'GET',
     // TODO: Might need a token here.
-    postponeFetch: !FeatureToggle.loodActive,
+    postponeFetch: !FeatureToggle.bodemActive,
   },
 };
 

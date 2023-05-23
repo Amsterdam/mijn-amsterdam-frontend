@@ -109,7 +109,7 @@ const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
 const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 
 const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
-const LoodMeting = lazy(() => import('./pages/LoodMeting/LoodMeting'));
+const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -316,10 +316,10 @@ function AppAuthenticated() {
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes.AVG} component={AVG} />
           )}
-          {FeatureToggle.loodActive && (
+          {FeatureToggle.bodemActive && (
             <Route path={AppRoutes.BODEM} component={Bodem} />
           )}
-          {FeatureToggle.loodActive && (
+          {FeatureToggle.bodemActive && (
             <Route path={AppRoutes['LOOD_METING']} component={LoodMeting} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />

@@ -47,33 +47,33 @@ export default function LoodMeting() {
           </Alert>
         )}
         {isLoading(BODEM) && <LoadingContent />}
-        {meting && (
+        {!!meting && (
           <>
-            <InfoDetail label="Kenmerk" value={meting?.aanvraagNummer || '-'} />
-            <InfoDetail label="Status" value={meting?.status} />
+            <InfoDetail label="Kenmerk" value={meting.aanvraagNummer || '-'} />
+            <InfoDetail label="Status" value={meting.status} />
             <Location
-              location={`${meting?.adres.straat} ${meting?.adres.huisnummer}${
-                meting?.adres.huisletter ?? ''
-              }, ${meting?.adres.stad}`}
+              location={`${meting.adres.straat} ${meting.adres.huisnummer}${
+                meting.adres.huisletter ?? ''
+              }, ${meting.adres.stad}`}
             />
 
-            {meting?.rapportBeschikbaar && (
+            {!!meting.document && (
               <InfoDetail
                 valueWrapperElement="div"
                 label="Document"
                 value={
                   <DocumentLink
-                    document={meting.document!}
-                    label={meting.document!.title}
+                    document={meting.document}
+                    label={meting.document.title}
                     trackPath={() =>
-                      `loodmeting/document/${meting.document!.title}`
+                      `loodmeting/document/${meting.document?.title}`
                     }
                   ></DocumentLink>
                 }
               />
             )}
 
-            {meting?.redenAfwijzing && (
+            {meting.redenAfwijzing && (
               <InfoDetail
                 label="Reden afwijzing"
                 value={meting.redenAfwijzing}
