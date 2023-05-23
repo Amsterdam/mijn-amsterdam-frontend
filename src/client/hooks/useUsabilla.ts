@@ -28,7 +28,7 @@ export function waitForUsabillaLiveInWindow() {
   });
 }
 
-export function useUsabilla() {
+export function useUsabilla(profileType?: ProfileType) {
   const isPhoneScreen = usePhoneScreen();
   const [isUsabillaLoaded] = useScript({
     src: '/js/usabilla-2021-10-05.js',
@@ -50,11 +50,14 @@ export function useUsabilla() {
       }
       waitForUsabillaLiveInWindow()
         .then(() => {
+          const MatomoVisitorId = (
+            window as any
+          ).Piwik?.getTracker().getVisitorId();
+
           (window as any).usabilla_live('data', {
             custom: {
-              MatomoVisitorId: (
-                window as any
-              ).Piwik?.getTracker().getVisitorId(),
+              MatomoVisitorId,
+              profileType: profileType ?? 'unknown',
             },
           });
         })
@@ -66,5 +69,5 @@ export function useUsabilla() {
           });
         });
     }
-  }, [isUsabillaLoaded, isPhoneScreen]);
+  }, [isUsabillaLoaded, isPhoneScreen, profileType]);
 }

@@ -37,6 +37,7 @@ const srcSet = {
 
 export default function ApplicationError({ error }: FallbackProps) {
   useUsabilla();
+
   const location = window.location;
   const isLargeScreen = useDesktopScreen();
   const Logo = isLargeScreen ? AmsterdamLogoLarge : AmsterdamLogo;
