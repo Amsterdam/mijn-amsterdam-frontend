@@ -30,9 +30,7 @@ export default function LoodMeting() {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{
-          to: generatePath(AppRoutes.BODEM, {
-            page: 1,
-          }),
+          to: generatePath(AppRoutes.BODEM),
           title: ChapterTitles.BODEM,
         }}
         isLoading={isLoading(BODEM)}

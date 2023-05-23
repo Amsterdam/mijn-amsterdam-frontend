@@ -38,7 +38,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
   let metingen: LoodMeting[] = [];
 
   if (!response.responsedata) {
-    return { metingen }; //Fout
+    return { metingen };
   }
 
   try {
