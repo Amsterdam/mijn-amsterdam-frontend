@@ -322,7 +322,7 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(LOODMETINGEN);
     },
   },
-  [String(`${ApiUrls.LOOD_365}/be_downloadleadreport`)]: {
+  [`${ApiUrls.LOOD_365}/be_downloadleadreport`]: {
     status: () => 200,
     method: 'post',
     responseData: async (config: any) => {
