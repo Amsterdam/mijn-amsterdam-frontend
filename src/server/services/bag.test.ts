@@ -4,7 +4,7 @@ import { Adres } from '../../universal/types';
 import { ApiUrls } from '../config';
 import { axiosRequest } from '../helpers/source-api-request';
 import bagData from '../mock-data/json/bag.json';
-import { fetchBAG, formatBAGData } from './bag';
+import { fetchBAG } from './bag';
 
 describe('BAG service', () => {
   const axMock = new MockAdapter(axiosRequest);
@@ -20,30 +20,6 @@ describe('BAG service', () => {
 
   // Error response
   axMock.onGet(String(ApiUrls.BAG), { params: { q: 'undefined' } }).reply(500);
-
-  it('should extraxt a lat/lon object', () => {
-    const address = { straatnaam: 'Herengracht', huisnummer: '23' } as Adres;
-
-    expect(formatBAGData(bagData as any, address)).toStrictEqual({
-      address,
-      bagNummeraanduidingId: '0363200000126446',
-      latlng: {
-        lat: 52.37873183842775,
-        lng: 4.891968036478453,
-      },
-    });
-  });
-
-  it('should have a null lat/lon', () => {
-    const address = { straatnaam: 'Herengracht', huisnummer: '23' } as Adres;
-    bagData.results = [];
-
-    expect(formatBAGData(bagData as any, address)).toStrictEqual({
-      address,
-      bagNummeraanduidingId: undefined,
-      latlng: null,
-    });
-  });
 
   it('Bag api should reply correctly', async () => {
     const address = {
@@ -65,7 +41,7 @@ describe('BAG service', () => {
       status: 'OK',
       content: {
         address,
-        bagNummeraanduidingId: undefined,
+        bagNummeraanduidingId: null,
         latlng: null,
       },
     });
@@ -84,7 +60,7 @@ describe('BAG service', () => {
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
-      message: 'Error: Request failed with status code 404',
+      message: 'Kon geen correct zoek adres opmaken.',
       content: null,
     });
   });
