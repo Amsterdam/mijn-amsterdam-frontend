@@ -21,11 +21,10 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
     {
       id: 'second-item',
       status: 'In behandeling',
-      datePublished: request.datumInbehandeling // Sometimes requests are immediately declinded
-        ? request.datumInbehandeling
-        : request.datumBeoordeling // And don't have a datumInBehandeling date,
-        ? request.datumBeoordeling // we then show datumBeoordeling (which sould be there if a request is declined)
-        : '',
+      datePublished: 
+        // Sometimes requests are immediately declined and don't have a datumInBehandeling date. We then show datumBeoordeling (which should be there if a request is declined).
+        request.datumInbehandeling || request.datumBeoordeling || '',
+
       description: '',
       documents: [],
       isActive: isInProgress,
