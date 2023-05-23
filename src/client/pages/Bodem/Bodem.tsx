@@ -94,7 +94,6 @@ export default function Bodem() {
           category: 'Loodmetingen overzicht / Lopende aanvragen',
           name: 'Datatabel',
         }}
-        className=""
       >
         <Table items={lopendeAanvragen} displayProps={DISPLAY_PROPS_BODEM} />
       </SectionCollapsible>
