@@ -82,7 +82,8 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
                   IS_ACCEPTANCE
                     ? process.env.REACT_APP_BFF_API_URL_ACC
                     : process.env.REACT_APP_BFF_API_URL
-                }${generatePath(BffEndpoints.LOODMETING_ATTACHEMENTS, {
+                }${generatePath(BffEndpoints.LOODMETING_ATTACHMENTS, {
+
                   id: location.Workorderid!,
                 })}`,
                 datePublished: location.Reportsenton!,
