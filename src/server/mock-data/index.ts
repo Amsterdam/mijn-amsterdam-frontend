@@ -319,9 +319,6 @@ export const mockDataConfig: MockDataConfig = {
   [String(`${ApiUrls.LOOD_365}/be_getrequestdetails`)]: {
     status: () => 200,
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(KREFIA);
-      // }
       return await loadMockApiResponseJson(LOODMETINGEN);
     },
   },
