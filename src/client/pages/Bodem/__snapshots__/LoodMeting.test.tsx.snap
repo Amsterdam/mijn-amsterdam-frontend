@@ -13,10 +13,11 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         class="Icon"
       >
         <svg
+          aria-label="Bodem"
           class="ChapterIcon"
           fill="black"
         >
-          burgerzaken.svg
+          icon_bodem.svg
         </svg>
       </span>
       <div
@@ -292,10 +293,11 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         class="Icon"
       >
         <svg
+          aria-label="Bodem"
           class="ChapterIcon"
           fill="black"
         >
-          burgerzaken.svg
+          icon_bodem.svg
         </svg>
       </span>
       <div
@@ -536,10 +538,11 @@ exports[`LoodMeting with results should show the correct detailpage for status i
         class="Icon"
       >
         <svg
+          aria-label="Bodem"
           class="ChapterIcon"
           fill="black"
         >
-          burgerzaken.svg
+          icon_bodem.svg
         </svg>
       </span>
       <div
@@ -770,10 +773,11 @@ exports[`LoodMeting without results should show the correct detailpage 1`] = `
         class="Icon"
       >
         <svg
+          aria-label="Bodem"
           class="ChapterIcon"
           fill="black"
         >
-          burgerzaken.svg
+          icon_bodem.svg
         </svg>
       </span>
       <div

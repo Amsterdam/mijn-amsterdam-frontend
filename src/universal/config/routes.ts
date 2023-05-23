@@ -62,7 +62,7 @@ export const AppRoutes: Record<string, string> = {
   'AVG/DETAIL': '/avg/verzoek/:id',
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
-  LOOD_METING: '/lood-meting/:id',
+  'BODEM/LOOD_METING': '/lood-meting/:id',
 };
 
 export const AppRoutesRedirect = [

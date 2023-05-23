@@ -89,7 +89,11 @@ describe('LoodMeting', () => {
   });
 
   describe('with results', () => {
-    const renderLoodMeting = setupMockApp(LoodMeting, 'LOOD_METING', testState);
+    const renderLoodMeting = setupMockApp(
+      LoodMeting,
+      'BODEM/LOOD_METING',
+      testState
+    );
 
     it('should show the correct detailpage for status in behandeling', async () => {
       const { asFragment } = renderLoodMeting({
@@ -117,7 +121,7 @@ describe('LoodMeting', () => {
   });
 
   describe('without results', () => {
-    const renderLoodMeting = setupMockApp(LoodMeting, 'LOOD_METING', {
+    const renderLoodMeting = setupMockApp(LoodMeting, 'BODEM/LOOD_METING', {
       BODEM: {
         content: {},
         status: 'OK',

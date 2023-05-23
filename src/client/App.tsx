@@ -320,7 +320,10 @@ function AppAuthenticated() {
             <Route path={AppRoutes.BODEM} component={Bodem} />
           )}
           {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes['LOOD_METING']} component={LoodMeting} />
+            <Route
+              path={AppRoutes['BODEM/LOOD_METING']}
+              component={LoodMeting}
+            />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />

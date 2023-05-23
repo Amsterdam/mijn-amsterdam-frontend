@@ -69,7 +69,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
           rapportId: location?.Workorderid,
           redenAfwijzing: location?.Rejectionreason,
           link: {
-            to: generatePath(AppRoutes['LOOD_METING'], {
+            to: generatePath(AppRoutes['BODEM/LOOD_METING'], {
               id: location.Reference,
             }),
             title: 'Bekijk loodmeting',
@@ -83,7 +83,6 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
                     ? process.env.REACT_APP_BFF_API_URL_ACC
                     : process.env.REACT_APP_BFF_API_URL
                 }${generatePath(BffEndpoints.LOODMETING_ATTACHMENTS, {
-
                   id: location.Workorderid!,
                 })}`,
                 datePublished: location.Reportsenton!,

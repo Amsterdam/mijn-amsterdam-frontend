@@ -143,7 +143,7 @@ router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
 });
 
 router.get(
-  BffEndpoints.LOODMETING_ATTACHEMENTS,
+  BffEndpoints.LOODMETING_ATTACHMENTS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
 
