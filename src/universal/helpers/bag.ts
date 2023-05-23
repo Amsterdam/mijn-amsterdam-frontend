@@ -55,14 +55,17 @@ export function getLatLonByAddress(
 export function getBagSearchAddress(adres: Adres): BAGSearchAddress | null {
   let bagZoekAdres =
     adres.straatnaam && adres.huisnummer
-      ? `${adres.straatnaam} ${adres.huisnummer || ''}`.trim()
+      ? `${adres.straatnaam} ${adres.huisnummer}`.trim()
       : null;
+
   if (bagZoekAdres && adres.huisnummertoevoeging) {
     bagZoekAdres += adres.huisnummertoevoeging;
   }
+
   if (bagZoekAdres && adres.huisletter) {
     bagZoekAdres += ` ${adres.huisletter}`;
   }
+
   return bagZoekAdres;
 }
 
