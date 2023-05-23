@@ -326,9 +326,6 @@ export const mockDataConfig: MockDataConfig = {
     status: () => 200,
     method: 'post',
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(KREFIA);
-      // }
       return await loadMockApiResponseJson(LOODMETING_RAPPORT);
     },
   },
