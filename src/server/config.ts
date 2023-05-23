@@ -394,7 +394,7 @@ export const BffEndpoints = {
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/bff/status/health',
 
-  LOODMETING_ATTACHEMENTS: '/services/lood/:id/attachments',
+  LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
