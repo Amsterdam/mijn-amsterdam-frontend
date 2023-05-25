@@ -135,6 +135,7 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 COPY --from=build-app-bff /build-space/build-bff /app/build-bff
 COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
+COPY src/server/views /app/build-bff/server/views
 
 # Run the app
 CMD /usr/local/bin/docker-entrypoint-bff.sh
