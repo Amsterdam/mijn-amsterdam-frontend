@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { IS_DEVELOPMENT } from '../../universal/config';
+import { IS_OT } from '../../universal/config';
 
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE ?? 'login_count';
@@ -7,7 +7,7 @@ export const tableNameLoginCount =
 const SQLITE3_DB_PATH = `${process.env.DB_PATH}`;
 
 const dbOptions: Database.Options = {
-  verbose: IS_DEVELOPMENT ? console.log : undefined,
+  verbose: IS_OT ? console.log : undefined,
 };
 
 const db = new Database(SQLITE3_DB_PATH, dbOptions);
