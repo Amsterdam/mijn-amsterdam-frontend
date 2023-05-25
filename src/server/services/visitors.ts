@@ -181,8 +181,6 @@ export async function loginStats(req: Request, res: Response) {
     count: number;
   };
 
-  console.log('\n\n', totalLoginsResult, '\n\n');
-
   if (totalLoginsResult) {
     totalLogins = totalLoginsResult.count;
   }

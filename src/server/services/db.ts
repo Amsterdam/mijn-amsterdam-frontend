@@ -41,7 +41,6 @@ export async function queryGET(
   values?: any[]
 ): Promise<unknown> {
   const statement = db.prepare(query);
-  console.log(statement, 'vals:', values);
   if (Array.isArray(values)) {
     return statement.get(...values);
   }
