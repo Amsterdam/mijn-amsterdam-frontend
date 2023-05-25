@@ -1,4 +1,4 @@
-CREATE TABLE login_count (
+CREATE TABLE IF NOT EXISTS login_count (
     "id" INTEGER PRIMARY KEY,
     "uid" VARCHAR(100) NOT NULL,
     "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
