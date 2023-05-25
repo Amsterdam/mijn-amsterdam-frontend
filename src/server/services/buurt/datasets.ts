@@ -159,9 +159,7 @@ export const datasetEndpoints: Record<
     // idKeyDetail: 'url',
   },
   bekendmakingen: {
-    listUrl: `https://${
-      !IS_PRODUCTION ? 'acc.' : ''
-    }api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
+    listUrl: `https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
     detailUrl: `https://${
       !IS_PRODUCTION ? 'acc.' : ''
     }api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/`,
