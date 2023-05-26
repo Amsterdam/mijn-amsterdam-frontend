@@ -1,3 +1,4 @@
+import { Adres } from '../types';
 import { BAGSourceData } from '../types/bag';
 import {
   extractAddress,
@@ -85,7 +86,12 @@ describe('getLatLonByAddress', () => {
 
   test('getBagSearchAddress', () => {
     expect(
-      getBagSearchAddress({ straatnaam: 'Herengracht', huisnummer: '23' })
-    ).toBe('Herengracht 23');
+      getBagSearchAddress({
+        straatnaam: 'Herengracht',
+        huisnummer: '23',
+        huisletter: 'hs',
+        huisnummertoevoeging: 'A',
+      } as Adres)
+    ).toBe('Herengracht 23A hs');
   });
 });
