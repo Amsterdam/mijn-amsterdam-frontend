@@ -13,6 +13,8 @@ import {
 import { useAppStateGetter } from '../../hooks';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
+import { showDocuments } from '../../../universal/helpers/vergunningen';
+import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 
 export default function HorecaDetail() {
   const { HORECA } = useAppStateGetter();
@@ -47,6 +49,11 @@ export default function HorecaDetail() {
             {Vergunning.caseType === CaseType.ExploitatieHorecabedrijf && (
               <ExploitatieHorecabedrijf vergunning={Vergunning} />
             )}
+
+            {showDocuments(Vergunning?.caseType) &&
+              !!Vergunning?.documentsUrl && (
+                <DocumentDetails vergunning={Vergunning} />
+              )}
           </>
         )}
       </PageContent>
