@@ -7,14 +7,14 @@ Object {
       Object {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-04-25T00:00:00",
-        "description": "Uw aanvraag voor een rvv-verkeersontheffing is in behandeling genomen.",
+        "description": "Uw aanvraag voor een RVV-verkeersontheffing is in behandeling genomen.",
         "id": "vergunning-1656544835-notification",
         "link": Object {
           "title": "Bekijk details",
           "to": "/vergunningen/rvv-hele-stad/1656544835",
         },
         "subject": "1656544835",
-        "title": "Aanvraag rvv-verkeersontheffing in behandeling",
+        "title": "Aanvraag RVV-verkeersontheffing in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",
