@@ -114,6 +114,7 @@ const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
 function AppNotAuthenticated() {
   useDeeplinkEntry();
   usePageChange(false);
+  useUsabilla();
 
   return (
     <>
@@ -158,6 +159,8 @@ function AppAuthenticated() {
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
+
+  useUsabilla(profileType);
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
@@ -360,7 +363,6 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useUsabilla();
 
   return (
     <RecoilRoot>
