@@ -50,8 +50,8 @@ export default function HorecaDetail() {
               <ExploitatieHorecabedrijf vergunning={Vergunning} />
             )}
 
-            {showDocuments(Vergunning?.caseType) &&
-              !!Vergunning?.documentsUrl && (
+            {showDocuments(Vergunning.caseType) &&
+              !!Vergunning.documentsUrl && (
                 <DocumentDetails vergunning={Vergunning} />
               )}
           </>

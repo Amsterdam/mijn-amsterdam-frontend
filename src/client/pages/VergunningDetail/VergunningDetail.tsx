@@ -116,8 +116,8 @@ export default function VergunningDetail() {
               <Woonvergunningen vergunning={Vergunning} />
             )}
 
-            {showDocuments(Vergunning?.caseType) &&
-              !!Vergunning?.documentsUrl && (
+            {showDocuments(Vergunning.caseType) &&
+              !!Vergunning.documentsUrl && (
                 <DocumentDetails vergunning={Vergunning} />
               )}
 
