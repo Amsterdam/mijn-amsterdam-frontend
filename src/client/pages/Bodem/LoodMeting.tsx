@@ -64,8 +64,7 @@ export default function LoodMeting() {
                     document={meting.document}
                     label={meting.document.title}
                     trackPath={() =>
-                      `loodmeting/document/${meting.document.title}`
-
+                      `loodmeting/document/${meting.document?.title}`
                     }
                   ></DocumentLink>
                 }
