@@ -30,7 +30,7 @@ export function getCertificateSync(path?: string, name?: string) {
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
-    ? process.env.BFF_REQUEST_CACHE_ENABLED === 'true'
+    ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
     : true;
 
 // Urls used in the BFF api
