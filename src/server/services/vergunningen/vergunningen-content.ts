@@ -222,5 +222,23 @@ export const notificationContent: NotificationContent = {
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
   [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
   [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.short,
-  [CaseType.RVVHeleStad]: defaultNotificationLabels.short,
+  [CaseType.RVVHeleStad]: {
+    requested: {
+      ...requestedShort,
+      title: (item) => `Aanvraag ${item.title} ontvangen`,
+      description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
+    },
+    inProgress: {
+      ...inProgressShort,
+      title: (item) => `Aanvraag ${item.title} in behandeling`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
+    },
+    done: {
+      ...doneShort,
+      title: (item) => `Aanvraag ${item.title} afgehandeld`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is afgehandeld.`,
+    },
+  },
 };
