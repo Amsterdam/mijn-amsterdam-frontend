@@ -46,6 +46,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { fetchSignals } from './sia';
+import { fetchLoodmetingen } from './bodem/loodmetingen';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -118,6 +119,7 @@ const BEZWAREN = callService(fetchBezwaren);
 const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
+const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -168,6 +170,7 @@ const SERVICES_INDEX = {
   HORECA,
   SIA,
   AVG,
+  BODEM,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -203,6 +206,7 @@ type CommercialServices = Pick<
   | 'VERGUNNINGEN'
   | 'TOERISTISCHE_VERHUUR'
   | 'HORECA'
+  | 'BODEM'
 >;
 
 type ServicesByProfileType = {
@@ -241,6 +245,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BELASTINGEN,
     HORECA,
     AVG,
+    BODEM,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -276,6 +281,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BELASTINGEN,
     HORECA,
     AVG,
+    BODEM,
   },
   commercial: {
     AFVAL,
@@ -291,6 +297,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     VERGUNNINGEN,
     HORECA,
+    BODEM,
   },
 };
 

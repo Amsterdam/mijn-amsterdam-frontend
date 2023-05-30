@@ -28,6 +28,7 @@ export type Chapter =
   | 'HORECA'
   | 'KREFIA'
   | 'AVG'
+  | 'BODEM'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -57,6 +58,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   KLACHTEN: 'KLACHTEN',
   HORECA: 'HORECA',
   AVG: 'AVG',
+  BODEM: 'BODEM',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -89,6 +91,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   KLACHTEN: 'Klachten',
   HORECA: 'Horeca',
   AVG: 'AVG persoonsgegevens',
+  BODEM: 'Bodem',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -175,4 +178,5 @@ export const DocumentTitles: Record<
   [AppRoutes.AVG]: 'AVG Verzoeken',
   [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
+  [AppRoutes.BODEM]: 'Bodem',
 };

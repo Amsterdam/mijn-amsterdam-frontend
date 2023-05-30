@@ -26,6 +26,7 @@ import {
   IconParkeren,
   IconKlachten,
   IconHoreca,
+  IconBodem,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -55,4 +56,5 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.PARKEREN]: IconParkeren,
   [Chapters.KLACHTEN]: IconKlachten,
   [Chapters.HORECA]: IconHoreca,
+  [Chapters.BODEM]: IconBodem,
 };

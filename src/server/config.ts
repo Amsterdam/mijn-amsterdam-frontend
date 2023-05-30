@@ -135,7 +135,8 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'ENABLEU_2_SMILE';
+  | 'ENABLEU_2_SMILE'
+  | 'LOOD_365';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -279,6 +280,12 @@ export const ApiConfig: ApiDataRequestConfig = {
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
   },
+  LOOD_365: {
+    url: `${process.env.BFF_LOOD_API_URL}`,
+    method: 'GET',
+    // TODO: Might need a token here.
+    postponeFetch: !FeatureToggle.bodemActive,
+  },
 };
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
@@ -308,6 +315,7 @@ export const RelayPathsAllowed = {
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
+  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
 };
 
 export const AUTH_BASE = '/api/v1/auth';
@@ -385,6 +393,8 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/bff/status/health',
+
+  LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
