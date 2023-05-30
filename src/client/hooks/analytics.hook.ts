@@ -1,3 +1,5 @@
+import memoize from 'memoizee';
+import { useDebouncedCallback } from 'use-debounce';
 import PiwikTracker from '@amsterdam/piwik-tracker';
 import {
   CustomDimension,
@@ -5,11 +7,9 @@ import {
   TrackPageViewParams,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
-import { useDebouncedCallback } from 'use-debounce';
 import { getOtapEnvItem } from '../../universal/config';
 import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { useSessionStorage } from './storage.hook';
-import memoize from 'memoizee';
 
 let PiwikInstance: PiwikTracker;
 
@@ -23,8 +23,8 @@ const PiwikTrackerConfig: UserOptions = {
 
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
 enum CustomDimensionId {
-  ProfileType = 1,
-  City = 2,
+  ProfileType = 'user_type',
+  City = 'user_city',
 }
 
 function profileTypeDimension(profileType: ProfileType) {
