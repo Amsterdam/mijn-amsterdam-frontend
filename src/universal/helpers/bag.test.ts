@@ -92,6 +92,6 @@ describe('getLatLonByAddress', () => {
         huisletter: 'hs',
         huisnummertoevoeging: 'A',
       } as Adres)
-    ).toBe('Herengracht 23A hs');
+    ).toBe('Herengracht 23 hs A');
   });
 });
