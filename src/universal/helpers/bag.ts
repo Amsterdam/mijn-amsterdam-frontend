@@ -30,6 +30,7 @@ export function getBagResult(
     const isAddressMatch = result.adres
       .toLowerCase()
       .includes(bagSearchAddress.toLowerCase());
+
     return isWoonplaatsMatch && isAddressMatch;
   });
 
@@ -59,11 +60,11 @@ export function getBagSearchAddress(adres: Adres): BAGSearchAddress | null {
       : null;
 
   if (bagZoekAdres && adres.huisletter) {
-    bagZoekAdres += ` ${adres.huisletter}`;
+    bagZoekAdres += `${adres.huisletter}`; // Bijvoorbeeld Herengracht 50C
   }
 
   if (bagZoekAdres && adres.huisnummertoevoeging) {
-    bagZoekAdres += ` ${adres.huisnummertoevoeging}`;
+    bagZoekAdres += `-${adres.huisnummertoevoeging}`; // Bijvoorbeeld Da Costakade 50-1
   }
 
   return bagZoekAdres;

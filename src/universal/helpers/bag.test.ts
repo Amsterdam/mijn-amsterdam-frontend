@@ -89,9 +89,45 @@ describe('getLatLonByAddress', () => {
       getBagSearchAddress({
         straatnaam: 'Herengracht',
         huisnummer: '23',
-        huisletter: 'hs',
+        huisletter: null,
+        huisnummertoevoeging: null,
+      } as Adres)
+    ).toBe('Herengracht 23');
+
+    expect(
+      getBagSearchAddress({
+        straatnaam: 'Herengracht',
+        huisnummer: '23',
+        huisletter: null,
+        huisnummertoevoeging: '1',
+      } as Adres)
+    ).toBe('Herengracht 23-1');
+
+    expect(
+      getBagSearchAddress({
+        straatnaam: 'Herengracht',
+        huisnummer: '23',
+        huisletter: null,
         huisnummertoevoeging: 'A',
       } as Adres)
-    ).toBe('Herengracht 23 hs A');
+    ).toBe('Herengracht 23-A');
+
+    expect(
+      getBagSearchAddress({
+        straatnaam: 'Herengracht',
+        huisnummer: '23',
+        huisletter: 'C',
+        huisnummertoevoeging: null,
+      } as Adres)
+    ).toBe('Herengracht 23C');
+
+    expect(
+      getBagSearchAddress({
+        straatnaam: 'Herengracht',
+        huisnummer: '23',
+        huisletter: 'C',
+        huisnummertoevoeging: '1',
+      } as Adres)
+    ).toBe('Herengracht 23C-1');
   });
 });
