@@ -124,6 +124,12 @@ COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 ########################################################################################################################
 FROM build-app-bff as deploy-bff
 
+ARG BFF_ADO_BUILD_ID=0
+ENV BFF_ADO_BUILD_ID=$BFF_ADO_BUILD_ID
+
+ARG BFF_GIT_SHA=0
+ENV BFF_GIT_SHA=$BFF_GIT_SHA
+
 WORKDIR /app
 
 ENV TZ=Europe/Amsterdam
