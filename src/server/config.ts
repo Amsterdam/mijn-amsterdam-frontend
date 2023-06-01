@@ -114,6 +114,7 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
+  | 'LOOD_365'
   | 'ENABLEU_2_SMILE';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
