@@ -58,3 +58,4 @@ jobs:
       btdDeploy: ${{ parameters.btdDeploy }}
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
+      updateAppSettings: ${{ parameters.updateAppSettings }}
