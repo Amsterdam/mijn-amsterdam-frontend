@@ -166,6 +166,15 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
 router.get(
   BffEndpoints.STATUS_HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
-    return res.json({ status: 'OK', otapEnv: OTAP_ENV });
+    const release = `mijnamsterdam-bff@${
+      process.env.REACT_APP_VERSION ?? 'latest-unknown'
+    }`;
+    return res.json({
+      status: 'OK',
+      otapEnv: OTAP_ENV,
+      release,
+      gitSha: process.env.REACT_APP_GIT_SHA ?? 'unknown',
+      buildId: process.env.REACT_APP_ADO_BUILD_ID ?? '0',
+    });
   }
 );
