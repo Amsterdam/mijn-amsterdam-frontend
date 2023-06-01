@@ -37,6 +37,11 @@ parameters:
   - name: btdDeploy
     type: boolean
     default: true
+
+  - name: updateAppSettings
+    type: boolean
+    default: false
+
   - name: btdAppBFF
     type: boolean
     default: true
