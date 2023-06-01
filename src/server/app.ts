@@ -79,8 +79,16 @@ const limiter = rateLimit({
 // apply rate limiter to all requests
 app.use(limiter);
 
+morgan.token('build', function (req, res) {
+  return `bff-${process.env.BFF_ADO_BUILD_ID ?? 'latest'}`;
+});
+
 // Logging
-app.use(morgan('combined'));
+app.use(
+  morgan(
+    '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+  )
+);
 
 // Json body parsing
 app.use(express.json());
