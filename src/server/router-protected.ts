@@ -1,13 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { pick } from '../universal/helpers/utils';
 import {
-  BFF_MS_API_BASE_URL,
   BffEndpoints,
+  BFF_MS_API_BASE,
+  BFF_MS_API_BASE_PATH,
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { getAuth, isProtectedRoute } from './helpers/app';
-import { isAuthenticated } from './router-oidc';
+import { isAuthenticated } from './router-auth';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -16,8 +16,11 @@ import {
 import {
   fetchSignalAttachments,
   fetchSignalHistory,
+  fetchSignals,
   fetchSignalsListByStatus,
 } from './services/sia';
+import { pick } from '../universal/helpers/utils';
+import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 
 export const router = express.Router();
 
@@ -62,10 +65,9 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
 router.use(
   BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE_URL, {
+  proxy(BFF_MS_API_BASE, {
     proxyReqPathResolver: function (req) {
-      // TODO: Verify if we need to add some path segment, maybe /api ?
-      return req.url;
+      return BFF_MS_API_BASE_PATH + req.url;
     },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
       // NOTE: Temporary
@@ -139,3 +141,32 @@ router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
 
   return res.send(siaResponse);
 });
+
+router.get(
+  BffEndpoints.LOODMETING_ATTACHMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchLoodMetingDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    if (
+      documentResponse.status === 'ERROR' ||
+      !documentResponse.content?.documentbody
+    ) {
+      return res.status(500);
+    }
+
+    res.type('application/pdf');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename="${documentResponse.content!.filename}.pdf"`
+    );
+    return res.send(
+      Buffer.from(documentResponse.content.documentbody, 'base64')
+    );
+  }
+);

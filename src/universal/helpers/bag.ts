@@ -1,4 +1,5 @@
 import { BAGSourceData } from '../types/bag';
+import { Adres } from '../types/brp';
 
 // Quick and dirty see also: https://stackoverflow.com/a/68401047
 export function extractAddress(rawAddress: string) {
@@ -32,7 +33,7 @@ export function getBagResult(
     return isWoonplaatsMatch && isAddressMatch;
   });
 
-  return result1;
+  return result1 ?? null;
 }
 
 export function getLatLonByAddress(
@@ -51,13 +52,21 @@ export function getLatLonByAddress(
   return null;
 }
 
-export function getBagSearchAddress(adres: {
-  straatnaam: string | null;
-  huisnummer: string | null;
-}): BAGSearchAddress {
-  return adres.straatnaam && adres.huisnummer
-    ? `${adres.straatnaam} ${adres.huisnummer || ''}`.trim()
-    : 'onbekend-adres';
+export function getBagSearchAddress(adres: Adres): BAGSearchAddress | null {
+  let bagZoekAdres =
+    adres.straatnaam && adres.huisnummer
+      ? `${adres.straatnaam} ${adres.huisnummer}`.trim()
+      : null;
+
+  if (bagZoekAdres && adres.huisnummertoevoeging) {
+    bagZoekAdres += adres.huisnummertoevoeging;
+  }
+
+  if (bagZoekAdres && adres.huisletter) {
+    bagZoekAdres += ` ${adres.huisletter}`;
+  }
+
+  return bagZoekAdres;
 }
 
 export function isLocatedInWeesp(address: string) {

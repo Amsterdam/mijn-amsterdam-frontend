@@ -23,6 +23,7 @@ import { fetchWpiNotifications } from './wpi';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchHorecaNotifications } from './horeca';
 import { fetchAVGNotifications } from './avg/avg';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -91,6 +92,7 @@ async function fetchServicesNotifications(
       maintenanceNotifications,
       subsidieNotificationsResult,
       toeristischeVerhuurNotificationsResult,
+      bodemNotificationResult,
     ] = await Promise.allSettled([
       fetchMilieuzoneNotifications(requestID, authProfileAndToken),
       fetchVergunningenNotifications(requestID, authProfileAndToken),
@@ -104,6 +106,7 @@ async function fetchServicesNotifications(
         new Date(),
         'commercial'
       ),
+      fetchLoodMetingNotifications(requestID, authProfileAndToken),
     ]);
 
     const milieuzoneNotifications = getSettledResult(
@@ -122,6 +125,8 @@ async function fetchServicesNotifications(
     );
     const horecaNotificaties = getSettledResult(horecaNotificationsResult);
 
+    const bodemNotificaties = getSettledResult(bodemNotificationResult);
+
     return getTipsAndNotificationsFromApiResults([
       milieuzoneNotifications,
       vergunningenNotifications,
@@ -130,6 +135,7 @@ async function fetchServicesNotifications(
       subsidieNotifications,
       maintenanceNotificationsResult,
       toeristischeVerhuurNotifications,
+      bodemNotificaties,
     ]);
   }
 
@@ -149,6 +155,7 @@ async function fetchServicesNotifications(
       klachtenNotificationsResult,
       horecaNotificationsResult,
       avgNotificationsResult,
+      bodemNotificationResult,
     ] = await Promise.allSettled([
       fetchBrpNotifications(requestID, authProfileAndToken),
       fetchBelastingNotifications(requestID, authProfileAndToken),
@@ -164,6 +171,7 @@ async function fetchServicesNotifications(
       fetchKlachtenNotifications(requestID, authProfileAndToken),
       fetchHorecaNotifications(requestID, authProfileAndToken),
       fetchAVGNotifications(requestID, authProfileAndToken),
+      fetchLoodMetingNotifications(requestID, authProfileAndToken),
     ]);
 
     const brpNotifications = getSettledResult(brpNotificationsResult);
@@ -192,6 +200,7 @@ async function fetchServicesNotifications(
     const klachtenNotifications = getSettledResult(klachtenNotificationsResult);
     const horecaNotificaties = getSettledResult(horecaNotificationsResult);
     const avgNotificaties = getSettledResult(avgNotificationsResult);
+    const bodemNotificaties = getSettledResult(bodemNotificationResult);
 
     return getTipsAndNotificationsFromApiResults([
       brpNotifications,
@@ -208,6 +217,7 @@ async function fetchServicesNotifications(
       klachtenNotifications,
       horecaNotificaties,
       avgNotificaties,
+      bodemNotificaties,
     ]);
   }
 

@@ -251,6 +251,12 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
   },
+  LOOD_365: {
+    url: `${process.env.BFF_LOOD_API_URL}`,
+    method: 'GET',
+    // TODO: Might need a token here.
+    postponeFetch: !FeatureToggle.bodemActive,
+  },
 };
 
 export const envDebug = Object.fromEntries(
@@ -286,6 +292,7 @@ export const RelayPathsAllowed = {
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
+  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
 };
 
 export const AUTH_BASE = '/api/v1/auth';
@@ -364,6 +371,7 @@ export const BffEndpoints = {
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/status/health',
   STATUS_ENV: '/status/env',
+  LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [

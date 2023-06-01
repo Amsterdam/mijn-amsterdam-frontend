@@ -39,3 +39,4 @@ process.env.BFF_KREFIA_API_BASE_URL = 'http://localhost/remote/api';
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = 'http://localhost';
 process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = 'http://localhost/token';
+process.env.BFF_LOOD_API_URL = 'http://localhost';

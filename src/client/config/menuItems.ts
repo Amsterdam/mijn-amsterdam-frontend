@@ -171,6 +171,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: generatePath(AppRoutes.AVG, { page: 1 }),
     profileTypes: ['private', 'private-commercial'],
   },
+  {
+    title: ChapterTitles.BODEM,
+    id: Chapters.BODEM,
+    to: AppRoutes.BODEM,
+    profileTypes: ['private', 'private-commercial', 'commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {

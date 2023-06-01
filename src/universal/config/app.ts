@@ -1,4 +1,4 @@
-import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from './env';
+import { getOtapEnvItem, IS_TAP, IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -19,10 +19,9 @@ export const FeatureToggle = {
   sportDatasetsActive: true,
   wiorDatasetActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
-  irmaActive: !IS_AP,
-  siaActive: !IS_PRODUCTION,
-  siaApiActive: !IS_PRODUCTION,
-  yiviActive: !IS_PRODUCTION,
+  siaActive: true,
+  siaApiActive: true,
+  yiviActive: true,
   aktesActive: false,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
@@ -41,6 +40,7 @@ export const FeatureToggle = {
   avgActive: !IS_PRODUCTION,
   svwiLinkActive: !IS_PRODUCTION,
   ehKetenmachtigingActive: !IS_PRODUCTION,
+  bodemActive: !IS_TAP,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';

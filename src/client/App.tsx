@@ -108,9 +108,13 @@ const AVG = lazy(() => import('./pages/AVG/AVG'));
 const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
 const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 
+const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
+const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
+
 function AppNotAuthenticated() {
   useDeeplinkEntry();
   usePageChange(false);
+  useUsabilla();
 
   return (
     <>
@@ -155,6 +159,8 @@ function AppAuthenticated() {
   const history = useHistory();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
+
+  useUsabilla(profileType);
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
@@ -313,6 +319,15 @@ function AppAuthenticated() {
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes.AVG} component={AVG} />
           )}
+          {FeatureToggle.bodemActive && (
+            <Route path={AppRoutes.BODEM} component={Bodem} />
+          )}
+          {FeatureToggle.bodemActive && (
+            <Route
+              path={AppRoutes['BODEM/LOOD_METING']}
+              component={LoodMeting}
+            />
+          )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
@@ -348,7 +363,6 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
-  useUsabilla();
 
   return (
     <RecoilRoot>
