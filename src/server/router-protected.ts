@@ -1,9 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import {
+  BFF_MS_API_BASE_URL,
   BffEndpoints,
-  BFF_MS_API_BASE,
-  BFF_MS_API_BASE_PATH,
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { getAuth, isProtectedRoute } from './helpers/app';
@@ -16,7 +15,6 @@ import {
 import {
   fetchSignalAttachments,
   fetchSignalHistory,
-  fetchSignals,
   fetchSignalsListByStatus,
 } from './services/sia';
 import { pick } from '../universal/helpers/utils';
@@ -65,9 +63,9 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
 router.use(
   BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE, {
+  proxy(BFF_MS_API_BASE_URL, {
     proxyReqPathResolver: function (req) {
-      return BFF_MS_API_BASE_PATH + req.url;
+      return req.url;
     },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
       // NOTE: Temporary

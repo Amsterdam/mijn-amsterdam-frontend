@@ -23,6 +23,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends dialog \
   && apt-get update \
   && apt-get install -y --no-install-recommends openssh-server \
+  && apt-get install -y --no-install-recommends nano \
   && echo "$SSH_PASSWD" | chpasswd 
 
 COPY package-lock.json /build-space/
