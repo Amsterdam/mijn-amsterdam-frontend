@@ -15,6 +15,8 @@ import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
+import LOODMETINGEN from './json/loodmetingen.json';
+import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
 import SIA from './json/sia-meldingen.json';
@@ -314,4 +316,17 @@ export const mockDataConfig: MockDataConfig = {
       },
     },
   ],
+  [`${ApiUrls.LOOD_365}/be_getrequestdetails`]: {
+    status: () => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson(LOODMETINGEN);
+    },
+  },
+  [`${ApiUrls.LOOD_365}/be_downloadleadreport`]: {
+    status: () => 200,
+    method: 'post',
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson(LOODMETING_RAPPORT);
+    },
+  },
 };

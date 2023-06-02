@@ -57,3 +57,4 @@ export { ReactComponent as IconHoreca } from './iconHoreca.svg';
 export { ReactComponent as IconSiaMeldingen } from './siameldingen.svg';
 export { ReactComponent as ThumbsUp } from './thumbs_up.svg';
 export { ReactComponent as ThumbsDown } from './thumbs_down.svg';
+export { ReactComponent as IconBodem } from './icon_bodem.svg';

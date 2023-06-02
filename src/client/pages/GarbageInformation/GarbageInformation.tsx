@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import {
@@ -32,6 +33,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { ButtonBody, buttonStyle } from '../../components/Button/Button';
 import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -47,20 +49,45 @@ interface InstructionCTAProps {
   fraction: GarbageFractionInformationTransformed;
 }
 
+function ButtonLink({
+  children,
+  href,
+  external,
+}: {
+  children: any;
+  href: string;
+  external: boolean;
+}) {
+  const relProp = external ? { rel: 'external noopener noreferrer' } : null;
+  return (
+    <a
+      className={buttonStyle({
+        variant: 'secondary',
+        className: classNames(styles.ProfileLink, styles.LogoutLink),
+      })}
+      href={href}
+      {...relProp}
+    >
+      <ButtonBody>{children}</ButtonBody>
+    </a>
+  );
+}
+
 function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <Linkd
-          href={fraction.instructieCTA.to}
-          external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
-        >
-          {fraction.instructieCTA.title}
-        </Linkd>
+        <p>
+          <ButtonLink
+            href={fraction.instructieCTA.to}
+            external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
+          >
+            {fraction.instructieCTA.title}
+          </ButtonLink>
+        </p>
         {fraction.instructie ? (
           <>
-            <br />
-            <InnerHtml>{fraction.instructie}</InnerHtml>
+            <InnerHtml el="p">{fraction.instructie}</InnerHtml>
           </>
         ) : null}
       </>

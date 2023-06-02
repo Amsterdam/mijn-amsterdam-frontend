@@ -36,6 +36,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     BEZWAREN,
     HORECA,
     AVG,
+    BODEM,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -174,6 +175,13 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         !isLoading(AVG) &&
         !!AVG?.content?.verzoeken?.length &&
         FeatureToggle.avgActive
+      );
+
+    case Chapters.BODEM:
+      return (
+        !isLoading(BODEM) &&
+        !!BODEM?.content?.metingen?.length &&
+        FeatureToggle.bodemActive
       );
   }
 

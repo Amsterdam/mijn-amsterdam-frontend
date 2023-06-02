@@ -20,6 +20,7 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { pick } from '../universal/helpers/utils';
+import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 
 export const router = express.Router();
 
@@ -140,3 +141,32 @@ router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
 
   return res.send(siaResponse);
 });
+
+router.get(
+  BffEndpoints.LOODMETING_ATTACHMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchLoodMetingDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    if (
+      documentResponse.status === 'ERROR' ||
+      !documentResponse.content?.documentbody
+    ) {
+      return res.status(500);
+    }
+
+    res.type('application/pdf');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename="${documentResponse.content!.filename}.pdf"`
+    );
+    return res.send(
+      Buffer.from(documentResponse.content.documentbody, 'base64')
+    );
+  }
+);

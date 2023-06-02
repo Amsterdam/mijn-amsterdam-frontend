@@ -6,7 +6,6 @@ import {
   getLatLonByAddress,
 } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
-import { BAGSourceData } from '../../universal/types/bag';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
@@ -15,27 +14,6 @@ export interface BAGData {
   latlng: LatLngLiteral | null;
   address?: Adres | null;
   bagNummeraanduidingId?: string | null;
-}
-
-export function formatBAGData(
-  responseData: BAGSourceData,
-  BRPaddress: Adres,
-  searchAddress: string,
-  isWeesp: boolean
-): BAGData {
-  const latlng = getLatLonByAddress(
-    responseData?.results,
-    searchAddress,
-    isWeesp
-  );
-
-  const bagResult = getBagResult(responseData?.results, searchAddress, isWeesp);
-
-  return {
-    latlng,
-    address: BRPaddress,
-    bagNummeraanduidingId: bagResult?.landelijk_id,
-  };
 }
 
 export async function fetchBAG(
