@@ -21,7 +21,7 @@ const PiwikTrackerConfig: UserOptions = {
   siteId,
 };
 
-// See dimension Ids specified on https://analytics.data.amsterdam.nl/
+// See dimension Ids specified in aansluitgids MIJN-5416
 enum CustomDimensionId {
   ProfileType = 'user_type',
   City = 'user_city',
