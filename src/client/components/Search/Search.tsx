@@ -6,10 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
-import {
-  trackEventWithCustomDimension,
-  trackSearch,
-} from '../../hooks/analytics.hook';
+import { trackSearch } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
@@ -161,26 +158,10 @@ export function Search({
 
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
-  const trackSearchBarEvent = useCallback(
-    (action: string) =>
-      trackEventWithCustomDimension(
-        {
-          category: 'Zoeken',
-          name: `${searchCategory} interactie`,
-          action,
-        },
-        profileType
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profileType]
-  );
-
   const trackSearchDebounced = useDebouncedCallback(
-    (term: string, category: string = 'Keyword input (typing)') => {
+    (term: string, count: number) => {
       if (term) {
-        trackSearch(term, category);
-      } else {
-        trackSearchBarEvent('Verwijder term');
+        trackSearch(term, 0);
       }
     },
     2000
@@ -202,18 +183,17 @@ export function Search({
         if (isResultsVisible && term) {
           searchBarRef.current?.focus();
           setResultsVisible(false);
-          trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
           onFinish('Escape toets');
         }
       }
     },
-    [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
+    [typeAhead, isResultsVisible, onFinish, term]
   );
 
   const onClickResult = useCallback(
     (result: SearchEntry) => {
-      trackSearchBarEvent('Click result');
+      // trackSearchBarEvent('Click result'); // Replace with trackSiteSearchResultClick
       setResultsVisible(false);
       onFinish('Click result');
 
@@ -228,13 +208,7 @@ export function Search({
         }
       }
     },
-    [
-      replaceResultUrl,
-      history,
-      trackSearchBarEvent,
-      setResultsVisible,
-      onFinish,
-    ]
+    [replaceResultUrl, history, setResultsVisible, onFinish]
   );
 
   useKeyDown(keyHandler);
@@ -293,12 +267,11 @@ export function Search({
           onSubmit={(e) => {
             e.preventDefault();
             if (term) {
-              trackSearchBarEvent('Submit search');
               history.push(
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
-              trackSearch(term, searchCategory);
+              trackSearch(term, 0);
             }
           }}
         >
@@ -322,7 +295,7 @@ export function Search({
               setResultsVisible(true);
               const term = e.target.value;
               setTermDebounced(term);
-              trackSearchDebounced(term);
+              trackSearchDebounced(term, 0);
             }}
           />
 

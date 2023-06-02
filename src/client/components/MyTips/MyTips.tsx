@@ -106,7 +106,11 @@ const Tip = ({ tip, profileType }: TipProps) => {
           href={tip.link.to}
           external={isExternal}
           onClick={() => {
-            trackItemClick(clickCategory, tipTitle(tip.title), profileType);
+            trackItemClick(
+              tip.link.to,
+              `${clickCategory} - ${tipTitle(tip.title)}`,
+              profileType
+            );
             if (isExternal) {
               trackLink(tip.link.to, tip.link.title);
             }

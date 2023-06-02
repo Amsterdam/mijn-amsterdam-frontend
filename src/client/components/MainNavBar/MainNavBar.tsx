@@ -148,12 +148,8 @@ export default function MainNavBar({
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const profileType = useProfileTypeValue();
-  const {
-    isSearchActive,
-    setSearchActive,
-    trackSearchBarEvent,
-    isDisplayLiveSearch,
-  } = useSearchOnPage();
+  const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
+    useSearchOnPage();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -283,11 +279,6 @@ export default function MainNavBar({
               className={styles.SearchButton}
               onClick={() => {
                 setSearchActive(!isSearchActive);
-                trackSearchBarEvent(
-                  `${
-                    !isSearchActive === false ? 'Sluiten' : 'Openen'
-                  } met button`
-                );
               }}
               icon={isSearchActive ? IconClose : IconSearch}
             />
@@ -300,11 +291,8 @@ export default function MainNavBar({
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
-                onFinish={(reason) => {
+                onFinish={() => {
                   setSearchActive(false);
-                  if (reason) {
-                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                  }
                 }}
                 replaceResultUrl={replaceResultUrl}
               />

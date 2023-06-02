@@ -183,7 +183,7 @@ export default function Linkd({
   let clickHandler = onClick;
 
   if (!!href && external && !clickHandler) {
-    clickHandler = () => trackLink(href, '');
+    clickHandler = () => trackLink(href, otherProps.title ?? '');
   }
 
   return (
