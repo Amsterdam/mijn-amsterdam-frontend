@@ -22,8 +22,7 @@ ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends dialog \
   && apt-get update \
-  && apt-get install -y --no-install-recommends openssh-server \
-  && apt-get install -y --no-install-recommends nano \
+  && apt-get install -y --no-install-recommends openssh-server nano inetutils-traceroute \
   && echo "$SSH_PASSWD" | chpasswd 
 
 COPY package-lock.json /build-space/
