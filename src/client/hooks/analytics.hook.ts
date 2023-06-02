@@ -3,7 +3,6 @@ import { useDebouncedCallback } from 'use-debounce';
 import PiwikTracker from '@amsterdam/piwik-tracker';
 import {
   CustomDimension,
-  TrackEventParams,
   TrackPageViewParams,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
@@ -13,8 +12,8 @@ import { useSessionStorage } from './storage.hook';
 
 let PiwikInstance: PiwikTracker;
 
-const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as number;
-const hasSiteId = siteId !== -1 && !!siteId;
+const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as string;
+const hasSiteId = !!siteId;
 
 const PiwikTrackerConfig: UserOptions = {
   urlBase: getOtapEnvItem('analyticsUrlBase') || '',
@@ -42,34 +41,30 @@ export function useAnalytics(isEnabled: boolean = true) {
   }
 }
 
-export function trackEvent(payload: TrackEventParams) {
-  return PiwikInstance && PiwikInstance.trackEvent(payload);
-}
+// export function trackEvent(payload: TrackEventParams) {
+//   return PiwikInstance && PiwikInstance.trackEvent(payload);
+// }
 
 export function trackSearch(keyword: string, category: string) {
   const payload = { keyword, category };
   return PiwikInstance && PiwikInstance.trackSiteSearch(payload);
 }
 
-export function trackEventWithCustomDimension(
-  payload: TrackEventParams,
-  profileType: ProfileType
-) {
-  const payloadFinal = {
-    ...payload,
-    customDimensions: [
-      ...((payload.customDimensions as CustomDimension[]) || []),
-      profileTypeDimension(profileType),
-    ],
-  };
-  return PiwikInstance && PiwikInstance.trackEvent(payloadFinal);
-}
+// export function trackEventWithCustomDimension(
+//   payload: TrackEventParams,
+//   profileType: ProfileType
+// ) {
+//   const payloadFinal = {
+//     ...payload,
+//     customDimensions: [
+//       ...((payload.customDimensions as CustomDimension[]) || []),
+//       profileTypeDimension(profileType),
+//     ],
+//   };
+//   return PiwikInstance && PiwikInstance.trackEvent(payloadFinal);
+// }
 
-function _trackPageView(
-  title?: string,
-  url?: string,
-  customDimensions?: CustomDimension[]
-) {
+function _trackPageView(url?: string, customDimensions?: CustomDimension[]) {
   let href = url || document.location.href;
 
   if (IS_AP && !href.startsWith('http')) {
@@ -77,7 +72,6 @@ function _trackPageView(
   }
 
   const payload: TrackPageViewParams = {
-    documentTitle: title || document.title,
     href,
     customDimensions,
   };
@@ -100,15 +94,15 @@ export function trackPageViewWithCustomDimension(
   if (userCity) {
     dimensions.push(userCityDimension(userCity));
   }
-  return trackPageView(title, url, dimensions);
+  return trackPageView(url, dimensions);
 }
 
-export function trackLink(url: string) {
+export function trackLink(url: string, linkTitle: string) {
   return (
     PiwikInstance &&
     PiwikInstance.trackLink({
       href: url,
-      linkType: 'link',
+      linkTitle,
     })
   );
 }

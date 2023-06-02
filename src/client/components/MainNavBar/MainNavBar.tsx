@@ -10,7 +10,6 @@ import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
@@ -47,16 +46,9 @@ export interface MainNavLinkProps {
 
 export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
-  const persoon = BRP.content?.persoon || null;
-  const hasFirstName = !!(persoon && persoon.voornamen);
+
   const isDesktopScreen = useDesktopScreen();
   const profileType = useProfileTypeValue();
-
-  useEffect(() => {
-    if (hasFirstName) {
-      trackItemPresentation('Mijn gegevens', 'Link naar Profiel', profileType);
-    }
-  }, [hasFirstName, profileType]);
 
   return (
     <div className={styles.secondaryLinks}>

@@ -6,11 +6,7 @@ import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 import { usePhoneScreen } from '../../hooks';
-import {
-  trackItemClick,
-  trackItemPresentation,
-  trackLink,
-} from '../../hooks/analytics.hook';
+import { trackItemClick, trackLink } from '../../hooks/analytics.hook';
 import { useOptIn } from '../../hooks/useOptIn';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
@@ -112,7 +108,7 @@ const Tip = ({ tip, profileType }: TipProps) => {
           onClick={() => {
             trackItemClick(clickCategory, tipTitle(tip.title), profileType);
             if (isExternal) {
-              trackLink(tip.link.to);
+              trackLink(tip.link.to, tip.link.title);
             }
           }}
         >
@@ -211,18 +207,6 @@ export default function MyTips({
 }: MyTipsProps) {
   const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
-
-  useEffect(() => {
-    if (items.length) {
-      items.forEach((tip) => {
-        trackItemPresentation(
-          tipTrackingCategory('Tonen', tip.isPersonalized),
-          tipTitle(tip.title),
-          profileType
-        );
-      });
-    }
-  }, [items, profileType]);
 
   return (
     <div
