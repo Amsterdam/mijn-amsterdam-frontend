@@ -1,3 +1,18 @@
+trigger:
+  branches:
+    include:
+      - ontwikkelen
+      - testen
+  paths:
+    include:
+      - src/server
+      - src/universal
+
+pr:
+  branches:
+    include:
+      - main
+
 resources:
   repositories:
     - repository: MamsInfra
@@ -28,13 +43,6 @@ parameters:
     type: boolean
     default: false
 
-  - name: btdAppBFF
-    type: boolean
-    default: true
-  - name: btdAppUI
-    type: boolean
-    default: true
-
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
@@ -42,6 +50,6 @@ jobs:
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
       btdDeploy: ${{ parameters.btdDeploy }}
-      btdAppBFF: ${{ parameters.btdAppBFF }}
-      btdAppUI: ${{ parameters.btdAppUI }}
+      btdAppBFF: true
+      btdAppUI: false
       updateAppSettings: ${{ parameters.updateAppSettings }}
