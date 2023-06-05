@@ -35,7 +35,7 @@ export const FeatureToggle = {
   bekendmakingenDatasetActive: true,
   evenementenDatasetActive: false,
   klachtenActive: true,
-  bezwarenActive: !IS_AP,
+  bezwarenActive: !IS_PRODUCTION,
   horecaActive: !IS_PRODUCTION,
   avgActive: !IS_PRODUCTION,
   svwiLinkActive: !IS_PRODUCTION,
