@@ -10,13 +10,6 @@ ENV CI=true
 
 WORKDIR /build-space
 
-# Copy certificate
-COPY ca/* /usr/local/share/ca-certificates/extras/
-
-# Update new cert
-RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
-  && update-ca-certificates
-
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
@@ -25,24 +18,32 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends openssh-server nano inetutils-traceroute \
   && echo "$SSH_PASSWD" | chpasswd 
 
+# Copy certificate
+COPY ca/* /usr/local/share/ca-certificates/extras/
+
+# Update new cert
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
+
+# Copy packages + Install
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
 
 RUN npm ci --prefer-offline --no-audit --progress=false
+
+# SSH config
 COPY conf/sshd_config /etc/ssh/
 
-COPY .prettierrc.json /build-space/
-
-COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
-RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
-
+# Typescript configs
 COPY tsconfig.json /build-space/
 COPY tsconfig.bff.json /build-space/
 
-# Front-end env files
-COPY .env.production /build-space/
+# Entrypoint
+COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
-COPY src/react-app-env.d.ts /build-space/src/react-app-env.d.ts
+# Copy source files
+COPY .env.production /build-space/
 COPY src /build-space/src
 
 ########################################################################################################################
