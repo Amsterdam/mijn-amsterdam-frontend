@@ -13,14 +13,9 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import {
-  fetchSignalAttachments,
-  fetchSignalHistory,
-  fetchSignals,
-  fetchSignalsListByStatus,
-} from './services/sia';
-import { pick } from '../universal/helpers/utils';
+import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
+import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 
 export const router = express.Router();
 
@@ -123,24 +118,24 @@ router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
   return res.send(attachmentsResponse);
 });
 
-router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
+router.get(
+  BffEndpoints.BEZWAREN_ATTACHMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
 
-  const siaResponse = await fetchSignalsListByStatus(
-    res.locals.requestID,
-    authProfileAndToken,
-    {
-      ...(pick(req.params, ['page', 'status']) as any),
-      pageSize: '20',
+    const documentResponse = await fetchBezwaarDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    if (documentResponse.status === 'ERROR') {
+      res.status(500);
     }
-  );
 
-  if (siaResponse.status === 'ERROR') {
-    res.status(500);
+    return res.send(documentResponse);
   }
-
-  return res.send(siaResponse);
-});
+);
 
 router.get(
   BffEndpoints.LOODMETING_ATTACHMENTS,

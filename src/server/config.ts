@@ -42,7 +42,7 @@ export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_PUBLIC_URL = `${
-  process.env.BFF_PUBLIC_URL || BFF_HOST + ':' + BFF_PORT
+  process.env.BFF_PUBLIC_URL || `http://${BFF_HOST}:${BFF_PORT}`
 }`;
 
 const BFF_MS_API_HOST = IS_PRODUCTION
@@ -117,7 +117,9 @@ export type SourceApiKey =
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
+  | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_STATUS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
@@ -162,18 +164,30 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
-    url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/zaken/_zoek`,
     method: 'POST',
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_DOCUMENT: {
+    url: `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
+    headers: {
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/zaakinformatieobjecten`,
     headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
+      'Content-Type': 'application/json',
+    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_STATUS: {
+    url: `${process.env.BFF_BEZWAREN_API}/statussen`,
+    headers: {
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.bezwarenActive,
@@ -316,6 +330,7 @@ export const RelayPathsAllowed = {
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
+  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
 
 export const AUTH_BASE = '/api/v1/auth';
@@ -347,6 +362,9 @@ export const BffEndpoints = {
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
   SIA_HISTORY: '/services/signals/:id/history',
   SIA_LIST: '/services/signals/:status/:page',
+
+  // Bezwaren
+  BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
 
   // start: OIDC config
   AUTH_BASE_DIGID,
