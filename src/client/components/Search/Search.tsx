@@ -6,7 +6,10 @@ import { AppRoutes } from '../../../universal/config';
 import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
-import { trackSearch } from '../../hooks/analytics.hook';
+import {
+  trackSearch,
+  trackSearchResultClick,
+} from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
@@ -21,17 +24,24 @@ import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
   results: SearchEntry[];
+  totalAmountOfResults: number;
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;
   term: string;
   extendedResults?: boolean;
   showIcon?: boolean;
-  onClickResult?: (result: SearchEntry) => void;
+  onClickResult?: (
+    result: SearchEntry,
+    resultNumber: number,
+    amountOfResults: number,
+    amountOfResultsShown: number
+  ) => void;
 }
 
 export function ResultSet({
   results,
+  totalAmountOfResults,
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
@@ -41,10 +51,19 @@ export function ResultSet({
   onClickResult: onClickResultCallback,
 }: ResultSetProps) {
   const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      onClickResultCallback?.(result);
+    (
+      result: SearchEntry,
+      resultNumber: number,
+      amountOfResultsShown: number
+    ) => {
+      onClickResultCallback?.(
+        result,
+        resultNumber,
+        totalAmountOfResults,
+        amountOfResultsShown
+      );
     },
-    [onClickResultCallback]
+    [onClickResultCallback, totalAmountOfResults]
   );
 
   return (
@@ -78,7 +97,7 @@ export function ResultSet({
                 className={styles.ResultSetLink}
                 onClick={(event) => {
                   event.preventDefault();
-                  onClickResult(result);
+                  onClickResult(result, index + 1, results.length);
                 }}
               >
                 {typeof result.displayTitle === 'function'
@@ -161,7 +180,7 @@ export function Search({
   const trackSearchDebounced = useDebouncedCallback(
     (term: string, count: number) => {
       if (term) {
-        trackSearch(term, 0);
+        trackSearch(term, count, searchCategory, profileType);
       }
     },
     2000
@@ -192,8 +211,27 @@ export function Search({
   );
 
   const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      // trackSearchBarEvent('Click result'); // Replace with trackSiteSearchResultClick
+    (
+      result: SearchEntry,
+      resultNumber: number,
+      amountOfResults: number,
+      amountOfResultsShown: number
+    ) => {
+      trackSearchResultClick({
+        keyword: term,
+        searchResult: {
+          position: resultNumber,
+          title:
+            typeof result.displayTitle === 'function'
+              ? result.description
+              : result.displayTitle,
+          type: '',
+          url: result.url,
+        },
+        amountOfResults,
+        amountOfResultsShown,
+        type: 'manueel',
+      });
       setResultsVisible(false);
       onFinish('Click result');
 
@@ -208,7 +246,7 @@ export function Search({
         }
       }
     },
-    [replaceResultUrl, history, setResultsVisible, onFinish]
+    [replaceResultUrl, history, setResultsVisible, onFinish, term]
   );
 
   useKeyDown(keyHandler);
@@ -271,7 +309,7 @@ export function Search({
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
-              trackSearch(term, 0);
+              trackSearch(term, 0, searchCategory, profileType);
             }
           }}
         >
@@ -315,6 +353,7 @@ export function Search({
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+              totalAmountOfResults={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
               onClickResult={onClickResult}
@@ -332,6 +371,12 @@ export function Search({
                 results?.am?.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
+              }
+              totalAmountOfResults={
+                results?.am?.state === 'hasValue' &&
+                results?.am?.contents !== null
+                  ? results.am.contents.length
+                  : 0
               }
             />
 

@@ -4,6 +4,7 @@ import {
   CustomDimension,
   TrackPageViewParams,
   TrackSiteSearchParams,
+  TrackSiteSearchResultClick,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
 import { getOtapEnvItem } from '../../universal/config';
@@ -40,29 +41,40 @@ export function useAnalytics(isEnabled: boolean = true) {
   }
 }
 
-export function trackSearch(keyword: string, count: number) {
+export function trackSearch(
+  keyword: string,
+  count: number,
+  searchMachine: string,
+  profileType: ProfileType
+) {
   const payload: TrackSiteSearchParams = {
     keyword,
     count,
     type: 'manueel',
-    searchMachine: 'mainSearch',
+    searchMachine,
+    customDimensions: [profileTypeDimension(profileType)],
   };
   return PiwikInstance && PiwikInstance.trackSiteSearch(payload);
 }
 
-// export function trackEventWithCustomDimension(
-//   payload: TrackEventParams,
-//   profileType: ProfileType
-// ) {
-//   const payloadFinal = {
-//     ...payload,
-//     customDimensions: [
-//       ...((payload.customDimensions as CustomDimension[]) || []),
-//       profileTypeDimension(profileType),
-//     ],
-//   };
-//   return PiwikInstance && PiwikInstance.trackEvent(payloadFinal);
-// }
+export function trackSearchResultClick({
+  keyword,
+  searchResult,
+  amountOfResults,
+  amountOfResultsShown,
+  type,
+}: TrackSiteSearchResultClick) {
+  return (
+    PiwikInstance &&
+    PiwikInstance.trackSiteSearchResultClick({
+      keyword,
+      searchResult,
+      amountOfResults,
+      amountOfResultsShown,
+      type,
+    })
+  );
+}
 
 function _trackPageView(url?: string, customDimensions?: CustomDimension[]) {
   let href = url || document.location.href;
