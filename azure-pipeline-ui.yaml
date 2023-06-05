@@ -1,0 +1,61 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - ontwikkelen
+      - testen
+  paths:
+    include:
+      - src/client
+      - src/universal
+      - src/index.tsx
+      - public
+      - Dockerfile
+      - package.json
+      - package-lock.json
+
+pr:
+  branches:
+    include:
+      - main
+
+resources:
+  repositories:
+    - repository: MamsInfra
+      type: git
+      name: MijnAmsterdam/mijn-amsterdam-infra
+      ref: refs/heads/pipeline-fe
+
+variables:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
+      - name: dtapName
+        value: o
+  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+      - name: dtapName
+        value: t
+
+parameters:
+  - name: btdBuild
+    type: boolean
+    default: true
+  - name: btdTest
+    type: boolean
+    default: true
+  - name: btdDeploy
+    type: boolean
+    default: true
+
+  - name: updateAppSettings
+    type: boolean
+    default: false
+
+jobs:
+  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
+    parameters:
+      dtapName: ${{ variables.dtapName }}
+      btdBuild: ${{ parameters.btdBuild }}
+      btdTest: ${{ parameters.btdTest }}
+      btdDeploy: ${{ parameters.btdDeploy }}
+      btdAppBFF: false
+      btdAppUI: true
+      updateAppSettings: ${{ parameters.updateAppSettings }}
