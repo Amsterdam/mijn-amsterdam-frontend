@@ -65,11 +65,11 @@ Sentry.init(sentryOptions);
 const app = express();
 const viewDir = __dirname.split('/').slice(-2, -1);
 
+// Set-up view engine voor SSR
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
 // set up rate limiter: maximum of five requests per minute
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -80,11 +80,11 @@ const limiter = rateLimit({
 // apply rate limiter to all requests
 app.use(limiter);
 
+// Request logging
 morgan.token('build', function (req, res) {
   return `bff-${process.env.BFF_ADO_BUILD_ID ?? 'latest'}`;
 });
 
-// Logging
 app.use(
   morgan(
     '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
