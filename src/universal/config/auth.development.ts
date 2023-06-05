@@ -3,7 +3,9 @@ export const DEV_USER_ID_DEFAULT =
 
 // accounts in  a string: foo=1234,bar=8098
 export const testAccounts = (
-  process.env.REACT_APP_TEST_ACCOUNTS || `dev=${DEV_USER_ID_DEFAULT}`
+  process.env.BFF_TEST_ACCOUNTS ||
+  process.env.REACT_APP_TEST_ACCOUNTS ||
+  `dev=${DEV_USER_ID_DEFAULT}`
 )
   .split(',')
   .reduce((acc, value) => {
