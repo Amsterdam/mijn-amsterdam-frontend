@@ -1,4 +1,5 @@
 trigger:
+  batch: true
   branches:
     include:
       - ontwikkelen
@@ -7,6 +8,10 @@ trigger:
     include:
       - src/server
       - src/universal
+      - src/bffserver.ts
+      - Dockerfile
+      - package.json
+      - package-lock.json
 
 pr:
   branches:
