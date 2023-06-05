@@ -33,6 +33,8 @@ export const BFF_REQUEST_CACHE_ENABLED =
     ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
     : true;
 
+export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.npm_package_version}`;
+
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';

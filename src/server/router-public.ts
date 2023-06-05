@@ -7,7 +7,7 @@ import {
   getDatasetCategoryId,
 } from '../universal/config';
 import { ApiResponse, apiSuccessResult, jsonCopy } from '../universal/helpers';
-import { BffEndpoints } from './config';
+import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import {
@@ -166,13 +166,10 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
 router.get(
   BffEndpoints.STATUS_HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
-    const release = `mijnamsterdam-bff@${
-      process.env.npm_package_version ?? 'latest-unknown'
-    }`;
     return res.json({
       status: 'OK',
       otapEnv: OTAP_ENV,
-      release,
+      release: RELEASE_VERSION,
       gitSha: process.env.BFF_GIT_SHA ?? 'unknown',
       buildId: process.env.BFF_ADO_BUILD_ID ?? '0',
     });

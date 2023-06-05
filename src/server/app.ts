@@ -36,6 +36,7 @@ import {
   BFF_PORT,
   corsOptions,
   securityHeaders,
+  RELEASE_VERSION,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
@@ -56,7 +57,7 @@ const sentryOptions: Sentry.NodeOptions = {
     }
     return event;
   },
-  release: `mijnamsterdam-bff@${process.env.npm_package_version}`,
+  release: RELEASE_VERSION,
 };
 
 Sentry.init(sentryOptions);
