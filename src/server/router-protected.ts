@@ -13,11 +13,7 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import {
-  fetchSignalAttachments,
-  fetchSignalHistory,
-  fetchSignalsListByStatus,
-} from './services/sia';
+import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 
@@ -122,25 +118,6 @@ router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
   return res.send(attachmentsResponse);
 });
 
-router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
-
-  const siaResponse = await fetchSignalsListByStatus(
-    res.locals.requestID,
-    authProfileAndToken,
-    {
-      ...(pick(req.params, ['page', 'status']) as any),
-      pageSize: '20',
-    }
-  );
-
-  if (siaResponse.status === 'ERROR') {
-    res.status(500);
-  }
-
-  return res.send(siaResponse);
-});
-
 router.get(
   BffEndpoints.BEZWAREN_ATTACHMENTS,
   async (req: Request, res: Response) => {
@@ -156,7 +133,7 @@ router.get(
       res.status(500);
     }
 
-    return res.send(documentResponse.content);
+    return res.send(documentResponse);
   }
 );
 
