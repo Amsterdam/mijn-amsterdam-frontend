@@ -1,16 +1,12 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { ChapterMenuItem } from '../../config/menuItems';
-import {
-  trackItemPresentation,
-  useSessionCallbackOnceDebounced,
-} from '../../hooks/analytics.hook';
+
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import styles from './MyChaptersPanel.module.scss';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { IconInfo } from '../../assets/icons';
 import Linkd from '../Button/Button';
 
@@ -26,20 +22,7 @@ export default function MyChaptersPanel({
   title,
   items = [],
   isLoading = true,
-  trackCategory,
 }: MyChaptersPanelProps) {
-  const profileType = useProfileTypeValue();
-  // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B started request with data returned from B.
-  useSessionCallbackOnceDebounced(trackCategory, () => {
-    items.forEach(({ id }) => {
-      trackItemPresentation(
-        trackCategory,
-        `Thema ${ChapterTitles[id] || id}`,
-        profileType
-      );
-    });
-  });
-
   return (
     <Panel className={styles.MyChaptersPanel}>
       <div className={styles.Header}>

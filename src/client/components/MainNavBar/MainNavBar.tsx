@@ -10,7 +10,6 @@ import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
@@ -47,16 +46,9 @@ export interface MainNavLinkProps {
 
 export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
-  const persoon = BRP.content?.persoon || null;
-  const hasFirstName = !!(persoon && persoon.voornamen);
+
   const isDesktopScreen = useDesktopScreen();
   const profileType = useProfileTypeValue();
-
-  useEffect(() => {
-    if (hasFirstName) {
-      trackItemPresentation('Mijn gegevens', 'Link naar Profiel', profileType);
-    }
-  }, [hasFirstName, profileType]);
 
   return (
     <div className={styles.secondaryLinks}>
@@ -156,12 +148,8 @@ export default function MainNavBar({
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const profileType = useProfileTypeValue();
-  const {
-    isSearchActive,
-    setSearchActive,
-    trackSearchBarEvent,
-    isDisplayLiveSearch,
-  } = useSearchOnPage();
+  const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
+    useSearchOnPage();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -291,11 +279,6 @@ export default function MainNavBar({
               className={styles.SearchButton}
               onClick={() => {
                 setSearchActive(!isSearchActive);
-                trackSearchBarEvent(
-                  `${
-                    !isSearchActive === false ? 'Sluiten' : 'Openen'
-                  } met button`
-                );
               }}
               icon={isSearchActive ? IconClose : IconSearch}
             />
@@ -308,11 +291,8 @@ export default function MainNavBar({
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
-                onFinish={(reason) => {
+                onFinish={() => {
                   setSearchActive(false);
-                  if (reason) {
-                    trackSearchBarEvent(`Automatisch sluiten (${reason})`);
-                  }
                 }}
                 replaceResultUrl={replaceResultUrl}
               />

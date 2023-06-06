@@ -33,7 +33,7 @@ export function MainNavSubmenuLink({
       href={to}
       onClick={(event: MouseEvent<HTMLAnchorElement>) => {
         onClick && onClick(event);
-        trackLink(to);
+        trackLink(to, title);
       }}
       rel={rel}
       className={classnames(styles.MainNavSubmenuLink, className)}

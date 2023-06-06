@@ -23,20 +23,11 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
   HOOD_ZOOM,
-  MY_AREA_TRACKING_CATEGORY,
 } from '../../../universal/config/myarea-datasets';
-import {
-  capitalizeFirstLetter,
-  getFullAddress,
-} from '../../../universal/helpers';
+import { getFullAddress } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import {
-  trackEventWithCustomDimension,
-  useAppStateGetter,
-  useAppStateReady,
-} from '../../hooks';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useAppStateGetter, useAppStateReady } from '../../hooks';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
 import * as Sentry from '@sentry/react';
@@ -214,7 +205,7 @@ export function useSelectedFeatureCSS(
 
 export function useOnMarkerClick() {
   const [, setLoadingFeature] = useLoadingFeature();
-  const profileType = useProfileTypeValue();
+
   return useCallback(
     (event: LeafletEvent) => {
       const isCluster =
@@ -227,14 +218,6 @@ export function useOnMarkerClick() {
           datasetId,
           id,
         });
-        trackEventWithCustomDimension(
-          {
-            category: MY_AREA_TRACKING_CATEGORY,
-            name: `${capitalizeFirstLetter(datasetId)} marker`,
-            action: 'Klikken',
-          },
-          profileType
-        );
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

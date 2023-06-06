@@ -145,8 +145,8 @@ const Notification = ({
                   external={isLinkExternal}
                   onClick={() => {
                     trackItemClick(
-                      trackCategory,
-                      notification.title,
+                      notification.link?.to || '#',
+                      `${trackCategory} - ${notification.title}`,
                       profileType
                     );
                     if (notification.customLink?.callback) {
