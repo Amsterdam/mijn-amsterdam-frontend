@@ -169,6 +169,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENT: {
@@ -176,6 +179,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
@@ -183,6 +189,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
@@ -190,6 +199,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
