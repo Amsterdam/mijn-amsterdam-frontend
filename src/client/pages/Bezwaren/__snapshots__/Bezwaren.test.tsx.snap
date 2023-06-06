@@ -1,0 +1,507 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bezwaren thema pagina Matches the Full Page snapshot when API gives no result 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Bezwaren"
+          class="ChapterIcon"
+          fill="black"
+        >
+          icon-bezwaren.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Bezwaren
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende bezwaren.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over Bezwaar maken
+        </a>
+      </p>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Ingediende bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <p
+              class="NoItemsMessage"
+            >
+              U heeft nog geen bezwaren ingediend.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Afgehandelde bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <p
+              class="NoItemsMessage"
+            >
+              U heeft nog geen afgehandelde bezwaren.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are no requests 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Bezwaren"
+          class="ChapterIcon"
+          fill="black"
+        >
+          icon-bezwaren.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Bezwaren
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende bezwaren.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over Bezwaar maken
+        </a>
+      </p>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Ingediende bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <p
+              class="NoItemsMessage"
+            >
+              U heeft nog geen bezwaren ingediend.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Afgehandelde bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <p
+              class="NoItemsMessage"
+            >
+              U heeft nog geen afgehandelde bezwaren.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are requests 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Bezwaren"
+          class="ChapterIcon"
+          fill="black"
+        >
+          icon-bezwaren.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Bezwaren
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Hier ziet u een overzicht van uw ingediende bezwaren.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over Bezwaar maken
+        </a>
+      </p>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Ingediende bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <table
+              class="Table DocumentsTable"
+            >
+              <thead>
+                <tr
+                  class="TableRow"
+                >
+                  <th
+                    class="DisplayProp"
+                  >
+                    Nummer
+                  </th>
+                  <th
+                    class="DisplayProp"
+                  >
+                    Ontvangstdatum
+                  </th>
+                  <th
+                    class="DisplayProp"
+                  >
+                    Onderwerp
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="TableRow"
+                >
+                  <td
+                    class="DisplayProp"
+                  >
+                    <span
+                      class="DisplayPropLabel"
+                    >
+                      Nummer:
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd"
+                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="Icon Icon__left"
+                        fill="#000"
+                        height="14px"
+                        width="14px"
+                      >
+                        Chevron-Right.svg
+                      </svg>
+                      BI.21.014121.001
+                    </a>
+                  </td>
+                  <td
+                    class="DisplayProp"
+                  >
+                    <span
+                      class="DisplayPropLabel"
+                    >
+                      Ontvangstdatum:
+                    </span>
+                    <span>
+                      2023-04-25
+                    </span>
+                  </td>
+                  <td
+                    class="DisplayProp"
+                  >
+                    <span
+                      class="DisplayPropLabel"
+                    >
+                      Onderwerp:
+                    </span>
+                    <span>
+                      Korte omschrijving van het bezwaar
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section
+        class="SectionCollapsible SectionCollapsibleFirst"
+      >
+        <h3
+          class="Heading Heading__mediumLarge Title TitleWithItems"
+        >
+          <button
+            aria-expanded="true"
+            class="TitleToggle"
+          >
+            <svg
+              aria-hidden="true"
+              class="CaretIcon"
+            >
+              Chevron-Right.svg
+            </svg>
+             Afgehandelde bezwaren
+          </button>
+        </h3>
+        <div
+          aria-hidden="false"
+          class="Panel"
+          style="height: 0px;"
+        >
+          <div
+            class="PanelInner"
+          >
+            <p
+              class="NoItemsMessage"
+            >
+              U heeft nog geen afgehandelde bezwaren.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</DocumentFragment>
+`;

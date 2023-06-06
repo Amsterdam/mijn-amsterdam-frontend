@@ -4,31 +4,44 @@
   "previous": null,
   "results": [
     {
-      "url": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93",
-      "identificatie": "6171a3ac-78a4-4d38-9ece-09a6798abe93",
-      "bronorganisatie": "test",
-      "creatiedatum": "2022-07-11",
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaakinformatieobjecten/e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
+      "uuid": "e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
+      "informatieobject": "https://amsterdam-test.octopus.nl/api/zgw/v1/enkelvoudiginformatieobjecten/e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "aardRelatieWeergave": "Hoort bij, omgekeerd: kent",
+      "titel": "Constructie.pdf",
+      "beschrijving": "Overige",
+      "registratiedatum": "2023-03-23T12:00:00+01:00"
+    },
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaakinformatieobjecten/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
+      "uuid": "a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
+      "informatieobject": "https://amsterdam-test.octopus.nl/api/zgw/v1/enkelvoudiginformatieobjecten/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "aardRelatieWeergave": "Hoort bij, omgekeerd: kent",
+      "titel": "Test document 01.pdf",
+      "beschrijving": "Overige",
+      "registratiedatum": "2023-03-23T12:00:00+01:00"
+    },
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaakinformatieobjecten/42034d2a-921e-4466-a205-c0356fa6be55",
+      "uuid": "42034d2a-921e-4466-a205-c0356fa6be55",
+      "informatieobject": "https://amsterdam-test.octopus.nl/api/zgw/v1/enkelvoudiginformatieobjecten/42034d2a-921e-4466-a205-c0356fa6be55",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "aardRelatieWeergave": "Hoort bij, omgekeerd: kent",
       "titel": "Concept besluit.pdf",
-      "vertrouwelijkheidaanduiding": "openbaar",
-      "auteur": "Richard Bergmans",
-      "status": "in_bewerking",
-      "formaat": "application/pdf",
-      "taal": "nld",
-      "versie": 0,
-      "beginRegistratie": "2022-07-11T12:00:00+02:00",
-      "bestandsnaam": "Concept besluit.pdf",
-      "inhoud": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93/download",
-      "bestandsomvang": 16384,
-      "link": "https://localhost/api/zgw/v1/enkelvoudiginformatieobjecten/6171a3ac-78a4-4d38-9ece-09a6798abe93",
-      "beschrijving": "Concept besluit genomen door vakafdeling",
-      "ontvangstdatum": "2022-07-11",
-      "indicatieGebruiksrecht": null,
-      "ondertekening": null,
-      "integriteit": null,
-      "informatieobjecttype": "https://localhost/api/zgw/v1/informatieobjecttypen/b650aae3-fa11-4965-b0ee-297d3b8dad84",
-      "locked": false,
-      "dossiertype": null,
-      "verzenddatum": "2022-07-11"
+      "beschrijving": "Overige",
+      "registratiedatum": "2023-03-23T03:51:13+01:00"
+    },
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaakinformatieobjecten/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
+      "uuid": "d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
+      "informatieobject": "https://amsterdam-test.octopus.nl/api/zgw/v1/enkelvoudiginformatieobjecten/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "aardRelatieWeergave": "Hoort bij, omgekeerd: kent",
+      "titel": "BZ020001.pdf",
+      "beschrijving": "Ontvangstbevestiging bezwaarde (BZ02)",
+      "registratiedatum": "2023-03-23T12:00:00+01:00"
     }
   ]
 }

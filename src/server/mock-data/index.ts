@@ -8,6 +8,7 @@ import AVG from './json/avg.json';
 import BELASTINGEN from './json/belasting.json';
 import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
+import BEZWAREN_STATUS from './json/bezwaren-status.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -19,7 +20,7 @@ import LOODMETINGEN from './json/loodmetingen.json';
 import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
-import SIA from './json/sia-meldingen.json';
+// import SIA from './json/sia-meldingen.json';
 import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
@@ -93,6 +94,7 @@ export const mockDataConfig: MockDataConfig = {
   [String(ApiUrls.BEZWAREN_LIST)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
+    method: 'post',
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';
@@ -108,6 +110,16 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
+    },
+  },
+  [String(ApiUrls.BEZWAREN_STATUS)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    // delay: 2500,
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BEZWAREN_STATUS);
     },
   },
   [String(ApiUrls.AKTES)]: {
