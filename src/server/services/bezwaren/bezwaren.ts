@@ -368,7 +368,7 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   return {
     'Content-Type': 'application/json',
     apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
-    Authorization: jose.JWT.sign(
+    Authorization: `Bearer ${jose.JWT.sign(
       tokenData,
       process.env.BFF_BEZWAREN_TOKEN_KEY ?? '',
       {
@@ -377,6 +377,6 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
           typ: 'JWT',
         },
       }
-    ),
+    )}`,
   };
 }

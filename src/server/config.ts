@@ -164,7 +164,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
-    url: `${process.env.BFF_BEZWAREN_API}/zaken/_zoek`,
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
     method: 'POST',
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
@@ -172,21 +172,21 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENT: {
-    url: `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_API}/zaakinformatieobjecten`,
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaakinformatieobjecten`,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
-    url: `${process.env.BFF_BEZWAREN_API}/statussen`,
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/statussen`,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
