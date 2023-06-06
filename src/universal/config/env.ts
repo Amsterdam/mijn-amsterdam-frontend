@@ -53,7 +53,7 @@ const otapServerEnv: OtapEnv = {
   },
   acceptance: {
     analyticsId: 'e63312c0-0efe-4c4f-bba1-3ca1f05374a8',
-    analyticsUrlBase: 'https://dap.amsterdam.nl/',
+    analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
@@ -69,7 +69,7 @@ const otapServerEnv: OtapEnv = {
   },
   production: {
     analyticsId: 'f558164e-e388-49e0-864e-5f172552789c',
-    analyticsUrlBase: 'https://dap.amsterdam.nl/',
+    analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
