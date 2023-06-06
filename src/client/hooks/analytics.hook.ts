@@ -18,6 +18,10 @@ const hasSiteId = !!siteId;
 const PiwikTrackerConfig: UserOptions = {
   urlBase: getOtapEnvItem('analyticsUrlBase') || '',
   siteId,
+  nonce: 'D6251655468576D5A566B59703373367',
+  heartBeat: {
+    active: false,
+  },
 };
 
 // See dimension Ids specified in aansluitgids MIJN-5416
