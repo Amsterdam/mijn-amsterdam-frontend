@@ -166,9 +166,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zaken/_zoek`,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
@@ -176,9 +173,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BEZWAREN_DOCUMENT: {
     url: `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
-    headers: {
-      'Content-Type': 'application/json',
-    },
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
@@ -186,9 +180,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BEZWAREN_DOCUMENTS: {
     url: `${process.env.BFF_BEZWAREN_API}/zaakinformatieobjecten`,
-    headers: {
-      'Content-Type': 'application/json',
-    },
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
@@ -196,9 +187,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BEZWAREN_STATUS: {
     url: `${process.env.BFF_BEZWAREN_API}/statussen`,
-    headers: {
-      'Content-Type': 'application/json',
-    },
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
     }),
