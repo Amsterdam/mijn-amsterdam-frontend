@@ -196,7 +196,7 @@ export async function fetchBezwaarDocument(
   });
 
   requestConfig.url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
+    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     { id: documentId }
   );
 
