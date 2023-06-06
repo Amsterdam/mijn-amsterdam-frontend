@@ -36,8 +36,6 @@ export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 
 const otapServerEnv: OtapEnv = {
   development: {
-    analyticsId: 'e63312c0-0efe-4c4f-bba1-3ca1f05374a8',
-    analyticsUrlBase: 'https://dap.amsterdam.nl',
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
