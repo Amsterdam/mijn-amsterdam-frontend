@@ -366,7 +366,7 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   }
 
   return {
-    apikey: process.env.BFF_BEZWAREN_APIKEY,
+    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
     Authorization: jose.JWT.sign(
       tokenData,
       process.env.BFF_BEZWAREN_TOKEN_KEY ?? '',
