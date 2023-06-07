@@ -344,15 +344,20 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 }
 
 function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
+  const now = new Date();
+
   const tokenData = {
-    'Unique-name': process.env.BFF_BEZWAREN_EMAIL,
-    Actort: process.env.BFF_BEZWAREN_USER,
-    Email: process.env.BFF_BEZWAREN_EMAIL,
+    unique_name: process.env.BFF_BEZWAREN_EMAIL,
+    actort: process.env.BFF_BEZWAREN_USER,
+    email: process.env.BFF_BEZWAREN_EMAIL,
+    given_name: null,
+    family_name: null,
     UserId: process.env.BFF_BEZWAREN_USER,
     UserLogin: process.env.BFF_BEZWAREN_EMAIL,
-    MedewerkerId: process.env.BFF_BEZWAREN_EMPLOYEE_ID,
+    MedewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '', 10),
     Role: '',
     NameIdentifier: '',
+    exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
   };
 
   if (authProfileAndToken.profile.authMethod === 'digid') {
@@ -365,7 +370,7 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
     tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
-  return {
+  const header = {
     'Content-Type': 'application/json',
     apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
     Authorization: `Bearer ${jose.JWT.sign(
@@ -379,4 +384,6 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
       }
     )}`,
   };
+
+  return header;
 }
