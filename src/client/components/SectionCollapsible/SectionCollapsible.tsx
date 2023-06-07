@@ -5,12 +5,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
-import {
-  trackEventWithCustomDimension,
-  useContentDimensions,
-  useSessionStorage,
-} from '../../hooks';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useContentDimensions, useSessionStorage } from '../../hooks';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './SectionCollapsible.module.scss';
@@ -84,7 +79,6 @@ export default function SectionCollapsible({
   const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
-  const profileType = useProfileTypeValue();
   const { height: contentHeight } = useContentDimensions(contentRef);
 
   const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
@@ -96,15 +90,6 @@ export default function SectionCollapsible({
   setReadyForAnimatonDebounced();
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
-    if (isCollapsed && track) {
-      trackEventWithCustomDimension(
-        {
-          ...track,
-          action: 'Open klikken',
-        },
-        profileType
-      );
-    }
     setCollapsed(!isCollapsed);
   });
 
