@@ -483,7 +483,7 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
 
   const transformed = history
     .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
-    .map((historyEntry) => {
+    .map((historyEntry, index, all) => {
       // Extract readable status string
       const statusValue = historyEntry.action.split(':')[1] as StatusValue;
 
@@ -493,17 +493,22 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
-      const hasVisibleDescription = [
-        REACTIE_GEVRAAGD,
-        REACTIE_ONTVANGEN,
-        AFGEHANDELD,
-      ].includes(statusKey);
+      // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
+      const nextEntry = all[index + 1];
+      let isDescriptionSentToOwner = false;
+      if (nextEntry) {
+        isDescriptionSentToOwner =
+          nextEntry.what === 'CREATE_NOTE' &&
+          !!nextEntry.description?.includes(
+            'Automatische e-mail bij inplannen is verzonden aan de melder'
+          );
+      }
 
       return {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description: hasVisibleDescription ? historyEntry.description : '',
+        description: isDescriptionSentToOwner ? historyEntry.description : '',
       } as SiaSignalStatusHistory;
     })
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
