@@ -309,10 +309,34 @@ describe('sia service', () => {
           "status": "Open",
         },
         Object {
+          "datePublished": "2023-03-22T11:43:53.784335+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:44:04.889572+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
           "datePublished": "2023-03-22T11:44:29.032811+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
           "status": "Vraag aan u verstuurd",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:45:15.024700+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:47:32.549606+01:00",
+          "description": "testen mijn meldingen",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
         },
         Object {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",

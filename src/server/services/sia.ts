@@ -482,7 +482,6 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
   const history = [...response].sort(dateSort('when', 'asc'));
 
   const transformed = history
-    .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
     .map((historyEntry, index, all) => {
       // Extract readable status string
       const statusValue = historyEntry.action.split(':')[1] as StatusValue;
@@ -493,10 +492,19 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
+      // Statusses we known for sure have a description that needs to be shown.
+      const hasVisibleDescription = [
+        REACTIE_GEVRAAGD,
+        REACTIE_ONTVANGEN,
+        AFGEHANDELD,
+        HEROPEND,
+      ].includes(statusKey);
+
       // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
       const nextEntry = all[index + 1];
       let isDescriptionSentToOwner = false;
-      if (nextEntry) {
+
+      if (!hasVisibleDescription && nextEntry) {
         isDescriptionSentToOwner =
           nextEntry.what === 'CREATE_NOTE' &&
           !!nextEntry.description?.includes(
@@ -508,59 +516,15 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description: isDescriptionSentToOwner ? historyEntry.description : '',
+        description:
+          hasVisibleDescription || isDescriptionSentToOwner
+            ? historyEntry.description
+            : '',
       } as SiaSignalStatusHistory;
     })
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
 
-  const statusUpdates: SiaSignalStatusHistory[] = [];
-
-  /**
-   * Status history is compacted from:
-   *
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   * Open
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   *
-   * TO:
-   *
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Closed
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   */
-
-  let prevOpenClosedState: SiaSignalStatusHistory['status'] | '' = '';
-
-  for (const statusEntry of transformed) {
-    if ([MA_REPLY_REQUESTED, MA_REPLY_RECEIVED].includes(statusEntry.status)) {
-      // Do not aggregate these statusses
-      statusUpdates.push(statusEntry);
-    } else if (prevOpenClosedState !== statusEntry.status) {
-      // Prevent Open/Closed states from being "doubled"
-      statusUpdates.push(statusEntry);
-      prevOpenClosedState = statusEntry.status;
-    } else if (prevOpenClosedState !== MA_OPEN) {
-      // Update the last non-open state date to the one that represents it
-      statusUpdates[statusUpdates.length - 1].datePublished =
-        statusEntry.datePublished;
-    }
-  }
-
-  return statusUpdates;
+  return transformed;
 }
 
 export async function fetchSignalHistory(
