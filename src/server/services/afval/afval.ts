@@ -50,7 +50,7 @@ export async function fetchAfvalPunten(
       return apiSuccessResult(null);
     }
 
-    return await fetchAfvalpunten(primaryLocation);
+    return fetchAfvalpunten(primaryLocation);
   }
 
   return apiDependencyError({ MY_LOCATION });
