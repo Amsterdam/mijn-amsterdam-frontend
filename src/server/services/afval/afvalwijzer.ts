@@ -97,7 +97,21 @@ function getText(text: string | null, fallbackText?: string): string {
     const lbl = labels[text];
 
     if (lbl) {
-      return lbl.html ?? lbl.text ?? '';
+      return lbl.text ?? '';
+    }
+
+    return fallbackText ?? text;
+  }
+
+  return fallbackText ?? '';
+}
+
+function getHtml(text: string | null, fallbackText?: string): string {
+  if (text) {
+    const lbl = labels[text];
+
+    if (lbl) {
+      return lbl.html ?? '';
     }
 
     return fallbackText ?? text;
@@ -140,7 +154,7 @@ function transformFractionData(
     .join(', ');
 
   const instructieSanitized = fractionData.afvalwijzerInstructie2
-    ? sanitizeCmsContent(getText(fractionData.afvalwijzerInstructie2), {
+    ? sanitizeCmsContent(getHtml(fractionData.afvalwijzerInstructie2), {
         allowedTags: ['a'],
         allowedAttributes: { a: ['href', 'rel'] },
         exclusiveFilter: () => false,
@@ -167,15 +181,26 @@ function transformFractionData(
     ? `In uw stadsdeel zijn mogelijk <a href="${stadsdeelRegelsUrl}" rel="noopener noreferrer">aanvullende regels</a> van kracht.`
     : null;
 
+  let titel = getText(fractionData.afvalwijzerFractieCode);
+
+  if (
+    fractionData.afvalwijzerFractieCode === 'Rest' &&
+    fractionData.afvalwijzerBasisroutetypeCode === 'THUISAFSPR'
+  ) {
+    titel = getText('Huishoudelijk afval');
+  }
+
   return {
-    titel: getText(fractionData.afvalwijzerFractieCode),
+    titel,
     instructie: fractionData.afvalwijzerInstructie2
       ? fractionData.afvalwijzerFractieCode !== 'GA'
         ? instructieSanitized
         : afvalpuntInstructie
       : null,
     instructieCTA:
-      fractionData.afvalwijzerButtontekst && url
+      fractionData.afvalwijzerInstructie2 &&
+      fractionData.afvalwijzerButtontekst &&
+      url
         ? {
             title: sanitizeCmsContent(fractionData.afvalwijzerButtontekst),
             to: url,
