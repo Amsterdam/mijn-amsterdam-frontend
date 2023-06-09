@@ -157,6 +157,20 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
           -
         </p>
       </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Toelichting
+        </h3>
+        <p
+          class="Value"
+        >
+          -
+        </p>
+      </div>
     </div>
     <div
       class="StatusLine AvgStatusLines"
