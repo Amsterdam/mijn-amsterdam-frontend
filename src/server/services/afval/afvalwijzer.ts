@@ -274,6 +274,7 @@ export const exportedForTesting = {
   formatKalenderMelding,
   getAfvalPuntKaartUrl,
   getText,
+  getHtml,
   getBuurtLink,
   transformFractionData,
 };
