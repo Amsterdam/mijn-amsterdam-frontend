@@ -95,12 +95,14 @@ interface HomeIconMarkerProps {
   center: LatLngLiteral;
   label: string;
   zoom?: number;
+  autCenterOnLocationChange?: boolean;
 }
 
 export function HomeIconMarker({
   center,
   zoom = LOCATION_ZOOM,
   label = '',
+  autCenterOnLocationChange = false,
 }: HomeIconMarkerProps) {
   const mapRef = useMapRef();
   const profileType = useProfileTypeValue();
@@ -117,6 +119,12 @@ export function HomeIconMarker({
       mapRef.current.setView(center, zoom);
     }
   }, [zoom, center, mapRef]);
+
+  useEffect(() => {
+    if (autCenterOnLocationChange) {
+      doCenter();
+    }
+  }, [autCenterOnLocationChange, doCenter]);
 
   return (
     <MyAreaMarker

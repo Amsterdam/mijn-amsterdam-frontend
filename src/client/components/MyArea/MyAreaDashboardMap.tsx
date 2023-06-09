@@ -12,6 +12,8 @@ import Map from './Map/Map';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
+import { useEffect } from 'react';
+import { useMapInstance } from '@amsterdam/react-maps';
 
 export default function MyAreaDashboard() {
   const { MY_LOCATION } = useAppStateGetter();
@@ -20,7 +22,6 @@ export default function MyAreaDashboard() {
     (location: BAGData | null): location is BAGData => !!location
   );
   const [primaryLocation, ...secondaryLocations] = locations;
-
   let center: LatLngLiteral | undefined =
     primaryLocation?.latlng || DEFAULT_MAP_OPTIONS.center;
 
@@ -45,6 +46,7 @@ export default function MyAreaDashboard() {
           }
           center={center}
           zoom={HOOD_ZOOM}
+          autCenterOnLocationChange={true}
         />
       )}
       {!!secondaryLocations?.length &&
