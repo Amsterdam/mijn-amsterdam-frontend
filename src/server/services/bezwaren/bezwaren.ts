@@ -350,22 +350,22 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
     unique_name: process.env.BFF_BEZWAREN_EMAIL,
     actort: process.env.BFF_BEZWAREN_USER,
     email: process.env.BFF_BEZWAREN_EMAIL,
-    UserId: process.env.BFF_BEZWAREN_USER,
-    UserLogin: process.env.BFF_BEZWAREN_EMAIL,
-    MedewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
-    Role: '',
-    NameIdentifier: '',
+    userId: process.env.BFF_BEZWAREN_USER,
+    userLogin: process.env.BFF_BEZWAREN_EMAIL,
+    medewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
+    role: '',
+    nameIdentifier: '',
     exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
   };
 
   if (authProfileAndToken.profile.authMethod === 'digid') {
-    tokenData.Role = 'natuurlijk_persoon';
-    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+    tokenData.role = 'natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
   if (authProfileAndToken.profile.authMethod === 'eherkenning') {
-    tokenData.Role = 'niet_natuurlijk_persoon';
-    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+    tokenData.role = 'niet_natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
   const header = {
