@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
+import basicAuth from 'express-basic-auth';
 import {
   DATASETS,
   IS_OT,
-  IS_TEST,
   OTAP_ENV,
   getDatasetCategoryId,
 } from '../universal/config';
@@ -21,7 +21,6 @@ import {
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 import { loginStats } from './services/visitors';
-import basicAuth from 'express-basic-auth';
 
 export const router = express.Router();
 
