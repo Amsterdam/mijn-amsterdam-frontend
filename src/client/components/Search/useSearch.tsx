@@ -2,7 +2,7 @@ import { ExternalLink } from '@amsterdam/asc-assets';
 import axios from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   atom,
@@ -20,7 +20,6 @@ import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
-import { trackEventWithCustomDimension } from '../../hooks';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useKeyUp } from '../../hooks/useKey';
@@ -415,28 +414,13 @@ export function useSearchResults(
 export function useSearchOnPage(): {
   isSearchActive: boolean;
   setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
-  trackSearchBarEvent: (action: string) => void;
   isDisplayLiveSearch: boolean;
 } {
-  const profileType = useProfileTypeValue();
   const [isSearchActive, setSearchActive] = useState(false);
   const location = useLocation();
   const isDisplayLiveSearch = !matchPath(location.pathname, {
     path: AppRoutes.SEARCH,
   });
-
-  const trackSearchBarEvent = useCallback(
-    (action: string) =>
-      trackEventWithCustomDimension(
-        {
-          category: 'Zoeken',
-          name: 'Zoekbalk open/dicht',
-          action,
-        },
-        profileType
-      ),
-    [profileType]
-  );
 
   useEffect(() => {
     if (isSearchActive && isDisplayLiveSearch) {
@@ -449,14 +433,12 @@ export function useSearchOnPage(): {
   useKeyUp((event) => {
     if (event.key === 'z' && !isSearchActive) {
       setSearchActive(true);
-      trackSearchBarEvent('Openen met z toets');
     }
   });
 
   return {
     isSearchActive,
     setSearchActive,
-    trackSearchBarEvent,
     isDisplayLiveSearch,
   };
 }

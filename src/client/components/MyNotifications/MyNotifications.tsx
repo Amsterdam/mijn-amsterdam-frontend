@@ -1,20 +1,10 @@
-import { useRef } from 'react';
 import { generatePath } from 'react-router-dom';
 import classnames from 'classnames';
 import { AppRoutes } from '../../../universal/config';
-import {
-  trackItemPresentation,
-  useSessionCallbackOnceDebounced,
-} from '../../hooks/analytics.hook';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
 import Notification, { MyNotification } from './Notification';
-import {
-  WelcomeNotification2,
-  WelcomeNotification2Commercial,
-} from '../../config/staticData';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -34,30 +24,6 @@ export default function MyNotifications({
   isEmbedded = false,
   ...otherProps
 }: MyNotificationsProps) {
-  const welcomNotificationShown = useRef<boolean>(false);
-  const profileType = useProfileTypeValue();
-
-  if (
-    items.some(
-      (n) =>
-        n.id === WelcomeNotification2.id ||
-        n.id === WelcomeNotification2Commercial.id
-    ) &&
-    !welcomNotificationShown.current
-  ) {
-    // Send event indicating we've shown the notification
-    welcomNotificationShown.current = true;
-    trackItemPresentation(
-      trackCategory,
-      'Welkom weespers melding',
-      profileType
-    );
-  }
-
-  useSessionCallbackOnceDebounced(trackCategory, () =>
-    trackItemPresentation(trackCategory, 'Aantal updates', profileType)
-  );
-
   return (
     <div
       {...otherProps}

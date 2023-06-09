@@ -1,26 +1,14 @@
 import { LatLngLiteral } from 'leaflet';
-import memoryCache from 'memory-cache';
 import {
   apiSuccessResult,
-  ApiSuccessResponse,
   getApproximateDistance,
-  apiErrorResult,
+  sortAlpha,
 } from '../../../universal/helpers';
-import { sortAlpha } from '../../../universal/helpers/utils';
-import { AfvalPuntenData, GarbageCenter } from '../../../universal/types/afval';
-import FileCache from '../../helpers/file-cache';
-
-export const cache = new memoryCache.Cache<string, any>();
-
-interface AfvalpuntenResponseData {
-  centers: GarbageCenter[];
-  datePublished: string;
-}
-
-const fileCache = new FileCache({
-  name: 'afvalpunten',
-  cacheTimeMinutes: -1,
-});
+import type {
+  AfvalPuntenData,
+  GarbageCenter,
+} from '../../../universal/types/afval';
+import afvalpunten from './afvalpunten-data.json';
 
 function addApproximateDistance(
   latlng: LatLngLiteral | null,
@@ -37,20 +25,8 @@ function addApproximateDistance(
     .sort(sortAlpha('distance'));
 }
 
-export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
-  const cachedFileContents: AfvalpuntenResponseData | undefined =
-    fileCache.getKey('responseData');
-
-  if (cachedFileContents) {
-    const responseData: AfvalpuntenResponseData = {
-      ...cachedFileContents,
-      centers: addApproximateDistance(latlng, cachedFileContents.centers),
-    };
-    return apiSuccessResult(responseData);
-  }
-
-  return apiErrorResult(
-    'Could not retrieve Afvalpunten from file cache.',
-    null
-  );
+export function fetchAfvalpunten(latlng: LatLngLiteral | null) {
+  const centers = addApproximateDistance(latlng, afvalpunten);
+  const responseData: { centers: GarbageCenter[] } = { centers };
+  return apiSuccessResult(responseData);
 }

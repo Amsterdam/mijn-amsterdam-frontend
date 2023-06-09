@@ -7,8 +7,8 @@ import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
-  trackEventWithCustomDimension,
   trackSearch,
+  trackSearchResultClick,
 } from '../../hooks/analytics.hook';
 import { useKeyDown } from '../../hooks/useKey';
 import {
@@ -24,17 +24,24 @@ import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
   results: SearchEntry[];
+  totalAmountOfResults: number;
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;
   term: string;
   extendedResults?: boolean;
   showIcon?: boolean;
-  onClickResult?: (result: SearchEntry) => void;
+  onClickResult?: (
+    result: SearchEntry,
+    resultNumber: number,
+    amountOfResults: number,
+    amountOfResultsShown: number
+  ) => void;
 }
 
 export function ResultSet({
   results,
+  totalAmountOfResults,
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
@@ -44,10 +51,19 @@ export function ResultSet({
   onClickResult: onClickResultCallback,
 }: ResultSetProps) {
   const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      onClickResultCallback?.(result);
+    (
+      result: SearchEntry,
+      resultNumber: number,
+      amountOfResultsShown: number
+    ) => {
+      onClickResultCallback?.(
+        result,
+        resultNumber,
+        totalAmountOfResults,
+        amountOfResultsShown
+      );
     },
-    [onClickResultCallback]
+    [onClickResultCallback, totalAmountOfResults]
   );
 
   return (
@@ -81,7 +97,7 @@ export function ResultSet({
                 className={styles.ResultSetLink}
                 onClick={(event) => {
                   event.preventDefault();
-                  onClickResult(result);
+                  onClickResult(result, index + 1, results.length);
                 }}
               >
                 {typeof result.displayTitle === 'function'
@@ -161,26 +177,10 @@ export function Search({
 
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
-  const trackSearchBarEvent = useCallback(
-    (action: string) =>
-      trackEventWithCustomDimension(
-        {
-          category: 'Zoeken',
-          name: `${searchCategory} interactie`,
-          action,
-        },
-        profileType
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profileType]
-  );
-
   const trackSearchDebounced = useDebouncedCallback(
-    (term: string, category: string = 'Keyword input (typing)') => {
+    (term: string, count: number) => {
       if (term) {
-        trackSearch(term, category);
-      } else {
-        trackSearchBarEvent('Verwijder term');
+        trackSearch(term, count, searchCategory, profileType);
       }
     },
     2000
@@ -202,18 +202,36 @@ export function Search({
         if (isResultsVisible && term) {
           searchBarRef.current?.focus();
           setResultsVisible(false);
-          trackSearchBarEvent('Verberg typeAhead resultaten met Escape toets');
         } else if (!isResultsVisible) {
           onFinish('Escape toets');
         }
       }
     },
-    [typeAhead, isResultsVisible, onFinish, term, trackSearchBarEvent]
+    [typeAhead, isResultsVisible, onFinish, term]
   );
 
   const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      trackSearchBarEvent('Click result');
+    (
+      result: SearchEntry,
+      resultNumber: number,
+      amountOfResults: number,
+      amountOfResultsShown: number
+    ) => {
+      trackSearchResultClick({
+        keyword: term,
+        searchResult: {
+          position: resultNumber,
+          title:
+            typeof result.displayTitle === 'function'
+              ? result.description
+              : result.displayTitle,
+          type: '',
+          url: result.url,
+        },
+        amountOfResults,
+        amountOfResultsShown,
+        type: 'manueel',
+      });
       setResultsVisible(false);
       onFinish('Click result');
 
@@ -228,13 +246,7 @@ export function Search({
         }
       }
     },
-    [
-      replaceResultUrl,
-      history,
-      trackSearchBarEvent,
-      setResultsVisible,
-      onFinish,
-    ]
+    [replaceResultUrl, history, setResultsVisible, onFinish, term]
   );
 
   useKeyDown(keyHandler);
@@ -293,12 +305,11 @@ export function Search({
           onSubmit={(e) => {
             e.preventDefault();
             if (term) {
-              trackSearchBarEvent('Submit search');
               history.push(
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
-              trackSearch(term, searchCategory);
+              trackSearch(term, 0, searchCategory, profileType);
             }
           }}
         >
@@ -322,7 +333,7 @@ export function Search({
               setResultsVisible(true);
               const term = e.target.value;
               setTermDebounced(term);
-              trackSearchDebounced(term);
+              trackSearchDebounced(term, 0);
             }}
           />
 
@@ -342,6 +353,7 @@ export function Search({
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
+              totalAmountOfResults={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
               showIcon={extendedAMResults}
               onClickResult={onClickResult}
@@ -359,6 +371,12 @@ export function Search({
                 results?.am?.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
+              }
+              totalAmountOfResults={
+                results?.am?.state === 'hasValue' &&
+                results?.am?.contents !== null
+                  ? results.am.contents.length
+                  : 0
               }
             />
 
