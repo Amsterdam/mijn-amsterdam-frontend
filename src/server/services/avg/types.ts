@@ -11,8 +11,8 @@ export type AVGRequest = {
   status: string;
   registratieDatum: string;
   type: string;
-  thema: string;
   onderwerp: string;
+  toelichting: string;
   resultaat: string;
   ontvangstDatum: string;
   opschortenGestartOp: string;
@@ -28,7 +28,7 @@ export type SmileAVGRequest = {
   avgverzoek_statusavgverzoek_alias: SmileFieldValue;
   avgverzoek_datumbinnenkomst: SmileFieldValue;
   avgverzoek_typeverzoek: SmileFieldValue;
-  avgverzoek_betrekkingopthema: SmileFieldValue;
+  avgverzoek_themas: SmileFieldValue;
   avgverzoek_typeafhandeling_resultaat: SmileFieldValue | null;
   avgverzoek_omschrijvingvanonderwerp: SmileFieldValue;
   avgverzoek_opschortengestartop: SmileFieldValue | null;

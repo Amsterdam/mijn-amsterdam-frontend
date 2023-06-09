@@ -81,7 +81,7 @@ const AVG = () => {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Afgehandelde verzoeken"
-        noItemsMessage="U heeft nog geen AVG verzoeken ingediend."
+        noItemsMessage="U hebt nog geen afgehandelde AVG verzoeken."
         startCollapsed={false}
         hasItems={!!avgVerzoekenAfgehandeld?.length}
         isLoading={isLoading(AVG)}

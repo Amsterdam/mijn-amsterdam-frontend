@@ -59,15 +59,16 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
     verzoeken: data.List.map((verzoek) => {
       const id = verzoek['avgverzoek_id']?.value || '';
 
-      return {
+      const request: AVGRequest = {
         id,
         status: verzoek['avgverzoek_statusavgverzoek_alias'].value || '',
         registratieDatum: smileDateParser(
           verzoek['avgverzoek_datuminbehandeling']?.value || ''
         ),
         type: verzoek['avgverzoek_typeverzoek'].value || '',
-        thema: verzoek['avgverzoek_betrekkingopthema'].value || '',
-        onderwerp: verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
+        onderwerp: verzoek['avgverzoek_themas']?.value || '',
+        toelichting:
+          verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
         resultaat: verzoek['avgverzoek_typeafhandeling_resultaat']?.value || '',
         ontvangstDatum: smileDateParser(
           verzoek['avgverzoek_datumbinnenkomst'].value || ''
@@ -88,6 +89,8 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
           title: `AVG verzoek ${id}`,
         },
       };
+
+      return request;
     }),
     aantal: data.rowcount,
   };

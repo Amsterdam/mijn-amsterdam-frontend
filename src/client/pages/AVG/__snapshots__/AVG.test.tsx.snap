@@ -135,7 +135,7 @@ exports[`AVG thema pagina Matches the Full Page snapshot when API gives no resul
           <p
             class="NoItemsMessage"
           >
-            U heeft nog geen AVG verzoeken ingediend.
+            U hebt nog geen afgehandelde AVG verzoeken.
           </p>
         </div>
       </div>
@@ -279,7 +279,7 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are no reque
           <p
             class="NoItemsMessage"
           >
-            U heeft nog geen AVG verzoeken ingediend.
+            U hebt nog geen afgehandelde AVG verzoeken.
           </p>
         </div>
       </div>
