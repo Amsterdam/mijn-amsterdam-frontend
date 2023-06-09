@@ -196,7 +196,7 @@ export async function fetchBezwaarDocument(
   });
 
   requestConfig.url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/enkelvoudiginformatieobjecten/:id/download`,
+    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     { id: documentId }
   );
 
@@ -344,29 +344,34 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 }
 
 function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
+  const now = new Date();
+
   const tokenData = {
-    'Unique-name': process.env.BFF_BEZWAREN_EMAIL,
-    Actort: process.env.BFF_BEZWAREN_USER,
-    Email: process.env.BFF_BEZWAREN_EMAIL,
-    UserId: process.env.BFF_BEZWAREN_USER,
-    UserLogin: process.env.BFF_BEZWAREN_EMAIL,
-    MedewerkerId: process.env.BFF_BEZWAREN_EMPLOYEE_ID,
-    Role: '',
-    NameIdentifier: '',
+    unique_name: process.env.BFF_BEZWAREN_EMAIL,
+    actort: process.env.BFF_BEZWAREN_USER,
+    email: process.env.BFF_BEZWAREN_EMAIL,
+    userId: process.env.BFF_BEZWAREN_USER,
+    userLogin: process.env.BFF_BEZWAREN_EMAIL,
+    medewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
+    role: '',
+    nameIdentifier: '',
+    exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
   };
 
   if (authProfileAndToken.profile.authMethod === 'digid') {
-    tokenData.Role = 'natuurlijk_persoon';
-    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+    tokenData.role = 'natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
   if (authProfileAndToken.profile.authMethod === 'eherkenning') {
-    tokenData.Role = 'niet_natuurlijk_persoon';
-    tokenData.NameIdentifier = authProfileAndToken.profile.id ?? '';
+    tokenData.role = 'niet_natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
-  return {
-    Authorization: jose.JWT.sign(
+  const header = {
+    'Content-Type': 'application/json',
+    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
+    Authorization: `Bearer ${jose.JWT.sign(
       tokenData,
       process.env.BFF_BEZWAREN_TOKEN_KEY ?? '',
       {
@@ -375,6 +380,8 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
           typ: 'JWT',
         },
       }
-    ),
+    )}`,
   };
+
+  return header;
 }
