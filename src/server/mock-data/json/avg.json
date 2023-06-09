@@ -73,6 +73,21 @@
       "avgverzoek_omschrijvingvanonderwerp": {
         "value": "Iets over mileu"
       }
+    },
+    {
+      "avgverzoek_id": { "value": "156" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Open" },
+      "avgverzoek_datumbinnenkomst": { "value": "18-03-2023 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Aanpassen gegevens" },
+      "avgverzoek_themas": { "value": "Mileuzone" },
+      "avgverzoek_typeafhandeling_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "19-03-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "" },
+      "avgverzoek_datuminbehandeling": { "value": "" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over mileu"
+      }
     }
   ]
 }
