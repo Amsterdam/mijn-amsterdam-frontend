@@ -68,7 +68,7 @@ describe('Afvalwijzer service', () => {
     expect(exportedForTesting.getText('test:')).toBe('test:');
     expect(exportedForTesting.getText('test:', 'hoi')).toBe('hoi');
     expect(
-      exportedForTesting.getText(
+      exportedForTesting.getHtml(
         'De afvalservice is momenteel niet beschikbaar. Probeer het later nog eens.'
       )
     ).toBe(
