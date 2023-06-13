@@ -80,15 +80,9 @@ export function trackSearchResultClick({
   );
 }
 
-function _trackPageView(url?: string, customDimensions?: CustomDimension[]) {
-  let href = url || document.location.href;
-
-  if (IS_AP && !href.startsWith('http')) {
-    href = `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn.amsterdam.nl${href}`;
-  }
-
+function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
   const payload: TrackPageViewParams = {
-    href,
+    href: `/mijn-amsterdam${href}/`,
     customDimensions,
   };
 
