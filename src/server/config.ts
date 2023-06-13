@@ -138,7 +138,8 @@ export type SourceApiKey =
   | 'KREFIA'
   | 'SIA'
   | 'ENABLEU_2_SMILE'
-  | 'LOOD_365';
+  | 'LOOD_365'
+  | 'LOOD_365_OAUTH';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -297,8 +298,13 @@ export const ApiConfig: ApiDataRequestConfig = {
   LOOD_365: {
     url: `${process.env.BFF_LOOD_API_URL}`,
     method: 'GET',
-    // TODO: Might need a token here.
     postponeFetch: !FeatureToggle.bodemActive,
+  },
+  LOOD_365_OAUTH: {
+    url: `${process.env.BFF_LOOD_OAUTH}/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`,
+    method: 'POST',
+    postponeFetch: !FeatureToggle.bodemActive,
+    cacheTimeout: 59 * ONE_MINUTE_MS,
   },
 };
 
