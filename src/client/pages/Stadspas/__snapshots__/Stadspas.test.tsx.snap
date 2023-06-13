@@ -64,9 +64,6 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
          om een nieuwe Stadspas aan te vragen.
       </p>
       <p>
-        Let op. Hebt u een Stadspas met blauwe ruit? Dan ziet u deze hier niet.
-      </p>
-      <p>
         <a
           class="Button Button__plain Button__lean Linkd"
           href="https://www.amsterdam.nl/stadspas"
