@@ -8,7 +8,6 @@ import {
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
 import { getOtapEnvItem } from '../../universal/config';
-import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 
 let PiwikInstance: PiwikTracker;
 
