@@ -53,7 +53,7 @@ export function trackSearch(
   const payload: TrackSiteSearchParams = {
     keyword,
     count,
-    type: 'manueel',
+    type: 'autocomplete',
     searchMachine,
     customDimensions: [profileTypeDimension(profileType)],
   };
