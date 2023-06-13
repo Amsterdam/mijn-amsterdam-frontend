@@ -31,15 +31,15 @@ describe('MyArea.hooks', () => {
           "customLocationMarker": Object {
             "label": "Amsterdam centrum",
             "latlng": Object {
-              "lat": 52.3717228,
-              "lng": 4.8927377,
+              "lat": 52.3676842478192,
+              "lng": 4.90022569871861,
             },
             "type": "default",
           },
           "homeLocationMarker": null,
           "mapCenter": Object {
-            "lat": 52.3717228,
-            "lng": 4.8927377,
+            "lat": 52.3676842478192,
+            "lng": 4.90022569871861,
           },
           "mapZoom": 12,
           "secondaryLocationMarkers": Array [],
@@ -123,8 +123,8 @@ describe('MyArea.hooks', () => {
           "customLocationMarker": Object {
             "label": "Amsterdam centrum",
             "latlng": Object {
-              "lat": 52.3717228,
-              "lng": 4.8927377,
+              "lat": 52.3676842478192,
+              "lng": 4.90022569871861,
             },
             "type": "default",
           },
@@ -138,8 +138,8 @@ describe('MyArea.hooks', () => {
             "type": "home",
           },
           "mapCenter": Object {
-            "lat": 52.3717228,
-            "lng": 4.8927377,
+            "lat": 52.3676842478192,
+            "lng": 4.90022569871861,
           },
           "mapZoom": 12,
           "secondaryLocationMarkers": Array [
@@ -190,8 +190,8 @@ describe('MyArea.hooks', () => {
           "customLocationMarker": Object {
             "label": "Amsterdam centrum",
             "latlng": Object {
-              "lat": 52.3717228,
-              "lng": 4.8927377,
+              "lat": 52.3676842478192,
+              "lng": 4.90022569871861,
             },
             "type": "default",
           },
@@ -205,8 +205,8 @@ describe('MyArea.hooks', () => {
             "type": "home",
           },
           "mapCenter": Object {
-            "lat": 52.3717228,
-            "lng": 4.8927377,
+            "lat": 52.3676842478192,
+            "lng": 4.90022569871861,
           },
           "mapZoom": 12,
           "secondaryLocationMarkers": Array [],

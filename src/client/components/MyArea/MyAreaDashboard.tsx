@@ -4,7 +4,6 @@ import { generatePath, NavLink } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isMokum } from '../../../universal/helpers';
 import { useAppStateGetter } from '../../hooks';
-import { useOnScreen } from '../../hooks/useOnScreen';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Heading from '../Heading/Heading';
@@ -18,11 +17,10 @@ export default function MyAreaDashboard() {
   const { BRP, KVK } = useAppStateGetter();
   const isPrivate = profileType === 'private';
   // Check if the Map is nearly scrolled into view
-  const isOnScreen = useOnScreen(ref, '-100px');
   const mokum = isPrivate ? isMokum(BRP.content) : isMokum(KVK.content);
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
-      {isOnScreen && <MyAreaLoader isDashboard={true} />}
+      <MyAreaLoader isDashboard={true} />
       <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
         <span className={styles.NavLinkContentWrap}>
           <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
