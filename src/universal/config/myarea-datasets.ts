@@ -1,8 +1,8 @@
 import { FeatureToggle } from './app';
 
 // Amsterdam center
-export const DEFAULT_LAT: number = 52.3717228;
-export const DEFAULT_LNG: number = 4.8927377;
+export const DEFAULT_LAT: number = 52.3676842478192;
+export const DEFAULT_LNG: number = 4.90022569871861;
 export const CITY_ZOOM = 8;
 export const HOOD_ZOOM = 12;
 export const LOCATION_ZOOM = 15;
