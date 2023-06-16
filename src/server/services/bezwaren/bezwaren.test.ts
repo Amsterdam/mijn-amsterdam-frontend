@@ -38,7 +38,7 @@ describe('Bezwaren', () => {
 
   describe('fetch bezwaren', () => {
     beforeEach(() => {
-      nock('http://localhost')
+      nock('http://localhost/zgw/v1')
         .post(`/zaken/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
         .get((uri) => uri.includes('/zaakinformatieobjecten'))

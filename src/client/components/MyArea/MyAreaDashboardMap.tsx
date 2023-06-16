@@ -20,7 +20,6 @@ export default function MyAreaDashboard() {
     (location: BAGData | null): location is BAGData => !!location
   );
   const [primaryLocation, ...secondaryLocations] = locations;
-
   let center: LatLngLiteral | undefined =
     primaryLocation?.latlng || DEFAULT_MAP_OPTIONS.center;
 
@@ -45,6 +44,7 @@ export default function MyAreaDashboard() {
           }
           center={center}
           zoom={HOOD_ZOOM}
+          autCenterOnLocationChange={true}
         />
       )}
       {!!secondaryLocations?.length &&

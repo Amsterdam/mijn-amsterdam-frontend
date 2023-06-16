@@ -144,12 +144,14 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
           <InnerHtml>{fraction.kalendermelding}</InnerHtml>
         </p>
       )}
-      <dl>
-        <dt>Hoe</dt>
-        <dd>
-          <InstructionCTA fraction={fraction} />
-        </dd>
-      </dl>
+      {(fraction.instructieCTA || fraction.instructie) && (
+        <dl>
+          <dt>Hoe</dt>
+          <dd>
+            <InstructionCTA fraction={fraction} />
+          </dd>
+        </dl>
+      )}
       {!!fraction.ophaaldagen && (
         <dl>
           <dt>Ophaaldag</dt>
