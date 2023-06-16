@@ -22,10 +22,6 @@ import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
 
 function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
-  return {
-    bsn: '123423234244',
-  };
-
   if (authProfileAndToken.profile.authMethod === 'digid') {
     return {
       bsn: authProfileAndToken.profile.id ?? '',
