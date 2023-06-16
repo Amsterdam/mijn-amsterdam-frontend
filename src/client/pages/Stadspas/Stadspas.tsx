@@ -141,10 +141,6 @@ export default function Stadspas() {
             </p>
           )}
         <p>
-          Let op. Hebt u een Stadspas met blauwe ruit? Dan ziet u deze hier
-          niet.
-        </p>
-        <p>
           <Linkd external={true} href={ExternalUrls.STADSPAS}>
             Meer informatie over de Stadspas
           </Linkd>

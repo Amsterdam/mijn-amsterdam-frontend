@@ -27,10 +27,6 @@ export interface GarbageFractionInformationTransformed {
 export interface GarbageCenter {
   title: string;
   latlng: LatLngLiteral;
-  url: string;
-  address: string;
-  phone: string;
-  email: string;
   distance: number;
   website: string;
 }

@@ -39,4 +39,15 @@ process.env.BFF_KREFIA_API_BASE_URL = 'http://localhost/remote/api';
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = 'http://localhost';
 process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = 'http://localhost/token';
+
+process.env.BFF_BEZWAREN_API = 'http://localhost';
+process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';
+process.env.BFF_BEZWAREN_EMAIL = 'BEZWAREN_EMAIL';
+process.env.BFF_BEZWAREN_EMPLOYEE_ID = '1';
+process.env.BFF_BEZWAREN_TOKEN_KEY = 'BEZWAREN_JWT_KEY';
+
+process.env.BFF_LOOD_OAUTH = 'http://localhost/lood_oauth';
 process.env.BFF_LOOD_API_URL = 'http://localhost';
+process.env.BFF_LOOD_USERNAME = 'username';
+process.env.BFF_LOOD_PWD = 'pwd';
+process.env.BFF_LOOD_TENANT = 'tenantid';

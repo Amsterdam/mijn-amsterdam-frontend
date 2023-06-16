@@ -98,7 +98,9 @@ export type SourceApiKey =
   | 'WPI_STADSPAS'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
+  | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_STATUS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
@@ -117,7 +119,8 @@ export type SourceApiKey =
   | 'KREFIA'
   | 'SIA'
   | 'LOOD_365'
-  | 'ENABLEU_2_SMILE';
+  | 'ENABLEU_2_SMILE'
+  | 'LOOD_365_OAUTH';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -146,18 +149,18 @@ export const ApiConfig: ApiDataRequestConfig = {
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
     method: 'POST',
-    headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
-      'Content-Type': 'application/json',
-    },
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_DOCUMENT: {
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_DOCUMENTS_ENDPOINT}`,
-    headers: {
-      Authorization: String(process.env.BFF_BEZWAREN_TOKEN),
-      'Content-Type': 'application/json',
-    },
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaakinformatieobjecten`,
+    postponeFetch: !FeatureToggle.bezwarenActive,
+  },
+  BEZWAREN_STATUS: {
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/statussen`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
@@ -188,22 +191,22 @@ export const ApiConfig: ApiDataRequestConfig = {
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
       private:
-        'https://amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       'private-commercial':
-        'https://amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
+        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
       'private-attributes':
-        'https://amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:
-        'https://amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
+        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
     },
   },
   CMS_CONTENT_FOOTER: {
-    url: 'https://amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data',
+    url: 'https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data',
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: 'https://amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
+    url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
     cacheTimeout: ONE_HOUR_MS,
   },
   TIPS: {
@@ -222,7 +225,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
   AFVAL: {
-    url: `https://api.data.amsterdam.nl/afvalophaalgebieden/search/`,
+    url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
   },
   KVK: {
     url: `${process.env.BFF_MKS_API_BASE_URL}/brp/hr`,
@@ -239,6 +242,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   KREFIA: {
     url: `${process.env.BFF_KREFIA_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
+    passthroughOIDCToken: true,
   },
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
@@ -256,9 +260,14 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   LOOD_365: {
     url: `${process.env.BFF_LOOD_API_URL}`,
-    method: 'GET',
-    // TODO: Might need a token here.
+    method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
+  },
+  LOOD_365_OAUTH: {
+    url: `${process.env.BFF_LOOD_OAUTH}/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`,
+    method: 'POST',
+    postponeFetch: !FeatureToggle.bodemActive,
+    cacheTimeout: 59 * ONE_MINUTE_MS,
   },
 };
 
@@ -296,6 +305,7 @@ export const RelayPathsAllowed = {
   BRP_BEWONERS: '/brp/aantal_bewoners',
   TIP_IMAGES: '/tips/static/tip_images/:fileName',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
+  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
 
 export const AUTH_BASE = '/api/v1/auth';
@@ -327,6 +337,9 @@ export const BffEndpoints = {
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
   SIA_HISTORY: '/services/signals/:id/history',
   SIA_LIST: '/services/signals/:status/:page',
+
+  // Bezwaren
+  BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

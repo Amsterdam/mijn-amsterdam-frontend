@@ -1,0 +1,499 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BezwarenDetail No result Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Bezwaren"
+          class="ChapterIcon"
+          fill="black"
+        >
+          icon-bezwaren.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/bezwaren"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Bezwaren
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Bezwaar
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="Alert warning"
+      >
+        <svg
+          aria-hidden="true"
+          class="Icon"
+        >
+          Alert.svg
+        </svg>
+         
+        <p>
+          We kunnen op dit moment geen gegevens tonen.
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page DetailPage"
+  >
+    <header
+      class="PageHeading hasIcon hasBackLink"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Bezwaren"
+          class="ChapterIcon"
+          fill="black"
+        >
+          icon-bezwaren.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/bezwaren"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Bezwaren
+        </a>
+        <h2
+          class="Heading Heading__large"
+        >
+          Korte omschrijving van het bezwaar
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Nummer van uw bezwaar
+        </h3>
+        <p
+          class="Value"
+        >
+          BI.21.014121.001
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Onderwerp
+        </h3>
+        <p
+          class="Value"
+        >
+          Korte omschrijving van het bezwaar
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Ontvangen op
+        </h3>
+        <p
+          class="Value"
+        >
+          25 april 2023
+        </p>
+      </div>
+      <div
+        class="InfoDetail"
+      >
+        <h3
+          class="Heading Heading__tiny Label"
+        >
+          Specificatie
+        </h3>
+        <p
+          class="Value"
+        >
+          Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.
+        </p>
+      </div>
+      <div
+        class="InfoDetailGroup"
+      >
+        <div
+          class="InfoDetailGroupContent"
+        >
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Besluit waartegen u bezwaar maakt
+            </h3>
+            <p
+              class="Value"
+            >
+              F2021.0008
+            </p>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Datum
+            </h3>
+            <p
+              class="Value"
+            >
+              05 januari 2021
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="InfoDetailGroup"
+      >
+        <div
+          class="InfoDetailGroupContent"
+        >
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Documenten
+            </h3>
+            <div
+              class="Value"
+            >
+              <ul
+                class="documentlist"
+              >
+                <li>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    >
+                      Constructie.pdf
+                    </a>
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    >
+                      Test document 01.pdf
+                    </a>
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    >
+                      Concept besluit.pdf
+                    </a>
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="DocumentLinkWrap"
+                  >
+                    <span
+                      class="DownloadIcon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        height="14"
+                        width="14"
+                      >
+                        Download.svg
+                      </svg>
+                    </span>
+                    <a
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
+                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    >
+                      BZ020001.pdf
+                    </a>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Datum
+            </h3>
+            <div
+              class="Value"
+            >
+              <ul
+                class="documentlist"
+              >
+                <li>
+                  23 maart 2023
+                </li>
+                <li>
+                  23 maart 2023
+                </li>
+                <li>
+                  23 maart 2023
+                </li>
+                <li>
+                  23 maart 2023
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="StatusLine"
+    >
+      <h4
+        class="Heading Heading__tiny ListHeading"
+      >
+        Status
+      </h4>
+      <ul
+        class="List"
+      >
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--start-checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                29 maart 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem ListItem--highlight"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--middle-checked-next"
+              />
+              <span
+                class="Checkmark Checkmark--active Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                30 maart 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--end"
+              />
+              <span
+                class="Checkmark"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
+              </strong>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;

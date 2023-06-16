@@ -4,10 +4,7 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-  MY_AREA_TRACKING_CATEGORY,
 } from '../../../../universal/config';
-import { trackEventWithCustomDimension } from '../../../hooks/analytics.hook';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import { getIcon } from '../datasets';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
@@ -36,7 +33,6 @@ export function DatasetControlPanel({
   onFilterControlItemChange,
   activeDatasetIds,
 }: DatasetControlPanelProps) {
-  const profileType = useProfileTypeValue();
   const { isChecked, isIndeterminate } = categoryCheckboxState(
     category,
     activeDatasetIds
@@ -61,14 +57,6 @@ export function DatasetControlPanel({
       }
       onChange={() => {
         onControlItemChange('category', datasetIds);
-        trackEventWithCustomDimension(
-          {
-            category: MY_AREA_TRACKING_CATEGORY,
-            name: `Dataset categorie: ${category.title}`,
-            action: isChecked ? 'Uit' : 'Aan',
-          },
-          profileType
-        );
       }}
     />
   );

@@ -86,7 +86,7 @@ export function Location({
 
   useEffect(() => {
     if (isLocationModalOpen && trackPageViewTitle && trackPageViewUrl) {
-      trackPageView(`${trackPageViewTitle}`, trackPageViewUrl);
+      trackPageView(trackPageViewUrl);
     }
   }, [isLocationModalOpen, trackPageViewTitle, trackPageViewUrl]);
 

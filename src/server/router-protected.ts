@@ -19,6 +19,7 @@ import {
 } from './services/sia';
 import { pick } from '../universal/helpers/utils';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
+import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 
 export const router = express.Router();
 
@@ -139,6 +140,25 @@ router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
 
   return res.send(siaResponse);
 });
+
+router.get(
+  BffEndpoints.BEZWAREN_ATTACHMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchBezwaarDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    if (documentResponse.status === 'ERROR') {
+      res.status(500);
+    }
+
+    return res.send(documentResponse);
+  }
+);
 
 router.get(
   BffEndpoints.LOODMETING_ATTACHMENTS,

@@ -22,9 +22,11 @@
 .GarbageSectionCollapsible {
   @include select(SectionCollapsible_PanelInner) {
     padding-left: 16rem;
+
     @include mq-tablet {
       padding-left: 9.5rem;
     }
+
     @include mq-phone {
       padding-left: 2rem;
     }
@@ -59,11 +61,14 @@
   &:first-child {
     width: calc(50% - 1rem);
   }
+
   &:last-child {
     width: calc(50% - 1rem);
     margin-left: 1rem;
   }
+
   @include mq-phone() {
+
     &:first-child,
     &:last-child {
       margin: 0;
@@ -90,8 +95,13 @@
   dd {
     width: 80%;
     font-weight: bold;
+
     p {
-      margin:0;
+      margin: 0;
+
+      +p {
+        margin-top: 1rem;
+      }
     }
   }
 }
@@ -111,9 +121,11 @@
 .GarbageFractionPanelOpmerking {
   a {
     color: $color-primary-darkblue;
+
     &:hover {
       color: $color-primary-red;
     }
+
     &:visited {
       color: $color-support-purple;
     }
@@ -142,7 +154,10 @@
   background-color: $color-support-blue;
   padding: 1rem;
 
-  &, a, a:visited,a:hover {
+  &,
+  a,
+  a:visited,
+  a:hover {
     color: $color-white;
   }
 }
