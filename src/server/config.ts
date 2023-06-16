@@ -297,7 +297,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   LOOD_365: {
     url: `${process.env.BFF_LOOD_API_URL}`,
-    method: 'GET',
+    method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
   },
   LOOD_365_OAUTH: {

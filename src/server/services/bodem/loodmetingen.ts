@@ -138,7 +138,6 @@ export async function fetchLoodmetingen(
   const data = getDataForLood365(authProfileAndToken);
   const requestConfig = getApiConfig('LOOD_365', {
     headers: await getLoodApiHeaders(requestID),
-    method: 'POST',
     data,
     transformResponse: transformLood365Response,
   });
@@ -166,7 +165,6 @@ export async function fetchLoodMetingDocument(
 
   const requestConfig = getApiConfig('LOOD_365', {
     headers: await getLoodApiHeaders(requestID),
-    method: 'POST',
     data: {
       workorderid: documentId,
     },
