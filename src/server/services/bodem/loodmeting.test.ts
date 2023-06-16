@@ -29,6 +29,14 @@ describe('Loodmeting', () => {
     nock.disableNetConnect();
   });
 
+  beforeEach(() => {
+    nock(process.env.BFF_LOOD_OAUTH!)
+      .post(`/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`)
+      .reply(200, {
+        access_token: 'token',
+      });
+  });
+
   afterEach(() => {
     nock.cleanAll();
     jest.clearAllMocks();
@@ -36,8 +44,10 @@ describe('Loodmeting', () => {
 
   describe('service', () => {
     beforeEach(() => {
-      nock('http://localhost')
-        .get('/be_getrequestdetails')
+      nock(process.env.BFF_LOOD_API_URL!, {
+        reqheaders: { Authorization: 'Bearer token' },
+      })
+        .post('/be_getrequestdetails')
         .reply(200, metingen);
     });
 
@@ -293,7 +303,7 @@ describe('Loodmeting', () => {
   describe('document', () => {
     beforeEach(() => {
       nock('http://localhost')
-        .get('/be_getrequestdetails')
+        .post('/be_getrequestdetails')
         .reply(200, metingen)
         .post('/be_downloadleadreport')
         .reply(200, document);
