@@ -66,6 +66,14 @@ const MA_STATUS_ALLOWED = [
   MA_REPLY_RECEIVED,
   MA_CLOSED,
 ];
+
+const STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER: StatusStateChoice[] = [
+  REACTIE_GEVRAAGD,
+  REACTIE_ONTVANGEN,
+  AFGEHANDELD,
+  HEROPEND,
+];
+
 // Choices for the API/Serializer layer. Users that can change the state via the API are only allowed
 // to use one of the following choices.
 const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
@@ -478,7 +486,32 @@ export interface SiaSignalStatusHistory {
   description: string;
 }
 
-function transformSiaStatusResponse(response: SiaSignalHistory[]) {
+function isStatusUpdateSentToUser(
+  statusKey: StatusStateChoice,
+  nextEntry?: SiaSignalHistory
+) {
+  // Statusses we known for sure have a description that needs to be shown.
+  const isExplitlyShownToUser =
+    STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey);
+
+  // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
+  let isDescriptionOptionallySentToUser = false;
+
+  // If an e-mail is sent to the user a CREATE_NOTE history log action is added with a specific text format.
+  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+Automatische%20e-mail&type=code
+  if (!isExplitlyShownToUser && nextEntry) {
+    isDescriptionOptionallySentToUser =
+      nextEntry.what === 'CREATE_NOTE' &&
+      !!(
+        nextEntry.description?.startsWith('Automatische e-mail') &&
+        nextEntry.description.includes('is verzonden aan de melder')
+      );
+  }
+
+  return isExplitlyShownToUser || isDescriptionOptionallySentToUser;
+}
+
+function transformSiaHistoryLogResponse(response: SiaSignalHistory[]) {
   const history = [...response].sort(dateSort('when', 'asc'));
 
   const transformed = history
@@ -492,36 +525,18 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
-      // Statusses we known for sure have a description that needs to be shown.
-      const hasVisibleDescription = [
-        REACTIE_GEVRAAGD,
-        REACTIE_ONTVANGEN,
-        AFGEHANDELD,
-        HEROPEND,
-      ].includes(statusKey);
-
-      // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
       const nextEntry = all[index + 1];
-      let isDescriptionSentToOwner = false;
-
-      if (!hasVisibleDescription && nextEntry) {
-        isDescriptionSentToOwner =
-          nextEntry.what === 'CREATE_NOTE' &&
-          !!nextEntry.description?.includes(
-            'Automatische e-mail bij inplannen is verzonden aan de melder'
-          );
-      }
 
       return {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description:
-          hasVisibleDescription || isDescriptionSentToOwner
-            ? historyEntry.description
-            : '',
+        description: isStatusUpdateSentToUser(statusKey, nextEntry)
+          ? historyEntry.description
+          : '',
       } as SiaSignalStatusHistory;
     })
+    // Filter out the log entries we want to show on MA
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
 
   return transformed;
@@ -542,7 +557,7 @@ export async function fetchSignalHistory(
     const response = await requestData<SiaSignalStatusHistory[]>(
       {
         ...requestConfig,
-        transformResponse: transformSiaStatusResponse,
+        transformResponse: transformSiaHistoryLogResponse,
       },
       requestID,
       authProfileAndToken
@@ -589,7 +604,7 @@ export async function fetchSignalNotifications(
 
 export const forTesting = {
   transformSiaAttachmentsResponse,
-  transformSiaStatusResponse,
+  transformSiaHistoryLogResponse,
   transformSIAData,
   createSIANotification,
   getSiaRequestConfig,
