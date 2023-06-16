@@ -22,6 +22,10 @@ import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
 
 function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
+  return {
+    bsn: '123423234244',
+  };
+
   if (authProfileAndToken.profile.authMethod === 'digid') {
     return {
       bsn: authProfileAndToken.profile.id ?? '',
@@ -104,8 +108,8 @@ async function getLoodApiHeaders(requestID: requestID) {
   const requestConfig = getApiConfig('LOOD_365_OAUTH');
 
   const data = new FormData();
-  data.append('client_id', process.env.BFF_LOOD_USERNAME + '');
-  data.append('client_secret', process.env.BFF_LOOD_PWD + '');
+  data.append('client_id', `${process.env.BFF_LOOD_USERNAME}`);
+  data.append('client_secret', `${process.env.BFF_LOOD_PWD}`);
   data.append('scope', `${url.substring(0, url.indexOf('api'))}.default`);
   data.append('grant_type', 'client_credentials');
 

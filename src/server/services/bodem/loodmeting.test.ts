@@ -32,6 +32,7 @@ describe('Loodmeting', () => {
   beforeEach(() => {
     nock(process.env.BFF_LOOD_OAUTH!)
       .post(`/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`)
+      .twice()
       .reply(200, {
         access_token: 'token',
       });
@@ -302,7 +303,9 @@ describe('Loodmeting', () => {
 
   describe('document', () => {
     beforeEach(() => {
-      nock('http://localhost')
+      nock('http://localhost', {
+        reqheaders: { Authorization: 'Bearer token' },
+      })
         .post('/be_getrequestdetails')
         .reply(200, metingen)
         .post('/be_downloadleadreport')
