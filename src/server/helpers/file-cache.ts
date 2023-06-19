@@ -14,7 +14,8 @@ interface FileCacheProps {
 const ONE_MINUTE_MS = 1000 * 60;
 const EXT = 'flat-cache.json';
 
-export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
+export const DEFAULT_CACHE_DIR =
+  process.env.BFF_DEFAULT_CACHE_DIR ?? path.join(__dirname, '../', 'cache');
 
 function fileName(name: string, isProd: boolean = IS_TAP) {
   const cacheName = isProd ? `prod.${name}` : `dev.${name}`;

@@ -4,13 +4,13 @@ import { IS_OT } from '../../universal/config';
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE ?? 'login_count';
 
-const SQLITE3_DB_PATH = `${process.env.DB_PATH}`;
+const SQLITE3_DB_PATH_FILE = `${process.env.BFF_DB_FILE}`;
 
 const dbOptions: Database.Options = {
   verbose: IS_OT ? console.log : undefined,
 };
 
-const db = new Database(SQLITE3_DB_PATH, dbOptions);
+const db = new Database(SQLITE3_DB_PATH_FILE, dbOptions);
 
 // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
 db.pragma('journal_mode = WAL');
