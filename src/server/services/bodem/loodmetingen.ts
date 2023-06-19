@@ -79,13 +79,12 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             ? {
                 title: 'Rapport Lood in de bodem-check',
                 id: location.Workorderid!,
-                url: `${
-                  IS_ACCEPTANCE
-                    ? process.env.REACT_APP_BFF_API_URL_ACC
-                    : process.env.REACT_APP_BFF_API_URL
-                }${generatePath(BffEndpoints.LOODMETING_ATTACHMENTS, {
-                  id: location.Workorderid!,
-                })}`,
+                url: `${process.env.BFF_PUBLIC_URL}${generatePath(
+                  BffEndpoints.LOODMETING_ATTACHMENTS,
+                  {
+                    id: location.Workorderid!,
+                  }
+                )}`,
                 datePublished: location.Reportsenton!,
               }
             : null,
