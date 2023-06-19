@@ -21,9 +21,9 @@ function fileName(name: string, isProd: boolean = IS_TAP) {
   return `${cacheName}.${EXT}`;
 }
 
-export function cacheOverview() {
+export function cacheOverview(cacheDir: string = DEFAULT_CACHE_DIR) {
   return new Promise((resolve, reject) => {
-    fs.readdir(DEFAULT_CACHE_DIR, (error, names) => {
+    fs.readdir(cacheDir, (error, names = []) => {
       if (error) {
         reject(error);
       }
@@ -31,7 +31,7 @@ export function cacheOverview() {
         .filter((name) => name.endsWith(`.${EXT}`))
         .map((file) => {
           const [env, name] = file.split('.');
-          const fileCache = flatCache.load(fileName(name), DEFAULT_CACHE_DIR);
+          const fileCache = flatCache.load(fileName(name), cacheDir);
           return {
             name,
             env,
