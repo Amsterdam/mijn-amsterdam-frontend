@@ -12,10 +12,11 @@ WORKDIR /build-space
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ENV SSH_PASSWD "root:Docker!"
+
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends dialog \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends openssh-server nano inetutils-traceroute \
+  && apt-get dist-upgrade -y \
+  && apt-get autoremove -y \
+  && apt-get install -y --no-install-recommends dialog openssh-server nano inetutils-traceroute \
   && echo "$SSH_PASSWD" | chpasswd 
 
 # Copy certificate
