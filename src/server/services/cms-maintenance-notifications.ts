@@ -4,7 +4,6 @@ import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
-import { AuthProfileAndToken } from '../helpers/app';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 

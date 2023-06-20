@@ -139,6 +139,44 @@ const testHistory: SiaSignalHistory[] = [
     who: 'Signalen systeem',
     _signal: 123123123,
   },
+  {
+    identifier: 'CREATE_NOTE_14279',
+    when: '2023-06-12T11:55:50.716996+02:00',
+    what: 'CREATE_NOTE',
+    action: 'Notitie toegevoegd:',
+    description:
+      'Automatische e-mail bij inplannen is verzonden aan de melder.',
+    who: 'Signalen systeem',
+    _signal: 123123123,
+  },
+  {
+    identifier: 'UPDATE_STATUS_25573',
+    when: '2023-06-12T11:55:50.424360+02:00',
+    what: 'UPDATE_STATUS',
+    action: 'Status gewijzigd naar: Ingepland',
+    description: 'Wij gaan er z.s.m mee aan de gang en houden u op de hoogte.',
+    who: 'hela.hola@amsterdam.nl',
+    _signal: 123123123,
+  },
+  {
+    identifier: 'CREATE_NOTE_142791',
+    when: '2023-06-12T11:57:50.716996+02:00',
+    what: 'CREATE_NOTE',
+    action: 'Notitie toegevoegd:',
+    description:
+      'Automatische e-mail bij inplannen is verzonden aan de melder.',
+    who: 'Signalen systeem',
+    _signal: 123123123,
+  },
+  {
+    identifier: 'UPDATE_STATUS_255731',
+    when: '2023-06-12T11:57:50.424360+02:00',
+    what: 'UPDATE_STATUS',
+    action: 'Status gewijzigd naar: Fake status',
+    description: 'Dingen die we niet willen laten zien',
+    who: 'hela.hola@amsterdam.nl',
+    _signal: 123123123,
+  },
 ];
 
 const siaResponse: /*SignalsSourceData*/ any = {
@@ -297,8 +335,8 @@ const attachmentsSample: SiaAttachmentResponse = {
 };
 
 describe('sia service', () => {
-  test('transformSiaStatusResponse', () => {
-    const history = forTesting.transformSiaStatusResponse(testHistory);
+  test('transformSiaHistoryLogResponse', () => {
+    const history = forTesting.transformSiaHistoryLogResponse(testHistory);
 
     expect(history).toMatchInlineSnapshot(`
       Array [
@@ -309,10 +347,34 @@ describe('sia service', () => {
           "status": "Open",
         },
         Object {
+          "datePublished": "2023-03-22T11:43:53.784335+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:44:04.889572+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
           "datePublished": "2023-03-22T11:44:29.032811+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
           "status": "Vraag aan u verstuurd",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:45:15.024700+01:00",
+          "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
+          "datePublished": "2023-03-22T11:47:32.549606+01:00",
+          "description": "testen mijn meldingen",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
         },
         Object {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",
@@ -329,6 +391,12 @@ describe('sia service', () => {
         Object {
           "datePublished": "2023-03-27T09:43:15.024700+01:00",
           "description": "",
+          "key": "UPDATE_STATUS",
+          "status": "Open",
+        },
+        Object {
+          "datePublished": "2023-06-12T11:55:50.424360+02:00",
+          "description": "Wij gaan er z.s.m mee aan de gang en houden u op de hoogte.",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
