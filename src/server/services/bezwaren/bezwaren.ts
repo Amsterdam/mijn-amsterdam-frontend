@@ -1,5 +1,6 @@
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
@@ -8,21 +9,20 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
+import { GenericDocument, MyNotification } from '../../../universal/types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   Bezwaar,
   BezwaarSourceData,
+  BezwaarSourceDocument,
+  BezwaarSourceStatus,
+  BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
   kenmerkKey,
-  BezwaarStatus,
-  BezwaarSourceStatus,
-  BezwaarSourceDocument,
 } from './types';
-import { AppRoutes, Chapters, IS_ACCEPTANCE } from '../../../universal/config';
-import { GenericDocument, MyNotification } from '../../../universal/types';
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
