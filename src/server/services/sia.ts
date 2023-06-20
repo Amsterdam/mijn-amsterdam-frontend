@@ -66,6 +66,14 @@ const MA_STATUS_ALLOWED = [
   MA_REPLY_RECEIVED,
   MA_CLOSED,
 ];
+
+const STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER: StatusStateChoice[] = [
+  REACTIE_GEVRAAGD,
+  REACTIE_ONTVANGEN,
+  AFGEHANDELD,
+  HEROPEND,
+];
+
 // Choices for the API/Serializer layer. Users that can change the state via the API are only allowed
 // to use one of the following choices.
 const STATUS_CHOICES_MA: Record<StatusStateChoice, string> = {
@@ -478,12 +486,36 @@ export interface SiaSignalStatusHistory {
   description: string;
 }
 
-function transformSiaStatusResponse(response: SiaSignalHistory[]) {
+function isStatusUpdateSentToUser(
+  statusKey: StatusStateChoice,
+  nextEntry?: SiaSignalHistory
+) {
+  // Statusses we known for sure have a description that needs to be shown.
+  const isExplitlyShownToUser =
+    STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey);
+
+  // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
+  let isDescriptionOptionallySentToUser = false;
+
+  // If an e-mail is sent to the user a CREATE_NOTE history log action is added with a specific text format.
+  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+Automatische%20e-mail&type=code
+  if (!isExplitlyShownToUser && nextEntry) {
+    isDescriptionOptionallySentToUser =
+      nextEntry.what === 'CREATE_NOTE' &&
+      !!(
+        nextEntry.description?.startsWith('Automatische e-mail') &&
+        nextEntry.description.includes('is verzonden aan de melder')
+      );
+  }
+
+  return isExplitlyShownToUser || isDescriptionOptionallySentToUser;
+}
+
+function transformSiaHistoryLogResponse(response: SiaSignalHistory[]) {
   const history = [...response].sort(dateSort('when', 'asc'));
 
   const transformed = history
-    .filter((historyEntry) => historyEntry.what === 'UPDATE_STATUS')
-    .map((historyEntry) => {
+    .map((historyEntry, index, all) => {
       // Extract readable status string
       const statusValue = historyEntry.action.split(':')[1] as StatusValue;
 
@@ -493,69 +525,21 @@ function transformSiaStatusResponse(response: SiaSignalHistory[]) {
       // Translate statusValue to one for display and aggregation in MA
       const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
 
-      const hasVisibleDescription = [
-        REACTIE_GEVRAAGD,
-        REACTIE_ONTVANGEN,
-        AFGEHANDELD,
-      ].includes(statusKey);
+      const nextEntry = all[index + 1];
 
       return {
         status,
         key: historyEntry.what,
         datePublished: historyEntry.when,
-        description: hasVisibleDescription ? historyEntry.description : '',
+        description: isStatusUpdateSentToUser(statusKey, nextEntry)
+          ? historyEntry.description
+          : '',
       } as SiaSignalStatusHistory;
     })
+    // Filter out the log entries we want to show on MA
     .filter((historyEntry) => MA_STATUS_ALLOWED.includes(historyEntry.status));
 
-  const statusUpdates: SiaSignalStatusHistory[] = [];
-
-  /**
-   * Status history is compacted from:
-   *
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   * Open
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   *
-   * TO:
-   *
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Closed
-   * Open
-   * Reactie gevraagd
-   * Reactie ontvangen
-   * Open
-   * Closed
-   */
-
-  let prevOpenClosedState: SiaSignalStatusHistory['status'] | '' = '';
-
-  for (const statusEntry of transformed) {
-    if ([MA_REPLY_REQUESTED, MA_REPLY_RECEIVED].includes(statusEntry.status)) {
-      // Do not aggregate these statusses
-      statusUpdates.push(statusEntry);
-    } else if (prevOpenClosedState !== statusEntry.status) {
-      // Prevent Open/Closed states from being "doubled"
-      statusUpdates.push(statusEntry);
-      prevOpenClosedState = statusEntry.status;
-    } else if (prevOpenClosedState !== MA_OPEN) {
-      // Update the last non-open state date to the one that represents it
-      statusUpdates[statusUpdates.length - 1].datePublished =
-        statusEntry.datePublished;
-    }
-  }
-
-  return statusUpdates;
+  return transformed;
 }
 
 export async function fetchSignalHistory(
@@ -573,7 +557,7 @@ export async function fetchSignalHistory(
     const response = await requestData<SiaSignalStatusHistory[]>(
       {
         ...requestConfig,
-        transformResponse: transformSiaStatusResponse,
+        transformResponse: transformSiaHistoryLogResponse,
       },
       requestID,
       authProfileAndToken
@@ -620,7 +604,7 @@ export async function fetchSignalNotifications(
 
 export const forTesting = {
   transformSiaAttachmentsResponse,
-  transformSiaStatusResponse,
+  transformSiaHistoryLogResponse,
   transformSIAData,
   createSIANotification,
   getSiaRequestConfig,
