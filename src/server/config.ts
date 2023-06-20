@@ -147,7 +147,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
-    url: `${process.env.BFF_BEZWAREN_LIST_ENDPOINT}`,
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
