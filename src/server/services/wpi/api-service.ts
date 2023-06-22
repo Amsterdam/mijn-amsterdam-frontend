@@ -360,6 +360,8 @@ export async function fetchWpiNotifications(
       authProfileAndToken
     );
 
+    console.log('fetchEAanvragen', content, status);
+
     if (status === 'OK') {
       if (content?.length) {
         const eAanvraagNotifications = content
