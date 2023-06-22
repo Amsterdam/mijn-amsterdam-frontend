@@ -102,7 +102,7 @@ describe('AVG', () => {
         });
     });
 
-    xit('should transform the data correctly', () => {
+    it('should transform the data correctly', () => {
       const res = transformAVGResponse(apiResponse);
 
       expect(res.verzoeken.length).toEqual(apiResponse.List.length);
@@ -129,138 +129,10 @@ describe('AVG', () => {
     it('should return data in expected format', async () => {
       const res = await fetchAVG(requestId, profileAndToken);
 
-      expect(res).toMatchInlineSnapshot(`
-        Object {
-          "content": Object {
-            "verzoeken": Array [
-              Object {
-                "datumAfhandeling": "",
-                "datumInBehandeling": "",
-                "id": "1",
-                "link": Object {
-                  "title": "AVG verzoek 1",
-                  "to": "/avg/verzoek/1",
-                },
-                "onderwerp": "Parkeren",
-                "ontvangstDatum": "2023-03-06T00:00:00.000Z",
-                "opschortenGestartOp": "2023-03-16T00:00:00.000Z",
-                "registratieDatum": "",
-                "resultaat": "",
-                "status": "Open",
-                "themas": Array [
-                  "avg thema 2",
-                ],
-                "toelichting": "Iets met parkeren",
-                "type": "Inzage",
-              },
-              Object {
-                "datumAfhandeling": "",
-                "datumInBehandeling": "2023-03-30T00:00:00.000Z",
-                "id": "2",
-                "link": Object {
-                  "title": "AVG verzoek 2",
-                  "to": "/avg/verzoek/2",
-                },
-                "onderwerp": "Vergunningen",
-                "ontvangstDatum": "2023-03-08T00:00:00.000Z",
-                "opschortenGestartOp": "",
-                "registratieDatum": "2023-03-30T00:00:00.000Z",
-                "resultaat": "",
-                "status": "Open",
-                "themas": Array [
-                  "avg thema 3",
-                ],
-                "toelichting": "Iets over vergunningen",
-                "type": "Verwijderen gegevens",
-              },
-              Object {
-                "datumAfhandeling": "2023-03-19T00:00:00.000Z",
-                "datumInBehandeling": "2023-03-16T00:00:00.000Z",
-                "id": "223",
-                "link": Object {
-                  "title": "AVG verzoek 223",
-                  "to": "/avg/verzoek/223",
-                },
-                "onderwerp": "Vergunningen",
-                "ontvangstDatum": "2022-03-09T00:00:00.000Z",
-                "opschortenGestartOp": "",
-                "registratieDatum": "2023-03-16T00:00:00.000Z",
-                "resultaat": "",
-                "status": "Afgehandeld",
-                "themas": Array [
-                  "avg thema 3",
-                ],
-                "toelichting": "Iets over vergunningen",
-                "type": "Verwijderen gegevens",
-              },
-              Object {
-                "datumAfhandeling": "2023-03-25T00:00:00.000Z",
-                "datumInBehandeling": "2023-03-20T00:00:00.000Z",
-                "id": "425",
-                "link": Object {
-                  "title": "AVG verzoek 425",
-                  "to": "/avg/verzoek/425",
-                },
-                "onderwerp": "Vergunningen",
-                "ontvangstDatum": "2022-03-10T00:00:00.000Z",
-                "opschortenGestartOp": "2022-03-12T00:00:00.000Z",
-                "registratieDatum": "2023-03-20T00:00:00.000Z",
-                "resultaat": "",
-                "status": "Afgehandeld",
-                "themas": Array [
-                  "avg thema 2",
-                ],
-                "toelichting": "Iets over vergunningen",
-                "type": "Verwijderen gegevens",
-              },
-              Object {
-                "datumAfhandeling": "",
-                "datumInBehandeling": "2023-03-30T00:00:00.000Z",
-                "id": "561",
-                "link": Object {
-                  "title": "AVG verzoek 561",
-                  "to": "/avg/verzoek/561",
-                },
-                "onderwerp": "Mileuzone",
-                "ontvangstDatum": "2023-03-18T00:00:00.000Z",
-                "opschortenGestartOp": "2023-04-03T00:00:00.000Z",
-                "registratieDatum": "2023-03-30T00:00:00.000Z",
-                "resultaat": "",
-                "status": "Open",
-                "themas": Array [
-                  "avg thema 1",
-                ],
-                "toelichting": "Iets over mileu",
-                "type": "Aanpassen gegevens",
-              },
-              Object {
-                "datumAfhandeling": "",
-                "datumInBehandeling": "",
-                "id": "156",
-                "link": Object {
-                  "title": "AVG verzoek 156",
-                  "to": "/avg/verzoek/156",
-                },
-                "onderwerp": "Mileuzone",
-                "ontvangstDatum": "2023-03-18T00:00:00.000Z",
-                "opschortenGestartOp": "",
-                "registratieDatum": "",
-                "resultaat": "",
-                "status": "Open",
-                "themas": Array [
-                  "avg thema 1",
-                ],
-                "toelichting": "Iets over mileu",
-                "type": "Aanpassen gegevens",
-              },
-            ],
-          },
-          "status": "OK",
-        }
-      `);
+      expect(res).toMatchSnapshot();
     });
 
-    xit('should return the right notifications', async () => {
+    it('should return the right notifications', async () => {
       const res = await fetchAVGNotifications(requestId, profileAndToken);
 
       expect(res).toMatchInlineSnapshot(`
