@@ -19,7 +19,6 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
-import * as Sentry from '@sentry/react';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -61,7 +60,7 @@ function getDataForAvgThemas(avgId: string) {
 
   data.append('username', process.env.BFF_SMILE_USERNAME);
   data.append('password', process.env.BFF_SMILE_PASSWORD);
-  data.append('function', 'readAVGverzoek');
+  data.append('function', 'readthemaperavgverzoek');
 
   const columns = [
     'themaperavgverzoek_avgthema_omschrijving',
@@ -109,7 +108,9 @@ export async function enrichAvgResponse(
     }
   }
 
-  return avgResponse;
+  return apiSuccessResult({
+    verzoeken: enrichedAvgRequests,
+  });
 }
 
 export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
@@ -191,12 +192,6 @@ export function transformAVGThemeResponse(
 ): AvgThemesResponse {
   // Do something with the data.
 
-  Sentry.captureMessage('transformAVGThemeResponse input', {
-    extra: {
-      data: JSON.stringify(data),
-    },
-  });
-
   if (!data.List || data.rowcount === 0) {
     return {
       verzoeken: [],
@@ -206,7 +201,8 @@ export function transformAVGThemeResponse(
   return {
     verzoeken: data.List.map((avgTheme) => ({
       avgVerzoekId: avgTheme.themaperavgverzoek_avgverzoek_id.value,
-      themaOmschrijving: avgTheme.themaperavgverzoek_avgverzoek_id.value,
+      themaOmschrijving:
+        avgTheme.themaperavgverzoek_avgthema_omschrijving.value,
     })),
   };
 }
