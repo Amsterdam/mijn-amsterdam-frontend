@@ -2,7 +2,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
     xml:space="preserve" width="28" height="28">
     <title>Papier en karton</title>
-    <circle cx="12" cy="12" r="12" style="fill: rgb(3, 78, 162);"></circle>
+    <circle cx="12" cy="12" r="12" fill="#034ea2"></circle>
     <g transform="translate(7.000000, 5.000000)">
         <polygon points="0.05 1.51 0.79 2.8 5.03 0.93 5.28 1.36 6.14 0.86 5.64 4.4408921e-16" fill="#FFFFFF"></polygon>
         <path d="M6.14,0.86 L-8.8817842e-16,4.42 L5.5,13.95 L11.65,10.4 L6.14,0.86 Z M7.47,5.8 L6.33,6.46 L5.83,5.59 L6.98,4.93 L7.47,5.8 Z M5.97,3.2 L6.47,4.07 L5.33,4.73 L4.83,3.87 L5.97,3.2 Z M2.23,5.37 L3.96,4.37 L5.46,6.97 L3.73,7.97 L2.23,5.37 Z M4.23,8.83 L7.98,6.67 L8.48,7.54 L4.73,9.7 L4.23,8.83 Z M5.23,10.56 L8.98,8.4 L9.48,9.27 L5.73,11.43 L5.23,10.56 Z" fill="#FFFFFF"></path>
