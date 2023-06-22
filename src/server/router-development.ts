@@ -8,12 +8,18 @@ import path from 'path';
 import { testAccounts } from '../universal/config/auth.development';
 import { apiSuccessResult } from '../universal/helpers';
 import {
+  BffEndpoints,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
   profileTypeByAuthMethod,
 } from './config';
-import { AuthProfile, getAuth, sendUnauthorized } from './helpers/app';
+import {
+  AuthProfile,
+  getAuth,
+  hasSessionCookie,
+  sendUnauthorized,
+} from './helpers/app';
 import { generateDevSessionCookieValue } from './helpers/app.development';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
@@ -84,14 +90,16 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get('/api/v1/auth/logout', async (req, res) => {
-  const auth = await getAuth(req);
-
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-
+authRouterDevelopment.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
   let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+  let authMethodRequested = req.query.authMethod;
 
-  switch (auth.profile.authMethod) {
+  if (hasSessionCookie(req) && !authMethodRequested) {
+    const auth = await getAuth(req);
+    authMethodRequested = auth.profile.authMethod;
+  }
+
+  switch (authMethodRequested) {
     case 'yivi':
       redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
       break;
