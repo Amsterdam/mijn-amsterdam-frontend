@@ -34,7 +34,7 @@ describe('AVG', () => {
       nock('http://localhost')
         .post('/smile', /readavgverzoek/gi)
         .reply(200, apiResponse)
-        .post('/smile', /425/gi)
+        .post('/smile', /'425'/gi)
         .reply(200, {
           List: [
             {
@@ -45,7 +45,7 @@ describe('AVG', () => {
             },
           ],
         })
-        .post('/smile', /223/gi)
+        .post('/smile', /'223'/gi)
         .reply(200, {
           List: [
             {
@@ -56,7 +56,7 @@ describe('AVG', () => {
             },
           ],
         })
-        .post('/smile', /561/gi)
+        .post('/smile', /'561'/gi)
         .reply(200, {
           List: [
             {
@@ -67,7 +67,7 @@ describe('AVG', () => {
             },
           ],
         })
-        .post('/smile', /1/gi)
+        .post('/smile', /'1'/gi)
         .reply(200, {
           List: [
             {
@@ -78,7 +78,7 @@ describe('AVG', () => {
             },
           ],
         })
-        .post('/smile', /2/gi)
+        .post('/smile', /'2'/gi)
         .reply(200, {
           List: [
             {
@@ -89,7 +89,7 @@ describe('AVG', () => {
             },
           ],
         })
-        .post('/smile', /156/gi)
+        .post('/smile', /'156'/gi)
         .reply(200, {
           List: [
             {
