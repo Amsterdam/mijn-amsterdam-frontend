@@ -5,6 +5,7 @@ import {
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
+  getSettledResult,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
@@ -12,6 +13,7 @@ import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AVGRequest, AVGResponse, SmileAvgResponse } from './types';
+import * as Sentry from '@sentry/react';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -66,13 +68,36 @@ function getDataForAvgThemas(avgId: string) {
   return data;
 }
 
-export function enrichAvgResponse(
-  bezwarenResponse: ApiSuccessResponse<AVGResponse>,
+export async function enrichAvgResponse(
+  avgResponse: ApiSuccessResponse<AVGResponse>,
   authProfileAndToken: AuthProfileAndToken
 ) {
   // For each avgRequest, fetch the theme's.
 
-  return bezwarenResponse;
+  const rs = [];
+
+  for (const avgRequest of avgResponse.content.verzoeken) {
+    const themePromise = fetchAVGRequestThemes(avgRequest.id);
+
+    rs.push(
+      Promise.all([Promise.resolve(avgRequest), themePromise]).then((res) =>
+        apiSuccessResult(res)
+      )
+    );
+  }
+
+  const results = await Promise.allSettled(rs);
+  const enrichedAvgRequests: AVGRequest[] = [];
+
+  for (const result of results) {
+    const settledResult = getSettledResult(result);
+
+    if (settledResult.status === 'OK') {
+      // const [avgRequest, {content: }]
+    }
+  }
+
+  return avgResponse;
 }
 
 export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
@@ -151,12 +176,18 @@ export async function fetchAVG(
 
 export function transformAVGThemeResponse(data: SmileAvgResponse) {
   // Do something with the data.
+
+  Sentry.captureMessage('transformAVGThemeResponse input', {
+    extra: {
+      data: JSON.stringify(data),
+    },
+  });
 }
 
 export async function fetchAVGRequestThemes(avgId: string) {
   const data = getDataForAvgThemas(avgId);
 
-  return await requestData<AVGResponse>(
+  const res = await requestData<AVGResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformAVGThemeResponse,
       data,
@@ -166,6 +197,8 @@ export async function fetchAVGRequestThemes(avgId: string) {
     }),
     avgId
   );
+
+  return res;
 }
 
 // fetchNotificaties
