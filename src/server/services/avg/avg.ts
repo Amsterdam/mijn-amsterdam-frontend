@@ -76,8 +76,6 @@ function getDataForAvgThemas(avgId: string) {
 export async function enrichAvgResponse(
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
-  // For each avgRequest, fetch the theme's.
-
   const rs = [];
 
   for (const avgRequest of avgResponse.content.verzoeken) {
@@ -190,8 +188,6 @@ export async function fetchAVG(
 export function transformAVGThemeResponse(
   data: SmileAvgThemesResponse
 ): AvgThemesResponse {
-  // Do something with the data.
-
   if (!data.List || data.rowcount === 0) {
     return {
       verzoeken: [],
