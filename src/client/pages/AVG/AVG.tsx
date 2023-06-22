@@ -16,7 +16,7 @@ import styles from './AVG.module.scss';
 const DISPLAY_PROPS_AVG = {
   idAsLink: 'Nummer',
   ontvangstDatum: 'Ontvangen op',
-  onderwerp: 'Onderwerp',
+  themaString: 'Onderwerp',
 };
 
 const AVG = () => {
@@ -27,6 +27,7 @@ const AVG = () => {
 
     ontvangstDatum: defaultDateFormat(avgVerzoek.ontvangstDatum),
     idAsLink: avgVerzoek.id,
+    themaString: avgVerzoek.themas?.join(', '),
   }));
 
   // TODO: Statussen verifieren.
