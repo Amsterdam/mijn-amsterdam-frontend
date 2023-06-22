@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "4.55.0",
+  "version": "4.58.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
@@ -138,6 +138,7 @@
   },
   "devDependencies": {
     "@types/express-http-proxy": "^1.6.3",
+    "mockdate": "^3.0.5",
     "nock": "^13.2.2"
   }
 }

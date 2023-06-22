@@ -1,5 +1,7 @@
 import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
+import { differenceInMonths } from 'date-fns';
+import FormData from 'form-data';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -18,7 +20,6 @@ import {
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
-import { differenceInMonths } from 'date-fns';
 
 function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {
@@ -98,8 +99,36 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
   return { metingen };
 }
 
-function getLoodApiHeaders() {
-  return {};
+async function getLoodApiHeaders(requestID: requestID) {
+  const url = `${process.env.BFF_LOOD_API_URL}`;
+  const requestConfig = getApiConfig('LOOD_365_OAUTH');
+
+  const data = new FormData();
+  data.append('client_id', `${process.env.BFF_LOOD_USERNAME}`);
+  data.append('client_secret', `${process.env.BFF_LOOD_PWD}`);
+  data.append('scope', `${url.substring(0, url.indexOf('api'))}.default`);
+  data.append('grant_type', 'client_credentials');
+
+  requestConfig.data = data;
+  // The receiving API is very strict about the headers. Without a boundary the request fails.
+  requestConfig.headers = {
+    'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
+  };
+
+  const response = await requestData<{ access_token: string }>(
+    requestConfig,
+    requestID
+  );
+
+  if (response.status === 'OK') {
+    const { access_token } = response.content;
+
+    return {
+      Authorization: `Bearer ${access_token}`,
+    };
+  }
+
+  return undefined;
 }
 
 export async function fetchLoodmetingen(
@@ -108,8 +137,9 @@ export async function fetchLoodmetingen(
 ) {
   const data = getDataForLood365(authProfileAndToken);
   const requestConfig = getApiConfig('LOOD_365', {
-    transformResponse: transformLood365Response,
+    headers: await getLoodApiHeaders(requestID),
     data,
+    transformResponse: transformLood365Response,
   });
   requestConfig.url = `${requestConfig.url}/be_getrequestdetails`;
 
@@ -134,8 +164,7 @@ export async function fetchLoodMetingDocument(
   }
 
   const requestConfig = getApiConfig('LOOD_365', {
-    headers: getLoodApiHeaders(),
-    method: 'POST',
+    headers: await getLoodApiHeaders(requestID),
     data: {
       workorderid: documentId,
     },
