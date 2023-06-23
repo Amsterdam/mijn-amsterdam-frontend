@@ -230,7 +230,7 @@ export function Search({
         },
         amountOfResults,
         amountOfResultsShown,
-        type: 'manueel',
+        type: 'autocomplete',
       });
       setResultsVisible(false);
       onFinish('Click result');
