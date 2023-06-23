@@ -2,7 +2,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
   xml:space="preserve" width="28" height="28">
   <title>Glas</title>
-  <circle cx="12" cy="12" r="12" style="fill: rgb(255, 230, 0);"></circle>
+  <circle cx="12" cy="12" r="12" fill="#ffe600"></circle>
   <g transform="translate(9.000000, 4.000000)">
     <rect id="Rectangle" x="-8.8817842e-16" y="7.86" width="2.25" height="4.38"></rect>
     <path

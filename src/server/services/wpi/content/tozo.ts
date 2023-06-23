@@ -135,6 +135,11 @@ const besluitLabels: WpiRequestStatusLabels = {
             statusStep.about || requestProcess.about
           }: Wij behandelen uw aanvraag niet meer`;
 
+        case 'beschikking':
+          return `${
+            statusStep.about || requestProcess.about
+          }: Uw uitkering is definitief berekend`;
+
         default:
         case 'vrijeBeschikking':
           return `${
@@ -158,6 +163,9 @@ const besluitLabels: WpiRequestStatusLabels = {
 
         case 'buitenBehandeling':
           return `Bekijk de brief voor meer details.`;
+
+        case 'beschikking':
+          return `Uw bijstandsuitkering zelfstandigen is definitief berekend.`;
 
         default:
         case 'vrijeBeschikking':

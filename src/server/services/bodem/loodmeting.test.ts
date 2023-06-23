@@ -1,4 +1,5 @@
 import nock from 'nock';
+import MockDate from 'mockdate';
 import { AuthProfileAndToken } from '../../helpers/app';
 import metingen from '../../mock-data/json/loodmetingen.json';
 import document from '../../mock-data/json/loodmeting_rapport.json';
@@ -23,10 +24,12 @@ describe('Loodmeting', () => {
   afterAll(() => {
     nock.enableNetConnect();
     nock.restore();
+    MockDate.reset();
   });
 
   beforeAll(() => {
     nock.disableNetConnect();
+    MockDate.set('2023-04-01');
   });
 
   beforeEach(() => {
