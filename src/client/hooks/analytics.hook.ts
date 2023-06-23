@@ -8,7 +8,6 @@ import {
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
 import { getOtapEnvItem } from '../../universal/config';
-import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 
 let PiwikInstance: PiwikTracker;
 
@@ -54,7 +53,7 @@ export function trackSearch(
   const payload: TrackSiteSearchParams = {
     keyword,
     count,
-    type: 'manueel',
+    type: 'autocomplete',
     searchMachine,
     customDimensions: [profileTypeDimension(profileType)],
   };
@@ -80,15 +79,9 @@ export function trackSearchResultClick({
   );
 }
 
-function _trackPageView(url?: string, customDimensions?: CustomDimension[]) {
-  let href = url || document.location.href;
-
-  if (IS_AP && !href.startsWith('http')) {
-    href = `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn.amsterdam.nl${href}`;
-  }
-
+function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
   const payload: TrackPageViewParams = {
-    href,
+    href: `/mijn-amsterdam${href}/`,
     customDimensions,
   };
 
