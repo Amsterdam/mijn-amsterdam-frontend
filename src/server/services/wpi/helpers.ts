@@ -60,6 +60,7 @@ export function createProcessNotification(
   const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;
   const descriptionTransform = notificationLabels.description;
+  const linkTransform = notificationLabels.link;
 
   return {
     id: `${requestProcess.id}-notification`,
@@ -74,10 +75,12 @@ export function createProcessNotification(
           statusStep.about || requestProcess.about
         }-aanvraag.`,
 
-    link: {
-      to: requestProcess.link?.to || '/',
-      title: 'Bekijk hoe het met uw aanvraag staat',
-    },
+    link: linkTransform
+      ? linkTransform(requestProcess, statusStep)
+      : {
+          to: requestProcess.link?.to || '/',
+          title: 'Bekijk hoe het met uw aanvraag staat',
+        },
   };
 }
 

@@ -1,5 +1,5 @@
 import { defaultDateTimeFormat } from '../../../../universal/helpers';
-import { productName } from '../helpers';
+import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
@@ -16,8 +16,8 @@ const aanvraagLabels: WpiRequestStatusLabels = {
   },
   description: (requestProcess, statusStep) =>
     `<p>Wij hebben uw aanvraag ${
-          statusStep.about || requestProcess.about
-        } ontvangen. Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details.</p>`,
+      statusStep.about || requestProcess.about
+    } ontvangen. Het kan zijn dat er meer informatie en tijd nodig is om uw aanvraag te behandelen. Bekijk de aanvraag voor meer details.</p>`,
 };
 
 const beslisTermijnLabels: WpiRequestStatusLabels = {
@@ -83,6 +83,9 @@ const besluitLabels: WpiRequestStatusLabels = {
           )}. Kijk voor de voorwaarden in de brief.
         </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
+      case 'beschikking':
+        return '<p>Wij hebben uw Bbz uitkering definitief berekend. Bekijk het besluit om te zien of u de uitkering mag houden of (voor een deel) moet terugbetalen.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>';
+
       default:
         return tozoRequestProcess.besluit.description(
           requestProcess,
@@ -90,6 +93,48 @@ const besluitLabels: WpiRequestStatusLabels = {
         );
     }
   },
+};
+
+const correctiemail: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${
+        statusStep.about || requestProcess.about
+      }: Wij hebben u een mail gestuurd`,
+    description: () =>
+      `Wij hebben u gemaild over uw bijstandsuitkering zelfstandigen.`,
+    link: (requestProcess, statusStep) => {
+      const [document] = statusStep!.documents!;
+      return {
+        to: `${document?.url}`,
+        title: 'Bekijk de mail',
+        download: documentDownloadName({
+          datePublished: requestProcess.datePublished,
+          title: 'Bbz-brief',
+        }),
+      };
+    },
+  },
+  description: () =>
+    `<p>Wij hebben u een mail gestuurd. Bekijk de mail voor meer details.</p>`,
+};
+
+const informatieOntvangen: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${
+        statusStep.about || requestProcess.about
+      }: Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen`,
+    description: (requestProcess, statusStep) =>
+      `Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(
+        statusStep.datePublished
+      )}.`,
+  },
+  description: (requestProcess, statusStep) =>
+    `<p>Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(
+      statusStep.datePublished
+    )}. Het kan zijn dat er meer informatie en tijd nodig is om uw Bbz-uitkering definitief te kunnen berekenen. Bekijk het formulier voor meer details.</p>` +
+    '<p>Wij maken een definitieve berekening van uw Bbz-uitkering en sturen u een besluit. We proberen dit binnen 3 maanden te doen. Het kan langer duren doordat het nog erg druk is op onze afdeling.</p>',
 };
 
 export const requestProcess = {
@@ -103,4 +148,6 @@ export const requestProcess = {
   briefAdviesRapport: briefAdviesRapportLabels,
   briefAkteBedrijfskapitaal: akteLabels,
   beslisTermijn: beslisTermijnLabels,
+  correctiemail,
+  informatieOntvangen,
 };
