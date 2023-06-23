@@ -122,23 +122,25 @@ function AppNotAuthenticated() {
   useUsabilla();
 
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const hasSSO = params.get('sso');
+  const authMethod = params.get('authMethod');
+  const shouldRedirectSSO =
+    hasSSO && authMethod && authMethod in loginUrlByAuthMethod;
 
-  if (location.search) {
-    const params = new URLSearchParams(location.search);
-    if (params.get('sso')) {
-      const authMethod = params.get('authMethod');
-      if (authMethod && authMethod in loginUrlByAuthMethod) {
-        return (
-          <p className={styles.PreLoader}>
-            Automatische toegang tot Mijn Amsterdam wordt gecontroleerd...
-            <meta
-              http-equiv="refresh"
-              content={`0; url=${loginUrlByAuthMethod[authMethod]}`}
-            />
-          </p>
-        );
-      }
+  // NOTE: Instantly redirecting users client side may lead to suboptimal UX. See also: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#sect2 and https://en.wikipedia.org/wiki/Meta_refresh
+  useEffect(() => {
+    if (shouldRedirectSSO) {
+      window.location.href = loginUrlByAuthMethod[authMethod];
     }
+  }, [shouldRedirectSSO, authMethod]);
+
+  if (shouldRedirectSSO) {
+    return (
+      <p className={styles.PreLoader}>
+        Automatische toegang tot Mijn Amsterdam wordt gecontroleerd...
+      </p>
+    );
   }
 
   return (
