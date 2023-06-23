@@ -7,6 +7,7 @@ import {
   Route,
   Switch,
   useHistory,
+  useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
@@ -21,13 +22,14 @@ import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useDeeplinkEntry,
+  useSetDeeplinkEntry,
   useDeeplinkRedirect,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 
 import { default as LandingPage } from './pages/Landing/Landing';
+import { loginUrlByAuthMethod } from './config/api';
 
 const BurgerzakenAkte = lazy(
   () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
@@ -115,9 +117,31 @@ const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
 const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
 
 function AppNotAuthenticated() {
-  useDeeplinkEntry();
+  useSetDeeplinkEntry(['sso', 'authMethod']);
   usePageChange(false);
   useUsabilla();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const hasSSO = params.get('sso');
+  const authMethod = params.get('authMethod');
+  const shouldRedirectSSO =
+    hasSSO && authMethod && authMethod in loginUrlByAuthMethod;
+
+  // NOTE: Instantly redirecting users client side may lead to suboptimal UX. See also: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#sect2 and https://en.wikipedia.org/wiki/Meta_refresh
+  useEffect(() => {
+    if (shouldRedirectSSO) {
+      window.location.href = loginUrlByAuthMethod[authMethod];
+    }
+  }, [shouldRedirectSSO, authMethod]);
+
+  if (shouldRedirectSSO) {
+    return (
+      <p className={styles.PreLoader}>
+        Automatische toegang tot Mijn Amsterdam wordt gecontroleerd...
+      </p>
+    );
+  }
 
   return (
     <>
@@ -379,7 +403,7 @@ export default function App() {
         <Suspense
           fallback={
             <div className={styles.PreLoader}>
-              Loading Mijn Amsterdam bundle...
+              De Mijn Amsterdam applicatie wordt geladen....
             </div>
           }
         >
