@@ -1,5 +1,5 @@
 import { defaultDateTimeFormat } from '../../../../universal/helpers';
-import { productName } from '../helpers';
+import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
@@ -103,6 +103,17 @@ const correctiemail: WpiRequestStatusLabels = {
       }: Wij hebben u een mail gestuurd`,
     description: () =>
       `Wij hebben u gemaild over uw bijstandsuitkering zelfstandigen.`,
+    link: (requestProcess, statusStep) => {
+      const [document] = statusStep!.documents!;
+      return {
+        to: `${document?.url}`,
+        title: 'Bekijk de mail',
+        download: documentDownloadName({
+          datePublished: requestProcess.datePublished,
+          title: 'Bbz-brief',
+        }),
+      };
+    },
   },
   description: () =>
     `<p>Wij hebben u een mail gestuurd. Bekijk de mail voor meer details.</p>`,
