@@ -1,4 +1,5 @@
 import nock from 'nock';
+import MockDate from 'mockdate';
 import { AuthProfileAndToken } from '../../helpers/app';
 import metingen from '../../mock-data/json/loodmetingen.json';
 import document from '../../mock-data/json/loodmeting_rapport.json';
@@ -23,10 +24,21 @@ describe('Loodmeting', () => {
   afterAll(() => {
     nock.enableNetConnect();
     nock.restore();
+    MockDate.reset();
   });
 
   beforeAll(() => {
     nock.disableNetConnect();
+    MockDate.set('2023-04-01');
+  });
+
+  beforeEach(() => {
+    nock(process.env.BFF_LOOD_OAUTH!)
+      .post(`/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`)
+      .twice()
+      .reply(200, {
+        access_token: 'token',
+      });
   });
 
   afterEach(() => {
@@ -36,8 +48,10 @@ describe('Loodmeting', () => {
 
   describe('service', () => {
     beforeEach(() => {
-      nock('http://localhost')
-        .get('/be_getrequestdetails')
+      nock(process.env.BFF_LOOD_API_URL!, {
+        reqheaders: { Authorization: 'Bearer token' },
+      })
+        .post('/be_getrequestdetails')
         .reply(200, metingen);
     });
 
@@ -292,8 +306,10 @@ describe('Loodmeting', () => {
 
   describe('document', () => {
     beforeEach(() => {
-      nock('http://localhost')
-        .get('/be_getrequestdetails')
+      nock('http://localhost', {
+        reqheaders: { Authorization: 'Bearer token' },
+      })
+        .post('/be_getrequestdetails')
         .reply(200, metingen)
         .post('/be_downloadleadreport')
         .reply(200, document);
