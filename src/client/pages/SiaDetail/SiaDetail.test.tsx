@@ -113,7 +113,7 @@ describe('<SiaDetail />', () => {
       ]).toStrictEqual([true, true]);
     });
 
-    console.log('hoi!!!', historyFetch?.isDone(), attachmentsFetch?.isDone());
+    console.debug('hoi!!!', historyFetch?.isDone(), attachmentsFetch?.isDone());
 
     await new Promise(process.nextTick);
 
