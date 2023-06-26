@@ -30,7 +30,6 @@ const AVG = () => {
     themaString: avgVerzoek.themas?.join(', '),
   }));
 
-  // TODO: Statussen verifieren.
   const avgVerzoekenLopend = avgVerzoeken
     ? addTitleLinkComponent(
         avgVerzoeken.filter((avgVerzoek) => avgVerzoek.datumAfhandeling === ''),
