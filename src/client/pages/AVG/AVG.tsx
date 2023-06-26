@@ -27,7 +27,7 @@ const AVG = () => {
 
     ontvangstDatum: defaultDateFormat(avgVerzoek.ontvangstDatum),
     idAsLink: avgVerzoek.id,
-    themaString: avgVerzoek.themas?.join(', '),
+    themaString: avgVerzoek.themas.join(', '),
   }));
 
   const avgVerzoekenLopend = avgVerzoeken
