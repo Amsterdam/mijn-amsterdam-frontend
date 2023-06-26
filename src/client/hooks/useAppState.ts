@@ -223,6 +223,13 @@ export function isAppStateReady(
     }
   );
 
+  console.debug(
+    profileStates.map(([appStateKey, response]) => [
+      appStateKey,
+      response.status,
+    ])
+  );
+
   return (
     !!profileStates.length &&
     profileStates.every(([appStateKey, state]) => {
