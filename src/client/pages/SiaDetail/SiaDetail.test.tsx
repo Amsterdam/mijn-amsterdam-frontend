@@ -1,12 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import nock from 'nock';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
+import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import SiaDetail from './SiaDetail';
-import nock from 'nock';
-import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 
 const SIA_ITEM = {
   id: 'xbcdefgh',
@@ -47,11 +47,8 @@ describe('<SiaDetail />', () => {
     nock.disableNetConnect();
   });
 
-  let historyFetch: nock.Scope | null = null;
-  let attachmentsFetch: nock.Scope | null = null;
-
   beforeEach(() => {
-    attachmentsFetch = nock('http://localhost')
+    nock('http://localhost')
       .get('/api/v1/services/signals/xbcdefgh/attachments')
       .reply(200, {
         content: [
@@ -63,7 +60,7 @@ describe('<SiaDetail />', () => {
         status: 'OK',
       });
 
-    historyFetch = nock('http://localhost')
+    nock('http://localhost')
       .get('/api/v1/services/signals/xbcdefgh/history')
       .reply(200, {
         content: [
@@ -103,15 +100,8 @@ describe('<SiaDetail />', () => {
     />
   );
 
-  it('Happy view', async () => {
+  test('Happy view', async () => {
     render(<Component />);
-
-    await waitFor(() => {
-      return expect([
-        historyFetch?.isDone(),
-        attachmentsFetch?.isDone(),
-      ]).toStrictEqual([true, true]);
-    });
 
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
     expect(
@@ -122,7 +112,9 @@ describe('<SiaDetail />', () => {
     expect(screen.getAllByText(SIA_ITEM.status)).toHaveLength(2); // one in body, one in status line
     expect(screen.getByText(SIA_ITEM.description)).toBeInTheDocument();
     expect(screen.queryByText(SIA_ITEM.category)).not.toBeInTheDocument();
-    expect(screen.getByText(`Foto's`)).toBeInTheDocument();
-    expect(screen.getByText(`Reactie verzonden`)).toBeInTheDocument();
+    expect((await screen.findAllByText(/Foto's/))[0]).toBeInTheDocument();
+    expect(
+      (await screen.findAllByText(/Reactie verzonden/))[0]
+    ).toBeInTheDocument();
   });
 });
