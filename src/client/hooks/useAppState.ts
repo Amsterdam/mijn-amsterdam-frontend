@@ -17,6 +17,7 @@ import { useDataApi } from './api/useDataApi';
 import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { IS_TEST } from '../../universal/config';
 
 // Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF because these services are based on
 // addresses that likely change whenever someone toggles between the private-commercial/private profiles.
@@ -223,12 +224,14 @@ export function isAppStateReady(
     }
   );
 
-  console.debug(
-    profileStates.map(([appStateKey, response]) => [
-      appStateKey,
-      response.status,
-    ])
-  );
+  if (IS_TEST) {
+    console.debug(
+      profileStates.map(([appStateKey, response]) => [
+        appStateKey,
+        response.status,
+      ])
+    );
+  }
 
   return (
     !!profileStates.length &&

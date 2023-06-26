@@ -113,8 +113,6 @@ describe('<SiaDetail />', () => {
       ]).toStrictEqual([true, true]);
     });
 
-    console.debug('hoi!!!', historyFetch?.isDone(), attachmentsFetch?.isDone());
-
     await new Promise(process.nextTick);
 
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
