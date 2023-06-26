@@ -547,14 +547,14 @@ describe('wpi/app-service', () => {
             "datePublished": "2022-04-28",
             "description": "
         Je hebt nog een saldo van €10 of meer voor het kindtegoed.
-        Het saldo vervalt op 31 juli 2022.
+        Het saldo vervalt op 31 juli 2023.
         ",
             "id": "stadspas-budget-notification",
             "link": Object {
               "title": "Check het saldo",
               "to": "/stadspas/saldo/200771",
             },
-            "title": "Stadspas kindtegoed: Maak je tegoed op voor 30 juli 2022!",
+            "title": "Stadspas kindtegoed: Maak je tegoed op voor 30 juli 2023!",
           },
           Object {
             "chapter": "INKOMEN",
