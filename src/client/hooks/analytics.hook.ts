@@ -72,6 +72,10 @@ export function trackSearchResultClick({
   amountOfResultsShown,
   type,
 }: TrackSiteSearchResultClick) {
+  if (keyword.length <= 3) {
+    return;
+  }
+
   return (
     PiwikInstance &&
     PiwikInstance.trackSiteSearchResultClick({
