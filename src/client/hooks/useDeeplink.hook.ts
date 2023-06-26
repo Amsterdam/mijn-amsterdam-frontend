@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 export const ROUTE_ENTRY_KEY = 'RouteEntry';
 
-export function useDeeplinkEntry() {
+export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
   const location = useLocation();
   const [routeEntry, setRouteEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
 
@@ -15,7 +15,15 @@ export function useDeeplinkEntry() {
     location.pathname !== '/' &&
     isPrivateRoute(location.pathname)
   ) {
-    setRouteEntry(location.pathname + location.search);
+    let search = location.search;
+    if (excludeQueryParams) {
+      const params = new URLSearchParams(location.search);
+      excludeQueryParams.forEach((name) => {
+        params.delete(name);
+      });
+      search = `?${params.toString()}`;
+    }
+    setRouteEntry(location.pathname + search);
   }
 }
 
