@@ -103,8 +103,8 @@ describe('<SiaDetail />', () => {
     />
   );
 
-  it('Happy view', async () => {
-    const { rerender } = render(<Component />);
+  test('Happy view', async () => {
+    render(<Component />);
 
     await waitFor(() => {
       return expect([
@@ -113,7 +113,9 @@ describe('<SiaDetail />', () => {
       ]).toStrictEqual([true, true]);
     });
 
-    rerender(<Component />);
+    console.log('hoi!!!', historyFetch?.isDone(), attachmentsFetch?.isDone());
+
+    await new Promise(process.nextTick);
 
     expect(screen.getByText('Meldingen')).toBeInTheDocument();
     expect(
