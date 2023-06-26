@@ -50,6 +50,11 @@ export function trackSearch(
   searchMachine: string,
   profileType: ProfileType
 ) {
+  if (keyword.length < 3) {
+    //Only track from 3 chars and above
+    return;
+  }
+
   const payload: TrackSiteSearchParams = {
     keyword,
     count,
