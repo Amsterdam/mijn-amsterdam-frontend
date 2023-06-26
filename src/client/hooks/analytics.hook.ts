@@ -50,6 +50,11 @@ export function trackSearch(
   searchMachine: string,
   profileType: ProfileType
 ) {
+  if (keyword.length <= 3) {
+    //Only track from 4 chars and above
+    return;
+  }
+
   const payload: TrackSiteSearchParams = {
     keyword,
     count,
@@ -67,6 +72,10 @@ export function trackSearchResultClick({
   amountOfResultsShown,
   type,
 }: TrackSiteSearchResultClick) {
+  if (keyword.length <= 3) {
+    return;
+  }
+
   return (
     PiwikInstance &&
     PiwikInstance.trackSiteSearchResultClick({
