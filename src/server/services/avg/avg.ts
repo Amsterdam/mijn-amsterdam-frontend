@@ -5,7 +5,6 @@ import {
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-  getSettledResult,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
@@ -55,7 +54,7 @@ function getDataForAVG(bsn: string) {
   return data;
 }
 
-function getDataForAvgThemas(avgId: string) {
+function getDataForAvgThemas(avgIds: string[]) {
   const data = new FormData();
 
   data.append('username', process.env.BFF_SMILE_USERNAME);
@@ -68,7 +67,11 @@ function getDataForAvgThemas(avgId: string) {
   ].join(', ');
 
   data.append('columns', columns);
-  data.append('filters', `themaperavgverzoek.avgverzoek.id IN ('${avgId}')`);
+  data.append(
+    'filters',
+    `themaperavgverzoek.avgverzoek.id IN ('${avgIds.join(', ')}')`
+  );
+  data.append('pagesize', 5 * DEFAULT_PAGE_SIZE);
 
   return data;
 }
@@ -76,39 +79,30 @@ function getDataForAvgThemas(avgId: string) {
 export async function enrichAvgResponse(
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
-  const rs = [];
+  const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
+  const themasResponse = await fetchAVGRequestThemes(avgIds);
 
-  for (const avgRequest of avgResponse.content.verzoeken) {
-    const themePromise = fetchAVGRequestThemes(avgRequest.id);
-
-    rs.push(
-      Promise.all([Promise.resolve(avgRequest), themePromise]).then((res) =>
-        apiSuccessResult(res)
-      )
-    );
-  }
-
-  const results = await Promise.allSettled(rs);
-  const enrichedAvgRequests: AVGRequest[] = [];
-
-  for (const result of results) {
-    const settledResult = getSettledResult(result);
-
-    if (settledResult.status === 'OK') {
-      const [avgRequest, { content: themes }] = settledResult.content;
+  if (themasResponse.status === 'OK') {
+    const enrichedAvgRequests: AVGRequest[] = [];
+    for (const avgRequest of avgResponse.content.verzoeken) {
+      const themasPerVerzoek = themasResponse.content.verzoeken.filter(
+        (verzoek) => verzoek.avgVerzoekId === avgRequest.id
+      );
 
       const enrichedAvgRequest = {
         ...avgRequest,
-        themas: themes?.verzoeken.map((theme) => theme.themaOmschrijving),
+        themas: themasPerVerzoek?.map((theme) => theme.themaOmschrijving),
       };
 
       enrichedAvgRequests.push(enrichedAvgRequest);
     }
+
+    return apiSuccessResult({
+      verzoeken: enrichedAvgRequests,
+    });
   }
 
-  return apiSuccessResult({
-    verzoeken: enrichedAvgRequests,
-  });
+  return avgResponse;
 }
 
 export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
@@ -203,18 +197,19 @@ export function transformAVGThemeResponse(
   };
 }
 
-export async function fetchAVGRequestThemes(avgId: string) {
-  const data = getDataForAvgThemas(avgId);
+export async function fetchAVGRequestThemes(avgIds: string[]) {
+  const data = getDataForAvgThemas(avgIds);
+  const cacheKey = avgIds.join('-');
 
   const res = await requestData<AvgThemesResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformAVGThemeResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `avg-themes-${avgId}`,
+      cacheKey: `avg-themes-${cacheKey}`,
       postponeFetch: !FeatureToggle.avgActive,
     }),
-    avgId
+    cacheKey
   );
 
   return res;

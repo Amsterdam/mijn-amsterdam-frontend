@@ -34,7 +34,7 @@ describe('AVG', () => {
       nock('http://localhost')
         .post('/smile', /readavgverzoek/gi)
         .reply(200, apiResponse)
-        .post('/smile', /'425'/gi)
+        .post('/smile', /readthemaperavgverzoek/gi)
         .reply(200, {
           List: [
             {
@@ -43,60 +43,35 @@ describe('AVG', () => {
               },
               themaperavgverzoek_avgverzoek_id: { value: '1' },
             },
-          ],
-        })
-        .post('/smile', /'223'/gi)
-        .reply(200, {
-          List: [
             {
               themaperavgverzoek_avgthema_omschrijving: {
                 value: 'avg thema 3',
               },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
+              themaperavgverzoek_avgverzoek_id: { value: '2' },
             },
-          ],
-        })
-        .post('/smile', /'561'/gi)
-        .reply(200, {
-          List: [
             {
               themaperavgverzoek_avgthema_omschrijving: {
                 value: 'avg thema 1',
               },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
+              themaperavgverzoek_avgverzoek_id: { value: '156' },
             },
-          ],
-        })
-        .post('/smile', /'1'/gi)
-        .reply(200, {
-          List: [
             {
               themaperavgverzoek_avgthema_omschrijving: {
                 value: 'avg thema 2',
               },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
+              themaperavgverzoek_avgverzoek_id: { value: '425' },
             },
-          ],
-        })
-        .post('/smile', /'2'/gi)
-        .reply(200, {
-          List: [
             {
               themaperavgverzoek_avgthema_omschrijving: {
                 value: 'avg thema 3',
               },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
+              themaperavgverzoek_avgverzoek_id: { value: '223' },
             },
-          ],
-        })
-        .post('/smile', /'156'/gi)
-        .reply(200, {
-          List: [
             {
               themaperavgverzoek_avgthema_omschrijving: {
                 value: 'avg thema 1',
               },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
+              themaperavgverzoek_avgverzoek_id: { value: '561' },
             },
           ],
         });
