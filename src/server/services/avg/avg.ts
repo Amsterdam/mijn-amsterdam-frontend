@@ -91,7 +91,9 @@ export async function enrichAvgResponse(
 
       const enrichedAvgRequest = {
         ...avgRequest,
-        themas: themasPerVerzoek?.map((theme) => theme.themaOmschrijving),
+        themas: themasPerVerzoek
+          .map((theme) => theme.themaOmschrijving)
+          .filter((theme: string | null): theme is string => theme !== null),
       };
 
       enrichedAvgRequests.push(enrichedAvgRequest);
@@ -140,6 +142,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
         datumAfhandeling: smileDateParser(
           verzoek['avgverzoek_werkelijkeeinddatum']?.value || ''
         ),
+        themas: [],
         link: {
           to: generatePath(AppRoutes['AVG/DETAIL'], {
             id,

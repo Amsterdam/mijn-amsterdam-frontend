@@ -91,6 +91,7 @@ describe('AVG', () => {
         registratieDatum: '2023-03-16T00:00:00.000Z',
         resultaat: '',
         status: 'Afgehandeld',
+        themas: [],
         toelichting: 'Iets over vergunningen',
         type: 'Verwijderen gegevens',
         id: '223',

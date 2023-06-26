@@ -19,7 +19,7 @@ export type AVGRequest = {
   datumInBehandeling: string;
   datumAfhandeling: string;
   link: LinkProps;
-  themas?: (string | null)[];
+  themas: string[];
 };
 
 export type SmileAvgResponse = SmileSourceResponse<SmileAVGRequest>;
