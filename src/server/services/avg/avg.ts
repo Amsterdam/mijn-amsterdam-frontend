@@ -68,7 +68,7 @@ function getDataForAvgThemas(avgId: string) {
   ].join(', ');
 
   data.append('columns', columns);
-  data.append('filters', `themaperavgverzoek.avgverzoek.id = '${avgId}'`);
+  data.append('filters', `themaperavgverzoek.avgverzoek.id IN ('${avgId}')`);
 
   return data;
 }
