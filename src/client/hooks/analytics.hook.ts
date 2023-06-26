@@ -50,8 +50,8 @@ export function trackSearch(
   searchMachine: string,
   profileType: ProfileType
 ) {
-  if (keyword.length < 3) {
-    //Only track from 3 chars and above
+  if (keyword.length <= 3) {
+    //Only track from 4 chars and above
     return;
   }
 
