@@ -50,6 +50,7 @@ function getDataForAVG(bsn: string) {
   );
 
   data.append('pagesize', DEFAULT_PAGE_SIZE);
+  data.append('orderbys', 'avgverzoek_id desc');
 
   return data;
 }
@@ -73,6 +74,8 @@ function getDataForAvgThemas(avgIds: string[]) {
   );
   // Maximum amount of themes is 14.
   data.append('pagesize', 14 * DEFAULT_PAGE_SIZE);
+
+  data.append('orderbys', 'themaperavgverzoek_avgverzoek_id desc');
 
   return data;
 }
