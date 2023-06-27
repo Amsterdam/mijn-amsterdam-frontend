@@ -1,10 +1,6 @@
 import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -46,19 +42,15 @@ const AVGDetail = () => {
           </Alert>
         ) : (
           <>
-            <InfoDetail
-              label="Nummer van uw klacht"
-              value={verzoek?.id || '-'}
-            />
+            <InfoDetail label="Nummer" value={verzoek?.id || '-'} />
             <InfoDetail label="Type verzoek" value={verzoek?.type || '-'} />
-            <InfoDetail label="Onderwerp" value={verzoek?.onderwerp || '-'} />
             <InfoDetail
-              label="Ontvangen op"
-              value={
-                verzoek?.ontvangstDatum
-                  ? defaultDateFormat(verzoek.ontvangstDatum)
-                  : '-'
-              }
+              label="Onderwerp(en)"
+              value={verzoek?.onderwerp || '-'}
+            />
+            <InfoDetail
+              label="Toelichting"
+              value={verzoek?.toelichting || '-'}
             />
             {verzoek?.resultaat && (
               <InfoDetail label="Resultaat" value={verzoek.resultaat} />

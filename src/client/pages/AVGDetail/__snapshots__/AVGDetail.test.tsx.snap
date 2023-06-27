@@ -121,7 +121,7 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Nummer van uw klacht
+          Nummer
         </h3>
         <p
           class="Value"
@@ -149,7 +149,7 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Onderwerp
+          Onderwerp(en)
         </h3>
         <p
           class="Value"
@@ -163,12 +163,12 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Ontvangen op
+          Toelichting
         </h3>
         <p
           class="Value"
         >
-          09 maart 2022
+          -
         </p>
       </div>
     </div>

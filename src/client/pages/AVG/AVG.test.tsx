@@ -22,6 +22,7 @@ const testState: any = {
           opschortenGestartOp: '2023-03-16T00:00:00.000Z',
           datumInBehandeling: '',
           datumAfhandeling: '',
+          themas: ['avg thema 3'],
           link: {
             to: '/avg/verzoek/1',
             title: 'AVG verzoek 1',
@@ -38,6 +39,7 @@ const testState: any = {
           opschortenGestartOp: '',
           datumInBehandeling: '2023-03-16T00:00:00.000Z',
           datumAfhandeling: '2023-03-19T00:00:00.000Z',
+          themas: ['avg thema 4', 'avg thema 1'],
           link: {
             to: '/avg/verzoek/223',
             title: 'AVG verzoek 223',
