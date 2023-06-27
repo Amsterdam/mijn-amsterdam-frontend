@@ -133,18 +133,22 @@ export const ApiConfig: ApiDataRequestConfig = {
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
+    cancelTimeout: 5 * ONE_SECOND_MS,
   },
   WPI_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
     passthroughOIDCToken: true,
+    cancelTimeout: 5 * ONE_SECOND_MS,
   },
   WPI_SPECIFICATIES: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
     passthroughOIDCToken: true,
+    cancelTimeout: 5 * ONE_SECOND_MS,
   },
   WPI_STADSPAS: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
     passthroughOIDCToken: true,
+    cancelTimeout: 5 * ONE_SECOND_MS,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
