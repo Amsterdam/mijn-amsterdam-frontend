@@ -70,7 +70,7 @@ function getDataForAvgThemas(avgIds: string[]) {
   data.append('columns', columns);
   data.append(
     'filters',
-    `themaperavgverzoek.avgverzoek.id IN ('${avgIds.join(', ')}')`
+    `themaperavgverzoek.avgverzoek.id IN ('${avgIds.join("', '")}')`
   );
   // Maximum amount of themes is 14.
   data.append('pagesize', 14 * DEFAULT_PAGE_SIZE);
