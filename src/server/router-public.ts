@@ -163,7 +163,7 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
 }
 
 router.get(
-  BffEndpoints.STATUS_HEALTH,
+  [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
   (req: Request, res: Response, next: NextFunction) => {
     return res.json({
       status: 'OK',
