@@ -25,6 +25,7 @@ import { fetchHorecaNotifications } from './horeca';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
+import * as Sentry from '@sentry/node';
 
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -163,22 +164,97 @@ async function fetchServicesNotifications(
       bodemNotificationResult,
       bezwarenNotificationsResult,
     ] = await Promise.allSettled([
-      fetchBrpNotifications(requestID, authProfileAndToken),
-      fetchBelastingNotifications(requestID, authProfileAndToken),
-      fetchMilieuzoneNotifications(requestID, authProfileAndToken),
-      fetchVergunningenNotifications(requestID, authProfileAndToken),
-      fetchErfpachtNotifications(requestID, authProfileAndToken),
-      fetchSubsidieNotifications(requestID, authProfileAndToken),
-      fetchMaintenanceNotificationsDashboard(requestID),
-      fetchToeristischeVerhuurNotifications(requestID, authProfileAndToken),
-      fetchKrefiaNotifications(requestID, authProfileAndToken),
-      fetchWiorNotifications(requestID, authProfileAndToken, profileType),
-      fetchWpiNotifications(requestID, authProfileAndToken),
-      fetchKlachtenNotifications(requestID, authProfileAndToken),
-      fetchHorecaNotifications(requestID, authProfileAndToken),
-      fetchAVGNotifications(requestID, authProfileAndToken),
-      fetchLoodMetingNotifications(requestID, authProfileAndToken),
-      fetchBezwarenNotifications(requestID, authProfileAndToken),
+      fetchBrpNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchBrpNotifications');
+        Sentry.captureMessage('Service result fetchBrpNotifications');
+        return r;
+      }),
+      fetchBelastingNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchBelastingNotifications');
+        Sentry.captureMessage('Service result fetchBelastingNotifications');
+        return r;
+      }),
+      fetchMilieuzoneNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchMilieuzoneNotifications');
+        Sentry.captureMessage('Service result fetchMilieuzoneNotifications');
+        return r;
+      }),
+      fetchVergunningenNotifications(requestID, authProfileAndToken).then(
+        (r) => {
+          console.log('Service result (r');
+          Sentry.captureMessage('Service result (r');
+          return r;
+        }
+      ),
+      fetchErfpachtNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchErfpachtNotifications');
+        Sentry.captureMessage('Service result fetchErfpachtNotifications');
+        return r;
+      }),
+      fetchSubsidieNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchSubsidieNotifications');
+        Sentry.captureMessage('Service result fetchSubsidieNotifications');
+        return r;
+      }),
+      fetchMaintenanceNotificationsDashboard(requestID).then((r) => {
+        console.log('Service result fetchMaintenanceNotificationsDashboard');
+        Sentry.captureMessage(
+          'Service result fetchMaintenanceNotificationsDashboard'
+        );
+        return r;
+      }),
+      fetchToeristischeVerhuurNotifications(
+        requestID,
+        authProfileAndToken
+      ).then((r) => {
+        console.log('Service result fetchToeristischeVerhuurNotifications');
+        Sentry.captureMessage(
+          'Service result fetchToeristischeVerhuurNotifications'
+        );
+        return r;
+      }),
+      fetchKrefiaNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchKrefiaNotifications');
+        Sentry.captureMessage('Service result fetchKrefiaNotifications');
+        return r;
+      }),
+      fetchWiorNotifications(requestID, authProfileAndToken, profileType).then(
+        (r) => {
+          console.log('Service result fetchWiorNotifications');
+          Sentry.captureMessage('Service result fetchWiorNotifications');
+          return r;
+        }
+      ),
+      fetchWpiNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchWpiNotifications');
+        Sentry.captureMessage('Service result fetchWpiNotifications');
+        return r;
+      }),
+      fetchKlachtenNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchKlachtenNotifications');
+        Sentry.captureMessage('Service result fetchKlachtenNotifications');
+        return r;
+      }),
+      fetchHorecaNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchHorecaNotifications');
+        Sentry.captureMessage('Service result fetchHorecaNotifications');
+        return r;
+      }),
+      fetchAVGNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchAVGNotifications');
+        Sentry.captureMessage('Service result fetchAVGNotifications');
+        return r;
+      }),
+      fetchLoodMetingNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchLoodMetingNotifications');
+        Sentry.captureMessage('Service result fetchLoodMetingNotifications');
+        return r;
+      }),
+      fetchBezwarenNotifications(requestID, authProfileAndToken).then((r) => {
+        console.log('Service result fetchBezwarenNotifications');
+        Sentry.captureMessage('Service result fetchBezwarenNotifications');
+        return r;
+      }),
     ]);
 
     const brpNotifications = getSettledResult(brpNotificationsResult);
