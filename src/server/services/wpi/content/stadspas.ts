@@ -122,8 +122,8 @@ export const requestProcess: WpiRequestProcessLabels = {
   },
 };
 
-const BUDGET_NOTIFICATION_DATE_START = '2022-05-01';
-const BUDGET_NOTIFICATION_DATE_END = '2022-07-31';
+const BUDGET_NOTIFICATION_DATE_START = `${new Date().getFullYear()}-05-01`;
+const BUDGET_NOTIFICATION_DATE_END = `${new Date().getFullYear()}-07-31`;
 const BUDGET_NOTIFICATION_BALANCE_THRESHOLD = 10;
 const BUDGET_NOTIFICATION_PARENT = `
   Uw kind heeft nog een saldo van €${BUDGET_NOTIFICATION_BALANCE_THRESHOLD} of meer voor het kindtegoed.
