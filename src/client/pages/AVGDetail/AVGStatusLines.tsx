@@ -32,7 +32,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
       description: '',
       documents: [],
       isActive: false,
-      isChecked: true,
+      isChecked: false,
     });
 
     lineItems.push({
