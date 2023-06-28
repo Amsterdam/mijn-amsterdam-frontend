@@ -503,8 +503,9 @@ function isStatusUpdateSentToUser(
     isDescriptionOptionallySentToUser =
       nextEntry.what === 'CREATE_NOTE' &&
       !!(
-        nextEntry.description?.startsWith('Automatische e-mail') &&
-        nextEntry.description.includes('is verzonden aan de melder')
+        nextEntry.description?.includes('e-mail') &&
+        nextEntry.description.includes('verzonden') &&
+        nextEntry.description.includes('melder')
       );
   }
 
