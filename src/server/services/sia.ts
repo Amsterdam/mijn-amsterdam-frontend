@@ -498,7 +498,7 @@ function isStatusUpdateSentToUser(
   let isDescriptionOptionallySentToUser = false;
 
   // If an e-mail is sent to the user a CREATE_NOTE history log action is added with a specific text format.
-  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+Automatische%20e-mail&type=code
+  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+e-mail&type=code
   if (!isExplitlyShownToUser && nextEntry) {
     isDescriptionOptionallySentToUser =
       nextEntry.what === 'CREATE_NOTE' &&
