@@ -21,6 +21,14 @@ export default defineConfig(() => {
       // svgr options: https://react-svgr.com/docs/options/
       svgr(),
     ],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.ts',
+      // you might want to disable it, if you don't have tests that rely on CSS
+      // since parsing CSS is slow
+      css: false,
+    },
     css: {
       modules: {
         scopeBehaviour: 'local',

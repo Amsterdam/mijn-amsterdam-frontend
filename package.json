@@ -23,24 +23,12 @@
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "react/jsx-curly-brace-presence": "error"
-    }
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie > 0",
     "not op_mini all"
   ],
-  "overrides": {
-    "autoprefixer": "10.4.5"
-  },
   "dependencies": {
     "@amsterdam/asc-assets": "^0.35.0",
     "@amsterdam/piwik-tracker": "^2.0.2",
@@ -48,7 +36,6 @@
     "@sentry/node": "^6.15.0",
     "@sentry/react": "^6.15.0",
     "@testing-library/dom": "^8.11.1",
-    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
@@ -137,12 +124,12 @@
   },
   "devDependencies": {
     "@types/express-http-proxy": "^1.6.3",
-    "@types/jest": "^29.5.2",
     "@vitejs/plugin-react": "^4.0.1",
+    "jsdom": "^22.1.0",
     "mockdate": "^3.0.5",
     "nock": "^13.2.2",
     "sass": "^1.63.6",
-    "ts-jest": "^29.1.0",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "vitest": "^0.32.2"
   }
 }

@@ -1,9 +1,9 @@
-import axios from 'axios';
-import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect';
+// import axios from 'axios';
+// import '@testing-library/jest-dom';
+// import '@testing-library/jest-dom/extend-expect';
 
 // Configure axios to use the node adapter.
-axios.defaults.adapter = require('axios/lib/adapters/http');
+// axios.defaults.adapter = require('axios/lib/adapters/http');
 
 global.matchMedia =
   global.matchMedia ||
@@ -15,6 +15,11 @@ global.matchMedia =
     };
   };
 
+import nock from 'nock';
+nock.disableNetConnect();
+
+process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
+process.env.BFF_FRONTEND_URL = 'http://test-host';
 process.env.BFF_FRONTEND_URL = 'http://test-host';
 process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = 'http://localhost/smile';
 process.env.BFF_OIDC_BASE_URL = 'http://localhost/bff';
@@ -43,3 +48,5 @@ process.env.BFF_LOOD_API_URL = 'http://localhost';
 process.env.BFF_LOOD_USERNAME = 'username';
 process.env.BFF_LOOD_PWD = 'pwd';
 process.env.BFF_LOOD_TENANT = 'tenantid';
+process.env.BFF_BELASTINGEN_ENDPOINT =
+  'http://localhost:3000/belastingen/remote/api';
