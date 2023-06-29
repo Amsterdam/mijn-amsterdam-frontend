@@ -324,7 +324,9 @@ export default function SiaDetail() {
         )}
         {history.status === 'ERROR' && (
           <Alert type="warning">
-            <p>We kunnen op dit moment niet alle status informatie zien.</p>
+            <p>
+              We kunnen op dit moment niet alle status informatie laten zien.
+            </p>
           </Alert>
         )}
       </PageContent>
