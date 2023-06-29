@@ -63,7 +63,7 @@
   flex-wrap: wrap;
   left: 50%;
   position: relative;
-  transform: translateX(-#{$main-boxed-width/2});
+  transform: translateX(calc(-#{$main-boxed-width} / 2));
 
   @include mq-tablet() {
     flex-direction: column;
@@ -104,6 +104,7 @@
     &:nth-child(odd) {
       margin-right: 0;
     }
+
     &:nth-child(even) {
       margin-left: 0;
     }

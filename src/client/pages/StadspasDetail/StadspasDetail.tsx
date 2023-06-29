@@ -11,7 +11,6 @@ import {
   ApiResponse,
   isError,
   isLoading,
-  relayApiUrl,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
@@ -33,6 +32,7 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
+import { relayApiUrl } from '../../utils/utils';
 
 const PAGE_SIZE = 10;
 

@@ -26,3 +26,14 @@ type ProfileType =
 type AuthMethod = 'digid' | 'eherkenning' | 'yivi';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
+declare module '*.scss' {
+  const content: { [className: string]: string };
+  export = content;
+}
+
+interface ImportMeta {
+  env: {
+    [key: string]: string;
+  };
+}

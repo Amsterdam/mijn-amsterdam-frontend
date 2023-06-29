@@ -3,17 +3,17 @@ import { matchPath, useLocation } from 'react-router-dom';
 import {
   CustomTrackingUrls,
   DocumentTitles,
-  ExcludePageViewTrackingUrls,
   NOT_FOUND_TITLE,
   PageTitleMain,
   TrackingConfig,
+  AppRoutes,
 } from '../../universal/config';
-import { AppRoutes } from '../../universal/config';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
 import * as Sentry from '@sentry/react';
+import { ExcludePageViewTrackingUrls } from '../config/api';
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
