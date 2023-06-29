@@ -487,12 +487,13 @@ export interface SiaSignalStatusHistory {
 }
 
 function isStatusUpdateSentToUser(
-  statusKey: StatusStateChoice,
+  statusKey: StatusStateChoice | null,
   nextEntry?: SiaSignalHistory
 ) {
   // Statusses we known for sure have a description that needs to be shown.
-  const isExplitlyShownToUser =
-    STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey);
+  const isExplitlyShownToUser = statusKey
+    ? STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey)
+    : false;
 
   // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
   let isDescriptionOptionallySentToUser = false;
@@ -517,14 +518,16 @@ function transformSiaHistoryLogResponse(response: SiaSignalHistory[]) {
 
   const transformed = history
     .map((historyEntry, index, all) => {
-      // Extract readable status string
+      // Try to extract readable status string
       const statusValue = historyEntry.action.split(':')[1] as StatusValue;
 
-      // Find the matching statusKey
-      const statusKey = STATUS_CHOICES_API[statusValue.trim()];
+      // If we have a status value, find the matching statusKey
+      const statusKey = statusValue
+        ? STATUS_CHOICES_API[statusValue.trim()]
+        : null;
 
       // Translate statusValue to one for display and aggregation in MA
-      const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
+      const status = statusKey ? STATUS_CHOICES_MA[statusKey] : statusValue;
 
       const nextEntry = all[index + 1];
 
@@ -563,6 +566,8 @@ export async function fetchSignalHistory(
       requestID,
       authProfileAndToken
     );
+
+    console.log('respo!', response);
 
     return response;
   }
