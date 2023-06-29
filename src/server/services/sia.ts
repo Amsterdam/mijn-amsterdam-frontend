@@ -567,8 +567,6 @@ export async function fetchSignalHistory(
       authProfileAndToken
     );
 
-    console.log('respo!', response);
-
     return response;
   }
 
