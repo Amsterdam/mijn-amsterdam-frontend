@@ -36,7 +36,14 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   bsn: 'BSN',
-  geboortedatum: ['Geboortedatum', (value) => defaultDateFormat(value)],
+  geboortedatum: [
+    'Geboortedatum',
+    (geboorteDatum, persoon) => {
+      return persoon.geregistreerdeGeboortedatum
+        ? persoon.geregistreerdeGeboortedatum
+        : defaultDateFormat(geboorteDatum);
+    },
+  ],
   overlijdensdatum: ['Datum overlijden', (value) => defaultDateFormat(value)],
   geboorteplaatsnaam: [
     'Geboorteplaats',
