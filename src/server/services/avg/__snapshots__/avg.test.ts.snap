@@ -95,6 +95,9 @@ Object {
         "status": "Open",
         "themas": Array [
           "avg thema 1",
+          "avg thema 2",
+          "avg thema 3",
+          "avg thema 4",
         ],
         "toelichting": "Iets over mileu",
         "type": "Aanpassen gegevens",

@@ -2,6 +2,7 @@ import nock from 'nock';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
 import apiResponse from '../../mock-data/json/avg.json';
+import avgThemasResponse from '../../mock-data/json/avg-themas.json';
 
 describe('AVG', () => {
   const requestId = '456';
@@ -35,46 +36,7 @@ describe('AVG', () => {
         .post('/smile', /readavgverzoek/gi)
         .reply(200, apiResponse)
         .post('/smile', /readthemaperavgverzoek/gi)
-        .reply(200, {
-          List: [
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 2',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 3',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '2' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 1',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '156' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 2',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '425' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 3',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '223' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 1',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '561' },
-            },
-          ],
-        });
+        .reply(200, avgThemasResponse);
     });
 
     it('should transform the data correctly', () => {
