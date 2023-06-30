@@ -37,6 +37,7 @@ import {
   corsOptions,
   securityHeaders,
   RELEASE_VERSION,
+  BffEndpoints,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { router as authRouter } from './router-auth';
@@ -145,6 +146,10 @@ app.use(authRouter);
 
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
+
+app.get(BffEndpoints.ROOT, (req, res) => {
+  return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
+});
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 
