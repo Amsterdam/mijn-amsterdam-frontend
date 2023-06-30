@@ -83,7 +83,6 @@ describe('AVG', () => {
       expect(res.verzoeken.length).toEqual(apiResponse.List.length);
 
       expect(res.verzoeken[2]).toEqual({
-        onderwerp: 'Vergunningen',
         datumAfhandeling: '2023-03-19T00:00:00.000Z',
         datumInBehandeling: '2023-03-16T00:00:00.000Z',
         ontvangstDatum: '2022-03-09T00:00:00.000Z',
