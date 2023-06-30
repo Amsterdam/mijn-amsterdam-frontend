@@ -487,24 +487,26 @@ export interface SiaSignalStatusHistory {
 }
 
 function isStatusUpdateSentToUser(
-  statusKey: StatusStateChoice,
+  statusKey: StatusStateChoice | null,
   nextEntry?: SiaSignalHistory
 ) {
   // Statusses we known for sure have a description that needs to be shown.
-  const isExplitlyShownToUser =
-    STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey);
+  const isExplitlyShownToUser = statusKey
+    ? STATUS_DESCRIPTION_EXPLICITLY_SENT_TO_USER.includes(statusKey)
+    : false;
 
   // Check if the description of this Entry is also sent by e-mail to the owner of the Melding.
   let isDescriptionOptionallySentToUser = false;
 
   // If an e-mail is sent to the user a CREATE_NOTE history log action is added with a specific text format.
-  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+Automatische%20e-mail&type=code
+  // See also: https://github.com/search?q=repo%3AAmsterdam%2Fsignals+path%3A%2F^app\%2Fsignals\%2Fapps\%2Femail_integrations\%2Factions\%2F%2F+e-mail&type=code
   if (!isExplitlyShownToUser && nextEntry) {
     isDescriptionOptionallySentToUser =
       nextEntry.what === 'CREATE_NOTE' &&
       !!(
-        nextEntry.description?.startsWith('Automatische e-mail') &&
-        nextEntry.description.includes('is verzonden aan de melder')
+        nextEntry.description?.includes('e-mail') &&
+        nextEntry.description.includes('verzonden') &&
+        nextEntry.description.includes('melder')
       );
   }
 
@@ -516,14 +518,16 @@ function transformSiaHistoryLogResponse(response: SiaSignalHistory[]) {
 
   const transformed = history
     .map((historyEntry, index, all) => {
-      // Extract readable status string
+      // Try to extract readable status string
       const statusValue = historyEntry.action.split(':')[1] as StatusValue;
 
-      // Find the matching statusKey
-      const statusKey = STATUS_CHOICES_API[statusValue.trim()];
+      // If we have a status value, find the matching statusKey
+      const statusKey = statusValue
+        ? STATUS_CHOICES_API[statusValue.trim()]
+        : null;
 
       // Translate statusValue to one for display and aggregation in MA
-      const status = STATUS_CHOICES_MA[statusKey] ?? statusValue;
+      const status = statusKey ? STATUS_CHOICES_MA[statusKey] : statusValue;
 
       const nextEntry = all[index + 1];
 
