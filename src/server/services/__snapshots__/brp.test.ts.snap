@@ -132,6 +132,7 @@ Object {
     "geboortelandnaam": "Nederland",
     "geboorteplaatsnaam": "Lochem",
     "gemeentenaamInschrijving": "Amsterdam",
+    "geregistreerdeGeboortedatum": "00-00-0000",
     "geslachtsnaam": "Beemsterboer",
     "indicatieGeheim": true,
     "mokum": true,
