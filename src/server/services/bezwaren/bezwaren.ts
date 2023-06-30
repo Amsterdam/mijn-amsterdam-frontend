@@ -59,7 +59,7 @@ export async function fetchBezwarenDocuments(
 ) {
   const params = {
     // We need to pass the entire url as query parameter
-    zaak: getZaakUrl(zaakId),
+    zaak: zaakId,
   };
 
   const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
@@ -158,7 +158,7 @@ async function fetchBezwaarStatus(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const params = {
-    zaak: getZaakUrl(zaakId),
+    zaak: zaakId,
   };
 
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
