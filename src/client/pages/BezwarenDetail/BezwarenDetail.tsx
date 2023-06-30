@@ -79,8 +79,8 @@ const BezwarenDetail = () => {
               </InfoDetailGroup>
             )}
 
-            {bezwaar?.documenten?.length && bezwaar?.documenten?.length > 0 && (
-              <>
+            {!!bezwaar?.documenten?.length &&
+              bezwaar?.documenten?.length > 0 && (
                 <InfoDetailGroup>
                   <InfoDetail
                     valueWrapperElement="div"
@@ -117,8 +117,7 @@ const BezwarenDetail = () => {
                     }
                   />
                 </InfoDetailGroup>
-              </>
-            )}
+              )}
 
             {!!bezwaar?.einddatum && bezwaar?.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
