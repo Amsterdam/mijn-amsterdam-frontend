@@ -322,13 +322,14 @@ export default function SiaDetail() {
             )}
           </>
         )}
+        {history.status === 'ERROR' && (
+          <Alert type="warning">
+            <p>
+              We kunnen op dit moment niet alle status informatie laten zien.
+            </p>
+          </Alert>
+        )}
       </PageContent>
-
-      {history.status === 'ERROR' && (
-        <Alert type="warning">
-          <p>We kunnen op dit moment geen volledige historie laten zien.</p>
-        </Alert>
-      )}
 
       {!isLoading(SIA) && !!SiaItem && (
         <StatusLine
