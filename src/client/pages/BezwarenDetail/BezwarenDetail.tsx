@@ -48,9 +48,15 @@ const BezwarenDetail = () => {
         ) : (
           <>
             <InfoDetail
-              label="Nummer van uw bezwaar"
-              value={bezwaar?.bezwaarnummer}
+              label="Kenmerk van uw bezwaar"
+              value={bezwaar?.zaakkenmerk}
             />
+            {bezwaar?.bezwaarnummer && (
+              <InfoDetail
+                label="Nummer van uw bezwaar"
+                value={bezwaar.bezwaarnummer}
+              />
+            )}
             {bezwaar?.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
             )}

@@ -59,7 +59,7 @@ export async function fetchBezwarenDocuments(
 ) {
   const params = {
     // We need to pass the entire url as query parameter
-    zaak: zaakId,
+    zaak: getZaakUrl(zaakId),
   };
 
   const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
@@ -97,6 +97,8 @@ function transformBezwarenResults(
 
       const bezwaar: Bezwaar = {
         identificatie: bezwaarBron.identificatie,
+        zaakkenmerk:
+          getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         uuid: bezwaarBron.uuid,
         ontvangstdatum: bezwaarBron.startdatum,
         bezwaarnummer: bezwaarBron.identificatie,
@@ -158,7 +160,7 @@ async function fetchBezwaarStatus(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const params = {
-    zaak: zaakId,
+    zaak: getZaakUrl(zaakId),
   };
 
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
