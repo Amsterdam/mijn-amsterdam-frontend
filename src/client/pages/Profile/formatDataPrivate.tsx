@@ -4,6 +4,7 @@ import {
   entries,
   getFullAddress,
   hasDutchNationality,
+  formatBrithdate,
 } from '../../../universal/helpers';
 import {
   Adres,
@@ -39,8 +40,8 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geboortedatum: [
     'Geboortedatum',
     (geboorteDatum, persoon) => {
-      return persoon.geregistreerdeGeboortedatum
-        ? persoon.geregistreerdeGeboortedatum
+      return !!persoon.indicatieGeboortedatum
+        ? formatBrithdate(persoon.indicatieGeboortedatum, geboorteDatum)
         : defaultDateFormat(geboorteDatum);
     },
   ],

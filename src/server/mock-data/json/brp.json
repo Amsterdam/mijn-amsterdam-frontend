@@ -47,7 +47,7 @@
       "omschrijvingAdellijkeTitel": "Hertogin",
       "bsn": "129095205",
       "geboortedatum": "1992-09-22",
-      "geregistreerdeGeboortedatum": "00-00-0000",
+      "indicatieGeboortedatum": "J",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "gemeentenaamInschrijving": "Amsterdam",
@@ -73,6 +73,7 @@
     "ouders": [
       {
         "geboortedatum": "1920-01-01",
+        "indicatieGeboortedatum": "M",
         "geboortelandnaam": "Nederland",
         "geboorteplaatsnaam": "Lochem",
         "geslachtsnaam": "Beemsterboer",
@@ -112,6 +113,7 @@
       "persoon": {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
+        "indicatieGeboortedatum": "D",
         "geslachtsnaam": "Bakker",
         "overlijdensdatum": null,
         "voornamen": "Souad",
@@ -129,6 +131,7 @@
         "persoon": {
           "bsn": "123456780",
           "geboortedatum": "2019-07-08",
+          "indicatieGeboortedatum": "V",
           "geslachtsnaam": "Bakker",
           "overlijdensdatum": null,
           "voornamen": "Souad",

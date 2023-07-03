@@ -1,4 +1,5 @@
 import { Persoon } from '../types';
+import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
 
 export function getFullName(persoon: Persoon) {
   return persoon
@@ -60,4 +61,23 @@ export function hasDutchAndOtherNationalities(
     nationaliteiten.length > 1 &&
     nationaliteiten.some(({ omschrijving }) => omschrijving === 'Nederlandse')
   );
+}
+
+export function formatBrithdate(
+  indicatie: 'J' | 'M' | 'D' | 'V',
+  geboortedatum: string
+) {
+  if (indicatie === 'J') {
+    return '00 00 0000';
+  }
+
+  if (indicatie === 'M') {
+    return `00 00 ${formatYear(geboortedatum)}`;
+  }
+
+  if (indicatie === 'D') {
+    return `00 ${formatMonthAndYear(geboortedatum)}`;
+  }
+
+  return defaultDateFormat(geboortedatum);
 }
