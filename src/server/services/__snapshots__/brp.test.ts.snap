@@ -95,6 +95,7 @@ Object {
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboer",
+      "indicatieGeboortedatum": "M",
       "nationaliteiten": Array [
         Object {
           "omschrijving": "Nederlandse",
@@ -132,8 +133,8 @@ Object {
     "geboortelandnaam": "Nederland",
     "geboorteplaatsnaam": "Lochem",
     "gemeentenaamInschrijving": "Amsterdam",
-    "geregistreerdeGeboortedatum": "00-00-0000",
     "geslachtsnaam": "Beemsterboer",
+    "indicatieGeboortedatum": "J",
     "indicatieGeheim": true,
     "mokum": true,
     "nationaliteiten": Array [
@@ -161,6 +162,7 @@ Object {
       "bsn": "123456780",
       "geboortedatum": "2019-07-08",
       "geslachtsnaam": "Bakker",
+      "indicatieGeboortedatum": "D",
       "overlijdensdatum": null,
       "voornamen": "Souad",
       "voorvoegselGeslachtsnaam": null,
@@ -178,6 +180,7 @@ Object {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
+        "indicatieGeboortedatum": "V",
         "overlijdensdatum": null,
         "voornamen": "Souad",
         "voorvoegselGeslachtsnaam": null,
