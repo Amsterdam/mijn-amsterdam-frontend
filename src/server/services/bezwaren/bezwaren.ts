@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import {
@@ -136,6 +137,12 @@ function transformBezwarenResults(
 function transformBezwaarStatus(
   response: BezwarenSourceResponse<BezwaarSourceStatus>
 ): BezwaarStatus[] {
+  Sentry.captureMessage(`Bezwaren status`, {
+    extra: {
+      data: JSON.stringify(response),
+    },
+  });
+
   const results = response.results;
   if (Array.isArray(results)) {
     return results.map((result) => {
