@@ -3,6 +3,8 @@ import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
+import { requestData } from '../../helpers';
+import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
@@ -96,4 +98,50 @@ export async function fetchErfpachtNotifications(
   );
 
   return response;
+}
+
+export async function fetchErfpachtV2(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const config = getApiConfig('ERFPACHTv2');
+
+  const connectieAPIM = requestData(
+    {
+      ...config,
+      url: `${config.url}/resource?param1=sample`,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  const connectieVerniseHealth = requestData(
+    {
+      ...config,
+      url: `${config.url}/vernise/management/health`,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  const connectieHermesInfo = requestData(
+    {
+      ...config,
+      url: `${config.url}/vernise/api/hermesversion`,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  const result = await Promise.allSettled([
+    connectieAPIM,
+    connectieVerniseHealth,
+    connectieHermesInfo,
+  ]);
+
+  return {
+    APIM: getSettledResult(result[0]),
+    verniseHealth: getSettledResult(result[1]),
+    hermesInfo: getSettledResult(result[2]),
+  };
 }

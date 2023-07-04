@@ -107,6 +107,7 @@ export type SourceApiKey =
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'BRP'
   | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'BAG'
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
@@ -211,6 +212,14 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
   },
   BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
+  ERFPACHTv2: {
+    url: process.env.BFF_ERFPACHT_API_URL,
+    passthroughOIDCToken: true,
+    httpsAgent: new https.Agent({
+      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+    }),
+    postponeFetch: !FeatureToggle.erfpachtV2EndpointActive,
+  },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
   },

@@ -30,7 +30,6 @@ import { fetchProfile } from './profile';
 import { fetchSignals } from './sia';
 import {
   fetchBelasting,
-  fetchErfpacht,
   fetchMilieuzone,
   fetchSubsidie,
 } from './simple-connect';
@@ -50,6 +49,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchErfpachtV2 } from './simple-connect/erfpacht';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -122,7 +122,7 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
-const ERFPACHT = callService(fetchErfpacht);
+const ERFPACHT = callService(fetchErfpachtV2);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
