@@ -17,13 +17,11 @@ import { AppRoutes } from '../../../universal/config';
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
   bezwaarnummer: 'Nummer',
   ontvangstdatum: 'Ontvangstdatum',
-  omschrijving: 'Onderwerp',
 };
 
 const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
   bezwaarnummer: 'Nummer',
   datumbesluit: 'Datum besluit',
-  omschrijving: 'Onderwerp',
 };
 
 export default function BEZWAREN() {
