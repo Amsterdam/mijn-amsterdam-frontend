@@ -122,14 +122,14 @@ describe('AVG', () => {
               },
               Object {
                 "chapter": "AVG",
-                "datePublished": "2023-03-30T00:00:00.000Z",
-                "description": "Uw AVG verzoek is in behandeling genomen.",
+                "datePublished": "2023-06-03T00:00:00.000Z",
+                "description": "Wij hebben meer informatie en tijd nodig om uw AVG verzoek te behandelen.",
                 "id": "avg-561-notification",
                 "link": Object {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/561",
                 },
-                "title": "AVG verzoek in behandeling",
+                "title": "AVG verzoek meer informatie nodig",
               },
               Object {
                 "chapter": "AVG",

@@ -82,15 +82,15 @@ Object {
       },
       Object {
         "datumAfhandeling": "",
-        "datumInBehandeling": "2023-03-30T00:00:00.000Z",
+        "datumInBehandeling": "2023-05-30T00:00:00.000Z",
         "id": "561",
         "link": Object {
           "title": "AVG verzoek 561",
           "to": "/avg/verzoek/561",
         },
         "ontvangstDatum": "2023-03-18T00:00:00.000Z",
-        "opschortenGestartOp": "2023-04-03T00:00:00.000Z",
-        "registratieDatum": "2023-03-30T00:00:00.000Z",
+        "opschortenGestartOp": "2023-06-03T00:00:00.000Z",
+        "registratieDatum": "2023-05-30T00:00:00.000Z",
         "resultaat": "",
         "status": "Open",
         "themas": Array [
