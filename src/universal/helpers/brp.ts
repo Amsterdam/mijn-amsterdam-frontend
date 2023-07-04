@@ -63,7 +63,7 @@ export function hasDutchAndOtherNationalities(
   );
 }
 
-export function formatBrithdate(
+export function formatBirthdate(
   indicatie: 'J' | 'M' | 'D' | 'V',
   geboortedatum: string
 ) {
