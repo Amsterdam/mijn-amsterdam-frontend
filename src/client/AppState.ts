@@ -45,7 +45,7 @@ export const PRISTINE_APPSTATE: AppState = {
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  ERFPACHT: apiPristineResult({ isKnown: false }),
+  ERFPACHT: apiPristineResult(null),
   SUBSIDIE: apiPristineResult(
     { isKnown: false, notifications: [] },
     { isActive: FeatureToggle.subsidieActive }

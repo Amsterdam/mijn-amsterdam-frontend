@@ -140,8 +140,10 @@ export async function fetchErfpachtV2(
   ]);
 
   return {
-    APIM: getSettledResult(result[0]),
-    verniseHealth: getSettledResult(result[1]),
-    hermesInfo: getSettledResult(result[2]),
+    content: {
+      APIM: getSettledResult(result[0]),
+      verniseHealth: getSettledResult(result[1]),
+      hermesInfo: getSettledResult(result[2]),
+    },
   };
 }
