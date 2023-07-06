@@ -5,6 +5,7 @@ import { ApiUrls, oidcConfigEherkenning } from '../config';
 import { decodeToken } from '../helpers/app';
 import AKTES from './json/aktes.json';
 import AVG from './json/avg.json';
+import AVG_THEMAS from './json/avg-themas.json';
 import BELASTINGEN from './json/belasting.json';
 import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
@@ -324,6 +325,21 @@ export const mockDataConfig: MockDataConfig = {
       params: {
         asymmetricMatch: function (actual: any) {
           return actual.getBuffer().toString().includes('readAVGverzoek');
+        },
+      },
+    },
+    {
+      status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+      method: 'post',
+      responseData: async (config: any) => {
+        return await loadMockApiResponseJson(AVG_THEMAS);
+      },
+      params: {
+        asymmetricMatch: function (actual: any) {
+          return actual
+            .getBuffer()
+            .toString()
+            .includes('readthemaperavgverzoek');
         },
       },
     },

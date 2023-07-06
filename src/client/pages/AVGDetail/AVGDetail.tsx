@@ -46,7 +46,7 @@ const AVGDetail = () => {
             <InfoDetail label="Type verzoek" value={verzoek?.type || '-'} />
             <InfoDetail
               label="Onderwerp(en)"
-              value={verzoek?.onderwerp || '-'}
+              value={verzoek?.themas?.join(', ') || '-'}
             />
             <InfoDetail
               label="Toelichting"
