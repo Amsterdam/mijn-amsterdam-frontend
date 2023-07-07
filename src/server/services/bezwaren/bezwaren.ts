@@ -101,8 +101,6 @@ function transformBezwarenResults(
           getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         uuid: bezwaarBron.uuid,
         ontvangstdatum: bezwaarBron.startdatum,
-        bezwaarnummer:
-          getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         omschrijving: bezwaarBron.omschrijving,
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),

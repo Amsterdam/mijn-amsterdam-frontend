@@ -27,7 +27,7 @@ const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'bezwaarnummer');
+  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'zaakkenmerk');
   const ingediendeBezwaren =
     items.filter((bezwaar) => bezwaar.einddatum === null) ?? [];
   const afgehandeldeBezwaren =
