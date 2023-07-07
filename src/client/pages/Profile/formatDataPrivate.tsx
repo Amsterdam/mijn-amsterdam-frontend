@@ -233,7 +233,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
     adres: brpData.adres
       ? format(brpInfoLabels.adres, brpData.adres, brpData)
-      : 'Adres onbekend',
+      : { '': 'Adres onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.
