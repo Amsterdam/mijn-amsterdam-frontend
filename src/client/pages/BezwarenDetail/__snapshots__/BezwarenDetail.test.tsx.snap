@@ -108,7 +108,7 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Korte omschrijving van het bezwaar
+          Bezwaar
         </h2>
       </div>
     </header>
@@ -127,20 +127,6 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
           class="Value"
         >
           ghi.abc.def
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Nummer van uw bezwaar
-        </h3>
-        <p
-          class="Value"
-        >
-          BI.21.014121.001
         </p>
       </div>
       <div

@@ -4,7 +4,6 @@ exports[`Bezwaren fetch bezwaren should return data in expected format 1`] = `
 Object {
   "content": Array [
     Object {
-      "bezwaarnummer": "BI.21.014121.001",
       "datumIntrekking": null,
       "datumbesluit": "01-05-2021",
       "documenten": Array [
@@ -67,7 +66,6 @@ Object {
       "zaakkenmerk": "ghi.abc.def",
     },
     Object {
-      "bezwaarnummer": "JB.22.000076.001",
       "datumIntrekking": null,
       "datumbesluit": "03-03-2021",
       "documenten": Array [
@@ -130,7 +128,6 @@ Object {
       "zaakkenmerk": "abc.def",
     },
     Object {
-      "bezwaarnummer": "ZAAK2",
       "datumIntrekking": null,
       "datumbesluit": null,
       "documenten": Array [
@@ -193,7 +190,6 @@ Object {
       "zaakkenmerk": "123.abc.def",
     },
     Object {
-      "bezwaarnummer": "ZAAK3",
       "datumIntrekking": null,
       "datumbesluit": "2023-01-03",
       "documenten": Array [
