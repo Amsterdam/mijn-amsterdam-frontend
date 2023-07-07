@@ -446,7 +446,7 @@ const oidcConfigBase: ConfigParams = {
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login' },
+  authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
@@ -494,7 +494,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0 },
+  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
