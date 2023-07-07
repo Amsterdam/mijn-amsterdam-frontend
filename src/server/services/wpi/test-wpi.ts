@@ -1,4 +1,5 @@
-import { AuthProfileAndToken, signDevelopmentToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../helpers/app';
+import { signDevelopmentToken } from '../../helpers/app.development';
 import {
   fetchBbz,
   fetchEAanvragen,

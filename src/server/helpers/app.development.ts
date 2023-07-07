@@ -24,7 +24,7 @@ function encryptDevSessionCookieValue(payload: string, headers: object) {
   return JWE.encrypt(payload, key, { alg, enc, ...headers });
 }
 
-function getPrivateKeyForDevelopment() {
+export function getPrivateKeyForDevelopment() {
   const key = JWK.asKey(DEV_JWK_PRIVATE);
   return key;
 }
@@ -33,7 +33,10 @@ export function getPublicKeyForDevelopment() {
   return JWK.asKey(DEV_JWK_PUBLIC);
 }
 
-function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
+export function signDevelopmentToken(
+  authMethod: AuthProfile['authMethod'],
+  userID: string
+) {
   const idToken = jose.JWT.sign(
     {
       [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
@@ -47,6 +50,10 @@ function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   return idToken;
 }
 
+export function decodeToken(idToken: string) {
+  return jose.JWT.decode(idToken);
+}
+
 export function generateDevSessionCookieValue(
   authMethod: AuthProfile['authMethod'],
   userID: string
@@ -56,7 +63,7 @@ export function generateDevSessionCookieValue(
   const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
 
   const value = encryptDevSessionCookieValue(
-    JSON.stringify({ id_token: signToken(authMethod, userID) }),
+    JSON.stringify({ id_token: signDevelopmentToken(authMethod, userID) }),
     {
       iat,
       uat,
