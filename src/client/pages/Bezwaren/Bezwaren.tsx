@@ -15,12 +15,12 @@ import { isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
-  bezwaarnummer: 'Nummer',
+  zaakkenmerk: 'Nummer',
   ontvangstdatum: 'Ontvangstdatum',
 };
 
 const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  bezwaarnummer: 'Nummer',
+  zaakkenmerk: 'Nummer',
   datumbesluit: 'Datum besluit',
 };
 
