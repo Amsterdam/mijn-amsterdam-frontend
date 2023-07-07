@@ -257,17 +257,17 @@ function createAVGNotification(verzoek: AVGRequest) {
     },
   };
 
+  if (inProgressActive) {
+    notification.title = 'AVG verzoek in behandeling';
+    notification.description = 'Uw AVG verzoek is in behandeling genomen.';
+    notification.datePublished = verzoek.datumInBehandeling;
+  }
+
   if (extraInfoActive) {
     notification.title = 'AVG verzoek meer informatie nodig';
     notification.description =
       'Wij hebben meer informatie en tijd nodig om uw AVG verzoek te behandelen.';
     notification.datePublished = verzoek.opschortenGestartOp;
-  }
-
-  if (inProgressActive) {
-    notification.title = 'AVG verzoek in behandeling';
-    notification.description = 'Uw AVG verzoek is in behandeling genomen.';
-    notification.datePublished = verzoek.datumInBehandeling;
   }
 
   if (isDone) {
