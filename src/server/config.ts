@@ -457,7 +457,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path
+    callback: false,
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {

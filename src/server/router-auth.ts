@@ -8,6 +8,7 @@ import {
   oidcConfigEherkenning,
   oidcConfigYivi,
   OIDC_SESSION_COOKIE_NAME,
+  AUTH_CALLBACK,
 } from './config';
 import {
   decodeOIDCToken,
@@ -45,6 +46,21 @@ router.use(nocache);
  * DIGID Oidc config
  */
 router.use(BffEndpoints.AUTH_BASE_DIGID, auth(oidcConfigDigid));
+
+router.get(BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK, (req, res) =>
+  res.oidc.callback({
+    redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+  })
+);
+
+router.post(
+  BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK,
+  express.urlencoded({ extended: false }),
+  (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+    })
+);
 
 router.use(
   BffEndpoints.AUTH_BASE_SSO_DIGID,
@@ -91,6 +107,21 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
  */
 if (FeatureToggle.eherkenningActive) {
   router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
+
+  router.get(BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK, (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+    })
+  );
+
+  router.post(
+    BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+    express.urlencoded({ extended: false }),
+    (req, res) =>
+      res.oidc.callback({
+        redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+      })
+  );
 
   router.use(
     BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
@@ -143,6 +174,21 @@ if (FeatureToggle.eherkenningActive) {
  */
 if (FeatureToggle.yiviActive) {
   router.use(BffEndpoints.AUTH_BASE_YIVI, auth(oidcConfigYivi));
+
+  router.get(BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK, (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
+    })
+  );
+
+  router.post(
+    BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK,
+    express.urlencoded({ extended: false }),
+    (req, res) =>
+      res.oidc.callback({
+        redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
+      })
+  );
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
     return res.oidc.login({
