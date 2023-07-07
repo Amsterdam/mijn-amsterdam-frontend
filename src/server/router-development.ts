@@ -105,6 +105,8 @@ authRouterDevelopment.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
       break;
   }
 
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+
   return res.redirect(redirectUrl);
 });
 
