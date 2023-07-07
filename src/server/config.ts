@@ -442,7 +442,10 @@ const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
+  // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
+  // Client secret
+  clientSecret: process.env.BFF_OIDC_SECRET,
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
