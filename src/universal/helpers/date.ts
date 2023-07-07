@@ -33,6 +33,14 @@ export function formatDurationInWords(datestr: string) {
   return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
 }
 
+export function formatMonthAndYear(datestr: string | Date | number) {
+  return dateFormat(datestr, 'MMMM yyyy');
+}
+
+export function formatYear(datestr: string | Date | number) {
+  return dateFormat(datestr, 'yyyy');
+}
+
 export function calculateDaysBetweenDates(
   date1: string,
   date2: string
