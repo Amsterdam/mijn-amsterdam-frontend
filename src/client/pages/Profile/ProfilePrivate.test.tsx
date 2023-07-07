@@ -347,6 +347,8 @@ describe('<Profile />', () => {
   });
 
   it.each([
+    [undefined, '01 januari 1950'],
+    ['', '01 januari 1950'],
     ['J', '00 00 0000'],
     ['M', '00 00 1950'],
     ['D', '00 januari 1950'],
