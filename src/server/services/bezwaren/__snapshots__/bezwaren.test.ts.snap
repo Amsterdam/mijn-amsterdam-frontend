@@ -4,7 +4,6 @@ exports[`Bezwaren fetch bezwaren should return data in expected format 1`] = `
 Object {
   "content": Array [
     Object {
-      "bezwaarnummer": "BI.21.014121.001",
       "datumIntrekking": null,
       "datumbesluit": "01-05-2021",
       "documenten": Array [
@@ -64,9 +63,9 @@ Object {
       ],
       "toelichting": "Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.",
       "uuid": "68cdd171-b4fd-44cc-a4d3-06b77341f20a",
+      "zaakkenmerk": "ghi.abc.def",
     },
     Object {
-      "bezwaarnummer": "JB.22.000076.001",
       "datumIntrekking": null,
       "datumbesluit": "03-03-2021",
       "documenten": Array [
@@ -126,9 +125,9 @@ Object {
       ],
       "toelichting": "",
       "uuid": "9804b064-90a3-43b0-bc7c-924f9939888d",
+      "zaakkenmerk": "abc.def",
     },
     Object {
-      "bezwaarnummer": "ZAAK2",
       "datumIntrekking": null,
       "datumbesluit": null,
       "documenten": Array [
@@ -188,9 +187,9 @@ Object {
       ],
       "toelichting": "Met toelichting",
       "uuid": "cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
+      "zaakkenmerk": "123.abc.def",
     },
     Object {
-      "bezwaarnummer": "ZAAK3",
       "datumIntrekking": null,
       "datumbesluit": "2023-01-03",
       "documenten": Array [
@@ -250,6 +249,7 @@ Object {
       ],
       "toelichting": "Met toelichting",
       "uuid": "956541b6-7a25-4132-9592-0a509bc7ace0",
+      "zaakkenmerk": "321.abc.def",
     },
   ],
   "status": "OK",

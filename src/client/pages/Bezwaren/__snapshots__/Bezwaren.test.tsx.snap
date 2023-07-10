@@ -401,11 +401,6 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                   >
                     Ontvangstdatum
                   </th>
-                  <th
-                    class="DisplayProp"
-                  >
-                    Onderwerp
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -433,7 +428,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                       >
                         Chevron-Right.svg
                       </svg>
-                      BI.21.014121.001
+                      Onbekend item
                     </a>
                   </td>
                   <td
@@ -446,18 +441,6 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                     </span>
                     <span>
                       2023-04-25
-                    </span>
-                  </td>
-                  <td
-                    class="DisplayProp"
-                  >
-                    <span
-                      class="DisplayPropLabel"
-                    >
-                      Onderwerp:
-                    </span>
-                    <span>
-                      Korte omschrijving van het bezwaar
                     </span>
                   </td>
                 </tr>

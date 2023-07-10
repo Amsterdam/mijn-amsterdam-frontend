@@ -97,9 +97,10 @@ function transformBezwarenResults(
 
       const bezwaar: Bezwaar = {
         identificatie: bezwaarBron.identificatie,
+        zaakkenmerk:
+          getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         uuid: bezwaarBron.uuid,
         ontvangstdatum: bezwaarBron.startdatum,
-        bezwaarnummer: bezwaarBron.identificatie,
         omschrijving: bezwaarBron.omschrijving,
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
