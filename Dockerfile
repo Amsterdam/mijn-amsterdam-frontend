@@ -107,6 +107,7 @@ RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
 
 ENV BFF_ENV=production
 ENV TZ=Europe/Amsterdam
+ENV NODE_OPTIONS=--use-openssl-ca
 
 LABEL name="mijnamsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
