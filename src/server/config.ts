@@ -356,6 +356,8 @@ export const BFF_OIDC_BASE_URL = `${
   process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
 }`;
 
+export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
+
 export const BffEndpoints = {
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
@@ -442,11 +444,14 @@ const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
+  // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
+  // Client secret
+  clientSecret: process.env.BFF_OIDC_SECRET,
   baseURL: BFF_OIDC_BASE_URL,
-  issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
+  issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login' },
+  authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
@@ -457,7 +462,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path
+    callback: false,
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
@@ -494,7 +499,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0 },
+  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,

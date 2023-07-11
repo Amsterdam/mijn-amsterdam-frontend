@@ -1,17 +1,20 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Sentry from '@sentry/node';
+import axios, { AxiosRequestConfig } from 'axios';
+import type { NextFunction, Request, Response } from 'express';
+import { AccessToken } from 'express-openid-connect';
 import jose, { JWE, JWK, JWKS } from 'jose';
 import memoize from 'memoizee';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
-import { apiErrorResult } from '../../universal/helpers';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
+  BFF_OIDC_ISSUER_BASE_URL,
   DEV_JWK_PRIVATE,
   DEV_JWK_PUBLIC,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-  oidcConfigYivi,
+  DEV_TOKEN_ID_ATTRIBUTE,
+  DIGID_ATTR_PRIMARY,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -21,7 +24,9 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
-  DEV_TOKEN_ID_ATTRIBUTE,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  oidcConfigYivi,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -237,6 +242,88 @@ export function isProtectedRoute(pathRequested: string) {
   });
 }
 
+export async function verifyUserIdWithRemoteUserinfo(
+  accessToken?: AccessToken,
+  userID?: string
+) {
+  if (!accessToken || !userID) {
+    return false;
+  }
+
+  const requestOptions: AxiosRequestConfig = {
+    method: 'get',
+    url:
+      process.env.BFF_OIDC_USERINFO_ENDPOINT ??
+      `${BFF_OIDC_ISSUER_BASE_URL}/aselectserver/server/userinfo`,
+    headers: {
+      Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+      Accept: 'application/jwt',
+    },
+  };
+
+  try {
+    const response = await axios(requestOptions);
+    type attr = typeof DIGID_ATTR_PRIMARY;
+    let decoded: Record<attr, string> = decodeToken(response.data.toString());
+    return decoded[DIGID_ATTR_PRIMARY] === userID;
+  } catch {}
+  return false;
+}
+
+export function verifyAuthenticated(
+  authMethod: AuthMethod,
+  profileType: ProfileType
+) {
+  return async (req: Request, res: Response) => {
+    const auth = await getAuth(req);
+    if (
+      req.oidc.isAuthenticated() &&
+      auth.profile.authMethod === authMethod &&
+      (await verifyUserIdWithRemoteUserinfo(
+        req.oidc.accessToken,
+        auth.profile.id
+      ))
+    ) {
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType,
+          authMethod,
+        })
+      );
+    }
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
+  };
+}
+
+export function decodeToken<T extends Record<string, string> = {}>(
+  jwtToken: string,
+  options?: jose.JWT.DecodeOptions
+): T {
+  return jose.JWT.decode(jwtToken, options) as unknown as T;
+}
+
+export function nocache(_req: Request, res: Response, next: NextFunction) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+}
+
+export const isAuthenticated =
+  () => async (req: Request, res: Response, next: NextFunction) => {
+    if (hasSessionCookie(req)) {
+      try {
+        await getAuth(req);
+        return next();
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    }
+    return sendUnauthorized(res);
+  };
+
 /**
  *
  * Helpers for development
@@ -273,10 +360,6 @@ function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   return idToken;
 }
 
-export function decodeToken(idToken: string) {
-  return jose.JWT.decode(idToken);
-}
-
 export function generateDevSessionCookieValue(
   authMethod: AuthProfile['authMethod'],
   userID: string
@@ -295,11 +378,4 @@ export function generateDevSessionCookieValue(
   );
 
   return value;
-}
-
-export function nocache(req: Request, res: Response, next: NextFunction) {
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
-  res.header('Pragma', 'no-cache');
-  next();
 }

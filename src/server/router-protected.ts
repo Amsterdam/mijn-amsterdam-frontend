@@ -6,8 +6,7 @@ import {
   BFF_MS_API_BASE_PATH,
   RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
-import { getAuth, isProtectedRoute } from './helpers/app';
-import { isAuthenticated } from './router-auth';
+import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
   loadServicesAll,
   loadServicesSSE,
