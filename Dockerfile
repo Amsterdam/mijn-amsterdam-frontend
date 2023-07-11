@@ -22,13 +22,6 @@ RUN npm ci
 COPY public /app/public
 COPY src /app/src
 
-# Copy certificate
-COPY ca/* /usr/local/share/ca-certificates/extras/
-
-# Update new cert
-RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
-  && update-ca-certificates
-
 ########################################################################################################################
 ########################################################################################################################
 # Actually building the application
@@ -104,6 +97,13 @@ COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/n
 ########################################################################################################################
 ########################################################################################################################
 FROM node:current-buster as deploy-ap-bff
+
+# Copy certificate
+COPY ca/* /usr/local/share/ca-certificates/extras/
+
+# Update new cert
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
 
 ENV BFF_ENV=production
 ENV TZ=Europe/Amsterdam
