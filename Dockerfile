@@ -22,6 +22,12 @@ RUN npm ci
 COPY public /app/public
 COPY src /app/src
 
+# Copy certificate
+COPY ca/* /usr/local/share/ca-certificates/extras/
+
+# Update new cert
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
 
 ########################################################################################################################
 ########################################################################################################################
