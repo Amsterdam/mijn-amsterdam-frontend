@@ -266,7 +266,9 @@ export async function verifyUserIdWithRemoteUserinfo(
     type attr = typeof DIGID_ATTR_PRIMARY;
     let decoded: Record<attr, string> = decodeToken(response.data.toString());
     return decoded[DIGID_ATTR_PRIMARY] === userID;
-  } catch {}
+  } catch (error) {
+    Sentry.captureException(error);
+  }
   return false;
 }
 
