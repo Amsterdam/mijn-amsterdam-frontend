@@ -39,7 +39,7 @@ export const FeatureToggle = {
   avgActive: !IS_PRODUCTION,
   svwiLinkActive: !IS_PRODUCTION,
   ehKetenmachtigingActive: !IS_PRODUCTION,
-  bodemActive: !IS_AP,
+  bodemActive: !IS_PRODUCTION,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';
