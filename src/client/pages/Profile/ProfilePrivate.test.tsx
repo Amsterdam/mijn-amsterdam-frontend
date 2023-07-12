@@ -65,7 +65,7 @@ const responseData = {
     voornamen: 'Wesley',
     voorvoegselGeslachtsnaam: null,
     mokum: true,
-    adresInOnderzoek: '080000'
+    adresInOnderzoek: '080000',
   },
   ouders: [
     {
@@ -345,4 +345,39 @@ describe('<Profile />', () => {
     expect(screen.getByText('Nederlandse')).toBeInTheDocument();
     expect(screen.queryByText('Armeense, Turkse')).toBeNull();
   });
+
+  it.each([
+    [' ', '01 januari 1950'],
+    ['A', '01 januari 1950'],
+    ['J', '00 00 0000'],
+    ['M', '00 00 1950'],
+    ['D', '00 januari 1950'],
+    ['V', '01 januari 1950'],
+  ])(
+    'Shows the correctly formatted birthday for indicatieGeboortedatum %s',
+    async (indicatieGeboortedatum, geformateerdeGeboortedatum) => {
+      const Component = () => (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                indicatieGeboortedatum,
+              },
+            } as any)
+          )}
+        />
+      );
+      render(<Component />);
+
+      expect(screen.getAllByText('Geboortedatum')[0]).toBeInTheDocument();
+      expect(
+        await screen.findByText(geformateerdeGeboortedatum)
+      ).toBeInTheDocument();
+    }
+  );
 });

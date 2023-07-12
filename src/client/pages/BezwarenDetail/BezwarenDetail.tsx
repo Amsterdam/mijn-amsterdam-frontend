@@ -37,7 +37,7 @@ const BezwarenDetail = () => {
         }}
         isLoading={isLoading(BEZWAREN)}
       >
-        {bezwaar?.omschrijving || 'Bezwaar'}
+        Bezwaar
       </PageHeading>
 
       <PageContent>
@@ -48,8 +48,8 @@ const BezwarenDetail = () => {
         ) : (
           <>
             <InfoDetail
-              label="Nummer van uw bezwaar"
-              value={bezwaar?.bezwaarnummer}
+              label="Kenmerk van uw bezwaar"
+              value={bezwaar?.zaakkenmerk}
             />
             {bezwaar?.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
@@ -79,8 +79,8 @@ const BezwarenDetail = () => {
               </InfoDetailGroup>
             )}
 
-            {bezwaar?.documenten?.length && bezwaar?.documenten?.length > 0 && (
-              <>
+            {!!bezwaar?.documenten?.length &&
+              bezwaar?.documenten?.length > 0 && (
                 <InfoDetailGroup>
                   <InfoDetail
                     valueWrapperElement="div"
@@ -117,8 +117,7 @@ const BezwarenDetail = () => {
                     }
                   />
                 </InfoDetailGroup>
-              </>
-            )}
+              )}
 
             {!!bezwaar?.einddatum && bezwaar?.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />

@@ -40,7 +40,6 @@ function getDataForAVG(bsn: string) {
     'avgverzoek_werkelijkeeinddatum',
     'avgverzoek_omschrijvingvanonderwerp',
     'avgverzoek_statusavgverzoek_alias',
-    'avgverzoek_themas',
   ].join(', ');
 
   data.append('columns', columns);
@@ -130,7 +129,6 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
           verzoek['avgverzoek_datuminbehandeling']?.value || ''
         ),
         type: verzoek['avgverzoek_typeverzoek'].value || '',
-        onderwerp: verzoek['avgverzoek_themas']?.value || '',
         toelichting:
           verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
         resultaat: verzoek['avgverzoek_typeafhandeling_resultaat']?.value || '',
@@ -259,17 +257,17 @@ function createAVGNotification(verzoek: AVGRequest) {
     },
   };
 
+  if (inProgressActive) {
+    notification.title = 'AVG verzoek in behandeling';
+    notification.description = 'Uw AVG verzoek is in behandeling genomen.';
+    notification.datePublished = verzoek.datumInBehandeling;
+  }
+
   if (extraInfoActive) {
     notification.title = 'AVG verzoek meer informatie nodig';
     notification.description =
       'Wij hebben meer informatie en tijd nodig om uw AVG verzoek te behandelen.';
     notification.datePublished = verzoek.opschortenGestartOp;
-  }
-
-  if (inProgressActive) {
-    notification.title = 'AVG verzoek in behandeling';
-    notification.description = 'Uw AVG verzoek is in behandeling genomen.';
-    notification.datePublished = verzoek.datumInBehandeling;
   }
 
   if (isDone) {

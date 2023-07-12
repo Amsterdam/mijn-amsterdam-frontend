@@ -33,6 +33,7 @@ export interface Persoon {
   aanduidingNaamgebruikOmschrijving: string | null;
   bsn: string | null;
   geboortedatum: string | null;
+  indicatieGeboortedatum: string | null;
   overlijdensdatum: string | null;
   geboortelandnaam: string | null;
   geboorteplaatsnaam: string | null;

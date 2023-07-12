@@ -2,6 +2,7 @@ import nock from 'nock';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
 import apiResponse from '../../mock-data/json/avg.json';
+import avgThemasResponse from '../../mock-data/json/avg-themas.json';
 
 describe('AVG', () => {
   const requestId = '456';
@@ -35,46 +36,7 @@ describe('AVG', () => {
         .post('/smile', /readavgverzoek/gi)
         .reply(200, apiResponse)
         .post('/smile', /readthemaperavgverzoek/gi)
-        .reply(200, {
-          List: [
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 2',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '1' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 3',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '2' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 1',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '156' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 2',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '425' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 3',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '223' },
-            },
-            {
-              themaperavgverzoek_avgthema_omschrijving: {
-                value: 'avg thema 1',
-              },
-              themaperavgverzoek_avgverzoek_id: { value: '561' },
-            },
-          ],
-        });
+        .reply(200, avgThemasResponse);
     });
 
     it('should transform the data correctly', () => {
@@ -83,7 +45,6 @@ describe('AVG', () => {
       expect(res.verzoeken.length).toEqual(apiResponse.List.length);
 
       expect(res.verzoeken[2]).toEqual({
-        onderwerp: 'Vergunningen',
         datumAfhandeling: '2023-03-19T00:00:00.000Z',
         datumInBehandeling: '2023-03-16T00:00:00.000Z',
         ontvangstDatum: '2022-03-09T00:00:00.000Z',
@@ -161,14 +122,14 @@ describe('AVG', () => {
               },
               Object {
                 "chapter": "AVG",
-                "datePublished": "2023-03-30T00:00:00.000Z",
-                "description": "Uw AVG verzoek is in behandeling genomen.",
+                "datePublished": "2023-06-03T00:00:00.000Z",
+                "description": "Wij hebben meer informatie en tijd nodig om uw AVG verzoek te behandelen.",
                 "id": "avg-561-notification",
                 "link": Object {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/561",
                 },
-                "title": "AVG verzoek in behandeling",
+                "title": "AVG verzoek meer informatie nodig",
               },
               Object {
                 "chapter": "AVG",
