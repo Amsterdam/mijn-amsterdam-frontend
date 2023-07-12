@@ -13,8 +13,9 @@ import {
   BFF_OIDC_ISSUER_BASE_URL,
   DEV_JWK_PRIVATE,
   DEV_JWK_PUBLIC,
-  DEV_TOKEN_ID_ATTRIBUTE,
+  TOKEN_ID_ATTRIBUTE,
   DIGID_ATTR_PRIMARY,
+  EH_ATTR_INTERMEDIATE_PRIMARY_ID,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -27,6 +28,7 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
   oidcConfigYivi,
+  TokenIdAttribute,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -243,6 +245,7 @@ export function isProtectedRoute(pathRequested: string) {
 }
 
 export async function verifyUserIdWithRemoteUserinfo(
+  authMethod: AuthMethod,
   accessToken?: AccessToken,
   userID?: string
 ) {
@@ -263,9 +266,10 @@ export async function verifyUserIdWithRemoteUserinfo(
 
   try {
     const response = await axios(requestOptions);
-    type attr = typeof DIGID_ATTR_PRIMARY;
-    let decoded: Record<attr, string> = decodeToken(response.data.toString());
-    return decoded[DIGID_ATTR_PRIMARY] === userID;
+    let decoded: Record<TokenIdAttribute, string> = decodeToken(
+      response.data.toString()
+    );
+    return decoded[TOKEN_ID_ATTRIBUTE[authMethod]] === userID;
   } catch (error) {
     Sentry.captureException(error);
   }
@@ -282,6 +286,7 @@ export function verifyAuthenticated(
       req.oidc.isAuthenticated() &&
       auth.profile.authMethod === authMethod &&
       (await verifyUserIdWithRemoteUserinfo(
+        authMethod,
         req.oidc.accessToken,
         auth.profile.id
       ))
@@ -351,7 +356,7 @@ function getPublicKeyForDevelopment() {
 function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   const idToken = jose.JWT.sign(
     {
-      [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
       aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
     },
     getPrivateKeyForDevelopment(),
