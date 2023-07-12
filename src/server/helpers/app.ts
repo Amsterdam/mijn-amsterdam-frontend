@@ -255,9 +255,7 @@ export async function verifyUserIdWithRemoteUserinfo(
 
   const requestOptions: AxiosRequestConfig = {
     method: 'get',
-    url:
-      process.env.BFF_OIDC_USERINFO_ENDPOINT ??
-      `${BFF_OIDC_ISSUER_BASE_URL}/aselectserver/server/userinfo`,
+    url: process.env.BFF_OIDC_USERINFO_ENDPOINT,
     headers: {
       Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
       Accept: 'application/jwt',
