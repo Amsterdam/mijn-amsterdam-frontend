@@ -40,6 +40,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
+import { getBagSearchAddress } from '../../../universal/helpers/bag';
 
 function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
@@ -238,6 +239,20 @@ export default function GarbageInformation() {
   const isWeesp = address?.woonplaatsNaam === 'Weesp';
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
+  const heeftGeenWoonfunctie = AFVAL.content?.some(
+    (fractionData) => !fractionData.gebruiksdoelWoonfunctie
+  );
+  const commercialLocation = MY_LOCATION.content?.find(
+    (location) => location?.profileType === 'commercial'
+  );
+  const privateLocation = MY_LOCATION.content?.find(
+    (location) => location?.profileType === 'private'
+  );
+
+  const privateIsCommercial =
+    commercialLocation?.bagNummeraanduidingId ===
+    privateLocation?.bagNummeraanduidingId;
+
   return (
     <DetailPage>
       <PageHeading
@@ -257,6 +272,19 @@ export default function GarbageInformation() {
               Hieronder vindt u een overzicht van alle huis- en grofvuil
               voorzieningen rond uw adres.
             </p>
+            {!!commercialLocation && !privateIsCommercial && (
+              <Alert type="warning">
+                <p>
+                  Let op deze regels gaan over uw woonadres. Lees hier{' '}
+                  <LinkdInline
+                    href={ExternalUrls.AFVAL_COMMERCIAL}
+                    external={true}
+                  >
+                    regels over bedrijfsafval in Amsterdam
+                  </LinkdInline>
+                </p>
+              </Alert>
+            )}
             <p>
               <Linkd href={ExternalUrls.AFVAL} external={true}>
                 Meer informatie over regels voor afval en hergebruik
@@ -309,9 +337,7 @@ export default function GarbageInformation() {
                 )}
               </p>
               {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
-              {AFVAL.content?.some(
-                (fractionData) => !fractionData.gebruiksdoelWoonfunctie
-              ) && (
+              {heeftGeenWoonfunctie && (
                 <p className={styles.WoonFunctieWaarschuwing}>
                   <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
                   <LinkdInline

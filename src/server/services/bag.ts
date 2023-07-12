@@ -14,18 +14,19 @@ export interface BAGData {
   latlng: LatLngLiteral | null;
   address?: Adres | null;
   bagNummeraanduidingId?: string | null;
+  profileType: ProfileType;
 }
 
 export async function fetchBAG(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  BRPaddress: Adres | null
+  sourceAddress: Adres | null
 ) {
-  if (!BRPaddress) {
+  if (!sourceAddress) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const searchAddress = getBagSearchAddress(BRPaddress);
+  const searchAddress = getBagSearchAddress(sourceAddress);
 
   if (!searchAddress) {
     return apiErrorResult(`Kon geen correct zoek adres opmaken.`, null);
@@ -34,8 +35,9 @@ export async function fetchBAG(
   const params = { q: searchAddress, features: 2 }; // features=2 is een Feature flag zodat ook locaties in Weesp worden weergegeven.
   const config = getApiConfig('BAG', {
     params,
+    cacheKey: `${requestID}-${searchAddress}`,
     transformResponse: (responseData) => {
-      const isWeesp = BRPaddress.woonplaatsNaam === 'Weesp';
+      const isWeesp = sourceAddress.woonplaatsNaam === 'Weesp';
 
       const latlng = getLatLonByAddress(
         responseData?.results,
@@ -51,7 +53,7 @@ export async function fetchBAG(
 
       return {
         latlng,
-        address: BRPaddress,
+        address: sourceAddress,
         bagNummeraanduidingId: bagResult?.landelijk_id ?? null,
       };
     },

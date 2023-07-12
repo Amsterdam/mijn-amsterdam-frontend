@@ -35,11 +35,14 @@ async function fetchPrivate(
             lng: DEFAULT_LNG,
           },
           address: null,
+          profileType: 'private',
         },
       ]);
     } else {
       // BAG Location found!
-      MY_LOCATION = apiSuccessResult([location]);
+      MY_LOCATION = apiSuccessResult([
+        Object.assign(location, { profileType: 'private' }),
+      ]);
     }
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
     // Not a Mokum address
@@ -47,6 +50,7 @@ async function fetchPrivate(
       {
         latlng: null,
         address: null,
+        profileType: 'private',
       },
     ]);
   } else {
@@ -74,7 +78,13 @@ async function fetchCommercial(
           fetchBAG(requestID, authProfileAndToken, address)
         )
       ).then((results) => {
-        return results.map((result) => result.content);
+        return results.map((result) =>
+          result.content !== null
+            ? Object.assign(result.content, {
+                profileType: 'commercial',
+              })
+            : null
+        );
       });
 
       MY_LOCATION = apiSuccessResult(locations);
@@ -101,7 +111,31 @@ export async function fetchMyLocation(
       return fetchCommercial(requestID, authProfileAndToken);
 
     case 'private':
-    default:
-      return fetchPrivate(requestID, authProfileAndToken);
+    default: {
+      const privateAddresses = await fetchPrivate(
+        requestID,
+        authProfileAndToken
+      );
+      const commercialAddresses = await fetchCommercial(
+        requestID,
+        authProfileAndToken
+      );
+
+      switch (true) {
+        case privateAddresses.content !== null &&
+          commercialAddresses.content !== null:
+          return apiSuccessResult([
+            ...privateAddresses.content!.filter(
+              (a: BAGData | null): a is BAGData => a !== null
+            ),
+            ...commercialAddresses.content!.filter(
+              (a: BAGData | null): a is BAGData => a !== null
+            ),
+          ]);
+        case privateAddresses.content !== null:
+          return privateAddresses;
+      }
+      return apiErrorResult('Could not fetch locations.', null);
+    }
   }
 }
