@@ -213,7 +213,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
   ERFPACHTv2: {
-    url: process.env.BFF_ERFPACHT_API_URL,
+    url: process.env.BFF_ERFPACHT_API_URL_ONT,
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
       ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],

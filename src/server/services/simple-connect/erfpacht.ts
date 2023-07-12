@@ -139,11 +139,11 @@ export async function fetchErfpachtV2(
     authProfileAndToken
   );
 
-  const connectieHermesInfo = requestData(
+  const connectieErfpachter = requestData(
     {
       ...config,
-      url: `${config.url}/vernise/api/hermesversion`,
-      transformResponse: getNamedResponseTransformer('vernise-hermesversion'),
+      url: `${config.url}/vernise/api/erfpachter `,
+      transformResponse: getNamedResponseTransformer('vernise-erfpachter'),
     },
     requestID,
     authProfileAndToken
@@ -152,14 +152,14 @@ export async function fetchErfpachtV2(
   const result = await Promise.allSettled([
     connectieAPIM,
     connectieVerniseHealth,
-    connectieHermesInfo,
+    connectieErfpachter,
   ]);
 
   return {
     content: {
       APIM: getSettledResult(result[0]),
       verniseHealth: getSettledResult(result[1]),
-      hermesInfo: getSettledResult(result[2]),
+      erfpachter: getSettledResult(result[2]),
     },
   };
 }
