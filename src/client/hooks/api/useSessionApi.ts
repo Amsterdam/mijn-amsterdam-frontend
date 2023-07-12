@@ -50,12 +50,12 @@ export const sessionAtom = atom<SessionState>({
   default: INITIAL_SESSION_STATE,
 });
 
-export function useSessionApi() {
-  const requestOptions: ApiRequestOptions = {
-    sentryEnabled: false, // Disable Sentry for auth check responses
-    url: AUTH_API_URL,
-  };
+const requestOptions: ApiRequestOptions = {
+  sentryEnabled: false, // Disable Sentry for auth check responses
+  url: AUTH_API_URL,
+};
 
+export function useSessionApi() {
   const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)
@@ -79,19 +79,40 @@ export function useSessionApi() {
   }, [sessionData.authMethod]);
 
   useEffect(() => {
+    const checkAuthentication = () => {
+      fetch({
+        url: AUTH_API_URL,
+        postpone: false,
+      });
+    };
+
+    const checkAway = () => {
+      if (document.body.classList.contains('is-away')) {
+        document.body.classList.remove('is-away');
+        checkAuthentication();
+      }
+    };
+
+    const addAway = () => {
+      document.body.classList.add('is-away');
+    };
+
     setSession(() => ({
       ...sessionData,
       isLoading,
       isDirty,
       isPristine,
-      refetch: () => {
-        fetch({
-          url: AUTH_API_URL,
-          postpone: false,
-        });
-      },
+      refetch: checkAuthentication,
       logout: () => logoutSession(),
     }));
+
+    window.addEventListener('focus', checkAway);
+    window.addEventListener('blur', addAway);
+
+    return () => {
+      window.removeEventListener('focus', checkAway);
+      window.removeEventListener('blur', addAway);
+    };
   }, [
     sessionData,
     isLoading,
