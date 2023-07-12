@@ -18,7 +18,6 @@ export const FeatureToggle = {
   residentCountActive: true,
   sportDatasetsActive: true,
   wiorDatasetActive: true,
-  foreignAddressInfoActive: !IS_PRODUCTION,
   siaActive: true,
   siaApiActive: true,
   yiviActive: true,
