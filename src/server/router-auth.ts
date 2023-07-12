@@ -54,12 +54,15 @@ router.use(
 );
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
-  return res.oidc.login({
-    returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
-    authorizationParams: {
-      redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
-    },
-  });
+  if (!req.oidc.isAuthenticated()) {
+    return res.oidc.login({
+      returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
+      authorizationParams: {
+        redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
+      },
+    });
+  }
+  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
 });
 
 router.get(
