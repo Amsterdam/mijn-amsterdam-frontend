@@ -27,7 +27,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.KVK,
     id: Chapters.KVK,
     to: AppRoutes.KVK,
-    profileTypes: ['commercial'],
+    profileTypes: ['commercial', 'private'],
   },
   {
     title: ChapterTitles.BELASTINGEN,

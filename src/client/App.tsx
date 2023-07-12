@@ -243,11 +243,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
-          {profileType !== 'private' ? (
-            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
-          ) : (
-            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
-          )}
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
