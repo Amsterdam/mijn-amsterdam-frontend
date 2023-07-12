@@ -17,9 +17,6 @@ describe('<DirectLinks />', () => {
   it('renders private links', () => {
     expect(getMountHtml('private')).toMatchSnapshot();
   });
-  it('renders private-commercial links', () => {
-    expect(getMountHtml('private-commercial')).toMatchSnapshot();
-  });
   it('renders commercial links', () => {
     expect(getMountHtml('commercial')).toMatchSnapshot();
   });

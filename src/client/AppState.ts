@@ -38,13 +38,13 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   WPI_TOZO: apiPristineResult([], {
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   }),
   WPI_TONK: apiPristineResult([], {
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   }),
   WPI_BBZ: apiPristineResult([], {
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   }),
   WPI_STADSPAS: apiPristineResult(null, {
     profileTypes: ['private'],
@@ -59,7 +59,7 @@ export const PRISTINE_APPSTATE: AppState = {
   ),
   BELASTINGEN: apiPristineResult(
     { isKnown: true },
-    { profileTypes: ['private', 'private-commercial'] }
+    { profileTypes: ['private'] }
   ),
   BEZWAREN: apiPristineResult([], {
     isActive: FeatureToggle.bezwarenActive,
@@ -81,7 +81,7 @@ export const PRISTINE_APPSTATE: AppState = {
 
   // Related
   BRP: apiPristineResult(null, {
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],
@@ -102,7 +102,7 @@ export const PRISTINE_APPSTATE: AppState = {
 
   KLACHTEN: apiPristineResult(
     { aantal: 0, klachten: [] },
-    { profileTypes: ['private', 'private-commercial'] }
+    { profileTypes: ['private'] }
   ),
 
   SIA: apiPristineResult(
@@ -127,7 +127,7 @@ export const PRISTINE_APPSTATE: AppState = {
 
   AVG: apiPristineResult(null, {
     isActive: FeatureToggle.avgActive,
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   }),
 
   BODEM: apiPristineResult(null, { isActive: FeatureToggle.bodemActive }),

@@ -17,7 +17,6 @@ const terms: {
   [profileType in ProfileType]: Record<string, string>;
 } = {
   private: GENERAL_PRIVATE_TERMS,
-  'private-commercial': GENERAL_COMMERCIAL_TERMS,
   'private-attributes': GENERAL_PRIVATE_TERMS,
   commercial: GENERAL_COMMERCIAL_TERMS,
 };

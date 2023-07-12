@@ -97,7 +97,6 @@ export async function fetchMyLocation(
   profileType: ProfileType
 ) {
   switch (profileType) {
-    case 'private-commercial':
     case 'commercial':
       return fetchCommercial(requestID, authProfileAndToken);
 

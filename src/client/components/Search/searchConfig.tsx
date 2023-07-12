@@ -172,9 +172,7 @@ const getWpiConfig = (
     };
   },
   profileTypes:
-    stateKey === 'WPI_AANVRAGEN'
-      ? ['private']
-      : ['private', 'private-commercial', 'commercial'],
+    stateKey === 'WPI_AANVRAGEN' ? ['private'] : ['private', 'commercial'],
 });
 
 export type ApiSearchConfigRemote = Record<
