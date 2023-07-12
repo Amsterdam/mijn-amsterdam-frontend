@@ -266,6 +266,23 @@ describe('<Profile />', () => {
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
+  it('Matches the Full Page snapshot no address known', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            adres: null,
+          } as any)
+        )}
+      />
+    );
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
+  });
+
   it('Matches the Full Page snapshot "Punt adres" in onderzoek', () => {
     const Component = () => (
       <MockApp
