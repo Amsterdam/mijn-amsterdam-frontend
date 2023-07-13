@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { apiErrorResult } from '../../universal/helpers';
+import { apiErrorResult, jsonCopy } from '../../universal/helpers';
 import * as config from '../config';
 import {
   addServiceResultHandler,
@@ -19,8 +19,9 @@ import {
   send404,
   sendMessage,
   sendUnauthorized,
-  TokenData,
+  verifyAuthenticated,
   verifyUserIdWithRemoteUserinfo,
+  type TokenData,
 } from './app';
 import { cache } from './source-api-request';
 import nock from 'nock';
@@ -47,14 +48,6 @@ describe('server/helpers/app', () => {
 
   let isOidcTokenVerificationEnabled =
     config.OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED;
-
-  nock('http://localhost')
-    .get('/oidc/userinfo')
-    .times(2)
-    .reply(200, config.DEV_JWT)
-    .get('/oidc/userinfo')
-    .times(1)
-    .reply(401, '');
 
   beforeAll(() => {
     (config as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = false;
@@ -417,6 +410,14 @@ describe('server/helpers/app', () => {
   });
 
   test('verifyUserIdWithRemoteUserinfo', async () => {
+    nock('http://localhost')
+      .get('/oidc/userinfo')
+      .times(2)
+      .reply(200, config.DEV_JWT)
+      .get('/oidc/userinfo')
+      .times(1)
+      .reply(401, '');
+
     // Happy
     expect(
       await verifyUserIdWithRemoteUserinfo(
@@ -507,5 +508,76 @@ describe('server/helpers/app', () => {
     await isAuthenticated()(req, res, nextFn);
 
     expect(nextFn).toHaveBeenCalled();
+  });
+
+  test('verifyAuthenticated', async () => {
+    const req = {
+      cookies: {
+        [OIDC_SESSION_COOKIE_NAME]:
+          'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjg5MjM4MzY3LCJ1YXQiOjE2ODkyMzgzNjcsImV4cCI6MTY4OTIzOTI2N30..RQW1R1ZKYLncXIVW.yoK7RQtRDjLQzz3Xyy244R5cZC8DnVm7m8Z6CuNmbgXxoI7ZaMEUaHRegeLqMrmhbAQOw3J59HRvf5y_-G_rN577N1qnnCt0VruL2ey0LL5Mp3ElVuXHLkWCdhU0DeZuHBcHcCPEj3_5HZTAeTBYS1HBNijsXON5_q8WeBJP_lshd-7ZbENcAjsZPeKs9SXZYbNaJPMcD4YY0IcXjI4A1Ue_RzU7I5hkYHC1yUWuiHw7b4yFCnclFZ0WpsS7tPGLdQ_tjXHSjR2Pj57J8_r_M5Y_nOajfYcDmc-J4V0vng13gocm99lac_UvjlLjkHwNQ802IQRPUTZVZKXYtcynq7o4-l2wFFp0KO9K8flEnUxAbYIZzdogRS66sS3u6IbhTkGMdGa_ZD8lNSpNo9iKR0jKRZSV1CQ2YmZ6VLYhekm7cAWa-HTBDd_yLOVVLUTjzMmp8_1Nyxlc0If3ZNtykPNcQltsWcP3HC5EE__Q-mzsc0SgiK5FfjHs9cbFpBglP_v41TRdNGJ9XPWexPRvwU4Alm_5gQVx6IVrNxBT_t8HZHKVNw5ZFTutNtpyK8sSa-bhURBB1PwcUwlp2Lxe2G0Aho1q5VuFrOZNNA3Ok_KkQXBVHNV86dxOFlurh6AWsKMQ6-Apq5nHHXvmhn1jOSCpNGt2nCekq6D_nEIGCnwWMq2vJw.3emPjZyYwAvDkOR_Pyevog',
+      },
+      oidc: {
+        isAuthenticated: jest.fn().mockReturnValueOnce(true),
+        accessToken: {
+          access_token: '',
+          token_type: 'Bearer',
+        },
+      },
+    } as unknown as Request;
+
+    const res = {
+      send: jest.fn().mockImplementation((responseContent: any) => {
+        return responseContent;
+      }),
+      status: jest.fn(),
+      clearCookie: jest.fn(),
+    } as unknown as Response;
+
+    const responseUnauthorized = {
+      content: null,
+      message: 'Unauthorized',
+      status: 'ERROR',
+    };
+
+    const verify = verifyAuthenticated('digid', 'private');
+    ////
+    nock('http://localhost').get('/oidc/userinfo').times(1).reply(401, '');
+
+    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
+
+    expect(res.clearCookie).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(401);
+
+    ////
+    req.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(false);
+    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
+
+    ////
+    req.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(true);
+    nock('http://localhost')
+      .get('/oidc/userinfo')
+      .times(1)
+      .reply(200, config.DEV_JWT);
+
+    expect(await verify(req, res)).toStrictEqual({
+      content: {
+        isAuthenticated: true,
+        profileType: 'private',
+        authMethod: 'digid',
+      },
+      status: 'OK',
+    });
+
+    ////
+    const req2 = jsonCopy(req);
+    nock('http://localhost')
+      .get('/oidc/userinfo')
+      .times(1)
+      .reply(200, config.DEV_JWT);
+    req2.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(true);
+    req2.cookies = {};
+    await expect(verify(req2, res)).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"JWE malformed or invalid serialization"`
+    );
   });
 });

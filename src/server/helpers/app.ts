@@ -10,12 +10,8 @@ import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
-  BFF_OIDC_ISSUER_BASE_URL,
   DEV_JWK_PRIVATE,
   DEV_JWK_PUBLIC,
-  TOKEN_ID_ATTRIBUTE,
-  DIGID_ATTR_PRIMARY,
-  EH_ATTR_INTERMEDIATE_PRIMARY_ID,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -25,10 +21,11 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
+  TOKEN_ID_ATTRIBUTE,
+  TokenIdAttribute,
   oidcConfigDigid,
   oidcConfigEherkenning,
   oidcConfigYivi,
-  TokenIdAttribute,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -75,7 +72,8 @@ export interface AuthProfileAndToken {
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
-  const oidcToken = getOIDCToken(combineCookieChunks(req.cookies));
+  const combinedCookies = combineCookieChunks(req.cookies);
+  const oidcToken = getOIDCToken(combinedCookies);
   const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
