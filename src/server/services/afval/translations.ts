@@ -64,8 +64,8 @@ export const labels: Record<string, { text: string; html?: string }> = {
     html: '<p>In de container voor gfe. Dit kan alleen met <a href="https://www.amsterdam.nl/gfe">een pas</a>. </p>',
   },
   'Huishoudelijk afval': {
-    text: 'Gfe/t, textiel, papier/karton, glas en restafval',
-    html: '<p>Gfe/t, textiel, papier/karton, glas en restafval</p>',
+    text: 'Restafval, papier/karton, gfe/t, glas en textiel',
+    html: '<p>Restafval, papier/karton, gfe/t, glas en textiel</p>',
   },
   'Ik heb minder dan 9 zakken afval per week en betaal reinigingsrecht.': {
     text: 'Ik heb maximaal 9 zakken afval per week en betaal reinigingsrecht.',
