@@ -61,7 +61,10 @@ export const PRISTINE_APPSTATE: AppState = {
     { isKnown: true },
     { profileTypes: ['private', 'private-commercial'] }
   ),
-  BEZWAREN: apiPristineResult([], { isActive: FeatureToggle.bezwarenActive }),
+  BEZWAREN: apiPristineResult([], {
+    isActive: FeatureToggle.bezwarenActive,
+    profileTypes: ['private', 'private-commercial'],
+  }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
   AKTES: apiPristineResult([], {
     isActive: FeatureToggle.aktesActive,
