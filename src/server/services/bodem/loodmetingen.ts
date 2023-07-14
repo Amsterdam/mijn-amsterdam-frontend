@@ -79,13 +79,13 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             ? {
                 title: 'Rapport Lood in de bodem-check',
                 id: location.Workorderid!,
-                url: `${
-                  IS_ACCEPTANCE
-                    ? process.env.REACT_APP_BFF_API_URL_ACC
-                    : process.env.REACT_APP_BFF_API_URL
-                }${generatePath(BffEndpoints.LOODMETING_ATTACHMENTS, {
-                  id: location.Workorderid!,
-                })}`,
+                // https://acc.mijn.amsterdam.nl/lood-meting/undefined/services/lood/b203d335-9906-ee11-8f6e-0022489fda17/attachments
+                url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+                  BffEndpoints.LOODMETING_ATTACHMENTS,
+                  {
+                    id: location.Workorderid!,
+                  }
+                )}`,
                 datePublished: location.Reportsenton!,
               }
             : null,
@@ -211,12 +211,10 @@ function isRecentNotification(
 }
 
 function createLoodNotification(meting: LoodMeting) {
-  const inProgress =
-    !!meting.datumInbehandeling &&
-    !meting.datumAfgehandeld &&
-    !meting.datumBeoordeling;
-  const isDone = !!meting.datumAfgehandeld;
-  const isDenied = !!meting.datumBeoordeling;
+  const status = meting.status.toLocaleLowerCase();
+  const inProgress = status === 'in behandeling';
+  const isDone = status === 'afgehandeld';
+  const isDenied = status === 'afgewezen';
 
   const formattedAdress = `${meting.adres.straat} ${meting.adres.huisnummer}${
     meting.adres.huisletter ?? ''

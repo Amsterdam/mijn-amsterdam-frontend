@@ -63,20 +63,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </p>
       </div>
       <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Status
-        </h3>
-        <p
-          class="Value"
-        >
-          Afgehandeld
-        </p>
-      </div>
-      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -343,20 +329,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </p>
       </div>
       <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Status
-        </h3>
-        <p
-          class="Value"
-        >
-          Afgewezen
-        </p>
-      </div>
-      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -588,20 +560,6 @@ exports[`LoodMeting with results should show the correct detailpage for status i
         </p>
       </div>
       <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Status
-        </h3>
-        <p
-          class="Value"
-        >
-          Ontvangen
-        </p>
-      </div>
-      <div
         class="InfoDetail LocationInfo"
       >
         <h3
@@ -739,7 +697,7 @@ exports[`LoodMeting with results should show the correct detailpage for status i
               <strong
                 class="StatusTitle"
               >
-                Afgewezen
+                Afgehandeld
               </strong>
             </div>
             <div

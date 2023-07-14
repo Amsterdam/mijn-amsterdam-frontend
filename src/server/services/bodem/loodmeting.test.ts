@@ -136,7 +136,7 @@ describe('Loodmeting', () => {
               "datePublished": "2022-11-28T13:53:42Z",
               "id": "87464b90-176f-ed11-9561-0022489fdff7",
               "title": "Rapport Lood in de bodem-check",
-              "url": "undefined/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments",
+              "url": "http://localhost/bff/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments",
             },
             "kenmerk": "OL-001471",
             "link": Object {
