@@ -5,8 +5,9 @@ import styles from './LoodMeting.module.scss';
 
 export default function LoodStatusLines({ request }: { request: LoodMeting }) {
   const status = request.status.toLowerCase();
-  const isDone = status === 'afgehandeld' || status === 'afgewezen';
-  const isInProgress = !!request.datumInbehandeling && !isDone;
+  const isInProgress = status === 'in behandeling';
+  const isDenied = status === 'afgewezen';
+  const isDone = status === 'afgehandeld' || isDenied;
 
   const statusLines: StatusLineItem[] = [
     {
@@ -21,10 +22,9 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
     {
       id: 'second-item',
       status: 'In behandeling',
-      datePublished: 
+      datePublished:
         // Sometimes requests are immediately declined and don't have a datumInBehandeling date. We then show datumBeoordeling (which should be there if a request is declined).
         request.datumInbehandeling || request.datumBeoordeling || '',
-
       description: '',
       documents: [],
       isActive: isInProgress,
@@ -34,11 +34,9 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
 
   statusLines.push({
     id: 'third-item',
-    status: !!request.datumAfgehandeld ? 'Afgehandeld' : 'Afgewezen',
+    status: isDenied ? 'Afgewezen' : 'Afgehandeld',
     datePublished:
-      (status === 'afgewezen'
-        ? request.datumBeoordeling
-        : request.datumAfgehandeld) ?? '',
+      (isDenied ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
     description: '',
     documents: [],
     isActive: isDone,
