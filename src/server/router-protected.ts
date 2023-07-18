@@ -156,7 +156,6 @@ router.get(
     }
 
     res.type('application/pdf');
-    res.header('Access-Control-Allow-Origin', '*.amsterdam.nl');
     res.header(
       'Content-Disposition',
       `attachment; filename="${documentResponse.content!.filename}.pdf"`
