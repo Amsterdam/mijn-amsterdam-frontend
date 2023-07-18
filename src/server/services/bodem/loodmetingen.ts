@@ -80,7 +80,8 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
                 title: 'Rapport Lood in de bodem-check',
                 id: location.Workorderid!,
                 // https://acc.mijn.amsterdam.nl/lood-meting/undefined/services/lood/b203d335-9906-ee11-8f6e-0022489fda17/attachments
-                url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+                url: `${process.env.BFF_PUBLIC_URL}${generatePath(
+
                   `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
                   {
                     id: location.Workorderid!,
