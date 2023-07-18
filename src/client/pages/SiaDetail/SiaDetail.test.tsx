@@ -111,7 +111,7 @@ describe('<SiaDetail />', () => {
     expect(screen.getByText(SIA_ITEM.phone)).toBeInTheDocument();
     expect(screen.getAllByText(SIA_ITEM.status)).toHaveLength(2); // one in body, one in status line
     expect(screen.getByText(SIA_ITEM.description)).toBeInTheDocument();
-    expect(screen.queryByText(SIA_ITEM.category)).not.toBeInTheDocument();
+    expect(screen.getByText(SIA_ITEM.category)).toBeInTheDocument();
     expect((await screen.findAllByText(/Foto's/))[0]).toBeInTheDocument();
     expect(
       (await screen.findAllByText(/Reactie verzonden/))[0]
