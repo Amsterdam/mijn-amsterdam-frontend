@@ -26,7 +26,6 @@ import express, {
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
-import { apiErrorResult } from '../universal/helpers';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
