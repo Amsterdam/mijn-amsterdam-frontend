@@ -76,7 +76,9 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             title: 'Bekijk loodmeting',
           },
           document:
-            !!location.Workorderid && !!location.Reportavailable
+            !!location.Workorderid &&
+            !!location.Reportsenton &&
+            !!location.Reportavailable
               ? {
                   title: 'Rapport Lood in de bodem-check',
                   id: location.Workorderid,
