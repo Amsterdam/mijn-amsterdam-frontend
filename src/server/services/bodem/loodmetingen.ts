@@ -75,19 +75,20 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             }),
             title: 'Bekijk loodmeting',
           },
-          document: location.Reportavailable
-            ? {
-                title: 'Rapport Lood in de bodem-check',
-                id: location.Workorderid!,
-                url: `${process.env.BFF_PUBLIC_URL}${generatePath(
-                  `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
-                  {
-                    id: location.Workorderid!,
-                  }
-                )}`,
-                datePublished: location.Reportsenton!,
-              }
-            : null,
+          document:
+            !!location.Workorderid && !!location.Reportavailable
+              ? {
+                  title: 'Rapport Lood in de bodem-check',
+                  id: location.Workorderid,
+                  url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
+                    {
+                      id: location.Workorderid,
+                    }
+                  )}`,
+                  datePublished: location.Reportsenton,
+                }
+              : null,
         };
       });
     });
