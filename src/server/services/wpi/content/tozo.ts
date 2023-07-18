@@ -2,7 +2,7 @@ import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../universal/helpers';
-import { productName } from '../helpers';
+import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
@@ -165,7 +165,7 @@ const besluitLabels: WpiRequestStatusLabels = {
           return `Bekijk de brief voor meer details.`;
 
         case 'beschikking':
-          return `Uw bijstandsuitkering zelfstandigen is definitief berekend.`;
+          return `Uw Bbz uitkering is definitief berekend.`;
 
         default:
         case 'vrijeBeschikking':
@@ -173,6 +173,26 @@ const besluitLabels: WpiRequestStatusLabels = {
             statusStep.about || requestProcess.about
           } aanvraag.`;
       }
+    },
+    link: (requestProcess, statusStep) => {
+      if (statusStep?.decision === 'beschikking') {
+        const [document] = statusStep!.documents!;
+
+        return {
+          to: `${document?.url}`,
+          title: 'Bekijk het besluit',
+          download: documentDownloadName({
+            datePublished: requestProcess.datePublished,
+            title: 'Bbz-beschikking',
+          }),
+        };
+      }
+
+      // Default
+      return {
+        to: requestProcess.link?.to || '/',
+        title: 'Bekijk hoe het met uw aanvraag staat',
+      };
     },
   },
   description: (requestProcess, statusStep) => {
