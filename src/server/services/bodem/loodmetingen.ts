@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -75,20 +75,22 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             }),
             title: 'Bekijk loodmeting',
           },
-          document: location.Reportavailable
-            ? {
-                title: 'Rapport Lood in de bodem-check',
-                id: location.Workorderid!,
-                url: `${
-                  IS_ACCEPTANCE
-                    ? process.env.REACT_APP_BFF_API_URL_ACC
-                    : process.env.REACT_APP_BFF_API_URL
-                }${generatePath(BffEndpoints.LOODMETING_ATTACHMENTS, {
-                  id: location.Workorderid!,
-                })}`,
-                datePublished: location.Reportsenton!,
-              }
-            : null,
+          document:
+            !!location.Workorderid &&
+            !!location.Reportsenton &&
+            !!location.Reportavailable
+              ? {
+                  title: 'Rapport Lood in de bodem-check',
+                  id: location.Workorderid,
+                  url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
+                    {
+                      id: location.Workorderid,
+                    }
+                  )}`,
+                  datePublished: location.Reportsenton,
+                }
+              : null,
         };
       });
     });
@@ -211,12 +213,10 @@ function isRecentNotification(
 }
 
 function createLoodNotification(meting: LoodMeting) {
-  const inProgress =
-    !!meting.datumInbehandeling &&
-    !meting.datumAfgehandeld &&
-    !meting.datumBeoordeling;
-  const isDone = !!meting.datumAfgehandeld;
-  const isDenied = !!meting.datumBeoordeling;
+  const status = meting.status.toLocaleLowerCase();
+  const inProgress = status === 'in behandeling';
+  const isDone = status === 'afgehandeld';
+  const isDenied = status === 'afgewezen';
 
   const formattedAdress = `${meting.adres.straat} ${meting.adres.huisnummer}${
     meting.adres.huisletter ?? ''
