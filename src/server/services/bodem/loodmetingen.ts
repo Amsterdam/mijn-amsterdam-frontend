@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -81,7 +81,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
                 id: location.Workorderid!,
                 // https://acc.mijn.amsterdam.nl/lood-meting/undefined/services/lood/b203d335-9906-ee11-8f6e-0022489fda17/attachments
                 url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-                  BffEndpoints.LOODMETING_ATTACHMENTS,
+                  `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
                   {
                     id: location.Workorderid!,
                   }
