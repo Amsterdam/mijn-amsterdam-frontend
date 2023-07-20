@@ -7,6 +7,7 @@ import { jsonCopy } from '../../../universal/helpers';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import GarbageInformation from './GarbageInformation';
+import { GarbageFractionData } from '../../../server/services/afval/afvalwijzer';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
@@ -149,6 +150,12 @@ const testState: any = {
           adresType: 'correspondentie',
         },
         bagNummeraanduidingId: '0363200012145295',
+        profileType: 'private',
+      },
+      {
+        // Only used to determine if a user also has commercial address registered.
+        profileType: 'commercial',
+        bagNummeraanduidingId: '123123123123',
       },
     ],
   },
@@ -172,6 +179,46 @@ describe('<GarbageInformation />', () => {
   );
 
   it('Matches the Full Page snapshot', () => {
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('Does not show warning concercing bedrijfsafval', () => {
+    const testState2 = jsonCopy(testState);
+    testState2.MY_LOCATION.content[1].bagNummeraanduidingId =
+      testState2.MY_LOCATION.content[0].bagNummeraanduidingId;
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={GarbageInformation}
+        initializeState={(snapshot) => initializeState(snapshot, testState2)}
+      />
+    );
+
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('Does not show warning concercing woonfunctie', () => {
+    const testState2 = jsonCopy(testState);
+    testState2.AFVAL.content = testState2.AFVAL.content.map(
+      (fractie: GarbageFractionData) => ({
+        ...fractie,
+        gebruiksdoelWoonfunctie: true,
+      })
+    );
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={GarbageInformation}
+        initializeState={(snapshot) => initializeState(snapshot, testState2)}
+      />
+    );
+
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
