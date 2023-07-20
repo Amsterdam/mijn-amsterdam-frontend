@@ -377,8 +377,7 @@
       ],
       "profileTypes": [
         "private",
-        "commercial",
-        "private-commercial"
+        "commercial"
       ]
     },
     {
@@ -443,8 +442,7 @@
         "budgetbeheer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -457,8 +455,7 @@
         "afvalcontainers"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -471,8 +468,7 @@
         "Brood container"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -485,8 +481,7 @@
         "GFT-containers"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -499,8 +494,7 @@
         "Glascontainer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -513,8 +507,7 @@
         "Papiercontainer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -527,8 +520,7 @@
         "restcontainer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -544,8 +536,7 @@
         "kledingcontainer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -558,8 +549,7 @@
         "geadopteerdecontainer"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -573,8 +563,7 @@
         "Parkeervergunningen"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -588,8 +577,7 @@
         "Parkeervergunningen"
       ],
       "profileTypes": [
-        "private",
-        "private-commercial"
+        "private"
       ]
     },
     {
@@ -602,7 +590,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -617,7 +604,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -630,7 +616,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -645,7 +630,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -660,7 +644,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -675,7 +658,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -690,7 +672,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -705,7 +686,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -721,7 +701,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -735,7 +714,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -749,7 +727,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -764,7 +741,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -778,7 +754,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -793,7 +768,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -807,7 +781,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -823,7 +796,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -838,7 +810,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -852,7 +823,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -866,7 +836,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -882,7 +851,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -898,7 +866,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -914,7 +881,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -930,7 +896,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     }
@@ -978,7 +943,6 @@
       ],
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ]
     },
@@ -986,7 +950,6 @@
       "isEnabled": true,
       "profileTypes": [
         "private",
-        "private-commercial",
         "commercial"
       ],
       "keywordsGeneratedFromProps": [
