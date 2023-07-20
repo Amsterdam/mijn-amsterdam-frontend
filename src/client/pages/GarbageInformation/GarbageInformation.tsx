@@ -282,6 +282,7 @@ export default function GarbageInformation() {
                   >
                     regels over bedrijfsafval in Amsterdam
                   </LinkdInline>
+                  .
                 </p>
               </Alert>
             )}
