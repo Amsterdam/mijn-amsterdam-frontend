@@ -73,7 +73,7 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         <p
           class="Value"
         >
-          Schipluidenlaan 16A, Amsterdam
+          Schipluidenlaan 16A
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -339,7 +339,7 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         <p
           class="Value"
         >
-          Schipluidenlaan 16A, Amsterdam
+          Schipluidenlaan 16A
           <button
             class="Button Button__inline Button__lean MapLink"
           >
@@ -570,7 +570,7 @@ exports[`LoodMeting with results should show the correct detailpage for status i
         <p
           class="Value"
         >
-          Schipluidenlaan 12A, Amsterdam
+          Schipluidenlaan 12A
           <button
             class="Button Button__inline Button__lean MapLink"
           >
