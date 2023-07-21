@@ -1024,6 +1024,21 @@
         "AVG"
       ]
     },
+    "BEZWAREN": {
+      "keywordsGeneratedFromProps": [
+        "zaakkenmerk",
+        "resultaat",
+        "toelichting",
+        "omschrijving",
+        "identificatie",
+        "status"
+      ],
+      "keywords": [
+        "Bezwaar",
+        "indienen",
+        "bezwaren"
+      ]
+    },
     "HORECA": {
       "keywordsGeneratedFromProps": [
         "caseType",
