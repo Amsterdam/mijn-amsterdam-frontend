@@ -276,16 +276,19 @@ export async function isRequestAuthenticated(
   req: Request,
   authMethod: AuthMethod
 ) {
-  const auth = await getAuth(req);
-  return (
-    req.oidc.isAuthenticated() &&
-    auth.profile.authMethod === authMethod &&
-    (await verifyUserIdWithRemoteUserinfo(
-      authMethod,
-      req.oidc.accessToken,
-      auth.profile.id
-    ))
-  );
+  try {
+    const auth = await getAuth(req);
+    return (
+      req.oidc.isAuthenticated() &&
+      auth.profile.authMethod === authMethod &&
+      (await verifyUserIdWithRemoteUserinfo(
+        authMethod,
+        req.oidc.accessToken,
+        auth.profile.id
+      ))
+    );
+  } catch {}
+  return false;
 }
 
 export function verifyAuthenticated(

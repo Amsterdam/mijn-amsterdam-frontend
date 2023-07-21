@@ -55,7 +55,7 @@ router.use(
 );
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
-  if (!(await isRequestAuthenticated(req, 'eherkenning'))) {
+  if (!(await isRequestAuthenticated(req, 'digid'))) {
     return res.oidc.login({
       returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
       authorizationParams: {

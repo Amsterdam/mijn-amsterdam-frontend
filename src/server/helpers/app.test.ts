@@ -576,8 +576,6 @@ describe('server/helpers/app', () => {
       .reply(200, config.DEV_JWT);
     req2.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(true);
     req2.cookies = {};
-    await expect(verify(req2, res)).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"JWE malformed or invalid serialization"`
-    );
+    expect(await verify(req2, res)).toStrictEqual(responseUnauthorized);
   });
 });
