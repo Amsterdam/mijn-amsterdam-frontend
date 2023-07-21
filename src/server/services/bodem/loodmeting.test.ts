@@ -65,13 +65,7 @@ describe('Loodmeting', () => {
         expect(res.content?.metingen[2]).toMatchInlineSnapshot(`
           Object {
             "aanvraagNummer": "AV-001313",
-            "adres": Object {
-              "huisletter": "A",
-              "huisnummer": 16,
-              "postcode": "1062HK",
-              "stad": "Amsterdam",
-              "straat": "Schipluidenlaan",
-            },
+            "adres": "Schipluidenlaan 16A",
             "datumAanvraag": "2023-04-22T12:08:11Z",
             "datumAfgehandeld": undefined,
             "datumBeoordeling": undefined,
@@ -93,13 +87,7 @@ describe('Loodmeting', () => {
         expect(res.content?.metingen[16]).toMatchInlineSnapshot(`
           Object {
             "aanvraagNummer": "AV-001446",
-            "adres": Object {
-              "huisletter": "A",
-              "huisnummer": 16,
-              "postcode": "1062HK",
-              "stad": "Amsterdam",
-              "straat": "Schipluidenlaan",
-            },
+            "adres": "Schipluidenlaan 16A",
             "datumAanvraag": "2022-11-29T09:54:22Z",
             "datumAfgehandeld": undefined,
             "datumBeoordeling": "2022-12-15T08:52:00Z",
@@ -121,13 +109,7 @@ describe('Loodmeting', () => {
         expect(res.content?.metingen[18]).toMatchInlineSnapshot(`
           Object {
             "aanvraagNummer": "AV-001444",
-            "adres": Object {
-              "huisletter": "A",
-              "huisnummer": 16,
-              "postcode": "1062HK",
-              "stad": "Amsterdam",
-              "straat": "Schipluidenlaan",
-            },
+            "adres": "Schipluidenlaan 16A",
             "datumAanvraag": "2022-11-28T12:14:55Z",
             "datumAfgehandeld": "2022-11-28T13:53:42Z",
             "datumBeoordeling": "2022-11-28T12:24:19Z",
