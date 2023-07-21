@@ -178,10 +178,7 @@ export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
-type PrivateCommercialServices = Omit<
-  ServicesType,
-  'AKTES' | 'PROFILE' | 'SIA'
->;
+
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
   | 'CMS_CONTENT'
@@ -212,7 +209,6 @@ type CommercialServices = Pick<
 type ServicesByProfileType = {
   private: PrivateServices;
   'private-attributes': PrivateServicesAttributeBased;
-  'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
 
@@ -254,35 +250,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     PROFILE,
     SIA,
   },
-  'private-commercial': {
-    AFVAL,
-    AFVALPUNTEN,
-    BRP,
-    CMS_CONTENT,
-    CMS_MAINTENANCE_NOTIFICATIONS,
-    ERFPACHT,
-    KREFIA,
-    WPI_AANVRAGEN,
-    WPI_SPECIFICATIES,
-    WPI_TOZO,
-    WPI_TONK,
-    WPI_BBZ,
-    WPI_STADSPAS,
-    NOTIFICATIONS,
-    MY_LOCATION,
-    KVK,
-    MILIEUZONE,
-    TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
-    VERGUNNINGEN,
-    WMO,
-    KLACHTEN,
-    BEZWAREN,
-    BELASTINGEN,
-    HORECA,
-    AVG,
-    BODEM,
-  },
   commercial: {
     AFVAL,
     AFVALPUNTEN,
@@ -309,10 +276,6 @@ export const servicesTipsByProfileType = {
     tipsOmit as Array<keyof PrivateServices>
   ),
   'private-attributes': {},
-  'private-commercial': omit(
-    servicesByProfileType['private-commercial'],
-    tipsOmit as Array<keyof PrivateCommercialServices>
-  ),
   commercial: omit(
     servicesByProfileType.commercial,
     tipsOmit as Array<keyof CommercialServices>
@@ -325,45 +288,34 @@ function loadServices(
   serviceMap:
     | PrivateServices
     | CommercialServices
-    | PrivateCommercialServices
-    | PrivateServicesAttributeBased,
-  filterIds: requestID[] = []
+    | PrivateServicesAttributeBased
 ) {
-  return Object.entries(serviceMap)
-    .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
-    .map(([serviceID, fetchService]) => {
-      // Return service result as Object like { SERVICE_ID: result }
-      return (fetchService(requestID, req) as Promise<any>)
-        .then((result) => ({
-          [serviceID]: result,
-        }))
-        .catch((error: Error) => {
-          Sentry.captureException(error);
-          return {
-            [serviceID]: apiErrorResult(
-              `Could not load ${serviceID}, error: ${error.message}`,
-              null
-            ),
-          };
-        });
-    });
+  return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
+    // Return service result as Object like { SERVICE_ID: result }
+    return (fetchService(requestID, req) as Promise<any>)
+      .then((result) => ({
+        [serviceID]: result,
+      }))
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        return {
+          [serviceID]: apiErrorResult(
+            `Could not load ${serviceID}, error: ${error.message}`,
+            null
+          ),
+        };
+      });
+  });
 }
 
 export async function loadServicesSSE(req: Request, res: Response) {
   const requestID = res.locals.requestID;
   const profileType = getProfileType(req);
-  const requestedServiceIds = (queryParams(req).serviceIds ||
-    []) as ServiceID[];
 
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
   const serviceIds = Object.keys(serviceMap);
-  const servicePromises = loadServices(
-    requestID,
-    req,
-    serviceMap,
-    requestedServiceIds
-  );
+  const servicePromises = loadServices(requestID, req, serviceMap);
 
   // Add result handler that sends the service result via the EventSource stream
   servicePromises.forEach((servicePromise, index) =>
@@ -389,15 +341,8 @@ export async function loadServicesSSE(req: Request, res: Response) {
 export async function loadServicesAll(req: Request, res: Response) {
   const requestID = res.locals.requestID;
   const profileType = getProfileType(req);
-  const requestedServiceIds = (queryParams(req).serviceIds ||
-    []) as ServiceID[];
   const serviceMap = getServiceMap(profileType);
-  const servicePromises = loadServices(
-    requestID,
-    req,
-    serviceMap,
-    requestedServiceIds
-  );
+  const servicePromises = loadServices(requestID, req, serviceMap);
 
   const tipsPromise = getTipsFromServiceResults(requestID, req).then(
     (responseData) => {
