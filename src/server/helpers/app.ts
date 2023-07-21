@@ -272,21 +272,28 @@ export async function verifyUserIdWithRemoteUserinfo(
   return false;
 }
 
+export async function isRequestAuthenticated(
+  req: Request,
+  authMethod: AuthMethod
+) {
+  const auth = await getAuth(req);
+  return (
+    req.oidc.isAuthenticated() &&
+    auth.profile.authMethod === authMethod &&
+    (await verifyUserIdWithRemoteUserinfo(
+      authMethod,
+      req.oidc.accessToken,
+      auth.profile.id
+    ))
+  );
+}
+
 export function verifyAuthenticated(
   authMethod: AuthMethod,
   profileType: ProfileType
 ) {
   return async (req: Request, res: Response) => {
-    const auth = await getAuth(req);
-    if (
-      req.oidc.isAuthenticated() &&
-      auth.profile.authMethod === authMethod &&
-      (await verifyUserIdWithRemoteUserinfo(
-        authMethod,
-        req.oidc.accessToken,
-        auth.profile.id
-      ))
-    ) {
+    if (await isRequestAuthenticated(req, authMethod)) {
       return res.send(
         apiSuccessResult({
           isAuthenticated: true,

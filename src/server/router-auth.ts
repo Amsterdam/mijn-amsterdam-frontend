@@ -15,6 +15,7 @@ import {
   decodeOIDCToken,
   getAuth,
   hasSessionCookie,
+  isRequestAuthenticated,
   nocache,
   sendUnauthorized,
   verifyAuthenticated,
@@ -53,8 +54,8 @@ router.use(
   }
 );
 
-router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
-  if (!req.oidc.isAuthenticated()) {
+router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
+  if (!(await isRequestAuthenticated(req, 'eherkenning'))) {
     return res.oidc.login({
       returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
       authorizationParams: {
@@ -107,13 +108,18 @@ if (FeatureToggle.eherkenningActive) {
     }
   );
 
-  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
-      },
-    });
+  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, async (req, res) => {
+    if (!(await isRequestAuthenticated(req, 'eherkenning'))) {
+      return res.oidc.login({
+        returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
+        authorizationParams: {
+          redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+        },
+      });
+    }
+    return res.redirect(
+      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+    );
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
@@ -153,13 +159,16 @@ if (FeatureToggle.yiviActive) {
       })
   );
 
-  router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
-      },
-    });
+  router.get(BffEndpoints.AUTH_LOGIN_YIVI, async (req, res) => {
+    if (!(await isRequestAuthenticated(req, 'yivi'))) {
+      return res.oidc.login({
+        returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
+        authorizationParams: {
+          redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
+        },
+      });
+    }
+    return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=yivi');
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
