@@ -968,7 +968,7 @@
       ]
     },
     "WMO": {
-      "keyswordsGeneratedFromProps": [
+      "keywordsGeneratedFromProps": [
         "supplier",
         "title",
         "voorzieningsoortcode"
@@ -996,20 +996,32 @@
       ]
     },
     "KLACHTEN": {
-      "keywords": [
-        "omschrijving",
-        "gewensteOplossing",
-        "onderwerp",
-        "locatie"
-      ]
-    },
-    "AVG": {
-      "keywords": [
+      "keywordsGeneratedFromProps": [
         "id",
         "omschrijving",
         "gewensteOplossing",
         "onderwerp",
         "locatie"
+      ],
+      "keywords": [
+        "klacht",
+        "klachten",
+        "indienen"
+      ]
+    },
+    "AVG": {
+      "keywordsGeneratedFromProps": [
+        "id",
+        "resultaat",
+        "toelichting",
+        "status",
+        "themas",
+        "type"
+      ],
+      "keywords": [
+        "AVG verzoek",
+        "verzoek",
+        "AVG"
       ]
     },
     "HORECA": {
@@ -1020,6 +1032,13 @@
         "decision",
         "identifier",
         "description"
+      ],
+      "keywords": [
+        "verguning",
+        "horecavergunning",
+        "hotel",
+        "restaurant",
+        "cafe"
       ]
     }
   }
