@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "https://acc.api.meldingen.amsterdam.nl/signals/v1/private/signals/?contact_details=email&reporter_email=hela.hola%40amsterdam.nl"
+      "href": "https://localhost/signals/v1/private/signals/?contact_details=email&reporter_email=hela.hola%40amsterdam.nl"
     },
     "next": {
       "href": null
@@ -15,7 +15,7 @@
     {
       "_links": {
         "self": {
-          "href": "https://acc.api.meldingen.amsterdam.nl/signals/v1/private/signals/12419"
+          "href": "https://localhost/signals/v1/private/signals/12419"
         }
       },
       "_display": "12419 - m - None - 2023-03-30T14:04:43.764584+02:00",
@@ -75,7 +75,7 @@
         "sub_slug": "overig",
         "main": "Overig",
         "main_slug": "overig",
-        "category_url": "https://acc.api.meldingen.amsterdam.nl/signals/v1/public/terms/categories/overig/sub_categories/overig",
+        "category_url": "https://localhost/signals/v1/public/terms/categories/overig/sub_categories/overig",
         "departments": "ASC",
         "created_by": null,
         "text": null,
