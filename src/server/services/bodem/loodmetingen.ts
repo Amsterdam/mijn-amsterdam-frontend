@@ -52,13 +52,9 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
     metingen = Requests.flatMap((request) => {
       return request.Researchlocations.map((location) => {
         return {
-          adres: {
-            straat: location.Street,
-            huisnummer: location.Housenumber,
-            huisletter: location?.Houseletter,
-            postcode: location.Postalcode,
-            stad: location.City,
-          },
+          adres: `${location.Street} ${location.Housenumber}${
+            location?.Houseletter ?? ''
+          }`,
           datumAanvraag: request.RequestedOn,
           datumInbehandeling: location?.Workordercreatedon,
           datumAfgehandeld: location?.Reportsenton,
@@ -218,15 +214,11 @@ function createLoodNotification(meting: LoodMeting) {
   const isDone = status === 'afgehandeld';
   const isDenied = status === 'afgewezen';
 
-  const formattedAdress = `${meting.adres.straat} ${meting.adres.huisnummer}${
-    meting.adres.huisletter ?? ''
-  }`;
-
   const notification: MyNotification = {
     chapter: Chapters.BODEM,
     id: meting.kenmerk,
     title: 'Aanvraag lood in de bodem-check ontvangen',
-    description: `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is ontvangen.`,
+    description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
     datePublished: meting.datumAanvraag,
     link: {
       to: meting.link.to,
@@ -236,19 +228,19 @@ function createLoodNotification(meting: LoodMeting) {
 
   if (inProgress) {
     notification.title = 'Aanvraag lood in de bodem-check in behandeling';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is in behandeling genomen`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
     notification.datePublished = meting.datumInbehandeling!;
   }
 
   if (isDone) {
     notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is afgehandeld.`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
     notification.datePublished = meting.datumAfgehandeld!;
   }
 
   if (isDenied) {
     notification.title = 'Aanvraag lood in de bodem-check afgewezen';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is afgewezen.`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
     notification.datePublished = meting.datumBeoordeling!;
   }
 

@@ -17,7 +17,7 @@ import qs from 'qs';
 import { decrypt, encrypt } from '../../universal/helpers/encrypt-decrypt';
 
 const encryptionKey = String(process.env.BFF_GENERAL_ENCRYPTION_KEY);
-const MAG_AGE_MS = 1000 * 60; // 1 minute
+const MAX_AGE_MS = 1000 * 60; // 1 minute
 
 export type StatusStateChoice =
   | 'm'
@@ -231,7 +231,6 @@ function transformSIAData(responseData: SignalsSourceData): SiaResponse {
       status === MA_CLOSED
         ? AppRoutes['SIA/DETAIL/CLOSED']
         : AppRoutes['SIA/DETAIL/OPEN'];
-
     return {
       id: signalIdEncrypted,
       identifier,
@@ -311,7 +310,7 @@ async function _getSiaRequestConfig(requestID: requestID) {
 }
 
 const getSiaRequestConfig = memoize(_getSiaRequestConfig, {
-  maxAge: MAG_AGE_MS,
+  maxAge: MAX_AGE_MS,
 });
 
 interface SiaResponse {
@@ -373,7 +372,6 @@ export async function fetchSignalsListByStatus(
         ...requestConfig,
         transformResponse: transformSIAData,
         params: queryParams,
-
         // https://github.com/axios/axios/issues/604#issuecomment-321460450
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: 'repeat' }),

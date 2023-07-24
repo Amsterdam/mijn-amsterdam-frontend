@@ -6,13 +6,7 @@ const testState: any = {
     content: {
       metingen: [
         {
-          adres: {
-            straat: 'Schipluidenlaan',
-            huisnummer: 12,
-            huisletter: 'A',
-            postcode: '1062HK',
-            stad: 'Amsterdam',
-          },
+          adres: 'Schipluidenlaan 12A',
           datumAanvraag: '2022-12-01T09:53:11Z',
           status: 'Ontvangen',
           kenmerk: 'OL-001478',
@@ -26,13 +20,7 @@ const testState: any = {
           document: null,
         },
         {
-          adres: {
-            straat: 'Schipluidenlaan',
-            huisnummer: 16,
-            huisletter: 'A',
-            postcode: '1062HK',
-            stad: 'Amsterdam',
-          },
+          adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-29T09:54:22Z',
           datumInbehandeling: '2022-11-29T09:54:44Z',
           datumBeoordeling: '2022-12-15T08:52:00Z',
@@ -49,13 +37,7 @@ const testState: any = {
           document: null,
         },
         {
-          adres: {
-            straat: 'Schipluidenlaan',
-            huisnummer: 16,
-            huisletter: 'A',
-            postcode: '1062HK',
-            stad: 'Amsterdam',
-          },
+          adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-28T12:14:55Z',
           datumInbehandeling: '2022-11-28T12:24:20Z',
           datumAfgehandeld: '2022-11-28T13:53:42Z',

@@ -898,6 +898,47 @@
         "private",
         "commercial"
       ]
+    },
+    {
+      "url": "/bodem",
+      "displayTitle": "Bodem - loodmetingen",
+      "description": "Bodem - loodmetingen",
+      "keywords": [
+        "Bodem",
+        "meting",
+        "lood",
+        "loodmeting"
+      ],
+      "profileTypes": [
+        "private",
+        "commercial"
+      ]
+    },
+    {
+      "url": "/bezwaren",
+      "displayTitle": "Bezwaren",
+      "description": "Ingediende bezwaren",
+      "keywords": [
+        "Bezwaren",
+        "ingediend",
+        "bezwaar"
+      ],
+      "profileTypes": [
+        "private",
+        "commercial"
+      ]
+    },
+    {
+      "url": "/avg",
+      "displayTitle": "AVG Verzoeken",
+      "description": "AVG Verzoeken",
+      "keywords": [
+        "AVG",
+        "verzoek"
+      ],
+      "profileTypes": [
+        "private"
+      ]
     }
   ],
   "apiSearchConfigs": {
@@ -1039,6 +1080,21 @@
         "bezwaren"
       ]
     },
+    "BODEM": {
+      "keywordsGeneratedFromProps": [
+        "kenmerk",
+        "status",
+        "redenAfwijzing",
+        "adres",
+        "aanvraagNummer"
+      ],
+      "keywords": [
+        "Lood",
+        "loodmeting",
+        "meting",
+        "bodem"
+      ]
+    },
     "HORECA": {
       "keywordsGeneratedFromProps": [
         "caseType",
@@ -1054,6 +1110,29 @@
         "hotel",
         "restaurant",
         "cafe"
+      ]
+    },
+    "SIA": {
+      "keywordsGeneratedFromProps": [
+        "id",
+        "identifier",
+        "category",
+        "datePublished",
+        "dateModified",
+        "dateClosed",
+        "dateIncidentStart",
+        "dateIncidentEnd",
+        "status",
+        "description",
+        "address",
+        "email",
+        "phone"
+      ],
+      "keywords": [
+        "meldingen",
+        "signalen",
+        "melding doen",
+        "melding openbare ruimte"
       ]
     }
   }

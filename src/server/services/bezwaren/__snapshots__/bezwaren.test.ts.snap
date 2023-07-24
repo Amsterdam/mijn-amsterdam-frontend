@@ -5,7 +5,7 @@ Object {
   "content": Array [
     Object {
       "datumIntrekking": null,
-      "datumbesluit": "01-05-2021",
+      "datumbesluit": "2021-05-01",
       "documenten": Array [
         Object {
           "datePublished": "23 maart 2023",
@@ -41,7 +41,7 @@ Object {
       "omschrijving": "Korte omschrijving van het bezwaar",
       "ontvangstdatum": "2023-04-25",
       "primairbesluit": "F2021.0008",
-      "primairbesluitdatum": "01-05-2021",
+      "primairbesluitdatum": "2021-05-01",
       "resultaat": "Niet-ontvankelijk",
       "status": null,
       "statussen": Array [
@@ -67,7 +67,7 @@ Object {
     },
     Object {
       "datumIntrekking": null,
-      "datumbesluit": "03-03-2021",
+      "datumbesluit": "2021-03-03",
       "documenten": Array [
         Object {
           "datePublished": "23 maart 2023",
@@ -103,7 +103,7 @@ Object {
       "omschrijving": null,
       "ontvangstdatum": "2023-04-03",
       "primairbesluit": "TESTRB003",
-      "primairbesluitdatum": "03-03-2021",
+      "primairbesluitdatum": "2021-03-03",
       "resultaat": "Gegrond",
       "status": null,
       "statussen": Array [
