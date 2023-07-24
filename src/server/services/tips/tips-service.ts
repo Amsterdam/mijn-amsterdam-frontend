@@ -22,7 +22,6 @@ function getTipsAudience(queryParams: Record<string, string>): TipAudience {
   let audience = 'persoonlijk';
 
   switch (queryParams.profileType) {
-    case 'private-commercial':
     case 'commercial':
       audience = 'zakelijk';
       break;

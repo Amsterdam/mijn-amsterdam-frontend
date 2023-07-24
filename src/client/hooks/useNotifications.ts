@@ -1,5 +1,4 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
-import { Chapters } from '../../universal/config';
 import { dateSort } from '../../universal/helpers';
 import {
   WelcomeNotification,
@@ -15,27 +14,7 @@ const appStateNotificationsSelector = selectorFamily({
     (profileType: ProfileType) =>
     ({ get }) => {
       const appState = get(appStateAtom);
-      const isLoggedInAsCompany = profileType === 'commercial';
       let notifications = appState.NOTIFICATIONS.content || [];
-
-      // Exclude meldingen for the private-commercial (ZZP) profile.
-      if (
-        profileType === 'private-commercial' &&
-        appState.NOTIFICATIONS.content
-      ) {
-        notifications = appState.NOTIFICATIONS.content.filter(
-          (notification) =>
-            notification.chapter !== Chapters.BRP &&
-            notification.chapter !== Chapters.BURGERZAKEN
-        );
-
-        // If user is not logged in with EHK filter subsidie notifications.
-        if (!isLoggedInAsCompany) {
-          notifications = notifications.filter(
-            (notification) => notification.chapter !== Chapters.SUBSIDIE
-          );
-        }
-      }
 
       let welcomeNotification = WelcomeNotification;
 

@@ -223,8 +223,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     urls: {
       private:
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      'private-commercial':
-        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
       'private-attributes':
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:

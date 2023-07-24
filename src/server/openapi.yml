@@ -124,13 +124,7 @@ paths:
         description: Users profile type
         schema:
           type: string
-          enum:
-            [
-              'private',
-              'private-commercial',
-              'commercial',
-              'private-attributes',
-            ]
+          enum: ['private', 'commercial', 'private-attributes']
     get:
       description: This endpoint returns relevant hints for the current user.
       responses:
@@ -261,8 +255,8 @@ components:
             type: string
             enum:
               - commercial
-              - private-commercial
               - private
+              - private-attributes
         isEnabled:
           type: boolean
     ApiSearchConfig:

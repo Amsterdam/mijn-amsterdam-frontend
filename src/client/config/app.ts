@@ -24,9 +24,6 @@ const uiElementConfigByProfileType: UiElementConfigByProfileType = {
   private: {
     MainNavBarSimple: false,
   },
-  'private-commercial': {
-    MainNavBarSimple: false,
-  },
   commercial: {
     MainNavBarSimple: false,
   },

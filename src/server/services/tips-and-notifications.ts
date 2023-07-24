@@ -144,7 +144,7 @@ async function fetchServicesNotifications(
     ]);
   }
 
-  if (profileType === 'private' || profileType === 'private-commercial') {
+  if (profileType === 'private') {
     const [
       brpNotificationsResult,
       belastingNotificationsResult,

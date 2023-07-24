@@ -48,11 +48,7 @@ export default function LoodMeting() {
         {!!meting && (
           <>
             <InfoDetail label="Kenmerk" value={meting.aanvraagNummer || '-'} />
-            <Location
-              location={`${meting.adres.straat} ${meting.adres.huisnummer}${
-                meting.adres.huisletter ?? ''
-              }, ${meting.adres.stad}`}
-            />
+            <Location location={meting.adres} />
 
             {!!meting.document && (
               <InfoDetail
