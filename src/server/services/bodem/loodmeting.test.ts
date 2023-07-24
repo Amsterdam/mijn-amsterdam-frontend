@@ -165,23 +165,34 @@ describe('Loodmeting', () => {
               },
               Object {
                 "chapter": "BODEM",
-                "datePublished": "2023-07-19T12:23:22Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Javastraat 603 is in behandeling genomen",
-                "id": "OL-001528",
-                "link": Object {
-                  "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001528",
-                },
-                "title": "Aanvraag lood in de bodem-check in behandeling",
-              },
-              Object {
-                "chapter": "BODEM",
                 "datePublished": "2023-07-13T11:18:29Z",
                 "description": "Uw aanvraag lood in de bodem-check voor Maanzicht 5 is in behandeling genomen",
                 "id": "OL-001519",
                 "link": Object {
                   "title": "Bekijk details",
                   "to": "/lood-meting/OL-001519",
+                },
+                "title": "Aanvraag lood in de bodem-check in behandeling",
+              },
+              Object {
+                "chapter": "BODEM",
+                "datePublished": "2023-07-19T11:17:10Z",
+                "description": "Uw aanvraag lood in de bodem-check voor p.boorsmastraat 30 is ontvangen.",
+                "id": "OL-001532",
+                "link": Object {
+                  "title": "Bekijk details",
+                  "to": "/lood-meting/OL-001532",
+                },
+                "title": "Aanvraag lood in de bodem-check ontvangen",
+              },
+              Object {
+                "chapter": "BODEM",
+                "datePublished": "2023-07-19T12:23:22Z",
+                "description": "Uw aanvraag lood in de bodem-check voor P.Javastraat 603 is in behandeling genomen",
+                "id": "OL-001528",
+                "link": Object {
+                  "title": "Bekijk details",
+                  "to": "/lood-meting/OL-001528",
                 },
                 "title": "Aanvraag lood in de bodem-check in behandeling",
               },
@@ -204,17 +215,6 @@ describe('Loodmeting', () => {
                 "link": Object {
                   "title": "Bekijk details",
                   "to": "/lood-meting/OL-001534",
-                },
-                "title": "Aanvraag lood in de bodem-check ontvangen",
-              },
-              Object {
-                "chapter": "BODEM",
-                "datePublished": "2023-07-19T11:17:10Z",
-                "description": "Uw aanvraag lood in de bodem-check voor p.boorsmastraat 30 is ontvangen.",
-                "id": "OL-001532",
-                "link": Object {
-                  "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001532",
                 },
                 "title": "Aanvraag lood in de bodem-check ontvangen",
               },
