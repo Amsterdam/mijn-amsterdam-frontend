@@ -32,15 +32,7 @@ export default function Bodem() {
       datumAanvraag: defaultDateFormat(meting.datumAanvraag),
     };
   });
-  const items = addTitleLinkComponent(loodMetingen, 'adres').sort(
-    (first, second) => {
-      return first.adres > second.adres
-        ? 1
-        : first.adres === second.adres
-        ? 0
-        : -1;
-    }
-  );
+  const items = addTitleLinkComponent(loodMetingen, 'adres');
 
   const lopendeAanvragen = items.filter(
     (meting) => meting.status !== 'Afgehandeld' && meting.status !== 'Afgewezen'

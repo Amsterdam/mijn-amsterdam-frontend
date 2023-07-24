@@ -17,6 +17,7 @@ import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
+  sortAlpha,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
@@ -93,6 +94,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
   } catch (e) {
     Sentry.captureException(e);
   }
+  metingen.sort(sortAlpha('adres', 'asc'));
 
   return { metingen };
 }
