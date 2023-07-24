@@ -12,16 +12,17 @@ import {
   LoodMetingRequestsSource,
   LoodMetingen,
 } from './types';
-import { AppRoutes, Chapters, IS_ACCEPTANCE } from '../../../universal/config';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
+  sortAlpha,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
 
-function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
+export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {
     return {
       bsn: authProfileAndToken.profile.id ?? '',
@@ -93,11 +94,12 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
   } catch (e) {
     Sentry.captureException(e);
   }
+  metingen.sort(sortAlpha('adres', 'asc'));
 
   return { metingen };
 }
 
-async function getLoodApiHeaders(requestID: requestID) {
+export async function getLoodApiHeaders(requestID: requestID) {
   const url = `${process.env.BFF_LOOD_API_URL}`;
   const requestConfig = getApiConfig('LOOD_365_OAUTH');
 
