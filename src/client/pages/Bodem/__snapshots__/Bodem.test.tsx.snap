@@ -244,58 +244,6 @@ exports[`Bodem with results should show the right overviewpage 1`] = `
                   </span>
                   <a
                     class="Button Button__plain Button__lean Linkd"
-                    href="/lood-meting/OL-001471"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Schipluidenlaan 16A
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    28 november 2022
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Status:
-                  </span>
-                  <span>
-                    Afgehandeld
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Adres:
-                  </span>
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
                     href="/lood-meting/OL-001475"
                   >
                     <svg
@@ -332,6 +280,58 @@ exports[`Bodem with results should show the right overviewpage 1`] = `
                   </span>
                   <span>
                     Afgewezen
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Adres:
+                  </span>
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/lood-meting/OL-001471"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
+                    Schipluidenlaan 16A
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 november 2022
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Afgehandeld
                   </span>
                 </td>
               </tr>
