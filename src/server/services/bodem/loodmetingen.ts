@@ -94,17 +94,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
   } catch (e) {
     Sentry.captureException(e);
   }
-  metingen
-    // .map((meting) =>
-    //   Object.assign(meting, {
-    //     adresSort: meting.adres.replace(/[^a-zA-Z0-9-]/g, ''),
-    //   })
-    // )
-    .sort(sortAlpha('adres', 'asc', 'lower'));
-  // .map((meting) => {
-  //   delete (meting as any).adresSort;
-  //   return meting;
-  // });
+  metingen.sort(sortAlpha('adres', 'asc', 'lower'));
 
   return { metingen };
 }
