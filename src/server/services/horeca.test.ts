@@ -35,7 +35,7 @@ describe('Horeca service', () => {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateDecision": "2023-04-28",
           "dateEnd": "2023-06-21",
-          "dateProcessed": "2023-04-28",
+          "dateDecision": "2023-04-28",
           "dateRequest": "2023-04-26",
           "dateStart": null,
           "dateWorkflowActive": "2023-04-27",
@@ -56,7 +56,7 @@ describe('Horeca service', () => {
         Object {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateEnd": "2025-01-02T00:00:00",
-          "dateProcessed": "2022-12-01T00:00:00",
+          "dateDecision": "2022-12-01T00:00:00",
           "dateRequest": "2022-11-20T00:00:00",
           "dateStart": "2023-11-01T00:00:00",
           "dateStartPermit": "2023-11-02T00:00:00",
@@ -77,7 +77,7 @@ describe('Horeca service', () => {
         Object {
           "caseType": "Horeca vergunning exploitatie Horecabedrijf",
           "dateEnd": "2024-01-02T00:00:00",
-          "dateProcessed": "2022-11-01T00:00:00",
+          "dateDecision": "2022-11-01T00:00:00",
           "dateRequest": "2022-10-20T00:00:00",
           "dateStart": "2022-11-01T00:00:00",
           "dateStartPermit": "2022-11-02T00:00:00",

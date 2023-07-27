@@ -183,7 +183,18 @@ export interface RVVHeleStad extends VergunningBase {
   licencePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
-  dateProcessed: string | null;
+}
+
+export interface RVVSloterweg extends VergunningBase {
+  caseType: CaseType.RVVSloterweg;
+  licencePlates: string | null;
+  previousLicensePlates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  dateWorkflowVerleend: string | null;
+  requestType: 'Nieuw' | 'Kenteken wijziging';
+  area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
+  decision: 'Verleend' | 'Verlopen' | 'Geweigerd' | 'Ingetrokken';
 }
 
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
@@ -211,7 +222,6 @@ export interface ExploitatieHorecabedrijf extends VergunningWithLocation {
   dateStart: string | null;
   dateEnd: string | null;
   dateStartPermit: string | null;
-  dateProcessed: string | null;
   numberOfPermits: string | null;
 }
 
@@ -246,7 +256,8 @@ export type Vergunning =
   | Splitsingsvergunning
   | Ligplaatsvergunning
   | ExploitatieHorecabedrijf
-  | RVVHeleStad;
+  | RVVHeleStad
+  | RVVSloterweg;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
