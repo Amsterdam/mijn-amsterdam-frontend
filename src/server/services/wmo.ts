@@ -288,7 +288,7 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: (data) => data.dateEnd || '',
-        isChecked: () => false,
+        isChecked: (stepIndex, data) => data.isActual === false,
         isActive: (stepIndex, data) => data.isActual === false,
         description: (data) =>
           `
