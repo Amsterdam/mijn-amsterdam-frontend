@@ -17,6 +17,7 @@ import {
   transformVergunningenData,
   VergunningenSourceData,
 } from './vergunningen';
+import MockDate from 'mockdate';
 
 describe('Vergunningen service', () => {
   const axMock = new MockAdapter(axiosRequest);
@@ -33,12 +34,12 @@ describe('Vergunningen service', () => {
     token: 'xxxxxx',
   };
 
-  jest.useFakeTimers('modern');
-  jest.setSystemTime(new Date('2022-10-06'));
+  MockDate.set('2022-10-06');
 
   afterAll(() => {
     axMock.restore();
     ApiConfig.VERGUNNINGEN.url = ORIGINAL_URL;
+    MockDate.reset();
   });
 
   axMock.onGet(DUMMY_URL_1).reply(200, DUMMY_RESPONSE);

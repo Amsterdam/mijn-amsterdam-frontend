@@ -16,7 +16,10 @@ type NotificationStatusType =
   | 'done';
 
 type NotificationProperty = 'title' | 'description' | 'datePublished' | 'link';
-type NotificationPropertyValue = (item: Vergunning) => string;
+type NotificationPropertyValue = (
+  item: Vergunning,
+  titleLower: string
+) => string;
 type NotificationLink = (item: Vergunning) => LinkProps;
 
 type NotificationLinks = {
@@ -80,17 +83,17 @@ const link = (item: Vergunning) => ({
 });
 
 const requested: NotificationLabels = {
-  title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} ontvangen`,
-  description: (item) =>
-    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is ontvangen.`,
+  title: (item, titleLower) => `Aanvraag ${titleLower} ontvangen`,
+  description: (item, titleLower) =>
+    `Uw vergunningsaanvraag ${titleLower} is ontvangen.`,
   datePublished: (item) => item.dateRequest,
   link,
 };
 
 const inProgress: NotificationLabels = {
-  title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} in behandeling`,
-  description: (item) =>
-    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+  title: (item, titleLower) => `Aanvraag ${titleLower} in behandeling`,
+  description: (item, titleLower) =>
+    `Uw vergunningsaanvraag ${titleLower} is in behandeling genomen.`,
   datePublished: (item) =>
     !hasWorkflow(item.caseType)
       ? item.dateRequest
@@ -101,33 +104,33 @@ const inProgress: NotificationLabels = {
 };
 
 const done: NotificationLabels = {
-  title: (item) => `Aanvraag ${item.title.toLocaleLowerCase()} afgehandeld`,
-  description: (item) =>
-    `Uw vergunningsaanvraag ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+  title: (item, titleLower) => `Aanvraag ${titleLower} afgehandeld`,
+  description: (item, titleLower) =>
+    `Uw vergunningsaanvraag ${titleLower} is afgehandeld.`,
   datePublished: (item) => item.dateDecision ?? item.dateRequest,
   link,
 };
 
 const requestedShort: NotificationLabels = {
   title: requested.title,
-  description: (item) =>
-    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is ontvangen.`,
+  description: (item, titleLower) =>
+    `Uw aanvraag voor een ${titleLower} is ontvangen.`,
   datePublished: requested.datePublished,
   link,
 };
 
 const inProgressShort: NotificationLabels = {
   title: inProgress.title,
-  description: (item) =>
-    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is in behandeling genomen.`,
+  description: (item, titleLower) =>
+    `Uw aanvraag voor een ${titleLower} is in behandeling genomen.`,
   datePublished: inProgress.datePublished,
   link,
 };
 
 const doneShort: NotificationLabels = {
   title: done.title,
-  description: (item) =>
-    `Uw aanvraag voor een ${item.title.toLocaleLowerCase()} is afgehandeld.`,
+  description: (item, titleLower) =>
+    `Uw aanvraag voor een ${titleLower} is afgehandeld.`,
   datePublished: done.datePublished,
   link,
 };
@@ -142,6 +145,25 @@ const defaultNotificationLabels: Record<string, NotificatonContentLabels> = {
     requested: requestedShort,
     inProgress: inProgressShort,
     done: doneShort,
+  },
+};
+
+const RVVLabels: NotificatonContentLabels = {
+  requested: {
+    ...requestedShort,
+    title: (item) => `Aanvraag ${item.title} ontvangen`,
+    description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
+  },
+  inProgress: {
+    ...inProgressShort,
+    title: (item) => `Aanvraag ${item.title} in behandeling`,
+    description: (item) =>
+      `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
+  },
+  done: {
+    ...doneShort,
+    title: (item) => `Aanvraag ${item.title} afgehandeld`,
+    description: (item) => `Uw aanvraag voor een ${item.title} is afgehandeld.`,
   },
 };
 
@@ -222,43 +244,8 @@ export const notificationContent: NotificationContent = {
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
   [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
   [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.short,
-  [CaseType.RVVHeleStad]: {
-    requested: {
-      ...requestedShort,
-      title: (item) => `Aanvraag ${item.title} ontvangen`,
-      description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
-    },
-    inProgress: {
-      ...inProgressShort,
-      title: (item) => `Aanvraag ${item.title} in behandeling`,
-      description: (item) =>
-        `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
-    },
-    done: {
-      ...doneShort,
-      title: (item) => `Aanvraag ${item.title} afgehandeld`,
-      description: (item) =>
-        `Uw aanvraag voor een ${item.title} is afgehandeld.`,
-    },
-  },
+  [CaseType.RVVHeleStad]: RVVLabels,
   [CaseType.RVVSloterweg]: {
-    requested: {
-      ...requestedShort,
-      title: (item) => `Aanvraag ${item.title} ontvangen`,
-      description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
-    },
-    inProgress: {
-      ...inProgressShort,
-      title: (item) => `Aanvraag ${item.title} in behandeling`,
-      description: (item) =>
-        `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
-    },
-    done: {
-      ...doneShort,
-      title: (item) => `Aanvraag ${item.title} afgehandeld`,
-      description: (item) =>
-        `Uw aanvraag voor een ${item.title} is afgehandeld.`,
-    },
-    almostExpired,
+    ...RVVLabels,
   },
 };

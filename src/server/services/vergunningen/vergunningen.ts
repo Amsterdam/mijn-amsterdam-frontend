@@ -415,7 +415,10 @@ function assignNotificationProperties(
   if (content) {
     type Key = keyof NotificationLabels;
     for (const [key, getValue] of Object.entries(content)) {
-      notification[key as Key] = getValue(vergunning);
+      notification[key as Key] = getValue(
+        vergunning,
+        vergunning.title.toLocaleLowerCase()
+      );
     }
   }
 }

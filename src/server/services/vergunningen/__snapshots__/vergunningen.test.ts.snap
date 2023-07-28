@@ -6,15 +6,15 @@ Object {
     "notifications": Array [
       Object {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2023-07-24T11:21:33",
-        "description": "Er is een update in uw vergunningsaanvraag.",
+        "datePublished": "2023-07-26T00:00:00",
+        "description": "Uw aanvraag voor een RVV ontheffing Sloterweg (Wijziging/Ontvangen) is in behandeling genomen.",
         "id": "vergunning-4039623833-notification",
         "link": Object {
           "title": "Bekijk details",
           "to": "/vergunningen/sluipverkeer-slooterweg/4039623833",
         },
         "subject": "4039623833",
-        "title": "Vergunningsaanvraag",
+        "title": "Aanvraag RVV ontheffing Sloterweg (Wijziging/Ontvangen) in behandeling",
       },
       Object {
         "chapter": "VERGUNNINGEN",

@@ -3,6 +3,7 @@ import vergunningenMockData from '../mock-data/json/vergunningen.json';
 import { BFF_MS_API_BASE_URL } from '../config';
 import { AuthProfileAndToken } from '../helpers/app';
 import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
+import MockDate from 'mockdate';
 
 describe('Horeca service', () => {
   const authProfileAndToken: AuthProfileAndToken = {
@@ -13,10 +14,12 @@ describe('Horeca service', () => {
   afterAll(() => {
     nock.enableNetConnect();
     nock.restore();
+    MockDate.reset();
   });
 
   beforeAll(() => {
     nock.disableNetConnect();
+    MockDate.set('2023-05-06');
   });
 
   beforeEach(() => {
