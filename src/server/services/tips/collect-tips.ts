@@ -39,7 +39,7 @@ function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
 export function collectTips(
   serviceResults: ServiceResults,
   optIn: boolean,
-  isNotification?: boolean,
+  isNotification?: true,
   profileType?: ProfileType
 ): MyTip[] {
   /**
@@ -54,9 +54,7 @@ export function collectTips(
   let filteredTips = tips;
 
   filteredTips = tips.filter((tip) =>
-    typeof isNotification === 'boolean'
-      ? tip.isNotification === isNotification
-      : false
+    isNotification === true ? tip.isNotification === true : true
   );
 
   // If we get a profileType first filter all tips using it.
@@ -77,6 +75,7 @@ export function collectTips(
     imgUrl: t.imgUrl,
     isPersonalized: t.isPersonalized,
     isNotification: t.isNotification ?? false,
+    profileTypes: t.profileTypes,
     chapter: t.chapter ?? null,
     priority: t.priority,
     reason: t.reason ? [t.reason] : [],

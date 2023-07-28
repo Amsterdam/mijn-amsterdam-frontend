@@ -58,7 +58,12 @@ export async function createTipsFromServiceResults(
   const { optIn, profileType } = getTipsQueryParams(queryParams);
 
   let tips = serviceResults
-    ? collectTips(serviceResults, optIn, isNotification, profileType)
+    ? collectTips(
+        serviceResults,
+        optIn,
+        isNotification ? true : undefined,
+        profileType
+      )
     : [];
 
   if (optIn) {
