@@ -490,7 +490,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActive": true,
-        "isChecked": false,
+        "isChecked": true,
         "isVisible": true,
         "status": "Einde recht",
       },
