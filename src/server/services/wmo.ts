@@ -117,6 +117,7 @@ const Labels: {
       ZIN?: string[];
       ''?: string[];
     };
+    isActual?: (data: WmoApiItem, today: Date) => boolean;
     statusItems: Array<{
       status: string;
       datePublished: TextPartContents;
@@ -341,6 +342,10 @@ const Labels: {
       ],
       '': ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
     },
+    isActual: (wmoItem, today) => {
+      // Does not take actuality of wmoItem into account. This Dienst could not be actual at the moment, for example if someone has died before delivery started.
+      return !hasHistoricDate(wmoItem.dateEnd, today);
+    },
     statusItems: [
       {
         status: 'Besluit',
@@ -429,15 +434,13 @@ const Labels: {
         datePublished: (data, today) =>
           (hasFutureDate(data.dateEnd, today) ? '' : data.dateEnd) || '',
         isChecked: (stepIndex, sourceData, today) =>
-          sourceData.isActual === false ||
           hasHistoricDate(sourceData.dateEnd, today),
         isActive: (stepIndex, sourceData, today) =>
-          sourceData.isActual === false ||
           hasHistoricDate(sourceData.dateEnd, today),
         description: (sourceData, today) =>
           `<p>
             ${
-              sourceData.isActual && hasFutureDate(sourceData.dateEnd, today)
+              hasFutureDate(sourceData.dateEnd, today)
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${sourceData.title} is beëindigd ${
                     sourceData.dateEnd
@@ -628,7 +631,7 @@ function parseLabelContent(
 function formatWmoStatusLineItems(
   wmoItem: WmoApiItem,
   today: Date
-): WmoItemStep[] {
+): [boolean, WmoItemStep[]] {
   const labelData = Object.values(Labels).find((labelData) => {
     const type = wmoItem.deliveryType || '';
     return (
@@ -688,10 +691,10 @@ function formatWmoStatusLineItems(
       })
       .filter(Boolean) as WmoItemStep[];
 
-    return steps;
+    return [labelData.isActual?.(wmoItem, today) ?? wmoItem.isActual, steps];
   }
 
-  return [];
+  return [false, []];
 }
 
 export function transformWmoResponse(
@@ -702,7 +705,7 @@ export function transformWmoResponse(
     .sort(dateSort('dateStart', 'desc'))
     .map((wmoItem, index) => {
       const id = hash(`${wmoItem.title}-${index}`).toLowerCase();
-      const steps: WmoItem['steps'] = formatWmoStatusLineItems(wmoItem, today);
+      const [isActual, steps] = formatWmoStatusLineItems(wmoItem, today);
       const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
         id,
       });
@@ -713,7 +716,7 @@ export function transformWmoResponse(
         dateStart: defaultDateFormat(wmoItem.dateStart),
         dateEnd: wmoItem.dateEnd ? defaultDateFormat(wmoItem.dateEnd) : '',
         supplier: wmoItem.supplier,
-        isActual: wmoItem.isActual,
+        isActual: isActual,
         link: {
           title: 'Meer informatie',
           to: route,
