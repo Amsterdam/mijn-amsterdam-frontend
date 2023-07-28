@@ -11,7 +11,7 @@ jest.mock('../../hooks/useProfileType');
 
 const TIPS: MyTip[] = [
   {
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     datePublished: '2020-06-15',
     description:
       'Maakt u mondkapjes? Of zoekt u manieren om te blijven bewegen? Amsterdammers helpen elkaar tijdens de coronacrisis.',

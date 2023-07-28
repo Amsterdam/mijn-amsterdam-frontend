@@ -1,5 +1,5 @@
 import { MyTip } from '../../../universal/types';
-import { ServiceResults, Tip, TipAudience } from './tip-types';
+import { ServiceResults, Tip } from './tip-types';
 import { tips } from './tips';
 
 function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
@@ -39,21 +39,31 @@ function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
 export function collectTips(
   serviceResults: ServiceResults,
   optIn: boolean,
-  audience: TipAudience
+  isNotification?: boolean,
+  profileType?: ProfileType
 ): MyTip[] {
   /**
    * Iterate over tips database and filter out requested tips based on props:
    * - date period
-   * - audience
+   * - profileTypes
    * - personalized
    * - predicates
    *   ...
    */
 
   let filteredTips = tips;
-  // If we get an audience first filter all tips using it.
-  if (audience) {
-    filteredTips = tips.filter((t) => t.audience.includes(audience));
+
+  filteredTips = tips.filter((tip) =>
+    typeof isNotification === 'boolean'
+      ? tip.isNotification === isNotification
+      : false
+  );
+
+  // If we get a profileType first filter all tips using it.
+  if (profileType) {
+    filteredTips = filteredTips.filter((t) =>
+      t.profileTypes.includes(profileType)
+    );
   }
 
   filteredTips = filteredTips.filter(tipsFilter(serviceResults, optIn));
@@ -66,8 +76,9 @@ export function collectTips(
     link: t.link,
     imgUrl: t.imgUrl,
     isPersonalized: t.isPersonalized,
+    isNotification: t.isNotification ?? false,
+    chapter: t.chapter ?? null,
     priority: t.priority,
     reason: t.reason ? [t.reason] : [],
-    audience: t.audience,
   })) as MyTip[];
 }

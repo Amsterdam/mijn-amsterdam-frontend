@@ -1,3 +1,4 @@
+import { Chapters } from '../../../universal/config';
 import {
   hasAOV,
   hasBijstandsuitkering,
@@ -5,6 +6,7 @@ import {
   hasBnBVergunning,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
+  hasKidsBetweenAges4And11,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
@@ -33,7 +35,7 @@ export const tips: Tip[] = [
     priority: 20,
     datePublished: '2019-07-24',
     title: 'Vrijwilliger worden?',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Er is altijd vrijwilligerswerk dat bij u past. Bekijk de vacatures.',
     link: {
@@ -51,7 +53,7 @@ export const tips: Tip[] = [
     priority: 25,
     datePublished: '2019-07-24',
     title: 'Grofvuil',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren.',
     link: {
@@ -69,7 +71,7 @@ export const tips: Tip[] = [
     priority: 20,
     datePublished: '2019-07-24',
     title: 'Geveltuin',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.',
     link: {
@@ -87,7 +89,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2019-08-18',
     title: 'Bekijk de afvalpunten in de buurt',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
     predicates: [isLivingInAmsterdamLessThanNumberOfDays(3)],
     reason: 'U ziet deze tip omdat u net bent verhuisd',
@@ -106,7 +108,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2019-10-22',
     title: 'Op stap met uw Stadspas',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
     predicates: [hasValidStadspasRequest],
@@ -126,7 +128,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-06-15',
     title: 'Amsterdammers helpen Amsterdammers',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Maakt u mondkapjes? Of zoekt u manieren om te blijven bewegen? Amsterdammers helpen elkaar tijdens de coronacrisis.',
     isPersonalized: false,
@@ -144,7 +146,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-06-15',
     title: 'Gratis energieadvies',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Werkt u thuis? Dan neemt uw energieverbruik toe. Wij geven gratis energieadvies aan Verenigingen van Eigenaren.',
     isPersonalized: false,
@@ -163,7 +165,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-06-15',
     title: 'Voor nieuwsgierige Amsterdammers',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Bent u op zoek naar gegevens of onderzoek over uw stad of buurt? U vindt al deze informatie nu op 1 website.',
     isPersonalized: false,
@@ -182,7 +184,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-07-03',
     title: 'Welkom in Amsterdam',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'U bent net in Amsterdam komen wonen, welkom! Blijf op de hoogte van het nieuws in uw stadsdeel.',
     predicates: [
@@ -206,7 +208,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-09-09',
     title: 'Gemeentelijke belastingen voor ondernemers',
-    audience: ['zakelijk'],
+    profileTypes: ['commercial'],
     description:
       'Als ondernemer moet u belastingen en heffingen betalen. Welke belastingen? Dat hangt af van uw type bedrijf.',
     reason: '',
@@ -226,7 +228,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-09-09',
     title: 'Idee voor uw buurt of straat?',
-    audience: ['zakelijk'],
+    profileTypes: ['commercial'],
     description:
       'Neem dan contact op met een gebiedsmakelaar. Benieuwd wie in uw buurt de gebiedsmakelaar is?',
     reason: '',
@@ -246,7 +248,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-09-09',
     title: 'Subsidie Bedrijveninvesteringszones (BIZ)',
-    audience: ['zakelijk'],
+    profileTypes: ['commercial'],
     description:
       'Met dit geld kunt u uw winkelstraat, horecagebied of bedrijventerrein opknappen of veiliger maken.',
     reason: '',
@@ -266,7 +268,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-09-09',
     title: 'Bedrijfsafval laten ophalen',
-    audience: ['zakelijk'],
+    profileTypes: ['commercial'],
     description:
       'Hebt u per week meer dan 9 vuilniszakken aan afval? Dan moet u een contract afsluiten met een erkende afvalinzamelaar of de gemeente.',
     reason: '',
@@ -286,7 +288,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-09-09',
     title: 'Op zoek naar bedrijfsruimte?',
-    audience: ['zakelijk'],
+    profileTypes: ['commercial'],
     description:
       'De Stadsloods helpt u bij het vinden van een geschikte ruimte voor uw bedrijf.',
     reason: '',
@@ -306,7 +308,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-12',
     title: 'Laat geen geld liggen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Had u als ondernemer in 2020 moeite om rond te komen? Of had u geldproblemen? Misschien zijn deze regelingen dan interessant voor u.',
     predicates: [hasTozo],
@@ -327,7 +329,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-25',
     title: 'Download de 020werkt-app',
-    audience: ['persoonlijk', 'zakelijk'],
+    profileTypes: ['private', 'commercial'],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
     predicates: [or([hasValidStadspasRequest, hasTozo, hasBijstandsuitkering])],
@@ -348,7 +350,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-26',
     title: 'Draag uw mondkapje',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Tijdens corona moet u een mondkapje op als u reist met het aanvullend openbaar vervoer. Hiermee beschermt u uzelf en anderen.',
     predicates: [hasAOV],
@@ -369,7 +371,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-26',
     title: 'Sporten met korting',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
     predicates: [hasValidStadspasRequest, hasKidsBetweenAges2And18],
@@ -392,7 +394,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-12-20',
     title: 'Hulp bij geldproblemen',
-    audience: ['persoonlijk', 'zakelijk'],
+    profileTypes: ['private', 'commercial'],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of  hebt u schulden? Meld u aan voor gratis hulp',
     predicates: [or([hasValidStadspasRequest, hasTozo, hasBijstandsuitkering])],
@@ -413,7 +415,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2021-02-02',
     title: 'Gratis ID-kaart om te stemmen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
@@ -440,7 +442,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2021-02-02',
     title: 'Breng je basis op orde',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
     predicates: [isBetween17and18],
@@ -462,7 +464,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2021-02-04',
     title: 'Veilig stemmen voor de Tweede Kamer',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'We doen er veel aan om te zorgen dat u veilig kunt stemmen op 15, 16 of 17 maart. Vergeet uw mondkapje niet en doe vooraf de gezondheidscheck!',
 
@@ -483,7 +485,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2021-02-04',
     title: 'Iemand anders voor u laten stemmen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Misschien kunt u zelf niet stemmen. Maak dan toch van uw stemrecht gebruik door een andere kiezer te machtigen. De gemachtigde mag voor maximaal 3 andere kiezers stemmen.',
 
@@ -504,7 +506,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2021-03-04',
     title: 'Kom stemmen op 15, 16 of 17 maart',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Bent u ouder dan 60 of hebt u gezondheidsklachten? Kom dan alvast op 15 of 16 maart stemmen bij een van de 50 stembureaus. Op 17 maart zijn er meer dan 450 stembureaus open.',
 
@@ -525,7 +527,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2021-03-04',
     title: 'Met de auto stemmen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Misschien gaat u vanwege corona liever niet naar een stembureau. Ga dan stemmen met de auto. Dat kan in de stemstraat bij de RAI.',
 
@@ -546,7 +548,7 @@ export const tips: Tip[] = [
     priority: 10,
     datePublished: '2021-06-15',
     title: 'Particuliere vakantieverhuur',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
     predicates: [
@@ -570,7 +572,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-06-15',
     title: 'Overgangsrecht bij Bed and breakfast',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
     predicates: [hasBnBTransitionRight],
@@ -592,7 +594,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-06-15',
     title: 'Bed & breakfast',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
     predicates: [hasBnBVergunning, not(hasVerhuurRegistrations), isMokum],
@@ -613,7 +615,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-08-01',
     title: 'Sportvergoeding voor kinderen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
     predicates: [not(hasStadspasGroeneStip), isReceivingSubsidy],
@@ -634,7 +636,7 @@ export const tips: Tip[] = [
     priority: 81,
     datePublished: '2022-03-10',
     title: 'Kom stemmen op 14, 15 of 16 maart',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Woensdag 16 maart 2022 kiezen we een nieuwe gemeenteraad. Op dezelfde dag zijn ook de verkiezingen voor de stadsdeelcommissies. Om drukte bij de stembureaus te voorkomen mag u ook op maandag 14 en dinsdag 15 maart stemmen.',
     reason: '',
@@ -655,7 +657,7 @@ export const tips: Tip[] = [
     priority: 81,
     datePublished: '2022-02-28',
     title: 'Iemand anders voor u laten stemmen',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Misschien kunt u zelf niet stemmen. Maak dan toch van uw stemrecht gebruik door een andere kiezer te machtigen. Een gemachtigde mag per verkiezing voor maximaal 2 andere mensen stemmen en voor de stadsdeelcommissie moet de gemachtigde in hetzelfde stadsdeel als u wonen.',
     reason: '',
@@ -676,7 +678,7 @@ export const tips: Tip[] = [
     priority: 81,
     datePublished: '2022-03-03',
     title: 'Verkiezingen komen eraan: op wie kunt u stemmen?',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Op amsterdam.nl/verkiezingen kunt u alle kandidatenlijsten inzien, zodat u weet op welke partijen en kandidaten u op 14, 15 of 16 maart kunt stemmen.',
     reason: '',
@@ -697,7 +699,7 @@ export const tips: Tip[] = [
     priority: 81,
     datePublished: '2022-03-07',
     title: 'Nog zwevend?',
-    audience: ['persoonlijk'],
+    profileTypes: ['private'],
     description:
       'Vul de stemwijzer in en ontdek met welke kandidaat jouw mening het meest overeenkomt.',
     reason: '',
@@ -708,5 +710,28 @@ export const tips: Tip[] = [
       to: 'https://www.amsterdam.nl/verkiezingen',
     },
     imgUrl: `${TIPS_IMG_HOST}/img/tips/stemmen.jpg`,
+  },
+  {
+    id: 'mijn-42',
+    owner: '',
+    dateActiveStart: '2023-07-22',
+    dateActiveEnd: '2023-11-30',
+    active: true,
+    priority: 81,
+    datePublished: '2023-07-28',
+    title: 'Gratis openbaar vervoer voor kinderen',
+    predicates: [hasKidsBetweenAges4And11, isMokum],
+    profileTypes: ['private'],
+    isPersonalized: true,
+    isNotification: true,
+    chapter: Chapters.INKOMEN,
+    description:
+      'Kinderen van 4 tot en met 11 jaar kunnen van 22 juli tot en met 30 november gratis reizen met het openbaar vervoer in Amsterdam. Elk kind heeft een ov-chipkaart nodig.',
+    reason:
+      'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 t/m 11 en woonachtig bent in Amsterdam.',
+    link: {
+      title: 'Hoe vraag je het aan?',
+      to: 'https://www.amsterdam.nl/nieuws/nieuwsoverzicht/gratis-ov-kinderen/',
+    },
   },
 ];
