@@ -6,7 +6,13 @@ import {
   hasWorkflow,
 } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { BZB, BZP, Vergunning, VergunningExpirable } from './vergunningen';
+import {
+  BZB,
+  BZP,
+  RVVSloterweg,
+  Vergunning,
+  VergunningExpirable,
+} from './vergunningen';
 
 type NotificationStatusType =
   | 'almostExpired'
@@ -148,25 +154,6 @@ const defaultNotificationLabels: Record<string, NotificatonContentLabels> = {
   },
 };
 
-const RVVLabels: NotificatonContentLabels = {
-  requested: {
-    ...requestedShort,
-    title: (item) => `Aanvraag ${item.title} ontvangen`,
-    description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
-  },
-  inProgress: {
-    ...inProgressShort,
-    title: (item) => `Aanvraag ${item.title} in behandeling`,
-    description: (item) =>
-      `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
-  },
-  done: {
-    ...doneShort,
-    title: (item) => `Aanvraag ${item.title} afgehandeld`,
-    description: (item) => `Uw aanvraag voor een ${item.title} is afgehandeld.`,
-  },
-};
-
 export const notificationContent: NotificationContent = {
   [CaseType.BZB]: {
     ...defaultNotificationLabels.short,
@@ -244,8 +231,71 @@ export const notificationContent: NotificationContent = {
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
   [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
   [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.short,
-  [CaseType.RVVHeleStad]: RVVLabels,
+  [CaseType.RVVHeleStad]: {
+    requested: {
+      ...requestedShort,
+      title: (item) => `Aanvraag ${item.title} ontvangen`,
+      description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
+    },
+    inProgress: {
+      ...inProgressShort,
+      title: (item) => `Aanvraag ${item.title} in behandeling`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
+    },
+    done: {
+      ...doneShort,
+      title: (item) => `Aanvraag ${item.title} afgehandeld`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is afgehandeld.`,
+    },
+  },
   [CaseType.RVVSloterweg]: {
-    ...RVVLabels,
+    requested: {
+      datePublished: requestedShort.datePublished,
+      title: (item) =>
+        `Aanvraag${
+          (item as RVVSloterweg).requestType === 'Kenteken wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } ${item.title} ontvangen`,
+      description: (item) =>
+        `Wij hebben uw aanvraag voor een${
+          (item as RVVSloterweg).requestType === 'Kenteken wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } ${item.title} ontvangen.`,
+      link: requestedShort.link,
+    },
+    inProgress: {
+      datePublished: inProgressShort.datePublished,
+      title: (item) =>
+        `Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling`,
+      description: (item) =>
+        `Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg (${
+          (item as RVVSloterweg).licencePlates
+        }) in behandeling genomen`,
+      link: inProgressShort.link,
+    },
+    done: {
+      datePublished: doneShort.datePublished,
+      title: (item) =>
+        `Aanvraag${
+          (item as RVVSloterweg).requestType === 'Kenteken wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg ${item.decision
+          ?.split(' ')[0]
+          .toLocaleLowerCase()}`,
+      description: (item) =>
+        `Wij hebben uw aanvraag voor een${
+          (item as RVVSloterweg).requestType === 'Kenteken wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg (${
+          (item as RVVSloterweg).licencePlates
+        }) ${item.decision?.split(' ')[0].toLocaleLowerCase()}.`,
+      link: doneShort.link,
+    },
   },
 };

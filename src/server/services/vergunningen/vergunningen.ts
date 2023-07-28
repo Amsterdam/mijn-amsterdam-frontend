@@ -26,6 +26,7 @@ import {
   notificationContent,
   NotificationLabels,
 } from './vergunningen-content';
+import { MyNotifications } from '../../../client/components';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -427,7 +428,7 @@ export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[],
   dateNow?: Date
-): MyNotification {
+): MyNotification | null {
   const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
     id: `vergunning-${item.id}-notification`,
@@ -445,9 +446,11 @@ export function createVergunningNotification(
 
   if (labels) {
     assignNotificationProperties(notification, labels, item);
+
+    return notification;
   }
 
-  return notification;
+  return null;
 }
 
 export function getVergunningNotifications(
@@ -469,7 +472,8 @@ export function getVergunningNotifications(
     .filter(
       ([notification, vergunning]) =>
         !vergunning.processed ||
-        isActualNotification(notification.datePublished, compareDate)
+        (!!notification &&
+          isActualNotification(notification.datePublished, compareDate))
     )
     .map(([notification]) => notification);
 }

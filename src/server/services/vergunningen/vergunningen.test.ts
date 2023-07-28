@@ -182,7 +182,9 @@ describe('Vergunningen service', () => {
   };
 
   describe('getVergunningNotifications', () => {
-    function createVergunningNotifications(...content: any): MyNotification[] {
+    function createVergunningNotifications(
+      ...content: any
+    ): Array<MyNotification | null> {
       const vergunningen: any = addLinks(
         transformVergunningenData({
           content,
