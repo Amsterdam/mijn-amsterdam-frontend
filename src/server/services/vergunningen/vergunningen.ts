@@ -26,7 +26,6 @@ import {
   notificationContent,
   NotificationLabels,
 } from './vergunningen-content';
-import { MyNotifications } from '../../../client/components';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
