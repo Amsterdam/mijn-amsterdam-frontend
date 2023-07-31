@@ -16,7 +16,7 @@ import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
   identificatie: 'Zaaknummer',
-  ontvangstdatum: 'Ontvangen op',
+  startdatum: 'Ontvangen op',
   omschrijving: 'Onderwerp',
 };
 

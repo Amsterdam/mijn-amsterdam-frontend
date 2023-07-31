@@ -99,7 +99,7 @@ function transformBezwarenResults(
         zaakkenmerk:
           getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         uuid: bezwaarBron.uuid,
-        ontvangstdatum: bezwaarBron.startdatum,
+        startdatum: bezwaarBron.startdatum,
         omschrijving: bezwaarBron.omschrijving,
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
@@ -319,12 +319,12 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   const notification: MyNotification = {
     chapter: Chapters.BEZWAREN,
     id: bezwaar.identificatie,
-    title: 'Bezwaar ontvangen',
-    description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
-    datePublished: bezwaar.ontvangstdatum,
+    title: 'Bezwaar in behandeling',
+    description: `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`,
+    datePublished: bezwaar.startdatum,
     link: {
       to: bezwaar.link.to,
-      title: 'Bekijk details',
+      title: 'Bekijk uw bezwaar',
     },
   };
 
