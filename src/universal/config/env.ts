@@ -50,6 +50,7 @@ const otapServerEnv: OtapEnv = {
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
+    ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
   acceptance: {
     analyticsId: 'e63312c0-0efe-4c4f-bba1-3ca1f05374a8',
