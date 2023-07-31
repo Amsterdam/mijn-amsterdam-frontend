@@ -31,6 +31,7 @@ export interface BezwaarSourceData {
   // Datum primair besluit
   datumprimairbesluit: string | null;
 
+  // In behandeling
   startdatum: string;
 
   einddatum: string | null;
