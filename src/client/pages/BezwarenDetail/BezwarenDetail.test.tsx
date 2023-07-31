@@ -79,7 +79,9 @@ const testState = {
 };
 
 function initializeState(testState: any) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
+  return (snapshot: MutableSnapshot) => {
+    snapshot.set(appStateAtom, testState);
+  };
 }
 
 function setupTestComponent(id: string) {

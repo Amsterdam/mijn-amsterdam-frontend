@@ -71,9 +71,7 @@ const BezwarenDetail = () => {
                 />
                 <InfoDetail
                   label="Datum"
-                  value={defaultDateFormat(
-                    new Date(bezwaar.primairbesluitdatum)
-                  )}
+                  value={defaultDateFormat(bezwaar.primairbesluitdatum)}
                 />
               </InfoDetailGroup>
             )}
