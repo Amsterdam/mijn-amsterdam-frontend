@@ -719,7 +719,7 @@ export const tips: Tip[] = [
     active: true,
     priority: 81,
     datePublished: '2023-07-28',
-    title: 'Gratis openbaar vervoer voor kinderen',
+    title: 'Tip: Gratis openbaar vervoer voor kinderen',
     predicates: [hasKidsBetweenAges4And11, isMokum],
     profileTypes: ['private'],
     isPersonalized: true,

@@ -92,9 +92,7 @@ const Notification = ({
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
-            {notification.isTip ? (
-              <em className={styles.TipLabel}>Tip</em>
-            ) : (
+            {!notification.isTip && (
               <em className={styles.ChapterIndication}>
                 {ChapterTitles[notification.chapter]}
               </em>
