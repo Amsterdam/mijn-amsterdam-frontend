@@ -80,7 +80,7 @@ authRouterDevelopment.get(
       return res.send(
         apiSuccessResult({
           isAuthenticated: true,
-          profileType: profileTypeByAuthMethod[authMethodParam][0], // NOTE: Private-Commercial Not implemented
+          profileType: profileTypeByAuthMethod[authMethodParam][0],
           authMethod: authMethodParam,
         })
       );
