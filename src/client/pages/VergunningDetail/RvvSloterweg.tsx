@@ -15,64 +15,9 @@ export function getRVVSloterwegLineItems(
     ? new Date(vergunning.dateEnd) < new Date()
     : false;
 
-  if (vergunning.requestType === 'Nieuw') {
-    const decision =
-      vergunning.decision === 'Verleend'
-        ? 'Verlopen'
-        : // Splits "Ingetrokken door gemeente" to "Ingetrokken"
-          vergunning.decision?.split(' ')[0] ?? 'Verlopen';
-    return [
-      {
-        id: 'item-1',
-        status: 'Ontvangen',
-        datePublished: vergunning.dateRequest,
-        description: '',
-        documents: [],
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        id: 'mid-item',
-        status: 'Verleend',
-        datePublished: vergunning.dateDecision ?? '',
-        description: '',
-        documents: [],
-        isActive: !isExpired,
-        isChecked: true,
-      },
-      {
-        id: 'last-item',
-        status: decision,
-        datePublished:
-          vergunning.decision === 'Verleend' ||
-          vergunning.decision === 'Verlopen'
-            ? vergunning.dateEnd ?? ''
-            : vergunning.dateDecision ?? '',
-        description: '',
-        documents: [],
-        isActive: isExpired,
-        isChecked: isExpired,
-      },
-    ];
-  }
-
-  let decision = 'Afgehandeld';
-
-  if (
-    vergunning.decision === 'Verleend' ||
-    vergunning.decision === 'Verlopen'
-  ) {
-    decision = 'Verleend';
-  } else {
-    decision = vergunning.decision?.split(' ')[0] ?? 'Verleend'; // Splits "Ingetrokken door gemeente" to "Ingetrokken"
-  }
-
-  // vergunning.decision === 'Verleend'
-  //   ? 'Verlopen'
-
   const lineItems = [
     {
-      id: 'item-1',
+      id: 'status-ontvangen',
       status: 'Ontvangen',
       datePublished: vergunning.dateRequest,
       description: '',
@@ -81,40 +26,44 @@ export function getRVVSloterwegLineItems(
       isChecked: true,
     },
     {
-      id: 'item-2',
+      id: 'status-in-behandeling',
       status: 'In behandeling',
-      datePublished: vergunning.dateWorkflowActive || '',
+      datePublished: vergunning.dateRequest ?? '',
       description: '',
       documents: [],
-      isActive: inProgressActive,
-      isChecked: hasDateWorkflowActive,
+      isActive: !isExpired,
+      isChecked: true,
     },
     {
-      id: 'item-3',
-      status: decision,
-      datePublished: vergunning.dateDecision || '',
+      id: 'status-afgehandeld',
+      status: 'Afgehandeld',
+      datePublished: vergunning.dateDecision ?? '',
       description: '',
       documents: [],
-      isActive: isDone && !isExpired,
-      isChecked: isDone,
-    },
-    {
-      id: 'last-item',
-      status: 'Verlopen',
-      datePublished: vergunning.dateEnd ?? '',
-      description: '',
-      documents: [],
-      isActive: isExpired,
-      isChecked: isExpired,
+      isActive: !isExpired,
+      isChecked: true,
     },
   ];
 
-  // Ingetrokken/Geweigerde vergunningen kunnen niet verlopen
   if (
-    vergunning.decision !== 'Verleend' &&
-    vergunning.decision !== 'Verlopen'
+    vergunning.decision === 'Verleend' ||
+    vergunning.decision === 'Verlopen'
   ) {
-    lineItems.pop();
+    lineItems.push({
+      id: 'status-verlopen',
+      status: 'Verlopen',
+      datePublished:
+        vergunning.decision === 'Verleend'
+          ? vergunning.dateEnd ?? ''
+          : vergunning.dateDecision ?? '',
+      description:
+        vergunning.decision === 'Verlopen'
+          ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
+          : '',
+      documents: [],
+      isActive: isExpired,
+      isChecked: isExpired,
+    });
   }
 
   return lineItems;

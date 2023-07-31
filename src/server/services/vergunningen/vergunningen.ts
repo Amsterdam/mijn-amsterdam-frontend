@@ -194,7 +194,7 @@ export interface RVVSloterweg extends VergunningBase {
   dateWorkflowVerleend: string | null;
   requestType: 'Nieuw' | 'Kenteken wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
-  decision: 'Verleend' | 'Verlopen' | 'Geweigerd' | 'Ingetrokken';
+  decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
 }
 
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
