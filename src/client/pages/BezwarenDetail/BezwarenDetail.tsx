@@ -13,7 +13,11 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  ChapterTitles,
+  IS_ACCEPTANCE,
+} from '../../../universal/config';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 import BezwarenStatusLines from './BezwarenStatusLines';
 import { DocumentLink } from '../../components/DocumentList/DocumentList';
@@ -50,6 +54,9 @@ const BezwarenDetail = () => {
         {!!bezwaar && (
           <>
             <InfoDetail label="Zaaknummer" value={bezwaar.identificatie} />
+            {IS_ACCEPTANCE && (
+              <InfoDetail label="Test kenmerk" value={bezwaar.zaakkenmerk} />
+            )}
             {bezwaar.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
             )}

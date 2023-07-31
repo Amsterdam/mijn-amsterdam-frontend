@@ -1,5 +1,6 @@
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
@@ -8,21 +9,22 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
+import { GenericDocument, MyNotification } from '../../../universal/types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   Bezwaar,
   BezwaarSourceData,
+  BezwaarSourceDocument,
+  BezwaarSourceStatus,
+  BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
   kenmerkKey,
-  BezwaarStatus,
-  BezwaarSourceStatus,
-  BezwaarSourceDocument,
 } from './types';
-import { AppRoutes, Chapters, IS_ACCEPTANCE } from '../../../universal/config';
-import { GenericDocument, MyNotification } from '../../../universal/types';
+import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import axios from 'axios';
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -35,19 +37,24 @@ function getZaakUrl(zaakId: string) {
 }
 
 function transformBezwarenDocumentsResults(
-  response: BezwarenSourceResponse<BezwaarSourceDocument>
+  documents: BezwaarSourceDocument[]
 ): GenericDocument[] {
-  const results = response.results;
-  if (Array.isArray(results)) {
-    return results.map(({ titel, registratiedatum, uuid }) => ({
-      id: uuid,
-      title: titel,
-      datePublished: defaultDateFormat(registratiedatum),
-      url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-        BffEndpoints.BEZWAREN_ATTACHMENTS,
-        { id: uuid }
-      )}`,
-    }));
+  if (Array.isArray(documents)) {
+    return documents.map(({ titel, registratiedatum, uuid }) => {
+      const [documentIdEncrypted] = encrypt(
+        uuid,
+        process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+      );
+      return {
+        id: documentIdEncrypted,
+        title: titel,
+        datePublished: defaultDateFormat(registratiedatum),
+        url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
+          BffEndpoints.BEZWAREN_ATTACHMENTS,
+          { id: documentIdEncrypted }
+        )}`,
+      };
+    });
   }
   return [];
 }
@@ -178,29 +185,26 @@ async function fetchBezwaarStatus(
 export async function fetchBezwaarDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentId: string
+  documentIdEncrypted: string,
+  isDownload: boolean = true
 ) {
-  // For additional security, first re-fetch users bezwaren and check if the requested doc id is present in one.
-  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
-  const documentIds =
-    bezwaren.content?.flatMap((b) => b.documenten).map((d) => d.id) ?? [];
+  const documentId = decrypt(
+    documentIdEncrypted,
+    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  );
 
-  const hasRequestedDocument = !!documentIds.find((id) => id === documentId);
-
-  if (!hasRequestedDocument) {
-    return apiErrorResult('Unknown document', null);
-  }
-
-  const requestConfig = getApiConfig('BEZWAREN_DOCUMENT', {
-    headers: getBezwarenApiHeaders(authProfileAndToken),
-  });
-
-  requestConfig.url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
+  const url = generatePath(
+    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${
+      isDownload ? '/download' : ''
+    }`,
     { id: documentId }
   );
 
-  return requestData<string>(requestConfig, requestID);
+  return axios({
+    url,
+    headers: getBezwarenApiHeaders(authProfileAndToken, isDownload),
+    responseType: isDownload ? 'stream' : 'json',
+  });
 }
 
 async function enrichBezwaarResponse(
@@ -313,7 +317,7 @@ export async function fetchBezwarenNotifications(
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
-  const isDone = !!bezwaar.einddatum;
+  const isDone = !!bezwaar.einddatum && !!bezwaar.resultaat;
   const isWithdrawn = !!bezwaar.datumIntrekking;
 
   const notification: MyNotification = {
@@ -343,7 +347,10 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   return notification;
 }
 
-function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
+function getBezwarenApiHeaders(
+  authProfileAndToken: AuthProfileAndToken,
+  isDocumentDownload: boolean = false
+) {
   const now = new Date();
 
   const tokenData = {
@@ -369,7 +376,7 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   }
 
   const header = {
-    'Content-Type': 'application/json',
+    'Content-Type': isDocumentDownload ? 'aplication/pdf' : 'application/json',
     apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
     Authorization: `Bearer ${jose.JWT.sign(
       tokenData,
