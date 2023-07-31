@@ -18,7 +18,7 @@ import {
 import { useAppStateGetter } from '../../hooks';
 
 const DISPLAY_PROPS_BODEM = {
-  adresAsLink: 'Adres',
+  adres: 'Adres',
   datumAanvraag: 'Aangevraagd',
   status: 'Status',
 };
@@ -27,26 +27,12 @@ export default function Bodem() {
   const { BODEM } = useAppStateGetter();
 
   const loodMetingen = (BODEM.content?.metingen || []).map((meting) => {
-    const adresString = `${meting.adres.straat} ${meting.adres.huisnummer}${
-      meting.adres.huisletter ?? ''
-    }`;
-
     return {
       ...meting,
       datumAanvraag: defaultDateFormat(meting.datumAanvraag),
-      adresString: adresString,
-      adresAsLink: adresString,
     };
   });
-  const items = addTitleLinkComponent(loodMetingen, 'adresAsLink').sort(
-    (first, second) => {
-      return first.adresString > second.adresString
-        ? 1
-        : first.adresString === second.adresString
-        ? 0
-        : -1;
-    }
-  );
+  const items = addTitleLinkComponent(loodMetingen, 'adres');
 
   const lopendeAanvragen = items.filter(
     (meting) => meting.status !== 'Afgehandeld' && meting.status !== 'Afgewezen'

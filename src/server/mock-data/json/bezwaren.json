@@ -46,7 +46,11 @@
         },
         {
           "kenmerk": "besluitdatum",
-          "bron": "01-05-2021"
+          "bron": "2021-05-01"
+        },
+        {
+          "kenmerk": "zaakkenmerk",
+          "bron": "ghi.abc.def"
         }
       ],
       "archiefnominatie": null,
@@ -98,7 +102,11 @@
         },
         {
           "kenmerk": "besluitdatum",
-          "bron": "03-03-2021"
+          "bron": "2021-03-03"
+        },
+        {
+          "kenmerk": "zaakkenmerk",
+          "bron": "abc.def"
         }
       ],
       "archiefnominatie": null,
@@ -139,7 +147,12 @@
         "https://localhost/api/zgw/v1/eigenschappen?zaakTypeUuid=cc117d91-1b00-4bae-bbdd-9ea3a6d6d185"
       ],
       "status": null,
-      "kenmerken": [],
+      "kenmerken": [
+        {
+          "kenmerk": "zaakkenmerk",
+          "bron": "123.abc.def"
+        }
+      ],
       "archiefnominatie": null,
       "archiefstatus": "nog_te_archiveren",
       "archiefactiedatum": null,
@@ -178,7 +191,16 @@
         "https://localhost/api/zgw/v1/eigenschappen?zaakTypeUuid=956541b6-7a25-4132-9592-0a509bc7ace0"
       ],
       "status": null,
-      "kenmerken": [{ "kenmerk": "besluitdatum", "bron": "2023-01-03" }],
+      "kenmerken": [
+        {
+          "kenmerk": "besluitdatum",
+          "bron": "2023-01-03"
+        },
+        {
+          "kenmerk": "zaakkenmerk",
+          "bron": "321.abc.def"
+        }
+      ],
       "archiefnominatie": null,
       "archiefstatus": "nog_te_archiveren",
       "archiefactiedatum": null,

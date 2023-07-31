@@ -4,6 +4,7 @@ import {
   entries,
   getFullAddress,
   hasDutchNationality,
+  formatBirthdate,
 } from '../../../universal/helpers';
 import {
   Adres,
@@ -36,7 +37,14 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   bsn: 'BSN',
-  geboortedatum: ['Geboortedatum', (value) => defaultDateFormat(value)],
+  geboortedatum: [
+    'Geboortedatum',
+    (geboorteDatum, persoon) => {
+      return !!persoon.indicatieGeboortedatum
+        ? formatBirthdate(persoon.indicatieGeboortedatum, geboorteDatum)
+        : defaultDateFormat(geboorteDatum);
+    },
+  ],
   overlijdensdatum: ['Datum overlijden', (value) => defaultDateFormat(value)],
   geboorteplaatsnaam: [
     'Geboorteplaats',
@@ -223,11 +231,9 @@ interface BrpProfileData {
 export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
-    adres:
-      brpData.adres?.landnaam === 'Nederland' ||
-      !FeatureToggle.foreignAddressInfoActive
-        ? format(brpInfoLabels.adres, brpData.adres, brpData)
-        : { '': 'Niet woonachtig in Nederland' },
+    adres: brpData.adres
+      ? format(brpInfoLabels.adres, brpData.adres, brpData)
+      : { '': 'Adres onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.

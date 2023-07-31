@@ -2,13 +2,14 @@ import { apiSuccessResult } from '../../universal/helpers';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
+import { decodeToken } from '../helpers/app';
 import AKTES from './json/aktes.json';
-import AVG_THEMAS from './json/avg-themas.json';
 import AVG from './json/avg.json';
+import AVG_THEMAS from './json/avg-themas.json';
 import BELASTINGEN from './json/belasting.json';
+import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
 import BEZWAREN_STATUS from './json/bezwaren-status.json';
-import BEZWAREN from './json/bezwaren.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -16,14 +17,14 @@ import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
-import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import LOODMETINGEN from './json/loodmetingen.json';
+import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
-// import SIA from './json/sia-meldingen.json';
-import { decodeToken } from '../helpers/app.development';
-import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
+import SIA from './json/sia-meldingen.json';
 import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
+import SIA_HISTORY from './json/sia-history.json';
+import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
@@ -76,9 +77,6 @@ export const mockDataConfig: MockDataConfig = {
   [String(ApiUrls.BELASTINGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
       return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
@@ -186,9 +184,6 @@ export const mockDataConfig: MockDataConfig = {
       if (config.url.includes('/notifications/')) {
         return await loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
       }
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
       return await loadMockApiResponseJson(ERFPACHT);
     },
   },
@@ -196,28 +191,37 @@ export const mockDataConfig: MockDataConfig = {
     pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
       return await loadMockApiResponseJson(SUBSIDIE);
     },
   },
-  // [String(ApiUrls.SIA)]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-  //   responseData: async (config: any) => {
-  //     // if (isCommercialUser(config)) {
-  //     //   return await loadMockApiResponseJson(MILIEUZONE);
-  //     // }
-  //     return await loadMockApiResponseJson(SIA);
-  //   },
-  // },
-  [`${ApiUrls.SIA}3fa85f64-5717-4562-b3fc-2c963f66afa6/attachments`]: {
+  [`${ApiUrls.SIA}`]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(MILIEUZONE);
-      // }
+      if (config.params.status.includes('ingepland')) {
+        return loadMockApiResponseJson(SIA);
+      }
+      return loadMockApiResponseJson([]);
+    },
+  },
+  [`${ApiUrls.SIA}:id/attachments`]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
       return await loadMockApiResponseJson(SIA_ATTACHMENTS);
+    },
+  },
+  [`${ApiUrls.SIA}:id/history`]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson(SIA_HISTORY);
+    },
+  },
+  [String(process.env.BFF_SIA_IAM_TOKEN_ENDPOINT)]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    method: 'post',
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        access_token: 'xxxx',
+      });
     },
   },
   // [String(ApiUrls.AFVAL)]: {
@@ -233,9 +237,6 @@ export const mockDataConfig: MockDataConfig = {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(MILIEUZONE);
-      // }
       return await loadMockApiResponseJson(MILIEUZONE);
     },
   },
@@ -346,6 +347,7 @@ export const mockDataConfig: MockDataConfig = {
   ],
   [`${ApiUrls.LOOD_365}/be_getrequestdetails`]: {
     status: () => 200,
+    method: 'post',
     responseData: async (config: any) => {
       return await loadMockApiResponseJson(LOODMETINGEN);
     },

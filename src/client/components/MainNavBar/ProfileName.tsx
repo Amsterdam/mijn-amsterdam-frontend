@@ -7,7 +7,6 @@ import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
 import { IconHomeCommercial, IconProfile } from '../../assets/icons';
 import { useAppStateReady } from '../../hooks';
-import { useProfileType } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './ProfileName.module.scss';
@@ -76,33 +75,6 @@ function PrivateProfileName({
   );
 }
 
-interface PrivateCommercialProfileToggleProps {
-  person?: BRPData['persoon'];
-  company?: KVKData;
-}
-
-function PrivateCommercialProfileToggle({
-  person,
-  company,
-}: PrivateCommercialProfileToggleProps) {
-  const [profileType, setProfileType] = useProfileType();
-
-  return (
-    <>
-      <PrivateProfileName
-        person={person}
-        isActive={profileType === 'private'}
-        onClick={() => setProfileType('private')}
-      />
-      <CommercialProfileName
-        company={company}
-        isActive={profileType === 'private-commercial'}
-        onClick={() => setProfileType('private-commercial')}
-      />
-    </>
-  );
-}
-
 interface ProfileNameProps {
   person?: BRPData['persoon'] | null;
   company?: KVKData | null;
@@ -133,8 +105,7 @@ export function ProfileName({
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
-      case (profileType === 'private' && !!person && !company) ||
-        (!FeatureToggle.profileToggleActive && !!person):
+      case profileType === 'private':
         nameContent = (
           <PrivateProfileName
             person={person!}
@@ -143,13 +114,7 @@ export function ProfileName({
           />
         );
         break;
-      case FeatureToggle.kvkActive &&
-        FeatureToggle.profileToggleActive &&
-        !!person &&
-        !!company:
-        nameContent = <PrivateCommercialProfileToggle person={person!} />;
-        break;
-      case FeatureToggle.kvkActive && !!company && !person:
+      case FeatureToggle.kvkActive && profileType === 'commercial':
         nameContent = (
           <CommercialProfileName
             company={company!}

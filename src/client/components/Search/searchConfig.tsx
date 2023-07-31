@@ -1,6 +1,7 @@
 import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
 import type {
+  HorecaVergunningen,
   Krefia,
   KrefiaDeepLink,
   Vergunning,
@@ -32,6 +33,10 @@ import {
 import { AppState } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
+import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { LoodMeting } from '../../../server/services/bodem/types';
+import { SIAItem } from '../../../server/services/sia';
+import { AVGRequest } from '../../../server/services/avg/types';
 
 export interface SearchEntry {
   url: string;
@@ -66,7 +71,7 @@ export interface ApiSearchConfig {
   generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
-  displayTitle: ((item: any, config: ApiSearchConfig) => ReactNode) | string;
+  displayTitle: ((item: any) => ReactNode) | string;
 
   // The url to link to
   url: string | ((item: any, config: ApiSearchConfig) => string);
@@ -101,8 +106,9 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
 
       return [];
     },
-    displayTitle: (item: any) => (term: string) =>
-      displayPath(term, [item.title]),
+    displayTitle: (item: any) => (term: string) => {
+      return displayPath(term, [item.title]);
+    },
     url: (item: any) => item.link?.to || '/',
     description: (item: any) => {
       return `Bekijk ${item.title}`;
@@ -123,9 +129,9 @@ export function displayPath(
         {segments.map((segment, i) => {
           let segmentReplaced = segment;
           if (replaceTerm) {
-            termSplitted.forEach((term) => {
+            termSplitted.forEach((termPart) => {
               const replaced = segmentReplaced.replace(
-                new RegExp(escapeRegex(term), 'ig'),
+                new RegExp(escapeRegex(termPart), 'ig'),
                 `<em>$&</em>`
               );
               if (replaced) {
@@ -172,9 +178,7 @@ const getWpiConfig = (
     };
   },
   profileTypes:
-    stateKey === 'WPI_AANVRAGEN'
-      ? ['private']
-      : ['private', 'private-commercial', 'commercial'],
+    stateKey === 'WPI_AANVRAGEN' ? ['private'] : ['private', 'commercial'],
 });
 
 export type ApiSearchConfigRemote = Record<
@@ -359,6 +363,45 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             };
           });
       return deepLinks || [];
+    },
+  },
+  {
+    isEnabled: FeatureToggle.bezwarenActive,
+    stateKey: 'BEZWAREN' as keyof AppState,
+    displayTitle(item: Bezwaar) {
+      return (term: string) =>
+        displayPath(term, [`Bezwaar ${item.zaakkenmerk}`]);
+    },
+  },
+  {
+    isEnabled: FeatureToggle.bodemActive,
+    stateKey: 'BODEM' as keyof AppState,
+    displayTitle(item: LoodMeting) {
+      return (term: string) =>
+        displayPath(term, [`Loodmeting ${item.aanvraagNummer}`]);
+    },
+  },
+  {
+    isEnabled: FeatureToggle.avgActive,
+    stateKey: 'AVG' as keyof AppState,
+    displayTitle(item: AVGRequest) {
+      return (term: string) => displayPath(term, [`AVG verzoek ${item.id}`]);
+    },
+  },
+  {
+    isEnabled: FeatureToggle.horecaActive,
+    stateKey: 'HORECA' as keyof AppState,
+    displayTitle(item: HorecaVergunningen) {
+      return (term: string) =>
+        displayPath(term, [`Horecavergunning ${item.title}`]);
+    },
+  },
+  {
+    isEnabled: FeatureToggle.siaActive,
+    stateKey: 'SIA' as keyof AppState,
+    displayTitle(item: SIAItem) {
+      return (term: string) =>
+        displayPath(term, [`Melding ${item.identifier}`]);
     },
   },
 ].map((apiConfig) => {

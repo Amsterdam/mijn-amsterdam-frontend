@@ -328,7 +328,7 @@ export const DATASETS: DatasetCategories = {
   },
   bedrijveninvesteringszones: {
     title: 'Bedrijveninvesteringszones',
-    profileType: ['commercial', 'private-commercial'],
+    profileType: ['commercial'],
     datasets: {
       bedrijveninvesteringszones: {
         title: 'Bedrijveninvesteringszones',

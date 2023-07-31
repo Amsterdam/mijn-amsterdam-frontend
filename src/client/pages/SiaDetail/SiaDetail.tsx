@@ -197,6 +197,11 @@ export default function SiaDetail() {
 
             <InfoDetail
               className={styles.NoPadding}
+              label="Categorie"
+              value={SiaItem.category || '-'}
+            />
+            <InfoDetail
+              className={styles.NoPadding}
               label="Omschrijving"
               value={
                 <TextClamp tagName="span">

@@ -101,8 +101,7 @@ const correctiemail: WpiRequestStatusLabels = {
       `${
         statusStep.about || requestProcess.about
       }: Wij hebben u een mail gestuurd`,
-    description: () =>
-      `Wij hebben u gemaild over uw bijstandsuitkering zelfstandigen.`,
+    description: () => `Wij hebben u gemaild over uw Bbz uitkering.`,
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
@@ -129,6 +128,17 @@ const informatieOntvangen: WpiRequestStatusLabels = {
       `Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(
         statusStep.datePublished
       )}.`,
+    link: (requestProcess, statusStep) => {
+      const [document] = statusStep!.documents!;
+      return {
+        to: `${document?.url}`,
+        title: 'Bekijk uw formulier',
+        download: documentDownloadName({
+          datePublished: requestProcess.datePublished,
+          title: 'Bbz-informatie-doorgeven-formulier',
+        }),
+      };
+    },
   },
   description: (requestProcess, statusStep) =>
     `<p>Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(

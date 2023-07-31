@@ -724,6 +724,20 @@
       "serviceOrderDate": "2022-01-23T13:31:36",
       "serviceDateStart": null,
       "serviceDateEnd": null
+    },
+    {
+      "dateDecision": "2023-07-04",
+      "title": "dagbesteding meedoen",
+      "itemTypeCode": "DBS",
+      "dateStart": "2023-07-01",
+      "dateEnd": "2024-07-01",
+      "isActual": false,
+      "deliveryType": "ZIN",
+      "supplier": "Madeliefje Thuiszorg",
+      "serviceOrderDate": null,
+      "serviceDateStart": null,
+      "serviceDateEnd": null,
+      "documents": null
     }
   ]
 }

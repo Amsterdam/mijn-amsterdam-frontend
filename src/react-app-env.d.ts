@@ -17,11 +17,7 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
   ? R
   : any;
 
-type ProfileType =
-  | 'private'
-  | 'private-attributes'
-  | 'private-commercial'
-  | 'commercial';
+type ProfileType = 'private' | 'private-attributes' | 'commercial';
 
 type AuthMethod = 'digid' | 'eherkenning' | 'yivi';
 

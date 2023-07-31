@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -12,16 +12,17 @@ import {
   LoodMetingRequestsSource,
   LoodMetingen,
 } from './types';
-import { AppRoutes, Chapters, IS_ACCEPTANCE } from '../../../universal/config';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
+  sortAlpha,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
 
-function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
+export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {
     return {
       bsn: authProfileAndToken.profile.id ?? '',
@@ -52,13 +53,9 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
     metingen = Requests.flatMap((request) => {
       return request.Researchlocations.map((location) => {
         return {
-          adres: {
-            straat: location.Street,
-            huisnummer: location.Housenumber,
-            huisletter: location?.Houseletter,
-            postcode: location.Postalcode,
-            stad: location.City,
-          },
+          adres: `${location.Street} ${location.Housenumber}${
+            location?.Houseletter ?? ''
+          }`,
           datumAanvraag: request.RequestedOn,
           datumInbehandeling: location?.Workordercreatedon,
           datumAfgehandeld: location?.Reportsenton,
@@ -75,30 +72,34 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
             }),
             title: 'Bekijk loodmeting',
           },
-          document: location.Reportavailable
-            ? {
-                title: 'Rapport Lood in de bodem-check',
-                id: location.Workorderid!,
-                url: `${process.env.BFF_PUBLIC_URL}${generatePath(
-                  BffEndpoints.LOODMETING_ATTACHMENTS,
-                  {
-                    id: location.Workorderid!,
-                  }
-                )}`,
-                datePublished: location.Reportsenton!,
-              }
-            : null,
+          document:
+            !!location.Workorderid &&
+            !!location.Reportsenton &&
+            !!location.Reportavailable
+              ? {
+                  title: 'Rapport Lood in de bodem-check',
+                  id: location.Workorderid,
+                  url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
+                    {
+                      id: location.Workorderid,
+                    }
+                  )}`,
+                  datePublished: location.Reportsenton,
+                }
+              : null,
         };
       });
     });
   } catch (e) {
     Sentry.captureException(e);
   }
+  metingen.sort(sortAlpha('adres', 'asc', 'lower'));
 
   return { metingen };
 }
 
-async function getLoodApiHeaders(requestID: requestID) {
+export async function getLoodApiHeaders(requestID: requestID) {
   const url = `${process.env.BFF_LOOD_API_URL}`;
   const requestConfig = getApiConfig('LOOD_365_OAUTH');
 
@@ -210,22 +211,16 @@ function isRecentNotification(
 }
 
 function createLoodNotification(meting: LoodMeting) {
-  const inProgress =
-    !!meting.datumInbehandeling &&
-    !meting.datumAfgehandeld &&
-    !meting.datumBeoordeling;
-  const isDone = !!meting.datumAfgehandeld;
-  const isDenied = !!meting.datumBeoordeling;
-
-  const formattedAdress = `${meting.adres.straat} ${meting.adres.huisnummer}${
-    meting.adres.huisletter ?? ''
-  }`;
+  const status = meting.status.toLocaleLowerCase();
+  const inProgress = status === 'in behandeling';
+  const isDone = status === 'afgehandeld';
+  const isDenied = status === 'afgewezen';
 
   const notification: MyNotification = {
     chapter: Chapters.BODEM,
     id: meting.kenmerk,
     title: 'Aanvraag lood in de bodem-check ontvangen',
-    description: `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is ontvangen.`,
+    description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
     datePublished: meting.datumAanvraag,
     link: {
       to: meting.link.to,
@@ -235,19 +230,19 @@ function createLoodNotification(meting: LoodMeting) {
 
   if (inProgress) {
     notification.title = 'Aanvraag lood in de bodem-check in behandeling';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is in behandeling genomen`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
     notification.datePublished = meting.datumInbehandeling!;
   }
 
   if (isDone) {
     notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is afgehandeld.`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
     notification.datePublished = meting.datumAfgehandeld!;
   }
 
   if (isDenied) {
     notification.title = 'Aanvraag lood in de bodem-check afgewezen';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${formattedAdress} is afgewezen.`;
+    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
     notification.datePublished = meting.datumBeoordeling!;
   }
 
