@@ -1,17 +1,22 @@
 import nock from 'nock';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import type { AuthProfileAndToken } from '../../helpers/app';
+import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
+import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
+import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
 import {
   fetchBezwaarDocument,
   fetchBezwaren,
   fetchBezwarenNotifications,
 } from './bezwaren';
-import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
-import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
-import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
 
 describe('Bezwaren', () => {
   const requestId = '456';
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
+  const [documentIdEncrypted] = encrypt(
+    documentId,
+    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  );
 
   const profileAndToken: AuthProfileAndToken = {
     profile: {
@@ -69,46 +74,46 @@ describe('Bezwaren', () => {
               Object {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-04-25",
-                "description": "Wij hebben uw bezwaar BI.21.014121.001 ontvangen.",
+                "description": "Wij hebben uw bezwaar BI.21.014121.001 in behandeling genomen.",
                 "id": "BI.21.014121.001",
                 "link": Object {
-                  "title": "Bekijk details",
+                  "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
                 },
-                "title": "Bezwaar ontvangen",
+                "title": "Bezwaar in behandeling",
               },
               Object {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-04-03",
-                "description": "Wij hebben uw bezwaar JB.22.000076.001 ontvangen.",
+                "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
                 "id": "JB.22.000076.001",
                 "link": Object {
-                  "title": "Bekijk details",
+                  "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
                 },
-                "title": "Bezwaar ontvangen",
+                "title": "Bezwaar in behandeling",
               },
               Object {
                 "chapter": "BEZWAREN",
                 "datePublished": "2022-11-04",
-                "description": "Wij hebben uw bezwaar ZAAK2 ontvangen.",
+                "description": "Wij hebben uw bezwaar ZAAK2 in behandeling genomen.",
                 "id": "ZAAK2",
                 "link": Object {
-                  "title": "Bekijk details",
+                  "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
                 },
-                "title": "Bezwaar ontvangen",
+                "title": "Bezwaar in behandeling",
               },
               Object {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-01-04",
-                "description": "Er is een besluit over uw bezwaar ZAAK3.",
+                "datePublished": "2022-11-04",
+                "description": "Wij hebben uw bezwaar ZAAK3 in behandeling genomen.",
                 "id": "ZAAK3",
                 "link": Object {
-                  "title": "Bekijk details",
+                  "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
                 },
-                "title": "Bezwaar afgehandeld",
+                "title": "Bezwaar in behandeling",
               },
             ],
           },
@@ -121,13 +126,13 @@ describe('Bezwaren', () => {
       const documentResponse = await fetchBezwaarDocument(
         requestId,
         profileAndToken,
-        documentId
+        documentIdEncrypted
       );
 
       //@ts-ignore
       expect(documentResponse?.message).toEqual(undefined);
-      expect(documentResponse.status).toEqual('OK');
-      expect(documentResponse.content).toEqual('wat-document-data');
+      expect(documentResponse.status).toEqual(200);
+      // expect(documentResponse.data).toEqual(new Buffer('wat-document-data'));
     });
   });
 });

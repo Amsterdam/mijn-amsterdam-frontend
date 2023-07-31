@@ -121,12 +121,12 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Kenmerk van uw bezwaar
+          Zaaknummer
         </h3>
         <p
           class="Value"
         >
-          ghi.abc.def
+          BI.21.014121.001
         </p>
       </div>
       <div
@@ -149,21 +149,7 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Ontvangen op
-        </h3>
-        <p
-          class="Value"
-        >
-          25 april 2023
-        </p>
-      </div>
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Specificatie
+          Reden
         </h3>
         <p
           class="Value"
@@ -202,7 +188,7 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
             <p
               class="Value"
             >
-              05 januari 2021
+              01-05-2021
             </p>
           </div>
         </div>
