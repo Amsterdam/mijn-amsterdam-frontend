@@ -15,13 +15,15 @@ import { isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
-  zaakkenmerk: 'Nummer',
-  ontvangstdatum: 'Ontvangstdatum',
+  zaakkenmerk: 'Zaaknummer',
+  ontvangstdatum: 'Ontvangen op',
+  omschrijving: 'Onderwerp',
 };
 
 const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  zaakkenmerk: 'Nummer',
+  zaakkenmerk: 'Zaaknummer',
   datumbesluit: 'Datum besluit',
+  omschrijving: 'Onderwerp',
 };
 
 export default function BEZWAREN() {
@@ -58,8 +60,8 @@ export default function BEZWAREN() {
 
         <SectionCollapsible
           id="SectionCollapsible-complaints"
-          title="Ingediende bezwaren"
-          noItemsMessage="U heeft nog geen bezwaren ingediend."
+          title="Lopende bezwaren"
+          noItemsMessage="U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen."
           startCollapsed={false}
           hasItems={!!ingediendeBezwaren?.length}
           isLoading={isLoading(BEZWAREN)}
@@ -75,7 +77,7 @@ export default function BEZWAREN() {
         <SectionCollapsible
           id="SectionCollapsible-complaints"
           title="Afgehandelde bezwaren"
-          noItemsMessage="U heeft nog geen afgehandelde bezwaren."
+          noItemsMessage="U hebt nog geen afgehandelde bezwaren."
           startCollapsed={false}
           hasItems={!!afgehandeldeBezwaren?.length}
           isLoading={isLoading(BEZWAREN)}
