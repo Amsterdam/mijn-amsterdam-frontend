@@ -25,7 +25,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
     });
   }
 
-  return datestr;
+  return String(datestr);
 }
 
 export function defaultDateFormat(datestr: string | Date | number) {
