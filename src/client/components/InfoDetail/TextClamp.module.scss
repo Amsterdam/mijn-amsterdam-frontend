@@ -3,6 +3,10 @@
 .TextClamp {
   position: relative;
 
+  &.isClamped .textWrap {
+    min-height: var(--minHeight);
+  }
+
   &.isClamped.hasOverflow .textWrap {
     display: block;
     display: -webkit-box;
