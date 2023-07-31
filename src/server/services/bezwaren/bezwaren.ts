@@ -43,7 +43,7 @@ function transformBezwarenDocumentsResults(
       id: uuid,
       title: titel,
       datePublished: defaultDateFormat(registratiedatum),
-      url: `${process.env.BFF_PUBLIC_URL}${generatePath(
+      url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
         BffEndpoints.BEZWAREN_ATTACHMENTS,
         { id: uuid }
       )}`,
