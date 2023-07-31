@@ -8,13 +8,24 @@ import {
 } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
 import { DEFAULT_DATE_FORMAT } from '../config';
+import * as Sentry from '@sentry/react';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {
     return '';
   }
-  const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
-  return format(d, fmt, { locale: NL_LOCALE });
+  try {
+    const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
+    return format(d, fmt, { locale: NL_LOCALE });
+  } catch (error) {
+    Sentry.captureException(error, {
+      extra: {
+        date: datestr,
+      },
+    });
+  }
+
+  return datestr;
 }
 
 export function defaultDateFormat(datestr: string | Date | number) {
