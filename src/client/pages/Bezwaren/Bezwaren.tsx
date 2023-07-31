@@ -15,13 +15,13 @@ import { isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
-  zaakkenmerk: 'Zaaknummer',
+  identificatie: 'Zaaknummer',
   ontvangstdatum: 'Ontvangen op',
   omschrijving: 'Onderwerp',
 };
 
 const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  zaakkenmerk: 'Zaaknummer',
+  identificatie: 'Zaaknummer',
   datumbesluit: 'Datum besluit',
   omschrijving: 'Onderwerp',
 };
@@ -29,11 +29,11 @@ const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'zaakkenmerk');
+  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'identificatie');
   const ingediendeBezwaren =
-    items.filter((bezwaar) => bezwaar.einddatum === null) ?? [];
+    items.filter((bezwaar) => !bezwaar.einddatum || !bezwaar.resultaat) ?? [];
   const afgehandeldeBezwaren =
-    items.filter((bezwaar) => bezwaar.einddatum !== null) ?? [];
+    items.filter((bezwaar) => !!bezwaar.einddatum && !!bezwaar.resultaat) ?? [];
 
   return (
     <OverviewPage>
