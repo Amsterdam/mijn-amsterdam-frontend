@@ -105,7 +105,9 @@ const correctiemail: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${document?.url}`,
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+          document.url
+        }`,
         title: 'Bekijk de mail',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
@@ -131,7 +133,9 @@ const informatieOntvangen: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${document?.url}`,
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+          document.url
+        }`,
         title: 'Bekijk uw formulier',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
