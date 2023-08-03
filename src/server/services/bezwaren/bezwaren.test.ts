@@ -132,7 +132,6 @@ describe('Bezwaren', () => {
       //@ts-ignore
       expect(documentResponse?.message).toEqual(undefined);
       expect(documentResponse.status).toEqual(200);
-      // expect(documentResponse.data).toEqual(new Buffer('wat-document-data'));
     });
   });
 });
