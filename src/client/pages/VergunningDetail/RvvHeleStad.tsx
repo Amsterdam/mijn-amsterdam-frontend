@@ -10,7 +10,7 @@ export function RvvHeleStad({ vergunning }: { vergunning: RVVHeleStad }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
 
-      <InfoDetail label="Kenteken(s)" value={vergunning.licencePlates || '-'} />
+      <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates || '-'} />
 
       <InfoDetailGroup>
         <InfoDetail

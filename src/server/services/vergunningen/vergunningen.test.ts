@@ -11,10 +11,13 @@ import {
   addLinks,
   BZB,
   BZP,
+  createVergunningNotification,
   fetchAllVergunningen,
   fetchVergunningenNotifications,
   getVergunningNotifications,
+  RVVSloterweg,
   transformVergunningenData,
+  Vergunning,
   VergunningenSourceData,
 } from './vergunningen';
 import MockDate from 'mockdate';
@@ -585,6 +588,113 @@ describe('Vergunningen service', () => {
           "processed": false,
           "status": "Ontvangen",
           "title": "Parkeerontheffingen Blauwe zone particulieren",
+        },
+      ]
+    `);
+  });
+
+  it('RVV Sloterweg: Created the correct meldingen', () => {
+    const vergunningen = addLinks(
+      vergunningenData.content as Vergunning[],
+      AppRoutes.VERGUNNINGEN
+    );
+    let RVVSlotwegAanvragen = vergunningen.filter(
+      (vergunning) => vergunning.caseType === CaseType.RVVSloterweg
+    ) as RVVSloterweg[];
+
+    const notifications = RVVSlotwegAanvragen.map((aanvraag) =>
+      createVergunningNotification(
+        aanvraag,
+        RVVSlotwegAanvragen,
+        new Date('2023-07-03')
+      )
+    );
+
+    expect(notifications).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-23T11:21:33",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/verleend) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (nieuw/verleend) afgehandeld",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-26T00:00:00",
+          "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg (BB-344-P, VV-899-C) in behandeling genomen",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-26T00:00:00",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/ingetrokken) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (wijziging/ingetrokken) afgehandeld",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-28T00:00:00",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/verleend) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (wijziging/verleend) afgehandeld",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-03T00:00:00",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/verlopen) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (wijziging/verlopen) afgehandeld",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-03T00:00:00",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/verlopen) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (nieuw/verlopen) afgehandeld",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-07-03T00:00:00",
+          "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/ingetrokken) is afgehandeld.",
+          "id": "vergunning-unique-id-of-zaak-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "unique-id-of-zaak",
+          "title": "Aanvraag rvv ontheffing sloterweg (nieuw/ingetrokken) afgehandeld",
         },
       ]
     `);

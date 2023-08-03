@@ -45,7 +45,6 @@ export interface VergunningBase {
   dateWorkflowActive: string | null;
   decision: string | null;
   dateDecision?: string | null;
-  isActual: boolean;
   documentsUrl: string | null;
   id: string;
   link: LinkProps;
@@ -173,21 +172,21 @@ export interface Nachtwerkontheffing extends VergunningWithLocation {
 export interface ZwaarVerkeer extends VergunningBase {
   caseType: CaseType.ZwaarVerkeer;
   exemptionKind: string | null;
-  licencePlates: string | null;
+  licensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
 export interface RVVHeleStad extends VergunningBase {
   caseType: CaseType.RVVHeleStad;
-  licencePlates: string | null;
+  licensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
 export interface RVVSloterweg extends VergunningBase {
   caseType: CaseType.RVVSloterweg;
-  licencePlates: string | null;
+  licensePlates: string | null;
   previousLicensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;

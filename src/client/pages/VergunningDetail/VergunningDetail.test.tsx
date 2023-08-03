@@ -234,7 +234,7 @@ describe('<VergunningDetail />', () => {
         identifier: 'Z/23/98989234',
       },
       {
-        title: 'RVV ontheffing Sloterweg (Wijziging/Geweigerd)',
+        title: 'RVV ontheffing Sloterweg (Wijziging/Ingetrokken)',
         identifier: 'Z/23/23423409',
       },
       {

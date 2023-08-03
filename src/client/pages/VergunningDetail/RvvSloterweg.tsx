@@ -4,13 +4,13 @@ import { StatusLineItem } from '../../../universal/types';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 
+const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
+const RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN = 'Verlopen';
+const RVV_SLOTERWEG_RESULT_GRANTED = 'Verleend';
+
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
-  const isDone = vergunning.processed;
-  const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
-  const inProgressActive = hasDateWorkflowActive && !isDone;
-
   const isExpired = vergunning.dateEnd
     ? new Date(vergunning.dateEnd) < new Date()
     : false;
@@ -31,7 +31,13 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateRequest ?? '',
       description: '',
       documents: [],
-      isActive: !isExpired,
+      isActive:
+        !vergunning.processed ||
+        !!(
+          vergunning.dateWorkflowActive &&
+          vergunning.dateDecision &&
+          vergunning.dateWorkflowActive > vergunning.dateDecision
+        ), // TODO: Uitvinden of deze situatie voor kan komen. Automatisch verleend maar daarna weer in behandeling genomen.
       isChecked: true,
     },
     {
@@ -40,24 +46,26 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateDecision ?? '',
       description: '',
       documents: [],
-      isActive: !isExpired,
+      isActive:
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
+        !isExpired, // TODO: Uitvinden of Ingetrokken het besluit is dat aangeeft of een vergunning niet "geldig/actief" is (en dus ook nooit kan verlopen..).
       isChecked: true,
     },
   ];
 
   if (
-    vergunning.decision === 'Verleend' ||
-    vergunning.decision === 'Verlopen'
+    vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED ||
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
   ) {
     lineItems.push({
       id: 'status-verlopen',
       status: 'Verlopen',
       datePublished:
-        vergunning.decision === 'Verleend'
-          ? vergunning.dateEnd ?? ''
-          : vergunning.dateDecision ?? '',
+        (vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED
+          ? vergunning.dateEnd // NOTE: Verloopt obv einde ontheffing
+          : vergunning.dateDecision) ?? '',
       description:
-        vergunning.decision === 'Verlopen'
+        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN // TODO: Uitvinden welke status we hier moeten checken.
           ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
           : '',
       documents: [],
@@ -74,20 +82,12 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
       <InfoDetailGroup>
-        <InfoDetail label="Verzoek" value={vergunning.requestType} />
+        {vergunning.requestType === 'Kenteken wijziging' && (
+          <InfoDetail label="Verzoek" value={vergunning.requestType} />
+        )}
         <InfoDetail label="Zone" value={vergunning.area} />
       </InfoDetailGroup>
-      <InfoDetailGroup>
-        <InfoDetail label="Kenteken(s)" value={vergunning.licencePlates} />
-
-        {!!vergunning.previousLicensePlates && (
-          <InfoDetail
-            label="Oude kenteken(s)"
-            value={vergunning.previousLicensePlates}
-          />
-        )}
-      </InfoDetailGroup>
-
+      <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
       <InfoDetailGroup>
         <InfoDetail
           label="Van"

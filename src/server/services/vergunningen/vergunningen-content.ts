@@ -270,32 +270,23 @@ export const notificationContent: NotificationContent = {
     inProgress: {
       datePublished: inProgressShort.datePublished,
       title: (item) =>
-        `Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling`,
-      description: (item) =>
-        `Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg (${
-          (item as RVVSloterweg).licencePlates
-        }) in behandeling genomen`,
-      link: inProgressShort.link,
-    },
-    done: {
-      datePublished: doneShort.datePublished,
-      title: (item) =>
         `Aanvraag${
           (item as RVVSloterweg).requestType === 'Kenteken wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg ${item.decision
-          ?.split(' ')[0]
-          .toLocaleLowerCase()}`,
+        } RVV ontheffing Sloterweg in behandeling`,
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Kenteken wijziging'
             ? ' kentekenwijziging'
             : ''
         } RVV ontheffing Sloterweg (${
-          (item as RVVSloterweg).licencePlates
-        }) ${item.decision?.split(' ')[0].toLocaleLowerCase()}.`,
-      link: doneShort.link,
+          (item as RVVSloterweg).licensePlates
+        }) in behandeling genomen`,
+      link: inProgressShort.link,
+    },
+    done: {
+      ...doneShort,
     },
   },
 };

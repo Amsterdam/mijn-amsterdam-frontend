@@ -16,7 +16,7 @@ export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
         value={vergunning.exemptionKind || '-'}
       />
 
-      <InfoDetail label="Kentekens" value={vergunning.licencePlates || '-'} />
+      <InfoDetail label="Kentekens" value={vergunning.licensePlates || '-'} />
 
       <InfoDetailGroup>
         <InfoDetail
