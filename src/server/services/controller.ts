@@ -32,10 +32,7 @@ import {
   fetchMilieuzone,
   fetchSubsidie,
 } from './simple-connect';
-import {
-  fetchTipsAndNotifications,
-  sortNotifications,
-} from './tips-and-notifications';
+import { fetchTipsAndNotifications } from './tips-and-notifications';
 import { createTipsFromServiceResults } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -50,9 +47,7 @@ import {
 } from './wpi';
 import { fetchSignals } from './sia';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { collectTips } from './tips/collect-tips';
-import { MyNotification, MyTip } from '../../universal/types';
-import { title } from 'process';
+import { MyNotification } from '../../universal/types';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
