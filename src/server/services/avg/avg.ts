@@ -33,13 +33,13 @@ function getDataForAVG(bsn: string) {
     'avgverzoek_alias',
     'avgverzoek_datuminbehandeling',
     'avgverzoek_typeverzoek',
-    'avgverzoek_typeafhandeling_resultaat',
     'avgverzoek_datumbinnenkomst',
     'avgverzoek_opschortengestartop',
     'avgverzoek_datuminbehandeling',
     'avgverzoek_werkelijkeeinddatum',
     'avgverzoek_omschrijvingvanonderwerp',
     'avgverzoek_statusavgverzoek_alias',
+    'avgverzoek_typeafhandelingvaststellen_resultaat',
   ].join(', ');
 
   data.append('columns', columns);
@@ -131,7 +131,9 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
         type: verzoek['avgverzoek_typeverzoek'].value || '',
         toelichting:
           verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
-        resultaat: verzoek['avgverzoek_typeafhandeling_resultaat']?.value || '',
+        resultaat:
+          verzoek['avgverzoek_typeafhandelingvaststellen_resultaat']?.value ||
+          '',
         ontvangstDatum: smileDateParser(
           verzoek['avgverzoek_datumbinnenkomst'].value || ''
         ),
