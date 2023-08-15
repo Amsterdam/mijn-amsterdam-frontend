@@ -1,6 +1,6 @@
 @import '../../styles/_global.scss';
 
-.MyNotifications > ul {
+.MyNotifications>ul {
   @include reset-list-style;
 }
 
@@ -68,6 +68,7 @@
     margin: 1.2rem 0;
     padding-left: 1.8rem;
   }
+
   p {
     margin: 0.2rem 0;
   }

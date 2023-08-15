@@ -1,4 +1,5 @@
 import type { AppState } from '../../../client/AppState';
+import { Chapter } from '../../../universal/config';
 import { ApiResponse } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 
@@ -13,20 +14,19 @@ export type Tip = {
   priority: number;
   datePublished: string;
   title: string;
-  audience: TipAudience[];
-  showOnUrls?: string[];
+  profileTypes: ProfileType[];
   description: string;
   predicates?: TipsPredicateFN[];
   reason?: string;
   isPersonalized: boolean;
   link: LinkProps;
-  imgUrl: string;
+  imgUrl?: string;
   alwaysVisible?: boolean;
+  isNotification?: boolean;
+  chapter?: Chapter;
 };
 
 export type TipsPredicateFN = (
   stateData: Partial<AppState>,
   today?: Date
 ) => boolean;
-
-export type TipAudience = 'persoonlijk' | 'persoonlijk,zakelijk' | 'zakelijk';

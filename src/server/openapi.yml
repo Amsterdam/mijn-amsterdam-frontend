@@ -436,7 +436,7 @@ components:
         reason:
           type: array
           items: {}
-        audience:
+        profileTypes:
           type: array
           items: {}
     MapDatasetResponse:
