@@ -1573,7 +1573,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg (Wijziging/Geweigerd)
+                    RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
                   </span>
                 </td>
                 <td
@@ -1585,7 +1585,7 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                     Resultaat:
                   </span>
                   <span>
-                    Geweigerd
+                    Ingetrokken
                   </span>
                 </td>
               </tr>
