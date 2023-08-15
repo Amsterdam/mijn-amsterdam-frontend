@@ -26,6 +26,15 @@ import { fetchAVGNotifications } from './avg/avg';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 
+export function sortNotifications(notifications: MyNotification[]) {
+  return (
+    notifications
+      .sort(dateSort('datePublished', 'desc'))
+      // Put the alerts on the top regardless of the publication date
+      .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0))
+  );
+}
+
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
 ) {
@@ -44,27 +53,30 @@ export function getTipsAndNotificationsFromApiResults(
 
     // Collection of tips
     if ('tips' in content) {
-      tips.push(...content.tips);
+      for (const tip of content.tips) {
+        // Should we show the tip as Notification?
+        if (tip.isNotification) {
+          notifications.push(tip);
+        } else {
+          tips.push(tip);
+        }
+      }
     }
   }
 
-  const notificationsResult = notifications
-    .map((notification) => {
-      if (notification.description) {
-        notification.description = sanitizeCmsContent(
-          marked(notification.description)
-        );
-      }
-      if (notification.moreInformation) {
-        notification.moreInformation = sanitizeCmsContent(
-          marked(notification.moreInformation)
-        );
-      }
-      return notification;
-    })
-    .sort(dateSort('datePublished', 'desc'))
-    // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+  const notificationsResult = notifications.map((notification) => {
+    if (notification.description) {
+      notification.description = sanitizeCmsContent(
+        marked(notification.description)
+      );
+    }
+    if (notification.moreInformation) {
+      notification.moreInformation = sanitizeCmsContent(
+        marked(notification.moreInformation)
+      );
+    }
+    return notification;
+  });
 
   const tipsResult = tips.map((notification) => {
     if (notification.description) {
@@ -81,10 +93,9 @@ export function getTipsAndNotificationsFromApiResults(
 
 async function fetchServicesNotifications(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  if (profileType === 'commercial') {
+  if (authProfileAndToken.profile.profileType === 'commercial') {
     const [
       milieuzoneNotificationsResult,
       vergunningenNotificationsResult,
@@ -144,7 +155,7 @@ async function fetchServicesNotifications(
     ]);
   }
 
-  if (profileType === 'private') {
+  if (authProfileAndToken.profile.profileType === 'private') {
     const [
       brpNotificationsResult,
       belastingNotificationsResult,
@@ -172,7 +183,11 @@ async function fetchServicesNotifications(
       fetchMaintenanceNotificationsDashboard(requestID),
       fetchToeristischeVerhuurNotifications(requestID, authProfileAndToken),
       fetchKrefiaNotifications(requestID, authProfileAndToken),
-      fetchWiorNotifications(requestID, authProfileAndToken, profileType),
+      fetchWiorNotifications(
+        requestID,
+        authProfileAndToken,
+        authProfileAndToken.profile.profileType
+      ),
       fetchWpiNotifications(requestID, authProfileAndToken),
       fetchKlachtenNotifications(requestID, authProfileAndToken),
       fetchHorecaNotifications(requestID, authProfileAndToken),
