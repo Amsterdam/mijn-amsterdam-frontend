@@ -33,7 +33,8 @@ const appStateNotificationsSelector = selectorFamily({
 
         return notificationsSorted;
       }
-      let sortedNotifications = JSON.parse(JSON.stringify(notifications)) as MyNotification[];
+
+      let sortedNotifications = [...notifications]; // make deepcopy cause of readonly
       sortedNotifications = sortedNotifications.sort(dateSort('datePublished', 'desc'))
 
       return [...sortedNotifications, welcomeNotification];
