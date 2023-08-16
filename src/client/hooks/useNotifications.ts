@@ -12,6 +12,7 @@ const appStateNotificationsSelector = selectorFamily({
   get:
     (profileType: ProfileType) =>
     ({ get }) => {
+      //a
       const appState = get(appStateAtom);
       let notifications = appState.NOTIFICATIONS.content || [];
       let welcomeNotification = WelcomeNotification;
