@@ -7,6 +7,7 @@ import {
 } from '../config/staticData';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
+import { MyNotification } from '../../universal/types';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',
@@ -32,8 +33,10 @@ const appStateNotificationsSelector = selectorFamily({
 
         return notificationsSorted;
       }
+      let sortedNotifications = JSON.parse(JSON.stringify(notifications)) as MyNotification[];
+      sortedNotifications = sortedNotifications.sort(dateSort('datePublished', 'desc'))
 
-      return [...notifications, welcomeNotification];
+      return [...sortedNotifications, welcomeNotification];
     },
 });
 
