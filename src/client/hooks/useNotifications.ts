@@ -1,5 +1,4 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
-import { dateSort } from '../../universal/helpers';
 import {
   WelcomeNotification,
   WelcomeNotification2,
@@ -15,10 +14,6 @@ const appStateNotificationsSelector = selectorFamily({
     ({ get }) => {
       const appState = get(appStateAtom);
       let notifications = appState.NOTIFICATIONS.content || [];
-      let notificationsSorted = [...notifications].sort(
-        dateSort('datePublished', 'desc')
-      );
-
       let welcomeNotification = WelcomeNotification;
 
       if (appState.BRP?.content?.adres?.woonplaatsNaam === 'Weesp') {
@@ -27,7 +22,7 @@ const appStateNotificationsSelector = selectorFamily({
             ? WelcomeNotification2
             : WelcomeNotification2Commercial;
 
-        return [welcomeNotification, ...notificationsSorted];
+        return [welcomeNotification, ...notifications];
       }
 
       return [...notifications, welcomeNotification];
