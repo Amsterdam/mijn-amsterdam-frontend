@@ -45,7 +45,6 @@ export interface VergunningBase {
   dateWorkflowActive: string | null;
   decision: string | null;
   dateDecision?: string | null;
-  isActual: boolean;
   documentsUrl: string | null;
   id: string;
   link: LinkProps;
@@ -173,17 +172,28 @@ export interface Nachtwerkontheffing extends VergunningWithLocation {
 export interface ZwaarVerkeer extends VergunningBase {
   caseType: CaseType.ZwaarVerkeer;
   exemptionKind: string | null;
-  licencePlates: string | null;
+  licensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
 export interface RVVHeleStad extends VergunningBase {
   caseType: CaseType.RVVHeleStad;
-  licencePlates: string | null;
+  licensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
-  dateProcessed: string | null;
+}
+
+export interface RVVSloterweg extends VergunningBase {
+  caseType: CaseType.RVVSloterweg;
+  licensePlates: string | null;
+  previousLicensePlates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  dateWorkflowVerleend: string | null;
+  requestType: 'Nieuw' | 'Kenteken wijziging';
+  area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
+  decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
 }
 
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
@@ -211,7 +221,6 @@ export interface ExploitatieHorecabedrijf extends VergunningWithLocation {
   dateStart: string | null;
   dateEnd: string | null;
   dateStartPermit: string | null;
-  dateProcessed: string | null;
   numberOfPermits: string | null;
 }
 
@@ -246,7 +255,8 @@ export type Vergunning =
   | Splitsingsvergunning
   | Ligplaatsvergunning
   | ExploitatieHorecabedrijf
-  | RVVHeleStad;
+  | RVVHeleStad
+  | RVVSloterweg;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
@@ -404,7 +414,10 @@ function assignNotificationProperties(
   if (content) {
     type Key = keyof NotificationLabels;
     for (const [key, getValue] of Object.entries(content)) {
-      notification[key as Key] = getValue(vergunning);
+      notification[key as Key] = getValue(
+        vergunning,
+        vergunning.title.toLocaleLowerCase()
+      );
     }
   }
 }
@@ -413,7 +426,7 @@ export function createVergunningNotification(
   item: Vergunning,
   items: Vergunning[],
   dateNow?: Date
-): MyNotification {
+): MyNotification | null {
   const notification: MyNotification = {
     chapter: Chapters.VERGUNNINGEN,
     id: `vergunning-${item.id}-notification`,
@@ -431,9 +444,11 @@ export function createVergunningNotification(
 
   if (labels) {
     assignNotificationProperties(notification, labels, item);
+
+    return notification;
   }
 
-  return notification;
+  return null;
 }
 
 export function getVergunningNotifications(
@@ -455,7 +470,8 @@ export function getVergunningNotifications(
     .filter(
       ([notification, vergunning]) =>
         !vergunning.processed ||
-        isActualNotification(notification.datePublished, compareDate)
+        (!!notification &&
+          isActualNotification(notification.datePublished, compareDate))
     )
     .map(([notification]) => notification);
 }
