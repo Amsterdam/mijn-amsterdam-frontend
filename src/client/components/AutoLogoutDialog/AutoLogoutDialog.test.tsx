@@ -36,7 +36,7 @@ describe('AutoLogoutDialog', () => {
     listenerSpy = jest.spyOn(window, 'addEventListener');
     document.title = DOC_TITLE;
     jest.useFakeTimers();
-    // component =  ;
+    // component = ;
   });
 
   afterEach(() => {
