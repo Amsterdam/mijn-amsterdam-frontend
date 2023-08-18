@@ -190,7 +190,7 @@ export interface RVVSloterweg extends VergunningBase {
   previousLicensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
-  dateWorkflowVerleend: string | null;
+  dateProcessed: string | null;
   requestType: 'Nieuw' | 'Kenteken wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
   decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
