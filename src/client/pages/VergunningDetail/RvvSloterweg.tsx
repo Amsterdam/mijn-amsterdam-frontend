@@ -97,7 +97,7 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
         />
 
         <InfoDetail
-          label="Tot en met"
+          label="Tot"
           value={
             vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
           }

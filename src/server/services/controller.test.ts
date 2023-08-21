@@ -5,7 +5,7 @@ import {
 } from './controller';
 
 const MOCK_SOURCE_TIP: MyTip = {
-  audience: ['persoonlijk'],
+  profileTypes: ['private'],
   datePublished: '2022-06-15',
   description: 'Can we fake it today?',
   id: 'mijn-999',
@@ -100,7 +100,7 @@ describe('controller', () => {
     expect(results.content?.some((tip) => tip.id === 'mijn-14')).toBe(true);
     expect(results.content?.every((tip) => tip.isPersonalized)).toBe(false);
     expect(
-      results.content?.every((tip) => tip.audience?.includes('persoonlijk'))
+      results.content?.every((tip) => tip.profileTypes?.includes('private'))
     ).toBe(true);
   });
 
@@ -118,7 +118,7 @@ describe('controller', () => {
 
     expect(results.content?.every((tip) => tip.isPersonalized)).toBe(false);
     expect(
-      results.content?.every((tip) => tip.audience?.includes('zakelijk'))
+      results.content?.every((tip) => tip.profileTypes?.includes('commercial'))
     ).toBe(true);
   });
 
@@ -135,7 +135,7 @@ describe('controller', () => {
     expect(results.content?.some((tip) => tip.id === 'mijn-28')).toBe(true);
     expect(results.content?.every((tip) => tip.isPersonalized)).toBe(true);
     expect(
-      results.content?.every((tip) => tip.audience?.includes('persoonlijk'))
+      results.content?.every((tip) => tip.profileTypes?.includes('private'))
     ).toBe(true);
   });
 });
