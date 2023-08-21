@@ -3697,20 +3697,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
             <h3
               class="Heading Heading__tiny Label"
             >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Nieuw
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
               Zone
             </h3>
             <p
@@ -3722,26 +3708,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          YY-123-A, ZZ-122-A
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -3769,7 +3747,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -3873,12 +3851,12 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                In behandeling
               </strong>
               <time
                 class="StatusDate"
               >
-                03 juli 2023
+                01 juli 2023
               </time>
             </div>
             <div
@@ -3894,7 +3872,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
+          class="ListItem"
           style="display: block;"
         >
           <div
@@ -3905,10 +3883,10 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+                class="ConnectLine ConnectLine--end-checked"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="Checkmark Checkmark--checked"
               />
             </div>
             <div
@@ -3917,7 +3895,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
               <strong
                 class="StatusTitle"
               >
-                Ingetrokken
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -4017,20 +3995,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
             <h3
               class="Heading Heading__tiny Label"
             >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Nieuw
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
               Zone
             </h3>
             <p
@@ -4042,26 +4006,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          YY-123-A, ZZ-122-A
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -4089,7 +4045,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -4170,6 +4126,50 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
           </div>
         </li>
         <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                23 juli 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
           class="ListItem ListItem--highlight"
           style="display: block;"
         >
@@ -4193,7 +4193,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -4337,20 +4337,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
             <h3
               class="Heading Heading__tiny Label"
             >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Nieuw
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
               Zone
             </h3>
             <p
@@ -4362,26 +4348,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          YY-123-A, ZZ-122-A
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -4409,7 +4387,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -4513,7 +4491,51 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                In behandeling
+              </strong>
+              <time
+                class="StatusDate"
+              >
+                01 juli 2023
+              </time>
+            </div>
+            <div
+              class="Panel Panel--description"
+            >
+              <div
+                class="PanelContent"
+              />
+            </div>
+            <div
+              class="Panel Panel--documents"
+            />
+          </div>
+        </li>
+        <li
+          class="ListItem"
+          style="display: block;"
+        >
+          <div
+            class="ListItemInner"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="StatusConnection"
+            >
+              <span
+                class="ConnectLine ConnectLine--checked"
+              />
+              <span
+                class="Checkmark Checkmark--checked"
+              />
+            </div>
+            <div
+              class="Panel Panel--status"
+            >
+              <strong
+                class="StatusTitle"
+              >
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -4562,7 +4584,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
               <time
                 class="StatusDate"
               >
-                22 juli 2023
+                03 juli 2023
               </time>
             </div>
             <div
@@ -4570,7 +4592,9 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
             >
               <div
                 class="PanelContent"
-              />
+              >
+                Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
+              </div>
             </div>
             <div
               class="Panel Panel--documents"
@@ -4583,7 +4607,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
 </DocumentFragment>
 `;
 
-exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/Geweigerd) 1`] = `
+exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/Ingetrokken) 1`] = `
 <DocumentFragment>
   <main
     class="Page DetailPage"
@@ -4624,7 +4648,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <h2
           class="Heading Heading__large"
         >
-          RVV ontheffing Sloterweg (Wijziging/Geweigerd)
+          RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
         </h2>
       </div>
     </header>
@@ -4682,40 +4706,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              BB-344-P, VV-899-C
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Oude kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          BB-344-P, VV-899-C
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -4743,7 +4745,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -4764,7 +4766,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <p
           class="Value"
         >
-          Geweigerd
+          Ingetrokken
         </p>
       </div>
     </div>
@@ -4852,7 +4854,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <time
                 class="StatusDate"
               >
-                26 juli 2023
+                24 juli 2023
               </time>
             </div>
             <div
@@ -4891,7 +4893,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <strong
                 class="StatusTitle"
               >
-                Geweigerd
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -5016,40 +5018,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              BB-344-P, VV-899-C
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Oude kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          BB-344-P, VV-899-C
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -5077,7 +5057,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -5172,7 +5152,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <time
                 class="StatusDate"
               >
-                26 juli 2023
+                24 juli 2023
               </time>
             </div>
             <div
@@ -5188,7 +5168,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
           </div>
         </li>
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
           style="display: block;"
         >
           <div
@@ -5199,10 +5179,10 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
               />
               <span
-                class="Checkmark"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -5211,7 +5191,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                Afgehandeld
               </strong>
             </div>
             <div
@@ -5331,40 +5311,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              BB-344-P, VV-899-C
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Oude kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          BB-344-P, VV-899-C
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -5392,7 +5350,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -5501,7 +5459,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <time
                 class="StatusDate"
               >
-                26 juli 2023
+                24 juli 2023
               </time>
             </div>
             <div
@@ -5540,7 +5498,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -5709,40 +5667,18 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </div>
       </div>
       <div
-        class="InfoDetailGroup"
+        class="InfoDetail"
       >
-        <div
-          class="InfoDetailGroupContent"
+        <h3
+          class="Heading Heading__tiny Label"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              BB-344-P, VV-899-C
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Oude kenteken(s)
-            </h3>
-            <p
-              class="Value"
-            >
-              YY-123-A, ZZ-122-A
-            </p>
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="Value"
+        >
+          BB-344-P, VV-899-C
+        </p>
       </div>
       <div
         class="InfoDetailGroup"
@@ -5770,7 +5706,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Tot en met
+              Tot
             </h3>
             <p
               class="Value"
@@ -5879,7 +5815,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <time
                 class="StatusDate"
               >
-                02 juli 2023
+                01 juli 2023
               </time>
             </div>
             <div
@@ -5918,7 +5854,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <strong
                 class="StatusTitle"
               >
-                Verleend
+                Afgehandeld
               </strong>
               <time
                 class="StatusDate"
@@ -5967,7 +5903,7 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               <time
                 class="StatusDate"
               >
-                22 juli 2023
+                03 juli 2023
               </time>
             </div>
             <div
@@ -5975,7 +5911,9 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             >
               <div
                 class="PanelContent"
-              />
+              >
+                Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
+              </div>
             </div>
             <div
               class="Panel Panel--documents"
