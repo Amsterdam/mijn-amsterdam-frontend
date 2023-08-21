@@ -101,7 +101,7 @@ describe('AVG', () => {
               Object {
                 "chapter": "AVG",
                 "datePublished": "2023-03-19T00:00:00.000Z",
-                "description": "Uw verzoek is afgehandeld. U ontvangt, of u hebt hierover bericht gekregen per e-mail of per brief.",
+                "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-223-notification",
                 "link": Object {
                   "title": "Bekijk details",
@@ -112,7 +112,7 @@ describe('AVG', () => {
               Object {
                 "chapter": "AVG",
                 "datePublished": "2023-03-25T00:00:00.000Z",
-                "description": "Uw verzoek is afgehandeld. U ontvangt, of u hebt hierover bericht gekregen per e-mail of per brief.",
+                "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-425-notification",
                 "link": Object {
                   "title": "Bekijk details",
