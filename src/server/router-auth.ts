@@ -1,43 +1,28 @@
 import * as Sentry from '@sentry/node';
 import express from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
+import { FeatureToggle } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
+  AUTH_CALLBACK,
   BffEndpoints,
+  OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
   oidcConfigYivi,
-  OIDC_SESSION_COOKIE_NAME,
 } from './config';
 import {
   decodeOIDCToken,
   getAuth,
   hasSessionCookie,
+  isRequestAuthenticated,
   nocache,
   sendUnauthorized,
+  verifyAuthenticated,
 } from './helpers/app';
 import { countLoggedInVisit } from './services/visitors';
-import { FeatureToggle } from '../universal/config';
 
 export const router = express.Router();
-
-export const isAuthenticated =
-  () =>
-  async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    if (hasSessionCookie(req)) {
-      try {
-        const a = await getAuth(req);
-        return next();
-      } catch (error) {
-        Sentry.captureException(error);
-      }
-    }
-    return sendUnauthorized(res);
-  };
 
 router.use(nocache);
 
@@ -45,6 +30,21 @@ router.use(nocache);
  * DIGID Oidc config
  */
 router.use(BffEndpoints.AUTH_BASE_DIGID, auth(oidcConfigDigid));
+
+router.get(BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK, (req, res) =>
+  res.oidc.callback({
+    redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+  })
+);
+
+router.post(
+  BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK,
+  express.urlencoded({ extended: false }),
+  (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+    })
+);
 
 router.use(
   BffEndpoints.AUTH_BASE_SSO_DIGID,
@@ -54,29 +54,22 @@ router.use(
   }
 );
 
-router.get(BffEndpoints.AUTH_LOGIN_DIGID, (req, res) => {
-  return res.oidc.login({
-    returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
-    authorizationParams: {
-      redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
-    },
-  });
+router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
+  if (!(await isRequestAuthenticated(req, 'digid'))) {
+    return res.oidc.login({
+      returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
+      authorizationParams: {
+        redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
+      },
+    });
+  }
+  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
 });
 
-router.get(BffEndpoints.AUTH_CHECK_DIGID, async (req, res) => {
-  const auth = await getAuth(req);
-  if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'digid') {
-    return res.send(
-      apiSuccessResult({
-        isAuthenticated: true,
-        profileType: 'private',
-        authMethod: 'digid',
-      })
-    );
-  }
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  return sendUnauthorized(res);
-});
+router.get(
+  BffEndpoints.AUTH_CHECK_DIGID,
+  verifyAuthenticated('digid', 'private')
+);
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   const auth = await getAuth(req);
@@ -92,6 +85,21 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
 if (FeatureToggle.eherkenningActive) {
   router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
 
+  router.get(BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK, (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+    })
+  );
+
+  router.post(
+    BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+    express.urlencoded({ extended: false }),
+    (req, res) =>
+      res.oidc.callback({
+        redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+      })
+  );
+
   router.use(
     BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
     attemptSilentLogin(),
@@ -100,13 +108,18 @@ if (FeatureToggle.eherkenningActive) {
     }
   );
 
-  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
-      },
-    });
+  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, async (req, res) => {
+    if (!(await isRequestAuthenticated(req, 'eherkenning'))) {
+      return res.oidc.login({
+        returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
+        authorizationParams: {
+          redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+        },
+      });
+    }
+    return res.redirect(
+      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+    );
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
@@ -119,23 +132,10 @@ if (FeatureToggle.eherkenningActive) {
     );
   });
 
-  router.get(BffEndpoints.AUTH_CHECK_EHERKENNING, async (req, res) => {
-    const auth = await getAuth(req);
-    if (
-      req.oidc.isAuthenticated() &&
-      auth.profile.authMethod === 'eherkenning'
-    ) {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: 'commercial',
-          authMethod: 'eherkenning',
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
-  });
+  router.get(
+    BffEndpoints.AUTH_CHECK_EHERKENNING,
+    verifyAuthenticated('eherkenning', 'commercial')
+  );
 }
 
 /**
@@ -144,13 +144,31 @@ if (FeatureToggle.eherkenningActive) {
 if (FeatureToggle.yiviActive) {
   router.use(BffEndpoints.AUTH_BASE_YIVI, auth(oidcConfigYivi));
 
-  router.get(BffEndpoints.AUTH_LOGIN_YIVI, (req, res) => {
-    return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
-      },
-    });
+  router.get(BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK, (req, res) =>
+    res.oidc.callback({
+      redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
+    })
+  );
+
+  router.post(
+    BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK,
+    express.urlencoded({ extended: false }),
+    (req, res) =>
+      res.oidc.callback({
+        redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
+      })
+  );
+
+  router.get(BffEndpoints.AUTH_LOGIN_YIVI, async (req, res) => {
+    if (!(await isRequestAuthenticated(req, 'yivi'))) {
+      return res.oidc.login({
+        returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
+        authorizationParams: {
+          redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
+        },
+      });
+    }
+    return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=yivi');
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
@@ -161,20 +179,10 @@ if (FeatureToggle.yiviActive) {
     return res.redirect(`${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`);
   });
 
-  router.get(BffEndpoints.AUTH_CHECK_YIVI, async (req, res) => {
-    const auth = await getAuth(req);
-    if (req.oidc.isAuthenticated() && auth.profile.authMethod === 'yivi') {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: 'private-attributes',
-          authMethod: 'yivi',
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
-  });
+  router.get(
+    BffEndpoints.AUTH_CHECK_YIVI,
+    verifyAuthenticated('yivi', 'private-attributes')
+  );
 }
 
 router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {

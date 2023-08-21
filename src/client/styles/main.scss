@@ -8,6 +8,12 @@
   --map-container-height: 100%;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 html,
 body {
   min-height: 100%;
@@ -32,16 +38,16 @@ body {
     position: fixed;
     width: 100vw;
 
-    > *:not(#modal-root) {
+    >*:not(#modal-root) {
       pointer-events: none;
     }
   }
-}
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+  &.is-away {
+    #root {
+      filter: blur(2px);
+    }
+  }
 }
 
 #root {
@@ -55,9 +61,11 @@ a {
 
 p a {
   color: $color-primary-darkblue;
+
   &:hover {
     color: $color-primary-red;
   }
+
   &:visited {
     color: $color-support-purple;
   }
@@ -80,6 +88,7 @@ h4 {
   @include heading-small;
   margin: 0;
 }
+
 h5 {
   @include heading-tiny;
   margin: 0;
@@ -92,12 +101,15 @@ h5 {
     @include select('App') {
       display: none;
     }
+
     @include select('MainFooter') {
       display: none;
     }
+
     @include select('MainHeaderHero') {
       display: none;
     }
+
     @include select('MyArea_MapContainer') {
       display: none;
     }
