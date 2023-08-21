@@ -806,6 +806,20 @@
           "id": "besluit",
           "status": "Besluit",
           "decision": "beschikking"
+        },
+        {
+          "datePublished": "2023-07-28T17:20:06+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-07-28T17:20:06+02:00",
+              "dcteId": "1538",
+              "id": "4400001187",
+              "title": "Bbz: informatie doorgeven",
+              "url": "/wpi/document?id=4400000187&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "informatieOntvangen",
+          "status": "Informatie ontvangen"
         }
       ],
       "title": "Bbz"

@@ -202,6 +202,11 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
               >
                 Afgehandeld
               </strong>
+              <time
+                class="StatusDate"
+              >
+                01 november 2022
+              </time>
             </div>
             <div
               class="Panel Panel--description"

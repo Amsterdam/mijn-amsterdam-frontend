@@ -2,6 +2,7 @@ import { differenceInYears, differenceInCalendarDays } from 'date-fns';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { TipsPredicateFN } from './tip-types';
+import { Kind } from '../../../universal/types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -94,16 +95,33 @@ export const hasAOV: TipsPredicateFN = (appState) => {
   );
 };
 
+export const hasKidsBetweenAges = (
+  kinderen: Kind[] | undefined,
+  ageFrom: number,
+  ageTo: number,
+  today: Date = new Date()
+) => {
+  return !!kinderen?.some(
+    (kind) =>
+      kind.geboortedatum &&
+      !kind.overlijdensdatum &&
+      differenceInYears(today, new Date(kind.geboortedatum)) >= ageFrom &&
+      differenceInYears(today, new Date(kind.geboortedatum)) <= ageTo
+  );
+};
+
 export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return !!appState.BRP?.content?.kinderen?.some(
-    (kind) =>
-      kind.geboortedatum &&
-      differenceInYears(today, new Date(kind.geboortedatum)) >= 2 &&
-      differenceInYears(today, new Date(kind.geboortedatum)) <= 18
-  );
+  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 2, 18, today);
+};
+
+export const hasKidsBetweenAges4And11: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 4, 11, today);
 };
 
 // Rule 13
