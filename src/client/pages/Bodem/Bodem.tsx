@@ -76,10 +76,6 @@ export default function Bodem() {
         startCollapsed={false}
         hasItems={!!lopendeAanvragen?.length}
         isLoading={isLoading(BODEM)}
-        track={{
-          category: 'Loodmetingen overzicht / Lopende aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table items={lopendeAanvragen} displayProps={DISPLAY_PROPS_BODEM} />
       </SectionCollapsible>
@@ -91,10 +87,6 @@ export default function Bodem() {
         startCollapsed={false}
         hasItems={!!afgerondeAanvragen?.length}
         isLoading={isLoading(BODEM)}
-        track={{
-          category: 'Loodmetingen overzicht / Eerdere aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table items={afgerondeAanvragen} displayProps={DISPLAY_PROPS_BODEM} />
       </SectionCollapsible>
