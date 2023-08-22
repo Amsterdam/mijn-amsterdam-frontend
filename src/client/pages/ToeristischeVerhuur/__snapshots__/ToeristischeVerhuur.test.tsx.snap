@@ -128,7 +128,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Vergunningen
+           Actieve vergunningen
         </button>
       </h3>
       <div
@@ -247,6 +247,127 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                     >
                       Chevron-Right.svg
                     </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 augustus 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    30 september 2021
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible SectionNoBorderBottom"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Verlopen vergunningen
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table TableVergunningen"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Status
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  <a
+                    class="Button Button__plain Button__lean Linkd"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="Icon Icon__left"
+                      fill="#000"
+                      height="14px"
+                      width="14px"
+                    >
+                      Chevron-Right.svg
+                    </svg>
                     Vergunning bed & breakfast
                   </a>
                 </td>
@@ -343,65 +464,6 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     21 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/toeristische-verhuur"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Vergunning vakantieverhuur
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Status:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Vanaf:
-                  </span>
-                  <span>
-                    01 augustus 2020
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Tot:
-                  </span>
-                  <span>
-                    30 september 2021
                   </span>
                 </td>
               </tr>

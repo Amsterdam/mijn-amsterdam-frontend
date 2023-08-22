@@ -91,6 +91,24 @@ export default function ToeristischeVerhuur() {
     return addTitleLinkComponent(vergunningen, 'title');
   }, [content?.vergunningen]);
 
+  const actieveVergunningen = vergunningen.filter((vergunning) => {
+    const vergunningEndDate = vergunning.dateEnd
+      ? new Date(vergunning.dateEnd)
+      : null;
+    const today = new Date();
+
+    return (
+      vergunning.status === 'Ontvangen' ||
+      (vergunning.status === 'Verleend' &&
+        vergunningEndDate &&
+        vergunningEndDate > today)
+    );
+  });
+
+  const inactieveVergunningen = vergunningen.filter(
+    (v) => !actieveVergunningen.includes(v)
+  );
+
   const hasRegistrations = !!content?.registraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
@@ -201,26 +219,45 @@ export default function ToeristischeVerhuur() {
       <SectionCollapsible
         id="SectionCollapsible-vergunningen"
         className={styles.SectionNoBorderBottom}
-        title="Vergunningen"
-        hasItems={!!vergunningen.length}
+        title="Actieve vergunningen"
+        hasItems={!!actieveVergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
         startCollapsed={false}
-        track={{
-          category: 'Toeristische verhuur / vergunningen',
-          name: 'Datatabel',
-        }}
       >
         {!hasVergunningBB && (
           <p className={styles.DisclaimerCollapseText}>
             {BB_VERGUNNING_DISCLAIMER}
           </p>
         )}
-        {!!vergunningen?.length && (
+        {!!actieveVergunningen?.length && (
           <Table
             className={styles.TableVergunningen}
             titleKey="title"
             displayProps={DISPLAY_PROPS_VERGUNNINGEN}
-            items={vergunningen}
+            items={actieveVergunningen}
+          />
+        )}
+      </SectionCollapsible>
+
+      <SectionCollapsible
+        id="SectionCollapsible-vergunningen"
+        className={styles.SectionNoBorderBottom}
+        title="Verlopen vergunningen"
+        hasItems={!!inactieveVergunningen.length}
+        noItemsMessage={BB_VERGUNNING_DISCLAIMER}
+        startCollapsed={false}
+      >
+        {!hasVergunningBB && (
+          <p className={styles.DisclaimerCollapseText}>
+            {BB_VERGUNNING_DISCLAIMER}
+          </p>
+        )}
+        {!!inactieveVergunningen?.length && (
+          <Table
+            className={styles.TableVergunningen}
+            titleKey="title"
+            displayProps={DISPLAY_PROPS_VERGUNNINGEN}
+            items={inactieveVergunningen}
           />
         )}
       </SectionCollapsible>
