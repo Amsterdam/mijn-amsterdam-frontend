@@ -147,7 +147,6 @@ export default function ToeristischeVerhuur() {
           </Linkd>
 
           <Linkd
-            target="_blank"
             external={true}
             href="https://www.toeristischeverhuur.nl/portaal/login"
           >

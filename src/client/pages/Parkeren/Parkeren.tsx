@@ -24,8 +24,7 @@ export default function Parkeren() {
           Alle informatie over parkeren in Amsterdam vindt u op{' '}
           <a
             title="Informatie over parkeren op Amsterdam.nl"
-            target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             href="https://www.amsterdam.nl/parkeren-verkeer/"
           >
             amsterdam.nl

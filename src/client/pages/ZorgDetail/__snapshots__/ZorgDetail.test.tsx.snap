@@ -63,21 +63,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
       class="StatusLine"
     >
@@ -91,7 +76,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -220,7 +205,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -265,7 +250,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -310,21 +295,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
@@ -392,21 +362,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
       class="StatusLine"
     >
@@ -420,7 +375,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -498,7 +453,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -543,7 +498,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -639,21 +594,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
@@ -721,21 +661,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
       class="StatusLine"
     >
@@ -833,7 +758,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -878,7 +803,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -923,7 +848,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -968,21 +893,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
@@ -1050,21 +960,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
       class="StatusLine"
     >
@@ -1078,7 +973,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1162,7 +1057,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1252,7 +1147,7 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: none;"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1297,21 +1192,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;

@@ -28,7 +28,6 @@ exports[`Linkd Linkd external renders correctly 1`] = `
     class="Button Button__plain Button__lean Linkd"
     href="/"
     rel="external noopener noreferrer"
-    target="_blank"
   >
     <svg
       aria-hidden="true"

@@ -124,10 +124,6 @@ describe('<StatusDetail />', () => {
 
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
-
-    userEvent.click(screen.getAllByText('Toon alles')[0]);
-
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Shows Unknown item page', () => {

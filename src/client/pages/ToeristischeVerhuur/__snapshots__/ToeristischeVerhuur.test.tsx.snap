@@ -72,7 +72,6 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           class="Button Button__plain Button__lean Linkd"
           href="https://www.toeristischeverhuur.nl/portaal/login"
           rel="external noopener noreferrer"
-          target="_blank"
         >
           <svg
             aria-hidden="true"
