@@ -1,7 +1,7 @@
 import { apiSuccessResult } from '../../../universal/helpers';
 import { MyTip } from '../../../universal/types';
 import { collectTips } from './collect-tips';
-import { ServiceResults, TipAudience } from './tip-types';
+import { ServiceResults } from './tip-types';
 
 function prioritySort(a: MyTip, b: MyTip) {
   const prioA = a.priority ?? 0;
@@ -18,17 +18,16 @@ function prioritySort(a: MyTip, b: MyTip) {
   return 0;
 }
 
-function getTipsAudience(queryParams: Record<string, string>): TipAudience {
-  let audience = 'persoonlijk';
+function getTipsProfileType(queryParams: Record<string, string>): ProfileType {
+  let profileType = 'private';
 
   switch (queryParams.profileType) {
-    case 'private-commercial':
     case 'commercial':
-      audience = 'zakelijk';
+      profileType = 'commercial';
       break;
   }
 
-  return audience as TipAudience;
+  return profileType as ProfileType;
 }
 
 function getTipsOptin(queryParams: Record<string, string>): boolean {
@@ -37,11 +36,11 @@ function getTipsOptin(queryParams: Record<string, string>): boolean {
 
 function getTipsQueryParams(queryParams: Record<string, string>) {
   const optIn = getTipsOptin(queryParams);
-  const audience = getTipsAudience(queryParams);
+  const profileType = getTipsProfileType(queryParams);
 
   return {
     optIn,
-    audience,
+    profileType,
   };
 }
 
@@ -53,11 +52,19 @@ export async function createTipsFromServiceResults(
   }: {
     serviceResults: ServiceResults | null;
     tipsDirectlyFromServices: MyTip[];
-  }
+  },
+  isNotification: boolean = false
 ) {
-  const { optIn, audience } = getTipsQueryParams(queryParams);
+  const { optIn, profileType } = getTipsQueryParams(queryParams);
 
-  let tips = serviceResults ? collectTips(serviceResults, optIn, audience) : [];
+  let tips = serviceResults
+    ? collectTips(
+        serviceResults,
+        optIn,
+        isNotification ? true : undefined,
+        profileType
+      )
+    : [];
 
   if (optIn) {
     tips = tips.concat(tipsDirectlyFromServices);

@@ -26,7 +26,7 @@ export async function fetchAfval(
       return apiSuccessResult([]);
     }
 
-    return await fetchAfvalwijzer(requestID, bagID, primaryLocation!.latlng);
+    return fetchAfvalwijzer(requestID, bagID, primaryLocation!.latlng);
   }
 
   return apiDependencyError({ MY_LOCATION });

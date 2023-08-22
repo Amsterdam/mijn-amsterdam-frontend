@@ -1,12 +1,5 @@
 import * as Sentry from '@sentry/react';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { ApiPristineResponse } from '../../universal/helpers';
 
@@ -17,12 +10,6 @@ import { useDataApi } from './api/useDataApi';
 import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-
-// Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF because these services are based on
-// addresses that likely change whenever someone toggles between the private-commercial/private profiles.
-const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE: Array<
-  keyof Pick<AppState, 'MY_LOCATION' | 'AFVAL' | 'AFVALPUNTEN' | 'CMS_CONTENT'>
-> = ['MY_LOCATION', 'AFVAL', 'AFVALPUNTEN', 'CMS_CONTENT'];
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -121,10 +108,6 @@ export function useAppStateRemote() {
     return {
       optin: isOptIn ? 'true' : 'false',
       profileType,
-      serviceIds:
-        useIncremental.current === false
-          ? []
-          : INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE,
     };
     // Omitting optIn here because TIPS api handles OptIn toggles
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,25 +129,6 @@ export function useAppStateRemote() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useLayoutEffect(() => {
-    if (requestParams.serviceIds.length) {
-      setAppState((appState) => {
-        const pristineStateSlices: any = {};
-
-        for (const id of requestParams.serviceIds as Array<keyof AppState>) {
-          pristineStateSlices[id] = PRISTINE_APPSTATE[id];
-        }
-
-        const appStateUpdated = {
-          ...appState,
-          ...pristineStateSlices,
-        };
-
-        return appStateUpdated;
-      });
-    }
-  }, [requestParams, setAppState]);
 
   useSSE({
     path: BFFApiUrls.SERVICES_SSE,
@@ -197,11 +161,7 @@ export function isAppStateReady(
   pristineAppState: AppState,
   profileType: ProfileType
 ) {
-  const isLegacyProfileType = [
-    'private',
-    'private-commercial',
-    'commercial',
-  ].includes(profileType);
+  const isLegacyProfileType = ['private', 'commercial'].includes(profileType);
 
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {

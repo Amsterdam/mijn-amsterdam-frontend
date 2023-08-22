@@ -44,7 +44,7 @@ export type LoodMetingen = {
 };
 
 export type LoodMeting = {
-  adres: LoodMetingAdres;
+  adres: string;
   datumAanvraag: string; // RequestedOn
   datumInbehandeling: string | null; // Workordercreatedon
   datumAfgehandeld: string | null; // Reportsenton
@@ -57,14 +57,6 @@ export type LoodMeting = {
   redenAfwijzing: string | null;
   rapportId: string | null;
   document: GenericDocument | null;
-};
-
-type LoodMetingAdres = {
-  straat: string;
-  huisnummer: string;
-  huisletter: string | null;
-  postcode: string;
-  stad: string;
 };
 
 export type LoodMetingDocument = {

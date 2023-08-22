@@ -72,13 +72,31 @@ export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
 
-export function sortAlpha(key: string, direction: 'asc' | 'desc' = 'asc') {
+export function sortAlpha(
+  key: string,
+  direction: 'asc' | 'desc' = 'asc',
+  casing?: 'lower' | 'upper'
+) {
   return (a: Record<string, any>, b: Record<string, any>) => {
     const sortASC = direction === 'asc';
-    if (a[key] < b[key]) {
+    let aValue = a[key];
+    let bValue = b[key];
+
+    switch (casing) {
+      case 'upper':
+        aValue = aValue.upper();
+        bValue = bValue.upper();
+        break;
+      case 'lower':
+        aValue = aValue.toLocaleLowerCase();
+        bValue = bValue.toLocaleLowerCase();
+        break;
+    }
+
+    if (aValue < bValue) {
       return sortASC ? -1 : 1;
     }
-    if (a[key] > b[key]) {
+    if (aValue > bValue) {
       return sortASC ? 1 : -1;
     }
     return 0;

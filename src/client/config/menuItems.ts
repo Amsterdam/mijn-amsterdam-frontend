@@ -27,20 +27,20 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.KVK,
     id: Chapters.KVK,
     to: AppRoutes.KVK,
-    profileTypes: ['private-commercial', 'commercial'],
+    profileTypes: ['commercial', 'private'],
   },
   {
     title: ChapterTitles.BELASTINGEN,
     id: Chapters.BELASTINGEN,
     to: ExternalUrls.SSO_BELASTINGEN,
     rel: 'external',
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.BEZWAREN,
     id: Chapters.BEZWAREN,
     to: AppRoutes.BEZWAREN,
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.BELASTINGEN,
@@ -61,7 +61,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.ERFPACHT,
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.ERFPACHT,
@@ -95,13 +95,13 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.INKOMEN_SVWI,
     to: String(ExternalUrls.SSO_SVWI),
     rel: 'external',
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.INKOMEN,
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.STADSPAS,
@@ -113,20 +113,20 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.AFVAL,
     id: Chapters.AFVAL,
     to: AppRoutes.AFVAL,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.VERGUNNINGEN,
     id: Chapters.VERGUNNINGEN,
     to: AppRoutes.VERGUNNINGEN,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.MILIEUZONE,
     id: Chapters.MILIEUZONE,
     to: ExternalUrls.SSO_MILIEUZONE || '',
     rel: 'external',
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.SIA,
@@ -138,44 +138,44 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.TOERISTISCHE_VERHUUR,
     id: Chapters.TOERISTISCHE_VERHUUR,
     to: AppRoutes.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.KREFIA,
     id: Chapters.KREFIA,
     to: AppRoutes.KREFIA,
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.PARKEREN,
     id: Chapters.PARKEREN,
     to: AppRoutes.PARKEREN,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
     hasAppStateValue: false,
   },
   {
     title: ChapterTitles.KLACHTEN,
     id: Chapters.KLACHTEN,
     to: generatePath(AppRoutes.KLACHTEN, { page: 1 }),
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.HORECA,
     id: Chapters.HORECA,
     to: generatePath(AppRoutes.HORECA),
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.AVG,
     id: Chapters.AVG,
     to: generatePath(AppRoutes.AVG, { page: 1 }),
-    profileTypes: ['private', 'private-commercial'],
+    profileTypes: ['private'],
   },
   {
     title: ChapterTitles.BODEM,
     id: Chapters.BODEM,
     to: AppRoutes.BODEM,
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'commercial'],
   },
 ];
 
@@ -194,14 +194,6 @@ export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
       return {
         ...item,
         title: termReplace('private-attributes', ChapterTitles[item.id]),
-      };
-    }),
-  'private-commercial': myChaptersMenuItems
-    .filter((item) => item.profileTypes.includes('private-commercial'))
-    .map((item) => {
-      return {
-        ...item,
-        title: termReplace('private-commercial', ChapterTitles[item.id]),
       };
     }),
   commercial: myChaptersMenuItems

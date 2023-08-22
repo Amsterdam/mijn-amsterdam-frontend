@@ -43,11 +43,10 @@ function transformBezwarenDocumentsResults(
       id: uuid,
       title: titel,
       datePublished: defaultDateFormat(registratiedatum),
-      url: `${
-        IS_ACCEPTANCE
-          ? process.env.REACT_APP_BFF_API_URL_ACC
-          : process.env.REACT_APP_BFF_API_URL
-      }${generatePath(BffEndpoints.BEZWAREN_ATTACHMENTS, { id: uuid })}`,
+      url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+        BffEndpoints.BEZWAREN_ATTACHMENTS,
+        { id: uuid }
+      )}`,
     }));
   }
   return [];
@@ -97,9 +96,10 @@ function transformBezwarenResults(
 
       const bezwaar: Bezwaar = {
         identificatie: bezwaarBron.identificatie,
+        zaakkenmerk:
+          getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
         uuid: bezwaarBron.uuid,
         ontvangstdatum: bezwaarBron.startdatum,
-        bezwaarnummer: bezwaarBron.identificatie,
         omschrijving: bezwaarBron.omschrijving,
         toelichting: bezwaarBron.toelichting,
         status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),

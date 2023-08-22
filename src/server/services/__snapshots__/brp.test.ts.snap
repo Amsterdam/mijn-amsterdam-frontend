@@ -70,7 +70,7 @@ Object {
   "kinderen": Array [
     Object {
       "bsn": "123456780",
-      "geboortedatum": "2019-07-08",
+      "geboortedatum": "2014-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
       "overlijdensdatum": null,
@@ -82,7 +82,7 @@ Object {
       "geboortedatum": "2019-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
-      "overlijdensdatum": "2019-07-08",
+      "overlijdensdatum": null,
       "voornamen": "Marwan",
       "voorvoegselGeslachtsnaam": null,
     },
@@ -95,6 +95,7 @@ Object {
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboer",
+      "indicatieGeboortedatum": "M",
       "nationaliteiten": Array [
         Object {
           "omschrijving": "Nederlandse",
@@ -133,6 +134,7 @@ Object {
     "geboorteplaatsnaam": "Lochem",
     "gemeentenaamInschrijving": "Amsterdam",
     "geslachtsnaam": "Beemsterboer",
+    "indicatieGeboortedatum": "J",
     "indicatieGeheim": true,
     "mokum": true,
     "nationaliteiten": Array [
@@ -160,6 +162,7 @@ Object {
       "bsn": "123456780",
       "geboortedatum": "2019-07-08",
       "geslachtsnaam": "Bakker",
+      "indicatieGeboortedatum": "D",
       "overlijdensdatum": null,
       "voornamen": "Souad",
       "voorvoegselGeslachtsnaam": null,
@@ -177,6 +180,7 @@ Object {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
+        "indicatieGeboortedatum": "V",
         "overlijdensdatum": null,
         "voornamen": "Souad",
         "voorvoegselGeslachtsnaam": null,

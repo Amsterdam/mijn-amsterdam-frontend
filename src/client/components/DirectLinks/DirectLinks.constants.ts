@@ -90,15 +90,6 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
     VAREN: GenericLinks.VAARVIGNETTEN,
   },
-  'private-commercial': {
-    UITLEG: GenericLinks.UITLEG,
-    STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
-    FAQ: GenericLinks.FAQ,
-    MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
-    AMSTERDAM: GenericLinks.AMSTERDAM,
-    TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
-    VAREN: GenericLinks.VAARVIGNETTEN,
-  },
   commercial: {
     UITLEG: GenericLinks.UITLEG,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,

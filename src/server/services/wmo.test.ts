@@ -212,7 +212,7 @@ describe('Transform api items', () => {
     expect(transformed.steps[0].isChecked).toBe(true);
 
     expect(transformed.steps[1].isActive).toBe(true);
-    expect(transformed.steps[1].isChecked).toBe(false);
+    expect(transformed.steps[1].isChecked).toBe(true);
   });
 
   test('woonruimte aanpassing (opdracht gegeven)', () => {

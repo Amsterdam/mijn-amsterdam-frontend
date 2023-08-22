@@ -10,6 +10,10 @@ ENV CI=true
 
 WORKDIR /app
 
+RUN apt-get update \
+  && apt-get dist-upgrade -y \
+  && apt-get autoremove -y
+
 COPY tsconfig.json /app/
 COPY tsconfig.bff.json /app/
 COPY package.json /app/
@@ -21,7 +25,6 @@ RUN npm ci
 
 COPY public /app/public
 COPY src /app/src
-
 
 ########################################################################################################################
 ########################################################################################################################
@@ -99,8 +102,16 @@ COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/n
 ########################################################################################################################
 FROM node:current-buster as deploy-ap-bff
 
+# Copy certificate
+COPY ca/* /usr/local/share/ca-certificates/extras/
+
+# Update new cert
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
+
 ENV BFF_ENV=production
 ENV TZ=Europe/Amsterdam
+ENV NODE_OPTIONS=--use-openssl-ca
 
 LABEL name="mijnamsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"

@@ -11,7 +11,7 @@ import https from 'https';
 import { FeatureToggle } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 import { TokenData } from './helpers/app';
-import jose, { JWE, JWK, JWKS } from 'jose';
+import jose from 'jose';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
 const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
@@ -223,8 +223,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     urls: {
       private:
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      'private-commercial':
-        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
       'private-attributes':
         'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
       commercial:

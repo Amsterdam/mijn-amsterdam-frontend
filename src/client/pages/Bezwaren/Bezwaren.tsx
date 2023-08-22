@@ -15,21 +15,19 @@ import { isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
-  bezwaarnummer: 'Nummer',
+  zaakkenmerk: 'Nummer',
   ontvangstdatum: 'Ontvangstdatum',
-  omschrijving: 'Onderwerp',
 };
 
 const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  bezwaarnummer: 'Nummer',
+  zaakkenmerk: 'Nummer',
   datumbesluit: 'Datum besluit',
-  omschrijving: 'Onderwerp',
 };
 
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'bezwaarnummer');
+  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'zaakkenmerk');
   const ingediendeBezwaren =
     items.filter((bezwaar) => bezwaar.einddatum === null) ?? [];
   const afgehandeldeBezwaren =
