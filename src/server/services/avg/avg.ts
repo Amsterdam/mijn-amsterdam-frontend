@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
@@ -87,12 +86,6 @@ export async function enrichAvgResponse(
   const themasResponse = await fetchAVGRequestThemes(avgIds);
 
   if (themasResponse.status === 'OK') {
-    Sentry.captureMessage(`AVG thema response`, {
-      extra: {
-        data: JSON.stringify(themasResponse.content),
-      },
-    });
-
     const enrichedAvgRequests: AVGRequest[] = [];
     for (const avgRequest of avgResponse.content.verzoeken) {
       const themasPerVerzoek = themasResponse.content.verzoeken.filter(
