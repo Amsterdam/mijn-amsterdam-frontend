@@ -183,7 +183,7 @@
     "kinderen": [
       {
         "bsn": "123456780",
-        "geboortedatum": "2019-07-08",
+        "geboortedatum": "2014-07-08",
         "geslachtsaanduiding": "M",
         "geslachtsnaam": "Kosterijk",
         "overlijdensdatum": null,
@@ -195,7 +195,7 @@
         "geboortedatum": "2019-07-08",
         "geslachtsaanduiding": "M",
         "geslachtsnaam": "Kosterijk",
-        "overlijdensdatum": "2019-07-08",
+        "overlijdensdatum": null,
         "voornamen": "Marwan",
         "voorvoegselGeslachtsnaam": null
       }

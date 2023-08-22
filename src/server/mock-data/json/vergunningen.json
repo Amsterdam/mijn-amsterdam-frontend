@@ -72,6 +72,7 @@
     },
     {
       "caseType": "Omzettingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "(WEESP!!!) Vergunning voor kamerverhuur (omzettingsvergunning)",
       "dateDecision": null,
       "dateRequest": "2021-03-28",
@@ -86,6 +87,7 @@
     },
     {
       "caseType": "Omzettingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning voor kamerverhuur (omzettingsvergunning) (Röel)",
       "dateDecision": null,
       "dateRequest": "2021-09-28",
@@ -100,6 +102,7 @@
     },
     {
       "caseType": "Omzettingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning voor kamerverhuur (omzettingsvergunning)",
       "dateDecision": null,
       "dateRequest": "2021-09-28",
@@ -114,6 +117,7 @@
     },
     {
       "caseType": "Omzettingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning voor kamerverhuur (omzettingsvergunning)",
       "dateDecision": "2021-10-18",
       "dateRequest": "2021-09-28",
@@ -128,6 +132,7 @@
     },
     {
       "caseType": "Evenement melding",
+      "id": "unique-id-of-zaak",
       "title": "Evenement melding",
       "dateDecision": "2021-10-17",
       "dateRequest": "2021-10-01",
@@ -148,6 +153,7 @@
     },
     {
       "caseType": "Evenement melding",
+      "id": "unique-id-of-zaak",
       "title": "Evenement melding",
       "dateDecision": null,
       "dateRequest": "2021-10-17",
@@ -168,6 +174,7 @@
     },
     {
       "caseType": "Evenement vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Evenement vergunning",
       "dateDecision": "2021-10-17",
       "dateRequest": "2021-10-01",
@@ -185,6 +192,7 @@
     },
     {
       "caseType": "Evenement vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Evenement vergunning",
       "dateDecision": null,
       "dateRequest": "2021-10-01",
@@ -202,6 +210,7 @@
     },
     {
       "caseType": "Evenement vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Evenement vergunning",
       "dateDecision": "2021-10-17",
       "dateRequest": "2021-10-01",
@@ -219,6 +228,7 @@
     },
     {
       "caseType": "E-RVV - TVM",
+      "id": "unique-id-of-zaak",
       "title": "e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)",
       "dateDecision": null,
       "dateRequest": "2021-09-03",
@@ -237,6 +247,7 @@
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
@@ -253,6 +264,7 @@
     },
     {
       "caseType": "B&B - vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning bed & breakfast",
       "dateDecision": null,
       "dateRequest": "2021-06-05",
@@ -271,6 +283,7 @@
     },
     {
       "caseType": "B&B - vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning bed & breakfast",
       "dateDecision": null,
       "dateRequest": "2020-05-10",
@@ -288,6 +301,7 @@
     },
     {
       "caseType": "B&B - vergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning bed & breakfast",
       "dateDecision": "2020-05-28",
       "dateRequest": "2020-05-10",
@@ -306,6 +320,7 @@
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
@@ -322,6 +337,7 @@
     },
     {
       "caseType": "Vakantieverhuur vergunningsaanvraag",
+      "id": "unique-id-of-zaak",
       "title": "Vergunning vakantieverhuur",
       "dateDecision": null,
       "dateRequest": "2021-05-10",
@@ -338,6 +354,7 @@
     },
     {
       "caseType": "GPK",
+      "id": "unique-id-of-zaak",
       "title": "Europese gehandicaptenparkeerkaart (GPK)",
       "dateDecision": null,
       "dateRequest": "2021-09-03",
@@ -356,6 +373,7 @@
     },
     {
       "caseType": "GPP",
+      "id": "unique-id-of-zaak",
       "title": "Vaste parkeerplaats voor gehandicapten (GPP)",
       "dateDecision": null,
       "dateRequest": "2021-04-07",
@@ -371,6 +389,7 @@
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone particulieren",
+      "id": "unique-id-of-zaak",
       "title": "Parkeerontheffingen Blauwe zone particulieren",
       "dateDecision": "2021-06-02",
       "dateStart": "2020-07-02",
@@ -386,6 +405,7 @@
     },
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
+      "id": "unique-id-of-zaak",
       "title": "Parkeerontheffingen Blauwe zone bedrijven",
       "dateDecision": "2021-06-02",
       "dateStart": "2021-07-02",
@@ -401,6 +421,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-02",
       "dateStart": "2020-07-02",
@@ -420,6 +441,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-06-24",
       "dateStart": "2021-09-02",
@@ -439,6 +461,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-01",
       "dateStart": "2020-07-02",
@@ -458,6 +481,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-07-02",
       "dateStart": "2020-07-02",
@@ -477,6 +501,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
@@ -496,6 +521,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
@@ -515,6 +541,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": null,
@@ -534,6 +561,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
@@ -553,6 +581,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-07-02",
@@ -572,6 +601,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2020-06-25",
       "dateStart": "2020-06-25",
@@ -591,6 +621,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": "2020-06-16",
@@ -610,6 +641,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": null,
       "dateStart": null,
@@ -629,6 +661,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2019-12-05",
       "dateStart": "2019-12-19",
@@ -648,6 +681,7 @@
     },
     {
       "caseType": "TVM - RVV - Object",
+      "id": "unique-id-of-zaak",
       "title": "Tijdelijke verkeersmaatregel",
       "dateDecision": "2019-06-21",
       "dateStart": "2020-07-02",
@@ -667,6 +701,7 @@
     },
     {
       "caseType": "Flyeren-Sampling",
+      "id": "unique-id-of-zaak",
       "title": "Verspreiden reclamemateriaal (sampling)",
       "identifier": "Z/22/1597501",
       "dateRequest": "2022-07-13T00:00:00",
@@ -683,6 +718,7 @@
     },
     {
       "caseType": "Flyeren-Sampling",
+      "id": "unique-id-of-zaak",
       "title": "Verspreiden reclamemateriaal (sampling)",
       "identifier": "Z/22/1597501",
       "dateRequest": "2022-08-08T00:00:00",
@@ -698,6 +734,7 @@
     },
     {
       "caseType": "Flyeren-Sampling",
+      "id": "unique-id-of-zaak",
       "title": "Verspreiden reclamemateriaal (sampling)",
       "identifier": "Z/22/1597502",
       "dateRequest": "2022-08-09T00:00:00",
@@ -736,6 +773,7 @@
     },
     {
       "caseType": "Aanbieden van diensten",
+      "id": "unique-id-of-zaak",
       "title": "Aanbieden van diensten",
       "identifier": "Z/22/1597602",
       "dateRequest": "2022-01-17T00:00:00",
@@ -750,6 +788,7 @@
     },
     {
       "caseType": "Aanbieden van diensten",
+      "id": "unique-id-of-zaak",
       "title": "Aanbieden van diensten",
       "identifier": "Z/22/1597471",
       "dateRequest": "2022-02-07T00:00:00",
@@ -764,6 +803,7 @@
     },
     {
       "caseType": "Aanbieden van diensten",
+      "id": "unique-id-of-zaak",
       "title": "Aanbieden van diensten",
       "identifier": "Z/22/1597712",
       "dateRequest": "2022-01-17T00:00:00",
@@ -774,6 +814,7 @@
     },
     {
       "caseType": "Nachtwerkontheffing",
+      "id": "unique-id-of-zaak",
       "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
       "identifier": "Z/22/1691001",
       "dateRequest": "2022-07-13T00:00:00",
@@ -790,6 +831,7 @@
     },
     {
       "caseType": "Nachtwerkontheffing",
+      "id": "unique-id-of-zaak",
       "title": "Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)",
       "identifier": "Z/22/1691001",
       "dateRequest": "2022-09-16T00:00:00",
@@ -806,6 +848,7 @@
     },
     {
       "caseType": "Zwaar verkeer",
+      "id": "unique-id-of-zaak",
       "title": "Ontheffing zwaar verkeer",
       "identifier": "Z/22/1692002",
       "dateRequest": "2022-10-16T00:00:00",
@@ -816,11 +859,12 @@
       "decision": null,
       "dateWorkflowActive": null,
       "exemptionKind": "Jaarontheffing hele zone met gewichtsverklaring en verklaring ondeelbare lading",
-      "licencePlates": "XX-123-Z, XX-122-Z",
+      "licensePlates": "XX-123-Z, XX-122-Z",
       "processed": false
     },
     {
       "caseType": "Zwaar verkeer",
+      "id": "unique-id-of-zaak",
       "title": "Ontheffing zwaar verkeer",
       "identifier": "Z/22/1692013",
       "dateRequest": "2022-10-19T00:00:00",
@@ -831,11 +875,12 @@
       "decision": null,
       "dateWorkflowActive": "2022-10-21",
       "exemptionKind": "Routeontheffing breed opgezette wegen tot en met 30 ton",
-      "licencePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
+      "licensePlates": "EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X, EE-123-C, DD-122-X",
       "processed": false
     },
     {
       "caseType": "Splitsingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Splitsingsvergunning",
       "identifier": "Z/22/1697573",
       "dateRequest": "2022-11-01T00:00:00",
@@ -848,6 +893,7 @@
     },
     {
       "caseType": "Woningvormingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Vormen van Woonruimte",
       "identifier": "Z/22/1697574",
       "dateRequest": "2022-10-27T00:00:00",
@@ -860,6 +906,7 @@
     },
     {
       "caseType": "Onttrekkingsvergunning voor sloop",
+      "id": "unique-id-of-zaak",
       "title": "Onttrekkingsvergunning voor sloop",
       "identifier": "Z/22/1797585",
       "dateRequest": "2022-11-01T00:00:00",
@@ -872,6 +919,7 @@
     },
     {
       "caseType": "Onttrekkingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Onttrekkingsvergunning voor ander gebruik",
       "identifier": "Z/22/1797707",
       "dateRequest": "2022-11-01T00:00:00",
@@ -884,6 +932,7 @@
     },
     {
       "caseType": "Samenvoegingsvergunning",
+      "id": "unique-id-of-zaak",
       "title": "Samenvoegingsvergunning",
       "identifier": "Z/22/1797696",
       "dateRequest": "2022-11-01T00:00:00",
@@ -896,6 +945,7 @@
     },
     {
       "caseType": "VOB",
+      "id": "unique-id-of-zaak",
       "title": "Ligplaatsvergunning",
       "identifier": "Z/23/1797714",
       "dateRequest": "2023-01-01T00:00:00",
@@ -911,6 +961,7 @@
     },
     {
       "caseType": "VOB",
+      "id": "unique-id-of-zaak",
       "title": "Ligplaatsvergunning",
       "identifier": "Z/23/1797715",
       "dateRequest": "2023-01-03T00:00:00",
@@ -927,6 +978,7 @@
     },
     {
       "caseType": "VOB",
+      "id": "unique-id-of-zaak",
       "title": "Ligplaatsvergunning",
       "identifier": "Z/23/1797716",
       "dateRequest": "2023-03-09T00:00:00",
@@ -943,6 +995,7 @@
     },
     {
       "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+      "id": "unique-id-of-zaak",
       "title": "Horeca vergunning exploitatie Horecabedrijf",
       "identifier": "Z/23/1808826",
       "dateRequest": "2022-10-20T00:00:00",
@@ -954,11 +1007,12 @@
       "dateStart": "2022-11-01T00:00:00",
       "dateEnd": "2024-01-02T00:00:00",
       "dateStartPermit": "2022-11-02T00:00:00",
-      "dateProcessed": "2022-11-01T00:00:00",
+      "dateDecision": "2022-11-01T00:00:00",
       "numberOfPermits": 10
     },
     {
       "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+      "id": "unique-id-of-zaak",
       "title": "Horeca vergunning exploitatie Horecabedrijf",
       "identifier": "Z/23/1808827",
       "dateRequest": "2022-11-20T00:00:00",
@@ -970,14 +1024,14 @@
       "dateStart": "2023-11-01T00:00:00",
       "dateEnd": "2025-01-02T00:00:00",
       "dateStartPermit": "2023-11-02T00:00:00",
-      "dateProcessed": "2022-12-01T00:00:00",
+      "dateDecision": "2022-12-01T00:00:00",
       "numberOfPermits": 10
     },
     {
       "caseType": "Horeca vergunning exploitatie Horecabedrijf",
+      "id": "unique-id-of-zaak",
       "dateDecision": "2023-04-28",
       "dateEnd": "2023-06-21",
-      "dateProcessed": "2023-04-28",
       "dateRequest": "2023-04-26",
       "dateStart": null,
       "dateWorkflowActive": "2023-04-27",
@@ -997,6 +1051,7 @@
     },
     {
       "caseType": "RVV - Hele stad",
+      "id": "unique-id-of-zaak",
       "title": "RVV-verkeersontheffing",
       "identifier": "Z/23/1809938",
       "dateRequest": "2023-04-20T00:00:00",
@@ -1006,8 +1061,139 @@
       "processed": false,
       "dateStart": "2023-11-01T00:00:00",
       "dateEnd": "2025-01-02T00:00:00",
-      "dateProcessed": null,
-      "licencePlates": "YY-123-A, ZZ-122-A"
+      "dateDecision": null,
+      "licensePlates": "YY-123-A, ZZ-122-A"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Nieuw/Verleend)",
+      "identifier": "Z/23/98798273423",
+      "dateRequest": "2023-07-23T11:21:33",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2023-07-23T11:21:33",
+      "processed": true,
+      "dateStart": "2023-08-01T00:00:00",
+      "dateEnd": "2024-08-01T00:00:00",
+      "dateDecision": "2023-07-23T11:21:33",
+      "licensePlates": "YY-123-A, ZZ-122-A",
+      "previousLicensePlates": "",
+      "requestType": "Nieuw",
+      "area": "Vaan van Laanderen"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Wijziging/Ontvangen)",
+      "identifier": "Z/23/98989234",
+      "dateRequest": "2023-07-24T11:21:33",
+      "status": "Ontvangen",
+      "decision": null,
+      "dateWorkflowActive": "2023-07-26T00:00:00",
+      "processed": false,
+      "dateStart": "2023-08-02T00:00:00",
+      "dateEnd": "2024-08-02T00:00:00",
+      "dateDecision": null,
+      "licensePlates": "BB-344-P, VV-899-C",
+      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "requestType": "Kenteken wijziging",
+      "area": "van Vlaanderenlaan"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Wijziging/Ingetrokken)",
+      "identifier": "Z/23/23423409",
+      "dateRequest": "2023-07-24T11:21:33",
+      "status": "Ontvangen",
+      "decision": "Ingetrokken",
+      "dateWorkflowActive": "2023-07-26T00:00:00",
+      "dateWorkflowVerleend": null,
+      "processed": true,
+      "dateStart": "2023-08-02T00:00:00",
+      "dateEnd": "2024-08-02T00:00:00",
+      "dateDecision": "2023-07-26T00:00:00",
+      "licensePlates": "BB-344-P, VV-899-C",
+      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "requestType": "Kenteken wijziging",
+      "area": "van Vlaanderenlaan"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Wijziging/Verleend)",
+      "identifier": "Z/23/091823087",
+      "dateRequest": "2023-07-24T11:21:33",
+      "status": "Ontvangen",
+      "decision": "Verleend",
+      "dateWorkflowActive": "2023-07-26T00:00:00",
+      "dateWorkflowVerleend": "2023-07-28T00:00:00",
+      "processed": true,
+      "dateStart": "2023-08-02T00:00:00",
+      "dateEnd": "2024-08-02T00:00:00",
+      "dateDecision": "2023-07-28T00:00:00",
+      "licensePlates": "BB-344-P, VV-899-C",
+      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "requestType": "Kenteken wijziging",
+      "area": "van Vlaanderenlaan"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Wijziging/Verlopen)",
+      "identifier": "Z/23/92222273423",
+      "dateRequest": "2023-07-01T11:21:33",
+      "status": "iets?",
+      "decision": "Verlopen",
+      "dateWorkflowActive": "2023-07-02T00:00:00",
+      "dateWorkflowVerleend": "2023-07-28T00:00:00",
+      "processed": true,
+      "dateStart": "2023-07-12T00:00:00",
+      "dateEnd": "2023-07-22T00:00:00",
+      "dateDecision": "2023-07-03T00:00:00",
+      "licensePlates": "BB-344-P, VV-899-C",
+      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "requestType": "Kenteken wijziging",
+      "area": "Laan van Vlaanderen"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Nieuw/Verlopen)",
+      "identifier": "Z/23/98744444423",
+      "dateRequest": "2023-07-01T11:21:33",
+      "status": "iets?",
+      "decision": "Verlopen",
+      "dateWorkflowActive": "2023-07-02T00:00:00",
+      "dateWorkflowVerleend": null,
+      "processed": true,
+      "dateStart": "2023-07-12T00:00:00",
+      "dateEnd": "2023-07-22T00:00:00",
+      "dateDecision": "2023-07-03T00:00:00",
+      "licensePlates": "YY-123-A, ZZ-122-A",
+      "previousLicensePlates": "",
+      "requestType": "Nieuw",
+      "area": "Laan van Vlaanderen"
+    },
+    {
+      "caseType": "Sluipverkeer Slooterweg",
+      "id": "unique-id-of-zaak",
+      "title": "RVV ontheffing Sloterweg (Nieuw/Ingetrokken)",
+      "identifier": "Z/23/123123456",
+      "dateRequest": "2023-07-01T11:21:33",
+      "status": "iets?",
+      "decision": "Ingetrokken door gemeente",
+      "dateWorkflowActive": "2023-07-02T00:00:00",
+      "dateWorkflowVerleend": null,
+      "processed": true,
+      "dateStart": "2023-07-12T00:00:00",
+      "dateEnd": "2023-07-22T00:00:00",
+      "dateDecision": "2023-07-03T00:00:00",
+      "licensePlates": "YY-123-A, ZZ-122-A",
+      "previousLicensePlates": "",
+      "requestType": "Nieuw",
+      "area": "Laan van Vlaanderen"
     }
   ],
   "status": "OK"

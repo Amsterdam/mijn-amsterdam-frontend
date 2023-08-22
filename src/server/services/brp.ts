@@ -3,17 +3,17 @@ import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import {
+  ApiSuccessResponse,
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
+import {
   BRPData,
   BRPDataFromSource,
   MyNotification,
 } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import {
-  apiSuccessResult,
-  apiDependencyError,
-  ApiSuccessResponse,
-} from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../helpers/app';
 
 const DAYS_BEFORE_EXPIRATION = 120;

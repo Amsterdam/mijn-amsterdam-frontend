@@ -12,6 +12,11 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
   const inProgressDate = new Date(request.datumInBehandeling);
   const extraInfoDate = new Date(request.opschortenGestartOp);
 
+  const extraInfoDesc =
+    'Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.';
+  const doneDesc =
+    'Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.';
+
   const lineItems = [
     {
       id: 'item-1',
@@ -66,7 +71,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         id: 'item-2',
         status: 'Extra informatie nodig',
         datePublished: request.opschortenGestartOp || '',
-        description: '',
+        description: extraInfoDesc,
         documents: [],
         isActive: true,
         isChecked: false,
@@ -98,7 +103,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         id: 'item-2',
         status: 'Extra informatie nodig',
         datePublished: request.opschortenGestartOp || '',
-        description: '',
+        description: extraInfoDesc,
         documents: [],
         isActive: !isDone,
         isChecked: true,
@@ -120,7 +125,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
         id: 'item-3',
         status: 'In behandeling',
         datePublished: request.datumInBehandeling || '',
-        description: '',
+        description: extraInfoDesc,
         documents: [],
         isActive: !isDone,
         isChecked: true,
@@ -132,7 +137,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
     id: 'last-item',
     status: 'Afgehandeld',
     datePublished: request.datumAfhandeling || '',
-    description: '',
+    description: isDone ? doneDesc : '',
     documents: [],
     isActive: isDone,
     isChecked: isDone,

@@ -92,9 +92,12 @@ const Notification = ({
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
-            <em className={styles.ChapterIndication}>
-              {ChapterTitles[notification.chapter]}
-            </em>
+            {!notification.isTip && (
+              <em className={styles.ChapterIndication}>
+                {ChapterTitles[notification.chapter]}
+              </em>
+            )}
+
             {!notification.hideDatePublished && (
               <time
                 className={styles.Datum}
