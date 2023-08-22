@@ -151,7 +151,7 @@ describe('<ToeristischeVerhuur />', () => {
       screen.queryAllByText('Registratienummer toeristische verhuur').length
     ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
 
     expect(
@@ -199,7 +199,7 @@ describe('<ToeristischeVerhuur />', () => {
       screen.getByText('Meer informatie over particuliere vakantieverhuur')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
     expect(
       screen.queryByText('Vergunning bed & breakfast')
     ).not.toBeInTheDocument();
