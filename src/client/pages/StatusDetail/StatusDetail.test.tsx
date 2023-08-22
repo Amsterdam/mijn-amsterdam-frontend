@@ -78,7 +78,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={false}
           pageContent={pageContent}
           maxStepCount={() => -1}
           highlightKey={false}
@@ -108,7 +107,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
@@ -138,7 +136,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
@@ -170,7 +167,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={false}
           reverseSteps={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}

@@ -28,7 +28,6 @@ export default function InkomenDetailTozo() {
     <StatusDetail
       chapter="INKOMEN"
       stateKey="WPI_TOZO"
-      showToggleMore={false}
       pageContent={pageContent}
       maxStepCount={() => -1}
       highlightKey={false}

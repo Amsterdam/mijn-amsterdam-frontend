@@ -40,7 +40,6 @@ export default function InkomenDetailBbz() {
     <StatusDetail
       chapter="INKOMEN"
       stateKey="WPI_BBZ"
-      showToggleMore={false}
       pageContent={pageContent}
       maxStepCount={() => -1}
       highlightKey={false}

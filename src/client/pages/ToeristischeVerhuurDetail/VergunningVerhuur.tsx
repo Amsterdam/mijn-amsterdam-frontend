@@ -206,7 +206,6 @@ export default function VergunningVerhuur({
           className={styles.VergunningStatus}
           trackCategory="Toeristisch verhuur detail / status"
           items={statusLineItems}
-          showToggleMore={false}
           id={`toeristische-verhuur-detail-${vergunning.id}`}
         />
       )}

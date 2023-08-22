@@ -341,7 +341,6 @@ export default function SiaDetail() {
           className={styles.SiaStatus}
           trackCategory="SiaMeldingen detail / status"
           items={getSiaMeldingStatusLineItems(SiaItem, history)}
-          showToggleMore={false}
           id={`sia-detail-${id}`}
         />
       )}

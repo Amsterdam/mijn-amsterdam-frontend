@@ -82,7 +82,6 @@ export function StatusLineItems({
       className={styles.VergunningStatus}
       trackCategory="Vergunningen detail / status"
       items={statusLineItems}
-      showToggleMore={false}
       id={`vergunning-detail-${vergunning.id}`}
       documentPathForTracking={trackPath}
     />
