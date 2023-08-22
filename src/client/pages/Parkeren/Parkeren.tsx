@@ -36,7 +36,7 @@ export default function Parkeren() {
         </p>
         <Linkd
           external={true}
-          href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/"
+          href="https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/"
         >
           Lees hier meer over parkeervergunningen
         </Linkd>{' '}
