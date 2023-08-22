@@ -1,10 +1,10 @@
 import { differenceInYears, differenceInCalendarDays } from 'date-fns';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { TipsPredicateFN } from './tip-types';
+import type { TipsPredicateFN } from './tip-types';
 import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
-import type { WmoApiItem } from '../wmo';
+import type { WmoItem } from '../wmo';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 
 // rule 2
@@ -96,7 +96,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 
 export const hasAOV: TipsPredicateFN = (appState) => {
   return !!appState.WMO?.content?.some(
-    (wmo: WmoApiItem) => wmo.isActual && wmo.itemTypeCode === 'AOV'
+    (wmo: WmoItem) => wmo.isActual && wmo.itemTypeCode === 'AOV'
   );
 };
 
