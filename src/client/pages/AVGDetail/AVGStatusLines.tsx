@@ -15,7 +15,7 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
   const extraInfoDesc =
     'Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.';
   const doneDesc =
-    'Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.';
+    'Uw verzoek is afgehandeld. U ontvangt hierover bericht per e-mail of per brief.';
 
   const lineItems = [
     {
