@@ -108,27 +108,13 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Bezwaar
+          BI.21.014121.001
         </h2>
       </div>
     </header>
     <div
       class="PageContent"
     >
-      <div
-        class="InfoDetail"
-      >
-        <h3
-          class="Heading Heading__tiny Label"
-        >
-          Zaaknummer
-        </h3>
-        <p
-          class="Value"
-        >
-          BI.21.014121.001
-        </p>
-      </div>
       <div
         class="InfoDetail"
       >
@@ -149,7 +135,7 @@ exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
         <h3
           class="Heading Heading__tiny Label"
         >
-          Reden
+          Reden bezwaar
         </h3>
         <p
           class="Value"

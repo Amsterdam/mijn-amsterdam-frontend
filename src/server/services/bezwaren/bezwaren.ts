@@ -4,7 +4,6 @@ import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
-  apiErrorResult,
   apiSuccessResult,
   defaultDateFormat,
   getSettledResult,
@@ -95,45 +94,53 @@ function transformBezwarenResults(
 ): Bezwaar[] {
   const results = response.results;
   if (Array.isArray(results)) {
-    return results.map((bezwaarBron) => {
-      const besluitdatum = getKenmerkValue(
-        bezwaarBron.kenmerken,
-        'besluitdatum'
-      );
-
-      const bezwaar: Bezwaar = {
-        identificatie: bezwaarBron.identificatie,
-        zaakkenmerk:
-          getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
-        uuid: bezwaarBron.uuid,
-        startdatum: bezwaarBron.startdatum,
-        omschrijving: bezwaarBron.omschrijving,
-        toelichting: bezwaarBron.toelichting,
-        status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
-        statussen: [],
-        datumbesluit: besluitdatum,
-        datumIntrekking: getKenmerkValue(
-          bezwaarBron.kenmerken,
-          'datumintrekking'
-        ),
-        einddatum: bezwaarBron.einddatum,
-        primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
-        primairbesluitdatum: getKenmerkValue(
+    return results
+      .map((bezwaarBron) => {
+        const besluitdatum = getKenmerkValue(
           bezwaarBron.kenmerken,
           'besluitdatum'
-        ),
-        resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
-        documenten: [],
-        link: {
-          title: 'Bekijk details',
-          to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
-            uuid: bezwaarBron.uuid,
-          }),
-        },
-      };
+        );
 
-      return bezwaar;
-    });
+        const bezwaar: Bezwaar = {
+          identificatie: bezwaarBron.identificatie,
+          zaakkenmerk:
+            getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
+          uuid: bezwaarBron.uuid,
+          startdatum: bezwaarBron.startdatum,
+          omschrijving: bezwaarBron.omschrijving,
+          toelichting: bezwaarBron.toelichting,
+          status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+          statussen: [],
+          datumbesluit: besluitdatum,
+          datumIntrekking: getKenmerkValue(
+            bezwaarBron.kenmerken,
+            'datumintrekking'
+          ),
+          einddatum: bezwaarBron.einddatum,
+          primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
+          primairbesluitdatum: getKenmerkValue(
+            bezwaarBron.kenmerken,
+            'besluitdatum'
+          ),
+          resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
+          documenten: [],
+          link: {
+            title: 'Bekijk details',
+            to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+              uuid: bezwaarBron.uuid,
+            }),
+          },
+        };
+
+        return bezwaar;
+      })
+      .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
+      .sort((a, b) => {
+        const aStart = new Date(a.startdatum);
+        const bStart = new Date(b.startdatum);
+
+        return aStart < bStart ? 1 : aStart > bStart ? -1 : 0;
+      });
   }
   return [];
 }
