@@ -40,7 +40,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
           </button>
           <a
             class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _ProfileLink_569e3a _LogoutLink_569e3a"
-            href="http://bff-api-host/dev/auth/logout"
+            href="http://bff-api-host/auth/logout"
           >
             <svg
               aria-hidden="true"
@@ -131,7 +131,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
               data-chapter-id="INKOMEN_SVWI"
-              href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
+              href="https://mijnwpi-test"
               rel="external"
             >
               <span

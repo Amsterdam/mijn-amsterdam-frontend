@@ -4,7 +4,7 @@ import nock from 'nock';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { describe, expect, test, beforeEach, afterEach } from 'vitest';
-import { bffApi } from '../../../test-utils';
+import { bffApi, remoteApi } from '../../../test-utils';
 import { appStateAtom } from '../../hooks';
 import { Search } from './Search';
 import * as bagResponse from './bag-response.json';
@@ -14,7 +14,43 @@ describe('<Search />', () => {
   beforeEach(() => {
     bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
 
-    nock('https://api.data.amsterdam.nl')
+    remoteApi
+      .get('/')
+      .times(3)
+      .query(true)
+      .reply(200, {
+        results: [
+          {
+            _links: {
+              self: {
+                href: 'https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010001025757/',
+              },
+            },
+            type: 'verblijfsobject',
+            dataset: 'v11_nummeraanduiding',
+            adres: 'Weesperplein 1',
+            postcode: '',
+            straatnaam: 'Weesperplein',
+            straatnaam_no_ws: 'Weesperplein',
+            huisnummer: 1,
+            toevoeging: '1',
+            bag_huisletter: '',
+            bag_toevoeging: '',
+            woonplaats: 'Amsterdam',
+            type_adres: 'Hoofdadres',
+            status: 'Naamgeving uitgegeven',
+            landelijk_id: '0363200000513852',
+            vbo_status: 'Verblijfsobject in gebruik',
+            adresseerbaar_object_id: '0363010001025757',
+            subtype: 'verblijfsobject',
+            centroid: [4.907992384700699, 52.362287357287045],
+            subtype_id: '0363010001025757',
+            _display: 'Weesperplein 1',
+          },
+        ],
+      });
+
+    nock('https://api-data')
       .defaultReplyHeaders({
         'access-control-allow-origin': '*',
         'access-control-allow-credentials': 'true',

@@ -48,8 +48,13 @@ const otapServerEnv: OtapEnv = {
     ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
   test: {
-    krefiaDirectLink: 'https://krefia.amsterdam.nl',
-    bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=',
+    krefiaDirectLink: 'https://krefia',
+    ssoErfpachtUrl: 'https://mijnerfpacht',
+    ssoErfpachtUrlEH: 'https://mijnerfpacht',
+    ssoMilieuzoneUrl: 'https://ontheffingen',
+    ssoSubsidiesUrl: 'https://mijnsubsidies',
+    bagUrl: 'http://remote-api-host:80/?q=',
+    ssoSvwi: 'https://mijnwpi-test',
   },
   acceptance: {
     analyticsId: 'e63312c0-0efe-4c4f-bba1-3ca1f05374a8',

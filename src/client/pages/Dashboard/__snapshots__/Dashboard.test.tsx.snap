@@ -492,7 +492,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-chapter-id="INKOMEN_SVWI"
-            href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
+            href="https://mijnwpi-test"
             rel="external"
           >
             <span
@@ -574,7 +574,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-chapter-id="MILIEUZONE"
-            href="https://ontheffingen.amsterdam.nl/publiek/aanvragen"
+            href="https://ontheffingen"
             rel="external"
           >
             <span

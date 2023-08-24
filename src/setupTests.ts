@@ -38,6 +38,10 @@ const bffApiHost = 'http://bff-api-host';
 const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
+process.env.BFF_ENV = 'test';
+process.env.REACT_APP_ENV = process.env.BFF_ENV;
+process.env.REACT_APP_BFF_AUTH_PATH = '';
+
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_MS_API_HOST = remoteApiHost;
 
