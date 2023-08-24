@@ -203,15 +203,6 @@ describe('<ProfileCommercial />', () => {
     />
   );
 
-  beforeAll(() => {
-    (window.matchMedia as any) = vi.fn(() => {
-      return {
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-      };
-    });
-  });
-
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();

@@ -15,6 +15,7 @@ global.matchMedia =
   };
 
 global.window && ((global.window as any).scrollTo = vi.fn());
+global.window && ((global.window as any).scrollBy = vi.fn());
 
 nock.disableNetConnect();
 
