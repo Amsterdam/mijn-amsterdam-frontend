@@ -24,6 +24,7 @@ COPY .prettierrc.json /app/
 
 RUN npm ci
 
+COPY index.html /app/
 COPY public /app/public
 COPY src /app/src
 
