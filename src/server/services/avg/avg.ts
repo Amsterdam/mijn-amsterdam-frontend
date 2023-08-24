@@ -33,13 +33,13 @@ function getDataForAVG(bsn: string) {
     'avgverzoek_alias',
     'avgverzoek_datuminbehandeling',
     'avgverzoek_typeverzoek',
-    'avgverzoek_typeafhandeling_resultaat',
     'avgverzoek_datumbinnenkomst',
     'avgverzoek_opschortengestartop',
     'avgverzoek_datuminbehandeling',
     'avgverzoek_werkelijkeeinddatum',
     'avgverzoek_omschrijvingvanonderwerp',
     'avgverzoek_statusavgverzoek_alias',
+    'avgverzoek_typeafhandelingvaststellen_resultaat',
   ].join(', ');
 
   data.append('columns', columns);
@@ -131,7 +131,9 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
         type: verzoek['avgverzoek_typeverzoek'].value || '',
         toelichting:
           verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
-        resultaat: verzoek['avgverzoek_typeafhandeling_resultaat']?.value || '',
+        resultaat:
+          verzoek['avgverzoek_typeafhandelingvaststellen_resultaat']?.value ||
+          '',
         ontvangstDatum: smileDateParser(
           verzoek['avgverzoek_datumbinnenkomst'].value || ''
         ),
@@ -266,13 +268,14 @@ function createAVGNotification(verzoek: AVGRequest) {
   if (extraInfoActive) {
     notification.title = 'AVG verzoek meer informatie nodig';
     notification.description =
-      'Wij hebben meer informatie en tijd nodig om uw AVG verzoek te behandelen.';
+      'Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.';
     notification.datePublished = verzoek.opschortenGestartOp;
   }
 
   if (isDone) {
     notification.title = 'AVG verzoek afgehandeld';
-    notification.description = 'Uw AVG verzoek is afgehandeld.';
+    notification.description =
+      'Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.';
     notification.datePublished = verzoek.datumAfhandeling;
   }
 

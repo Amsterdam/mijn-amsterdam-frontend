@@ -308,7 +308,9 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
             >
               <div
                 class="PanelContent"
-              />
+              >
+                Uw verzoek is afgehandeld. U ontvangt hierover bericht per e-mail of per brief.
+              </div>
             </div>
             <div
               class="Panel Panel--documents"
