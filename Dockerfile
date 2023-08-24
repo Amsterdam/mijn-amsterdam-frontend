@@ -14,6 +14,7 @@ RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y
 
+COPY vite.config.ts /app/
 COPY tsconfig.json /app/
 COPY tsconfig.bff.json /app/
 COPY package.json /app/
