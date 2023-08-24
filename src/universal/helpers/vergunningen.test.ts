@@ -9,8 +9,8 @@ import {
 } from './vergunningen';
 
 describe('helpers/Vergunningen', () => {
-  jest.useFakeTimers('modern');
-  jest.setSystemTime(new Date('2022-10-06'));
+  vi.useFakeTimers();
+  vi.setSystemTime(new Date('2022-10-06'));
 
   test('isActualNotification', () => {
     expect(isActualNotification('2022-12-06')).toBe(true);

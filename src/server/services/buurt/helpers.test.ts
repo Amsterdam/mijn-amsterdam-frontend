@@ -1,4 +1,4 @@
-import * as config from '../../../universal/config/myarea-datasets';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { ApiResponse } from '../../../universal/helpers';
 import {
   DatasetConfig,
@@ -176,12 +176,9 @@ const features: any = [
   BEKENDMAKING1,
 ];
 
-describe('Buurt helpers', () => {
-  let ORIGINAL_DATASETS = config.DATASETS;
-  let DATASETS: any = null;
-
-  beforeAll(() => {
-    DATASETS = (config.DATASETS as any) = {
+const mocks = vi.hoisted(() => {
+  return {
+    DATASETS: {
       sport: {
         datasets: {
           openbaresportplek: {
@@ -229,13 +226,22 @@ describe('Buurt helpers', () => {
           },
         },
       },
+    },
+  };
+});
+
+vi.mock(
+  '../../../universal/config/myarea-datasets',
+  async (requireOriginal) => {
+    const origModule = (await requireOriginal()) as object;
+    return {
+      ...origModule,
+      DATASETS: mocks.DATASETS,
     };
-  });
+  }
+);
 
-  afterAll(() => {
-    (config.DATASETS as any) = ORIGINAL_DATASETS;
-  });
-
+describe('Buurt helpers', () => {
   it('Should extract correct api response', () => {
     const result = ['api-result'];
     expect(
@@ -329,7 +335,7 @@ describe('Buurt helpers', () => {
 
   it('Should getDynamicDatasetFilters', () => {
     expect(getDynamicDatasetFilters('openbaresportplek')).toStrictEqual(
-      DATASETS.sport.datasets.openbaresportplek.filters
+      mocks.DATASETS.sport.datasets.openbaresportplek.filters
     );
   });
 
@@ -564,7 +570,7 @@ describe('Buurt helpers', () => {
 
   it('Should getPropertyFilters', () => {
     expect(getPropertyFilters('openbaresportplek')).toStrictEqual(
-      DATASETS.sport.datasets.openbaresportplek.filters
+      mocks.DATASETS.sport.datasets.openbaresportplek.filters
     );
   });
 
@@ -649,7 +655,7 @@ describe('Buurt helpers', () => {
     expect(
       transformDsoApiListResponse(
         'openbaresportplek',
-        DATASETS.sport.datasets.openbaresportplek,
+        mocks.DATASETS.sport.datasets.openbaresportplek as any,
         DSO_API_RESULT
       )
     ).toStrictEqual(datasetResultTransformed);
@@ -672,7 +678,7 @@ describe('Buurt helpers', () => {
     expect(
       transformDsoApiListResponse(
         'test',
-        DATASETS.sport.datasets.test,
+        mocks.DATASETS.sport.datasets.test as any,
         DSO_API_RESULT,
         'openbaresportplek'
       )
@@ -706,7 +712,7 @@ describe('Buurt helpers', () => {
     expect(
       transformDsoApiListResponse(
         'sportveld',
-        DATASETS.sport.datasets.sportveld,
+        mocks.DATASETS.sport.datasets.sportveld as any,
         DSO_API_RESULT2
       )
     ).toStrictEqual(datasetResultTransformed);

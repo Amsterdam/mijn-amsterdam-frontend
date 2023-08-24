@@ -45,22 +45,11 @@ export const BFF_PUBLIC_URL = `${
   process.env.BFF_PUBLIC_URL || `http://${BFF_HOST}:${BFF_PORT}`
 }`;
 
-const BFF_MS_API_HOST = IS_PRODUCTION
-  ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
-  : IS_ACCEPTANCE
-  ? process.env.BFF_MS_API_HOST || 'acc.mijn.data.amsterdam.nl'
-  : 'localhost';
-
-const BFF_MS_API_PORT = IS_AP ? '' : `:${BFF_PORT}`;
-const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
-
 export const BFF_MS_API_BASE_PATH = IS_AP ? '/api' : '';
-export const BFF_MS_API_BASE = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}`;
+export const BFF_MS_API_BASE = `${process.env.BFF_MS_API_HOST}`;
 export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
 
-export const BFF_DATAPUNT_API_BASE_URL = IS_AP
-  ? 'https://api.data.amsterdam.nl'
-  : 'https://api.data.amsterdam.nl';
+export const BFF_DATAPUNT_API_BASE_URL = 'https://api.data.amsterdam.nl';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -283,7 +272,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
+      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a well known actor (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
   ENABLEU_2_SMILE: {

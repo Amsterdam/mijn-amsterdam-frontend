@@ -4,8 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { Dialog } from './Modal';
 
 describe('Modal test', () => {
-  window.scrollTo = jest.fn();
-
   it('Renders without crashing', () => {
     render(
       <Dialog isOpen={false} onClose={() => void 0}>
@@ -45,7 +43,7 @@ describe('Modal test', () => {
   });
 
   it('Opens and Closes the modal via close callback', () => {
-    const close = jest.fn(() => {
+    const close = vi.fn(() => {
       rerender(
         <Dialog isOpen={false} onClose={close}>
           Testje

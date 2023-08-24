@@ -1,15 +1,16 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { atom, RecoilState, useRecoilState } from 'recoil';
+import { RecoilState, atom, useRecoilState } from 'recoil';
 import {
-  SiaAttachment,
   SIAItem,
+  SiaAttachment,
   SiaSignalStatusHistory,
 } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
-  apiPristineResult,
   ApiResponse,
+  apiPristineResult,
   defaultDateFormat,
   isError,
   isLoading,
@@ -108,14 +109,15 @@ function useAdditionalDataById<T extends ApiResponse<any>>(
 
   useEffect(() => {
     if (!isDataFetched && id) {
-      fetch(url, {
-        credentials: 'include',
-      })
-        .then((response) => {
-          return response.json();
+      axios
+        .get(url, {
+          withCredentials: true,
+          responseType: 'json',
         })
         .then((responseJson) => {
-          setData((data) => Object.assign({}, data, { [id]: responseJson }));
+          setData((data) =>
+            Object.assign({}, data, { [id]: responseJson.data })
+          );
         });
     }
   }, [url, id, setData, isDataFetched]);

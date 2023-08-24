@@ -3,7 +3,7 @@ import MainHeader from './MainHeader';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-jest.mock('../../hooks/media.hook');
+vi.mock('../../hooks/media.hook');
 
 describe('<MainHeader />', () => {
   it('Renders unauthenticated header', () => {

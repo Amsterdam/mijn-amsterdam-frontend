@@ -1,4 +1,4 @@
-/// <reference types="react-scripts" />
+/// <reference types="vite" />
 // TODO: Add typings for this function
 declare module 'slugme';
 

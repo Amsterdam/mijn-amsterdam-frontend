@@ -35,7 +35,7 @@ describe('requestData.ts', () => {
   let axiosRequestSpy: any;
 
   beforeEach(() => {
-    jest.useFakeTimers('modern');
+    vi.useFakeTimers();
     axMock = new MockAdapter(axiosRequest);
     axMock
       .onGet(DUMMY_URL)
@@ -44,7 +44,7 @@ describe('requestData.ts', () => {
       .replyOnce(200, DUMMY_RESPONSE_2);
 
     axMock.onGet(DUMMY_URL_2).networkError();
-    axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
+    axiosRequestSpy = vi.spyOn(axiosRequest, 'request');
   });
 
   afterEach(() => {
@@ -90,7 +90,7 @@ describe('requestData.ts', () => {
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
 
     // Should clear the cache timeout
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);
   });
@@ -124,7 +124,7 @@ describe('requestData.ts', () => {
     expect(cache.keys()[0]).toBe(CACHE_KEY_1);
     expect(cache.keys()[1]).toBe(CACHE_KEY_2);
 
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(cache.keys().length).toBe(0);
   });

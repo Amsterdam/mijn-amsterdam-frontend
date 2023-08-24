@@ -48,7 +48,7 @@ describe('Toeristische verhuur service', () => {
     token: 'xxxxxx',
   };
 
-  jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
+  vi.useFakeTimers().setSystemTime(new Date('2021-07-07').getTime());
 
   const BFF_LVV_API_URL = process.env.BFF_LVV_API_URL;
 

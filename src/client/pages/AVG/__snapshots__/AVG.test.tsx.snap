@@ -1,104 +1,141 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AVG thema pagina Matches the Full Page snapshot when API gives no result 1`] = `
+exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no result 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage AVG"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _AVG_7ac078"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32"
+          viewBox="0 0 32 32"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          AVG-verzoeken.svg
+          <path
+            clip-rule="evenodd"
+            d="M0 9C0 13.9706 4.02945 18 9 18V32H32V4H16.4845C14.8699 1.58801 12.1204 0 9 0C4.02945 0 0 4.02942 0 9ZM18 9C18 9.68738 17.9229 10.3568 17.777 11H26V13H17.0645C16.7026 13.7281 16.2451 14.4003 15.7083 15H26V17H15V15.7083C14.4003 16.2451 13.7281 16.7026 13 17.0645V28H28V8H17.9451C17.9814 8.32831 18 8.66199 18 9ZM15 19H26V21H15V19ZM26 23H15V25H26V23ZM9 3C7.34315 3 6 4.34315 6 6V8H5V14H13V8H12V6C12 4.34315 10.6569 3 9 3ZM9 5C8.44772 5 8 5.44772 8 6V8H10V6C10 5.44772 9.55228 5 9 5Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           AVG persoonsgegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/privacy/loket/"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Loket persoonsgegevens gemeente Amsterdam
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleFirst"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Lopende verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <p
-            class="NoItemsMessage"
+            class="_NoItemsMessage_b93dc7"
           >
             U heeft nog geen AVG verzoeken ingediend.
           </p>
@@ -106,34 +143,45 @@ exports[`AVG thema pagina Matches the Full Page snapshot when API gives no resul
       </div>
     </section>
     <section
-      class="SectionCollapsible"
+      class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Afgehandelde verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <p
-            class="NoItemsMessage"
+            class="_NoItemsMessage_b93dc7"
           >
             U hebt nog geen afgehandelde AVG verzoeken.
           </p>
@@ -144,105 +192,142 @@ exports[`AVG thema pagina Matches the Full Page snapshot when API gives no resul
 </DocumentFragment>
 `;
 
-exports[`AVG thema pagina Matches the Full Page snapshot when there are no requests 1`] = `
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are no requests 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage AVG"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _AVG_7ac078"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32"
+          viewBox="0 0 32 32"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          AVG-verzoeken.svg
+          <path
+            clip-rule="evenodd"
+            d="M0 9C0 13.9706 4.02945 18 9 18V32H32V4H16.4845C14.8699 1.58801 12.1204 0 9 0C4.02945 0 0 4.02942 0 9ZM18 9C18 9.68738 17.9229 10.3568 17.777 11H26V13H17.0645C16.7026 13.7281 16.2451 14.4003 15.7083 15H26V17H15V15.7083C14.4003 16.2451 13.7281 16.7026 13 17.0645V28H28V8H17.9451C17.9814 8.32831 18 8.66199 18 9ZM15 19H26V21H15V19ZM26 23H15V25H26V23ZM9 3C7.34315 3 6 4.34315 6 6V8H5V14H13V8H12V6C12 4.34315 10.6569 3 9 3ZM9 5C8.44772 5 8 5.44772 8 6V8H10V6C10 5.44772 9.55228 5 9 5Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           AVG persoonsgegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/privacy/loket/"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Loket persoonsgegevens gemeente Amsterdam
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleFirst"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Lopende verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <p
-            class="NoItemsMessage"
+            class="_NoItemsMessage_b93dc7"
           >
             U heeft nog geen AVG verzoeken ingediend.
           </p>
@@ -250,34 +335,45 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are no reque
       </div>
     </section>
     <section
-      class="SectionCollapsible"
+      class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Afgehandelde verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <p
-            class="NoItemsMessage"
+            class="_NoItemsMessage_b93dc7"
           >
             U hebt nog geen afgehandelde AVG verzoeken.
           </p>
@@ -288,122 +384,159 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are no reque
 </DocumentFragment>
 `;
 
-exports[`AVG thema pagina Matches the Full Page snapshot when there are requests 1`] = `
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are requests 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage AVG"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _AVG_7ac078"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32"
+          viewBox="0 0 32 32"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          AVG-verzoeken.svg
+          <path
+            clip-rule="evenodd"
+            d="M0 9C0 13.9706 4.02945 18 9 18V32H32V4H16.4845C14.8699 1.58801 12.1204 0 9 0C4.02945 0 0 4.02942 0 9ZM18 9C18 9.68738 17.9229 10.3568 17.777 11H26V13H17.0645C16.7026 13.7281 16.2451 14.4003 15.7083 15H26V17H15V15.7083C14.4003 16.2451 13.7281 16.7026 13 17.0645V28H28V8H17.9451C17.9814 8.32831 18 8.66199 18 9ZM15 19H26V21H15V19ZM26 23H15V25H26V23ZM9 3C7.34315 3 6 4.34315 6 6V8H5V14H13V8H12V6C12 4.34315 10.6569 3 9 3ZM9 5C8.44772 5 8 5.44772 8 6V8H10V6C10 5.44772 9.55228 5 9 5Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           AVG persoonsgegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hier ziet u een overzicht van uw ingediende AVG verzoeken.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/privacy/loket/"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Loket persoonsgegevens gemeente Amsterdam
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleFirst"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Lopende verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table"
+            class="_Table_a66dcc"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Nummer
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Ontvangen op
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Onderwerp
                 </th>
@@ -411,37 +544,46 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Nummer:
                   </span>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/avg/verzoek/1"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     1
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Ontvangen op:
                   </span>
@@ -450,10 +592,10 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Onderwerp:
                   </span>
@@ -468,51 +610,62 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
       </div>
     </section>
     <section
-      class="SectionCollapsible"
+      class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Afgehandelde verzoeken
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table"
+            class="_Table_a66dcc"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Nummer
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Ontvangen op
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Onderwerp
                 </th>
@@ -520,37 +673,46 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Nummer:
                   </span>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/avg/verzoek/223"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     223
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Ontvangen op:
                   </span>
@@ -559,10 +721,10 @@ exports[`AVG thema pagina Matches the Full Page snapshot when there are requests
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Onderwerp:
                   </span>

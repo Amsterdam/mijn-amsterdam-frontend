@@ -1,33 +1,24 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { BFFApiUrls } from '../../config/api';
+import { describe, expect, test, beforeEach, afterEach } from 'vitest';
+import { bffApi } from '../../../test-utils';
 import { appStateAtom } from '../../hooks';
 import { Search } from './Search';
-import * as remoteConfig from './search-config.json';
 import * as bagResponse from './bag-response.json';
+import * as remoteConfig from './search-config.json';
 
 describe('<Search />', () => {
-  afterAll(() => {
-    // Enable http requests.
-    nock.enableNetConnect();
-    nock.restore();
-  });
-
-  beforeAll(() => {
-    // Disable real http requests.
-    // All requests should be mocked.
-    nock.disableNetConnect();
-  });
-
   beforeEach(() => {
-    nock('http://localhost')
-      .get(BFFApiUrls.SEARCH_CONFIGURATION)
-      .reply(200, { content: remoteConfig });
+    bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
 
     nock('https://api.data.amsterdam.nl')
+      .defaultReplyHeaders({
+        'access-control-allow-origin': '*',
+        'access-control-allow-credentials': 'true',
+      })
       .get('/atlas/search/adres/?features=2&q=gehandicaptenparkeerkaart')
       .reply(200, { results: [] })
       .get('/atlas/search/adres/?features=2&q=Dashboard')
@@ -36,19 +27,30 @@ describe('<Search />', () => {
       .reply(200, bagResponse);
 
     nock('https://api.swiftype.com')
+      .defaultReplyHeaders({
+        'access-control-allow-origin': '*',
+        'access-control-allow-credentials': 'true',
+      })
       .get(
         '/api/v1/public/engines/suggest.json?q=gehandicaptenparkeerkaart&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
+      )
+      .reply(200, {})
+      .get(
+        '/api/v1/public/engines/suggest.json?q=Dashboard&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
+      )
+      .reply(200, {})
+      .get(
+        '/api/v1/public/engines/suggest.json?q=weesperplein&engine_key=zw32MDuzZjzNC8VutizD&per_page=10'
       )
       .reply(200, {});
   });
 
   afterEach(() => {
     nock.cleanAll();
-    jest.clearAllMocks();
   });
 
   test('Render search placeholder busy', async () => {
-    render(
+    const screen = render(
       <BrowserRouter>
         <RecoilRoot>
           <Search />
@@ -60,7 +62,7 @@ describe('<Search />', () => {
   });
 
   test('Render search placeholder ready', async () => {
-    render(
+    const screen = render(
       <BrowserRouter>
         <RecoilRoot
           initializeState={(snapshot) => {
@@ -78,7 +80,7 @@ describe('<Search />', () => {
   });
 
   test('Enter search text', async () => {
-    render(
+    const screen = render(
       <BrowserRouter>
         <RecoilRoot
           initializeState={(snapshot) => {
@@ -132,7 +134,7 @@ describe('<Search />', () => {
   });
 
   test('Finding address', async () => {
-    render(
+    const screen = render(
       <BrowserRouter>
         <RecoilRoot
           initializeState={(snapshot) => {

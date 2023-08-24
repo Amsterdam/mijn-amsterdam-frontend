@@ -13,6 +13,8 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
+import { describe, expect, it, test } from 'vitest';
+import { bffApi } from '../../../test-utils';
 
 const transformedVergunningen = transformVergunningenData(
   vergunningenData as any
@@ -40,7 +42,10 @@ function state(state: any) {
 }
 
 describe('<ToeristischVerhuurDetail />, vergunning', () => {
-  (window as any).scrollTo = jest.fn();
+  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
+    content: [],
+  });
+
   const vergunning = vergunningen?.find(
     (v) => v.caseType === 'Vakantieverhuur vergunningsaanvraag'
   );

@@ -1,52 +1,71 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -55,13 +74,35 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -71,7 +112,7 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -80,19 +121,41 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -113,24 +176,24 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -264,22 +327,31 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Inzien of correctie doorgeven
             </a>
@@ -288,24 +360,24 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -355,22 +427,31 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing doorgeven
             </a>
@@ -379,47 +460,58 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Burgerlijke staat
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenis"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -539,22 +631,31 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -566,47 +667,58 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere huwelijken of partnerschappen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenisHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -739,10 +851,10 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -862,22 +974,31 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -889,47 +1010,58 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Kinderen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-kinderen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -992,10 +1124,10 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1073,22 +1205,31 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -1100,47 +1241,58 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Ouders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-ouders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1231,10 +1383,10 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1326,7 +1478,7 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -1334,47 +1486,58 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vorige adressen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-adresHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1437,10 +1600,10 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1504,7 +1667,7 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -1512,14 +1675,14 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Gegevens van een levenloos geboren kindje ziet u niet in Mijn Amsterdam. U kunt die gegevens alleen inzien via 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://mijn.overheid.nl"
           rel="external noopener noreferrer"
         >
@@ -1528,7 +1691,7 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
         .
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
@@ -1537,53 +1700,72 @@ exports[`<Profile /> Matches the Full Page snapshot "Punt adres" in onderzoek 1`
 </DocumentFragment>
 `;
 
-exports[`<Profile /> Matches the Full Page snapshot 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -1592,13 +1774,35 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -1608,7 +1812,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -1617,19 +1821,41 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -1650,24 +1876,24 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -1801,22 +2027,31 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Inzien of correctie doorgeven
             </a>
@@ -1825,24 +2060,24 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -1892,22 +2127,31 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing doorgeven
             </a>
@@ -1916,47 +2160,58 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Burgerlijke staat
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenis"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2076,22 +2331,31 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -2103,47 +2367,58 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere huwelijken of partnerschappen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenisHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2276,10 +2551,10 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2399,22 +2674,31 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -2426,47 +2710,58 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Kinderen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-kinderen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2529,10 +2824,10 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2610,22 +2905,31 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -2637,47 +2941,58 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Ouders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-ouders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2768,10 +3083,10 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2863,7 +3178,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -2871,47 +3186,58 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vorige adressen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-adresHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -2974,10 +3300,10 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -3041,7 +3367,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -3049,14 +3375,14 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Gegevens van een levenloos geboren kindje ziet u niet in Mijn Amsterdam. U kunt die gegevens alleen inzien via 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://mijn.overheid.nl"
           rel="external noopener noreferrer"
         >
@@ -3065,7 +3391,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
         .
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
@@ -3074,53 +3400,72 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -3129,13 +3474,35 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -3145,7 +3512,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -3154,19 +3521,41 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -3187,24 +3576,24 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -3352,22 +3741,31 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Inzien of correctie doorgeven
             </a>
@@ -3376,24 +3774,24 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -3443,22 +3841,31 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing doorgeven
             </a>
@@ -3467,47 +3874,58 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere huwelijken of partnerschappen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenisHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -3654,10 +4072,10 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -3791,22 +4209,31 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -3818,47 +4245,58 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Kinderen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-kinderen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -3935,10 +4373,10 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -4030,22 +4468,31 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -4057,47 +4504,58 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Ouders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-ouders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -4202,10 +4660,10 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -4311,7 +4769,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -4319,47 +4777,58 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vorige adressen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-adresHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -4422,10 +4891,10 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -4489,7 +4958,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -4497,14 +4966,14 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Gegevens van een levenloos geboren kindje ziet u niet in Mijn Amsterdam. U kunt die gegevens alleen inzien via 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://mijn.overheid.nl"
           rel="external noopener noreferrer"
         >
@@ -4513,7 +4982,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
         .
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
@@ -4522,53 +4991,72 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -4580,13 +5068,35 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -4596,7 +5106,7 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -4605,19 +5115,41 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -4638,24 +5170,24 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -4789,29 +5321,29 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         />
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -4861,22 +5393,31 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing naar Amsterdam doorgeven
             </a>
@@ -4888,53 +5429,72 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -4943,13 +5503,35 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -4959,7 +5541,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -4968,19 +5550,41 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -5001,24 +5605,24 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -5152,22 +5756,31 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Inzien of correctie doorgeven
             </a>
@@ -5176,24 +5789,24 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -5243,22 +5856,31 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing doorgeven
             </a>
@@ -5267,47 +5889,58 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Burgerlijke staat
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenis"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -5427,22 +6060,31 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -5454,47 +6096,58 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere huwelijken of partnerschappen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenisHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -5627,10 +6280,10 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -5750,22 +6403,31 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -5777,47 +6439,58 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Kinderen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-kinderen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -5880,10 +6553,10 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -5961,22 +6634,31 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -5988,47 +6670,58 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Ouders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-ouders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -6119,10 +6812,10 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -6214,7 +6907,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -6222,47 +6915,58 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vorige adressen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-adresHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -6325,10 +7029,10 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -6392,7 +7096,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -6400,14 +7104,14 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Gegevens van een levenloos geboren kindje ziet u niet in Mijn Amsterdam. U kunt die gegevens alleen inzien via 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://mijn.overheid.nl"
           rel="external noopener noreferrer"
         >
@@ -6416,7 +7120,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
         .
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>
@@ -6425,53 +7129,72 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
 </DocumentFragment>
 `;
 
-exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
+exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage Profile"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _Profile_a22688"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn gegevens"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="30px"
+          viewBox="0 0 30 30"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          MijnGegevens.svg
+          <title>
+            Mijn gegevens icoon
+          </title>
+          <path
+            d="M15,0 C18.9782473,0 22.793556,1.58035261 25.6066017,4.39339828 C28.4196474,7.20644396 30,11.0217527 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,4 C8.92486775,4 4,8.92486775 4,15 C4,21.0751322 8.92486775,26 15,26 C21.0751322,26 26,21.0751322 26,15 C26,8.92486775 21.0751322,4 15,4 Z M15,16 C17.2135009,16 21.0684044,16.9513859 22.9315561,18.731182 C21.4114702,21.8683108 18.4297823,24 15,24 C11.5698561,24 8.58790108,21.8678613 7.06907756,18.7312979 C8.92677829,16.9511554 12.7756454,16 15,16 Z M15,6 C17.209139,6 19,7.790861 19,10 C19,12.209139 17.209139,14 15,14 C12.790861,14 11,12.209139 11,10 C11,7.790861 12.790861,6 15,6 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Mijn gegevens
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus dat deze gegevens kloppen.
@@ -6480,13 +7203,35 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <div
-        class="Alert warning vertrokkenOnbekendWaarheen"
+        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
@@ -6496,7 +7241,7 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
           Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
           <a
             aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -6505,19 +7250,41 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
         </p>
       </div>
       <div
-        class="Alert warning inOnderzoek"
+        class="_Alert_21b118 _warning_21b118 inOnderzoek"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>
           Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
           <a
-            class="Button Button__inline Button__lean Linkd LinkedInline"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
             href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
             rel="external noopener noreferrer"
           >
@@ -6538,24 +7305,24 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__persoonlijke-gegevens persoonlijke-gegevens"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__persoonlijke-gegevens persoonlijke-gegevens"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -6689,22 +7456,31 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Inzien of correctie doorgeven
             </a>
@@ -6713,24 +7489,24 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel AddressPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="_Heading_2bd2a4 _Heading__medium_2bd2a4 _Title_37c468"
       >
         Adres
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__adres adres"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__adres adres"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -6750,22 +7526,31 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         >
           <li>
             <a
-              class="Button Button__plain Button__lean Linkd"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
               rel="external noopener noreferrer"
             >
               <svg
                 aria-hidden="true"
-                class="Icon Icon__left"
+                class="_Icon_c3ab45 _Icon__left_c3ab45"
                 fill="#000"
+                focusable="false"
                 height="14px"
+                viewBox="0 0 32 32"
                 width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Chevron-Right.svg
+                <title>
+                  chevron-rechts-icoon
+                </title>
+                <polygon
+                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                />
               </svg>
               Verhuizing doorgeven
             </a>
@@ -6774,47 +7559,58 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Burgerlijke staat
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenis"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -6934,22 +7730,31 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -6961,47 +7766,58 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere huwelijken of partnerschappen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel Verbintenis CollapsiblePanel"
+            class="_InfoPanel_37c468 _Verbintenis_a22688 _CollapsiblePanel_a22688"
             id="profile-verbintenisHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7134,10 +7950,10 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7257,22 +8073,31 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -7284,47 +8109,58 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Kinderen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-kinderen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7387,10 +8223,10 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7468,22 +8304,31 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               >
                 <li>
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D"
                     rel="external noopener noreferrer"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Inzien of correctie doorgeven
                   </a>
@@ -7495,47 +8340,58 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Ouders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-ouders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7626,10 +8482,10 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7721,7 +8577,7 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -7729,47 +8585,58 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vorige adressen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="profile-adresHistorisch"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7832,10 +8699,10 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -7899,7 +8766,7 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -7907,14 +8774,14 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Gegevens van een levenloos geboren kindje ziet u niet in Mijn Amsterdam. U kunt die gegevens alleen inzien via 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://mijn.overheid.nl"
           rel="external noopener noreferrer"
         >
@@ -7923,7 +8790,7 @@ exports[`<Profile /> Matches the Full Page snapshot no address known 1`] = `
         .
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Op deze pagina laten wij uw gegevens zien uit de landelijke en Amsterdamse administratie. Gegevens die bij een andere gemeente zijn geregistreerd worden hier niet getoond.
       </p>

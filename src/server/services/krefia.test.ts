@@ -24,7 +24,7 @@ describe('Kredietbank & FIBU service', () => {
     axMock = new MockAdapter(axiosRequest);
     axMock.onGet(DUMMY_URL_KREFIA).reply(200, KREFIA_DUMMY_RESPONSE);
 
-    axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
+    axiosRequestSpy = vi.spyOn(axiosRequest, 'request');
   });
 
   afterEach(() => {

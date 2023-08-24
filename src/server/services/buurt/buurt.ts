@@ -119,6 +119,7 @@ export async function fetchDataset(
 
   if (response.status === 'OK') {
     const filterConfig = getDynamicDatasetFilters(datasetId);
+
     const filters =
       filterConfig &&
       createDynamicFilterConfig(datasetId, response.content, filterConfig);

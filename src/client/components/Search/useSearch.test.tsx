@@ -19,6 +19,10 @@ import {
   useSearchIndex,
 } from './useSearch';
 
+import { vi, test, describe, afterEach, expect } from 'vitest';
+import { bffApi } from '../../../test-utils';
+import * as remoteConfig from './search-config.json';
+
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {
     return new Promise((resolve) => {
@@ -84,8 +88,10 @@ const krefiaData = {
 };
 
 describe('Search hooks and helpers', () => {
+  bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
+
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('generateSearchIndexPageEntry', () => {
@@ -154,11 +160,11 @@ describe('Search hooks and helpers', () => {
       ]
     );
     expect(pageEntries).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "description": "Bekijk Europse gehandicaptenparkeerkaart (GPK)",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "GPK",
             "Europse gehandicaptenparkeerkaart (GPK)",
             "Z/000/000008",
@@ -168,10 +174,10 @@ describe('Search hooks and helpers', () => {
           ],
           "url": "/buurt/vergunningen/detail/1726584505",
         },
-        Object {
+        {
           "description": "Bekijk Tijdelijke verkeersmaatregel",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "Omzettingsvergunning",
             "Tijdelijke verkeersmaatregel",
             "Z/000/000001",
@@ -181,10 +187,10 @@ describe('Search hooks and helpers', () => {
           ],
           "url": "/vergunningen/detail/1467362160",
         },
-        Object {
+        {
           "description": "Bekijk Parkeerontheffingen Blauwe zone particulieren",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "Parkeerontheffingen Blauwe zone particulieren",
             "Z/21/1500000",
             "Afgehandeld",
@@ -223,7 +229,7 @@ describe('Search hooks and helpers', () => {
         ...remoteConfig,
       },
     ]);
-    expect(pageEntries).toMatchInlineSnapshot(`Array []`);
+    expect(pageEntries).toMatchInlineSnapshot('[]');
     config.isEnabled = true;
     const pageEntriesEnabled = generateSearchIndexPageEntries(
       'private',
@@ -236,11 +242,11 @@ describe('Search hooks and helpers', () => {
       ]
     );
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "description": "Bekijk Beheer uw budget op FiBu",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "Beheer uw budget op FiBu",
             "lening",
             "fibu",
@@ -251,10 +257,10 @@ describe('Search hooks and helpers', () => {
           ],
           "url": "http://host/bbr/2064866/3",
         },
-        Object {
+        {
           "description": "Bekijk Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "Kredietsom €1.689,12 met openstaand termijnbedrag €79,66",
             "lening",
             "fibu",
@@ -265,10 +271,10 @@ describe('Search hooks and helpers', () => {
           ],
           "url": "http://host/pl/2442531/1",
         },
-        Object {
+        {
           "description": "Bekijk Afkoopvoorstellen zijn verstuurd",
           "displayTitle": [Function],
-          "keywords": Array [
+          "keywords": [
             "Afkoopvoorstellen zijn verstuurd",
             "lening",
             "fibu",
@@ -285,9 +291,7 @@ describe('Search hooks and helpers', () => {
   });
 
   test('useSearchIndex <failure>', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockImplementation(() => Promise.reject() as any);
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject() as any);
 
     const wrapper = ({ children }: { children: ReactChildren }) => (
       <RecoilRoot

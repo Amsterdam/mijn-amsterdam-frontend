@@ -24,6 +24,18 @@ import {
   getDynamicDatasetFilters,
 } from './helpers';
 
+import {
+  vi,
+  describe,
+  expect,
+  it,
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  Mock,
+} from 'vitest';
+
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },
   { properties: { foo: 'hop', bar: true } },
@@ -120,21 +132,22 @@ const DATASET_RESULT_MULTI_WITH_ERRORS = {
   ],
 };
 
-jest.mock('./helpers');
-jest.mock('../../helpers/source-api-request');
-jest.mock('../../helpers/file-cache');
-jest.mock('../../../universal/config/env', () => {
+vi.mock('./helpers');
+vi.mock('../../helpers/source-api-request');
+vi.mock('../../helpers/file-cache');
+vi.mock('../../../universal/config/env', () => {
   return {
     IS_AP: true,
+    IS_PRODUCTION: false,
     getOtapEnvItem: (key: string) => key,
   };
 });
-jest.mock('../../../universal/config/myarea-datasets');
+vi.mock('../../../universal/config/myarea-datasets');
 
-const cacheGetKey = jest.fn();
-const cacheSetKey = jest.fn();
-const cacheSave = jest.fn();
-const cacheIsStale = jest.fn();
+const cacheGetKey = vi.fn();
+const cacheSetKey = vi.fn();
+const cacheSave = vi.fn();
+const cacheIsStale = vi.fn();
 
 function mockFileCache() {
   return {
@@ -146,15 +159,17 @@ function mockFileCache() {
 }
 
 describe('Buurt services', () => {
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('Should fetchDataset, cache and return cached dataset on future invocations', async () => {
-    (FileCache as jest.Mock).mockImplementation(mockFileCache);
-    (requestData as jest.Mock).mockResolvedValue(DUMMY_DATA_RESPONSE);
-    (getDynamicDatasetFilters as jest.Mock).mockReturnValue(
+    (FileCache as Mock).mockImplementation(mockFileCache);
+    (requestData as Mock).mockResolvedValue(DUMMY_DATA_RESPONSE);
+    (getDynamicDatasetFilters as Mock).mockReturnValue(
       DATASET_FILTER_CONFIG_MOCK
     );
-    (createDynamicFilterConfig as jest.Mock).mockReturnValue(
-      DATASET_FILTERS_MOCK
-    );
+    (createDynamicFilterConfig as Mock).mockReturnValue(DATASET_FILTERS_MOCK);
 
     // First call fetches data from source api
     const result = await service.fetchDataset(
@@ -186,8 +201,8 @@ describe('Buurt services', () => {
     expect(result).toEqual(SERVICE_RESULT);
 
     // Second call, testing the cached result
-    (FileCache as jest.Mock).mockReset();
-    (requestData as jest.Mock).mockReset();
+    (FileCache as Mock).mockReset();
+    (requestData as Mock).mockReset();
     cacheGetKey.mockReset();
     cacheGetKey
       .mockReturnValueOnce(SERVICE_RESULT.content.features)
@@ -206,23 +221,23 @@ describe('Buurt services', () => {
   });
 
   it('Should loadDatasetFeatures', async () => {
-    (FileCache as jest.Mock).mockImplementation(mockFileCache);
+    (FileCache as Mock).mockImplementation(mockFileCache);
 
-    (requestData as jest.Mock)
+    (requestData as Mock)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE2)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE_ERROR);
 
     // Only for the first dataset
-    (getDynamicDatasetFilters as jest.Mock).mockReturnValueOnce(
+    (getDynamicDatasetFilters as Mock).mockReturnValueOnce(
       DATASET_FILTER_CONFIG_MOCK
     );
 
-    (datasetApiResult as jest.Mock).mockReturnValueOnce(
+    (datasetApiResult as Mock).mockReturnValueOnce(
       DATASET_RESULT_MULTI_WITH_ERRORS
     );
 
-    (createDynamicFilterConfig as jest.Mock).mockReturnValueOnce(
+    (createDynamicFilterConfig as Mock).mockReturnValueOnce(
       DATASET_FILTERS_MOCK
     );
 
@@ -232,41 +247,39 @@ describe('Buurt services', () => {
       [datasetId3, datasetConfig3],
     ]);
 
-    expect(datasetApiResult).toHaveBeenCalledWith([
+    const argumentsCalled = [
       { ...SERVICE_RESULT, id: datasetId },
       { ...SERVICE_RESULT2, id: datasetId2 },
       { ...DUMMY_DATA_RESPONSE_ERROR, id: datasetId3 },
-    ]);
+    ];
+
+    expect(datasetApiResult).toHaveBeenCalledWith(argumentsCalled);
 
     expect(result).toEqual(DATASET_RESULT_MULTI_WITH_ERRORS);
   });
 
   it('Should loadPolylineFeatures', async () => {
-    (FileCache as jest.Mock).mockImplementation(mockFileCache);
-    (requestData as jest.Mock)
+    (FileCache as Mock).mockImplementation(mockFileCache);
+    (requestData as Mock)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE2);
-    (getDynamicDatasetFilters as jest.Mock)
+    (getDynamicDatasetFilters as Mock)
       .mockReturnValueOnce(DATASET_FILTER_CONFIG_MOCK)
       .mockReturnValueOnce(null);
-    (createDynamicFilterConfig as jest.Mock).mockReturnValue(
-      DATASET_FILTERS_MOCK
-    );
+    (createDynamicFilterConfig as Mock).mockReturnValue(DATASET_FILTERS_MOCK);
 
-    (getDatasetEndpointConfig as jest.Mock).mockReturnValueOnce([
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([
       [datasetId, datasetConfig],
       [datasetId2, datasetConfig2],
     ]);
 
-    (datasetApiResult as jest.Mock).mockReturnValueOnce(DATASET_RESULT_MULTI);
+    (datasetApiResult as Mock).mockReturnValueOnce(DATASET_RESULT_MULTI);
 
-    (filterPolylineFeaturesWithinBoundingBox as jest.Mock).mockReturnValueOnce(
+    (filterPolylineFeaturesWithinBoundingBox as Mock).mockReturnValueOnce(
       DATASET_RESULT_MULTI.features
     );
 
-    (filterAndRefineFeatures as jest.Mock).mockReturnValueOnce(
-      DATASET_RESULT_MULTI
-    );
+    (filterAndRefineFeatures as Mock).mockReturnValueOnce(DATASET_RESULT_MULTI);
 
     const filterSelection = { 'test-dataset': DATASET_FILTERS_MOCK };
 
@@ -312,13 +325,11 @@ describe('Buurt services', () => {
   });
 
   it('Should loadFeatureDetail', async () => {
-    (getDatasetEndpointConfig as jest.Mock).mockReturnValueOnce([
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([
       [datasetId, datasetConfig],
     ]);
 
-    (requestData as jest.Mock).mockResolvedValueOnce(
-      DUMMY_DATA_DETAIL_RESPONSE
-    );
+    (requestData as Mock).mockResolvedValueOnce(DUMMY_DATA_DETAIL_RESPONSE);
 
     const detailItemId = 'x-detail';
 
@@ -339,7 +350,7 @@ describe('Buurt services', () => {
   });
 
   it('Should fail to loadFeatureDetail', async () => {
-    (getDatasetEndpointConfig as jest.Mock).mockReturnValueOnce([]);
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([]);
     const detailItemId = 'x';
     const result = await service.loadFeatureDetail(
       requestID,

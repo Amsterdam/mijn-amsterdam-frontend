@@ -12,7 +12,7 @@ describe('<DateInput />', () => {
   });
 
   it('Calls back with a Date from the native datepicker', () => {
-    const onChange = jest.fn(() => {});
+    const onChange = vi.fn(() => {});
     render(<DateInput value={new Date('2019-11-11')} onChange={onChange} />);
 
     userEvent.type(screen.getByDisplayValue('2019-11-11'), '2019-11-12');
@@ -21,14 +21,14 @@ describe('<DateInput />', () => {
   });
 
   it('Does not allow a wrong date', () => {
-    const onChange = jest.fn(() => {});
+    const onChange = vi.fn(() => {});
     render(<DateInput value={parseISO('20000-01-01')} onChange={onChange} />);
 
     expect(onChange).not.toHaveBeenCalled();
   });
 
   it('Does not allow changing to a wrong date', () => {
-    const onChange = jest.fn(() => {});
+    const onChange = vi.fn(() => {});
     render(<DateInput value={new Date('2019-11-11')} onChange={onChange} />);
     userEvent.type(screen.getByDisplayValue('2019-11-11'), '3333333-11-12');
 
@@ -36,7 +36,7 @@ describe('<DateInput />', () => {
   });
 
   it('Calls back with a Date from the replacement picker', () => {
-    const onChange = jest.fn(() => {});
+    const onChange = vi.fn(() => {});
     render(
       <DateInput
         value={new Date(2019, 9, 12)}

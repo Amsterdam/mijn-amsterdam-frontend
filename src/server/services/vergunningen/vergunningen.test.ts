@@ -213,13 +213,13 @@ describe('Vergunningen service', () => {
 
       const notifications = createVergunningNotifications(tvmDummy);
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2020-06-24T00:00:00",
             "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
             "id": "vergunning-3607535691-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
@@ -241,13 +241,13 @@ describe('Vergunningen service', () => {
 
       const notifications = createVergunningNotifications(tvmDummy);
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2018-01-23",
             "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
             "id": "vergunning-2247558132-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/2247558132",
             },
@@ -268,13 +268,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(tvmDummy);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-04",
             "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
             "id": "vergunning-3607535691-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/tvm-rvv-object/3607535691",
             },
@@ -296,13 +296,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(bzpDummy);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-28",
             "description": "Uw ontheffing blauwe zone (GD-33-MV) loopt op 28 december 2022 af.",
             "id": "vergunning-2295682720-notification",
-            "link": Object {
+            "link": {
               "title": "Vraag op tijd een nieuwe ontheffing aan",
               "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
             },
@@ -324,13 +324,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(bzpDummy);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-06",
             "description": "Uw ontheffing blauwe zone (GD-33-MV) is op 06 september 2022 verlopen.",
             "id": "vergunning-2295682720-notification",
-            "link": Object {
+            "link": {
               "title": "Vraag een nieuwe ontheffing aan",
               "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
             },
@@ -366,13 +366,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(gpkDummy);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-06",
             "description": "Uw Europese gehandicaptenparkeerkaart (GPK) loopt binnenkort af.",
             "id": "vergunning-1221166450-notification",
-            "link": Object {
+            "link": {
               "title": "Vraag tijdig een nieuwe vergunning aan",
               "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
             },
@@ -394,13 +394,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(gpkDummy);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-08-06",
             "description": "Uw Europese gehandicaptenparkeerkaart (GPK) is verlopen.",
             "id": "vergunning-1221166450-notification",
-            "link": Object {
+            "link": {
               "title": "Vraag zonodig een nieuwe vergunning aan",
               "to": "https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/GehandicaptenParkeerKaartAanvraag.aspx",
             },
@@ -422,7 +422,7 @@ describe('Vergunningen service', () => {
 
       const notifications = createVergunningNotifications(gpkDummy);
 
-      expect(notifications).toMatchInlineSnapshot(`Array []`);
+      expect(notifications).toMatchInlineSnapshot('[]');
     });
 
     test('GPK: Gaat verlopen - geen melding want aanvraag gevonden', () => {
@@ -449,13 +449,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(gpkDummy, gpkDummy2);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-04",
             "description": "Uw vergunningsaanvraag europese gehandicaptenparkeerkaart (gpk) is afgehandeld.",
             "id": "vergunning-1056864091-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
@@ -476,13 +476,13 @@ describe('Vergunningen service', () => {
       const notifications2 = createVergunningNotifications(gpkDummy, gpkDummy3);
 
       expect(notifications2).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-23",
             "description": "Uw vergunningsaanvraag europese gehandicaptenparkeerkaart (gpk) is in behandeling genomen.",
             "id": "vergunning-1056864091-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/gpk/1056864091",
             },
@@ -509,13 +509,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(omzettingsVergunning);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-09-27",
             "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
             "id": "vergunning-1037482200-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/omzettingsvergunning/1037482200",
             },
@@ -543,13 +543,13 @@ describe('Vergunningen service', () => {
       const notifications = createVergunningNotifications(omzettingsVergunning);
 
       expect(notifications).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "chapter": "VERGUNNINGEN",
             "datePublished": "2022-10-20",
             "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is afgehandeld.",
             "id": "vergunning-1037482200-notification",
-            "link": Object {
+            "link": {
               "title": "Bekijk details",
               "to": "/vergunningen/omzettingsvergunning/1037482200",
             },
@@ -567,8 +567,8 @@ describe('Vergunningen service', () => {
       AppRoutes['VERGUNNINGEN/DETAIL']
     );
     expect(vergunningenWithLinks).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "caseType": "Parkeerontheffingen Blauwe zone particulieren",
           "dateDecision": null,
           "dateEnd": null,
@@ -581,7 +581,7 @@ describe('Vergunningen service', () => {
           "id": "2191426354",
           "identifier": "Z/22/19795392",
           "kenteken": "GD-33-MV",
-          "link": Object {
+          "link": {
             "title": "Bekijk hoe het met uw aanvraag staat",
             "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2191426354",
           },
@@ -611,85 +611,85 @@ describe('Vergunningen service', () => {
     );
 
     expect(notifications).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-23T11:21:33",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/verleend) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (nieuw/verleend) afgehandeld",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-26T00:00:00",
           "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg (BB-344-P, VV-899-C) in behandeling genomen",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-26T00:00:00",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/ingetrokken) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (wijziging/ingetrokken) afgehandeld",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-28T00:00:00",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/verleend) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (wijziging/verleend) afgehandeld",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-03T00:00:00",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (wijziging/verlopen) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (wijziging/verlopen) afgehandeld",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-03T00:00:00",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/verlopen) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (nieuw/verlopen) afgehandeld",
         },
-        Object {
+        {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-03T00:00:00",
           "description": "Uw aanvraag voor een rvv ontheffing sloterweg (nieuw/ingetrokken) is afgehandeld.",
           "id": "vergunning-unique-id-of-zaak-notification",
-          "link": Object {
+          "link": {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },

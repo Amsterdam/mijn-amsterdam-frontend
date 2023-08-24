@@ -174,7 +174,7 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
   );
 
   beforeAll(() => {
-    (window as any).scrollBy = jest.fn();
+    (window as any).scrollBy = vi.fn();
   });
 
   it('Matches the Full Page snapshot', () => {

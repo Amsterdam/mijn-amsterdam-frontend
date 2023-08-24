@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import Pagination from './Pagination';
 
 describe('<Pagination />', () => {
-  const onPageClick = jest.fn();
+  const onPageClick = vi.fn();
   it('Renders without crashing', async () => {
     const { rerender } = render(
       <Pagination

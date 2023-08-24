@@ -45,7 +45,7 @@ export function useProfileType() {
   return state;
 }
 
-export function useProfileTypeValue() {
+export function useProfileTypeValue(): ProfileType {
   return useRecoilValue(profileTypeState);
 }
 

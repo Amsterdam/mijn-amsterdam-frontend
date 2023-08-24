@@ -7,7 +7,7 @@ import { RecoilRoot } from 'recoil';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
-jest.mock('../../hooks/useProfileType');
+vi.mock('../../hooks/useProfileType');
 
 const TIPS: MyTip[] = [
   {
@@ -30,10 +30,9 @@ const TIPS: MyTip[] = [
 ];
 
 describe('<MyTips />', () => {
-  (useProfileTypeValue as jest.Mock).mockResolvedValueOnce('prive');
+  (useProfileTypeValue as vi.Mock).mockResolvedValueOnce('prive');
 
   it('Renders without crashing', () => {
-    (window as any).scrollTo = jest.fn();
     render(
       <MemoryRouter>
         <RecoilRoot>

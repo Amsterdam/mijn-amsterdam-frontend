@@ -1,4 +1,4 @@
-import flatCache from 'flat-cache';
+import { load, clearCacheById, Cache } from 'flat-cache';
 import fs from 'fs';
 import path from 'path';
 import { createHash } from 'node:crypto';
@@ -31,7 +31,7 @@ export function cacheOverview() {
         .filter((name) => name.endsWith(`.${EXT}`))
         .map((file) => {
           const [env, name] = file.split('.');
-          const fileCache = flatCache.load(fileName(name), DEFAULT_CACHE_DIR);
+          const fileCache = load(fileName(name), DEFAULT_CACHE_DIR);
           return {
             name,
             env,
@@ -59,7 +59,7 @@ export default class FileCache {
   name: string;
   name_: string;
   path?: string;
-  cache: flatCache.Cache;
+  cache: Cache;
   expire: number | false;
   hashes: string[];
   triesUntilConsiderdStale: number;
@@ -73,7 +73,7 @@ export default class FileCache {
     this.name = fileName(name);
     this.path = path;
     this.name_ = name;
-    this.cache = flatCache.load(this.name, path);
+    this.cache = load(this.name, path);
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
     this.hashes = [];
@@ -121,13 +121,12 @@ export default class FileCache {
   }
 
   remove() {
-    flatCache.clearCacheById(this.name, this.path);
+    clearCacheById(this.name, this.path);
     this.hashes = [];
   }
 
   getKeyStale(key: string, isProd: boolean = IS_AP) {
-    return flatCache.load(fileName(this.name_, isProd), this.path).getKey(key)
-      ?.data;
+    return load(fileName(this.name_, isProd), this.path).getKey(key)?.data;
   }
 
   isStale() {

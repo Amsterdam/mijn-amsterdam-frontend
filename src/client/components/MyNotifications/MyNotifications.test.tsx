@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
 import { defaultDateFormat } from '../../../universal/helpers';
 
-const callback = jest.fn();
+const callback = vi.fn();
 
 const NOTIFICATIONS: MyNotification[] = [
   {

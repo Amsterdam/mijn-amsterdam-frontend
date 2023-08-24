@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Transform api items All transformations 1`] = `
-Array [
-  Object {
+exports[`Transform api items > All transformations 1`] = `
+[
+  {
     "dateEnd": "",
     "dateStart": "15 januari 2022",
     "id": "102996420",
     "isActual": true,
     "itemTypeCode": "WMH",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/102996420",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U krijgt dit besluit per post.
@@ -31,43 +31,43 @@ Array [
                   
               </p>
             ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": true,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
         "isVisible": true,
         "status": "Levering gestart",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
         "isVisible": true,
         "status": "Levering gestopt",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -78,18 +78,18 @@ Array [
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (nog niet geleverd)",
   },
-  Object {
+  {
     "dateEnd": "10 maart 2022",
     "dateStart": "03 januari 2022",
     "id": "3519644845",
     "isActual": false,
     "itemTypeCode": "WRA",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3519644845",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U hebt dit besluit per post ontvangen.
@@ -105,32 +105,32 @@ Array [
               indienen.
             </p>
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             De gemeente heeft opdracht gegeven aan JTWD - Zorg om de aanpassingen aan uw woning uit
             te voeren.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Opdracht gegeven",
       },
-      Object {
+      {
         "datePublished": "2022-03-10",
         "description": "<p>
             Uw recht op woonruimteaanpassing is beëindigd per 10 maart 2022
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": true,
         "isChecked": true,
@@ -141,18 +141,18 @@ Array [
     "supplier": "JTWD - Zorg",
     "title": "Woonruimteaanpassing",
   },
-  Object {
+  {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "3957012630",
     "isActual": true,
     "itemTypeCode": "WMH",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3957012630",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U krijgt dit besluit per post.
@@ -170,43 +170,43 @@ Array [
                   
               </p>
             ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
         "isVisible": true,
         "status": "Levering gestart",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
         "isVisible": true,
         "status": "Levering gestopt",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -217,18 +217,18 @@ Array [
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (geleverd)",
   },
-  Object {
+  {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "4155084517",
     "isActual": true,
     "itemTypeCode": "WMH",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/4155084517",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U krijgt dit besluit per post.
@@ -246,43 +246,43 @@ Array [
                   
               </p>
             ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Levering gestart",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Niet van toepassing.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-2",
         "isActive": true,
         "isChecked": true,
         "isVisible": true,
         "status": "Levering gestopt",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd 
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -293,18 +293,18 @@ Array [
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (tijdelijk gestopt)",
   },
-  Object {
+  {
     "dateEnd": "22 januari 2022",
     "dateStart": "15 december 2021",
     "id": "3454563024",
     "isActual": false,
     "itemTypeCode": "WMH",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3454563024",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U hebt dit besluit per post ontvangen.
@@ -320,44 +320,44 @@ Array [
               indienen.
               </p>
             ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Levering gestart",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
             meer krijgt.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-2",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Levering gestopt",
       },
-      Object {
+      {
         "datePublished": "2022-01-22",
         "description": "<p>
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": true,
         "isChecked": true,
@@ -368,18 +368,18 @@ Array [
     "supplier": "Emile Thuiszorg",
     "title": "Hulp bij het huishouden (gestopt)",
   },
-  Object {
+  {
     "dateEnd": "",
     "dateStart": "15 december 2021",
     "id": "747844866",
     "isActual": true,
     "itemTypeCode": "WRA",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/747844866",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U krijgt dit besluit per post.
@@ -395,45 +395,45 @@ Array [
               indienen.
             </p>
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             De gemeente heeft opdracht gegeven aan Aanpassing Thuiszorg om de aanpassingen aan uw woning uit
             te voeren.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
         "isVisible": true,
         "status": "Opdracht gegeven",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Aanpassing Thuiszorg heeft aan ons doorgegeven dat de
             aanpassing aan uw woning is uitgevoerd.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-2",
         "isActive": false,
         "isChecked": false,
         "isVisible": true,
         "status": "Aanpassing uitgevoerd",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "<p>
             Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
           </p>",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-3",
         "isActive": false,
         "isChecked": false,
@@ -444,18 +444,18 @@ Array [
     "supplier": "Aanpassing Thuiszorg",
     "title": "Woonruimte aanpassing (opdracht gegeven)",
   },
-  Object {
+  {
     "dateEnd": "23 november 2018",
     "dateStart": "24 november 2017",
     "id": "3995408655",
     "isActual": false,
     "itemTypeCode": "AO5",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3995408655",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U hebt dit besluit per post ontvangen.
@@ -471,14 +471,14 @@ Array [
               indienen.
             </p>
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": false,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "2018-11-23",
         "description": "
             <p>
@@ -487,7 +487,7 @@ Array [
 
             
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": true,
         "isChecked": true,
@@ -498,18 +498,18 @@ Array [
     "supplier": "PGB Ring",
     "title": "PGB item 1",
   },
-  Object {
+  {
     "dateEnd": "",
     "dateStart": "28 april 2016",
     "id": "3551611681",
     "isActual": true,
     "itemTypeCode": "MVV",
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/3551611681",
     },
-    "steps": Array [
-      Object {
+    "steps": [
+      {
         "altDocumentContent": "<p>
             <strong>
               U krijgt dit besluit per post.
@@ -525,14 +525,14 @@ Array [
               indienen.
             </p>
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-0",
         "isActive": true,
         "isChecked": true,
         "isVisible": true,
         "status": "Besluit",
       },
-      Object {
+      {
         "datePublished": "",
         "description": "
             <p>
@@ -540,7 +540,7 @@ Array [
             </p>
             
           ",
-        "documents": Array [],
+        "documents": [],
         "id": "status-step-1",
         "isActive": false,
         "isChecked": false,
