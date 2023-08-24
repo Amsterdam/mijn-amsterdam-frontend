@@ -16,7 +16,7 @@ type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
 function getBrowserEnv() {
-  return process.env.REACT_APP_ENV || 'production';
+  return import.meta.env.REACT_APP_ENV || 'production';
 }
 
 function isBrowser() {
@@ -41,7 +41,7 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
-    bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
+    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
@@ -61,7 +61,7 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
-    bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
+    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
@@ -77,7 +77,7 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
-    bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
+    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:

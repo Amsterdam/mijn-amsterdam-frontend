@@ -17,6 +17,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     sourcemap: true,
+    target: 'es2015',
   },
   plugins: [
     react(),
