@@ -1,5 +1,4 @@
 const express = require('express');
-const setupProxy = require('../src/setupProxy');
 const path = require('path');
 const compression = require('compression');
 const fs = require('fs');
@@ -8,9 +7,6 @@ const app = express();
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
-
-// Use the same proxy as webpack-dev-server during development (npm start)
-setupProxy(app);
 
 let cfg = '';
 
