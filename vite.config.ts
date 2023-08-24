@@ -16,6 +16,7 @@ export default defineConfig({
   envPrefix: 'REACT_APP_',
   build: {
     outDir: 'build',
+    sourcemap: true,
   },
   plugins: [
     react(),

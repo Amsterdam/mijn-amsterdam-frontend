@@ -8,8 +8,6 @@
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
-    "serve-build": "concurrently \"npm:bff-api:serve-build\" \"node scripts/serveBuild\"",
-    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
@@ -117,6 +115,7 @@
     "slugme": "^1.1.1",
     "supercluster": "^7.1.4",
     "throttle-debounce": "^3.0.1",
+    "ts-node": "^10.9.1",
     "typescript": "^4.7.3",
     "uid-safe": "^2.1.5",
     "use-debounce": "^7.0.1",
