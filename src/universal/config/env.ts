@@ -15,20 +15,24 @@ interface EnvVars {
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
-function getBrowserEnv() {
-  return import.meta.env.REACT_APP_ENV || 'production';
-}
-
-function isBrowser() {
+function getAppMode() {
   // @ts-ignore
-  return typeof window !== 'undefined' && !!window.document;
+  const browserAppMode =
+    typeof window !== 'undefined' ? (window as any).MA_APP_MODE : undefined;
+  return browserAppMode || process.env.MODE || 'production';
 }
 
-export const ENV = `${
-  isBrowser() ? getBrowserEnv() : process.env.BFF_ENV ?? 'development'
-}` as OtapEnvName;
+function getOtapEnv() {
+  // @ts-ignore
+  const browserOtapEnv =
+    typeof window !== 'undefined' ? (window as any).MA_OTAP_ENV : undefined;
+  const nodeOtapEnv = process.env.MA_OTAP_ENV;
+  return browserOtapEnv || nodeOtapEnv || 'development';
+}
 
-process.env.NODE_ENV !== 'test' && console.info(`App running in ${ENV} mode.`);
+export const ENV = getOtapEnv() as OtapEnvName;
+
+getAppMode() !== 'test' && console.info(`App running in ${getAppMode()} mode.`);
 
 export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
@@ -41,12 +45,12 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
-    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     ssoSubsidiesUrl: 'https://acc.mijnsubsidies.amsterdam.nl/dashboard',
     bagUrl: 'https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=', // features=2 is een Feature flag zodat ook Weesp resultaten worden weergegeven.
     ssoSvwi: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
   },
+  // NOTE: test OTAP_ENV wordt nu misbruikt voor unittesting. TODO: Refactor met onderscheid voor MODE en OTAP_ENV
   test: {
     krefiaDirectLink: 'https://krefia',
     ssoErfpachtUrl: 'https://mijnerfpacht',
@@ -61,7 +65,6 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
-    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
@@ -77,7 +80,6 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://dap.amsterdam.nl',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13',
-    bffSentryDsn: import.meta.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
