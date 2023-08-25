@@ -7,7 +7,7 @@ vi.mock('flat-cache', () => {
   return {
     default: vi.fn(),
     setKey: vi.fn(),
-    load: () => ({
+    create: () => ({
       setKey: (key: string, data: any) => {
         cache[key] = data;
       },
