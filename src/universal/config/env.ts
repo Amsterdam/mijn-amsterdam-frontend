@@ -15,14 +15,17 @@ interface EnvVars {
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
-function getAppMode() {
+type AppModeName = 'development' | 'test' | 'production';
+type AppMode = { [name in OtapEnvName]: EnvVars };
+
+function getAppMode(): AppModeName {
   // @ts-ignore
   const browserAppMode =
     typeof window !== 'undefined' ? (window as any).MA_APP_MODE : undefined;
   return browserAppMode || process.env.MODE || 'production';
 }
 
-function getOtapEnv() {
+function getOtapEnv(): OtapEnvName {
   // @ts-ignore
   const browserOtapEnv =
     typeof window !== 'undefined' ? (window as any).MA_OTAP_ENV : undefined;
@@ -30,9 +33,9 @@ function getOtapEnv() {
   return browserOtapEnv || nodeOtapEnv || 'development';
 }
 
-export const ENV = getOtapEnv() as OtapEnvName;
+export const ENV = getOtapEnv();
 
-getAppMode() !== 'test' && console.info(`App running in ${getAppMode()} mode.`);
+console.info(`App running in ${getAppMode()} mode.`);
 
 export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
