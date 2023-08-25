@@ -290,9 +290,6 @@ export default function StatusLine({
             <LineItem
               key={`step-${item.id}-${index}`}
               highlight={highlightKey ? !!item[highlightKey] : false}
-              style={{
-                display: 'block',
-              }}
             >
               {!!showStatusLineConnection ? (
                 <StatusLineConnection
