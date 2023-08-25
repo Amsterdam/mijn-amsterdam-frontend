@@ -34,12 +34,10 @@ afterAll(() => {
   // nock.restore();
 });
 
-const bffApiHost = 'http://bff-api-host';
-const frontentHost = 'http://frontend-host';
+export const bffApiHost = 'http://bff-api-host';
+export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
-process.env.BFF_ENV = 'test';
-process.env.MA_OTAP_ENV = 'test';
 process.env.REACT_APP_BFF_AUTH_PATH = '';
 
 process.env.REACT_APP_BFF_API_URL = bffApiHost;

@@ -12,7 +12,7 @@ import {
 import MockApp from '../../pages/MockApp';
 import MainNavBar from './MainNavBar';
 
-import { vi, describe, test, it, expect, Mock } from 'vitest';
+import { Mock, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../hooks/media.hook');
 vi.mock('../../hooks/useProfileType', async (requireActual) => {

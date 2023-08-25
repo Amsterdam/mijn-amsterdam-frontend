@@ -139,7 +139,7 @@ vi.mock('../../../universal/config/env', () => {
   return {
     IS_AP: true,
     IS_PRODUCTION: false,
-    getOtapEnvItem: (key: string) => key,
+    IS_ACCEPTANCE: true,
   };
 });
 vi.mock('../../../universal/config/myarea-datasets');

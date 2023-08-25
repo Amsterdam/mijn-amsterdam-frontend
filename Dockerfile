@@ -111,7 +111,7 @@ COPY ca/* /usr/local/share/ca-certificates/extras/
 RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
   && update-ca-certificates
 
-ENV BFF_ENV=production
+ENV MA_OTAP_ENV=production
 ENV TZ=Europe/Amsterdam
 ENV NODE_OPTIONS=--use-openssl-ca
 

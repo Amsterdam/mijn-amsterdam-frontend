@@ -50,7 +50,7 @@ describe('<Search />', () => {
         ],
       });
 
-    nock('https://api-data')
+    nock('https://api.data.amsterdam.nl')
       .defaultReplyHeaders({
         'access-control-allow-origin': '*',
         'access-control-allow-credentials': 'true',

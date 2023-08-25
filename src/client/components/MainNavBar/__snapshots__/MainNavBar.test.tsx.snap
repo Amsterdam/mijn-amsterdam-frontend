@@ -131,7 +131,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
               data-chapter-id="INKOMEN_SVWI"
-              href="https://mijnwpi-test"
+              href=""
               rel="external"
             >
               <span

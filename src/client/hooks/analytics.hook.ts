@@ -7,15 +7,15 @@ import {
   TrackSiteSearchResultClick,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
-import { getOtapEnvItem } from '../../universal/config';
 
 let PiwikInstance: PiwikTracker;
 
-const siteId = (getOtapEnvItem('analyticsId') || -1) as unknown as string;
+const siteId = (import.meta.env.REACT_APP_ANALYTICS_ID ||
+  -1) as unknown as string;
 const hasSiteId = !!siteId;
 
 const PiwikTrackerConfig: UserOptions = {
-  urlBase: getOtapEnvItem('analyticsUrlBase') || '',
+  urlBase: 'https://dap.amsterdam.nl',
   siteId,
   nonce: 'D6251655468576D5A566B59703373367',
   heartBeat: {
