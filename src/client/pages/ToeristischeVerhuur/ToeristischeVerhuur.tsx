@@ -219,7 +219,7 @@ export default function ToeristischeVerhuur() {
       <SectionCollapsible
         id="SectionCollapsible-vergunningen"
         className={styles.SectionNoBorderBottom}
-        title="Actieve vergunningen"
+        title="Huidige vergunningen"
         hasItems={!!actieveVergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
         startCollapsed={false}
