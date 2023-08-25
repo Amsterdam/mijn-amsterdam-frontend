@@ -592,7 +592,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                     Ontvangen op
                   </th>
                   <th
-                    class="DisplayProp"
+                    class="_DisplayProp_a66dcc"
                   >
                     Onderwerp
                   </th>
@@ -648,10 +648,10 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                     </span>
                   </td>
                   <td
-                    class="DisplayProp"
+                    class="_DisplayProp_a66dcc"
                   >
                     <span
-                      class="DisplayPropLabel"
+                      class="_DisplayPropLabel_a66dcc"
                     >
                       Onderwerp:
                     </span>
