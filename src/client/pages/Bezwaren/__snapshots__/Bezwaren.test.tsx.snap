@@ -141,7 +141,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
                 points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
               />
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -155,7 +155,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             <p
               class="_NoItemsMessage_b93dc7"
             >
-              U heeft nog geen bezwaren ingediend.
+              U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
             </p>
           </div>
         </div>
@@ -201,7 +201,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             <p
               class="_NoItemsMessage_b93dc7"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>
@@ -352,7 +352,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
                 points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
               />
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -366,7 +366,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             <p
               class="_NoItemsMessage_b93dc7"
             >
-              U heeft nog geen bezwaren ingediend.
+              U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
             </p>
           </div>
         </div>
@@ -412,7 +412,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             <p
               class="_NoItemsMessage_b93dc7"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>
@@ -563,7 +563,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                 points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
               />
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -584,12 +584,17 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                   <th
                     class="_DisplayProp_a66dcc"
                   >
-                    Nummer
+                    Zaaknummer
                   </th>
                   <th
                     class="_DisplayProp_a66dcc"
                   >
-                    Ontvangstdatum
+                    Ontvangen op
+                  </th>
+                  <th
+                    class="DisplayProp"
+                  >
+                    Onderwerp
                   </th>
                 </tr>
               </thead>
@@ -603,7 +608,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                     <span
                       class="_DisplayPropLabel_a66dcc"
                     >
-                      Nummer:
+                      Zaaknummer:
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
@@ -627,7 +632,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                           points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                         />
                       </svg>
-                      Onbekend item
+                      BI.21.014121.001
                     </a>
                   </td>
                   <td
@@ -636,10 +641,22 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                     <span
                       class="_DisplayPropLabel_a66dcc"
                     >
-                      Ontvangstdatum:
+                      Ontvangen op:
                     </span>
                     <span>
                       2023-04-25
+                    </span>
+                  </td>
+                  <td
+                    class="DisplayProp"
+                  >
+                    <span
+                      class="DisplayPropLabel"
+                    >
+                      Onderwerp:
+                    </span>
+                    <span>
+                      Korte omschrijving van het bezwaar
                     </span>
                   </td>
                 </tr>
@@ -689,7 +706,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             <p
               class="_NoItemsMessage_b93dc7"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>

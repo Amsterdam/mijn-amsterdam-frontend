@@ -66,7 +66,7 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
       class="_PageContent_47d7c0"
     >
       <p>
-        Op deze pagina vindt u informatie over uw lood in bodem check.
+        Op deze pagina vindt u informatie over uw lood in de bodem-check.
       </p>
       <p>
         <a
@@ -92,7 +92,7 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
           </svg>
-          Meer informatie over Loodmetingen
+          Meer informatie over lood in de bodem.
         </a>
       </p>
     </div>
@@ -485,7 +485,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
       class="_PageContent_47d7c0"
     >
       <p>
-        Op deze pagina vindt u informatie over uw lood in bodem check.
+        Op deze pagina vindt u informatie over uw lood in de bodem-check.
       </p>
       <p>
         <a
@@ -511,7 +511,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
           </svg>
-          Meer informatie over Loodmetingen
+          Meer informatie over lood in de bodem.
         </a>
       </p>
     </div>

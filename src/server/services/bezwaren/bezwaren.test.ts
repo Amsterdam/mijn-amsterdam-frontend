@@ -13,6 +13,10 @@ import {
 describe('Bezwaren', () => {
   const requestId = '456';
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
+  const [documentIdEncrypted] = encrypt(
+    documentId,
+    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  );
 
   const profileAndToken: AuthProfileAndToken = {
     profile: {
@@ -114,7 +118,7 @@ describe('Bezwaren', () => {
       const documentResponse = await fetchBezwaarDocument(
         requestId,
         profileAndToken,
-        documentId
+        documentIdEncrypted
       );
 
       //@ts-ignore

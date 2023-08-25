@@ -1,119 +1,61 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
+exports[`BezwarenDetail No result Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="Page DetailPage"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
-        class="_Icon_3b337d"
+        class="Icon"
       >
         <svg
           aria-label="Bezwaren"
-          class="_ChapterIcon_3ea2dd"
+          class="ChapterIcon"
           fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M15 19H26V21H15V19Z"
-          />
-          <path
-            d="M26 23H15V25H26V23Z"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M9 18C4.02945 18 0 13.9706 0 9C0 4.02942 4.02945 0 9 0C12.1204 0 14.8699 1.58801 16.4845 4H32V32H9V18ZM17.777 11C17.9229 10.3568 18 9.68738 18 9C18 8.66199 17.9814 8.32831 17.9451 8H28V28H13V17.0645C13.7281 16.7026 14.4003 16.2451 15 15.7083V17H26V15H15.7083C16.2451 14.4003 16.7026 13.7281 17.0645 13H26V11H17.777Z"
-            fill-rule="evenodd"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="7"
-            width="2"
-            x="8"
-            y="3"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="2"
-            transform="matrix(1 0 0 -1 8 14)"
-            width="2"
-          />
+          icon-bezwaren.svg
         </svg>
       </span>
       <div
-        class="_HeadingInner_3b337d"
+        class="HeadingInner"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="Button Button__plain Button__lean Linkd BackLink"
           href="/bezwaren"
         >
           <svg
             aria-hidden="true"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            class="Icon Icon__left"
             fill="#000"
-            focusable="false"
             height="14px"
-            viewBox="0 0 32 32"
             width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
+            Chevron-Left.svg
           </svg>
           Bezwaren
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="Heading Heading__large"
         >
           Bezwaar
         </h2>
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="PageContent"
     >
       <div
-        class="_Alert_21b118 _warning_21b118"
+        class="Alert warning"
       >
         <svg
           aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+          class="Icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
+          Alert.svg
         </svg>
          
         <p>
@@ -125,228 +67,155 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
+exports[`BezwarenDetail With result Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="Page DetailPage"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
-        class="_Icon_3b337d"
+        class="Icon"
       >
         <svg
           aria-label="Bezwaren"
-          class="_ChapterIcon_3ea2dd"
+          class="ChapterIcon"
           fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M15 19H26V21H15V19Z"
-          />
-          <path
-            d="M26 23H15V25H26V23Z"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M9 18C4.02945 18 0 13.9706 0 9C0 4.02942 4.02945 0 9 0C12.1204 0 14.8699 1.58801 16.4845 4H32V32H9V18ZM17.777 11C17.9229 10.3568 18 9.68738 18 9C18 8.66199 17.9814 8.32831 17.9451 8H28V28H13V17.0645C13.7281 16.7026 14.4003 16.2451 15 15.7083V17H26V15H15.7083C16.2451 14.4003 16.7026 13.7281 17.0645 13H26V11H17.777Z"
-            fill-rule="evenodd"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="7"
-            width="2"
-            x="8"
-            y="3"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="2"
-            transform="matrix(1 0 0 -1 8 14)"
-            width="2"
-          />
+          icon-bezwaren.svg
         </svg>
       </span>
       <div
-        class="_HeadingInner_3b337d"
+        class="HeadingInner"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="Button Button__plain Button__lean Linkd BackLink"
           href="/bezwaren"
         >
           <svg
             aria-hidden="true"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            class="Icon Icon__left"
             fill="#000"
-            focusable="false"
             height="14px"
-            viewBox="0 0 32 32"
             width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
+            Chevron-Left.svg
           </svg>
           Bezwaren
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="Heading Heading__large"
         >
-          Bezwaar
+          BI.21.014121.001
         </h2>
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="PageContent"
     >
       <div
-        class="_InfoDetail_6f1df2"
+        class="InfoDetail"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
-        >
-          Kenmerk van uw bezwaar
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          ghi.abc.def
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="Heading Heading__tiny Label"
         >
           Onderwerp
         </h3>
         <p
-          class="_Value_6f1df2"
+          class="Value"
         >
           Korte omschrijving van het bezwaar
         </p>
       </div>
       <div
-        class="_InfoDetail_6f1df2"
+        class="InfoDetail"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="Heading Heading__tiny Label"
         >
-          Ontvangen op
+          Reden bezwaar
         </h3>
         <p
-          class="_Value_6f1df2"
-        >
-          25 april 2023
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
-        >
-          Specificatie
-        </h3>
-        <p
-          class="_Value_6f1df2"
+          class="Value"
         >
           Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="InfoDetailGroup"
       >
         <div
-          class="_InfoDetailGroupContent_6f1df2"
+          class="InfoDetailGroupContent"
         >
           <div
-            class="_InfoDetail_6f1df2"
+            class="InfoDetail"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="Heading Heading__tiny Label"
             >
               Besluit waartegen u bezwaar maakt
             </h3>
             <p
-              class="_Value_6f1df2"
+              class="Value"
             >
               F2021.0008
             </p>
           </div>
           <div
-            class="_InfoDetail_6f1df2"
+            class="InfoDetail"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="Heading Heading__tiny Label"
             >
               Datum
             </h3>
             <p
-              class="_Value_6f1df2"
+              class="Value"
             >
-              05 januari 2021
+              01-05-2021
             </p>
           </div>
         </div>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="InfoDetailGroup"
       >
         <div
-          class="_InfoDetailGroupContent_6f1df2"
+          class="InfoDetailGroupContent"
         >
           <div
-            class="_InfoDetail_6f1df2"
+            class="InfoDetail"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="Heading Heading__tiny Label"
             >
               Documenten
             </h3>
             <div
-              class="_Value_6f1df2"
+              class="Value"
             >
               <ul
-                class="_documentlist_839df0"
+                class="documentlist"
               >
                 <li>
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="DocumentLinkWrap"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        focusable="false"
                         height="14"
-                        viewBox="0 0 32 32"
                         width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
+                        Download.svg
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
                       href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                     >
                       Constructie.pdf
@@ -355,30 +224,21 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 </li>
                 <li>
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="DocumentLinkWrap"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        focusable="false"
                         height="14"
-                        viewBox="0 0 32 32"
                         width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
+                        Download.svg
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
                       href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                     >
                       Test document 01.pdf
@@ -387,30 +247,21 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 </li>
                 <li>
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="DocumentLinkWrap"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        focusable="false"
                         height="14"
-                        viewBox="0 0 32 32"
                         width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
+                        Download.svg
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
                       href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                     >
                       Concept besluit.pdf
@@ -419,30 +270,21 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 </li>
                 <li>
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="DocumentLinkWrap"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="DownloadIcon"
                     >
                       <svg
                         aria-hidden="true"
-                        focusable="false"
                         height="14"
-                        viewBox="0 0 32 32"
                         width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
+                        Download.svg
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="Button Button__plain Button__lean Linkd DocumentLink"
                       href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                     >
                       BZ020001.pdf
@@ -453,18 +295,18 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             </div>
           </div>
           <div
-            class="_InfoDetail_6f1df2"
+            class="InfoDetail"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="Heading Heading__tiny Label"
             >
               Datum
             </h3>
             <div
-              class="_Value_6f1df2"
+              class="Value"
             >
               <ul
-                class="_documentlist_839df0"
+                class="documentlist"
               >
                 <li>
                   23 maart 2023
@@ -485,140 +327,140 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="_StatusLine_a12ff2"
+      class="StatusLine"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="Heading Heading__tiny ListHeading"
       >
         Status
       </h4>
       <ul
-        class="_List_a12ff2"
+        class="List"
       >
         <li
-          class="_ListItem_a12ff2"
+          class="ListItem"
           style="display: block;"
         >
           <div
-            class="_ListItemInner_a12ff2"
+            class="ListItemInner"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
+              class="StatusConnection"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
+                class="ConnectLine ConnectLine--start-checked"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="Checkmark Checkmark--checked"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
+              class="Panel Panel--status"
             >
               <strong
-                class="_StatusTitle_a12ff2"
+                class="StatusTitle"
               >
                 Ontvangen
               </strong>
               <time
-                class="_StatusDate_a12ff2"
+                class="StatusDate"
               >
                 29 maart 2023
               </time>
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+              class="Panel Panel--description"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="PanelContent"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+              class="Panel Panel--documents"
             />
           </div>
         </li>
         <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+          class="ListItem ListItem--highlight"
           style="display: block;"
         >
           <div
-            class="_ListItemInner_a12ff2"
+            class="ListItemInner"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
+              class="StatusConnection"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
+                class="ConnectLine ConnectLine--middle-checked-next"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
+              class="Panel Panel--status"
             >
               <strong
-                class="_StatusTitle_a12ff2"
+                class="StatusTitle"
               >
                 In behandeling
               </strong>
               <time
-                class="_StatusDate_a12ff2"
+                class="StatusDate"
               >
                 30 maart 2023
               </time>
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+              class="Panel Panel--description"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="PanelContent"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+              class="Panel Panel--documents"
             />
           </div>
         </li>
         <li
-          class="_ListItem_a12ff2"
+          class="ListItem"
           style="display: block;"
         >
           <div
-            class="_ListItemInner_a12ff2"
+            class="ListItemInner"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
+              class="StatusConnection"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                class="ConnectLine ConnectLine--end"
               />
               <span
-                class="_Checkmark_a12ff2"
+                class="Checkmark"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
+              class="Panel Panel--status"
             >
               <strong
-                class="_StatusTitle_a12ff2"
+                class="StatusTitle"
               >
                 Afgehandeld
               </strong>
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+              class="Panel Panel--description"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="PanelContent"
               />
             </div>
             <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+              class="Panel Panel--documents"
             />
           </div>
         </li>
