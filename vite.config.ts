@@ -12,7 +12,9 @@ export default defineConfig({
   // https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
   define: {
     'process.env': {},
-    MA_OTAP_ENV: process.env.MA_OTAP_ENV || process.env.BFF_ENV,
+    __MA_OTAP_ENV__: JSON.stringify(
+      process.env.MA_OTAP_ENV || process.env.BFF_ENV || 'development'
+    ),
   },
   envPrefix: 'REACT_APP_',
   build: {

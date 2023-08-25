@@ -35,7 +35,7 @@ function getOtapEnv(): OtapEnvName {
 
 export const ENV = getOtapEnv();
 
-console.info(`App running in ${getAppMode()} mode.`);
+getAppMode() !== 'test' && console.info(`App running in ${getAppMode()} mode.`);
 
 export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
