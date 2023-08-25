@@ -2,15 +2,15 @@ type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type AppModeName = 'development' | 'test' | 'production';
 
 function getAppMode(): AppModeName {
-  return (MA_APP_MODE ||
-    process.env.MA_APP_MODE ||
-    'production') as AppModeName;
+  const maAppMode =
+    typeof MA_APP_MODE !== 'undefined' ? MA_APP_MODE : process.env.MA_APP_MODE;
+  return (maAppMode || 'production') as AppModeName;
 }
 
 function getOtapEnv(): OtapEnvName {
-  return (MA_OTAP_ENV ||
-    process.env.MA_OTAP_ENV ||
-    'development') as OtapEnvName;
+  const maOtapEnv =
+    typeof MA_OTAP_ENV !== 'undefined' ? MA_OTAP_ENV : process.env.MA_OTAP_ENV;
+  return (maOtapEnv || 'development') as OtapEnvName;
 }
 
 export const ENV = getOtapEnv();
