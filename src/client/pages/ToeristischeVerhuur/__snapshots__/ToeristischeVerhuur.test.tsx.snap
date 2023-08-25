@@ -128,7 +128,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Actieve vergunningen
+           Huidige vergunningen
         </button>
       </h3>
       <div
@@ -426,7 +426,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Verlopen vergunningen
+           Eerdere vergunningen
         </button>
       </h3>
       <div

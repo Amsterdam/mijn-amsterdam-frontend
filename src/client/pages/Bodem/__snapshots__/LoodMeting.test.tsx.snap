@@ -130,7 +130,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -174,7 +173,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -218,7 +216,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -361,7 +358,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -405,7 +401,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -449,7 +444,6 @@ exports[`LoodMeting with results should show the correct detailpage for status a
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -592,7 +586,6 @@ exports[`LoodMeting with results should show the correct detailpage for status i
       >
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -636,7 +629,6 @@ exports[`LoodMeting with results should show the correct detailpage for status i
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -675,7 +667,6 @@ exports[`LoodMeting with results should show the correct detailpage for status i
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"

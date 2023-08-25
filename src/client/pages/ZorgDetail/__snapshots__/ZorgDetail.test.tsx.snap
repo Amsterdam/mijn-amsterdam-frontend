@@ -76,7 +76,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -160,7 +159,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -205,7 +203,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -250,7 +247,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -375,7 +371,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -453,7 +448,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -498,7 +492,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -544,7 +537,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -674,7 +666,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -758,7 +749,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -803,7 +793,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -848,7 +837,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -973,7 +961,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1057,7 +1044,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1102,7 +1088,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1147,7 +1132,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -1272,7 +1256,6 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Wmo item 1 1`] = `
       >
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
