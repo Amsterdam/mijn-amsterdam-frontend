@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
@@ -25,7 +26,7 @@ import {
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
 
-const MAX_BEZWAREN_COUNT = 50; // 10 per fetch
+const MAX_AMOUNT_OF_FETCHES = 5;
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -95,6 +96,11 @@ function transformBezwarenResults(
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): BezwaarResponse {
   const results = response.results;
+
+  Sentry.captureMessage('Bezwaren response', {
+    extra: { data: JSON.stringify(response) },
+  });
+
   if (Array.isArray(results)) {
     return {
       bezwaren: results
@@ -312,8 +318,10 @@ export async function fetchBezwaren(
     // Need more data ?
     while (
       bezwarenResponse.content &&
-      result.length < MAX_BEZWAREN_COUNT &&
-      result.length < bezwarenResponse.content?.count
+      result.length < bezwarenResponse.content?.count &&
+      bezwarenResponse.content.bezwaren.length > 0 &&
+      bezwarenResponse.content.count > 0 &&
+      requestConfig.params.page < MAX_AMOUNT_OF_FETCHES
     ) {
       requestConfig.params.page += 1; //Fetch next page
       bezwarenResponse = await requestData<BezwaarResponse>(
