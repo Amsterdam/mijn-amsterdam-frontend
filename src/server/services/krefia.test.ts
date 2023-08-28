@@ -1,6 +1,6 @@
-import MockAdapter from 'axios-mock-adapter';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { remoteApi } from '../../test-utils';
 import { jsonCopy, omit } from '../../universal/helpers';
-import { ApiConfig } from '../config';
 import { axiosRequest } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import KrefiaData from '../mock-data/json/krefia.json';
@@ -13,26 +13,19 @@ describe('Kredietbank & FIBU service', () => {
     token: 'xxxxxx',
   };
 
-  const DUMMY_URL_KREFIA = '/krefia';
-
-  ApiConfig.KREFIA.url = DUMMY_URL_KREFIA;
-
-  let axMock: any;
   let axiosRequestSpy: any;
 
-  beforeEach(() => {
-    axMock = new MockAdapter(axiosRequest);
-    axMock.onGet(DUMMY_URL_KREFIA).reply(200, KREFIA_DUMMY_RESPONSE);
-
+  beforeAll(() => {
     axiosRequestSpy = vi.spyOn(axiosRequest, 'request');
   });
 
-  afterEach(() => {
-    axMock.restore();
+  afterAll(() => {
     axiosRequestSpy.mockRestore();
   });
 
   it('Should respond correctly', async () => {
+    remoteApi.get('/krefia/all').reply(200, KREFIA_DUMMY_RESPONSE);
+
     const response = await fetchSource('x1', authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
 
