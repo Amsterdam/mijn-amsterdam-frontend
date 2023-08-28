@@ -12,6 +12,7 @@ interface TextClampProps {
   children: ReactNode;
   tagName?: keyof JSX.IntrinsicElements;
   maxHeight?: `${number}px`;
+  minHeight?: `${number}px`;
   startClamped?: boolean;
   style?: TextClampCSSProperties | null;
 }
@@ -20,6 +21,7 @@ export function TextClamp({
   children,
   tagName = 'div',
   maxHeight = '45px',
+  minHeight = '35px',
   startClamped = true,
   style = null,
 }: TextClampProps) {
@@ -55,7 +57,11 @@ export function TextClamp({
         hasOverflow && isClamped && styles.isClamped,
         hasOverflow && styles.hasOverflow
       )}
-      style={{ ...style, ['--maxHeight' as string]: maxHeight }}
+      style={{
+        ...style,
+        ['--maxHeight' as string]: maxHeight,
+        ['--minHeight' as string]: minHeight,
+      }}
     >
       <span ref={callBackRef} className={styles.textWrap}>
         {children}

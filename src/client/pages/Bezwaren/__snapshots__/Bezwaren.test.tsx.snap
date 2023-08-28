@@ -85,7 +85,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when API gives no 
             >
               Chevron-Right.svg
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -99,7 +99,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when API gives no 
             <p
               class="NoItemsMessage"
             >
-              U heeft nog geen bezwaren ingediend.
+              U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
             </p>
           </div>
         </div>
@@ -134,7 +134,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when API gives no 
             <p
               class="NoItemsMessage"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>
@@ -229,7 +229,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are no 
             >
               Chevron-Right.svg
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -243,7 +243,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are no 
             <p
               class="NoItemsMessage"
             >
-              U heeft nog geen bezwaren ingediend.
+              U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
             </p>
           </div>
         </div>
@@ -278,7 +278,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are no 
             <p
               class="NoItemsMessage"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>
@@ -373,7 +373,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
             >
               Chevron-Right.svg
             </svg>
-             Ingediende bezwaren
+             Lopende bezwaren
           </button>
         </h3>
         <div
@@ -394,12 +394,17 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                   <th
                     class="DisplayProp"
                   >
-                    Nummer
+                    Zaaknummer
                   </th>
                   <th
                     class="DisplayProp"
                   >
-                    Ontvangstdatum
+                    Ontvangen op
+                  </th>
+                  <th
+                    class="DisplayProp"
+                  >
+                    Onderwerp
                   </th>
                 </tr>
               </thead>
@@ -413,7 +418,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                     <span
                       class="DisplayPropLabel"
                     >
-                      Nummer:
+                      Zaaknummer:
                     </span>
                     <a
                       class="Button Button__plain Button__lean Linkd"
@@ -428,7 +433,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                       >
                         Chevron-Right.svg
                       </svg>
-                      Onbekend item
+                      BI.21.014121.001
                     </a>
                   </td>
                   <td
@@ -437,10 +442,22 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
                     <span
                       class="DisplayPropLabel"
                     >
-                      Ontvangstdatum:
+                      Ontvangen op:
                     </span>
                     <span>
                       2023-04-25
+                    </span>
+                  </td>
+                  <td
+                    class="DisplayProp"
+                  >
+                    <span
+                      class="DisplayPropLabel"
+                    >
+                      Onderwerp:
+                    </span>
+                    <span>
+                      Korte omschrijving van het bezwaar
                     </span>
                   </td>
                 </tr>
@@ -479,7 +496,7 @@ exports[`Bezwaren thema pagina Matches the Full Page snapshot when there are req
             <p
               class="NoItemsMessage"
             >
-              U heeft nog geen afgehandelde bezwaren.
+              U hebt nog geen afgehandelde bezwaren.
             </p>
           </div>
         </div>

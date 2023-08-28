@@ -128,11 +128,9 @@ router.get(
       req.params.id
     );
 
-    if (documentResponse.status === 'ERROR') {
-      res.status(500);
-    }
-
-    return res.send(documentResponse);
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
   }
 );
 
