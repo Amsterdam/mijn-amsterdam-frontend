@@ -32,7 +32,7 @@ describe('Bezwaren', () => {
     vi.clearAllMocks();
   });
 
-  xdescribe('fetch bezwaren', () => {
+  describe('fetch bezwaren', () => {
     beforeEach(() => {
       remoteApi
         .post(`/bezwaren/zgw/v1/zaken/_zoek?page=1`)
@@ -135,31 +135,53 @@ describe('Bezwaren', () => {
   });
 
   describe('fetch multiple pages of bezwaren', () => {
-    beforeEach(() => {
-      nock('http://localhost/zgw/v1')
-        .post(`/zaken/_zoek?page=1`)
-        .reply(200, {
-          ...bezwarenApiResponse,
-          count: 8,
-        })
-        .post(`/zaken/_zoek?page=2`)
-        .reply(200, {
-          ...bezwarenApiResponse,
-          count: 8,
-        })
-        .get((uri) => uri.includes('/zaakinformatieobjecten'))
-        .times(8)
-        .reply(200, bezwarenDocumenten)
-        .get((uri) => uri.includes('/statussen'))
-        .times(8)
-        .reply(200, bezwarenStatus);
+    describe('empty response', () => {
+      const emptyResponse = {
+        count: 0,
+        results: null,
+      };
+
+      beforeEach(() => {
+        nock('http://localhost/zgw/v1')
+          .post(`/zaken/_zoek?page=1`)
+          .reply(200, emptyResponse);
+      });
+
+      it('should fetch only once', async () => {
+        const res = await fetchBezwaren(requestId, profileAndToken);
+
+        expect(res.status).toEqual('OK');
+        expect(res.content?.length).toEqual(0);
+      });
     });
 
-    it('should fetch more results', async () => {
-      const res = await fetchBezwaren(requestId, profileAndToken);
+    describe('regular flow', () => {
+      beforeEach(() => {
+        nock('http://localhost/zgw/v1')
+          .post(`/zaken/_zoek?page=1`)
+          .reply(200, {
+            ...bezwarenApiResponse,
+            count: 8,
+          })
+          .post(`/zaken/_zoek?page=2`)
+          .reply(200, {
+            ...bezwarenApiResponse,
+            count: 8,
+          })
+          .get((uri) => uri.includes('/zaakinformatieobjecten'))
+          .times(8)
+          .reply(200, bezwarenDocumenten)
+          .get((uri) => uri.includes('/statussen'))
+          .times(8)
+          .reply(200, bezwarenStatus);
+      });
 
-      expect(res.status).toEqual('OK');
-      expect(res.content?.length).toEqual(8);
+      it('should fetch more results', async () => {
+        const res = await fetchBezwaren(requestId, profileAndToken);
+
+        expect(res.status).toEqual('OK');
+        expect(res.content?.length).toEqual(8);
+      });
     });
   });
 });
