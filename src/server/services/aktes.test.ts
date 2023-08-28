@@ -1,20 +1,14 @@
-import MockAdapter from 'axios-mock-adapter';
+import { describe, expect, it } from 'vitest';
+import { remoteApi } from '../../test-utils';
 import { jsonCopy } from '../../universal/helpers';
-import { ApiUrls } from '../config';
-import { axiosRequest } from '../helpers';
 import aktesSourceData from '../mock-data/json/aktes.json';
 import { AKTESDataFromSource, fetchAKTES, transformAKTESData } from './aktes';
 
 describe('Aktes service', () => {
-  const axMock = new MockAdapter(axiosRequest);
   const DUMMY_RESPONSE = jsonCopy(aktesSourceData);
 
-  afterAll(() => {
-    axMock.restore();
-  });
-
   it('Should fetch the data', async () => {
-    axMock.onGet(String(ApiUrls.AKTES)).replyOnce(200, DUMMY_RESPONSE);
+    remoteApi.get('/aktes/aktes').reply(200, DUMMY_RESPONSE);
 
     const rs = await fetchAKTES('x', {
       profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },
@@ -28,7 +22,7 @@ describe('Aktes service', () => {
   });
 
   it('Fetch fails', async () => {
-    axMock.onGet(String(ApiUrls.AKTES)).replyOnce(500, []);
+    remoteApi.get('/aktes/aktes').replyWithError('No can do!');
 
     const rs = await fetchAKTES('x', {
       profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxx' },
@@ -38,7 +32,7 @@ describe('Aktes service', () => {
     expect(rs).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: Request failed with status code 500',
+      message: 'Error: No can do!',
     });
   });
 });
