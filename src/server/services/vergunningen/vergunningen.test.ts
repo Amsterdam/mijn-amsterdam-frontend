@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import { remoteApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config';
 import { jsonCopy } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
@@ -21,12 +21,11 @@ import {
   VergunningenSourceData,
 } from './vergunningen';
 import MockDate from 'mockdate';
+import { it, describe, expect, afterAll, test } from 'vitest';
 
 describe('Vergunningen service', () => {
-  const axMock = new MockAdapter(axiosRequest);
   const DUMMY_RESPONSE = jsonCopy(vergunningenData);
 
-  const ORIGINAL_URL = ApiConfig.VERGUNNINGEN.url;
   const DUMMY_URL_1 = '/x';
   const DUMMY_URL_2 = '/y';
   const DUMMY_URL_3 = '/z';
@@ -40,20 +39,15 @@ describe('Vergunningen service', () => {
   MockDate.set('2022-10-06');
 
   afterAll(() => {
-    axMock.restore();
-    ApiConfig.VERGUNNINGEN.url = ORIGINAL_URL;
     MockDate.reset();
   });
 
-  axMock.onGet(DUMMY_URL_1).reply(200, DUMMY_RESPONSE);
-  axMock.onGet(DUMMY_URL_2).reply(200, null);
-  axMock.onGet(DUMMY_URL_3).reply(500, { message: 'fat chance!' });
-  axMock.onGet(DUMMY_URL_4).reply(200, {
-    content: DUMMY_RESPONSE.content.filter((x: BZP | BZB) =>
-      x.caseType.includes('Blauwe zone')
-    ),
-    status: 'OK',
-  });
+  // axMock.onGet(DUMMY_URL_4).reply(200, {
+  //   content: DUMMY_RESPONSE.content.filter((x: BZP | BZB) =>
+  //     x.caseType.includes('Blauwe zone')
+  //   ),
+  //   status: 'OK',
+  // });
 
   it('should format data correctly', () => {
     expect(
@@ -62,7 +56,8 @@ describe('Vergunningen service', () => {
   });
 
   it('FetchVergunningen: should respond with a success response', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
+    remoteApi.get('/decosjoin/getvergunningen').reply(200, DUMMY_RESPONSE);
+
     const response = await fetchAllVergunningen('x', authProfileAndToken);
     const successResponse = {
       status: 'OK',
@@ -72,7 +67,8 @@ describe('Vergunningen service', () => {
   });
 
   it('should should respond with an empty list', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_2;
+    remoteApi.get('/decosjoin/getvergunningen').reply(200, []);
+
     const response = await fetchAllVergunningen('x', authProfileAndToken);
     const successResponse = {
       status: 'OK',
@@ -82,18 +78,20 @@ describe('Vergunningen service', () => {
   });
 
   it('should should respond with an empty list if api returns error', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_3;
+    remoteApi.get('/decosjoin/getvergunningen').replyWithError('fat chance!');
+
     const response = await fetchAllVergunningen('x', authProfileAndToken);
     const errorResponse = {
       content: null,
-      message: 'Error: Request failed with status code 500',
+      message: 'Error: fat chance!',
       status: 'ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
   });
 
   it('fetchVergunningenNotifications', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
+    remoteApi.get('/decosjoin/getvergunningen').reply(200, DUMMY_RESPONSE);
+
     const response = await fetchVergunningenNotifications(
       'x',
       authProfileAndToken,
@@ -103,7 +101,13 @@ describe('Vergunningen service', () => {
   });
 
   it('fetchVergunningenNotifications BZP/BZB', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_4;
+    remoteApi.get('/decosjoin/getvergunningen').reply(
+      200,
+      DUMMY_RESPONSE.content.filter((x: BZP | BZB) =>
+        x.caseType.includes('Blauwe zone')
+      )
+    );
+
     const response = await fetchVergunningenNotifications(
       'x',
       authProfileAndToken,
