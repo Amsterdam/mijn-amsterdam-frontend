@@ -96,3 +96,8 @@ export interface BezwaarSourceDocument {
   beschrijving: string;
   registratiedatum: string;
 }
+
+export interface BezwaarResponse {
+  bezwaren: Bezwaar[];
+  count: number;
+}

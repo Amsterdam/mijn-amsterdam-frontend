@@ -14,6 +14,7 @@ import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   Bezwaar,
+  BezwaarResponse,
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
@@ -24,6 +25,8 @@ import {
 } from './types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
+
+const MAX_BEZWAREN_COUNT = 100;
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -91,58 +94,65 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 
 function transformBezwarenResults(
   response: BezwarenSourceResponse<BezwaarSourceData>
-): Bezwaar[] {
+): BezwaarResponse {
   const results = response.results;
   if (Array.isArray(results)) {
-    return results
-      .map((bezwaarBron) => {
-        const besluitdatum = getKenmerkValue(
-          bezwaarBron.kenmerken,
-          'besluitdatum'
-        );
-
-        const bezwaar: Bezwaar = {
-          identificatie: bezwaarBron.identificatie,
-          zaakkenmerk:
-            getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
-          uuid: bezwaarBron.uuid,
-          startdatum: bezwaarBron.startdatum,
-          omschrijving: bezwaarBron.omschrijving,
-          toelichting: bezwaarBron.toelichting,
-          status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
-          statussen: [],
-          datumbesluit: besluitdatum,
-          datumIntrekking: getKenmerkValue(
-            bezwaarBron.kenmerken,
-            'datumintrekking'
-          ),
-          einddatum: bezwaarBron.einddatum,
-          primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
-          primairbesluitdatum: getKenmerkValue(
+    return {
+      bezwaren: results
+        .map((bezwaarBron) => {
+          const besluitdatum = getKenmerkValue(
             bezwaarBron.kenmerken,
             'besluitdatum'
-          ),
-          resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
-          documenten: [],
-          link: {
-            title: 'Bekijk details',
-            to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
-              uuid: bezwaarBron.uuid,
-            }),
-          },
-        };
+          );
 
-        return bezwaar;
-      })
-      .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-      .sort((a, b) => {
-        const aStart = new Date(a.startdatum);
-        const bStart = new Date(b.startdatum);
+          const bezwaar: Bezwaar = {
+            identificatie: bezwaarBron.identificatie,
+            zaakkenmerk:
+              getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
+            uuid: bezwaarBron.uuid,
+            startdatum: bezwaarBron.startdatum,
+            omschrijving: bezwaarBron.omschrijving,
+            toelichting: bezwaarBron.toelichting,
+            status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+            statussen: [],
+            datumbesluit: besluitdatum,
+            datumIntrekking: getKenmerkValue(
+              bezwaarBron.kenmerken,
+              'datumintrekking'
+            ),
+            einddatum: bezwaarBron.einddatum,
+            primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
+            primairbesluitdatum: getKenmerkValue(
+              bezwaarBron.kenmerken,
+              'besluitdatum'
+            ),
+            resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
+            documenten: [],
+            link: {
+              title: 'Bekijk details',
+              to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+                uuid: bezwaarBron.uuid,
+              }),
+            },
+          };
 
-        return aStart < bStart ? 1 : aStart > bStart ? -1 : 0;
-      });
+          return bezwaar;
+        })
+        .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
+        .sort((a, b) => {
+          const aStart = new Date(a.startdatum);
+          const bStart = new Date(b.startdatum);
+
+          return aStart < bStart ? 1 : aStart > bStart ? -1 : 0;
+        }),
+      count: response.count,
+    };
   }
-  return [];
+
+  return {
+    bezwaren: [],
+    count: 0,
+  };
 }
 
 function transformBezwaarStatus(
@@ -215,13 +225,13 @@ export async function fetchBezwaarDocument(
 }
 
 async function enrichBezwaarResponse(
-  bezwarenResponse: ApiSuccessResponse<Bezwaar[]>,
+  bezwaren: Bezwaar[],
   authProfileAndToken: AuthProfileAndToken
 ) {
   const rs = [];
 
   // Go through the list of returned bezwaren and use the uuid property to call other api's
-  for (const bezwaar of bezwarenResponse.content) {
+  for (const bezwaar of bezwaren) {
     // non-blocking fetch of statusses
     const statussenPromise = fetchBezwaarStatus(
       bezwaar.uuid,
@@ -290,14 +300,33 @@ export async function fetchBezwaren(
     headers: getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwarenResponse = await requestData<Bezwaar[]>(
+  let result: Bezwaar[] = [];
+
+  let bezwarenResponse = await requestData<BezwaarResponse>(
     requestConfig,
     requestID
   );
 
+  if (bezwarenResponse.status === 'OK') {
+    result = result.concat(bezwarenResponse.content.bezwaren);
+
+    // Need more data ?
+    while (
+      bezwarenResponse.content &&
+      result.length <= MAX_BEZWAREN_COUNT &&
+      result.length < bezwarenResponse.content?.count
+    ) {
+      requestConfig.params.page += 1; //Fetch next page
+      bezwarenResponse = await requestData<BezwaarResponse>(
+        requestConfig,
+        requestID
+      );
+    }
+  }
+
   // If the main call to bezwaren is ok, proceed.
   if (bezwarenResponse.status === 'OK') {
-    return enrichBezwaarResponse(bezwarenResponse, authProfileAndToken);
+    return enrichBezwaarResponse(result, authProfileAndToken);
   }
 
   // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
