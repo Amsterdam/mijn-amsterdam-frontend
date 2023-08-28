@@ -1,17 +1,17 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Sentry from '@sentry/node';
+import axios, { AxiosRequestConfig } from 'axios';
+import type { NextFunction, Request, Response } from 'express';
+import { AccessToken } from 'express-openid-connect';
 import jose, { JWE, JWK, JWKS } from 'jose';
 import memoize from 'memoizee';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
-import { apiErrorResult } from '../../universal/helpers';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
   DEV_JWK_PRIVATE,
   DEV_JWK_PUBLIC,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-  oidcConfigYivi,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -21,7 +21,11 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
-  DEV_TOKEN_ID_ATTRIBUTE,
+  TOKEN_ID_ATTRIBUTE,
+  TokenIdAttribute,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+  oidcConfigYivi,
 } from '../config';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -68,7 +72,8 @@ export interface AuthProfileAndToken {
 }
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
-  const oidcToken = getOIDCToken(combineCookieChunks(req.cookies));
+  const combinedCookies = combineCookieChunks(req.cookies);
+  const oidcToken = getOIDCToken(combinedCookies);
   const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
@@ -237,6 +242,101 @@ export function isProtectedRoute(pathRequested: string) {
   });
 }
 
+export async function verifyUserIdWithRemoteUserinfo(
+  authMethod: AuthMethod,
+  accessToken?: AccessToken,
+  userID?: string
+) {
+  if (!accessToken || !userID) {
+    return false;
+  }
+
+  const requestOptions: AxiosRequestConfig = {
+    method: 'get',
+    url: process.env.BFF_OIDC_USERINFO_ENDPOINT,
+    headers: {
+      Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+      Accept: 'application/jwt',
+    },
+  };
+
+  try {
+    const response = await axios(requestOptions);
+    let decoded: Record<TokenIdAttribute, string> = decodeToken(
+      response.data.toString()
+    );
+    return decoded[TOKEN_ID_ATTRIBUTE[authMethod]] === userID;
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+  return false;
+}
+
+export async function isRequestAuthenticated(
+  req: Request,
+  authMethod: AuthMethod
+) {
+  try {
+    const auth = await getAuth(req);
+    return (
+      req.oidc.isAuthenticated() &&
+      auth.profile.authMethod === authMethod &&
+      (await verifyUserIdWithRemoteUserinfo(
+        authMethod,
+        req.oidc.accessToken,
+        auth.profile.id
+      ))
+    );
+  } catch {}
+  return false;
+}
+
+export function verifyAuthenticated(
+  authMethod: AuthMethod,
+  profileType: ProfileType
+) {
+  return async (req: Request, res: Response) => {
+    if (await isRequestAuthenticated(req, authMethod)) {
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType,
+          authMethod,
+        })
+      );
+    }
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
+  };
+}
+
+export function decodeToken<T extends Record<string, string> = {}>(
+  jwtToken: string,
+  options?: jose.JWT.DecodeOptions
+): T {
+  return jose.JWT.decode(jwtToken, options) as unknown as T;
+}
+
+export function nocache(_req: Request, res: Response, next: NextFunction) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+}
+
+export const isAuthenticated =
+  () => async (req: Request, res: Response, next: NextFunction) => {
+    if (hasSessionCookie(req)) {
+      try {
+        await getAuth(req);
+        return next();
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    }
+    return sendUnauthorized(res);
+  };
+
 /**
  *
  * Helpers for development
@@ -262,7 +362,7 @@ function getPublicKeyForDevelopment() {
 function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
   const idToken = jose.JWT.sign(
     {
-      [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
       aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
     },
     getPrivateKeyForDevelopment(),
@@ -271,10 +371,6 @@ function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
     }
   );
   return idToken;
-}
-
-export function decodeToken(idToken: string) {
-  return jose.JWT.decode(idToken);
 }
 
 export function generateDevSessionCookieValue(
@@ -295,11 +391,4 @@ export function generateDevSessionCookieValue(
   );
 
   return value;
-}
-
-export function nocache(req: Request, res: Response, next: NextFunction) {
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
-  res.header('Pragma', 'no-cache');
-  next();
 }

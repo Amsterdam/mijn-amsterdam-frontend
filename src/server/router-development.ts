@@ -15,15 +15,23 @@ import {
   AuthProfile,
   generateDevSessionCookieValue,
   getAuth,
+  hasSessionCookie,
+  sendUnauthorized,
 } from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
+import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
+
+const DevelopmentRoutes = {
+  DEV_LOGIN: '/api/v1/dev/auth/:authMethod/login',
+  DEV_LOGOUT: '/api/v1/dev/auth/logout',
+  DEV_AUTH_CHECK: '/api/v1/dev/auth/check',
+};
 
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/api/v1/dev/auth/:authMethod/login',
+  DevelopmentRoutes.DEV_LOGIN,
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -61,7 +69,7 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get('/api/v1/dev/auth/logout', async (req, res) => {
+authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
   const auth = await getAuth(req);
 
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
@@ -76,6 +84,25 @@ authRouterDevelopment.get('/api/v1/dev/auth/logout', async (req, res) => {
 
   return res.redirect(redirectUrl);
 });
+
+authRouterDevelopment.get(
+  DevelopmentRoutes.DEV_AUTH_CHECK,
+  async (req, res) => {
+    if (hasSessionCookie(req)) {
+      const auth = await getAuth(req);
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType: auth.profile.profileType,
+          authMethod: auth.profile.authMethod,
+        })
+      );
+    }
+
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
+  }
+);
 
 export const relayDevRouter = express.Router();
 

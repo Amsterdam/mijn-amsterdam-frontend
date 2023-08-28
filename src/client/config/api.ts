@@ -31,7 +31,7 @@ export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL + AUTH_PATH}/yivi/login`;
 
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
 
-export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
+export const AUTH_API_URL = `${BFF_API_BASE_URL + AUTH_PATH}/check`;
 export const AUTH_API_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/check`;
 export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/check`;
 
