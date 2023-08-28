@@ -2,7 +2,6 @@ import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
-  ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
   defaultDateFormat,
@@ -26,7 +25,7 @@ import {
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
 
-const MAX_BEZWAREN_COUNT = 100;
+const MAX_BEZWAREN_COUNT = 50; // 10 per fetch
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -313,7 +312,7 @@ export async function fetchBezwaren(
     // Need more data ?
     while (
       bezwarenResponse.content &&
-      result.length <= MAX_BEZWAREN_COUNT &&
+      result.length < MAX_BEZWAREN_COUNT &&
       result.length < bezwarenResponse.content?.count
     ) {
       requestConfig.params.page += 1; //Fetch next page
@@ -321,6 +320,12 @@ export async function fetchBezwaren(
         requestConfig,
         requestID
       );
+
+      if (bezwarenResponse.status === 'OK') {
+        result = result.concat(bezwarenResponse.content.bezwaren);
+      } else {
+        return bezwarenResponse;
+      }
     }
   }
 
