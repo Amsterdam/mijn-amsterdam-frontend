@@ -354,6 +354,8 @@ export const BFF_OIDC_BASE_URL = `${
   process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
 }`;
 
+export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
+
 export const BffEndpoints = {
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
@@ -440,11 +442,14 @@ const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
+  // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
+  // Client secret
+  clientSecret: process.env.BFF_OIDC_SECRET,
   baseURL: BFF_OIDC_BASE_URL,
-  issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
+  issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login' },
+  authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
@@ -455,7 +460,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path
+    callback: false,
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
@@ -492,7 +497,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0 },
+  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
@@ -537,7 +542,12 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
   yivi: () => YIVI_ATTR_PRIMARY,
 };
 
-export const DEV_TOKEN_ID_ATTRIBUTE = {
+export type TokenIdAttribute =
+  | typeof DIGID_ATTR_PRIMARY
+  | typeof EH_ATTR_PRIMARY_ID
+  | typeof YIVI_ATTR_PRIMARY;
+
+export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
   yivi: YIVI_ATTR_PRIMARY,
@@ -583,6 +593,9 @@ export const DEV_JWK_PRIVATE: any = {
   dq: '2xIAK4NTjrOw12hfCcCkChOAIisertsEZIYeVwbunx9Gr1gvtyk7YoCvoUNsFfLlZAjFTvnUqODlpiJptx7P4WzTu04oPon9hjg6Ze4FSb7VGbTuaEbNJfNuP_AaBXoO8BpceG2tjZm4Wzr3ivUja-5q9E73ld44ezdeKuX-cGE',
   n: '0CXtOrsyIGkhhJ_sHzGbyK9U6sug4HdjdSNaq-FVbFFO_OeAaS8NvzM7DJXkZvmvZ7HNIPdlRk0-TCELmbOGK1RlddQZA_iic9DePydxloNJIWmUVI5GK1T84PxhjnMfBAD3SWPdTZ0zG1IubAjUJT4nwl0uVdzp0-LixbmKPQU87dqA1jt7ZuC73M55oZAyi1e2fzvgdxWyM7-NyvkZqwG2eGoDQ3SNb0rArlHTgdsLf1YsGPxn1wN3bSjhrq6af4fCnB5UVRb-r3g4NN_VJxBOc2xGDDoOgaPW9XW-BhSefc2hqRjTwtjaGiZFLdEuZdcq_mUB-AHc0YYD3_4VXw',
 };
+
+export const DEV_JWT =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
 export const securityHeaders = {
   'Permissions-Policy':

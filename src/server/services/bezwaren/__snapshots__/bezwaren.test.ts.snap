@@ -6,32 +6,7 @@ Object {
     Object {
       "datumIntrekking": null,
       "datumbesluit": "2021-05-01",
-      "documenten": Array [
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
-          "title": "Constructie.pdf",
-          "url": "http://localhost/bff/services/bezwaren/e6ed38c3-a44a-4c16-97c1-89d7ebfca095/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
-          "title": "Test document 01.pdf",
-          "url": "http://localhost/bff/services/bezwaren/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "42034d2a-921e-4466-a205-c0356fa6be55",
-          "title": "Concept besluit.pdf",
-          "url": "http://localhost/bff/services/bezwaren/42034d2a-921e-4466-a205-c0356fa6be55/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
-          "title": "BZ020001.pdf",
-          "url": "http://localhost/bff/services/bezwaren/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c/attachments",
-        },
-      ],
+      "documenten": Array [],
       "einddatum": null,
       "identificatie": "BI.21.014121.001",
       "link": Object {
@@ -39,10 +14,10 @@ Object {
         "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
       },
       "omschrijving": "Korte omschrijving van het bezwaar",
-      "ontvangstdatum": "2023-04-25",
       "primairbesluit": "F2021.0008",
       "primairbesluitdatum": "2021-05-01",
       "resultaat": "Niet-ontvankelijk",
+      "startdatum": "2023-04-25",
       "status": null,
       "statussen": Array [
         Object {
@@ -68,32 +43,7 @@ Object {
     Object {
       "datumIntrekking": null,
       "datumbesluit": "2021-03-03",
-      "documenten": Array [
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
-          "title": "Constructie.pdf",
-          "url": "http://localhost/bff/services/bezwaren/e6ed38c3-a44a-4c16-97c1-89d7ebfca095/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
-          "title": "Test document 01.pdf",
-          "url": "http://localhost/bff/services/bezwaren/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "42034d2a-921e-4466-a205-c0356fa6be55",
-          "title": "Concept besluit.pdf",
-          "url": "http://localhost/bff/services/bezwaren/42034d2a-921e-4466-a205-c0356fa6be55/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
-          "title": "BZ020001.pdf",
-          "url": "http://localhost/bff/services/bezwaren/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c/attachments",
-        },
-      ],
+      "documenten": Array [],
       "einddatum": null,
       "identificatie": "JB.22.000076.001",
       "link": Object {
@@ -101,10 +51,10 @@ Object {
         "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
       },
       "omschrijving": null,
-      "ontvangstdatum": "2023-04-03",
       "primairbesluit": "TESTRB003",
       "primairbesluitdatum": "2021-03-03",
       "resultaat": "Gegrond",
+      "startdatum": "2023-04-03",
       "status": null,
       "statussen": Array [
         Object {
@@ -130,32 +80,7 @@ Object {
     Object {
       "datumIntrekking": null,
       "datumbesluit": null,
-      "documenten": Array [
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
-          "title": "Constructie.pdf",
-          "url": "http://localhost/bff/services/bezwaren/e6ed38c3-a44a-4c16-97c1-89d7ebfca095/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
-          "title": "Test document 01.pdf",
-          "url": "http://localhost/bff/services/bezwaren/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "42034d2a-921e-4466-a205-c0356fa6be55",
-          "title": "Concept besluit.pdf",
-          "url": "http://localhost/bff/services/bezwaren/42034d2a-921e-4466-a205-c0356fa6be55/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
-          "title": "BZ020001.pdf",
-          "url": "http://localhost/bff/services/bezwaren/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c/attachments",
-        },
-      ],
+      "documenten": Array [],
       "einddatum": null,
       "identificatie": "ZAAK2",
       "link": Object {
@@ -163,10 +88,10 @@ Object {
         "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
       },
       "omschrijving": "Online bezwaar",
-      "ontvangstdatum": "2022-11-04",
       "primairbesluit": null,
       "primairbesluitdatum": null,
       "resultaat": null,
+      "startdatum": "2022-11-04",
       "status": null,
       "statussen": Array [
         Object {
@@ -192,32 +117,7 @@ Object {
     Object {
       "datumIntrekking": null,
       "datumbesluit": "2023-01-03",
-      "documenten": Array [
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "e6ed38c3-a44a-4c16-97c1-89d7ebfca095",
-          "title": "Constructie.pdf",
-          "url": "http://localhost/bff/services/bezwaren/e6ed38c3-a44a-4c16-97c1-89d7ebfca095/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "a9efe7c9-b2d2-4162-bb7b-00189f4c60d0",
-          "title": "Test document 01.pdf",
-          "url": "http://localhost/bff/services/bezwaren/a9efe7c9-b2d2-4162-bb7b-00189f4c60d0/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "42034d2a-921e-4466-a205-c0356fa6be55",
-          "title": "Concept besluit.pdf",
-          "url": "http://localhost/bff/services/bezwaren/42034d2a-921e-4466-a205-c0356fa6be55/attachments",
-        },
-        Object {
-          "datePublished": "23 maart 2023",
-          "id": "d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c",
-          "title": "BZ020001.pdf",
-          "url": "http://localhost/bff/services/bezwaren/d5aa70d6-f54b-4bd9-a6c1-42a9fd9acf9c/attachments",
-        },
-      ],
+      "documenten": Array [],
       "einddatum": "2023-01-04",
       "identificatie": "ZAAK3",
       "link": Object {
@@ -225,10 +125,10 @@ Object {
         "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
       },
       "omschrijving": "Online bezwaar",
-      "ontvangstdatum": "2022-11-04",
       "primairbesluit": null,
       "primairbesluitdatum": "2023-01-03",
       "resultaat": null,
+      "startdatum": "2022-11-04",
       "status": null,
       "statussen": Array [
         Object {
