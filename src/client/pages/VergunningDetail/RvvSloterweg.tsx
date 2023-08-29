@@ -28,27 +28,21 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-in-behandeling',
       status: 'In behandeling',
-      datePublished: vergunning.dateRequest ?? '',
+      datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive:
-        !vergunning.processed ||
-        !!(
-          vergunning.dateWorkflowActive &&
-          vergunning.dateDecision &&
-          vergunning.dateWorkflowActive > vergunning.dateDecision
-        ), // TODO: Uitvinden of deze situatie voor kan komen. Automatisch verleend maar daarna weer in behandeling genomen.
+      isActive: false,
       isChecked: true,
     },
     {
       id: 'status-afgehandeld',
       status: 'Afgehandeld',
-      datePublished: vergunning.dateDecision ?? '',
+      datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive:
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
-        !isExpired, // TODO: Uitvinden of Ingetrokken het besluit is dat aangeeft of een vergunning niet "geldig/actief" is (en dus ook nooit kan verlopen..).
+      isActive: !(
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE || isExpired
+      ),
       isChecked: true,
     },
   ];
