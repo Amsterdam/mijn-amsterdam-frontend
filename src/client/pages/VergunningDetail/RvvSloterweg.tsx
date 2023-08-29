@@ -41,16 +41,15 @@ export function getRVVSloterwegLineItems(
       description: '',
       documents: [],
       isActive: !(
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE || isExpired
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
+        isExpired ||
+        RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
       ),
       isChecked: true,
     },
   ];
 
-  if (
-    vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED ||
-    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
-  ) {
+  if (!!vergunning.decision) {
     lineItems.push({
       id: 'status-verlopen',
       status: 'Verlopen',
@@ -63,8 +62,12 @@ export function getRVVSloterwegLineItems(
           ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
           : '',
       documents: [],
-      isActive: isExpired,
-      isChecked: isExpired,
+      isActive:
+        isExpired ||
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+      isChecked:
+        isExpired ||
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
     });
   }
 
