@@ -21,7 +21,7 @@ export function getEvenementVergunningLineItems(
       datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive: false,
+      isActive: !isDone,
       isChecked: true,
     },
     {
