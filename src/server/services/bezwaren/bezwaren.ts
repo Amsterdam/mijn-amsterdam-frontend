@@ -26,7 +26,7 @@ import {
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
 
-const MAX_AMOUNT_OF_FETCHES = 5;
+const MAX_AMOUNT_OF_FETCHES = 5; // Should amount to 50 bezwaren
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -312,15 +312,13 @@ export async function fetchBezwaren(
     requestID
   );
 
-  if (bezwarenResponse.status === 'OK') {
+  if (bezwarenResponse.status === 'OK' && bezwarenResponse.content) {
     result = result.concat(bezwarenResponse.content.bezwaren);
 
     // Need more data ?
     while (
-      bezwarenResponse.content &&
-      result.length < bezwarenResponse.content?.count &&
+      result.length < bezwarenResponse.content.count &&
       bezwarenResponse.content.bezwaren.length > 0 &&
-      bezwarenResponse.content.count > 0 &&
       requestConfig.params.page < MAX_AMOUNT_OF_FETCHES
     ) {
       requestConfig.params.page += 1; //Fetch next page
