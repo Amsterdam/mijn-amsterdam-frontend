@@ -41,6 +41,10 @@ function getZaakUrl(zaakId: string) {
 function transformBezwarenDocumentsResults(
   documents: BezwaarSourceDocument[]
 ): GenericDocument[] {
+  Sentry.captureMessage('Bezwaren documents', {
+    extra: { data: JSON.stringify(documents) },
+  });
+
   if (Array.isArray(documents)) {
     return documents.map(({ titel, registratiedatum, uuid }) => {
       const [documentIdEncrypted] = encrypt(
