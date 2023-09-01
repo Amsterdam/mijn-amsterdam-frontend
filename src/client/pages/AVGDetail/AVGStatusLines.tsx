@@ -154,7 +154,6 @@ const AVGStatusLines = ({ request }: { request: AVGRequest }) => {
       className={styles.AvgStatusLines}
       trackCategory="AVG verzoek detail / status"
       items={statusLineItems}
-      showToggleMore={false}
       id={`avg-detail-${request.id}`}
       documentPathForTracking={(document) =>
         `/downloads/avg-verzoek/${document.title}`

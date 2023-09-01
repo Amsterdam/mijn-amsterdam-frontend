@@ -27,7 +27,6 @@ export default function InkomenDetailUitkering() {
     <StatusDetail
       chapter="INKOMEN"
       stateKey="WPI_AANVRAGEN"
-      showToggleMore={true}
       pageContent={pageContent}
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_WPI_REQUEST : undefined

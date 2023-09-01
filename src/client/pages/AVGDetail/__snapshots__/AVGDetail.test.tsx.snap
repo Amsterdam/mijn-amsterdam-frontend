@@ -185,7 +185,6 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
       >
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -229,7 +228,6 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -273,7 +271,6 @@ exports[`AVGDetail With result Matches the Full Page snapshot 1`] = `
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"

@@ -48,7 +48,6 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
       className={styles.LoodStatusLines}
       trackCategory="Loodmeting detail / status"
       items={statusLines}
-      showToggleMore={false}
       id={`loodmeting-detail-${request.kenmerk}`}
     />
   );

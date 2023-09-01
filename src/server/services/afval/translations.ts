@@ -52,11 +52,11 @@ export const labels: Record<string, { text: string; html?: string }> = {
   'De afvalservice is momenteel niet beschikbaar. Probeer het later nog eens.':
     {
       text: 'De afvalservice is momenteel niet beschikbaar. Probeer het later nog eens.',
-      html: '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding" target="_blank">deze link</a>.</p>',
+      html: '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding">deze link</a>.</p>',
     },
   'Wegbrengen naar een Afvalpunt of buiten zetten': {
     text: 'Wegbrengen naar een Afvalpunt of buiten zetten',
-    html: '<p>Wegbrengen naar een <a href="https://www.amsterdam.nl/afval-en-hergebruik/grofafval/spullen-wegbrengen-afvalpunt/" target="_blank">Afvalpunt</a> of buiten zetten</p>',
+    html: '<p>Wegbrengen naar een <a href="https://www.amsterdam.nl/afval-en-hergebruik/grofafval/spullen-wegbrengen-afvalpunt/">Afvalpunt</a> of buiten zetten</p>',
   },
   'Dit is een bedrijfspand.': { text: 'Dit is geen woonadres.' },
   'In de container voor gfe. Dit kan alleen met een pas.': {
@@ -76,7 +76,7 @@ export const labels: Record<string, { text: string; html?: string }> = {
   },
   'De gemeente haalt uw afval aan huis op.': {
     text: 'De gemeente haalt uw afval aan huis op.',
-    html: '<p>De gemeente haalt uw afval aan huis op. Lees <a href="https://www.amsterdam.nl/afval-en-hergebruik/proef-afval-ophalen-afspraak/" target="_blank">hoe dit werkt</a>.</p>',
+    html: '<p>De gemeente haalt uw afval aan huis op. Lees <a href="https://www.amsterdam.nl/afval-en-hergebruik/proef-afval-ophalen-afspraak/">hoe dit werkt</a>.</p>',
   },
   dinsdag: { text: 'Dinsdag' },
   'dinsdag, vrijdag': { text: 'Dinsdag en vrijdag' },
@@ -90,7 +90,7 @@ export const labels: Record<string, { text: string; html?: string }> = {
   },
   'In de container voor textiel of bij een Afvalpunt': {
     text: 'Link',
-    html: '<div>In de container voor textiel of bij een</div>\r\n<div>\r\n  <a href="https://kaart.amsterdam.nl/afvalpunten" target="_blank">Afvalpunt</a>\r\n</div>',
+    html: '<div>In de container voor textiel of bij een</div>\r\n<div>\r\n  <a href="https://kaart.amsterdam.nl/afvalpunten">Afvalpunt</a>\r\n</div>',
   },
   'Klopt de informatie niet? Geef het door.': {
     text: 'Klopt dit niet? Geef het door',

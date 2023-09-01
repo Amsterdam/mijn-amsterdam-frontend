@@ -17,7 +17,6 @@ export interface SectionCollapsibleProps {
   startCollapsed?: boolean;
   className?: string;
   isLoading?: boolean;
-  track?: { category: string; name: string };
   hasItems?: boolean;
   children: ComponentChildren;
 }
@@ -71,7 +70,6 @@ export default function SectionCollapsible({
   className,
   isLoading = false,
   hasItems = true,
-  track,
   children,
 }: SectionCollapsibleProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
