@@ -627,14 +627,14 @@ describe('Vergunningen service', () => {
         Object {
           "chapter": "VERGUNNINGEN",
           "datePublished": "2023-07-26T00:00:00",
-          "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg (BB-344-P, VV-899-C) in behandeling genomen",
+          "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg (BB-344-P, VV-899-C) in behandeling genomen",
           "id": "vergunning-unique-id-of-zaak-notification",
           "link": Object {
             "title": "Bekijk details",
             "to": "/vergunningen",
           },
           "subject": "unique-id-of-zaak",
-          "title": "Aanvraag RVV ontheffing Sloterweg in behandeling",
+          "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
         },
         Object {
           "chapter": "VERGUNNINGEN",

@@ -4671,6 +4671,20 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
+              Verzoek
+            </h3>
+            <p
+              class="Value"
+            >
+              Wijziging
+            </p>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
               Zone
             </h3>
             <p
@@ -5009,6 +5023,20 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
+              Verzoek
+            </h3>
+            <p
+              class="Value"
+            >
+              Wijziging
+            </p>
+          </div>
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
               Zone
             </h3>
             <p
@@ -5284,6 +5312,20 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <div
           class="InfoDetailGroupContent"
         >
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Verzoek
+            </h3>
+            <p
+              class="Value"
+            >
+              Wijziging
+            </p>
+          </div>
           <div
             class="InfoDetail"
           >
@@ -5622,6 +5664,20 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <div
           class="InfoDetailGroupContent"
         >
+          <div
+            class="InfoDetail"
+          >
+            <h3
+              class="Heading Heading__tiny Label"
+            >
+              Verzoek
+            </h3>
+            <p
+              class="Value"
+            >
+              Wijziging
+            </p>
+          </div>
           <div
             class="InfoDetail"
           >

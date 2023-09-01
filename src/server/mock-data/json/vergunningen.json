@@ -1131,7 +1131,7 @@
       "dateDecision": null,
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "wijziging",
+      "requestType": "Wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1150,7 +1150,7 @@
       "dateDecision": "2023-07-26T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "wijziging",
+      "requestType": "Wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1169,7 +1169,7 @@
       "dateDecision": "2023-07-28T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "wijziging",
+      "requestType": "Wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1188,7 +1188,7 @@
       "dateDecision": "2023-07-03T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "wijziging",
+      "requestType": "Wijziging",
       "area": "Laan van Vlaanderen"
     },
     {
