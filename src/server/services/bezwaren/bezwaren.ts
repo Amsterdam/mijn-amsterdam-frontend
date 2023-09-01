@@ -148,12 +148,7 @@ function transformBezwarenResults(
           return bezwaar;
         })
         .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort((a, b) => {
-          const aStart = new Date(a.startdatum);
-          const bStart = new Date(b.startdatum);
-
-          return aStart < bStart ? 1 : aStart > bStart ? -1 : 0;
-        }),
+        .sort(dateSort('startdatum', 'desc')),
       count: response.count,
     };
   }
