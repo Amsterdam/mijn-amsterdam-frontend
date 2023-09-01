@@ -46,7 +46,7 @@ export const BFF_PUBLIC_URL = `${
 }`;
 
 export const BFF_MS_API_BASE_PATH = IS_AP ? '/api' : '';
-export const BFF_MS_API_BASE = `${process.env.BFF_MS_API_HOST}`;
+export const BFF_MS_API_BASE = `${process.env.BFF_API_DATA_HOST}`;
 export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = 'https://api.data.amsterdam.nl';
