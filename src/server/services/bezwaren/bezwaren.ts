@@ -1,10 +1,12 @@
 import * as Sentry from '@sentry/node';
+import axios from 'axios';
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiDependencyError,
   apiSuccessResult,
+  dateSort,
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
@@ -24,7 +26,6 @@ import {
   kenmerkKey,
 } from './types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import axios from 'axios';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 10 (per page) = 50 bezwaren
 
