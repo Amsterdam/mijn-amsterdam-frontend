@@ -49,6 +49,7 @@ process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
 process.env.BFF_FRONTEND_URL = frontentHost;
 process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = `${remoteApiHost}/smile`;
 process.env.BFF_OIDC_BASE_URL = bffApiHost;
+process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;
 process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
 process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
