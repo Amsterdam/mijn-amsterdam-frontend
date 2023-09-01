@@ -43,7 +43,7 @@ export function getRVVSloterwegLineItems(
       isActive: !(
         vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
         isExpired ||
-        RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
+        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
       ),
       isChecked: true,
     },
@@ -79,7 +79,7 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
       <InfoDetailGroup>
-        {vergunning.requestType === 'Kenteken wijziging' && (
+        {vergunning.requestType === 'Wijziging' && (
           <InfoDetail label="Verzoek" value={vergunning.requestType} />
         )}
         <InfoDetail label="Zone" value={vergunning.area} />

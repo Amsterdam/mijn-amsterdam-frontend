@@ -696,6 +696,54 @@ describe('Vergunningen service', () => {
           "subject": "unique-id-of-zaak",
           "title": "Aanvraag rvv ontheffing sloterweg (nieuw/ingetrokken) afgehandeld",
         },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-08-29",
+          "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg ontvangen.",
+          "id": "vergunning-1097314015-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "1097314015",
+          "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-08-29",
+          "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg ontvangen.",
+          "id": "vergunning-394540596-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "394540596",
+          "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-08-29",
+          "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing Sloterweg ontvangen.",
+          "id": "vergunning-1623553971-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "1623553971",
+          "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg ontvangen",
+        },
+        Object {
+          "chapter": "VERGUNNINGEN",
+          "datePublished": "2023-08-17",
+          "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg ontvangen.",
+          "id": "vergunning-4069415615-notification",
+          "link": Object {
+            "title": "Bekijk details",
+            "to": "/vergunningen",
+          },
+          "subject": "4069415615",
+          "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+        },
       ]
     `);
   });
