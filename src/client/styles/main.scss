@@ -42,12 +42,6 @@ body {
       pointer-events: none;
     }
   }
-
-  &.is-away {
-    #root {
-      filter: blur(2px);
-    }
-  }
 }
 
 #root {

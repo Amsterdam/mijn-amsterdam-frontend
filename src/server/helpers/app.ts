@@ -287,7 +287,9 @@ export async function isRequestAuthenticated(
         auth.profile.id
       ))
     );
-  } catch {}
+  } catch (error) {
+    Sentry.captureException(error);
+  }
   return false;
 }
 
