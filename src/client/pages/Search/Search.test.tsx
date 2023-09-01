@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import nock from 'nock';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+import { beforeAll, describe, it } from 'vitest';
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config';
-import { BFFApiUrls } from '../../config/api';
 import { appStateAtom } from '../../hooks';
 import MockApp from '../../pages/MockApp';
 import Search from './Search';
@@ -48,13 +48,7 @@ describe('<Search />', () => {
   };
 
   beforeAll(() => {
-    // Disable real http requests.
-    // All requests should be mocked.
-    nock.disableNetConnect();
-
-    nock('http://localhost')
-      .get(BFFApiUrls.SEARCH_CONFIGURATION)
-      .reply(200, { content: remoteConfig });
+    bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
   });
 
   it('Renders without crashing', async () => {

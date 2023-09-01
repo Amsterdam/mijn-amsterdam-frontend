@@ -1,52 +1,71 @@
-import { MyTip } from '../../universal/types/App.types';
+import Mockdate from 'mockdate';
 import {
-  servicesTipsByProfileType,
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest';
+import {
   getTipsFromServiceResults,
+  servicesTipsByProfileType,
 } from './controller';
 
-const MOCK_SOURCE_TIP: MyTip = {
-  profileTypes: ['private'],
-  datePublished: '2022-06-15',
-  description: 'Can we fake it today?',
-  id: 'mijn-999',
-  imgUrl: '/api/tips/static/tip_images/openresearch.jpg',
-  isPersonalized: true,
-  link: {
-    title: 'Kijk op fake.amsterdam',
-    to: 'https://fake.amsterdam/',
-  },
-  priority: 70,
-  reason: ['Omdat dit een fake tip is.'],
-  title: 'Voor fake Amsterdammers',
-};
+const mocks = vi.hoisted(() => {
+  return {
+    MOCK_SOURCE_TIP: {
+      profileTypes: ['private'],
+      datePublished: '2022-06-15',
+      description: 'Can we fake it today?',
+      id: 'mijn-999',
+      imgUrl: '/api/tips/static/tip_images/openresearch.jpg',
+      isPersonalized: true,
+      link: {
+        title: 'Kijk op fake.amsterdam',
+        to: 'https://fake.amsterdam/',
+      },
+      priority: 70,
+      reason: ['Omdat dit een fake tip is.'],
+      title: 'Voor fake Amsterdammers',
+    },
+  };
+});
 
-jest.mock('../helpers/app', () => ({
-  ...jest.requireActual('../helpers/app'),
-  getAuth: async () => {
-    return {
-      profile: { id: '123456789', profileType: 'private', authMethod: '' },
-      token: 'xxx==',
-    };
-  },
-}));
+vi.mock('./tips-and-notifications', async () => {
+  return {
+    getTipsAndNotificationsFromApiResults: vi.fn(),
+    sortNotifications: vi.fn(),
+    fetchServicesNotifications: vi.fn(),
+    fetchTipsAndNotifications: async () => {
+      return {
+        NOTIFICATIONS: { content: [] },
+        TIPS: { content: [mocks.MOCK_SOURCE_TIP] },
+      };
+    },
+  };
+});
 
-jest.mock('./tips-and-notifications', () => ({
-  fetchTipsAndNotifications: async () => {
-    return {
-      NOTIFICATIONS: { content: [] },
-      TIPS: { content: [MOCK_SOURCE_TIP] },
-    };
-  },
-}));
+vi.mock('../helpers/app', async (requireActual) => {
+  const origModule = (await requireActual()) as object;
+  return {
+    ...origModule,
+    getAuth: async () => {
+      return {
+        profile: { id: '123456789', profileType: 'private', authMethod: '' },
+        token: 'xxx==',
+      };
+    },
+  };
+});
 
 describe('controller', () => {
   const servicesPrivate = servicesTipsByProfileType.private;
   const servicesCommercial = servicesTipsByProfileType.commercial;
 
   beforeAll(() => {
-    jest
-      .useFakeTimers('modern')
-      .setSystemTime(new Date('2022-07-22').getTime());
+    Mockdate.set('2022-07-22');
   });
 
   beforeEach(() => {
@@ -85,7 +104,7 @@ describe('controller', () => {
   afterAll(() => {
     servicesTipsByProfileType.private = servicesPrivate;
     servicesTipsByProfileType.commercial = servicesCommercial;
-    jest.useRealTimers();
+    Mockdate.reset();
   });
 
   test('Only persoonlijke tips, not opted-in', async () => {

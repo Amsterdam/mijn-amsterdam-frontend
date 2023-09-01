@@ -7,8 +7,8 @@ import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
-
-// TIPS, NOTIFICATIONS, BUURT, MY_LOCATION
+import { bffApi } from '../../../test-utils';
+import { vi, describe, it, expect } from 'vitest';
 
 const testState: any = {
   BRP: {
@@ -96,10 +96,6 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<Dashboard />', () => {
-  beforeAll(() => {
-    (window.scrollTo as any) = jest.fn();
-  });
-
   const routeEntry = generatePath(AppRoutes.ROOT);
   const routePath = AppRoutes.ROOT;
 

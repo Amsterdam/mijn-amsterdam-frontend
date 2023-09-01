@@ -1,113 +1,139 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LoodMeting with results should show the correct detailpage for status afgehandeld 1`] = `
+exports[`LoodMeting > with results > should show the correct detailpage for status afgehandeld 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Bodem"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          icon_bodem.svg
+          <path
+            clip-rule="evenodd"
+            d="M12.772 9.73134C13.2283 8.82556 13.4851 7.80275 13.4851 6.72015C13.4851 3.00871 10.4664 0 6.74257 0C3.01875 0 0 3.00871 0 6.72015C0 9.42558 1.60404 11.7576 3.91595 12.8231C1.50899 15.0094 0 18.1604 0 21.667H3.01322C3.01322 16.7143 7.03084 12.7101 12 12.7101C14.0058 12.7101 15.8565 13.3625 17.3505 14.4663C18.0434 13.9952 18.686 13.5601 19.2219 13.1981C19.4931 13.0149 19.737 12.8504 19.9464 12.7093C18.0077 10.9998 15.5122 9.90546 12.772 9.73134ZM2.9967 3.73342V9.70688H3.74587V7.46683H4.86963C5.90402 7.46683 6.74257 6.63108 6.74257 5.60013C6.74257 4.56917 5.90402 3.73342 4.86963 3.73342H2.9967ZM7.49174 3.73342H8.24091V5.97347H9.36467C10.3991 5.97347 11.2376 6.80922 11.2376 7.84018C11.2376 8.87113 10.3991 9.70688 9.36467 9.70688H7.49174V3.73342ZM5.99339 5.60013C5.99339 6.2187 5.49027 6.72015 4.86963 6.72015H3.74587V4.4801H4.86963C5.49027 4.4801 5.99339 4.98155 5.99339 5.60013ZM8.24091 6.72015V8.9602H9.36467C9.98531 8.9602 10.4884 8.45875 10.4884 7.84018C10.4884 7.2216 9.98531 6.72015 9.36467 6.72015H8.24091ZM19.4491 16.65C20.4201 18.0806 20.9868 19.8069 20.9868 21.667H24C24 18.7627 22.9598 16.1024 21.2332 14.032C21.0953 14.2352 20.9358 14.4701 20.759 14.7301C20.3862 15.2783 19.9362 15.9385 19.4491 16.65ZM10.5793 23.3439C11.457 24.2187 12.8801 24.2187 13.7578 23.3439C14.6355 22.4691 21.1743 12.7842 21.1743 12.7842C21.1743 12.7842 11.457 19.3012 10.5793 20.176C9.70162 21.0508 9.70162 22.4691 10.5793 23.3439Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/bodem"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Bodem
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Lood in bodem-check
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           AV-001444
         </p>
       </div>
       <div
-        class="InfoDetail LocationInfo"
+        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Locatie
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Schipluidenlaan 16A
           <button
-            class="Button Button__inline Button__lean MapLink"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
             Bekijk op de kaart
           </button>
         </p>
       </div>
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Document
         </h3>
         <div
-          class="Value"
+          class="_Value_6f1df2"
         >
           <span
-            class="DocumentLinkWrap"
+            class="_DocumentLinkWrap_7ed0ad"
           >
             <span
-              class="DownloadIcon"
+              class="_DownloadIcon_7ed0ad"
             >
               <svg
                 aria-hidden="true"
+                focusable="false"
                 height="14"
+                viewBox="0 0 32 32"
                 width="14"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                Download.svg
+                <title>
+                  download-icoon
+                </title>
+                <path
+                  d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                />
               </svg>
             </span>
             <a
-              class="Button Button__plain Button__lean Linkd DocumentLink"
+              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
               href="http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments"
               rel="external noopener noreferrer"
             >
@@ -118,145 +144,142 @@ exports[`LoodMeting with results should show the correct detailpage for status a
       </div>
     </div>
     <div
-      class="StatusLine LoodStatusLines"
+      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Ontvangen
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 In behandeling
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Afgehandeld
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
@@ -266,82 +289,99 @@ exports[`LoodMeting with results should show the correct detailpage for status a
 </DocumentFragment>
 `;
 
-exports[`LoodMeting with results should show the correct detailpage for status afgewezen 1`] = `
+exports[`LoodMeting > with results > should show the correct detailpage for status afgewezen 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Bodem"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          icon_bodem.svg
+          <path
+            clip-rule="evenodd"
+            d="M12.772 9.73134C13.2283 8.82556 13.4851 7.80275 13.4851 6.72015C13.4851 3.00871 10.4664 0 6.74257 0C3.01875 0 0 3.00871 0 6.72015C0 9.42558 1.60404 11.7576 3.91595 12.8231C1.50899 15.0094 0 18.1604 0 21.667H3.01322C3.01322 16.7143 7.03084 12.7101 12 12.7101C14.0058 12.7101 15.8565 13.3625 17.3505 14.4663C18.0434 13.9952 18.686 13.5601 19.2219 13.1981C19.4931 13.0149 19.737 12.8504 19.9464 12.7093C18.0077 10.9998 15.5122 9.90546 12.772 9.73134ZM2.9967 3.73342V9.70688H3.74587V7.46683H4.86963C5.90402 7.46683 6.74257 6.63108 6.74257 5.60013C6.74257 4.56917 5.90402 3.73342 4.86963 3.73342H2.9967ZM7.49174 3.73342H8.24091V5.97347H9.36467C10.3991 5.97347 11.2376 6.80922 11.2376 7.84018C11.2376 8.87113 10.3991 9.70688 9.36467 9.70688H7.49174V3.73342ZM5.99339 5.60013C5.99339 6.2187 5.49027 6.72015 4.86963 6.72015H3.74587V4.4801H4.86963C5.49027 4.4801 5.99339 4.98155 5.99339 5.60013ZM8.24091 6.72015V8.9602H9.36467C9.98531 8.9602 10.4884 8.45875 10.4884 7.84018C10.4884 7.2216 9.98531 6.72015 9.36467 6.72015H8.24091ZM19.4491 16.65C20.4201 18.0806 20.9868 19.8069 20.9868 21.667H24C24 18.7627 22.9598 16.1024 21.2332 14.032C21.0953 14.2352 20.9358 14.4701 20.759 14.7301C20.3862 15.2783 19.9362 15.9385 19.4491 16.65ZM10.5793 23.3439C11.457 24.2187 12.8801 24.2187 13.7578 23.3439C14.6355 22.4691 21.1743 12.7842 21.1743 12.7842C21.1743 12.7842 11.457 19.3012 10.5793 20.176C9.70162 21.0508 9.70162 22.4691 10.5793 23.3439Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/bodem"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Bodem
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Lood in bodem-check
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           AV-001446
         </p>
       </div>
       <div
-        class="InfoDetail LocationInfo"
+        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Locatie
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Schipluidenlaan 16A
           <button
-            class="Button Button__inline Button__lean MapLink"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
             Bekijk op de kaart
           </button>
@@ -349,145 +389,142 @@ exports[`LoodMeting with results should show the correct detailpage for status a
       </div>
     </div>
     <div
-      class="StatusLine LoodStatusLines"
+      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Ontvangen
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 29 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 In behandeling
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 29 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Afgewezen
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 15 december 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
@@ -497,82 +534,99 @@ exports[`LoodMeting with results should show the correct detailpage for status a
 </DocumentFragment>
 `;
 
-exports[`LoodMeting with results should show the correct detailpage for status in behandeling 1`] = `
+exports[`LoodMeting > with results > should show the correct detailpage for status in behandeling 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Bodem"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          icon_bodem.svg
+          <path
+            clip-rule="evenodd"
+            d="M12.772 9.73134C13.2283 8.82556 13.4851 7.80275 13.4851 6.72015C13.4851 3.00871 10.4664 0 6.74257 0C3.01875 0 0 3.00871 0 6.72015C0 9.42558 1.60404 11.7576 3.91595 12.8231C1.50899 15.0094 0 18.1604 0 21.667H3.01322C3.01322 16.7143 7.03084 12.7101 12 12.7101C14.0058 12.7101 15.8565 13.3625 17.3505 14.4663C18.0434 13.9952 18.686 13.5601 19.2219 13.1981C19.4931 13.0149 19.737 12.8504 19.9464 12.7093C18.0077 10.9998 15.5122 9.90546 12.772 9.73134ZM2.9967 3.73342V9.70688H3.74587V7.46683H4.86963C5.90402 7.46683 6.74257 6.63108 6.74257 5.60013C6.74257 4.56917 5.90402 3.73342 4.86963 3.73342H2.9967ZM7.49174 3.73342H8.24091V5.97347H9.36467C10.3991 5.97347 11.2376 6.80922 11.2376 7.84018C11.2376 8.87113 10.3991 9.70688 9.36467 9.70688H7.49174V3.73342ZM5.99339 5.60013C5.99339 6.2187 5.49027 6.72015 4.86963 6.72015H3.74587V4.4801H4.86963C5.49027 4.4801 5.99339 4.98155 5.99339 5.60013ZM8.24091 6.72015V8.9602H9.36467C9.98531 8.9602 10.4884 8.45875 10.4884 7.84018C10.4884 7.2216 9.98531 6.72015 9.36467 6.72015H8.24091ZM19.4491 16.65C20.4201 18.0806 20.9868 19.8069 20.9868 21.667H24C24 18.7627 22.9598 16.1024 21.2332 14.032C21.0953 14.2352 20.9358 14.4701 20.759 14.7301C20.3862 15.2783 19.9362 15.9385 19.4491 16.65ZM10.5793 23.3439C11.457 24.2187 12.8801 24.2187 13.7578 23.3439C14.6355 22.4691 21.1743 12.7842 21.1743 12.7842C21.1743 12.7842 11.457 19.3012 10.5793 20.176C9.70162 21.0508 9.70162 22.4691 10.5793 23.3439Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/bodem"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Bodem
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Lood in bodem-check
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           AV-001447
         </p>
       </div>
       <div
-        class="InfoDetail LocationInfo"
+        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Locatie
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Schipluidenlaan 12A
           <button
-            class="Button Button__inline Button__lean MapLink"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
             Bekijk op de kaart
           </button>
@@ -580,135 +634,132 @@ exports[`LoodMeting with results should show the correct detailpage for status i
       </div>
     </div>
     <div
-      class="StatusLine LoodStatusLines"
+      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Ontvangen
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 01 december 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 In behandeling
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Afgehandeld
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
@@ -718,62 +769,101 @@ exports[`LoodMeting with results should show the correct detailpage for status i
 </DocumentFragment>
 `;
 
-exports[`LoodMeting without results should show the correct detailpage 1`] = `
+exports[`LoodMeting > without results > should show the correct detailpage 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Bodem"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          icon_bodem.svg
+          <path
+            clip-rule="evenodd"
+            d="M12.772 9.73134C13.2283 8.82556 13.4851 7.80275 13.4851 6.72015C13.4851 3.00871 10.4664 0 6.74257 0C3.01875 0 0 3.00871 0 6.72015C0 9.42558 1.60404 11.7576 3.91595 12.8231C1.50899 15.0094 0 18.1604 0 21.667H3.01322C3.01322 16.7143 7.03084 12.7101 12 12.7101C14.0058 12.7101 15.8565 13.3625 17.3505 14.4663C18.0434 13.9952 18.686 13.5601 19.2219 13.1981C19.4931 13.0149 19.737 12.8504 19.9464 12.7093C18.0077 10.9998 15.5122 9.90546 12.772 9.73134ZM2.9967 3.73342V9.70688H3.74587V7.46683H4.86963C5.90402 7.46683 6.74257 6.63108 6.74257 5.60013C6.74257 4.56917 5.90402 3.73342 4.86963 3.73342H2.9967ZM7.49174 3.73342H8.24091V5.97347H9.36467C10.3991 5.97347 11.2376 6.80922 11.2376 7.84018C11.2376 8.87113 10.3991 9.70688 9.36467 9.70688H7.49174V3.73342ZM5.99339 5.60013C5.99339 6.2187 5.49027 6.72015 4.86963 6.72015H3.74587V4.4801H4.86963C5.49027 4.4801 5.99339 4.98155 5.99339 5.60013ZM8.24091 6.72015V8.9602H9.36467C9.98531 8.9602 10.4884 8.45875 10.4884 7.84018C10.4884 7.2216 9.98531 6.72015 9.36467 6.72015H8.24091ZM19.4491 16.65C20.4201 18.0806 20.9868 19.8069 20.9868 21.667H24C24 18.7627 22.9598 16.1024 21.2332 14.032C21.0953 14.2352 20.9358 14.4701 20.759 14.7301C20.3862 15.2783 19.9362 15.9385 19.4491 16.65ZM10.5793 23.3439C11.457 24.2187 12.8801 24.2187 13.7578 23.3439C14.6355 22.4691 21.1743 12.7842 21.1743 12.7842C21.1743 12.7842 11.457 19.3012 10.5793 20.176C9.70162 21.0508 9.70162 22.4691 10.5793 23.3439Z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/bodem"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Bodem
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Lood in bodem-check
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="Alert warning"
+        class="_Alert_21b118 _warning_21b118"
       >
         <svg
           aria-hidden="true"
-          class="Icon"
+          class="_Icon_21b118"
+          focusable="false"
+          height="36"
+          viewBox="0 0 36 36"
+          width="36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Alert.svg
+          <title>
+            waarschuwing-icoon
+          </title>
+          <path
+            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+          />
+          <rect
+            height="4.95"
+            width="2"
+            x="17"
+            y="16.99"
+          />
+          <rect
+            height="1.95"
+            width="2"
+            x="17"
+            y="22.94"
+          />
         </svg>
          
         <p>

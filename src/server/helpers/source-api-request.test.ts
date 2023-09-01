@@ -1,4 +1,3 @@
-import MockAdapter from 'axios-mock-adapter';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -12,13 +11,27 @@ import {
   findApiByRequestUrl,
   requestData,
 } from './source-api-request';
+import { remoteApi } from '../../test-utils';
+import {
+  vi,
+  describe,
+  beforeAll,
+  beforeEach,
+  afterEach,
+  expect,
+  it,
+  test,
+  SpyInstance,
+  afterAll,
+} from 'vitest';
+import { remoteApiHost } from '../../setupTests';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
   const DUMMY_RESPONSE_2 = { foo: 'baz' };
 
-  const DUMMY_URL = BFF_MS_API_BASE_URL + '/1';
-  const DUMMY_URL_2 = BFF_MS_API_BASE_URL + '/2';
+  const DUMMY_URL = `${remoteApiHost}/1`;
+  const DUMMY_URL_2 = `${remoteApiHost}/2`;
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
@@ -31,29 +44,28 @@ describe('requestData.ts', () => {
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
 
-  let axMock: any;
-  let axiosRequestSpy: any;
+  let axiosRequestSpy: SpyInstance;
+
+  beforeAll(() => {
+    vi.useFakeTimers();
+  });
 
   beforeEach(() => {
-    jest.useFakeTimers('modern');
-    axMock = new MockAdapter(axiosRequest);
-    axMock
-      .onGet(DUMMY_URL)
-      .replyOnce(200, DUMMY_RESPONSE)
-      .onGet(DUMMY_URL)
-      .replyOnce(200, DUMMY_RESPONSE_2);
-
-    axMock.onGet(DUMMY_URL_2).networkError();
-    axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
+    axiosRequestSpy = vi.spyOn(axiosRequest, 'request');
   });
 
   afterEach(() => {
-    axMock.restore();
     cache.clear();
     axiosRequestSpy.mockRestore();
   });
 
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   it('A requests succeeds', async () => {
+    remoteApi.get('/1').reply(200, DUMMY_RESPONSE);
+
     const rs = await requestData(
       {
         url: DUMMY_URL,
@@ -66,6 +78,8 @@ describe('requestData.ts', () => {
   });
 
   it('Should make request with passthrough headers', async () => {
+    remoteApi.get('/1').reply(200, DUMMY_RESPONSE_2);
+
     await requestData(
       {
         url: DUMMY_URL,
@@ -79,6 +93,8 @@ describe('requestData.ts', () => {
   });
 
   it('Caches the response', async () => {
+    remoteApi.get('/1').reply(200, 'whoa');
+
     const rs = await requestData(
       {
         url: DUMMY_URL,
@@ -90,12 +106,15 @@ describe('requestData.ts', () => {
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
 
     // Should clear the cache timeout
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);
   });
 
   it('Caches the response per session id', async () => {
+    remoteApi.get('/1').reply(200, DUMMY_RESPONSE);
+    remoteApi.get('/1').reply(200, DUMMY_RESPONSE_2);
+
     const rs = await requestData(
       {
         url: DUMMY_URL,
@@ -124,7 +143,7 @@ describe('requestData.ts', () => {
     expect(cache.keys()[0]).toBe(CACHE_KEY_1);
     expect(cache.keys()[1]).toBe(CACHE_KEY_2);
 
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(cache.keys().length).toBe(0);
   });
@@ -144,6 +163,8 @@ describe('requestData.ts', () => {
   });
 
   it('A requests responds with error', async () => {
+    remoteApi.get('/2').replyWithError('Network Error');
+
     const rs = await requestData(
       {
         url: DUMMY_URL_2,

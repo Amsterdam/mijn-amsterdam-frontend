@@ -1,108 +1,166 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
+exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage ToeristischeVerhuur"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _ToeristischeVerhuur_702859"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Toeristische verhuur"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32"
+          viewBox="0 0 32 32"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          toeristische-verhuur.svg
+          <title>
+            Toeristische verhuur
+          </title>
+          <path
+            d="M2.91 5v13.2h11.635V7.933h11.637C29.396 7.933 32 10.56 32 13.8V27h-2.91v-4.4H2.91V27H0V5h2.91zM8.5 8c2.49 0 4.5 2.01 4.5 4.5S10.99 17 8.5 17 4 14.99 4 12.5 6.01 8 8.5 8z"
+            fill-rule="evenodd"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Toeristische verhuur
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hieronder vindt u een overzicht van uw vergunningen voor toeristische verhuur.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Meer over toeristenbelasting
         </a>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.toeristischeverhuur.nl/portaal/login"
           rel="external noopener noreferrer"
-          target="_blank"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Vakantieverhuur melden of registratienummer aanvragen
         </a>
       </p>
       <div
-        class="Detail"
+        class="_Detail_702859"
       >
         <div
-          class="Alert warning"
+          class="_Alert_21b118 _warning_21b118"
         >
           <svg
             aria-hidden="true"
-            class="Icon"
+            class="_Icon_21b118"
+            focusable="false"
+            height="36"
+            viewBox="0 0 36 36"
+            width="36"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Alert.svg
+            <title>
+              waarschuwing-icoon
+            </title>
+            <path
+              d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
+            />
+            <rect
+              height="4.95"
+              width="2"
+              x="17"
+              y="16.99"
+            />
+            <rect
+              height="1.95"
+              width="2"
+              x="17"
+              y="22.94"
+            />
           </svg>
            
           <p>
             U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen.
             <a
-              class="Button Button__inline Button__lean Linkd LinkedInline"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
               href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
               rel="external noopener noreferrer"
             >
@@ -114,56 +172,67 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <section
-      class="SectionCollapsible SectionNoBorderBottom"
+      class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
-           Vergunningen
+           Huidige vergunningen
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table TableVergunningen"
+            class="_Table_a66dcc _TableVergunningen_702859"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Soort vergunning
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Status
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Vanaf
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Tot
                 </th>
@@ -171,32 +240,177 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 augustus 2023
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    30 september 2024
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Vergunning vakantieverhuur
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    01 augustus 2022
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    22 augustus 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning bed & breakfast
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -205,10 +419,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -217,10 +431,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -230,150 +444,41 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
-                    </svg>
-                    Vergunning bed & breakfast
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Status:
-                  </span>
-                  <span>
-                    In behandeling
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Vanaf:
-                  </span>
-                  <span>
-                    22 oktober 2020
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Tot:
-                  </span>
-                  <span>
-                    21 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/toeristische-verhuur"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
-                    </svg>
-                    Vergunning bed & breakfast
-                  </a>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Status:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Vanaf:
-                  </span>
-                  <span>
-                    22 oktober 2020
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Tot:
-                  </span>
-                  <span>
-                    21 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  <a
-                    class="Button Button__plain Button__lean Linkd"
-                    href="/toeristische-verhuur"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="Icon Icon__left"
-                      fill="#000"
-                      height="14px"
-                      width="14px"
-                    >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -382,10 +487,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -394,10 +499,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -406,33 +511,251 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Eerdere vergunningen
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <table
+            class="_Table_a66dcc _TableVergunningen_702859"
+          >
+            <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Vergunning bed & breakfast
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    In behandeling
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    22 oktober 2020
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    21 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Vergunning bed & breakfast
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Vanaf:
+                  </span>
+                  <span>
+                    22 oktober 2020
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Tot:
+                  </span>
+                  <span>
+                    21 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/toeristische-verhuur"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -441,10 +764,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -453,10 +776,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -466,32 +789,41 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -500,10 +832,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -512,10 +844,10 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -530,21 +862,21 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Registratienummer toeristische verhuur
         </h3>
         <div
-          class="Value"
+          class="_Value_6f1df2"
         >
           <article
-            class="RegistrationNumber"
+            class="_RegistrationNumber_702859"
           >
             <span>
               0363 E7B8 B042 8A92 37E5
@@ -553,7 +885,7 @@ exports[`<ToeristischeVerhuur /> Matches the Full Page snapshot 1`] = `
             Schakelstraat 16  1014AW Amsterdam
           </article>
           <article
-            class="RegistrationNumber"
+            class="_RegistrationNumber_702859"
           >
             <span>
               E7B8 B042 8A92 37E5 0363

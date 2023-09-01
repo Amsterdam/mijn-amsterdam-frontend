@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem } from '../universal/config/env';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -390,7 +389,7 @@ export default function App() {
   /**
    * Visitor analytics and support
    */
-  useAnalytics(!!getOtapEnvItem('analyticsId'));
+  useAnalytics(!!import.meta.env.REACT_APP_ANALYTICS_ID);
 
   return (
     <RecoilRoot>

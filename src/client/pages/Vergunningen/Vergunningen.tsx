@@ -102,10 +102,6 @@ export default function Vergunningen() {
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(VERGUNNINGEN)}
-        track={{
-          category: 'Vergunningen overzicht / Lopende aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table
           className={styles.Table}
@@ -122,10 +118,6 @@ export default function Vergunningen() {
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}
         isLoading={isLoading(VERGUNNINGEN)}
-        track={{
-          category: 'Vergunningen overzicht / Eerdere aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table
           className={styles.Table}

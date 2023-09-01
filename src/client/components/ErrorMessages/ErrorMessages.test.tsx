@@ -18,8 +18,6 @@ describe('<ErrorMessages />', () => {
     </RecoilRoot>
   );
 
-  (window as any).scrollTo = jest.fn();
-
   it('Renders without crashing', () => {
     render(<Component />);
     expect(

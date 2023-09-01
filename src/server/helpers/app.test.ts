@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { apiErrorResult, jsonCopy } from '../../universal/helpers';
 import * as config from '../config';
 import {
@@ -38,6 +39,13 @@ const {
   EH_ATTR_PRIMARY_ID_LEGACY,
 } = config;
 
+vi.mock('../config', async (requireOriginal) => {
+  const origModule = (await requireOriginal()) as object;
+  return {
+    ...origModule,
+  };
+});
+
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
   const eherkenningClientId = oidcConfigEherkenning.clientID;
@@ -54,7 +62,6 @@ describe('server/helpers/app', () => {
     oidcConfigEherkenning.clientID = 'test1';
     oidcConfigDigid.clientID = 'test2';
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = '123123123kjhkjhsdkjfhsd';
-    nock.disableNetConnect();
   });
 
   afterAll(() => {
@@ -63,21 +70,24 @@ describe('server/helpers/app', () => {
     oidcConfigEherkenning.clientID = digidClientId;
     oidcConfigDigid.clientID = eherkenningClientId;
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = secret;
-    nock.restore();
   });
 
   test('getAuth.eherkenning', async () => {
+
+    const cookieValue =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
+
     const req = {
       cookies: {
-        [OIDC_SESSION_COOKIE_NAME]: jweCookieString,
+        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
       },
     } as unknown as typeof express.request;
 
     const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "profile": Object {
+      {
+        "profile": {
           "authMethod": "eherkenning",
           "id": "123-eherkenning-321",
           "profileType": "commercial",
@@ -105,8 +115,8 @@ describe('server/helpers/app', () => {
     const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "profile": Object {
+      {
+        "profile": {
           "authMethod": "digid",
           "id": "000-digid-999",
           "profileType": "private",
@@ -204,7 +214,7 @@ describe('server/helpers/app', () => {
   });
 
   test('requestID', () => {
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
 
     const req = {} as any;
     const res = {
@@ -219,8 +229,8 @@ describe('server/helpers/app', () => {
 
   test('send404', () => {
     const mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
+      status: vi.fn(),
+      send: vi.fn(),
     };
 
     send404(mockRes as any);
@@ -233,8 +243,8 @@ describe('server/helpers/app', () => {
 
   test('sendUnauthorized', () => {
     const mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
+      status: vi.fn(),
+      send: vi.fn(),
     };
 
     sendUnauthorized(mockRes as any);
@@ -259,7 +269,7 @@ describe('server/helpers/app', () => {
 
   test('clearRequestCache.unknown.key', () => {
     const requestID = '11223300xx';
-    const nextMock = jest.fn();
+    const nextMock = vi.fn();
     cache.put(requestID, { foo: 'bar' });
 
     expect(cache.get(requestID)).toEqual({ foo: 'bar' });
@@ -275,7 +285,7 @@ describe('server/helpers/app', () => {
 
   test('sendMessage', () => {
     const res = {
-      write: jest.fn(),
+      write: vi.fn(),
     };
     sendMessage(res as any, 'test', 'data-message', { foo: 'bar' });
 
@@ -288,7 +298,7 @@ describe('server/helpers/app', () => {
     const data = { foo: 'bar' };
     const servicePromise = Promise.resolve(data);
     const res = {
-      write: jest.fn(),
+      write: vi.fn(),
     };
     const result = await addServiceResultHandler(
       res as any,
@@ -342,14 +352,16 @@ describe('server/helpers/app', () => {
   });
 
   test('decodeOIDCToken', async () => {
+    const jweCookieString =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
     expect(await decodeOIDCToken(getOIDCToken(jweCookieString)))
       .toMatchInlineSnapshot(`
-      Object {
-        "aud": "test1",
-        "iat": 1650620133,
-        "urn:etoegang:1.9:EntityConcernedID:KvKnr": "123-eherkenning-321",
-      }
-    `);
+        {
+          "aud": "test1",
+          "iat": 1650620133,
+          "urn:etoegang:1.9:EntityConcernedID:KvKnr": "123-eherkenning-321",
+        }
+      `);
   });
 
   test('isRelayAllowed', () => {

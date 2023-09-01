@@ -12,18 +12,6 @@ const combine = ({ results }: Response, newResponse: any) => {
 };
 
 describe('requestData paginated requests', () => {
-  afterAll(() => {
-    // Enable http requests.
-    nock.enableNetConnect();
-    nock.restore();
-  });
-
-  beforeAll(() => {
-    // Disable real http requests.
-    // All requests should be mocked.
-    nock.disableNetConnect();
-  });
-
   describe('basics', () => {
     let scope: nock.Scope | null = null;
 
@@ -69,7 +57,7 @@ describe('requestData paginated requests', () => {
     });
 
     it('Should combine results using the function passed via combinePaginatedResults', async () => {
-      const combineMock = jest.fn().mockImplementation(combine);
+      const combineMock = vi.fn().mockImplementation(combine);
       expect(combineMock).not.toHaveBeenCalled();
 
       const result = await requestData<Response>(

@@ -1,47 +1,47 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Landing /> Renders without crashing 1`] = `
+exports[`<Landing /> > Renders without crashing 1`] = `
 <DocumentFragment>
   <main
-    class="Page TextPage"
+    class="_Page_47d7c0 _TextPage_47d7c0"
   >
     <header
-      class="PageHeading Heading"
+      class="_PageHeading_3b337d _Heading_39d0ac"
     >
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Welkom op Mijn Amsterdam
         </h2>
       </div>
     </header>
     <div
-      class="PageContent LandingContent"
+      class="_PageContent_47d7c0 _LandingContent_39d0ac"
       id="skip-to-id-AppContent"
     >
       <p>
         Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente Amsterdam.
       </p>
       <div
-        class="LoginOption"
+        class="_LoginOption_39d0ac"
       >
         <h3
-          class="Heading Heading__tiny LoginOptionHeading"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _LoginOptionHeading_39d0ac"
         >
           Voor particulieren en eenmanszaken
         </h3>
         <p>
           <a
-            class="LoginBtn"
-            href="/api/v1/auth/digid/login"
+            class="_LoginBtn_39d0ac"
+            href="http://bff-api-host/auth/digid/login"
             rel="noopener noreferrer"
             role="button"
           >
             <span
-              class="LoginLogoWrap"
+              class="_LoginLogoWrap_39d0ac"
             >
               <svg
                 viewBox="0 0 150 150"
@@ -64,14 +64,14 @@ exports[`<Landing /> Renders without crashing 1`] = `
               </svg>
             </span>
             <span
-              class="LoginButtonText"
+              class="_LoginButtonText_39d0ac"
             >
               Inloggen met DigiD
             </span>
           </a>
         </p>
         <h4
-          class="Heading Heading__tiny"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4"
         >
           Hebt u nog geen DigiD? Regel dit dan eerst.
         </h4>
@@ -86,22 +86,22 @@ exports[`<Landing /> Renders without crashing 1`] = `
         </p>
       </div>
       <div
-        class="LoginOption LoginOption--eherkenning"
+        class="_LoginOption_39d0ac _LoginOption--eherkenning_39d0ac"
       >
         <h3
-          class="Heading Heading__tiny LoginOptionHeading"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _LoginOptionHeading_39d0ac"
         >
           Voor ondernemers
         </h3>
         <p>
           <a
-            class="LoginBtn LoginBtn--eherkenning"
-            href="/api/v1/auth/eherkenning/login"
+            class="_LoginBtn_39d0ac _LoginBtn--eherkenning_39d0ac"
+            href="http://bff-api-host/auth/eherkenning/login"
             rel="noopener noreferrer"
             role="button"
           >
             <span
-              class="LoginLogoWrap"
+              class="_LoginLogoWrap_39d0ac"
             >
               <svg
                 height="28px"
@@ -144,14 +144,14 @@ exports[`<Landing /> Renders without crashing 1`] = `
               </svg>
             </span>
             <span
-              class="LoginButtonText"
+              class="_LoginButtonText_39d0ac"
             >
               Inloggen met eHerkenning
             </span>
           </a>
         </p>
         <h4
-          class="Heading Heading__tiny"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4"
         >
           U hebt eHerkenning niveau 3 nodig om in te loggen.
         </h4>
@@ -167,16 +167,16 @@ exports[`<Landing /> Renders without crashing 1`] = `
         </p>
       </div>
       <h4
-        class="Heading Heading__tiny"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4"
       >
         Vragen over Mijn Amsterdam?
       </h4>
       <p
-        class="FaqInfo"
+        class="_FaqInfo_39d0ac"
       >
         Kijk bij 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}"
           rel="external noopener noreferrer"
         >

@@ -14,6 +14,7 @@ RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y
 
+COPY vite.config.ts /app/
 COPY tsconfig.json /app/
 COPY tsconfig.bff.json /app/
 COPY package.json /app/
@@ -23,6 +24,7 @@ COPY .prettierrc.json /app/
 
 RUN npm ci
 
+COPY index.html /app/
 COPY public /app/public
 COPY src /app/src
 
@@ -36,8 +38,8 @@ FROM build-deps as build-app
 ENV BROWSER=none
 ENV CI=true
 
-ARG REACT_APP_ENV=production
-ENV REACT_APP_ENV=$REACT_APP_ENV
+ARG MA_OTAP_ENV=production
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
@@ -109,7 +111,7 @@ COPY ca/* /usr/local/share/ca-certificates/extras/
 RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
   && update-ca-certificates
 
-ENV BFF_ENV=production
+ENV MA_OTAP_ENV=production
 ENV TZ=Europe/Amsterdam
 ENV NODE_OPTIONS=--use-openssl-ca
 

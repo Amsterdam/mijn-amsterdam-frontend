@@ -3,12 +3,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { describe, expect, it, vi, Mock } from 'vitest';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
 import { trackPageViewWithCustomDimension } from '../../hooks/analytics.hook';
 import DocumentList from './DocumentList';
 
-jest.mock('../../hooks/analytics.hook');
+vi.mock('../../hooks/analytics.hook');
 
 const ITEMS: GenericDocument[] = [
   {
@@ -35,13 +36,13 @@ describe('DocumentList', () => {
 
   it('Clicking a link fires tracking call', async () => {
     const originalFn = console.error;
-    console.error = jest.fn(); // Hide warnings about navigation not implemented exceptions.
+    console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
-    const fetch = ((global as any).fetch = jest
+    const fetch = ((global as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
 
-    (trackPageViewWithCustomDimension as jest.Mock).mockReturnValue(null);
+    (trackPageViewWithCustomDimension as Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -72,13 +73,13 @@ describe('DocumentList', () => {
 
   it('trackPath function is used to create the link sent to the tracking call', async () => {
     const originalFn = console.error;
-    console.error = jest.fn(); // Hide warnings about navigation not implemented exceptions.
+    console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
-    (global as any).fetch = jest
+    (global as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null });
 
-    (trackPageViewWithCustomDimension as jest.Mock).mockReturnValue(null);
+    (trackPageViewWithCustomDimension as Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -109,12 +110,12 @@ describe('DocumentList', () => {
   });
 
   it('Clicking a link does not fire a tracking call when the link returns a 404 status', async () => {
-    const fetch = ((global as any).fetch = jest
+    const fetch = ((global as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
     const track = ((analytics as any).trackPageViewWithCustomDimension =
-      jest.fn());
-    const captureException = ((Sentry as any).captureException = jest.fn());
+      vi.fn());
+    const captureException = ((Sentry as any).captureException = vi.fn());
 
     render(
       <RecoilRoot>

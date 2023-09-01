@@ -1,111 +1,151 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Burgerzaken /> Renders without crashing 1`] = `
+exports[`<Burgerzaken /> > Renders without crashing 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage BurgerzakenOverviewPage"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _BurgerzakenOverviewPage_8de9f6"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Burgerzaken"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          burgerzaken.svg
+          <g
+            transform="translate(-5 0)"
+          >
+            <path
+              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
+            />
+          </g>
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Burgerzaken
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/burgerzaken"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Overzicht en aanvragen bij burgerzaken
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleIdKaarten"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleIdKaarten_8de9f6"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Mijn reisdocumenten
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table DocumentsTable"
+            class="_Table_a66dcc _DocumentsTable_8de9f6"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Geldig tot
                 </th>
@@ -113,13 +153,13 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Geldig tot:
                   </span>
@@ -129,13 +169,13 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Geldig tot:
                   </span>
@@ -150,49 +190,60 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionCollapsibleAktes"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleAktes_8de9f6"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Mijn aktes
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table AktesTable"
+            class="_Table_a66dcc _AktesTable_8de9f6"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 />
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Aktenummer
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Registerjaar
                 </th>
@@ -200,32 +251,41 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/burgerzaken/akte/70669889"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Huwelijksakte
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aktenummer:
                   </span>
@@ -234,10 +294,10 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Registerjaar:
                   </span>
@@ -247,32 +307,41 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/burgerzaken/akte/4150191554"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Geboorteakte
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aktenummer:
                   </span>
@@ -281,10 +350,10 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Registerjaar:
                   </span>
@@ -294,32 +363,41 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/burgerzaken/akte/1975027871"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Akte van geregistreerd partnerschap
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aktenummer:
                   </span>
@@ -328,10 +406,10 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Registerjaar:
                   </span>
@@ -346,7 +424,7 @@ exports[`<Burgerzaken /> Renders without crashing 1`] = `
       </div>
     </section>
     <p
-      class="AktesDisclaimer"
+      class="_AktesDisclaimer_8de9f6"
     >
       Alleen akte indien rechtsfeit in amsterdam Akte is niet rechtsgeldig oid
     </p>

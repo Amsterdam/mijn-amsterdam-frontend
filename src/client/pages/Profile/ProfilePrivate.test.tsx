@@ -189,10 +189,10 @@ describe('<Profile />', () => {
   const routePath = AppRoutes.BRP;
 
   beforeAll(() => {
-    (window.matchMedia as any) = jest.fn(() => {
+    (window.matchMedia as any) = vi.fn(() => {
       return {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
       };
     });
   });

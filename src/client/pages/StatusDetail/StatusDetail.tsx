@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading, relayApiUrl } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   GenericDocument,
   StatusLine,
@@ -21,6 +21,7 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StatusDetail.module.scss';
+import { relayApiUrl } from '../../utils/utils';
 
 export type StatusSourceItem = StatusLine;
 
@@ -32,7 +33,6 @@ interface StatusDetailProps {
   ) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   maxStepCount?: (hasDecision: boolean) => number | undefined;
-  showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   showStatusLineConnection?: boolean;
   reverseSteps?: boolean;
@@ -45,7 +45,6 @@ export default function StatusDetail({
   getItems,
   pageContent,
   maxStepCount,
-  showToggleMore = true,
   chapter,
   statusLabel = 'Status',
   showStatusLineConnection = true,
@@ -159,7 +158,6 @@ export default function StatusDetail({
           }
           showStatusLineConnection={showStatusLineConnection}
           items={statusItemSteps}
-          showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
           id={`${chapter}-${stateKey}-status`}

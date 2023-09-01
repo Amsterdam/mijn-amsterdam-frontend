@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { relayApiUrl } from '../../../universal/helpers';
 import { AppState } from '../../AppState';
 import { DocumentLink } from '../../components/DocumentList/DocumentList';
+import { relayApiUrl } from '../../utils/utils';
 
 export function useAddDocumentLinkComponents(
   WPI_SPECIFICATIES: AppState['WPI_SPECIFICATIES']

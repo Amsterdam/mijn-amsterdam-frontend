@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-
 import { BrowserRouter } from 'react-router-dom';
 import { ReactComponent as IconComponent } from '../../assets/icons/Alert.svg';
 import Linkd from './Button';
@@ -15,31 +14,31 @@ describe('Linkd', () => {
   });
 
   it('Renders', () => {
-    const component = render(
+    const { asFragment } = render(
       <BrowserRouter>
         <Linkd href="/">Link!</Linkd>
       </BrowserRouter>
     );
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Linkd default renders correctly', () => {
-    const component = render(
+    const { asFragment } = render(
       <BrowserRouter>
         <Linkd href="/">
           <IconComponent />
         </Linkd>
       </BrowserRouter>
     );
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Linkd external renders correctly', () => {
-    const component = render(
-      <Linkd external={true} target="_blank" href="/">
+    const { asFragment } = render(
+      <Linkd external={true} href="/">
         Link!
       </Linkd>
     );
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

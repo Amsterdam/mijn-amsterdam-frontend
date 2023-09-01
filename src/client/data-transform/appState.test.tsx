@@ -68,7 +68,7 @@ describe('transformSourceData', () => {
 
   test('Unexpected state key', () => {
     const data = { STATE_KEY: '<html>dingen</html>' };
-    const sentrySpy = jest.spyOn(Sentry, 'captureMessage');
+    const sentrySpy = vi.spyOn(Sentry, 'captureMessage');
     const result = transformSourceData(data as Partial<AppState>);
     expect(sentrySpy).toHaveBeenCalledWith(
       '[transformSourceData] Unknown stateKey encountered',
@@ -83,7 +83,7 @@ describe('transformSourceData', () => {
 
   test('Unexpected data', () => {
     const data = '<html>dingen</html>';
-    const sentrySpy = jest.spyOn(Sentry, 'captureMessage');
+    const sentrySpy = vi.spyOn(Sentry, 'captureMessage');
     const result = transformSourceData(data as Partial<AppState>);
     expect(result).toEqual(
       createAllErrorState(PRISTINE_APPSTATE, 'Received invalid appState')

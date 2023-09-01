@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import DirectLinks from './DirectLinks';
 
-jest.mock('../../hooks/media.hook');
+vi.mock('../../hooks/media.hook');
 
 describe('<DirectLinks />', () => {
   function getMountHtml(profileType: ProfileType) {
@@ -21,7 +21,7 @@ describe('<DirectLinks />', () => {
     expect(getMountHtml('commercial')).toMatchSnapshot();
   });
   it('renders additional links on phone', () => {
-    (usePhoneScreen as jest.Mock).mockReturnValueOnce(true);
+    (usePhoneScreen as vi.Mock).mockReturnValueOnce(true);
     expect(getMountHtml('private')).toMatchSnapshot();
   });
 });

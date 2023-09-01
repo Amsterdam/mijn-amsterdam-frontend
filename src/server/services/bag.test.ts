@@ -1,27 +1,18 @@
-import MockAdapter from 'axios-mock-adapter';
+import nock from 'nock';
+import { describe, expect, it } from 'vitest';
 import { jsonCopy } from '../../universal/helpers';
 import { Adres } from '../../universal/types';
-import { ApiUrls } from '../config';
-import { axiosRequest } from '../helpers/source-api-request';
 import bagData from '../mock-data/json/bag.json';
 import { fetchBAG } from './bag';
 
 describe('BAG service', () => {
-  const axMock = new MockAdapter(axiosRequest);
   const DUMMY_RESPONSE = jsonCopy(bagData);
 
-  afterAll(() => {
-    axMock.restore();
-  });
-
-  axMock
-    .onGet(String(ApiUrls.BAG), { params: { q: 'straatje 25', features: 2 } })
-    .reply(200, DUMMY_RESPONSE);
-
-  // Error response
-  axMock.onGet(String(ApiUrls.BAG), { params: { q: 'undefined' } }).reply(500);
-
   it('Bag api should reply correctly', async () => {
+    nock('https://api.data.amsterdam.nl')
+      .get('/atlas/search/adres/?q=straatje 25&features=2')
+      .reply(200, DUMMY_RESPONSE);
+
     const address = {
       straatnaam: 'straatje',
       huisnummer: 25,
@@ -48,6 +39,9 @@ describe('BAG service', () => {
   });
 
   it('Bag api should fail correct;y', async () => {
+    nock('http://api.data.amsterdam.nl')
+      .get('/bag', { params: { q: 'undefined' } })
+      .reply(500);
     // Request non-existing mock url
     const rs = await fetchBAG(
       'x',

@@ -1,20 +1,22 @@
-import nock from 'nock';
+import { describe, expect, test, vi } from 'vitest';
+import { remoteApi } from '../../test-utils';
 import { jsonCopy } from '../../universal/helpers';
 import {
-  forTesting,
   SiaAttachmentResponse,
   SiaSignalHistory,
   SignalPrivate,
   StatusStateChoice,
   fetchSignalAttachments,
+  forTesting,
 } from './sia';
 
 const SIGNAL_ID_ENCRYPTED = 'xxxxxxxxxx-encrypted-xxxxxxxxxxx';
 const SIGNAL_ID_DECRYPTED = 'x1x2x3x4x5x';
 
-jest.mock('../../universal/helpers/encrypt-decrypt', () => {
+vi.mock('../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+  const origModule = (await requireActual()) as object;
   return {
-    ...jest.requireActual('../../universal/helpers/encrypt-decrypt'),
+    ...origModule,
     encrypt: (value: string) => [SIGNAL_ID_ENCRYPTED],
     decrypt: () => SIGNAL_ID_DECRYPTED,
   };
@@ -339,62 +341,62 @@ describe('sia service', () => {
     const history = forTesting.transformSiaHistoryLogResponse(testHistory);
 
     expect(history).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "datePublished": "2023-03-22T09:43:15.024700+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:43:53.784335+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:44:04.889572+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:44:29.032811+01:00",
           "description": "Kunt u deze dingen nog vermelden?",
           "key": "UPDATE_STATUS",
           "status": "Vraag aan u verstuurd",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:45:15.024700+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:47:32.549606+01:00",
           "description": "testen mijn meldingen",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-03-22T11:48:10.750252+01:00",
           "description": "testen mijn meldingen",
           "key": "UPDATE_STATUS",
           "status": "Afgesloten",
         },
-        Object {
+        {
           "datePublished": "2023-03-23T11:44:29.032811+01:00",
           "description": "U heeft het voor elkaar!",
           "key": "UPDATE_STATUS",
           "status": "Antwoord van u ontvangen",
         },
-        Object {
+        {
           "datePublished": "2023-03-27T09:43:15.024700+01:00",
           "description": "",
           "key": "UPDATE_STATUS",
           "status": "Open",
         },
-        Object {
+        {
           "datePublished": "2023-06-12T11:55:50.424360+02:00",
           "description": "Wij gaan er z.s.m mee aan de gang en houden u op de hoogte.",
           "key": "UPDATE_STATUS",
@@ -409,8 +411,8 @@ describe('sia service', () => {
       forTesting.transformSiaAttachmentsResponse(attachmentsSample);
 
     expect(attachments).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "isImage": true,
           "url": "/signals/media/images/2020/01/01/happy-new-year.jpg",
         },
@@ -423,16 +425,16 @@ describe('sia service', () => {
       null as unknown as SiaAttachmentResponse
     );
 
-    expect(attachments).toMatchInlineSnapshot(`Array []`);
+    expect(attachments).toMatchInlineSnapshot('[]');
   });
 
   test('transformSIAData - Open', () => {
     const siaItems = forTesting.transformSIAData(siaResponse);
 
     expect(siaItems).toMatchInlineSnapshot(`
-      Object {
-        "items": Array [
-          Object {
+      {
+        "items": [
+          {
             "address": "Eerste Tuindwarsstraat 1  2V
       1015RT Amsterdam",
             "category": "Overig",
@@ -450,11 +452,11 @@ describe('sia service', () => {
             "hasAttachments": true,
             "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
-            "latlon": Object {
+            "latlon": {
               "lat": 52.37778548459913,
               "lng": 4.883837264102948,
             },
-            "link": Object {
+            "link": {
               "title": "SIA Melding SIG-12419",
               "to": "/detail-open-melding/SIG-12419",
             },
@@ -476,9 +478,9 @@ describe('sia service', () => {
     const attachments = forTesting.transformSIAData(siaResponseCopy);
 
     expect(attachments).toMatchInlineSnapshot(`
-      Object {
-        "items": Array [
-          Object {
+      {
+        "items": [
+          {
             "address": "Eerste Tuindwarsstraat 1  2V
       1015RT Amsterdam",
             "category": "Overig",
@@ -496,11 +498,11 @@ describe('sia service', () => {
             "hasAttachments": true,
             "id": "xxxxxxxxxx-encrypted-xxxxxxxxxxx",
             "identifier": "SIG-12419",
-            "latlon": Object {
+            "latlon": {
               "lat": 52.37778548459913,
               "lng": 4.883837264102948,
             },
-            "link": Object {
+            "link": {
               "title": "SIA Melding SIG-12419",
               "to": "/detail-afgesloten-melding/SIG-12419",
             },
@@ -529,9 +531,9 @@ describe('sia service', () => {
   });
 
   test('fetch signal attachments', async () => {
-    nock('http://localhost').post('/token').reply(200, 'token');
-    nock('http://localhost')
-      .get(`/private/signals/${SIGNAL_ID_DECRYPTED}/attachments`)
+    remoteApi.post('/sia-iam-token').reply(200, 'token');
+    remoteApi
+      .get(`/sia/private/signals/${SIGNAL_ID_DECRYPTED}/attachments`)
       .reply(200, {
         results: [
           { location: '/1', is_image: false },

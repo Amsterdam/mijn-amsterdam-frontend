@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
@@ -12,13 +12,14 @@ import {
 import MockApp from '../../pages/MockApp';
 import MainNavBar from './MainNavBar';
 
-jest.mock('../../hooks/media.hook');
-jest.mock('../../hooks/useProfileType', () => {
+import { Mock, describe, expect, it, vi } from 'vitest';
+
+vi.mock('../../hooks/media.hook');
+vi.mock('../../hooks/useProfileType', async (requireActual) => {
   return {
-    __esModule: true,
-    ...(jest.requireActual('../../hooks/useProfileType') as object),
-    useProfileType: jest.fn(),
-    useProfileTypeValue: jest.fn(),
+    ...((await requireActual()) as object),
+    useProfileType: vi.fn(),
+    useProfileTypeValue: vi.fn(),
   };
 });
 
@@ -54,23 +55,24 @@ describe('<MainNavBar />', () => {
   );
 
   it('Renders without crashing', () => {
-    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
-    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+    (useProfileType as Mock).mockReturnValue(['private', vi.fn()]);
+    (useProfileTypeValue as Mock).mockReturnValue('private');
 
-    const { asFragment } = render(<Component />);
+    const screen = render(<Component />);
+    const { asFragment } = screen;
     expect(asFragment()).toMatchSnapshot();
 
-    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Vergunningen/)[0]).toBeInTheDocument();
   });
 
   it('Renders burger menu on small screens', () => {
-    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
-    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
-    (useTabletScreen as jest.Mock).mockReturnValue(true);
+    (useProfileType as Mock).mockReturnValue(['private', vi.fn()]);
+    (useProfileTypeValue as Mock).mockReturnValue('private');
+    (useTabletScreen as Mock).mockReturnValue(true);
 
-    render(<Component />);
+    const screen = render(<Component />);
 
-    expect(screen.getByText(/Vergunningen/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Vergunningen/)[0]).toBeInTheDocument();
     expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
     userEvent.click(screen.getAllByText('Toon navigatie')[0]);
     expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
@@ -78,20 +80,17 @@ describe('<MainNavBar />', () => {
   });
 
   it('Shows different ID based on profile type', () => {
-    (useProfileType as jest.Mock).mockReturnValue(['private', jest.fn()]);
-    (useProfileTypeValue as jest.Mock).mockReturnValue('private');
+    (useProfileType as Mock).mockReturnValue(['private', vi.fn()]);
+    (useProfileTypeValue as Mock).mockReturnValue('private');
 
     const view = render(<Component />);
-    expect(screen.getByText(/Test\svan\sFooBar/)).toBeInTheDocument();
+    expect(view.getByText(/Test\svan\sFooBar/)).toBeInTheDocument();
 
-    (useProfileType as jest.Mock).mockReturnValue([
-      'private-attributes',
-      jest.fn(),
-    ]);
-    (useProfileTypeValue as jest.Mock).mockReturnValue('private-attributes');
+    (useProfileType as Mock).mockReturnValue(['private-attributes', vi.fn()]);
+    (useProfileTypeValue as Mock).mockReturnValue('private-attributes');
 
     view.rerender(<Component />);
 
-    expect(screen.getByText(/test@test\.com/)).toBeInTheDocument();
+    expect(view.getByText(/test@test\.com/)).toBeInTheDocument();
   });
 });

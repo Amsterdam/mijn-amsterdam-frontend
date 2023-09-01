@@ -71,9 +71,11 @@
 
 @mixin select($names...) {
   $selectors: ();
+
   @each $name in $names {
     $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
   }
+
   #{$selectors} {
     @content;
   }
@@ -81,24 +83,29 @@
 
 @mixin select-id($names...) {
   $selectors: ();
+
   @each $name in $names {
     $selectors: append($selectors, ('[id="#{$name}"]'), comma);
   }
+
   #{$selectors} {
     @content;
   }
 }
 
 @mixin hoverCapable {
+
   @media all and (-ms-high-contrast: none),
-    (-ms-high-contrast: active),
-    (hover: hover) {
+  (-ms-high-contrast: active),
+  (hover: hover) {
     @content;
   }
 }
 
 @mixin IE11() {
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+  @media all and (-ms-high-contrast: none),
+  (-ms-high-contrast: active) {
     @content;
   }
 }
@@ -168,6 +175,7 @@
   &::-ms-expand {
     display: none;
   }
+
   option {
     font-weight: normal;
   }
@@ -175,11 +183,11 @@
 
 @function str-split($string, $separator) {
   $i: str-index($string, $separator);
-  @if $i != null {
-    @return append(
-      str-slice($string, 1, $i - 1),
-      str-split(str-slice($string, $i + str-length($separator)), $separator)
-    );
+
+  @if $i !=null {
+    @return append(str-slice($string, 1, $i - 1),
+      str-split(str-slice($string, $i + str-length($separator)), $separator));
   }
+
   @return $string;
 }

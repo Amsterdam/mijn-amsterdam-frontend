@@ -1,115 +1,119 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<StatusDetail /> Matches different config of Full Status Detail Page snapshot 1`] = `
+exports[`<StatusDetail /> > Matches different config of Full Status Detail Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          burgerzaken.svg
+          <g
+            transform="translate(-5 0)"
+          >
+            <path
+              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
+            />
+          </g>
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Inkomen
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Aanvraag Test item
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     />
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Test item-aanvraag
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 aanvraag
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 24 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is binngekomen
@@ -117,31 +121,41 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <ul
-                class="DocumentList"
+                class="_DocumentList_7ed0ad"
               >
                 <li
-                  class="DocumentListItem"
+                  class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="DocumentLinkWrap"
+                    class="_DocumentLinkWrap_7ed0ad"
                   >
                     <span
-                      class="DownloadIcon"
+                      class="_DownloadIcon_7ed0ad"
                     >
                       <svg
                         aria-hidden="true"
+                        focusable="false"
                         height="14"
+                        viewBox="0 0 32 32"
                         width="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        Download.svg
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
                       </svg>
                     </span>
                     <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/api/v1/relay/mijnamsterdamapi/kappie"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
+                      rel="external noopener noreferrer"
                     >
                       Documentje
                     </a>
@@ -152,42 +166,41 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 inbehandeling
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is in behandeling
@@ -195,347 +208,131 @@ exports[`<StatusDetail /> Matches different config of Full Status Detail Page sn
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
 
-exports[`<StatusDetail /> Matches different config of Full Status Detail Page snapshot 2`] = `
+exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          burgerzaken.svg
+          <g
+            transform="translate(-5 0)"
+          >
+            <path
+              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
+            />
+          </g>
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Inkomen
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Aanvraag Test item
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
-    />
-    <button
-      aria-expanded="true"
-      class="Button Button__plain Button__lean MoreStatus"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon minder
-    </button>
-    <div
-      class="StatusLine"
-    >
-      <h4
-        class="Heading Heading__tiny ListHeading"
-      >
-        Test item-aanvraag
-      </h4>
-      <ul
-        class="List"
-      >
-        <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
-        >
-          <div
-            class="ListItemInner"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
-            >
-              <span
-                class="ConnectLine ConnectLine--start"
-              />
-              <span
-                class="Checkmark Checkmark--active Checkmark--checked"
-              />
-            </div>
-            <div
-              class="Panel Panel--status"
-            >
-              <strong
-                class="StatusTitle"
-              >
-                aanvraag
-              </strong>
-              <time
-                class="StatusDate"
-              >
-                24 juli 2020
-              </time>
-            </div>
-            <div
-              class="Panel Panel--description"
-            >
-              <div
-                class="PanelContent"
-              >
-                <p>
-                  Uw aanvraag is binngekomen
-                </p>
-              </div>
-            </div>
-            <div
-              class="Panel Panel--documents"
-            >
-              <ul
-                class="DocumentList"
-              >
-                <li
-                  class="DocumentListItem"
-                >
-                  <span
-                    class="DocumentLinkWrap"
-                  >
-                    <span
-                      class="DownloadIcon"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        height="14"
-                        width="14"
-                      >
-                        Download.svg
-                      </svg>
-                    </span>
-                    <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/api/v1/relay/mijnamsterdamapi/kappie"
-                    >
-                      Documentje
-                    </a>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
-        >
-          <div
-            class="ListItemInner"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
-            >
-              <span
-                class="ConnectLine ConnectLine--middle-checked-next"
-              />
-              <span
-                class="Checkmark Checkmark--active Checkmark--checked"
-              />
-            </div>
-            <div
-              class="Panel Panel--status"
-            >
-              <strong
-                class="StatusTitle"
-              >
-                inbehandeling
-              </strong>
-              <time
-                class="StatusDate"
-              >
-                28 juli 2020
-              </time>
-            </div>
-            <div
-              class="Panel Panel--description"
-            >
-              <div
-                class="PanelContent"
-              >
-                <p>
-                  Uw aanvraag is in behandeling
-                </p>
-              </div>
-            </div>
-            <div
-              class="Panel Panel--documents"
-            />
-          </div>
-        </li>
-      </ul>
-    </div>
-    <button
-      aria-expanded="true"
-      class="Button Button__plain Button__lean MoreStatus"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon minder
-    </button>
-  </main>
-</DocumentFragment>
-`;
-
-exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
-<DocumentFragment>
-  <main
-    class="Page DetailPage StatusDetail"
-  >
-    <header
-      class="PageHeading hasIcon hasBackLink"
-    >
-      <span
-        aria-hidden="true"
-        class="Icon"
-      >
-        <svg
-          class="ChapterIcon"
-          fill="black"
-        >
-          burgerzaken.svg
-        </svg>
-      </span>
-      <div
-        class="HeadingInner"
-      >
-        <a
-          class="Button Button__plain Button__lean Linkd BackLink"
-          href="/inkomen"
-        >
-          <svg
-            aria-hidden="true"
-            class="Icon Icon__left"
-            fill="#000"
-            height="14px"
-            width="14px"
-          >
-            Chevron-Left.svg
-          </svg>
-          Inkomen
-        </a>
-        <h2
-          class="Heading Heading__large"
-        >
-          Aanvraag Test item
-        </h2>
-      </div>
-    </header>
-    <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <p>
         This text will appear. Aanvraag Test item
       </p>
     </div>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Test item-aanvraag
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 aanvraag
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 24 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is binngekomen
@@ -543,31 +340,41 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <ul
-                class="DocumentList"
+                class="_DocumentList_7ed0ad"
               >
                 <li
-                  class="DocumentListItem"
+                  class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="DocumentLinkWrap"
+                    class="_DocumentLinkWrap_7ed0ad"
                   >
                     <span
-                      class="DownloadIcon"
+                      class="_DownloadIcon_7ed0ad"
                     >
                       <svg
                         aria-hidden="true"
+                        focusable="false"
                         height="14"
+                        viewBox="0 0 32 32"
                         width="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        Download.svg
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
                       </svg>
                     </span>
                     <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/api/v1/relay/mijnamsterdamapi/kappie"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
+                      rel="external noopener noreferrer"
                     >
                       Documentje
                     </a>
@@ -578,39 +385,38 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: block;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 inbehandeling
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is in behandeling
@@ -618,7 +424,7 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
@@ -628,101 +434,120 @@ exports[`<StatusDetail /> Matches the Full Status Detail Page snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`<StatusDetail /> Reverses the steps 1`] = `
+exports[`<StatusDetail /> > Reverses the steps 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          burgerzaken.svg
+          <g
+            transform="translate(-5 0)"
+          >
+            <path
+              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
+            />
+          </g>
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Inkomen
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Aanvraag Test item
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     />
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Test item-aanvraag
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 inbehandeling
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 28 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is in behandeling
@@ -730,47 +555,46 @@ exports[`<StatusDetail /> Reverses the steps 1`] = `
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 aanvraag
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 24 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   Uw aanvraag is binngekomen
@@ -778,31 +602,41 @@ exports[`<StatusDetail /> Reverses the steps 1`] = `
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <ul
-                class="DocumentList"
+                class="_DocumentList_7ed0ad"
               >
                 <li
-                  class="DocumentListItem"
+                  class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="DocumentLinkWrap"
+                    class="_DocumentLinkWrap_7ed0ad"
                   >
                     <span
-                      class="DownloadIcon"
+                      class="_DownloadIcon_7ed0ad"
                     >
                       <svg
                         aria-hidden="true"
+                        focusable="false"
                         height="14"
+                        viewBox="0 0 32 32"
                         width="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        Download.svg
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
                       </svg>
                     </span>
                     <a
-                      class="Button Button__plain Button__lean Linkd DocumentLink"
-                      href="/api/v1/relay/mijnamsterdamapi/kappie"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
+                      rel="external noopener noreferrer"
                     >
                       Documentje
                     </a>

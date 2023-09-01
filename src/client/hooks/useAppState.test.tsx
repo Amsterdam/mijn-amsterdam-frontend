@@ -1,34 +1,42 @@
+import * as Sentry from '@sentry/react';
 import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
 import { renderRecoilHook } from '../utils/renderRecoilHook';
-import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
-import * as Sentry from '@sentry/react';
+import * as dataApiHook from './api/useDataApi';
 import { isAppStateReady, useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
-jest.mock('./api/useTipsApi');
-jest.mock('./useOptIn');
-jest.mock('./useProfileType');
+import {
+  SpyInstance,
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 
-jest.spyOn(console, 'info').mockImplementation();
+vi.mock('./api/useTipsApi');
+vi.mock('./useOptIn');
+vi.mock('./useProfileType');
 
 describe('useAppState', () => {
-  const stateSliceMock = { FOO: { content: { hello: 'world' } } };
+  const stateSliceMock = { BRP: { content: { hello: 'world' } } };
 
   const initialAppState = appStateModule.PRISTINE_APPSTATE;
 
-  let dataApiSpy: jest.SpyInstance;
-  let axiosGetSpy: jest.SpyInstance;
-  let sseSpy: jest.SpyInstance;
+  let dataApiSpy: SpyInstance;
+  let axiosGetSpy: SpyInstance;
+  let sseSpy: SpyInstance;
 
   beforeEach(() => {
-    dataApiSpy = jest.spyOn(dataApiHook, 'useDataApi');
-    axiosGetSpy = jest.spyOn(axios, 'get');
-    sseSpy = jest.spyOn(sseHook, 'useSSE');
+    dataApiSpy = vi.spyOn(dataApiHook, 'useDataApi');
+    axiosGetSpy = vi.spyOn(axios, 'get');
+    sseSpy = vi.spyOn(sseHook, 'useSSE');
   });
 
   afterEach(() => {
@@ -40,10 +48,7 @@ describe('useAppState', () => {
   it('Should start with the SSE endpoint', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    (appStateModule.PRISTINE_APPSTATE as any) = {
-      ...appStateModule.PRISTINE_APPSTATE,
-      FOO: apiPristineResult(null),
-    };
+
     const { result } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
@@ -57,7 +62,7 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(3);
     expect(axiosGetSpy).toBeCalledTimes(0);
 
-    expect(result.current).toEqual(
+    expect(result.current).toStrictEqual(
       Object.assign({}, initialAppState, stateSliceMock)
     );
   });
@@ -177,7 +182,7 @@ describe('useAppState', () => {
     });
 
     it('Should be false if we have statekey mismatch', async () => {
-      const spy = jest.spyOn(Sentry, 'captureMessage');
+      const spy = vi.spyOn(Sentry, 'captureMessage');
       const isReady = isAppStateReady(
         { BLAP: apiSuccessResult('blap') } as any,
         pristineState,

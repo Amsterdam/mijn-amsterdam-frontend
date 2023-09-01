@@ -1,5 +1,6 @@
 import { createDecipheriv } from 'crypto';
-import nock from 'nock';
+import { describe, expect, test } from 'vitest';
+import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   fetchErfpacht,
@@ -18,19 +19,9 @@ describe('simple-connect/erfpacht', () => {
     token: 'xxxxxx',
   };
 
-  afterAll(() => {
-    // Enable http requests.
-    nock.enableNetConnect();
-    nock.restore();
-  });
-
-  beforeAll(() => {
-    nock.disableNetConnect();
-  });
-
   test('fetchErfpacht:  null', async () => {
-    nock('http://localhost')
-      .get(new RegExp('/api/v2/check/groundlease/user/*'))
+    remoteApi
+      .get(new RegExp('/erfpacht/api/v2/check/groundlease/user/*'))
       .reply(200, null as any);
 
     const responseContent = await fetchErfpacht(
@@ -39,8 +30,8 @@ describe('simple-connect/erfpacht', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+      {
+        "content": {
           "isKnown": false,
         },
         "status": "OK",
@@ -49,8 +40,8 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpacht: known=true', async () => {
-    nock('http://localhost')
-      .get(new RegExp('/api/v2/check/groundlease/user/*'))
+    remoteApi
+      .get(new RegExp('/erfpacht/api/v2/check/groundlease/user/*'))
       .reply(200, 'true');
 
     const responseContent = await fetchErfpacht(
@@ -59,8 +50,8 @@ describe('simple-connect/erfpacht', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+      {
+        "content": {
           "isKnown": true,
         },
         "status": "OK",
@@ -69,8 +60,8 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpacht: known=false', async () => {
-    nock('http://localhost')
-      .get(new RegExp('/api/v2/check/groundlease/user/*'))
+    remoteApi
+      .get(new RegExp('/erfpacht/api/v2/check/groundlease/user/*'))
       .reply(200, 'false');
 
     const responseContent = await fetchErfpacht(
@@ -79,8 +70,8 @@ describe('simple-connect/erfpacht', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+      {
+        "content": {
           "isKnown": false,
         },
         "status": "OK",
@@ -89,8 +80,8 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpachtGenerated: no content', async () => {
-    nock('http://localhost')
-      .get(new RegExp('/api/v2/notifications/bsn/*'))
+    remoteApi
+      .get(new RegExp('/erfpacht/api/v2/notifications/bsn/*'))
       .reply(200, null as any);
 
     const responseContent = await fetchErfpachtNotifications(
@@ -99,9 +90,9 @@ describe('simple-connect/erfpacht', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
-          "notifications": Array [],
+      {
+        "content": {
+          "notifications": [],
         },
         "status": "OK",
       }
@@ -109,8 +100,8 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpachtGenerated: with notifications', async () => {
-    nock('http://localhost')
-      .get(new RegExp('/api/v2/notifications/bsn/*'))
+    remoteApi
+      .get(new RegExp('/erfpacht/api/v2/notifications/bsn/*'))
       .reply(200, [
         {
           title: 'Automatische incasso erfpacht goedgekeurd',
@@ -132,15 +123,15 @@ describe('simple-connect/erfpacht', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
-          "notifications": Array [
-            Object {
+      {
+        "content": {
+          "notifications": [
+            {
               "chapter": "ERFPACHT",
               "datePublished": "2022-04-22",
               "description": "Uw aanvraag voor automatische incasso voor erfpacht is goedgekeurd en verwerkt. Uw eerstvolgende betaling van erfpacht zal middels automatische incasso plaatsvinden",
               "id": 0,
-              "link": Object {
+              "link": {
                 "title": "Bekijk hier uw automatische incasso-aanvraag",
                 "to": "https: //mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger/target/5cGv/JO0bYFwcogNaliQj3783Lag1VbCps15b5sdk6c=",
               },

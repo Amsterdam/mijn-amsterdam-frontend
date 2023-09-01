@@ -1,7 +1,6 @@
-import MockAdapter from 'axios-mock-adapter';
+import { describe, expect, it, vi } from 'vitest';
+import { remoteApi } from '../../test-utils';
 import { jsonCopy } from '../../universal/helpers';
-import { ApiConfig } from '../config';
-import { axiosRequest } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import vergunningenData from '../mock-data/json/vergunningen.json';
 import {
@@ -11,7 +10,6 @@ import {
 import { toeristischeVerhuurVergunningTypes } from './vergunningen/vergunningen';
 
 describe('Toeristische verhuur service', () => {
-  const axMock = new MockAdapter(axiosRequest);
   const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
   const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
     {
@@ -36,55 +34,23 @@ describe('Toeristische verhuur service', () => {
     agreementDate: '2021-01-01T10:47:44.6107122',
   };
 
-  const TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL = ApiConfig.VERGUNNINGEN.url;
-
-  const DUMMY_URL_VERGUNNINGEN = '/vergunningen';
-  const DUMMY_URL_NULL_CONTENT = '/null-content';
-  const DUMMY_URL_ERROR = '/error-response/';
-  const DUMMY_URL_ERROR_2 = '/another-error/';
-
   const authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: 'DIGID-BSN' },
     token: 'xxxxxx',
   };
 
-  jest.useFakeTimers('modern').setSystemTime(new Date('2021-07-07').getTime());
-
-  const BFF_LVV_API_URL = process.env.BFF_LVV_API_URL;
-
-  afterAll(() => {
-    axMock.restore();
-    ApiConfig.VERGUNNINGEN.url = TOERISTISCHE_VERHUUR_VERGUNNINGEN_URL;
-    process.env.BFF_LVV_API_URL = BFF_LVV_API_URL;
-  });
-
-  axMock
-    .onPost(BFF_LVV_API_URL + '/bsn')
-    .reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
-
-  axMock
-    .onGet(new RegExp(`${BFF_LVV_API_URL}*`))
-    .reply(200, REGISTRATIES_DUMMY_RESPONSE);
-
-  axMock.onGet(DUMMY_URL_VERGUNNINGEN).reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
-  axMock.onGet(DUMMY_URL_NULL_CONTENT).reply(200, null);
-
-  axMock
-    .onGet(DUMMY_URL_ERROR)
-    .reply(500, { status: 'ERROR', message: 'fat chance!', content: null });
-
-  axMock
-    .onAny(new RegExp(`${DUMMY_URL_ERROR}*`))
-    .reply(500, { message: 'fat chance!', content: null });
-
-  axMock
-    .onPost(new RegExp(`${DUMMY_URL_ERROR_2}*`))
-    .reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
-
-  axMock.onGet(new RegExp(`${DUMMY_URL_ERROR_2}*`)).reply(500, null);
+  vi.useFakeTimers().setSystemTime(new Date('2021-07-07').getTime());
 
   it('Should respond with both vergunningen and registraties', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_VERGUNNINGEN;
+    remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
+    remoteApi
+      .get('/lvv/BBBBBBBBBBBBBBBBBBBB')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE)
+      .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE);
+    remoteApi
+      .get('/decosjoin/getvergunningen')
+      .reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
 
     const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
 
@@ -105,46 +71,60 @@ describe('Toeristische verhuur service', () => {
   });
 
   it('Should reply with memoized response based on function params', async () => {
-    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
+    remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
+    remoteApi
+      .get('/lvv/BBBBBBBBBBBBBBBBBBBB')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE)
+      .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE);
+    remoteApi
+      .get('/decosjoin/getvergunningen')
+      .reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
 
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
-
-    const response2 = await fetchToeristischeVerhuur('x1', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
+    const response2 = await fetchToeristischeVerhuur('x2', authProfileAndToken);
 
     expect(response === response2).toBe(true);
   });
 
   it('Should respond with 1 failed dependency: vergunningen failed', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
+    remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
+    remoteApi
+      .get('/lvv/BBBBBBBBBBBBBBBBBBBB')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE)
+      .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
+      .reply(200, REGISTRATIES_DUMMY_RESPONSE);
 
-    const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
+    remoteApi.get('/decosjoin/getvergunningen').replyWithError('No can do!');
+
+    const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
 
     expect(response.content.registraties.length).toBeGreaterThan(0);
     expect(response.content.vergunningen.length).toBe(0);
     expect(response.failedDependencies?.vergunningen).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: Request failed with status code 500',
+      message: 'Error: No can do!',
     });
   });
 
   it('Should respond with 1 failed dependency: registrationNumbers failed', async () => {
-    process.env.BFF_LVV_API_URL = DUMMY_URL_ERROR;
-
-    const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
+    remoteApi.post('/lvv/bsn').replyWithError('Not Available');
+    const response = await fetchToeristischeVerhuur('x4', authProfileAndToken);
 
     expect(response.failedDependencies?.registraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
       content: null,
-      message: `[registrationNumbers] Error: Request failed with status code 500  `,
+      message: `[registrationNumbers] Error: Not Available  `,
     });
   });
 
   it('Should respond with 2 failed dependencies', async () => {
-    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_ERROR;
-    process.env.BFF_LVV_API_URL = DUMMY_URL_ERROR_2;
+    remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
+    remoteApi.get('/decosjoin/getvergunningen').replyWithError('No can do!');
+    remoteApi.get(/lvv/).times(2).replyWithError('blap!');
 
-    const response = await fetchToeristischeVerhuur('x4', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur('x5', authProfileAndToken);
 
     expect(response.failedDependencies?.registraties).toStrictEqual({
       status: 'ERROR',
@@ -155,7 +135,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.vergunningen).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: Request failed with status code 500',
+      message: 'Error: No can do!',
     });
   });
 

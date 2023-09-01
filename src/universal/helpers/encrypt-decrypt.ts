@@ -1,16 +1,19 @@
 import { Buffer } from 'buffer';
 import crypto from 'crypto';
 
-export function encrypt(plainText: string, encryptionKey: string) {
+type Base64IvEncryptedValue = string;
+type EncryptedValue = Buffer;
+type Iv = Buffer;
+
+export function encrypt(
+  plainText: string,
+  encryptionKey: string
+): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
-  return [
-    Buffer.concat([iv, encrypted]).toString('base64url'),
-    encrypted,
-    iv,
-  ] as const;
+  return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
 }
 
 export function decrypt(encryptedValue: string, encryptionKey: string) {

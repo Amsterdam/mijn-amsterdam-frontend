@@ -4,7 +4,6 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
-import { useSessionStorage } from '../../hooks/storage.hook';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
@@ -261,7 +260,6 @@ interface StatusLineProps {
   trackCategory: string;
   altDocumentContent?: AltDocumentContent;
   id?: string;
-  showToggleMore?: boolean;
   statusLabel?: string;
   showStatusLineConnection?: boolean;
   className?: string;
@@ -273,7 +271,6 @@ interface StatusLineProps {
 export default function StatusLine({
   items,
   trackCategory,
-  showToggleMore = true,
   statusLabel = 'Status',
   className,
   id,
@@ -282,77 +279,47 @@ export default function StatusLine({
   showStatusLineConnection = true,
   documentPathForTracking,
 }: StatusLineProps) {
-  const [isCollapsed, setCollapsed] = useSessionStorage(
-    'STATUS_LINE_' + id,
-    showToggleMore
-  );
-
-  function toggleCollapsed() {
-    setCollapsed(!isCollapsed);
-  }
-
   return (
-    <>
-      {showToggleMore && items.length > 1 && (
-        <ToggleMore
-          isCollapsed={isCollapsed}
-          toggleCollapsed={toggleCollapsed}
-        />
-      )}
-      <div className={classnames(styles.StatusLine, className)}>
-        <Heading size="tiny" el="h4" className={styles.ListHeading}>
-          {statusLabel}
-        </Heading>
-        {!!items.length && (
-          <ul className={styles.List}>
-            {items.map((item, index) => (
-              <LineItem
-                key={`step-${item.id}-${index}`}
-                highlight={highlightKey ? !!item[highlightKey] : false}
-                style={{
-                  display: showToggleMore
-                    ? !isCollapsed || (isCollapsed && item.isActive)
-                      ? 'block'
-                      : 'none'
-                    : 'block',
-                }}
-              >
-                {!!showStatusLineConnection ? (
-                  <StatusLineConnection
-                    index={index}
-                    total={items.length}
-                    max={maxStepCount}
-                    isActive={Boolean(item.isActive)}
-                    isChecked={Boolean(item.isChecked)}
-                  />
-                ) : (
-                  <StatusLineConnectionPlaceholder />
-                )}
+    <div className={classnames(styles.StatusLine, className)}>
+      <Heading size="tiny" el="h4" className={styles.ListHeading}>
+        {statusLabel}
+      </Heading>
+      {!!items.length && (
+        <ul className={styles.List}>
+          {items.map((item, index) => (
+            <LineItem
+              key={`step-${item.id}-${index}`}
+              highlight={highlightKey ? !!item[highlightKey] : false}
+            >
+              {!!showStatusLineConnection ? (
+                <StatusLineConnection
+                  index={index}
+                  total={items.length}
+                  max={maxStepCount}
+                  isActive={Boolean(item.isActive)}
+                  isChecked={Boolean(item.isChecked)}
+                />
+              ) : (
+                <StatusLineConnectionPlaceholder />
+              )}
 
-                <StatusLinePanelStatus
-                  datePublished={item.datePublished}
-                  status={item.status}
-                />
-                <StatusLinePanelDescription content={item.description} />
-                <StatusLinePanelDocuments
-                  documents={item.documents}
-                  altDocumentContent={item.altDocumentContent}
-                  trackPath={documentPathForTracking}
-                />
-              </LineItem>
-            ))}
-          </ul>
-        )}
-        {!items.length && (
-          <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
-        )}
-      </div>
-      {showToggleMore && items.length > 1 && (
-        <ToggleMore
-          isCollapsed={isCollapsed}
-          toggleCollapsed={toggleCollapsed}
-        />
+              <StatusLinePanelStatus
+                datePublished={item.datePublished}
+                status={item.status}
+              />
+              <StatusLinePanelDescription content={item.description} />
+              <StatusLinePanelDocuments
+                documents={item.documents}
+                altDocumentContent={item.altDocumentContent}
+                trackPath={documentPathForTracking}
+              />
+            </LineItem>
+          ))}
+        </ul>
       )}
-    </>
+      {!items.length && (
+        <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
+      )}
+    </div>
   );
 }

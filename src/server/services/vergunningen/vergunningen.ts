@@ -188,12 +188,13 @@ export interface RVVSloterweg extends VergunningBase {
   caseType: CaseType.RVVSloterweg;
   licensePlates: string | null;
   previousLicensePlates: string | null;
+  dateWorkflowVerleend: string | null; // TODO: Mogelijk wordt een zaak niet afgesloten en hebben we deze datum nodig voor de status Afgehandeld/Verleend
   dateStart: string | null;
   dateEnd: string | null;
-  dateWorkflowVerleend: string | null;
-  requestType: 'Nieuw' | 'Kenteken wijziging';
+  requestType: 'Nieuw' | 'Wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
   decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
+  status: 'Afgehandeld' | 'Actief' | 'Ontvangen';
 }
 
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
@@ -467,12 +468,14 @@ export function getVergunningNotifications(
           vergunning,
         ] as const
     )
-    .filter(
-      ([notification, vergunning]) =>
+    .filter(([notification, vergunning]) => {
+      const isActual =
         !vergunning.processed ||
         (!!notification &&
-          isActualNotification(notification.datePublished, compareDate))
-    )
+          isActualNotification(notification.datePublished, compareDate));
+
+      return isActual;
+    })
     .map(([notification]) => notification);
 }
 

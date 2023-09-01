@@ -3,12 +3,14 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
+import { describe, expect, it, test } from 'vitest';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';
+import { bffApi } from '../../../test-utils';
 
 const content = transformVergunningenData(vergunningenData as any);
 
@@ -41,6 +43,10 @@ export function MockVergunningDetail({ identifier }: { identifier: string }) {
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
+  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
+    content: [],
+  });
+
   return (
     <MockApp
       routeEntry={routeEntry}
@@ -52,10 +58,6 @@ export function MockVergunningDetail({ identifier }: { identifier: string }) {
 }
 
 describe('<VergunningDetail />', () => {
-  beforeAll(() => {
-    (window as any).scrollTo = jest.fn();
-  });
-
   describe('<EvenementMelding />', () => {
     it('should match the full page snapshot', () => {
       const { asFragment } = render(

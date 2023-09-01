@@ -1,76 +1,103 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as rrd from 'react-router-dom';
-import { usePageChange } from '.';
-import { NOT_FOUND_TITLE } from '../../universal/config';
+import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
+import { NOT_FOUND_TITLE } from '../../universal/config/chapter';
 import type { TrackingConfig } from '../../universal/config/routes';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
+import { usePageChange } from './usePageChange';
 
-const testRoute = '/test/page/change';
-const titleNotAuthenticated = 'test-title-NOT-authenticated';
-const titleAuthenticated = 'TEST_TITLE_AUTHENTICATED';
+const mocks = vi.hoisted(() => {
+  return {
+    pathname: '/',
+    testRoute: '/test/page/change',
+    titleNotAuthenticated: 'test-title-NOT-authenticated',
+    titleAuthenticated: 'TEST_TITLE_AUTHENTICATED',
+  };
+});
 
-jest.mock('./useProfileType', () => ({
-  ...jest.requireActual('./useProfileType'),
-  useProfileTypeValue: () => 'test-profile',
-}));
+vi.mock('react-router-dom', async (requireActual) => {
+  const origModule: object = await requireActual();
+  return {
+    ...origModule,
+    useLocation: () => {
+      return { pathname: mocks.pathname };
+    },
+    __setPathname: (name: string) => {
+      mocks.pathname = name;
+    },
+  };
+});
 
-jest.mock('./useTermReplacement', () => ({
+vi.mock('../../universal/config/routes', async (requireActual) => {
+  const origModule: object = await requireActual();
+  return {
+    ...origModule,
+    AppRoutes: {
+      TEST_PAGE_CHANGE: mocks.testRoute,
+      FOO_BAR: '/',
+      TEST_NO_TITLE: '/no-title',
+    },
+  };
+});
+
+vi.mock('../config/api', async (requireActual) => {
+  const origModule: object = await requireActual();
+  return {
+    ...origModule,
+    ExcludePageViewTrackingUrls: ['/not/included'],
+  };
+});
+
+vi.mock('./useTermReplacement', () => ({
   useTermReplacement: () => {
     return (input: string) => input;
   },
 }));
 
-jest.mock('./useUserCity', () => ({
+vi.mock('./useUserCity', () => ({
   useUserCity: () => 'Amsterdam',
 }));
 
-jest.mock('./analytics.hook');
-
-jest.mock('react-router-dom', () => {
-  let pathname = '/';
+vi.mock('./useProfileType', async (requireActual) => {
+  const origModule: object = await requireActual();
   return {
-    ...(jest.requireActual('react-router-dom') as object),
-    useLocation: () => {
-      return { pathname };
-    },
-    __setPathname: (name: string) => {
-      pathname = name;
-    },
+    ...origModule,
+    useProfileTypeValue: () => 'private-attributes',
   };
 });
 
-jest.mock('../../universal/config/routes', () => {
+vi.mock('../../universal/config/chapter', async (requireActual) => {
+  const origModule: object = await requireActual();
   return {
-    ...(jest.requireActual('../../universal/config/routes') as object),
-    AppRoutes: {
-      TEST_PAGE_CHANGE: testRoute,
-      FOO_BAR: '/',
-      TEST_NO_TITLE: '/no-title',
-    },
-    ExcludePageViewTrackingUrls: ['/not/included'],
-  };
-});
-
-jest.mock('../../universal/config/chapter', () => {
-  return {
-    ...(jest.requireActual('../../universal/config/chapter') as object),
+    ...origModule,
     DocumentTitles: {
-      [testRoute]: (config: TrackingConfig) => {
+      [mocks.testRoute]: (config: TrackingConfig) => {
         return config.isAuthenticated
-          ? titleAuthenticated
-          : titleNotAuthenticated;
+          ? mocks.titleAuthenticated
+          : mocks.titleNotAuthenticated;
       },
       '/': 'Foo Bar',
     },
   };
 });
 
+vi.mock('./analytics.hook', async (requireActual) => {
+  const origModule: object = await requireActual();
+  return {
+    ...origModule,
+    trackPageViewWithCustomDimension: vi.fn(),
+  };
+});
+
 describe('usePageChange', () => {
-  global.window.scrollTo = jest.fn();
-  global.console.info = jest.fn(); // Hide info warnings from our own code.
+  // global.console.info = vi.fn(); // Hide info warnings from our own code.
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
   it('should track page view when path is known', () => {
@@ -112,21 +139,21 @@ describe('usePageChange', () => {
     expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
       '[undefined] /no-title',
       '/no-title',
-      'test-profile',
+      'private-attributes',
       'Amsterdam'
     );
   });
 
   test('Custom page title should be tracked', () => {
     // @ts-ignore
-    rrd.__setPathname(testRoute);
+    rrd.__setPathname(mocks.testRoute);
 
     renderHook(() => usePageChange(true));
 
-    expect(document.title).toBe(titleAuthenticated);
+    expect(document.title).toBe(mocks.titleAuthenticated);
 
     renderHook(() => usePageChange(false));
 
-    expect(document.title).toBe(titleNotAuthenticated);
+    expect(document.title).toBe(mocks.titleNotAuthenticated);
   });
 });

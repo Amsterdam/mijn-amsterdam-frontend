@@ -100,10 +100,6 @@ export default function Klachten() {
         startCollapsed={false}
         hasItems={!!klachten?.length}
         isLoading={isLoading(KLACHTEN)}
-        track={{
-          category: 'Klachten overzicht',
-          name: 'Datatabel',
-        }}
         className={styles.SectionCollapsibleFirst}
       >
         <Table items={klachten} displayProps={DISPLAY_PROPS_KLACHTEN} />
