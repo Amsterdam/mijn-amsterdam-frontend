@@ -94,10 +94,6 @@ export default function Burgerzaken() {
         startCollapsed={false}
         hasItems={!!documentItems.length}
         isLoading={isLoading(BRP)}
-        track={{
-          category: 'Burgerzaken overzicht / ID-kaarten',
-          name: 'Datatabel',
-        }}
       >
         <Table
           className={styles.DocumentsTable}
@@ -114,10 +110,6 @@ export default function Burgerzaken() {
             startCollapsed={true}
             hasItems={true}
             isLoading={false}
-            track={{
-              category: 'Burgerzaken overzicht / Mijn Aktes',
-              name: 'Datatabel',
-            }}
           >
             <Table
               titleKey="type"

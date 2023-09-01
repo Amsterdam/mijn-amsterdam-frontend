@@ -129,10 +129,6 @@ export default function Krefia() {
           startCollapsed={false}
           className={styles.SectionBorderTop}
           isLoading={isLoading(KREFIA)}
-          track={{
-            category: 'Kredietbank & FIBU overzicht / Schuldregeling',
-            name: 'Datatabel',
-          }}
         >
           <Table
             className={styles.HulpTable}
@@ -147,10 +143,6 @@ export default function Krefia() {
           title="Leningen"
           startCollapsed={!!deepLinks?.schuldhulp?.length}
           isLoading={isLoading(KREFIA)}
-          track={{
-            category: 'Kredietbank & FIBU overzicht / Leningen',
-            name: 'Datatabel',
-          }}
         >
           <Table
             className={styles.HulpTable}
@@ -167,10 +159,6 @@ export default function Krefia() {
             !!deepLinks?.schuldhulp?.length || !!deepLinks?.lening?.length
           }
           isLoading={isLoading(KREFIA)}
-          track={{
-            category: 'Kredietbank & FIBU overzicht / Budgetbeheer',
-            name: 'Datatabel',
-          }}
         >
           <Table
             className={styles.HulpTable}

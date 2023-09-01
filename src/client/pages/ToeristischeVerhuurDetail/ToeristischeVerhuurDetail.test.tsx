@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import slug from 'slugme';
 
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
@@ -70,8 +69,8 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
     expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();
-    expect(screen.getByText('01 augustus 2020')).toBeInTheDocument();
-    expect(screen.getAllByText('30 september 2021').length).toBe(2);
+    expect(screen.getByText('01 augustus 2023')).toBeInTheDocument();
+    expect(screen.getAllByText('30 september 2024').length).toBe(2);
     expect(screen.getByText('Verleend')).toBeInTheDocument();
     expect(screen.getByText('Verlopen')).toBeInTheDocument();
   });

@@ -32,7 +32,6 @@ const BezwarenStatusLines = ({
       className=""
       trackCategory="AVG verzoek detail / status"
       items={statusLineItems}
-      showToggleMore={false}
       id={`bezwaar-detail-${id}`}
       documentPathForTracking={(document) =>
         `/downloads/avg-verzoek/${document.title}`

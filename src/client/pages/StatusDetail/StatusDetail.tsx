@@ -33,7 +33,6 @@ interface StatusDetailProps {
   ) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   maxStepCount?: (hasDecision: boolean) => number | undefined;
-  showToggleMore?: boolean;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   showStatusLineConnection?: boolean;
   reverseSteps?: boolean;
@@ -46,7 +45,6 @@ export default function StatusDetail({
   getItems,
   pageContent,
   maxStepCount,
-  showToggleMore = true,
   chapter,
   statusLabel = 'Status',
   showStatusLineConnection = true,
@@ -160,7 +158,6 @@ export default function StatusDetail({
           }
           showStatusLineConnection={showStatusLineConnection}
           items={statusItemSteps}
-          showToggleMore={showToggleMore}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
           id={`${chapter}-${stateKey}-status`}

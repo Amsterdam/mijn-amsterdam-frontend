@@ -72,7 +72,7 @@ describe('Afvalwijzer service', () => {
         'De afvalservice is momenteel niet beschikbaar. Probeer het later nog eens.'
       )
     ).toBe(
-      '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding" target="_blank">deze link</a>.</p>'
+      '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding">deze link</a>.</p>'
     );
   });
 
