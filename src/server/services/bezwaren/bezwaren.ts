@@ -318,7 +318,7 @@ export async function fetchBezwaren(
     while (
       result.length < bezwarenResponse.content.count &&
       bezwarenResponse.content.bezwaren.length > 0 &&
-      requestConfig.params.page < MAX_AMOUNT_OF_FETCHES
+      requestConfig.params.page < MAX_PAGE_COUNT
     ) {
       requestConfig.params.page += 1; //Fetch next page
       bezwarenResponse = await requestData<BezwaarResponse>(
