@@ -25,13 +25,13 @@ expect.extend(matchers);
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {
   cleanup();
-  // nock.cleanAll();
 });
 
 afterAll(() => {
   // Enable http requests.
-  // nock.enableNetConnect();
-  // nock.restore();
+  nock.cleanAll();
+  nock.restore();
+  nock.enableNetConnect();
 });
 
 export const bffApiHost = 'http://bff-api-host';
