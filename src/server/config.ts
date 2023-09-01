@@ -1,17 +1,17 @@
-import {
-  ApiSuccessResponse,
-  ApiErrorResponse,
-  ApiPostponeResponse,
-} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
-import { FeatureToggle } from '../universal/config';
-import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
-import { TokenData } from './helpers/app';
 import jose from 'jose';
+import { FeatureToggle } from '../universal/config';
+import { IS_AP } from '../universal/config/env';
+import {
+  ApiErrorResponse,
+  ApiPostponeResponse,
+  ApiSuccessResponse,
+} from './../universal/helpers/api';
+import { TokenData } from './helpers/app';
 
 const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
 const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
