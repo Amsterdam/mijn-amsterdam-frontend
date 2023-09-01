@@ -26,7 +26,7 @@ import {
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
 
-const MAX_AMOUNT_OF_FETCHES = 5; // Should amount to 50 bezwaren
+const MAX_PAGE_COUNT = 5; // Should amount to 5 * 10 (per page) = 50 bezwaren
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
