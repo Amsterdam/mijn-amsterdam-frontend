@@ -69,7 +69,6 @@ describe('<SectionCollapsible />', () => {
           id="test-SectionCollapsible2"
           isLoading={false}
           hasItems={true}
-          track={{ category: 'the category', name: 'the content thing' }}
           title="Click me!"
         >
           <div style={{ height: 500 }}>Boohoo!</div>

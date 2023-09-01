@@ -95,7 +95,6 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
       >
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -139,7 +138,6 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -178,7 +176,6 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"

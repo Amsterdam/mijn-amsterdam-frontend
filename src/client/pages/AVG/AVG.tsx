@@ -70,10 +70,6 @@ const AVG = () => {
         startCollapsed={false}
         hasItems={!!avgVerzoekenLopend?.length}
         isLoading={isLoading(AVG)}
-        track={{
-          category: 'AVG lopende verzoeken overzicht',
-          name: 'Datatabel',
-        }}
         className={styles.SectionCollapsibleFirst}
       >
         <Table items={avgVerzoekenLopend} displayProps={DISPLAY_PROPS_AVG} />
@@ -85,10 +81,6 @@ const AVG = () => {
         startCollapsed={false}
         hasItems={!!avgVerzoekenAfgehandeld?.length}
         isLoading={isLoading(AVG)}
-        track={{
-          category: 'AVG afgehandelde verzoeken overzicht',
-          name: 'Datatabel',
-        }}
       >
         <Table
           items={avgVerzoekenAfgehandeld}

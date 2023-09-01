@@ -80,11 +80,6 @@ export default function Zorg() {
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(WMO)}
-        track={{
-          category:
-            'Zorg en ondersteuning overzicht / Huidige regelingen en hulpmiddelen',
-          name: 'Datatabel',
-        }}
       >
         <Table displayProps={DISPLAY_PROPS} items={itemsActual} />
       </SectionCollapsible>
@@ -96,11 +91,6 @@ export default function Zorg() {
         hasItems={!!itemsPrevious.length}
         startCollapsed={true}
         isLoading={isLoading(WMO)}
-        track={{
-          category:
-            'Zorg en ondersteuning overzicht / Eerdere regelingen en hulpmiddelen',
-          name: 'Datatabel',
-        }}
       >
         <Table displayProps={DISPLAY_PROPS} items={itemsPrevious} />
       </SectionCollapsible>

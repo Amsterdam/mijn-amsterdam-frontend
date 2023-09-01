@@ -151,7 +151,6 @@ export default function VergunningVerhuur({
             Vakantieverhuur kunt u melden en annuleren via{' '}
             <LinkdInline
               external={true}
-              target="_blank"
               href="https://www.toeristischeverhuur.nl/portaal/login"
             >
               toeristischeverhuur.nl
@@ -206,7 +205,6 @@ export default function VergunningVerhuur({
           className={styles.VergunningStatus}
           trackCategory="Toeristisch verhuur detail / status"
           items={statusLineItems}
-          showToggleMore={false}
           id={`toeristische-verhuur-detail-${vergunning.id}`}
         />
       )}
