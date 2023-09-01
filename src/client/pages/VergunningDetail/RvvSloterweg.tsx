@@ -28,35 +28,28 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-in-behandeling',
       status: 'In behandeling',
-      datePublished: vergunning.dateRequest ?? '',
+      datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive:
-        !vergunning.processed ||
-        !!(
-          vergunning.dateWorkflowActive &&
-          vergunning.dateDecision &&
-          vergunning.dateWorkflowActive > vergunning.dateDecision
-        ), // TODO: Uitvinden of deze situatie voor kan komen. Automatisch verleend maar daarna weer in behandeling genomen.
+      isActive: false,
       isChecked: true,
     },
     {
       id: 'status-afgehandeld',
       status: 'Afgehandeld',
-      datePublished: vergunning.dateDecision ?? '',
+      datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive:
+      isActive: !(
         vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
-        !isExpired, // TODO: Uitvinden of Ingetrokken het besluit is dat aangeeft of een vergunning niet "geldig/actief" is (en dus ook nooit kan verlopen..).
+        isExpired ||
+        RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
+      ),
       isChecked: true,
     },
   ];
 
-  if (
-    vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED ||
-    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
-  ) {
+  if (!!vergunning.decision) {
     lineItems.push({
       id: 'status-verlopen',
       status: 'Verlopen',
@@ -69,8 +62,12 @@ export function getRVVSloterwegLineItems(
           ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
           : '',
       documents: [],
-      isActive: isExpired,
-      isChecked: isExpired,
+      isActive:
+        isExpired ||
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+      isChecked:
+        isExpired ||
+        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
     });
   }
 
@@ -97,7 +94,7 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
         />
 
         <InfoDetail
-          label="Tot en met"
+          label="Tot"
           value={
             vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
           }
