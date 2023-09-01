@@ -156,7 +156,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -200,7 +199,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -244,7 +242,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -404,7 +401,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -448,7 +444,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -492,7 +487,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -652,7 +646,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -696,7 +689,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -735,7 +727,6 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"

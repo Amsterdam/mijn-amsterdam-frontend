@@ -165,7 +165,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -209,7 +208,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -253,7 +251,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -444,7 +441,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -488,7 +484,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -532,7 +527,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -676,7 +670,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -720,7 +713,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -764,7 +756,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -977,7 +968,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1021,7 +1011,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1065,7 +1054,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1273,7 +1261,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1317,7 +1304,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1361,7 +1347,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1547,7 +1532,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1591,7 +1575,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1635,7 +1618,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1852,7 +1834,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1896,7 +1877,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -1940,7 +1920,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2112,7 +2091,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2156,7 +2134,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2200,7 +2177,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2353,7 +2329,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2397,7 +2372,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2441,7 +2415,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2657,7 +2630,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2701,7 +2673,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2745,7 +2716,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -2964,7 +2934,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3008,7 +2977,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3052,7 +3020,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3280,7 +3247,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3324,7 +3290,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3368,7 +3333,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3531,7 +3495,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3575,7 +3538,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3619,7 +3581,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3777,7 +3738,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
       >
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3821,7 +3781,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -3860,7 +3819,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4085,7 +4043,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4129,7 +4086,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4173,7 +4129,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4217,7 +4172,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4447,7 +4401,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4491,7 +4444,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4535,7 +4487,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4579,7 +4530,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4809,7 +4759,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4853,7 +4802,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4897,7 +4845,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4941,7 +4888,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5187,7 +5133,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5231,7 +5176,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5275,7 +5219,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5319,7 +5262,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5549,7 +5491,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5593,7 +5534,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5637,7 +5577,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5881,7 +5820,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5925,7 +5863,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -5969,7 +5906,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6013,7 +5949,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6257,7 +6192,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6301,7 +6235,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6345,7 +6278,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6389,7 +6321,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6585,7 +6516,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6629,7 +6559,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6673,7 +6602,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6831,7 +6759,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6875,7 +6802,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6919,7 +6845,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7082,7 +7007,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7126,7 +7050,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7170,7 +7093,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7328,7 +7250,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7372,7 +7293,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7416,7 +7336,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7619,7 +7538,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
       >
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7663,7 +7581,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         </li>
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -7707,7 +7624,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"

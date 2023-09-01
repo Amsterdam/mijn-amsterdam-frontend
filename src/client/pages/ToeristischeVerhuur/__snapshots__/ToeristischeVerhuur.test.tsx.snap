@@ -271,10 +271,10 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -283,10 +283,10 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -295,10 +295,10 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -308,32 +308,41 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -342,10 +351,10 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Vanaf:
                   </span>
@@ -354,10 +363,10 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tot:
                   </span>
@@ -367,23 +376,32 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/toeristische-verhuur"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Vergunning bed & breakfast
                   </a>
@@ -499,56 +517,67 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionNoBorderBottom"
+      class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere vergunningen
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table TableVergunningen"
+            class="_Table_a66dcc _TableVergunningen_702859"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Soort vergunning
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Status
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Vanaf
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Tot
                 </th>

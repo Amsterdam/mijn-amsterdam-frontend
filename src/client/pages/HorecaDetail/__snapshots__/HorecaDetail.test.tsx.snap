@@ -110,7 +110,6 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
       >
         <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -154,7 +153,6 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -193,7 +191,6 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         </li>
         <li
           class="_ListItem_a12ff2"
-          style="display: block;"
         >
           <div
             class="_ListItemInner_a12ff2"
