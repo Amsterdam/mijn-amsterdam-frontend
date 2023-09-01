@@ -1,8 +1,11 @@
 import { differenceInYears, differenceInCalendarDays } from 'date-fns';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { TipsPredicateFN } from './tip-types';
-import { Kind } from '../../../universal/types';
+import type { TipsPredicateFN } from './tip-types';
+import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
+import type { Identiteitsbewijs, Kind } from '../../../universal/types';
+import type { WmoItem } from '../wmo';
+import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -24,7 +27,7 @@ export const hasValidId: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  return ids.some((idBewijs) => {
+  return ids.some((idBewijs: Identiteitsbewijs) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
 };
@@ -32,7 +35,9 @@ export const hasValidId: TipsPredicateFN = (
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   const stadspassen = appState.WPI_STADSPAS?.content?.stadspassen ?? [];
-  return stadspassen.some((stadspas) => stadspas.passType === 'ouder');
+  return stadspassen.some(
+    (stadspas: WpiStadspas) => stadspas.passType === 'ouder'
+  );
 };
 
 export const hasValidStadspasRequest: TipsPredicateFN = (
@@ -41,7 +46,7 @@ export const hasValidStadspasRequest: TipsPredicateFN = (
 ) => {
   return (
     appState.WPI_STADSPAS?.content?.aanvragen.some(
-      (aanvraag) =>
+      (aanvraag: WpiRequestProcess) =>
         aanvraag.decision === 'toekenning' &&
         differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
     ) || false
@@ -82,7 +87,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 ) => {
   return (
     appState.WPI_AANVRAGEN?.content?.some(
-      (aanvraag) =>
+      (aanvraag: WpiRequestProcess) =>
         aanvraag.decision === 'toekenning' &&
         differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
     ) || false
@@ -91,7 +96,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 
 export const hasAOV: TipsPredicateFN = (appState) => {
   return !!appState.WMO?.content?.some(
-    (wmo) => wmo.isActual && wmo.itemTypeCode === 'AOV'
+    (wmo: WmoItem) => wmo.isActual && wmo.itemTypeCode === 'AOV'
   );
 };
 
@@ -127,7 +132,7 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
 // Rule 13
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
   return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
-    (n) => n.omschrijving === 'Nederlandse'
+    (n: { omschrijving: string }) => n.omschrijving === 'Nederlandse'
   );
 };
 
@@ -151,19 +156,21 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v) => v.caseType === CaseType.VakantieverhuurVergunningaanvraag
+    (v: ToeristischeVerhuurVergunning) =>
+      v.caseType === CaseType.VakantieverhuurVergunningaanvraag
   );
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v) => v.caseType === CaseType.BBVergunning
+    (v: ToeristischeVerhuurVergunning) => v.caseType === CaseType.BBVergunning
   );
 };
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v) => v.caseType === CaseType.BBVergunning && v.hasTransitionAgreement
+    (v: ToeristischeVerhuurVergunning) =>
+      v.caseType === CaseType.BBVergunning && v.hasTransitionAgreement
   );
 };
 
@@ -179,17 +186,17 @@ export const isReceivingSubsidy: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const hasTozo = appState.WPI_TOZO?.content?.some(
-    (r) =>
+    (r: WpiRequestProcess) =>
       r.decision === 'toekenning' &&
       differenceInYears(today, new Date(r.datePublished)) <= 1
   );
   const hasTonk = appState.WPI_TONK?.content?.some(
-    (r) =>
+    (r: WpiRequestProcess) =>
       r.decision === 'toekenning' &&
       differenceInYears(today, new Date(r.datePublished)) <= 1
   );
   const hasWpi = appState.WPI_AANVRAGEN?.content?.some(
-    (r) =>
+    (r: WpiRequestProcess) =>
       r.about === 'Bijstandsuitkering' &&
       r.decision === 'toekenning' &&
       differenceInYears(today, new Date(r.datePublished)) <= 1

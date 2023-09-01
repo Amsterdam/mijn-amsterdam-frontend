@@ -55,10 +55,6 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<MyNotifications />', () => {
-  beforeAll(() => {
-    (window as any).scrollBy = jest.fn();
-  });
-
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
   const routePath = AppRoutes.NOTIFICATIONS;
 

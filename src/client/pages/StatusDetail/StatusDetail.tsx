@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading, relayApiUrl } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   GenericDocument,
   StatusLine,
@@ -21,6 +21,7 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StatusDetail.module.scss';
+import { relayApiUrl } from '../../utils/utils';
 
 export type StatusSourceItem = StatusLine;
 

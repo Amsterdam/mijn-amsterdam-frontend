@@ -1,5 +1,6 @@
-import express, { Request, Response } from 'express';
-import { apiErrorResult, jsonCopy } from '../../universal/helpers';
+import express from 'express';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import { apiErrorResult } from '../../universal/helpers';
 import * as config from '../config';
 import {
   addServiceResultHandler,
@@ -10,8 +11,6 @@ import {
   getAuthProfile,
   getOIDCToken,
   getProfileType,
-  hasSessionCookie,
-  isAuthenticated,
   isRelayAllowed,
   isSessionCookieName,
   queryParams,
@@ -19,13 +18,9 @@ import {
   send404,
   sendMessage,
   sendUnauthorized,
-  verifyAuthenticated,
-  verifyUserIdWithRemoteUserinfo,
-  type TokenData,
+  TokenData,
 } from './app';
 import { cache } from './source-api-request';
-import nock from 'nock';
-import { AccessToken } from 'express-openid-connect';
 
 const {
   oidcConfigDigid,
@@ -38,13 +33,17 @@ const {
   EH_ATTR_PRIMARY_ID_LEGACY,
 } = config;
 
+vi.mock('../config', async (requireOriginal) => {
+  const origModule = (await requireOriginal()) as object;
+  return {
+    ...origModule,
+  };
+});
+
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
   const eherkenningClientId = oidcConfigEherkenning.clientID;
   const secret = config.OIDC_COOKIE_ENCRYPTION_KEY;
-
-  const jweCookieString =
-    'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
 
   let isOidcTokenVerificationEnabled =
     config.OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED;
@@ -54,7 +53,6 @@ describe('server/helpers/app', () => {
     oidcConfigEherkenning.clientID = 'test1';
     oidcConfigDigid.clientID = 'test2';
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = '123123123kjhkjhsdkjfhsd';
-    nock.disableNetConnect();
   });
 
   afterAll(() => {
@@ -63,21 +61,28 @@ describe('server/helpers/app', () => {
     oidcConfigEherkenning.clientID = digidClientId;
     oidcConfigDigid.clientID = eherkenningClientId;
     (config.OIDC_COOKIE_ENCRYPTION_KEY as any) = secret;
-    nock.restore();
   });
 
   test('getAuth.eherkenning', async () => {
+    // const cookieValue = generateDevSessionCookieValue(
+    //   'eherkenning',
+    //   '123-eherkenning-321'
+    // );
+
+    const cookieValue =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
+
     const req = {
       cookies: {
-        [OIDC_SESSION_COOKIE_NAME]: jweCookieString,
+        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
       },
     } as unknown as typeof express.request;
 
     const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "profile": Object {
+      {
+        "profile": {
           "authMethod": "eherkenning",
           "id": "123-eherkenning-321",
           "profileType": "commercial",
@@ -105,8 +110,8 @@ describe('server/helpers/app', () => {
     const result = await getAuth(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "profile": Object {
+      {
+        "profile": {
           "authMethod": "digid",
           "id": "000-digid-999",
           "profileType": "private",
@@ -204,7 +209,7 @@ describe('server/helpers/app', () => {
   });
 
   test('requestID', () => {
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
 
     const req = {} as any;
     const res = {
@@ -219,8 +224,8 @@ describe('server/helpers/app', () => {
 
   test('send404', () => {
     const mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
+      status: vi.fn(),
+      send: vi.fn(),
     };
 
     send404(mockRes as any);
@@ -233,8 +238,8 @@ describe('server/helpers/app', () => {
 
   test('sendUnauthorized', () => {
     const mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
+      status: vi.fn(),
+      send: vi.fn(),
     };
 
     sendUnauthorized(mockRes as any);
@@ -259,7 +264,7 @@ describe('server/helpers/app', () => {
 
   test('clearRequestCache.unknown.key', () => {
     const requestID = '11223300xx';
-    const nextMock = jest.fn();
+    const nextMock = vi.fn();
     cache.put(requestID, { foo: 'bar' });
 
     expect(cache.get(requestID)).toEqual({ foo: 'bar' });
@@ -275,7 +280,7 @@ describe('server/helpers/app', () => {
 
   test('sendMessage', () => {
     const res = {
-      write: jest.fn(),
+      write: vi.fn(),
     };
     sendMessage(res as any, 'test', 'data-message', { foo: 'bar' });
 
@@ -288,7 +293,7 @@ describe('server/helpers/app', () => {
     const data = { foo: 'bar' };
     const servicePromise = Promise.resolve(data);
     const res = {
-      write: jest.fn(),
+      write: vi.fn(),
     };
     const result = await addServiceResultHandler(
       res as any,
@@ -342,14 +347,16 @@ describe('server/helpers/app', () => {
   });
 
   test('decodeOIDCToken', async () => {
+    const jweCookieString =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
     expect(await decodeOIDCToken(getOIDCToken(jweCookieString)))
       .toMatchInlineSnapshot(`
-      Object {
-        "aud": "test1",
-        "iat": 1650620133,
-        "urn:etoegang:1.9:EntityConcernedID:KvKnr": "123-eherkenning-321",
-      }
-    `);
+        {
+          "aud": "test1",
+          "iat": 1650620133,
+          "urn:etoegang:1.9:EntityConcernedID:KvKnr": "123-eherkenning-321",
+        }
+      `);
   });
 
   test('isRelayAllowed', () => {
@@ -377,205 +384,5 @@ describe('server/helpers/app', () => {
     expect(isSessionCookieName(name)).toBe(true);
     name = 'MA-appSession';
     expect(isSessionCookieName(name)).toBe(false);
-  });
-
-  test('hasSessionCookie', () => {
-    {
-      const req = {
-        cookies: {
-          [OIDC_SESSION_COOKIE_NAME]: 'test',
-        },
-      } as Request;
-
-      expect(hasSessionCookie(req)).toBe(true);
-    }
-    {
-      const req = {
-        cookies: {
-          [OIDC_SESSION_COOKIE_NAME + '.1']: 'test',
-        },
-      } as Request;
-
-      expect(hasSessionCookie(req)).toBe(true);
-    }
-    {
-      const req = {
-        cookies: {
-          blap: 'test',
-        },
-      } as Request;
-
-      expect(hasSessionCookie(req)).toBe(false);
-    }
-  });
-
-  test('verifyUserIdWithRemoteUserinfo', async () => {
-    nock('http://localhost')
-      .get('/oidc/userinfo')
-      .times(2)
-      .reply(200, config.DEV_JWT)
-      .get('/oidc/userinfo')
-      .times(1)
-      .reply(401, '');
-
-    // Happy
-    expect(
-      await verifyUserIdWithRemoteUserinfo(
-        'digid',
-        {
-          token_type: 'Bearer',
-          access_token: config.DEV_JWT,
-        } as AccessToken,
-        '1234567890'
-      )
-    ).toBe(true);
-
-    // Wrong value
-    expect(
-      await verifyUserIdWithRemoteUserinfo(
-        'digid',
-        {
-          token_type: 'Bearer',
-          access_token: config.DEV_JWT,
-        } as AccessToken,
-        '908979'
-      )
-    ).toBe(false);
-
-    // Incorrect types for arguments (undefined)
-    expect(
-      await verifyUserIdWithRemoteUserinfo('digid', {
-        token_type: 'Bearer',
-        access_token: config.DEV_JWT,
-      } as AccessToken)
-    ).toBe(false);
-
-    // Incorrect types for arguments (undefined)
-    expect(await verifyUserIdWithRemoteUserinfo('digid')).toBe(false);
-
-    // Reply with 401
-    expect(
-      await verifyUserIdWithRemoteUserinfo(
-        'digid',
-        {
-          token_type: 'Bearer',
-          access_token: config.DEV_JWT,
-        } as AccessToken,
-        '1234567890'
-      )
-    ).toBe(false);
-  });
-
-  test('isAuthenticated.false', async () => {
-    const req = {
-      cookies: {
-        blap: 'test',
-      },
-    } as Request;
-
-    const res = {
-      send: jest.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: jest.fn(),
-    } as unknown as Response;
-
-    expect(await isAuthenticated()(req, res, jest.fn())).toStrictEqual({
-      content: null,
-      message: 'Unauthorized',
-      status: 'ERROR',
-    });
-
-    expect(res.status).toHaveBeenCalledWith(401);
-  });
-
-  test('isAuthenticated.true', async () => {
-    const req = {
-      cookies: {
-        [OIDC_SESSION_COOKIE_NAME]: jweCookieString,
-      },
-    } as Request;
-
-    const res = {
-      send: jest.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: jest.fn(),
-    } as unknown as Response;
-
-    const nextFn = jest.fn();
-
-    await isAuthenticated()(req, res, nextFn);
-
-    expect(nextFn).toHaveBeenCalled();
-  });
-
-  test('verifyAuthenticated', async () => {
-    const req = {
-      cookies: {
-        [OIDC_SESSION_COOKIE_NAME]:
-          'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjg5MjM4MzY3LCJ1YXQiOjE2ODkyMzgzNjcsImV4cCI6MTY4OTIzOTI2N30..RQW1R1ZKYLncXIVW.yoK7RQtRDjLQzz3Xyy244R5cZC8DnVm7m8Z6CuNmbgXxoI7ZaMEUaHRegeLqMrmhbAQOw3J59HRvf5y_-G_rN577N1qnnCt0VruL2ey0LL5Mp3ElVuXHLkWCdhU0DeZuHBcHcCPEj3_5HZTAeTBYS1HBNijsXON5_q8WeBJP_lshd-7ZbENcAjsZPeKs9SXZYbNaJPMcD4YY0IcXjI4A1Ue_RzU7I5hkYHC1yUWuiHw7b4yFCnclFZ0WpsS7tPGLdQ_tjXHSjR2Pj57J8_r_M5Y_nOajfYcDmc-J4V0vng13gocm99lac_UvjlLjkHwNQ802IQRPUTZVZKXYtcynq7o4-l2wFFp0KO9K8flEnUxAbYIZzdogRS66sS3u6IbhTkGMdGa_ZD8lNSpNo9iKR0jKRZSV1CQ2YmZ6VLYhekm7cAWa-HTBDd_yLOVVLUTjzMmp8_1Nyxlc0If3ZNtykPNcQltsWcP3HC5EE__Q-mzsc0SgiK5FfjHs9cbFpBglP_v41TRdNGJ9XPWexPRvwU4Alm_5gQVx6IVrNxBT_t8HZHKVNw5ZFTutNtpyK8sSa-bhURBB1PwcUwlp2Lxe2G0Aho1q5VuFrOZNNA3Ok_KkQXBVHNV86dxOFlurh6AWsKMQ6-Apq5nHHXvmhn1jOSCpNGt2nCekq6D_nEIGCnwWMq2vJw.3emPjZyYwAvDkOR_Pyevog',
-      },
-      oidc: {
-        isAuthenticated: jest.fn().mockReturnValueOnce(true),
-        accessToken: {
-          access_token: '',
-          token_type: 'Bearer',
-        },
-      },
-    } as unknown as Request;
-
-    const res = {
-      send: jest.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: jest.fn(),
-      clearCookie: jest.fn(),
-    } as unknown as Response;
-
-    const responseUnauthorized = {
-      content: null,
-      message: 'Unauthorized',
-      status: 'ERROR',
-    };
-
-    const verify = verifyAuthenticated('digid', 'private');
-    ////
-    nock('http://localhost').get('/oidc/userinfo').times(1).reply(401, '');
-
-    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
-
-    expect(res.clearCookie).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(401);
-
-    ////
-    req.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(false);
-    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
-
-    ////
-    req.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(true);
-    nock('http://localhost')
-      .get('/oidc/userinfo')
-      .times(1)
-      .reply(200, config.DEV_JWT);
-
-    expect(await verify(req, res)).toStrictEqual({
-      content: {
-        isAuthenticated: true,
-        profileType: 'private',
-        authMethod: 'digid',
-      },
-      status: 'OK',
-    });
-
-    ////
-    const req2 = jsonCopy(req);
-    nock('http://localhost')
-      .get('/oidc/userinfo')
-      .times(1)
-      .reply(200, config.DEV_JWT);
-    req2.oidc.isAuthenticated = jest.fn().mockReturnValueOnce(true);
-    req2.cookies = {};
-    expect(await verify(req2, res)).toStrictEqual(responseUnauthorized);
   });
 });

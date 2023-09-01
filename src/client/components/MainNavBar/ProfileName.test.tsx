@@ -5,7 +5,7 @@ import { appStateAtom, useAppStateGetter } from '../../hooks';
 import MockApp from '../../pages/MockApp';
 import { ProfileName } from './ProfileName';
 
-jest.mock('../../hooks/media.hook');
+vi.mock('../../hooks/media.hook');
 
 function testState(brp: any = null, profile: any = null, kvk: any = null) {
   const s: any = {

@@ -66,10 +66,6 @@ const testState: any = {
 };
 
 describe('LoodMeting', () => {
-  beforeAll(() => {
-    (window as any).scrollTo = jest.fn();
-  });
-
   describe('with results', () => {
     const renderLoodMeting = setupMockApp(
       LoodMeting,

@@ -1,18 +1,11 @@
-/// <reference types="react-scripts" />
-
 import * as Sentry from '@sentry/react';
-import 'react-app-polyfill/stable';
-import 'core-js/features/object/entries';
-import 'core-js/features/object/from-entries';
-import 'core-js/features/array/flat-map';
-import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
-import { ENV, getOtapEnvItem } from './universal/config/env';
+import { ENV } from './universal/config/env';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -22,15 +15,11 @@ if (
   window.location.replace('/no-support');
 }
 
-const release = `mijnamsterdam-frontend@${
-  process.env.REACT_APP_VERSION || 'latest-unknown'
-}`;
+const release = `mijnamsterdam-frontend@${MA_APP_VERSION || 'latest-unknown'}`;
 console.info('App version: ' + release);
 
-const sentryDSN = getOtapEnvItem('sentryDsn');
-
 Sentry.init({
-  dsn: sentryDSN,
+  dsn: import.meta.env.REACT_APP_SENTRY_DSN,
   environment: ENV,
   debug: ENV === 'development',
   ignoreErrors: [
@@ -44,7 +33,7 @@ Sentry.init({
     if (ENV === 'development') {
       console.log(hint);
     }
-    if (!sentryDSN) {
+    if (!import.meta.env.REACT_APP_SENTRY_DSN) {
       return null;
     }
 

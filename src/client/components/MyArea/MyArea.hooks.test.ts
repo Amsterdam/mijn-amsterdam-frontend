@@ -2,21 +2,26 @@ import { renderRecoilHook } from '../../utils/renderRecoilHook';
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
 import * as reactMaps from '@amsterdam/react-maps';
 import { appStateAtom } from '../../hooks';
+import { vi, describe, expect, it, test } from 'vitest';
 
 const mapInstanceMock = {
-  setView: jest.fn(),
+  setView: vi.fn(),
 } as unknown as L.Map;
 
-jest.mock('@amsterdam/react-maps');
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useHistory: () => {
-    return { location: { pathname: '/', search: '' } };
-  },
-}));
+vi.mock('@amsterdam/react-maps');
+
+vi.mock('react-router-dom', async (requireActual) => {
+  const origModule: object = await requireActual();
+  return {
+    ...origModule,
+    useHistory: () => {
+      return { location: { pathname: '/', search: '' } };
+    },
+  };
+});
 
 describe('MyArea.hooks', () => {
-  jest.spyOn(reactMaps, 'useMapInstance').mockImplementation(() => {
+  vi.spyOn(reactMaps, 'useMapInstance').mockImplementation(() => {
     return mapInstanceMock;
   });
 
@@ -27,22 +32,22 @@ describe('MyArea.hooks', () => {
       });
 
       expect(result.current).toMatchInlineSnapshot(`
-        Object {
-          "customLocationMarker": Object {
+        {
+          "customLocationMarker": {
             "label": "Amsterdam centrum",
-            "latlng": Object {
+            "latlng": {
               "lat": 52.3676842478192,
               "lng": 4.90022569871861,
             },
             "type": "default",
           },
           "homeLocationMarker": null,
-          "mapCenter": Object {
+          "mapCenter": {
             "lat": 52.3676842478192,
             "lng": 4.90022569871861,
           },
           "mapZoom": 12,
-          "secondaryLocationMarkers": Array [],
+          "secondaryLocationMarkers": [],
         }
       `);
 
@@ -62,22 +67,22 @@ describe('MyArea.hooks', () => {
       });
 
       expect(result.current).toMatchInlineSnapshot(`
-        Object {
-          "customLocationMarker": Object {
+        {
+          "customLocationMarker": {
             "label": "Home",
-            "latlng": Object {
+            "latlng": {
               "lat": 9988,
               "lng": 6677,
             },
             "type": "custom",
           },
           "homeLocationMarker": null,
-          "mapCenter": Object {
+          "mapCenter": {
             "lat": 9988,
             "lng": 6677,
           },
           "mapZoom": 10,
-          "secondaryLocationMarkers": Array [],
+          "secondaryLocationMarkers": [],
         }
       `);
     });
@@ -119,34 +124,34 @@ describe('MyArea.hooks', () => {
       );
 
       expect(result.current).toMatchInlineSnapshot(`
-        Object {
-          "customLocationMarker": Object {
+        {
+          "customLocationMarker": {
             "label": "Amsterdam centrum",
-            "latlng": Object {
+            "latlng": {
               "lat": 52.3676842478192,
               "lng": 4.90022569871861,
             },
             "type": "default",
           },
-          "homeLocationMarker": Object {
+          "homeLocationMarker": {
             "label": "Amstel 1
          Amsterdam",
-            "latlng": Object {
+            "latlng": {
               "lat": 123,
               "lng": 456,
             },
             "type": "home",
           },
-          "mapCenter": Object {
+          "mapCenter": {
             "lat": 52.3676842478192,
             "lng": 4.90022569871861,
           },
           "mapZoom": 12,
-          "secondaryLocationMarkers": Array [
-            Object {
+          "secondaryLocationMarkers": [
+            {
               "label": "Cenraal stationstraat 999
          Amsterdam",
-              "latlng": Object {
+              "latlng": {
                 "lat": 678,
                 "lng": 901,
               },
@@ -186,30 +191,30 @@ describe('MyArea.hooks', () => {
       );
 
       expect(result.current).toMatchInlineSnapshot(`
-        Object {
-          "customLocationMarker": Object {
+        {
+          "customLocationMarker": {
             "label": "Amsterdam centrum",
-            "latlng": Object {
+            "latlng": {
               "lat": 52.3676842478192,
               "lng": 4.90022569871861,
             },
             "type": "default",
           },
-          "homeLocationMarker": Object {
+          "homeLocationMarker": {
             "label": "Cenraal stationstraat 999
          Amsterdam",
-            "latlng": Object {
+            "latlng": {
               "lat": 678,
               "lng": 901,
             },
             "type": "home",
           },
-          "mapCenter": Object {
+          "mapCenter": {
             "lat": 52.3676842478192,
             "lng": 4.90022569871861,
           },
           "mapZoom": 12,
-          "secondaryLocationMarkers": Array [],
+          "secondaryLocationMarkers": [],
         }
       `);
     });

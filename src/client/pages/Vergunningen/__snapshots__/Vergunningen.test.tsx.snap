@@ -1,121 +1,161 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
+exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage Vergunningen"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _Vergunningen_d146a0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Vergunningen"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          vergunningen.svg
+          <title>
+            Vergunningen
+          </title>
+          <path
+            d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Vergunningen
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p>
         Hier ziet u een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BE4341B52-1FC0-4E17-AB68-2B3AFE15160A%7D"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Ontheffing RVV en TVM aanvragen
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleCurrent"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleCurrent_d146a0"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Lopende aanvragen
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table Table"
+            class="_Table_a66dcc _Table_d146a0"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Kenmerk
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Soort vergunning
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Aangevraagd
                 </th>
@@ -123,32 +163,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1097314015"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/2003529
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -157,10 +206,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -170,32 +219,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/394540596"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/2003533
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -204,10 +262,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -217,32 +275,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1623553971"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/2003534
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -251,10 +318,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -264,32 +331,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4069415615"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/2003388
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -298,10 +374,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -311,32 +387,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4039623833"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/98989234
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -345,10 +430,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -358,32 +443,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-hele-stad/1656544835"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/1809938
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -392,10 +486,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -405,32 +499,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/3229752453"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/1797716
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -439,10 +542,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -452,32 +555,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/513492494"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/1797715
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -486,10 +598,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -499,32 +611,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/splitsingsvergunning/4220998766"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1697573
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -533,10 +654,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -546,32 +667,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/onttrekkingsvergunning-voor-sloop/2377704102"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1797585
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -580,10 +710,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -593,32 +723,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/samenvoegingsvergunning/3588461895"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1797696
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -627,10 +766,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -640,32 +779,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/woningvormingsvergunning/4289555340"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1697574
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -674,10 +822,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -687,32 +835,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/zwaar-verkeer/2318111872"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1692013
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -721,10 +878,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -734,32 +891,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/zwaar-verkeer/1863159343"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1692002
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -768,10 +934,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -781,32 +947,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/nachtwerkontheffing/504231399"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1691001
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -815,10 +990,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -828,32 +1003,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/19795392
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -862,10 +1046,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -875,32 +1059,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1979539
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -909,10 +1102,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -922,32 +1115,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/3407608046"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597712
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -956,10 +1158,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -969,32 +1171,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-melding/4187042164"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000003
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1003,10 +1214,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1016,32 +1227,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/3073404626"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/111/000003
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1050,10 +1270,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1063,32 +1283,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/4081922197"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/111/000004
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1097,10 +1326,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1110,32 +1339,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/2331715774"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000001.b
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1144,10 +1382,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1157,32 +1395,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/913567999"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000001.c
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1191,10 +1438,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1204,32 +1451,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/e-rvv-tvm/3105266233"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000003
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1238,10 +1494,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1251,32 +1507,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/gpp/260384730"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000009
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1285,10 +1550,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1298,32 +1563,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/333728632"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000001
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1332,10 +1606,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1345,32 +1619,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3452781026"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597197
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1379,10 +1662,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1392,32 +1675,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2872491299"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597196
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1426,10 +1718,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1439,32 +1731,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3490212832"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597195
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1473,10 +1774,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1486,32 +1787,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2909923105"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597194
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1520,10 +1830,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1533,32 +1843,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3706696166"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597193
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1567,10 +1886,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1580,32 +1899,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2594256166"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1592761
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1614,10 +1942,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1627,32 +1955,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3468041544"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1592521
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1661,10 +1998,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Aangevraagd:
                   </span>
@@ -1679,51 +2016,62 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionCollapsiblePrevious"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsiblePrevious_d146a0"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere aanvragen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table Table"
+            class="_Table_a66dcc _Table_d146a0"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Kenmerk
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Soort vergunning
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Resultaat
                 </th>
@@ -1731,32 +2079,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4198587804"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/23423409
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1765,10 +2122,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -1778,32 +2135,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/335638187"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/091823087
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1812,10 +2178,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -1825,32 +2191,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/3368771494"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/98798273423
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1859,10 +2234,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -1872,32 +2247,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2303699528"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/92222273423
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1906,10 +2290,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -1919,32 +2303,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2165183397"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/98744444423
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -1953,10 +2346,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -1966,32 +2359,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4110068165"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/123123456
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2000,10 +2402,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2013,32 +2415,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/3689116237"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/23/1797714
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2047,10 +2458,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2060,32 +2471,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/onttrekkingsvergunning/1659133230"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1797707
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2094,10 +2514,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2107,32 +2527,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/19795384
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2141,10 +2570,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2154,32 +2583,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1979538
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2188,10 +2626,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2201,32 +2639,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/1314482059"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597502
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2235,10 +2682,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2248,32 +2695,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/239013065"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597501
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2282,10 +2738,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2295,32 +2751,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/1580959320"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1978055
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2329,10 +2794,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2342,32 +2807,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/421733388"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597501
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2376,10 +2850,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2389,32 +2863,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/nachtwerkontheffing/321076396"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1691001
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2423,10 +2906,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2436,32 +2919,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/1939428970"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597471
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2470,10 +2962,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2483,32 +2975,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/458936654"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/22/1597602
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2517,10 +3018,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2530,32 +3031,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-melding/3446432146"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000002
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2564,10 +3074,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2577,32 +3087,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/830781715"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/111/000002
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2611,10 +3130,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2624,32 +3143,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/3664304440"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000001.d
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2658,10 +3186,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2671,32 +3199,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/gpk/1221166450"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/000/000008
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2705,10 +3242,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2718,32 +3255,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/3490008162"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/21/1500000
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2752,10 +3298,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2765,32 +3311,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/21/1600000
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2799,10 +3354,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2812,32 +3367,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3607535691"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597204
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2846,10 +3410,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2859,32 +3423,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3276988108"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597203
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2893,10 +3466,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2906,32 +3479,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2804017741"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597202
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2940,10 +3522,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -2953,32 +3535,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/1324498924"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597199
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -2987,10 +3578,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -3000,32 +3591,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/976898368"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1595179
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -3034,10 +3634,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -3047,32 +3647,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/593205051"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/615500
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -3081,10 +3690,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>
@@ -3094,32 +3703,41 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                 </td>
               </tr>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="Button Button__plain Button__lean Linkd"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/574064900"
                   >
                     <svg
                       aria-hidden="true"
-                      class="Icon Icon__left"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
+                      focusable="false"
                       height="14px"
+                      viewBox="0 0 32 32"
                       width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      Chevron-Right.svg
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
                     </svg>
                     Z/20/1597205
                   </a>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Soort vergunning:
                   </span>
@@ -3128,10 +3746,10 @@ exports[`<Vergunningen /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Resultaat:
                   </span>

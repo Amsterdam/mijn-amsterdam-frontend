@@ -1,21 +1,22 @@
-jest.mock('flat-cache', () => {
+import { describe, expect, it, vi } from 'vitest';
+import FileCache from './file-cache';
+
+vi.mock('flat-cache', () => {
   const cache: { [key: string]: any } = {};
 
   return {
-    setKey: jest.fn(),
-    load: () => ({
+    default: vi.fn(),
+    setKey: vi.fn(),
+    create: () => ({
       setKey: (key: string, data: any) => {
         cache[key] = data;
       },
       getKey: (key: string) => cache[key],
-      save: jest.fn(),
+      save: vi.fn(),
       keys: () => Object.keys(cache),
     }),
   };
 });
-
-// eslint-disable-next-line import/first
-import FileCache from './file-cache';
 
 describe('FileCache', () => {
   it('should function as expected', () => {

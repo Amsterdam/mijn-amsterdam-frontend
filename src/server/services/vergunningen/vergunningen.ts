@@ -468,12 +468,14 @@ export function getVergunningNotifications(
           vergunning,
         ] as const
     )
-    .filter(
-      ([notification, vergunning]) =>
+    .filter(([notification, vergunning]) => {
+      const isActual =
         !vergunning.processed ||
         (!!notification &&
-          isActualNotification(notification.datePublished, compareDate))
-    )
+          isActualNotification(notification.datePublished, compareDate));
+
+      return isActual;
+    })
     .map(([notification]) => notification);
 }
 

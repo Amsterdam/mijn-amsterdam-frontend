@@ -1,6 +1,6 @@
-import nock from 'nock';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import type { AuthProfileAndToken } from '../../helpers/app';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../helpers/app';
 import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
 import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
 import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
@@ -9,6 +9,7 @@ import {
   fetchBezwaren,
   fetchBezwarenNotifications,
 } from './bezwaren';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 
 describe('Bezwaren', () => {
   const requestId = '456';
@@ -27,33 +28,21 @@ describe('Bezwaren', () => {
     token: 'abc123',
   };
 
-  afterAll(() => {
-    nock.enableNetConnect();
-    nock.restore();
-  });
-
-  beforeAll(() => {
-    nock.disableNetConnect();
-  });
-
   afterEach(() => {
-    nock.cleanAll();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('fetch bezwaren', () => {
     beforeEach(() => {
-      nock('http://localhost/zgw/v1')
-        .post(`/zaken/_zoek?page=1`)
+      remoteApi
+        .post(`/bezwaren/zgw/v1/zaken/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
         .get((uri) => uri.includes('/zaakinformatieobjecten'))
         .times(4)
         .reply(200, bezwarenDocumenten)
         .get((uri) => uri.includes('/statussen'))
         .times(4)
-        .reply(200, bezwarenStatus)
-        .get(`/enkelvoudiginformatieobjecten/${documentId}/download`)
-        .reply(200, 'wat-document-data');
+        .reply(200, bezwarenStatus);
     });
 
     it('should return data in expected format', async () => {
@@ -68,48 +57,48 @@ describe('Bezwaren', () => {
       const res = await fetchBezwarenNotifications(requestId, profileAndToken);
 
       expect(res).toMatchInlineSnapshot(`
-        Object {
-          "content": Object {
-            "notifications": Array [
-              Object {
+        {
+          "content": {
+            "notifications": [
+              {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-04-25",
                 "description": "Wij hebben uw bezwaar BI.21.014121.001 in behandeling genomen.",
                 "id": "BI.21.014121.001",
-                "link": Object {
+                "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
                 },
                 "title": "Bezwaar in behandeling",
               },
-              Object {
+              {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-04-03",
                 "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
                 "id": "JB.22.000076.001",
-                "link": Object {
+                "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
                 },
                 "title": "Bezwaar in behandeling",
               },
-              Object {
+              {
                 "chapter": "BEZWAREN",
                 "datePublished": "2022-11-04",
                 "description": "Wij hebben uw bezwaar ZAAK2 in behandeling genomen.",
                 "id": "ZAAK2",
-                "link": Object {
+                "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
                 },
                 "title": "Bezwaar in behandeling",
               },
-              Object {
+              {
                 "chapter": "BEZWAREN",
                 "datePublished": "2022-11-04",
                 "description": "Wij hebben uw bezwaar ZAAK3 in behandeling genomen.",
                 "id": "ZAAK3",
-                "link": Object {
+                "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
                 },
@@ -123,15 +112,25 @@ describe('Bezwaren', () => {
     });
 
     it('should be possible to download a document', async () => {
+      remoteApi
+        .get(
+          `/bezwaren/zgw/v1/enkelvoudiginformatieobjecten/${documentId}/download`
+        )
+        .reply(200);
+
       const documentResponse = await fetchBezwaarDocument(
         requestId,
         profileAndToken,
-        documentIdEncrypted
+        documentIdEncrypted,
+        true
       );
 
       //@ts-ignore
-      expect(documentResponse?.message).toEqual(undefined);
       expect(documentResponse.status).toEqual(200);
+      expect(documentResponse.request.headers['content-type']).toEqual(
+        'aplication/pdf'
+      );
+      // expect(documentResponse).toEqual(X);
     });
   });
 });

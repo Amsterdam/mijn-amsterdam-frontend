@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
-  getOtapEnvItem,
   LOCATION_ZOOM,
 } from '../../../universal/config';
 import {
@@ -70,7 +69,7 @@ export function Location({
       const isWeesp = isLocatedInWeesp(location);
 
       fetchBag({
-        url: `${getOtapEnvItem('bagUrl')}${address}`,
+        url: `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${address}`,
         transformResponse: (response) =>
           getLatLonByAddress(response?.results, address, isWeesp),
       });

@@ -1,4 +1,4 @@
-import nock from 'nock';
+import { describe, expect, test } from 'vitest';
 import { ApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -6,6 +6,7 @@ import {
   fetchMilieuzoneNotifications,
   getJSONRequestPayload,
 } from './cleopatra';
+import { remoteApi } from '../../../test-utils';
 
 const REQUEST_ID = 'test-x-123';
 const authProfileAndToken: AuthProfileAndToken = {
@@ -14,22 +15,6 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('simple-connect/cleopatra', () => {
-  const url = ApiConfig.CLEOPATRA.url;
-
-  ApiConfig.CLEOPATRA.url = 'http://localhost/cleopatra/remote/api';
-
-  afterAll(() => {
-    // Enable http requests.
-    nock.enableNetConnect();
-    nock.restore();
-
-    ApiConfig.CLEOPATRA.url = url;
-  });
-
-  beforeAll(() => {
-    nock.disableNetConnect();
-  });
-
   test('getJSONRequestPayload', () => {
     expect(
       getJSONRequestPayload({
@@ -49,7 +34,7 @@ describe('simple-connect/cleopatra', () => {
   });
 
   test('fetchMilieuzone null content', async () => {
-    nock('http://localhost').post('/cleopatra/remote/api').reply(200);
+    remoteApi.post('/cleopatra').reply(200);
 
     const responseContent = await fetchMilieuzone(
       REQUEST_ID,
@@ -57,8 +42,8 @@ describe('simple-connect/cleopatra', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+      {
+        "content": {
           "isKnown": false,
         },
         "status": "OK",
@@ -67,8 +52,8 @@ describe('simple-connect/cleopatra', () => {
   });
 
   test('fetchMilieuzone content', async () => {
-    nock('http://localhost')
-      .post('/cleopatra/remote/api')
+    remoteApi
+      .post('/cleopatra')
       .times(2)
       .reply(200, {
         content: [
@@ -103,8 +88,8 @@ describe('simple-connect/cleopatra', () => {
     );
 
     expect(responseContent).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+      {
+        "content": {
           "isKnown": true,
         },
         "status": "OK",
@@ -117,26 +102,26 @@ describe('simple-connect/cleopatra', () => {
     );
 
     expect(notificationsResponse).toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
-          "notifications": Array [
-            Object {
+      {
+        "content": {
+          "notifications": [
+            {
               "chapter": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "milieuzone-M1",
-              "link": Object {
+              "link": {
                 "title": "Betaal direct",
                 "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
               },
               "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
             },
-            Object {
+            {
               "chapter": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "milieuzone-M1",
-              "link": Object {
+              "link": {
                 "title": "Betaal direct",
                 "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2",
               },

@@ -58,10 +58,6 @@ function MockVergunningDetail({ identifier }: { identifier: string }) {
 }
 
 describe('<HorecaDetail />', () => {
-  beforeAll(() => {
-    (window as any).scrollTo = jest.fn();
-  });
-
   describe('<ExploitatieHorecaBedrijf />', () => {
     it('should match fullpage snapshot', () => {
       const { asFragment } = render(

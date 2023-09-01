@@ -1,81 +1,96 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage snapshot 1`] = `
+exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Horeca"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32"
+          viewBox="0 0 25 32"
+          width="25"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          iconHoreca.svg
+          <path
+            d="M6 32V17C3 17 0 13.8962 0 11V0H3V11H6V0H9V11H11.94L12 0H15V11C15 14 11.94 17 9 17V32H6ZM22 32V19H18V7C18 4.89333 18.64 3.2 19.92 1.92C21.2 0.64 22.8933 0 25 0V32H22Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/horeca/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Horeca
         </a>
         <h2
-          class="Heading Heading__large"
+          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
         >
           Horeca vergunning exploitatie Horecabedrijf
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Z/23/1808826
         </p>
       </div>
       <div
-        class="InfoDetail LocationInfo"
+        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
         >
           Locatie
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           J.J. Cremerplein 54I 1054 TM Amsterdam
           <button
-            class="Button Button__inline Button__lean MapLink"
+            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
             Bekijk op de kaart
           </button>
@@ -83,137 +98,137 @@ exports[`<HorecaDetail /> <ExploitatieHorecaBedrijf /> should match fullpage sna
       </div>
     </div>
     <div
-      class="StatusLine VergunningStatus"
+      class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Ontvangen
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 20 oktober 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 In behandeling
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Afgehandeld
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 01 november 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>

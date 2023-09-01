@@ -1,5 +1,5 @@
 import { ExternalLink } from '@amsterdam/asc-assets';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
@@ -14,7 +14,7 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
-import { AppRoutes, getOtapEnvItem } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
@@ -177,7 +177,6 @@ export async function searchAmsterdamNL(
       transformSearchAmsterdamNLresponse
     ),
   });
-
   return response.data;
 }
 
@@ -219,7 +218,7 @@ async function searchBag(keywords: string) {
   if (!keywords || keywords?.length === 0) {
     return null;
   }
-  const url = `${getOtapEnvItem('bagUrl')}${keywords}`;
+  const url = `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${keywords}`;
 
   const response = await axios.get<SearchEntry[]>(url, {
     transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
@@ -279,7 +278,7 @@ function useDynamicSearchEntries() {
         appState,
         combineApiSearchConfigs(
           apiSearchConfigs,
-          remoteSearchConfig.contents?.apiSearchConfigs
+          remoteSearchConfig.contents.apiSearchConfigs
         )
       );
     }
@@ -337,9 +336,9 @@ const amsterdamNLQuery = selectorFamily({
     (useExtendedAmsterdamSearch: boolean) =>
     async ({ get }) => {
       const term = get(searchTermAtom);
-      const response = term
-        ? await searchAmsterdamNL(term, 10, useExtendedAmsterdamSearch)
-        : null;
+      const response = await (term
+        ? searchAmsterdamNL(term, 10, useExtendedAmsterdamSearch)
+        : null);
       return response;
     },
 });
@@ -354,12 +353,13 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
   get: async ({ get }) => {
     // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
-    const response: ApiResponse<SearchConfigRemote> = await fetch(
-      BFFApiUrls.SEARCH_CONFIGURATION,
-      { credentials: 'include' }
-    ).then((response) => response.json());
+    const response: AxiosResponse<ApiResponse<SearchConfigRemote>> =
+      await axios.get(BFFApiUrls.SEARCH_CONFIGURATION, {
+        responseType: 'json',
+        withCredentials: true,
+      });
 
-    return response.content;
+    return response.data.content;
   },
 });
 

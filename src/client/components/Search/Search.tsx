@@ -19,7 +19,7 @@ import { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
-import { displayPath, SearchEntry } from './searchConfig';
+import { SearchEntry, displayPath } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
@@ -367,14 +367,13 @@ export function Search({
               extendedResults={extendedAMResults}
               onClickResult={onClickResult}
               results={
-                results?.am?.state === 'hasValue' &&
-                results?.am?.contents !== null
+                results.am?.state === 'hasValue' && results.am.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
               }
               totalAmountOfResults={
                 results?.am?.state === 'hasValue' &&
-                results?.am?.contents !== null
+                results.am.contents !== null
                   ? results.am.contents.length
                   : 0
               }

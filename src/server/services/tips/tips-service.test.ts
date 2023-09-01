@@ -21,15 +21,15 @@ const TOERISTISCHE_VERHUUR = {
 
 describe('createTipsFromServiceResults', () => {
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   beforeEach(() => {
-    jest.setSystemTime(jest.getRealSystemTime());
+    vi.setSystemTime(vi.getRealSystemTime());
   });
 
   it('Should not return personalized tips if not opted-in', async () => {
@@ -45,7 +45,7 @@ describe('createTipsFromServiceResults', () => {
   });
 
   it('should return tip mijn-28 when age is between 17 and 18', async () => {
-    jest.setSystemTime(new Date('2022-07-25'));
+    vi.setSystemTime(new Date('2022-07-25'));
 
     const BRPCopy = { ...BRP };
 
@@ -76,7 +76,7 @@ describe('createTipsFromServiceResults', () => {
       )
     ).toBeFalsy();
 
-    jest.setSystemTime(new Date('2022-03-14'));
+    vi.setSystemTime(new Date('2022-03-14'));
 
     const tipsOnDate = await createTipsFromServiceResults(
       { profileType: 'private', optin: 'false' },
@@ -91,7 +91,7 @@ describe('createTipsFromServiceResults', () => {
   });
 
   it('should show tip mijn-36', async () => {
-    jest.setSystemTime(new Date('2021-09-25'));
+    vi.setSystemTime(new Date('2021-09-25'));
 
     const TOZO_copy = { ...TOZO };
 
@@ -124,7 +124,7 @@ describe('createTipsFromServiceResults', () => {
   });
 
   it('should show tip mijn-35 and mijn-36', async () => {
-    jest.setSystemTime(new Date('2021-09-25'));
+    vi.setSystemTime(new Date('2021-09-25'));
 
     const TOZO_copy = { ...TOZO };
     const VERHUUR_copy = { ...TOERISTISCHE_VERHUUR };

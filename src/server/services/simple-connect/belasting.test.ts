@@ -1,5 +1,5 @@
-import nock from 'nock';
-import { ApiConfig } from '../../config';
+import { describe, expect, test } from 'vitest';
+import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 
@@ -10,31 +10,14 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('simple-connect/belasting', () => {
-  const url = ApiConfig.BELASTINGEN.url;
-
-  ApiConfig.BELASTINGEN.url = 'http://localhost/belastingen/remote/api';
-
-  afterAll(() => {
-    // Enable http requests.
-    nock.enableNetConnect();
-    nock.restore();
-
-    ApiConfig.BELASTINGEN.url = url;
-  });
-
-  beforeAll(() => {
-    nock.disableNetConnect();
-  });
-
   test('fetchBelasting: no content', async () => {
-    nock('http://localhost')
-      .get('/belastingen/remote/api')
-      .reply(200, null as any);
+    remoteApi.get('/belastingen').reply(200, null as any);
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+    expect(
+      await fetchBelasting(REQUEST_ID, authProfileAndToken)
+    ).toMatchInlineSnapshot(`
+      {
+        "content": {
           "isKnown": false,
         },
         "status": "OK",
@@ -43,14 +26,15 @@ describe('simple-connect/belasting', () => {
   });
 
   test('fetchBelasting: bsn known', async () => {
-    nock('http://localhost').get('/belastingen/remote/api').reply(200, {
+    remoteApi.get('/belastingen').reply(200, {
       status: 'BSN known',
     });
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+    expect(
+      await fetchBelasting(REQUEST_ID, authProfileAndToken)
+    ).toMatchInlineSnapshot(`
+      {
+        "content": {
           "isKnown": true,
         },
         "status": "OK",
@@ -59,8 +43,8 @@ describe('simple-connect/belasting', () => {
   });
 
   test('fetchBelasting: bsn known + tips + notifications', async () => {
-    nock('http://localhost')
-      .get('/belastingen/remote/api')
+    remoteApi
+      .get('/belastingen')
       .times(2)
       .reply(200, {
         status: 'BSN known',
@@ -95,46 +79,48 @@ describe('simple-connect/belasting', () => {
         ],
       });
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
+    expect(
+      await fetchBelasting(REQUEST_ID, authProfileAndToken)
+    ).toMatchInlineSnapshot(`
+      {
+        "content": {
           "isKnown": true,
         },
         "status": "OK",
       }
     `);
 
-    expect(await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
-      Object {
-        "content": Object {
-          "notifications": Array [
-            Object {
+    expect(
+      await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken)
+    ).toMatchInlineSnapshot(`
+      {
+        "content": {
+          "notifications": [
+            {
               "chapter": "BELASTINGEN",
               "datePublished": "2022-05-30T09:00:34Z",
               "description": "Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.",
               "id": "belasting-4",
-              "link": Object {
+              "link": {
                 "title": "Betaal direct",
                 "to": "https://belastingbalie-acc.amsterdam.nl/aanslagen.php",
               },
               "title": "Betaal uw aanslagen",
             },
           ],
-          "tips": Array [
-            Object {
+          "tips": [
+            {
               "datePublished": "2022-05-30T09:00:34Z",
               "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
               "id": "belasting-5",
-              "imgUrl": "http://test-host/img/tips/belastingen.jpg",
+              "imgUrl": "http://frontend-host/img/tips/belastingen.jpg",
               "isPersonalized": true,
-              "link": Object {
+              "link": {
                 "title": "Vraag direct aan",
                 "to": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
               },
               "priority": 10,
-              "reason": Array [
+              "reason": [
                 "U krijgt deze tip omdat u nog niet via automatische incasso betaalt",
               ],
               "title": "Automatische incasso",

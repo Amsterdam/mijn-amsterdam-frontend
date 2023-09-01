@@ -74,7 +74,7 @@ describe('predicates', () => {
   const DATE_TO_TEST_AGAINST = '2022-07-25';
 
   beforeAll(() => {
-    jest.useFakeTimers().setSystemTime(new Date(DATE_TO_TEST_AGAINST));
+    vi.useFakeTimers().setSystemTime(new Date(DATE_TO_TEST_AGAINST));
   });
 
   describe('BRP', () => {

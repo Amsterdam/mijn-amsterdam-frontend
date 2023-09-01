@@ -86,7 +86,7 @@
 .secondaryLinks {
   position: absolute;
   margin-top: -8.9rem;
-  right: calc((100vw - #{$main-boxed-width}) / 2);
+  right: calc(calc(100vw - #{$main-boxed-width}) / 2);
   display: inline-block;
 
   @include select(LoadingContent_LoadingContent) {

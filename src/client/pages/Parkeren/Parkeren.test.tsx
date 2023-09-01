@@ -8,7 +8,7 @@ import Parkeren from './Parkeren';
 
 describe('Parkeren', () => {
   beforeAll(() => {
-    (window.scrollTo as any) = jest.fn();
+    (window.scrollTo as any) = vi.fn();
   });
 
   const routeEntry = generatePath(AppRoutes.TIPS);

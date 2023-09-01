@@ -1,30 +1,33 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
-import { apiSuccessResult } from '../../universal/helpers';
-import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
-import { MyNotification, MyTip } from '../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config';
-import { AuthProfileAndToken } from '../helpers/app';
 import {
-  fetchBelastingNotifications,
-  fetchSubsidieNotifications,
-  fetchMilieuzoneNotifications,
-  fetchErfpachtNotifications,
-} from './simple-connect';
+  ApiResponse,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
+import { dateSort } from '../../universal/helpers/date';
+import type { MyNotification, MyTip } from '../../universal/types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../config';
+import type { AuthProfileAndToken } from '../helpers/app';
+import { fetchAVGNotifications } from './avg/avg';
+import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
+import { fetchHorecaNotifications } from './horeca';
+import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
+import {
+  fetchBelastingNotifications,
+  fetchErfpachtNotifications,
+  fetchMilieuzoneNotifications,
+  fetchSubsidieNotifications,
+} from './simple-connect';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
-import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchHorecaNotifications } from './horeca';
-import { fetchAVGNotifications } from './avg/avg';
-import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 
 export function sortNotifications(notifications: MyNotification[]) {
   return (

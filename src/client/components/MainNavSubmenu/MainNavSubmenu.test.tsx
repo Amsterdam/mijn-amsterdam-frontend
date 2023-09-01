@@ -7,7 +7,7 @@ const SUBMENU_TITLE = 'submenutje';
 
 describe('<MainNavSubmenu/> rendering', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   it('Opens/closes the submenu panel on user interaction', () => {
@@ -20,7 +20,7 @@ describe('<MainNavSubmenu/> rendering', () => {
     );
     act(() => {
       userEvent.hover(screen.getByText(SUBMENU_TITLE));
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(screen.getByText('Linkje')).toBeInTheDocument();
@@ -28,21 +28,21 @@ describe('<MainNavSubmenu/> rendering', () => {
 
     act(() => {
       userEvent.unhover(screen.getByText(SUBMENU_TITLE));
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
 
     act(() => {
       getByText(SUBMENU_TITLE).parentElement?.focus();
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
 
     act(() => {
       getByText(SUBMENU_TITLE).parentElement?.blur();
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
