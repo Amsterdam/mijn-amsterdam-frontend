@@ -3872,7 +3872,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Inge
         </li>
         <li
           class="ListItem ListItem--highlight"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -4168,7 +4167,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -4861,7 +4859,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -5157,7 +5154,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -5201,7 +5197,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -5511,7 +5506,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         </li>
         <li
           class="ListItem"
-          style="display: block;"
         >
           <div
             class="ListItemInner"
