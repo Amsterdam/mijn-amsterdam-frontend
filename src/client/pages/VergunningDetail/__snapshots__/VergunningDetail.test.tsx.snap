@@ -4166,7 +4166,8 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
           </div>
         </li>
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -4176,10 +4177,10 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Nieuw/Verl
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="ConnectLine ConnectLine--middle-checked-next"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -4671,20 +4672,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Kenteken wijziging
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
               Zone
             </h3>
             <p
@@ -5023,20 +5010,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
             <h3
               class="Heading Heading__tiny Label"
             >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Kenteken wijziging
-            </p>
-          </div>
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
               Zone
             </h3>
             <p
@@ -5196,7 +5169,8 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
           </div>
         </li>
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -5206,10 +5180,10 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--end-checked"
+                class="ConnectLine ConnectLine--end-active ConnectLine--end-checked"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -5312,20 +5286,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <div
           class="InfoDetailGroupContent"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Kenteken wijziging
-            </p>
-          </div>
           <div
             class="InfoDetail"
           >
@@ -5505,7 +5465,8 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
           </div>
         </li>
         <li
-          class="ListItem"
+          class="ListItem ListItem--highlight"
+          style="display: block;"
         >
           <div
             class="ListItemInner"
@@ -5515,10 +5476,10 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
               class="StatusConnection"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="ConnectLine ConnectLine--middle-checked-next"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="Checkmark Checkmark--active Checkmark--checked"
               />
             </div>
             <div
@@ -5664,20 +5625,6 @@ exports[`<VergunningDetail /> RVV Sloterweg RVV ontheffing Sloterweg (Wijziging/
         <div
           class="InfoDetailGroupContent"
         >
-          <div
-            class="InfoDetail"
-          >
-            <h3
-              class="Heading Heading__tiny Label"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="Value"
-            >
-              Kenteken wijziging
-            </p>
-          </div>
           <div
             class="InfoDetail"
           >

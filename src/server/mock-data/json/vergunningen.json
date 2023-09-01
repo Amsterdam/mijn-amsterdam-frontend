@@ -1131,7 +1131,7 @@
       "dateDecision": null,
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "Kenteken wijziging",
+      "requestType": "wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1150,7 +1150,7 @@
       "dateDecision": "2023-07-26T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "Kenteken wijziging",
+      "requestType": "wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1169,7 +1169,7 @@
       "dateDecision": "2023-07-28T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "Kenteken wijziging",
+      "requestType": "wijziging",
       "area": "van Vlaanderenlaan"
     },
     {
@@ -1188,7 +1188,7 @@
       "dateDecision": "2023-07-03T00:00:00",
       "licensePlates": "BB-344-P, VV-899-C",
       "previousLicensePlates": "YY-123-A, ZZ-122-A",
-      "requestType": "Kenteken wijziging",
+      "requestType": "wijziging",
       "area": "Laan van Vlaanderen"
     },
     {
@@ -1228,6 +1228,102 @@
       "previousLicensePlates": "",
       "requestType": "Nieuw",
       "area": "Laan van Vlaanderen"
+    },
+    {
+      "area": "Laan van Vlaanderen",
+      "caseType": "RVV Sloterweg",
+      "dateDecision": null,
+      "dateEnd": "2025-08-31",
+      "dateRequest": "2023-08-29",
+      "dateStart": "2023-08-31",
+      "dateWorkflowActive": null,
+      "dateWorkflowVerleend": null,
+      "decision": null,
+      "description": "RVV-ontheffing Sloterweg",
+      "id": "1097314015",
+      "identifier": "Z/23/2003529",
+      "licensePlates": "37BHK4",
+      "previousLicensePlates": null,
+      "processed": false,
+      "requestType": "Nieuw",
+      "status": "Actief",
+      "title": "RVV ontheffing Sloterweg",
+      "link": {
+        "to": "/vergunningen/rvv-sloterweg/1097314015",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
+    },
+    {
+      "area": "Sloterweg West",
+      "caseType": "RVV Sloterweg",
+      "dateDecision": null,
+      "dateEnd": "2023-08-31",
+      "dateRequest": "2023-08-29",
+      "dateStart": "2023-08-31",
+      "dateWorkflowActive": null,
+      "dateWorkflowVerleend": null,
+      "decision": "Vervallen",
+      "description": "RVV-ontheffing Sloterweg",
+      "id": "394540596",
+      "identifier": "Z/23/2003533",
+      "licensePlates": "PR067L",
+      "previousLicensePlates": null,
+      "processed": false,
+      "requestType": "Nieuw",
+      "status": "Afgehandeld",
+      "title": "RVV ontheffing Sloterweg",
+      "link": {
+        "to": "/vergunningen/rvv-sloterweg/394540596",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
+    },
+    {
+      "area": "Laan van Vlaanderen",
+      "caseType": "RVV Sloterweg",
+      "dateDecision": null,
+      "dateEnd": "2025-08-31",
+      "dateRequest": "2023-08-29",
+      "dateStart": "2023-08-31",
+      "dateWorkflowActive": null,
+      "dateWorkflowVerleend": null,
+      "decision": null,
+      "description": "RVV-ontheffing Sloterweg wijzigen",
+      "id": "1623553971",
+      "identifier": "Z/23/2003534",
+      "licensePlates": "TT148N",
+      "previousLicensePlates": "PR067L",
+      "processed": false,
+      "requestType": "Wijziging",
+      "status": "Actief",
+      "title": "RVV ontheffing Sloterweg",
+      "link": {
+        "to": "/vergunningen/rvv-sloterweg/1623553971",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
+    },
+    {
+      "area": "Laan van Vlaanderen",
+      "caseType": "RVV Sloterweg",
+      "dateDecision": null,
+      "dateEnd": "2025-08-19",
+      "dateRequest": "2023-08-17",
+      "dateStart": "2023-08-19",
+      "dateWorkflowActive": null,
+      "dateWorkflowVerleend": null,
+      "decision": null,
+      "description": "RVV-ontheffing Sloterweg",
+      "id": "4069415615",
+      "identifier": "Z/23/2003388",
+      "licensePlates": "37BHK4",
+      "previousLicensePlates": null,
+      "processed": false,
+      "requestType": "Nieuw",
+      "status": "Ontvangen",
+      "title": "RVV ontheffing Sloterweg",
+      "link": {
+        "to": "/vergunningen/rvv-sloterweg/4069415615",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
     }
   ],
   "status": "OK"
