@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
 
-export const AppRoutes: Record<string, string> = {
+export const AppRoutes = {
   ROOT: '/',
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
@@ -31,9 +31,6 @@ export const AppRoutes: Record<string, string> = {
   BUURT: '/buurt',
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
-  API_LOGIN: '/api/login',
-  API1_LOGIN: '/api1/login',
-  API2_LOGIN: '/api2/login',
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
@@ -60,7 +57,7 @@ export const AppRoutes: Record<string, string> = {
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
   'BODEM/LOOD_METING': '/lood-meting/:id',
-};
+} as const;
 
 export const AppRoutesRedirect = [
   {
@@ -110,10 +107,7 @@ export const AppRoutesRedirect = [
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
 ];
 
-export const PublicRoutes = [
-  AppRoutes.API_LOGIN,
-  AppRoutes.API1_LOGIN,
-  AppRoutes.API2_LOGIN,
+export const PublicRoutes: string[] = [
   AppRoutes.ACCESSIBILITY,
   AppRoutes.YIVI_LANDING,
   AppRoutes.BFF_500_ERROR,
@@ -123,35 +117,36 @@ export const PublicRoutes = [
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
-  (path) => !PublicRoutes.includes(path)
+  (path: string) => !PublicRoutes.includes(path)
 );
 
-type AppRoute = keyof typeof AppRoutes;
+type RouteKey = keyof typeof AppRoutes;
+export type AppRoute = (typeof AppRoutes)[RouteKey];
 
 export interface TrackingConfig {
   profileType: ProfileType;
   isAuthenticated: boolean;
 }
 
-export const CustomTrackingUrls: {
-  [key: AppRoute]: (match: Match, trackingConfig: TrackingConfig) => string;
-} = {
-  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match) => {
+type CustomTrackingUrlMap = {
+  [key in AppRoute]+?: (match: Match, trackingConfig: TrackingConfig) => string;
+};
+
+export const CustomTrackingUrls: CustomTrackingUrlMap = {
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: Match) => {
     return `/vergunning/${match.params?.title}`;
   },
 
-  [AppRoutes['INKOMEN/BBZ']]: (match) => {
+  [AppRoutes['INKOMEN/BBZ']]: (match: Match) => {
     return `/inkomen/bbz`;
   },
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match) => {
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match: Match) => {
     return `/inkomen/bijstandsuitkering`;
   },
-  [AppRoutes['INKOMEN/TOZO']]: (match) => {
+  [AppRoutes['INKOMEN/TOZO']]: (match: Match) => {
     return `/inkomen/tozo/${match.params?.version}`;
   },
-  [AppRoutes['INKOMEN/TONK']]: (match) => {
-    return `/inkomen/tonk`;
-  },
+  [AppRoutes['INKOMEN/TONK']]: () => `/inkomen/tonk`,
 
   [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
 
@@ -169,16 +164,19 @@ export const CustomTrackingUrls: {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['SIA/DETAIL/OPEN']]: (match) =>
+  [AppRoutes['SIA/DETAIL/OPEN']]: (match: Match) =>
     `/yivi/open-melding/${match.params?.id}`,
-  [AppRoutes['SIA/DETAIL/CLOSED']]: (match) =>
+  [AppRoutes['SIA/DETAIL/CLOSED']]: (match: Match) =>
     `/yivi/afgesloten-melding/${match.params?.id}`,
-  [AppRoutes.SIA_CLOSED]: (match) =>
+  [AppRoutes.SIA_CLOSED]: (match: Match) =>
     `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
-  [AppRoutes.SIA_OPEN]: (match) =>
+  [AppRoutes.SIA_OPEN]: (match: Match) =>
     `/yivi/alle-open-meldingen/pagina-${match.params?.page ?? 1}`,
 
-  [AppRoutes.ROOT]: (match, { profileType, isAuthenticated }) =>
+  [AppRoutes.ROOT]: (
+    match: Match,
+    { profileType, isAuthenticated }: TrackingConfig
+  ) =>
     profileType === 'private-attributes'
       ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
         `/yivi/meldingen-overzicht`

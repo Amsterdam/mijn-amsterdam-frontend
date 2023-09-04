@@ -2,7 +2,9 @@ import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
+  AppRoute,
   AppRoutes,
+  ChapterTitles,
   CustomTrackingUrls,
   DocumentTitles,
   NOT_FOUND_TITLE,
@@ -20,7 +22,7 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
     return 0;
   }
   return a.length < b.length ? 1 : -1;
-});
+}) as AppRoute[];
 
 export function usePageChange(isAuthenticated: boolean) {
   const location = useLocation();
@@ -70,6 +72,12 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
+    const thema = Object.values(ChapterTitles).find((t) => {
+      return documentTitle.includes(t);
+    });
+
+    console.log('Chapter', thema);
+
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
     }
@@ -115,7 +123,8 @@ function getCustomTrackingUrl(
   pathname: string,
   trackingConfig: TrackingConfig
 ) {
-  const route = Object.keys(CustomTrackingUrls).find((r) => {
+  const customTrackingUrlKeys = Object.keys(CustomTrackingUrls) as AppRoute[];
+  const route = customTrackingUrlKeys.find((r) => {
     return matchPath(pathname, r);
   });
 
@@ -126,7 +135,7 @@ function getCustomTrackingUrl(
       return pathname;
     }
 
-    return CustomTrackingUrls[route](matchResult, trackingConfig);
+    return CustomTrackingUrls[route]!(matchResult, trackingConfig);
   }
 
   return pathname;

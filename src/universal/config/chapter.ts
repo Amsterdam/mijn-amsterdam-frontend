@@ -1,4 +1,4 @@
-import { AppRoutes, TrackingConfig } from './routes';
+import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 
 // Within the team we call these Themes
 export type Chapter =
@@ -99,10 +99,9 @@ export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
-export const DocumentTitles: Record<
-  string,
-  string | ((config: TrackingConfig) => string)
-> = {
+export const DocumentTitles: {
+  [key in AppRoute]: string | ((config: TrackingConfig) => string);
+} = {
   [AppRoutes.ROOT]: (config) => {
     switch (true) {
       case config.profileType === 'private-attributes' &&
@@ -148,7 +147,8 @@ export const DocumentTitles: Record<
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
   [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.BEZWAREN]: `Bezwaren | overzicht`,
+  [AppRoutes.BEZWAREN]: `${ChapterTitles.BEZWAREN} | overzicht`,
+  [AppRoutes['BEZWAREN/DETAIL']]: `${ChapterTitles.BEZWAREN} | bezwaar`,
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
@@ -175,8 +175,9 @@ export const DocumentTitles: Record<
   [AppRoutes.HORECA]: 'Horeca',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
-  [AppRoutes.AVG]: 'AVG Verzoeken',
-  [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
+  [AppRoutes.AVG]: `${ChapterTitles.AVG} | verzoeken`,
+  [AppRoutes['AVG/DETAIL']]: `${ChapterTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  [AppRoutes.BODEM]: 'Bodem',
+  [AppRoutes.BODEM]: 'Bodem | overzicht',
+  [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
 };
