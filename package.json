@@ -110,7 +110,7 @@
     "react-spring": "^8.0.27",
     "react-swipeable": "^6.2.0",
     "react-test-renderer": "^18.2.0",
-    "recoil": "^0.5.2",
+    "recoil": "^0.7.4",
     "sanitize-html": "^2.6.0",
     "slugme": "^1.1.1",
     "supercluster": "^7.1.4",

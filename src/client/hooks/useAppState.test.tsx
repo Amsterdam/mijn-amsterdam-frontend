@@ -71,9 +71,7 @@ describe('useAppState', () => {
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
 
@@ -81,7 +79,7 @@ describe('useAppState', () => {
     expect(sseSpy).toBeCalledTimes(3);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
+    await rerender();
 
     expect(result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
@@ -91,9 +89,7 @@ describe('useAppState', () => {
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
@@ -109,7 +105,7 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
+    await rerender();
 
     expect(result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
@@ -119,9 +115,7 @@ describe('useAppState', () => {
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
 
@@ -137,7 +131,7 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
+    await rerender();
 
     expect(result.current).toEqual(
       Object.assign({}, initialAppState, {
