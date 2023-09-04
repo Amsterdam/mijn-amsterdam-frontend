@@ -71,7 +71,9 @@ export interface ApiSearchConfig {
   generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
-  displayTitle: ((item: any) => ReactNode) | ReactNode;
+  displayTitle:
+    | ((item: any) => ReactNode | ((term: string) => ReactNode))
+    | ReactNode;
 
   // The url to link to
   url: string | ((item: any, config: ApiSearchConfig) => string);

@@ -306,13 +306,13 @@ describe('Search hooks and helpers', () => {
       </RecoilRoot>
     );
 
-    const { result, waitForNextUpdate } = renderHook(useSearchIndex, {
+    const { result, rerender } = renderHook(useSearchIndex, {
       wrapper,
     });
 
     expect(result.current).toBeUndefined();
 
-    await waitForNextUpdate();
+    rerender();
 
     expect(result.current).toBeUndefined();
   });
