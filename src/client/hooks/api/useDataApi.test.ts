@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import { getDefaultState, useDataApi } from './useDataApi';
 import axios from 'axios';

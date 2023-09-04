@@ -1,4 +1,4 @@
-import { HTMLProps } from 'react';
+import type { HTMLProps, ReactNode } from 'react';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
 import Heading, { HeadingTagName } from '../Heading/Heading';
 
@@ -13,7 +13,7 @@ export interface PageHeadingProps
   children: ComponentChildren;
   backLink?: LinkProps;
   el?: HeadingTagName;
-  icon?: JSX.Element;
+  icon?: ReactNode;
   className?: string;
   isLoading?: boolean;
 }

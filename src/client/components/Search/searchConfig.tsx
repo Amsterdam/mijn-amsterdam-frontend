@@ -71,7 +71,7 @@ export interface ApiSearchConfig {
   generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
-  displayTitle: ((item: any) => ReactNode) | string;
+  displayTitle: ((item: any) => ReactNode) | ReactNode;
 
   // The url to link to
   url: string | ((item: any, config: ApiSearchConfig) => string);
@@ -121,7 +121,7 @@ export function displayPath(
   term: string,
   segments: string[],
   replaceTerm: boolean = true
-) {
+): ReactNode {
   const termSplitted = term.trim().split(/\s+/g);
   return (
     <>

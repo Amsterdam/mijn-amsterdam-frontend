@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';

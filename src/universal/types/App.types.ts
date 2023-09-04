@@ -71,7 +71,7 @@ export interface GenericDocument {
   [key: string]: any;
 }
 
-export type AltDocumentContent = string | JSX.Element;
+export type AltDocumentContent = string | ReactNode;
 
 export interface StatusLineItem {
   id: string;
