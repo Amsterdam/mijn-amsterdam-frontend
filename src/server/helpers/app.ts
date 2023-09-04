@@ -277,16 +277,17 @@ export async function isRequestAuthenticated(
   authMethod: AuthMethod
 ) {
   try {
-    const auth = await getAuth(req);
-    return (
-      req.oidc.isAuthenticated() &&
-      auth.profile.authMethod === authMethod &&
-      (await verifyUserIdWithRemoteUserinfo(
-        authMethod,
-        req.oidc.accessToken,
-        auth.profile.id
-      ))
-    );
+    if (req.oidc.isAuthenticated()) {
+      const auth = await getAuth(req);
+      return (
+        auth.profile.authMethod === authMethod &&
+        (await verifyUserIdWithRemoteUserinfo(
+          authMethod,
+          req.oidc.accessToken,
+          auth.profile.id
+        ))
+      );
+    }
   } catch (error) {
     Sentry.captureException(error);
   }
