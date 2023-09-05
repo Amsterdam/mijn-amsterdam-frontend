@@ -11,7 +11,7 @@ import {
 import styles from './Bezwaren.module.scss';
 
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { isLoading } from '../../../universal/helpers';
+import { defaultDateFormat, isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
@@ -29,7 +29,14 @@ const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const items = addTitleLinkComponent(BEZWAREN.content ?? [], 'identificatie');
+  const items = addTitleLinkComponent(
+    BEZWAREN.content ?? [],
+    'identificatie'
+  ).map((bezwaar) => ({
+    ...bezwaar,
+    startdatum: defaultDateFormat(bezwaar.startdatum),
+  }));
+
   const ingediendeBezwaren =
     items.filter((bezwaar) => !bezwaar.einddatum || !bezwaar.resultaat) ?? [];
   const afgehandeldeBezwaren =
