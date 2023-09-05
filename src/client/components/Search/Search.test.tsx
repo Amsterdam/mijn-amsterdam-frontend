@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import nock from 'nock';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { describe, expect, test, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { bffApi, remoteApi } from '../../../test-utils';
 import { appStateAtom } from '../../hooks';
 import { Search } from './Search';
@@ -116,6 +116,8 @@ describe('<Search />', () => {
   });
 
   test('Enter search text', async () => {
+    const user = userEvent.setup();
+
     const screen = render(
       <BrowserRouter>
         <RecoilRoot
@@ -145,31 +147,26 @@ describe('<Search />', () => {
       </BrowserRouter>
     );
 
-    userEvent.type(
-      screen.getByPlaceholderText('Zoeken naar...'),
-      'gehandicaptenparkeerkaart'
-    );
+    const input = screen.getByPlaceholderText('Zoeken naar...');
 
-    expect(screen.getByPlaceholderText('Zoeken naar...')).toHaveValue(
-      'gehandicaptenparkeerkaart'
-    );
+    await user.keyboard('gehandicaptenparkeerkaart');
+
+    expect(input).toHaveValue('gehandicaptenparkeerkaart');
 
     expect(await screen.findByText('Z/000/000008')).toBeInTheDocument();
 
-    userEvent.type(
-      screen.getByPlaceholderText('Zoeken naar...'),
-      '{selectall}{del}Dashboard'
-    );
+    await user.tripleClick(input);
+    await user.keyboard('Dashboard');
 
-    expect(screen.getByPlaceholderText('Zoeken naar...')).toHaveValue(
-      'Dashboard'
-    );
+    expect(screen.getByDisplayValue('Dashboard')).toBeInTheDocument();
 
     expect(await screen.findByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Home -')).toBeInTheDocument();
   });
 
   test('Finding address', async () => {
+    const user = userEvent.setup();
+
     const screen = render(
       <BrowserRouter>
         <RecoilRoot
@@ -199,10 +196,7 @@ describe('<Search />', () => {
       </BrowserRouter>
     );
 
-    userEvent.type(
-      screen.getByPlaceholderText('Zoeken naar...'),
-      'weesperplein'
-    );
+    await user.keyboard('weesperplein');
 
     expect(await screen.findByText('Weesperplein')).toBeInTheDocument();
     expect(screen.queryByText('Z/000/000008')).not.toBeInTheDocument();
