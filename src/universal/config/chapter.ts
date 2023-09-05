@@ -117,7 +117,7 @@ export const DocumentTitles: {
         return 'Inloggen | Mijn Amsterdam';
     }
   },
-  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} overzicht`,
+  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} | overzicht`,
   [AppRoutes[
     'BURGERZAKEN/ID-KAART'
   ]]: `ID-Kaart | ${ChapterTitles.BURGERZAKEN}`,
@@ -141,7 +141,7 @@ export const DocumentTitles: {
   [AppRoutes.BRP]: `Mijn gegevens`,
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
-  [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
+  [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} | overzicht`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
@@ -157,7 +157,7 @@ export const DocumentTitles: {
   [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ChapterTitles.SIA}`,
   [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
   [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
-  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
+  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} | overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
   ]]: `Vergunning | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
@@ -170,9 +170,9 @@ export const DocumentTitles: {
   [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.PARKEREN]: 'Parkeren',
-  [AppRoutes.KLACHTEN]: 'Klachten',
-  [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
-  [AppRoutes.HORECA]: 'Horeca',
+  [AppRoutes.KLACHTEN]: `${ChapterTitles.KLACHTEN} | overzicht`,
+  [AppRoutes['KLACHTEN/KLACHT']]: `${ChapterTitles.KLACHTEN} | klacht`,
+  [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.AVG]: `${ChapterTitles.AVG} | verzoeken`,

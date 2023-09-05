@@ -115,12 +115,15 @@ export function trackPageViewWithCustomDimension(
   thema?: string
 ) {
   const dimensions = [profileTypeDimension(profileType)];
+  
   if (userCity) {
     dimensions.push(userCityDimension(userCity));
   }
+
   if (thema) {
-    dimensions.push();
+    dimensions.push(maThema(thema));
   }
+
   return trackPageView(url, dimensions);
 }
 

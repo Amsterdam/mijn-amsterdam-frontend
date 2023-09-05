@@ -74,9 +74,7 @@ export function usePageChange(isAuthenticated: boolean) {
 
     const thema = Object.values(ChapterTitles).find((t) => {
       return documentTitle.includes(t);
-    });
-
-    console.log('Chapter', thema);
+    }) ?? "Mijn Amsterdam algemeen";
 
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
@@ -105,7 +103,8 @@ export function usePageChange(isAuthenticated: boolean) {
           getCustomTrackingUrl(location.pathname, tackingConfig) +
             (location.search ?? ''),
           profileType,
-          userCity
+          userCity,
+          thema
         );
       }
     }
