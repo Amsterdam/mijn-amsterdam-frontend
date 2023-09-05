@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
 import {
@@ -34,21 +34,14 @@ describe('AutoLogoutDialog', () => {
   const map: any = {};
   let listenerSpy: SpyInstance;
 
-  beforeEach(() => {
-    window.addEventListener = vi.fn((event, callback: any) => {
-      map[event] = (...args: any) => {
-        callback && callback(...args);
-      };
-    });
-    listenerSpy = vi.spyOn(window, 'addEventListener');
-    document.title = DOC_TITLE;
-    vi.useFakeTimers();
+  window.addEventListener = vi.fn((event, callback: any) => {
+    map[event] = (...args: any) => {
+      callback && callback(...args);
+    };
   });
-
-  afterEach(() => {
-    listenerSpy.mockRestore();
-    refetch.mockReset();
-  });
+  listenerSpy = vi.spyOn(window, 'addEventListener');
+  document.title = DOC_TITLE;
+  vi.useFakeTimers();
 
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
     const screen = render(
@@ -59,20 +52,25 @@ describe('AutoLogoutDialog', () => {
       </RecoilRoot>
     );
 
-    vi.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-    );
+    act(() => {
+      vi.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      );
+      expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
+    });
 
-    expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
-
-    vi.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
-    );
+    act(() => {
+      vi.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
+      );
+    });
 
     expect(logout).toHaveBeenCalled();
   });
 
   it('fires callback when clicking continue button', async () => {
+    const user = userEvent.setup();
+
     const screen = render(
       <RecoilRoot
         initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
@@ -81,13 +79,15 @@ describe('AutoLogoutDialog', () => {
       </RecoilRoot>
     );
 
-    vi.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-    );
+    act(() => {
+      vi.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      );
+    });
 
     expect(screen.getByText('Doorgaan')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText('Doorgaan'));
+    await user.click(screen.getByText('Doorgaan'));
 
     expect(refetch).toHaveBeenCalledTimes(1);
 
@@ -105,15 +105,19 @@ describe('AutoLogoutDialog', () => {
 
     const documentTitle = document.title;
 
-    vi.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-    );
+    act(() => {
+      vi.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      );
+    });
 
     expect(screen.getByText('Doorgaan')).toBeInTheDocument();
 
     expect(document.title).toBe(documentTitle);
 
-    vi.advanceTimersByTime(ONE_SECOND_IN_MS * 2.1);
+    act(() => {
+      vi.advanceTimersByTime(ONE_SECOND_IN_MS * 2.1);
+    });
 
     expect(document.title).not.toBe(DOC_TITLE);
   });

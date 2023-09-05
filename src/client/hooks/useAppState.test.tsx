@@ -18,6 +18,7 @@ import {
   it,
   vi,
 } from 'vitest';
+import { act, waitFor } from '@testing-library/react';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useOptIn');
@@ -79,11 +80,11 @@ describe('useAppState', () => {
     expect(sseSpy).toBeCalledTimes(3);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await rerender();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, stateSliceMock)
+      );
+    });
   });
 
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
@@ -105,11 +106,11 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await rerender();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, stateSliceMock)
+      );
+    });
   });
 
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
@@ -131,17 +132,17 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await rerender();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, {
-        ALL: {
-          status: 'ERROR',
-          message:
-            'Services.all endpoint could not be reached or returns an error.',
-        },
-      })
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, {
+          ALL: {
+            status: 'ERROR',
+            message:
+              'Services.all endpoint could not be reached or returns an error.',
+          },
+        })
+      );
+    });
   });
 
   describe('isAppStateReady', () => {

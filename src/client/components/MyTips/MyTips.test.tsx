@@ -6,6 +6,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { RecoilRoot } from 'recoil';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { describe, it, expect, vi, Mock } from 'vitest';
 
 vi.mock('../../hooks/useProfileType');
 
@@ -30,9 +31,10 @@ const TIPS: MyTip[] = [
 ];
 
 describe('<MyTips />', () => {
-  (useProfileTypeValue as vi.Mock).mockResolvedValueOnce('prive');
+  (useProfileTypeValue as Mock).mockResolvedValueOnce('prive');
 
-  it('Renders without crashing', () => {
+  it('Renders without crashing', async () => {
+    const user = userEvent.setup();
     render(
       <MemoryRouter>
         <RecoilRoot>
@@ -41,7 +43,7 @@ describe('<MyTips />', () => {
       </MemoryRouter>
     );
     expect(screen.getByText('Vind elkaar')).toBeInTheDocument();
-    userEvent.click(screen.getByLabelText('Reden waarom u deze tip ziet'));
+    await user.click(screen.getByLabelText('Reden waarom u deze tip ziet'));
     expect(screen.getByText('Omdat dit een toptip is.')).toBeInTheDocument();
   });
 });

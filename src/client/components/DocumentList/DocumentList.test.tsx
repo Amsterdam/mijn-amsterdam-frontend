@@ -35,6 +35,8 @@ describe('DocumentList', () => {
   });
 
   it('Clicking a link fires tracking call', async () => {
+    const user = userEvent.setup();
+
     const originalFn = console.error;
     console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
@@ -53,7 +55,7 @@ describe('DocumentList', () => {
     );
 
     expect(screen.getAllByText(ITEMS[0].title).length).toBe(2);
-    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+    await user.click(screen.getAllByText(ITEMS[0].title)[0]);
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url, {
       credentials: 'include',
     });
@@ -72,6 +74,7 @@ describe('DocumentList', () => {
   });
 
   it('trackPath function is used to create the link sent to the tracking call', async () => {
+    const user = userEvent.setup();
     const originalFn = console.error;
     console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
@@ -94,7 +97,7 @@ describe('DocumentList', () => {
       </RecoilRoot>
     );
 
-    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+    await user.click(screen.getAllByText(ITEMS[0].title)[0]);
 
     await waitFor(() =>
       expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
@@ -110,6 +113,8 @@ describe('DocumentList', () => {
   });
 
   it('Clicking a link does not fire a tracking call when the link returns a 404 status', async () => {
+    const user = userEvent.setup();
+
     const fetch = ((global as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
@@ -125,7 +130,7 @@ describe('DocumentList', () => {
       </RecoilRoot>
     );
 
-    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+    await user.click(screen.getAllByText(ITEMS[0].title)[0]);
 
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url, {
       credentials: 'include',

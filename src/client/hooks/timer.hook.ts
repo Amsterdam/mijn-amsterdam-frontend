@@ -74,10 +74,11 @@ export function useCounter(nConfig: Partial<CounterProps> = DefaultConfig) {
 
   useInterval(() => {
     // this state is not yet available in the rest of this function body
-    setCount((count) => count + incrementWith);
+    setCount(count + incrementWith);
     if (typeof onTick === 'function') {
       onTick(count + incrementWith);
     }
+
     // Check if new count is max count
     if (count + incrementWith >= maxCount) {
       pause();

@@ -85,7 +85,9 @@ describe('<MyNotifications />', () => {
     ).toBeNull();
   });
 
-  it('Tests custom link with callback', () => {
+  it('Tests custom link with callback', async () => {
+    const user = userEvent.setup();
+
     const screen = render(
       <RecoilRoot>
         <BrowserRouter>
@@ -99,7 +101,7 @@ describe('<MyNotifications />', () => {
     );
 
     expect(screen.getByText('Custom test link')).toBeInTheDocument();
-    userEvent.click(screen.getByText('Custom test link'));
+    await user.click(screen.getByText('Custom test link'));
     expect(callback).toHaveBeenCalled();
   });
 });
