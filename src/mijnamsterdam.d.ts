@@ -1,5 +1,7 @@
 /// <reference types="vite" />
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
+
 // TODO: Add typings for this function
 declare module 'slugme';
 

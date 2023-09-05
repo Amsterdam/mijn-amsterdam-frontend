@@ -4,8 +4,15 @@
 @import 'global';
 @import 'normalize';
 
+@import '@amsterdam/design-system-tokens/dist/root.css';
+@import '@amsterdam/design-system-assets/font/index.css';
+@import '@amsterdam/design-system-css/src/heading/heading.scss';
+
 :root {
   --map-container-height: 100%;
+
+  // TODO: Remove 
+  --amsterdam-heading-font-weight: 600;
 }
 
 *,
