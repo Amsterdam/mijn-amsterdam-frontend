@@ -40,7 +40,7 @@ import { AVGRequest } from '../../../server/services/avg/types';
 
 export interface SearchEntry {
   url: string;
-  displayTitle: ((term: string) => ReactNode) | string;
+  displayTitle: ((term: string) => ReactNode) | ReactNode;
   description: string;
   keywords: string[];
   profileTypes?: ProfileType[];

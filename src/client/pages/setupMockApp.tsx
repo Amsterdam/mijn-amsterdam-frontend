@@ -6,7 +6,7 @@ import { appStateAtom } from '../hooks/useAppState';
 import MockApp from './MockApp';
 
 export function setupMockApp(
-  Component: React.ReactNode,
+  Component: React.FC,
   appRouteKey: string,
   testState: any
 ) {

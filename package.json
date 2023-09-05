@@ -29,7 +29,9 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@amsterdam/asc-assets": "^0.38.0",
+    "@amsterdam/design-system-css": "^0.1.4",
+    "@amsterdam/design-system-react": "^0.1.4",
+    "@amsterdam/design-system-react-icons": "^0.1.4",
     "@amsterdam/piwik-tracker": "^2.0.2",
     "@amsterdam/react-maps": "^1.1.1",
     "@sentry/node": "^6.15.0",

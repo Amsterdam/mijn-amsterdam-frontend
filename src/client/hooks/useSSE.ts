@@ -8,7 +8,7 @@ interface useSSEProps {
   eventName: string;
   callback: (message: any) => void;
   postpone: boolean;
-  requestParams?: Record<string, string | string[]>;
+  requestParams?: Record<string, string>;
 }
 
 export function useSSE({
@@ -21,17 +21,20 @@ export function useSSE({
   const [es, setEs] = useState<EventSource | null>(null);
   const connectionCounter = useRef(0);
 
-  const connect = useCallback((path, requestParams) => {
-    const es = new window.EventSource(
-      path + (requestParams ? '?' + new URLSearchParams(requestParams) : ''),
-      { withCredentials: true }
-    );
-    setEs(es);
-  }, []);
+  const connect = useCallback(
+    (path: string, requestParams: Record<string, string>) => {
+      const es = new window.EventSource(
+        path + (requestParams ? '?' + new URLSearchParams(requestParams) : ''),
+        { withCredentials: true }
+      );
+      setEs(es);
+    },
+    []
+  );
 
   useEffect(() => {
     if (!postpone) {
-      connect(path, requestParams);
+      connect(path, requestParams ?? {});
     }
   }, [path, connect, postpone, requestParams]);
 

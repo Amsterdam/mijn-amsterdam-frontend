@@ -102,7 +102,9 @@ export function ResultSet({
               >
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
-                  : displayPath(term, [result.displayTitle])}
+                  : typeof result.displayTitle === 'string'
+                  ? displayPath(term, [result.displayTitle])
+                  : result.displayTitle}
                 {result.trailingIcon}
                 {extendedResults && (
                   <p className={styles.ResultDescription}>
@@ -151,7 +153,7 @@ export function Search({
   const results = useSearchResults(extendedAMResults);
 
   const setTerm = useCallback(
-    (term) => {
+    (term: string) => {
       if (!term && searchBarRef.current) {
         searchBarRef.current.value = '';
       }
@@ -222,7 +224,7 @@ export function Search({
         searchResult: {
           position: resultNumber,
           title:
-            typeof result.displayTitle === 'function'
+            typeof result.displayTitle !== 'string'
               ? result.description
               : result.displayTitle,
           type: '',

@@ -1,12 +1,13 @@
 import type { HTMLProps, ReactNode } from 'react';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
-import Heading, { HeadingTagName } from '../Heading/Heading';
+import { Heading } from '@amsterdam/design-system-react';
 
 import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import composeClassNames from 'classnames';
 import styles from './PageHeading.module.scss';
+import '@amsterdam/design-system-css/src/heading/heading.scss';
 
 export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
@@ -50,7 +51,7 @@ export default function PageHeading({
             {backLink.title}
           </Linkd>
         )}
-        <Heading el={el} size="large">
+        <Heading level={2} size="level-2">
           {isLoading ? (
             <LoadingContent
               className={styles.LoadingContentHeading}
