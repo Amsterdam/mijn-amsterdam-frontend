@@ -72,9 +72,10 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
-    const thema = Object.values(ChapterTitles).find((t) => {
-      return documentTitle.includes(t);
-    }) ?? "Mijn Amsterdam algemeen";
+    const thema =
+      Object.values(ChapterTitles).find((t) => {
+        return documentTitle.includes(t);
+      }) ?? 'Mijn Amsterdam algemeen';
 
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
