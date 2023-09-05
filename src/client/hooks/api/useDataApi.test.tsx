@@ -1,22 +1,19 @@
-import { act, renderHook } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { bffApiHost } from '../../../setupTests';
+import { bffApi } from '../../../test-utils';
 import { getDefaultState, useDataApi } from './useDataApi';
-import axios from 'axios';
 
-interface Response {
+interface ResponseData {
   foo: string;
 }
 
-type DummyResponse = Nullable<Response>;
+type DummyResponse = Nullable<ResponseData>;
 
 const DUMMY_RESPONSE: DummyResponse = { foo: 'bar' };
-const DUMMY_URL = 'http://test';
+const DUMMY_URL = `${bffApiHost}/test`;
 
 describe('Api hook', () => {
-  const axMock = new MockAdapter(axios);
-
-  axMock.onGet(DUMMY_URL).reply(200, DUMMY_RESPONSE);
-
   it('should have a default state', () => {
     const { result } = renderHook(() =>
       useDataApi<DummyResponse>(undefined, null)
@@ -42,40 +39,45 @@ describe('Api hook', () => {
   });
 
   it('should make http request and update api state', async () => {
+    bffApi.get('/test').reply(200, DUMMY_RESPONSE);
+
     const options = {
       url: DUMMY_URL,
       postpone: true,
     };
-    const { result, waitForNextUpdate } = renderHook(() =>
+
+    const { result, rerender } = renderHook(() =>
       useDataApi<DummyResponse>(options, null)
     );
 
-    // make fetch call
-    act(() => {
-      result.current[1](options);
-    });
-
-    expect(result.current[0].isLoading).toBe(true);
+    expect(result.current[0].isLoading).toBe(false);
     expect(result.current[0].isDirty).toBe(false);
     expect(result.current[0].isPristine).toBe(true);
 
-    await waitForNextUpdate();
+    // make fetch call
+    act(() => {
+      result.current[1](options);
+    });
 
-    expect(result.current[0].isLoading).toBe(false);
-    expect(result.current[0].isDirty).toBe(true);
-    expect(result.current[0].isPristine).toBe(false);
+    await waitFor(async () => {
+      expect(result.current[0].isLoading).toBe(true);
+      expect(result.current[0].isDirty).toBe(false);
+      expect(result.current[0].isPristine).toBe(true);
 
-    expect(result.current[0].data).toEqual(DUMMY_RESPONSE);
+      await waitFor(() => {
+        expect(result.current[0].data).toEqual(DUMMY_RESPONSE);
+      });
+    });
   });
 
   it('should make http request and throw an error', async () => {
-    axMock.onGet(DUMMY_URL).networkError();
+    bffApi.get('/test').reply(500, 'Not worky!');
 
     const options = {
       url: DUMMY_URL,
       postpone: true,
     };
-    const { result, waitForNextUpdate } = renderHook(() =>
+    const { result, rerender } = renderHook(() =>
       useDataApi<DummyResponse>(options, null)
     );
 
@@ -84,20 +86,23 @@ describe('Api hook', () => {
       result.current[1](options);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current[0].isError).toBe(true);
+    await waitFor(() => {
+      expect((result.current[0].data as any)?.message).toBe(
+        'Request failed with status code 500'
+      );
+      expect(result.current[0].isError).toBe(true);
+    });
   });
 
   it('should return initial data when no content is served from api', async () => {
-    axMock.onGet(DUMMY_URL).reply(204, '');
+    bffApi.get('/test').reply(204, '');
 
     const options = {
       url: DUMMY_URL,
       postpone: true,
     };
     const initialData = { foo: 'bar' };
-    const { result, waitForNextUpdate } = renderHook(() =>
+    const { result, rerender } = renderHook(() =>
       useDataApi<DummyResponse>(options, initialData)
     );
     // make fetch call
@@ -105,8 +110,8 @@ describe('Api hook', () => {
       result.current[1](options);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current[0].data).toBe(initialData);
+    await waitFor(() => {
+      expect(result.current[0].data).toBe(initialData);
+    });
   });
 });
