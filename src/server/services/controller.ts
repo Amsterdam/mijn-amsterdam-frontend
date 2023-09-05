@@ -214,6 +214,7 @@ type CommercialServices = Pick<
   | 'TOERISTISCHE_VERHUUR'
   | 'HORECA'
   | 'BODEM'
+  | 'BEZWAREN'
 >;
 
 type ServicesByProfileType = {
@@ -275,6 +276,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     HORECA,
     BODEM,
+    BEZWAREN,
   },
 };
 
