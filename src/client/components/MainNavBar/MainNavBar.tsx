@@ -8,6 +8,7 @@ import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
+// @ts-expect-error
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
