@@ -56,8 +56,9 @@ describe('AutoLogoutDialog', () => {
       vi.advanceTimersByTime(
         ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
       );
-      expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
     });
+
+    expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
 
     act(() => {
       vi.advanceTimersByTime(
