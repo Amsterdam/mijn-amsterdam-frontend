@@ -180,4 +180,7 @@ export const DocumentTitles: {
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
   [AppRoutes.BODEM]: 'Bodem | overzicht',
   [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
 };

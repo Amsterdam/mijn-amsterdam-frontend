@@ -31,6 +31,9 @@ export const AppRoutes = {
   BUURT: '/buurt',
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
+  API_LOGIN: '/api/login',
+  API1_LOGIN: '/api1/login',
+  API2_LOGIN: '/api2/login',
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
@@ -108,6 +111,9 @@ export const AppRoutesRedirect = [
 ];
 
 export const PublicRoutes: string[] = [
+  AppRoutes.API_LOGIN,
+  AppRoutes.API1_LOGIN,
+  AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.YIVI_LANDING,
   AppRoutes.BFF_500_ERROR,
