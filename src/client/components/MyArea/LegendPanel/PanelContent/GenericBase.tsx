@@ -7,7 +7,7 @@ import JsonString from './JsonString';
 import { usePhoneScreen } from '../../../../hooks/media.hook';
 import styles from './GenericBase.module.scss';
 import classnames from 'classnames';
-import Heading from '../../../Heading/Heading';
+import { Heading } from '@amsterdam/design-system-react';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;
@@ -42,13 +42,14 @@ export default function GenericBase({
   return (
     <div className={styles.GenericBase}>
       {!!supTitle && (
-        <Heading className={styles.SuperTitle} as="h4">
+        <Heading className={styles.SuperTitle} size="level-4" level={4}>
           {supTitle}
         </Heading>
       )}
       {!!title && (
         <Heading
-          as="h3"
+          size="level-3"
+          level={3}
           className={classnames(styles.Title, isPhone && styles.IsPhone)}
         >
           {title}
