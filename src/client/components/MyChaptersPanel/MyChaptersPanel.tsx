@@ -1,14 +1,13 @@
 import { AppRoutes } from '../../../universal/config';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { ChapterMenuItem } from '../../config/menuItems';
-
-import Heading from '../Heading/Heading';
+import { Heading } from '@amsterdam/design-system-react';
+import { IconInfo } from '../../assets/icons';
+import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import styles from './MyChaptersPanel.module.scss';
-import { IconInfo } from '../../assets/icons';
-import Linkd from '../Button/Button';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -26,7 +25,7 @@ export default function MyChaptersPanel({
   return (
     <Panel className={styles.MyChaptersPanel}>
       <div className={styles.Header}>
-        <Heading size="large" className={styles.Title}>
+        <Heading size="level-1" level={3} className={styles.Title}>
           {title}
         </Heading>
         <Linkd
