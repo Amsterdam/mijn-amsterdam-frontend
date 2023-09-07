@@ -1,17 +1,17 @@
+import { Heading } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { useState } from 'react';
 import type { FallbackProps } from 'react-error-boundary';
-import classNames from 'classnames';
-import styles from './ApplicationError.module.scss';
-import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
 import { AppRoutes, ExternalUrls } from '../../../universal/config';
-import { useDesktopScreen } from '../../hooks';
-import Heading from '../../components/Heading/Heading';
-import { PageContent, TextPage } from '../../components/Page/Page';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { LinkdInline } from '../../components';
+import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
+import { PageContent, TextPage } from '../../components/Page/Page';
+import PageHeading from '../../components/PageHeading/PageHeading';
+import { useDesktopScreen } from '../../hooks';
 import { useUsabilla } from '../../hooks/useUsabilla';
+import styles from './ApplicationError.module.scss';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -62,13 +62,13 @@ export default function ApplicationError({ error }: FallbackProps) {
               />
             </a>
             {location.pathname !== AppRoutes.ROOT ? (
-              <Heading size="large" el="h1">
+              <Heading size="level-2" level={1}>
                 <a href={AppRoutes.ROOT} title="Terug naar home">
                   Mijn Amsterdam
                 </a>
               </Heading>
             ) : (
-              <Heading size="large" el="h1">
+              <Heading size="level-2" level={1}>
                 Mijn Amsterdam
               </Heading>
             )}
@@ -95,7 +95,7 @@ export default function ApplicationError({ error }: FallbackProps) {
               <strong>Fout:</strong> {error.toString()}
             </p>
           )}
-          <Heading size="tiny" el="h4">
+          <Heading size="level-4" level={4}>
             Vragen over Mijn Amsterdam?
           </Heading>
           <p>

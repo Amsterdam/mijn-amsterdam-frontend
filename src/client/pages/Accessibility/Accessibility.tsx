@@ -1,12 +1,12 @@
-import { useTermReplacement } from '../../hooks/useTermReplacement';
+import { Heading } from '@amsterdam/design-system-react';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import {
-  TextPage,
-  PageHeading,
-  PageContent,
   LinkdInline,
-  Heading,
+  PageContent,
+  PageHeading,
+  TextPage,
 } from '../../components';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 export default function Accessibility() {
   const termReplace = useTermReplacement();
@@ -26,7 +26,7 @@ export default function Accessibility() {
           </LinkdInline>
           .
         </p>
-        <Heading el="h3" size="small">
+        <Heading level={3} size="level-4">
           Toegankelijk Mijn Amsterdam
         </Heading>
         <p>
@@ -45,7 +45,7 @@ export default function Accessibility() {
             Onze medewerkers houden hun kennis over toegankelijkheid op peil.
           </li>
         </ul>
-        <Heading el="h3" size="small">
+        <Heading level={3} size="level-4">
           Onderdelen die nog niet toegankelijk zijn
         </Heading>
         <ul>
@@ -57,7 +57,7 @@ export default function Accessibility() {
           </li>
         </ul>
 
-        <Heading el="h3" size="small">
+        <Heading level={3} size="level-4">
           Toegankelijkheidsverklaring
         </Heading>
         <p>
