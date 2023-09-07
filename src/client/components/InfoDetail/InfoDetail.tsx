@@ -25,7 +25,7 @@ export function InfoDetailGroup({
   return (
     <div className={classnames(styles.InfoDetailGroup, className)}>
       {!!label && (
-        <Heading level={4} size="level-4" className={styles.Label}>
+        <Heading level={3} size="level-4" className={styles.Label}>
           {label}
         </Heading>
       )}
@@ -43,7 +43,7 @@ export default function InfoDetail({
   const ELValue = valueWrapperElement;
   return (
     <div className={classnames(styles.InfoDetail, className)}>
-      <Heading level={4} size="level-4" className={styles.Label}>
+      <Heading level={3} size="level-4" className={styles.Label}>
         {label}
       </Heading>
       <ELValue className={styles.Value}>{value}</ELValue>

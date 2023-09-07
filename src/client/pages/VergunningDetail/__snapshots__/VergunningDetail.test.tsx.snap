@@ -59,7 +59,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Aanbieden van diensten
         </h2>
@@ -72,7 +72,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -86,7 +86,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -100,7 +100,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -125,7 +125,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -139,7 +139,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -156,7 +156,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -357,7 +357,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Aanbieden van diensten
         </h2>
@@ -370,7 +370,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -384,7 +384,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -398,7 +398,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -417,7 +417,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Op
         </h3>
@@ -432,7 +432,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -633,7 +633,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Aanbieden van diensten
         </h2>
@@ -646,7 +646,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -661,7 +661,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -862,7 +862,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Evenement melding
         </h2>
@@ -875,7 +875,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -889,7 +889,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -914,7 +914,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Op
             </h3>
@@ -928,7 +928,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -942,7 +942,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -959,7 +959,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1155,7 +1155,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Verspreiden reclamemateriaal (sampling)
         </h2>
@@ -1168,7 +1168,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1182,7 +1182,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -1207,7 +1207,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -1221,7 +1221,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -1235,7 +1235,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tussen
             </h3>
@@ -1252,7 +1252,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1448,7 +1448,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Vaste parkeerplaats voor gehandicapten (GPP)
         </h2>
@@ -1461,7 +1461,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1475,7 +1475,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -1494,7 +1494,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -1508,7 +1508,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -1523,7 +1523,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1719,7 +1719,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Parkeerontheffingen Blauwe zone bedrijven
         </h2>
@@ -1732,7 +1732,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1746,7 +1746,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Naam bedrijf
         </h3>
@@ -1760,7 +1760,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aantal aangevraagde ontheffingen
         </h3>
@@ -1780,7 +1780,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -1794,7 +1794,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -1810,7 +1810,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -1825,7 +1825,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2026,7 +2026,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Parkeerontheffingen Blauwe zone bedrijven
         </h2>
@@ -2039,7 +2039,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2053,7 +2053,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Naam bedrijf
         </h3>
@@ -2067,7 +2067,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aantal aangevraagde ontheffingen
         </h3>
@@ -2082,7 +2082,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2278,7 +2278,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Parkeerontheffingen Blauwe zone particulieren
         </h2>
@@ -2291,7 +2291,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2305,7 +2305,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -2320,7 +2320,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2516,7 +2516,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Parkeerontheffingen Blauwe zone particulieren
         </h2>
@@ -2529,7 +2529,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2543,7 +2543,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -2563,7 +2563,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -2577,7 +2577,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -2593,7 +2593,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -2621,7 +2621,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2822,7 +2822,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Ligplaatsvergunning
         </h2>
@@ -2835,7 +2835,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2849,7 +2849,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -2868,7 +2868,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Soort vaartuig
         </h3>
@@ -2882,7 +2882,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Naam vaartuig
         </h3>
@@ -2896,7 +2896,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Soort aanvraag
         </h3>
@@ -2910,7 +2910,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Reden
         </h3>
@@ -2925,7 +2925,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3121,7 +3121,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Ligplaatsvergunning
         </h2>
@@ -3134,7 +3134,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3148,7 +3148,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -3167,7 +3167,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Soort vaartuig
         </h3>
@@ -3181,7 +3181,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Naam vaartuig
         </h3>
@@ -3195,7 +3195,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Soort aanvraag
         </h3>
@@ -3209,7 +3209,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Reden
         </h3>
@@ -3223,7 +3223,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -3238,7 +3238,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3439,7 +3439,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
         </h2>
@@ -3452,7 +3452,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3466,7 +3466,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -3486,7 +3486,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3682,7 +3682,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Onttrekkingsvergunning voor sloop
         </h2>
@@ -3695,7 +3695,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3709,7 +3709,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -3729,7 +3729,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3920,7 +3920,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Nieuw/Ingetrokken)
         </h2>
@@ -3933,7 +3933,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3953,7 +3953,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -3969,7 +3969,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -3989,7 +3989,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -4003,7 +4003,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -4019,7 +4019,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -4034,7 +4034,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4278,7 +4278,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Nieuw/Verleend)
         </h2>
@@ -4291,7 +4291,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4311,7 +4311,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -4327,7 +4327,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -4347,7 +4347,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -4361,7 +4361,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -4377,7 +4377,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -4392,7 +4392,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4636,7 +4636,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Nieuw/Verlopen)
         </h2>
@@ -4649,7 +4649,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4669,7 +4669,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -4685,7 +4685,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -4705,7 +4705,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -4719,7 +4719,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -4735,7 +4735,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -4750,7 +4750,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4996,7 +4996,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
         </h2>
@@ -5009,7 +5009,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5029,7 +5029,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Verzoek
             </h3>
@@ -5043,7 +5043,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -5059,7 +5059,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -5079,7 +5079,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -5093,7 +5093,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -5109,7 +5109,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -5124,7 +5124,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5368,7 +5368,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Wijziging/Ontvangen)
         </h2>
@@ -5381,7 +5381,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5401,7 +5401,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Verzoek
             </h3>
@@ -5415,7 +5415,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -5431,7 +5431,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -5451,7 +5451,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -5465,7 +5465,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -5482,7 +5482,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5683,7 +5683,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Wijziging/Verleend)
         </h2>
@@ -5696,7 +5696,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5716,7 +5716,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Verzoek
             </h3>
@@ -5730,7 +5730,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -5746,7 +5746,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -5766,7 +5766,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -5780,7 +5780,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -5796,7 +5796,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -5811,7 +5811,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6055,7 +6055,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV ontheffing Sloterweg (Wijziging/Verlopen)
         </h2>
@@ -6068,7 +6068,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6088,7 +6088,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Verzoek
             </h3>
@@ -6102,7 +6102,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Zone
             </h3>
@@ -6118,7 +6118,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -6138,7 +6138,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -6152,7 +6152,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -6168,7 +6168,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -6183,7 +6183,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6429,7 +6429,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           RVV-verkeersontheffing
         </h2>
@@ -6442,7 +6442,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6456,7 +6456,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -6476,7 +6476,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -6490,7 +6490,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -6507,7 +6507,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6703,7 +6703,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Samenvoegingsvergunning
         </h2>
@@ -6716,7 +6716,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6730,7 +6730,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -6750,7 +6750,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6951,7 +6951,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Splitsingsvergunning
         </h2>
@@ -6964,7 +6964,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6978,7 +6978,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -6998,7 +6998,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -7194,7 +7194,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Vormen van Woonruimte
         </h2>
@@ -7207,7 +7207,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -7221,7 +7221,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -7241,7 +7241,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -7437,7 +7437,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
           Vergunningen
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Ontheffing zwaar verkeer
         </h2>
@@ -7450,7 +7450,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -7464,7 +7464,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Soort ontheffing
         </h3>
@@ -7478,7 +7478,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Kentekens
         </h3>
@@ -7498,7 +7498,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -7512,7 +7512,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -7529,7 +7529,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
