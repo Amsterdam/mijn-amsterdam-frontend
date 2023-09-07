@@ -5,7 +5,6 @@ import { ComponentChildren, LinkProps } from '../../../universal/types';
 import composeClassNames from 'classnames';
 import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
-import { HeadingTagName } from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './PageHeading.module.scss';
 
@@ -13,14 +12,12 @@ export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   children: ComponentChildren;
   backLink?: LinkProps;
-  el?: HeadingTagName;
   icon?: ReactNode;
   className?: string;
   isLoading?: boolean;
 }
 
 export default function PageHeading({
-  el = 'h2',
   children,
   className,
   icon,

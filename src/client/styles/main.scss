@@ -4,6 +4,7 @@
 @import 'global';
 @import 'normalize';
 
+// Import (NLDesign) Amsterdam design system components
 @import '@amsterdam/design-system-tokens/dist/root.css';
 @import '@amsterdam/design-system-assets/font/index.css';
 @import '@amsterdam/design-system-css/src/heading/heading.scss';
@@ -11,7 +12,7 @@
 :root {
   --map-container-height: 100%;
 
-  // TODO: Remove 
+  // TODO: Temporary override to confirm with current styling.
   --amsterdam-heading-font-weight: 600;
 }
 
@@ -83,16 +84,6 @@ textarea,
 select,
 button {
   line-height: inherit;
-}
-
-h4 {
-  @include heading-small;
-  margin: 0;
-}
-
-h5 {
-  @include heading-tiny;
-  margin: 0;
 }
 
 @import 'print.scss';
