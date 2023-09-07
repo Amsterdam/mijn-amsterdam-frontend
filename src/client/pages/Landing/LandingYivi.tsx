@@ -1,7 +1,7 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
 import {
-  Heading,
   LinkdInline,
   MaintenanceNotifications,
   PageContent,
@@ -35,7 +35,11 @@ export default function Landing() {
             styles['LoginOption--yivi']
           )}
         >
-          <Heading className={styles.LoginOptionHeading} size="large" el="h3">
+          <Heading
+            className={styles.LoginOptionHeading}
+            size="level-3"
+            level={3}
+          >
             Inloggen met Yivi
           </Heading>
           <p>
@@ -77,7 +81,7 @@ export default function Landing() {
             </LinkdInline>
             .
           </p>
-          <Heading size="medium" el="h4">
+          <Heading size="level-3" level={4}>
             Download Yivi
           </Heading>
           <p>
