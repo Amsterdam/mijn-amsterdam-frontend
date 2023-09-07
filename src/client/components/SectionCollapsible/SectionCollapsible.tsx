@@ -26,16 +26,12 @@ export interface SectionCollapsibleHeadingProps {
   toggleCollapsed: (event: any) => void;
   isAriaExpanded: boolean;
 }
-const yes = true;
 
 export function SectionCollapsibleHeading({
   children,
   toggleCollapsed,
   isAriaExpanded,
 }: SectionCollapsibleHeadingProps) {
-  if (yes) {
-    throw new Error('waa');
-  }
   return (
     <Heading
       level={3}
