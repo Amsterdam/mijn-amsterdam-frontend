@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import classnames from 'classnames';
-import Heading, { HeadingTagName } from '../Heading/Heading';
+import { Heading } from '@amsterdam/design-system-react';
 
 export interface InfoDetailGroupProps {
   children: ComponentChildren;
@@ -14,7 +14,6 @@ export interface InfoDetailProps {
   label: string;
   value: string | number | ReactNode;
   valueWrapperElement?: keyof JSX.IntrinsicElements;
-  labelElement?: HeadingTagName;
   className?: string;
 }
 
@@ -25,7 +24,11 @@ export function InfoDetailGroup({
 }: InfoDetailGroupProps) {
   return (
     <div className={classnames(styles.InfoDetailGroup, className)}>
-      {!!label && <h3 className={styles.Label}>{label}</h3>}
+      {!!label && (
+        <Heading level={4} size="level-4" className={styles.Label}>
+          {label}
+        </Heading>
+      )}
       <div className={styles.InfoDetailGroupContent}>{children}</div>
     </div>
   );
@@ -36,12 +39,11 @@ export default function InfoDetail({
   value,
   className,
   valueWrapperElement = 'p',
-  labelElement = 'h3',
 }: InfoDetailProps) {
   const ELValue = valueWrapperElement;
   return (
     <div className={classnames(styles.InfoDetail, className)}>
-      <Heading el={labelElement} size="tiny" className={styles.Label}>
+      <Heading level={4} size="level-4" className={styles.Label}>
         {label}
       </Heading>
       <ELValue className={styles.Value}>{value}</ELValue>
