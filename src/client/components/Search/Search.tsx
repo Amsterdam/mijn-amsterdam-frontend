@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +17,6 @@ import {
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
 import { Button, IconButton } from '../Button/Button';
-import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
 import { SearchEntry, displayPath } from './searchConfig';
@@ -69,7 +69,7 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading className={styles.ResultSetTitle} size="tiny">
+        <Heading className={styles.ResultSetTitle} size="level-4" level={3}>
           {title}
         </Heading>
       )}
