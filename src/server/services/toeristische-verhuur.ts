@@ -285,7 +285,7 @@ export function createToeristischeVerhuurNotification(
   let description = 'Er is een update in uw toeristische verhuur overzicht.';
   let datePublished = item.dateRequest;
   let cta = 'Bekijk uw aanvraag';
-  let linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
+  let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
 
   const vergunningTitleLower = item.title.toLowerCase();
 
@@ -296,9 +296,6 @@ export function createToeristischeVerhuurNotification(
     const ctaLinkToDetail = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
-        title: slug(item.caseType, {
-          lower: true,
-        }),
         id: item.id,
       }
     );

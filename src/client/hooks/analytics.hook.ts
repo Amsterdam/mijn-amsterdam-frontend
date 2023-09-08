@@ -27,6 +27,7 @@ const PiwikTrackerConfig: UserOptions = {
 enum CustomDimensionId {
   ProfileType = 'user_type',
   City = 'user_city',
+  Thema = 'content_theme',
 }
 
 function profileTypeDimension(profileType: ProfileType) {
@@ -35,6 +36,10 @@ function profileTypeDimension(profileType: ProfileType) {
 
 function userCityDimension(userCity: string) {
   return { id: CustomDimensionId.City, value: userCity };
+}
+
+function maThema(thema: string) {
+  return { id: CustomDimensionId.Thema, value: thema };
 }
 
 // Initialize connection with analytics
@@ -106,12 +111,19 @@ export function trackPageViewWithCustomDimension(
   title: string,
   url: string,
   profileType: ProfileType,
-  userCity?: string
+  userCity?: string,
+  thema?: string
 ) {
   const dimensions = [profileTypeDimension(profileType)];
+  
   if (userCity) {
     dimensions.push(userCityDimension(userCity));
   }
+
+  if (thema) {
+    dimensions.push(maThema(thema));
+  }
+
   return trackPageView(url, dimensions);
 }
 
