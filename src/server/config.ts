@@ -319,6 +319,7 @@ export const BFF_OIDC_BASE_URL = `${
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
 export const BffEndpoints = {
+  ROOT: '/',
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
   SERVICES_ALL: '/services/all',

@@ -1,8 +1,8 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heading } from '@amsterdam/design-system-react';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, OTAP_ENV } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';

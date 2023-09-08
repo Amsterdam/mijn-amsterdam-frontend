@@ -46,3 +46,15 @@ declare const MA_APP_VERSION: string;
 
 // Mode: Development Test (unittest) Production
 declare const MA_APP_MODE: string;
+
+// A fixed user id for development purposes, for example when testing yivi an email address can be provided
+declare const MA_PROFILE_DEV_ID: string;
+
+// A list with test-accounts in the form of: foo=123,bar=456,hello=789
+declare const MA_TEST_ACCOUNTS: string;
+
+// The commit sha
+declare const MA_GIT_SHA: string;
+
+// The ADO (Azure) build id
+declare const MA_ADO_BUILD_ID: string;

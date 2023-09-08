@@ -1,12 +1,11 @@
 import * as Sentry from '@sentry/react';
-import ReactDOM from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
+import { createRoot } from 'react-dom/client';
 import './client/styles/main.scss';
 import { OTAP_ENV } from './universal/config/env';
-import { createRoot } from 'react-dom/client';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -16,14 +15,12 @@ if (
   window.location.replace('/no-support');
 }
 
-const release = `mijnamsterdam-frontend@${
-  process.env.REACT_APP_VERSION ?? 'latest-unknown'
-}`;
+const release = `mijnamsterdam-frontend@${MA_APP_VERSION ?? 'latest-unknown'}`;
 console.info(
   'App version: %s, Commit sha: %s, Build id:, %s',
   release,
-  process.env.REACT_APP_GIT_SHA ?? 'unknown',
-  process.env.REACT_APP_ADO_BUILD_ID ?? '0'
+  MA_GIT_SHA ?? 'unknown',
+  MA_ADO_BUILD_ID ?? '0'
 );
 
 Sentry.init({

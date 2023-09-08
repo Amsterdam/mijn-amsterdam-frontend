@@ -28,7 +28,6 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
-import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';

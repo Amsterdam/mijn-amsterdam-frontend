@@ -7,19 +7,23 @@ function getAppMode(): AppModeName {
   return (maAppMode || 'production') as AppModeName;
 }
 
-function getOtapEnv(): OtapEnvName {
+export function getOtapEnv(): OtapEnvName {
   const maOtapEnv =
     typeof MA_OTAP_ENV !== 'undefined' ? MA_OTAP_ENV : process.env.MA_OTAP_ENV;
   return (maOtapEnv || 'development') as OtapEnvName;
 }
 
-export const ENV = getOtapEnv();
+export const OTAP_ENV = getOtapEnv();
 
 getAppMode() !== 'test' &&
   console.info(
-    `App running in ${getAppMode()} mode on the ${getOtapEnv()} environment.`
+    `App running in ${getAppMode()} mode on the ${OTAP_ENV} environment.`
   );
 
-export const IS_ACCEPTANCE = ENV === 'acceptance';
-export const IS_PRODUCTION = ENV === 'production';
+export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
+export const IS_PRODUCTION = OTAP_ENV === 'production';
+export const IS_TEST = OTAP_ENV === 'test';
+export const IS_DEVELOPMENT = OTAP_ENV === 'development';
+export const IS_OT = IS_DEVELOPMENT || IS_TEST;
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
+export const IS_TAP = IS_TEST || IS_ACCEPTANCE || IS_PRODUCTION;

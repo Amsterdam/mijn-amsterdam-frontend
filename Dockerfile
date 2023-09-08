@@ -30,6 +30,7 @@ RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
 
+# Install the dependencies
 RUN npm ci --prefer-offline --no-audit --progress=false
 
 # SSH config
@@ -55,22 +56,20 @@ COPY index.html /build-space/
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
+ENV INLINE_RUNTIME_CHUNK=false
+ENV TZ=Europe/Amsterdam
+
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
-ENV INLINE_RUNTIME_CHUNK=false
-ENV TZ=Europe/Amsterdam
-ARG REACT_APP_OTAP_ENV=production
-ENV REACT_APP_OTAP_ENV=$REACT_APP_OTAP_ENV
+ARG MA_ADO_BUILD_ID=0
+ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
 
-ARG REACT_APP_ADO_BUILD_ID=0
-ENV REACT_APP_ADO_BUILD_ID=$REACT_APP_ADO_BUILD_ID
+ARG MA_GIT_SHA=0
+ENV MA_GIT_SHA=$MA_GIT_SHA
 
-ARG REACT_APP_GIT_SHA=0
-ENV REACT_APP_GIT_SHA=$REACT_APP_GIT_SHA
-
-ARG REACT_APP_TEST_ACCOUNTS=
-ENV REACT_APP_TEST_ACCOUNTS=$REACT_APP_TEST_ACCOUNTS
+ARG MA_TEST_ACCOUNTS=
+ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
 
 COPY public /build-space/public
 

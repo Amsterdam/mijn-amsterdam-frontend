@@ -10,10 +10,16 @@ export default defineConfig({
     port: process.env.port ? parseInt(process.env.port, 10) : 3000,
   },
   // https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
+  // Using the define option over import.meta because the Node part our universal app cannot handle import.meta yet.
+  // See also src/mijnamsterdam.d.ts
   define: {
     MA_OTAP_ENV: JSON.stringify(process.env.MA_OTAP_ENV || 'development'),
     MA_APP_MODE: JSON.stringify(process.env.MA_APP_MODE || 'development'),
-    MA_APP_VERSION: JSON.stringify(process.env.npm_package_version || '-1'),
+    MA_APP_VERSION: JSON.stringify(process.env.MA_APP_VERSION || '-1'),
+    MA_ADO_BUILD_ID: JSON.stringify(process.env.MA_ADO_BUILD_ID || '-1'),
+    MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
+    MA_TEST_ACCOUNTS: JSON.stringify(process.env.MA_TEST_ACCOUNTS || ''),
+    MA_PROFILE_DEV_ID: JSON.stringify(process.env.MA_PROFILE_DEV_ID || ''),
   },
   envPrefix: 'REACT_APP_',
   build: {

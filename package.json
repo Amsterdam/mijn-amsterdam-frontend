@@ -68,6 +68,7 @@
     "@types/uid-safe": "^2.1.2",
     "axios": "^0.24.0",
     "axios-mock-adapter": "^1.21.4",
+    "better-sqlite3": "^8.6.0",
     "classnames": "^2.3.1",
     "compression": "^1.7.4",
     "concurrently": "^6.4.0",
@@ -126,6 +127,7 @@
     "vite-plugin-svgr": "^3.2.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.4",
     "@types/express-http-proxy": "^1.6.3",
     "@vitejs/plugin-react": "^4.0.1",
     "jsdom": "^22.1.0",

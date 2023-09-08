@@ -19,7 +19,6 @@ import {
   StatusLine as StatusLineComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
-import { relayApiUrl } from '../../config/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StatusDetail.module.scss';
 import { relayApiUrl } from '../../utils/utils';

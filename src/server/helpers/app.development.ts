@@ -5,7 +5,7 @@ import {
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
-  DEV_TOKEN_ID_ATTRIBUTE,
+  TOKEN_ID_ATTRIBUTE,
 } from '../config';
 import type { AuthProfile } from './app';
 
@@ -39,7 +39,7 @@ export function signDevelopmentToken(
 ) {
   const idToken = jose.JWT.sign(
     {
-      [DEV_TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
+      [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
       aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
     },
     getPrivateKeyForDevelopment(),
