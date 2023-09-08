@@ -95,6 +95,8 @@ export interface BezwaarSourceDocument {
   titel: string;
   beschrijving: string;
   registratiedatum: string;
+  dossiertype: string;
+  verzenddatum: string;
 }
 
 export interface BezwaarResponse {

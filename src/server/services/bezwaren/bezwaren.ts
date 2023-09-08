@@ -47,21 +47,24 @@ function transformBezwarenDocumentsResults(
   });
 
   if (Array.isArray(documents)) {
-    return documents.map(({ titel, registratiedatum, uuid }) => {
-      const [documentIdEncrypted] = encrypt(
-        uuid,
-        process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-      );
-      return {
-        id: documentIdEncrypted,
-        title: titel,
-        datePublished: defaultDateFormat(registratiedatum),
-        url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-          BffEndpoints.BEZWAREN_ATTACHMENTS,
-          { id: documentIdEncrypted }
-        )}`,
-      };
-    });
+    return documents.map(
+      ({ titel, registratiedatum, uuid, dossiertype, verzenddatum }) => {
+        const [documentIdEncrypted] = encrypt(
+          uuid,
+          process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+        );
+        return {
+          id: documentIdEncrypted,
+          title: titel,
+          datePublished: defaultDateFormat(verzenddatum),
+          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
+            BffEndpoints.BEZWAREN_ATTACHMENTS,
+            { id: documentIdEncrypted }
+          )}`,
+          dossiertype,
+        };
+      }
+    );
   }
   return [];
 }
