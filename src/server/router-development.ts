@@ -5,34 +5,37 @@ import express, {
   Response,
 } from 'express';
 import path from 'path';
-import { testAccounts } from '../universal/config/auth.development';
 import { apiSuccessResult } from '../universal/helpers';
 import {
-  BffEndpoints,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   RelayPathsAllowed,
-  profileTypeByAuthMethod,
 } from './config';
 import {
   AuthProfile,
+  generateDevSessionCookieValue,
   getAuth,
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import { generateDevSessionCookieValue } from './helpers/app.development';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 
+const DevelopmentRoutes = {
+  DEV_LOGIN: '/api/v1/dev/auth/:authMethod/login',
+  DEV_LOGOUT: '/api/v1/dev/auth/logout',
+  DEV_AUTH_CHECK: '/api/v1/dev/auth/check',
+};
+
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
-  '/api/v1/auth/:authMethod/login/:user?',
+  DevelopmentRoutes.DEV_LOGIN,
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
+        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000
       ),
       httpOnly: true,
       path: '/',
@@ -40,8 +43,7 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userName = req.params.user ?? Object.keys(testAccounts)[0];
-    const userId = testAccounts[userName];
+    const userId = process.env.BFF_PROFILE_DEV_ID ?? `xxx-${authMethod}-xxx`;
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId
@@ -67,48 +69,40 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get(
-  '/api/v1/auth/:authMethod/check',
-  async (req, res) => {
-    const auth = await getAuth(req);
-    const authMethodParam = req.params.authMethod as AuthMethod;
-    if (
-      !!auth.token &&
-      auth.profile.authMethod === authMethodParam &&
-      !!profileTypeByAuthMethod?.[authMethodParam]?.length
-    ) {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: profileTypeByAuthMethod[authMethodParam][0],
-          authMethod: authMethodParam,
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
-  }
-);
+authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
+  const auth = await getAuth(req);
 
-authRouterDevelopment.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+
   let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
-  let authMethodRequested = req.query.authMethod;
 
-  if (hasSessionCookie(req) && !authMethodRequested) {
-    const auth = await getAuth(req);
-    authMethodRequested = auth.profile.authMethod;
-  }
-
-  switch (authMethodRequested) {
+  switch (auth.profile.authMethod) {
     case 'yivi':
       redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
       break;
   }
 
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-
   return res.redirect(redirectUrl);
 });
+
+authRouterDevelopment.get(
+  DevelopmentRoutes.DEV_AUTH_CHECK,
+  async (req, res) => {
+    if (hasSessionCookie(req)) {
+      const auth = await getAuth(req);
+      return res.send(
+        apiSuccessResult({
+          isAuthenticated: true,
+          profileType: auth.profile.profileType,
+          authMethod: auth.profile.authMethod,
+        })
+      );
+    }
+
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
+  }
+);
 
 export const relayDevRouter = express.Router();
 

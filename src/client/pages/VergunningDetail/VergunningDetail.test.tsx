@@ -3,12 +3,14 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
+import { describe, expect, it, test } from 'vitest';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';
+import { bffApi } from '../../../test-utils';
 
 const content = transformVergunningenData(vergunningenData as any);
 
@@ -31,7 +33,7 @@ function state(state: any) {
   return initializeState;
 }
 
-function MockVergunningDetail({ identifier }: { identifier: string }) {
+export function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
     title: slug(vergunning?.caseType, {
@@ -40,6 +42,10 @@ function MockVergunningDetail({ identifier }: { identifier: string }) {
     id: vergunning?.id,
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
+
+  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
+    content: [],
+  });
 
   return (
     <MockApp
@@ -52,10 +58,6 @@ function MockVergunningDetail({ identifier }: { identifier: string }) {
 }
 
 describe('<VergunningDetail />', () => {
-  beforeAll(() => {
-    (window as any).scrollTo = jest.fn();
-  });
-
   describe('<EvenementMelding />', () => {
     it('should match the full page snapshot', () => {
       const { asFragment } = render(
@@ -221,5 +223,47 @@ describe('<VergunningDetail />', () => {
       );
       expect(asFragment()).toMatchSnapshot();
     });
+  });
+
+  describe('RVV Sloterweg', () => {
+    const zaken: Array<{ title: string; identifier: string }> = [
+      {
+        title: 'RVV ontheffing Sloterweg (Nieuw/Verleend)',
+        identifier: 'Z/23/98798273423',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Wijziging/Ontvangen)',
+        identifier: 'Z/23/98989234',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Wijziging/Ingetrokken)',
+        identifier: 'Z/23/23423409',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Wijziging/Verleend)',
+        identifier: 'Z/23/091823087',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Wijziging/Verlopen)',
+        identifier: 'Z/23/92222273423',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Nieuw/Verlopen)',
+        identifier: 'Z/23/98744444423',
+      },
+      {
+        title: 'RVV ontheffing Sloterweg (Nieuw/Ingetrokken)',
+        identifier: 'Z/23/123123456',
+      },
+    ];
+
+    for (const zaak of zaken) {
+      test(`${zaak.title}`, () => {
+        const { asFragment } = render(
+          <MockVergunningDetail identifier={zaak.identifier} />
+        );
+        expect(asFragment()).toMatchSnapshot();
+      });
+    }
   });
 });

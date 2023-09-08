@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import styles from './TextClamp.module.scss';
 
 // The difference between maxHeight and actualHeight should be at least this number in pixels
@@ -12,6 +12,7 @@ interface TextClampProps {
   children: ReactNode;
   tagName?: keyof JSX.IntrinsicElements;
   maxHeight?: `${number}px`;
+  minHeight?: `${number}px`;
   startClamped?: boolean;
   style?: TextClampCSSProperties | null;
 }
@@ -20,6 +21,7 @@ export function TextClamp({
   children,
   tagName = 'div',
   maxHeight = '45px',
+  minHeight = '35px',
   startClamped = true,
   style = null,
 }: TextClampProps) {
@@ -29,7 +31,8 @@ export function TextClamp({
     undefined
   );
 
-  const callBackRef = useCallback((domNode) => {
+  // TODO: Fix type
+  const callBackRef = useCallback((domNode: any) => {
     if (typeof hasOverflow === 'boolean' || !domNode) {
       return;
     }
@@ -55,7 +58,11 @@ export function TextClamp({
         hasOverflow && isClamped && styles.isClamped,
         hasOverflow && styles.hasOverflow
       )}
-      style={{ ...style, ['--maxHeight' as string]: maxHeight }}
+      style={{
+        ...style,
+        ['--maxHeight' as string]: maxHeight,
+        ['--minHeight' as string]: minHeight,
+      }}
     >
       <span ref={callBackRef} className={styles.textWrap}>
         {children}

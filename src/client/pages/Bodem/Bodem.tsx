@@ -54,13 +54,13 @@ export default function Bodem() {
         {ChapterTitles.BODEM}
       </PageHeading>
       <PageContent>
-        <p>Op deze pagina vindt u informatie over uw lood in bodem check.</p>
+        <p>Op deze pagina vindt u informatie over uw lood in de bodem-check.</p>
         <p>
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
           >
-            Meer informatie over Loodmetingen
+            Meer informatie over lood in de bodem.
           </Linkd>
         </p>
         {isError(BODEM) && (
@@ -76,10 +76,6 @@ export default function Bodem() {
         startCollapsed={false}
         hasItems={!!lopendeAanvragen?.length}
         isLoading={isLoading(BODEM)}
-        track={{
-          category: 'Loodmetingen overzicht / Lopende aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table items={lopendeAanvragen} displayProps={DISPLAY_PROPS_BODEM} />
       </SectionCollapsible>
@@ -91,10 +87,6 @@ export default function Bodem() {
         startCollapsed={false}
         hasItems={!!afgerondeAanvragen?.length}
         isLoading={isLoading(BODEM)}
-        track={{
-          category: 'Loodmetingen overzicht / Eerdere aanvragen',
-          name: 'Datatabel',
-        }}
       >
         <Table items={afgerondeAanvragen} displayProps={DISPLAY_PROPS_BODEM} />
       </SectionCollapsible>

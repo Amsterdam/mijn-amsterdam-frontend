@@ -1,4 +1,4 @@
-/// <reference path="./react-app-env.d.ts" />
+/// <reference path="./mijnamsterdam.d.ts" />
 
 // Compilation entrypoint
 import './server/app';

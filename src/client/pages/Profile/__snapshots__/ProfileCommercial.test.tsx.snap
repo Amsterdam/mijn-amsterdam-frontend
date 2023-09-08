@@ -1,55 +1,74 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
+exports[`<ProfileCommercial /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage ProfileCommercial"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _ProfileCommercial_a22688"
   >
     <header
-      class="PageHeading hasIcon"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Mijn onderneming"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          home-commercial.svg
+          <title>
+            Bedrijfsgebouw icoon
+          </title>
+          <path
+            d="M22,7 L22,0 L0,0 L0,32 L32,32 L32,7 L22,7 Z M4,28 L4,4 L18,4 L18,28 L4,28 Z M30,30 L22,30 L22,9 L30,9 L30,30 Z M6,7 L10,7 L10,11 L6,11 L6,7 Z M6,14 L10,14 L10,18 L6,18 L6,14 Z M16,11 L12,11 L12,7 L16,7 L16,11 Z M16,18 L12,18 L12,14 L16,14 L16,18 Z M26,18 L24,18 L24,16 L28,16 L28,18 L26,18 Z M26,22 L24,22 L24,20 L28,20 L28,22 L26,22 Z M26,26 L24,26 L24,24 L28,24 L28,26 L26,26 Z M26,14 L24,14 L24,12 L28,12 L28,14 L26,14 Z M6,21 L10,21 L10,25 L6,25 L6,21 Z M16,25 L12,25 L12,21 L16,21 L16,25 Z"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Mijn onderneming
         </h2>
       </div>
     </header>
     <div
-      class="PageContent Intro"
+      class="_PageContent_47d7c0 _Intro_a22688"
     >
       <p>
         Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister van de Kamer van Koophandel. In dat register staan onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Geef wijzigingen door aan de Kamer van Koophandel
         </a>
@@ -57,24 +76,24 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
       </p>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="amsterdam-heading amsterdam-heading-3 _Title_37c468"
       >
         Onderneming
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__onderneming onderneming"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__onderneming onderneming"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -158,29 +177,29 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         />
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="amsterdam-heading amsterdam-heading-3 _Title_37c468"
       >
         Rechtspersoon
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__rechtspersoon rechtspersoon"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__rechtspersoon rechtspersoon"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -244,29 +263,29 @@ exports[`<ProfileCommercial /> Matches the Full Page snapshot 1`] = `
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         />
       </div>
     </div>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="amsterdam-heading amsterdam-heading-3 _Title_37c468"
       >
         Hoofdvestiging
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__hoofdvestiging hoofdvestiging"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__hoofdvestiging hoofdvestiging"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -342,7 +361,7 @@ Amsterdam
                     translate="yes"
                   >
                     <a
-                      class="Button Button__inline Button__lean Linkd LinkedInline"
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                       href="tel:+310209991362"
                       rel="external noopener noreferrer"
                     >
@@ -363,7 +382,7 @@ Amsterdam
                   >
                     <span>
                       <a
-                        class="Button Button__inline Button__lean Linkd LinkedInline"
+                        class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                         href="www.electrotechniek.amsterdam.nl"
                         rel="external noopener noreferrer"
                       >
@@ -385,7 +404,7 @@ Amsterdam
                     translate="yes"
                   >
                     <a
-                      class="Button Button__inline Button__lean Linkd LinkedInline"
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                       href="mailto:info@electrotechniek.amsterdam.nl"
                       rel="external noopener noreferrer"
                     >
@@ -447,52 +466,63 @@ Amsterdam
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         />
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Vestigingen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688 _CollapsiblePanel_a22688"
             id="overige-vestigingen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -572,7 +602,7 @@ Amsterdam-Duivendrecht
                           translate="yes"
                         >
                           <a
-                            class="Button Button__inline Button__lean Linkd LinkedInline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="tel:+310208451362"
                             rel="external noopener noreferrer"
                           >
@@ -593,7 +623,7 @@ Amsterdam-Duivendrecht
                         >
                           <span>
                             <a
-                              class="Button Button__inline Button__lean Linkd LinkedInline"
+                              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                               href="www.feestwinkel.nl"
                               rel="external noopener noreferrer"
                             >
@@ -615,7 +645,7 @@ Amsterdam-Duivendrecht
                           translate="yes"
                         >
                           <a
-                            class="Button Button__inline Button__lean Linkd LinkedInline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="mailto:info@feestwinkel.nl"
                             rel="external noopener noreferrer"
                           >
@@ -672,10 +702,10 @@ Amsterdam-Duivendrecht
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -751,7 +781,7 @@ Amsterdam
                           translate="yes"
                         >
                           <a
-                            class="Button Button__inline Button__lean Linkd LinkedInline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="tel:+310205641954"
                             rel="external noopener noreferrer"
                           >
@@ -795,7 +825,7 @@ Amsterdam
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -803,24 +833,24 @@ Amsterdam
       </div>
     </section>
     <div
-      class="InfoPanel DefaultPanel"
+      class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="Heading Heading__medium Title"
+        class="amsterdam-heading amsterdam-heading-3 _Title_37c468"
       >
         Gemachtigde
       </h3>
       <div
-        class="InfoPanelContent InfoPanelContent__gemachtigde gemachtigde"
+        class="_InfoPanelContent_37c468 _InfoPanelContent_37c468__gemachtigde gemachtigde"
       >
         <div
-          class="Tables"
+          class="_Tables_37c468"
         >
           <div
-            class="TableWrap"
+            class="_TableWrap_37c468"
           >
             <table
-              class="InfoPanelTable"
+              class="_InfoPanelTable_37c468"
             >
               <tbody>
                 <tr
@@ -870,52 +900,63 @@ Amsterdam
           </div>
         </div>
         <ul
-          class="InfoPanelActionLinks"
+          class="_InfoPanelActionLinks_37c468"
         />
       </div>
     </div>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Bestuurders
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="kvk-bestuurders"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -978,10 +1019,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1044,10 +1085,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1110,10 +1151,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1177,7 +1218,7 @@ Amsterdam
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -1185,47 +1226,58 @@ Amsterdam
       </div>
     </section>
     <section
-      class="SectionCollapsible InfoPanelCollapsible"
+      class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Overige functionarissen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <div
-            class="InfoPanel CollapsiblePanel"
+            class="_InfoPanel_37c468 _CollapsiblePanel_a22688"
             id="kvk-overige-functionarissen"
           >
             <div
-              class="InfoPanelContent"
+              class="_InfoPanelContent_37c468"
             >
               <div
-                class="Tables"
+                class="_Tables_37c468"
               >
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1274,10 +1326,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1326,10 +1378,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1378,10 +1430,10 @@ Amsterdam
                   </table>
                 </div>
                 <div
-                  class="TableWrap"
+                  class="_TableWrap_37c468"
                 >
                   <table
-                    class="InfoPanelTable"
+                    class="_InfoPanelTable_37c468"
                   >
                     <tbody>
                       <tr
@@ -1431,7 +1483,7 @@ Amsterdam
                 </div>
               </div>
               <ul
-                class="InfoPanelActionLinks"
+                class="_InfoPanelActionLinks_37c468"
               />
             </div>
           </div>
@@ -1439,19 +1491,19 @@ Amsterdam
       </div>
     </section>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
       </p>
       <p
-        class="SuppressedParagraph"
+        class="_SuppressedParagraph_a22688"
       >
         U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt uittreksel vraagt u aan bij de de 
         <a
-          class="Button Button__inline Button__lean Linkd LinkedInline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://kvk.nl"
           rel="external noopener noreferrer"
         >

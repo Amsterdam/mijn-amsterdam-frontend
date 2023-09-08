@@ -14,6 +14,7 @@ import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
+import { relayApiUrl } from '../../utils/utils';
 
 interface DocumentDetailsProps {
   vergunning: Vergunning;

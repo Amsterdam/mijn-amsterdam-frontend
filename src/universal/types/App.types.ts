@@ -27,16 +27,17 @@ export type SVGComponent = FunctionComponent<
 export type ComponentChildren = ReactNode;
 
 export interface MyNotification {
-  id: string;
   chapter: Chapter;
   datePublished: string;
-  title: string;
   description: string;
-  moreInformation?: string;
-  link?: LinkProps;
   hideDatePublished?: boolean;
+  id: string;
   isAlert?: boolean;
+  isTip?: boolean;
+  link?: LinkProps;
+  moreInformation?: string;
   subject?: string;
+  title: string;
 
   // NOTE: Maybe move this to client?
   customLink?: {
@@ -46,16 +47,18 @@ export interface MyNotification {
 }
 
 export interface MyTip {
-  id: string;
+  chapter?: Chapter | null;
   datePublished: string;
-  title: string;
   description: string;
-  link: LinkProps;
+  id: string;
   imgUrl?: string;
+  isNotification?: boolean;
   isPersonalized: boolean;
+  link: LinkProps;
   priority?: number;
+  profileTypes?: ProfileType[];
   reason: string[];
-  audience?: string[];
+  title: string;
 }
 
 export interface GenericDocument {
@@ -68,7 +71,7 @@ export interface GenericDocument {
   [key: string]: any;
 }
 
-export type AltDocumentContent = string | JSX.Element;
+export type AltDocumentContent = string | ReactNode;
 
 export interface StatusLineItem {
   id: string;

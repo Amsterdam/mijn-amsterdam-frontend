@@ -135,11 +135,6 @@ const besluitLabels: WpiRequestStatusLabels = {
             statusStep.about || requestProcess.about
           }: Wij behandelen uw aanvraag niet meer`;
 
-        case 'beschikking':
-          return `${
-            statusStep.about || requestProcess.about
-          }: Uw uitkering is definitief berekend`;
-
         default:
         case 'vrijeBeschikking':
           return `${
@@ -164,9 +159,6 @@ const besluitLabels: WpiRequestStatusLabels = {
         case 'buitenBehandeling':
           return `Bekijk de brief voor meer details.`;
 
-        case 'beschikking':
-          return `Uw Bbz uitkering is definitief berekend.`;
-
         default:
         case 'vrijeBeschikking':
           return `Wij hebben een besluit genomen over uw ${
@@ -175,20 +167,6 @@ const besluitLabels: WpiRequestStatusLabels = {
       }
     },
     link: (requestProcess, statusStep) => {
-      if (statusStep?.decision === 'beschikking') {
-        const [document] = statusStep!.documents!;
-
-        return {
-          to: `${document?.url}`,
-          title: 'Bekijk het besluit',
-          download: documentDownloadName({
-            datePublished: requestProcess.datePublished,
-            title: 'Bbz-beschikking',
-          }),
-        };
-      }
-
-      // Default
       return {
         to: requestProcess.link?.to || '/',
         title: 'Bekijk hoe het met uw aanvraag staat',

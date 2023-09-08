@@ -8,15 +8,15 @@ import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
+import jose from 'jose';
 import { FeatureToggle } from '../universal/config';
 import { IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
-import jose from 'jose';
 
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
     if (name) {
-      console.log(`${name}: Certificate path empty`);
+      console.log(`${name}: Certificate path empty ${path}`);
     }
     return '';
   }
@@ -118,8 +118,8 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'KREFIA'
   | 'SIA'
-  | 'LOOD_365'
   | 'ENABLEU_2_SMILE'
+  | 'LOOD_365'
   | 'LOOD_365_OAUTH';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
@@ -127,28 +127,23 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
     url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
-    debugRequestConfig: true,
     passthroughOIDCToken: true,
   },
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
-    debugRequestConfig: true,
   },
   WPI_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
     passthroughOIDCToken: true,
-    debugRequestConfig: true,
   },
   WPI_SPECIFICATIES: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
     passthroughOIDCToken: true,
-    debugRequestConfig: true,
   },
   WPI_STADSPAS: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
     passthroughOIDCToken: true,
-    debugRequestConfig: true,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
@@ -253,7 +248,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a wel known actor (GH), no sensitive data is involved and no JS code is evaluated.
+      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a well known actor (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
   ENABLEU_2_SMILE: {
@@ -272,12 +267,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },
 };
-
-export const envDebug = Object.fromEntries(
-  Object.entries(process.env).map(([key, value]) => {
-    return [key, value];
-  })
-);
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
@@ -327,8 +316,9 @@ export const BFF_OIDC_BASE_URL = `${
   process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
 }`;
 
+export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
+
 export const BffEndpoints = {
-  ROOT: '/',
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
   SERVICES_ALL: '/services/all',
@@ -388,8 +378,9 @@ export const BffEndpoints = {
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
-  STATUS_HEALTH: '/status/health',
+  STATUS_HEALTH: '/bff/status/health',
   STATUS_ENV: '/status/env',
+
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
@@ -414,11 +405,14 @@ const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
   idpLogout: true,
+  // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
+  // Client secret
+  clientSecret: process.env.BFF_OIDC_SECRET,
   baseURL: BFF_OIDC_BASE_URL,
-  issuerBaseURL: process.env.BFF_OIDC_ISSUER_BASE_URL,
+  issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login' },
+  authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
   // @ts-ignore
   session: {
@@ -429,7 +423,7 @@ const oidcConfigBase: ConfigParams = {
   routes: {
     login: false,
     logout: AUTH_LOGOUT,
-    callback: AUTH_CALLBACK, // Relative to the Router path
+    callback: false,
     postLogoutRedirect: process.env.BFF_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
@@ -466,7 +460,7 @@ export const oidcConfigEherkenning: ConfigParams = {
 export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0 },
+  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
   routes: {
     ...oidcConfigBase.routes,
     postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
@@ -511,7 +505,12 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
   yivi: () => YIVI_ATTR_PRIMARY,
 };
 
-export const DEV_TOKEN_ID_ATTRIBUTE = {
+export type TokenIdAttribute =
+  | typeof DIGID_ATTR_PRIMARY
+  | typeof EH_ATTR_PRIMARY_ID
+  | typeof YIVI_ATTR_PRIMARY;
+
+export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
   yivi: YIVI_ATTR_PRIMARY,
@@ -563,6 +562,9 @@ export const DEV_JWK_PRIVATE: any = {
   dq: '2xIAK4NTjrOw12hfCcCkChOAIisertsEZIYeVwbunx9Gr1gvtyk7YoCvoUNsFfLlZAjFTvnUqODlpiJptx7P4WzTu04oPon9hjg6Ze4FSb7VGbTuaEbNJfNuP_AaBXoO8BpceG2tjZm4Wzr3ivUja-5q9E73ld44ezdeKuX-cGE',
   n: '0CXtOrsyIGkhhJ_sHzGbyK9U6sug4HdjdSNaq-FVbFFO_OeAaS8NvzM7DJXkZvmvZ7HNIPdlRk0-TCELmbOGK1RlddQZA_iic9DePydxloNJIWmUVI5GK1T84PxhjnMfBAD3SWPdTZ0zG1IubAjUJT4nwl0uVdzp0-LixbmKPQU87dqA1jt7ZuC73M55oZAyi1e2fzvgdxWyM7-NyvkZqwG2eGoDQ3SNb0rArlHTgdsLf1YsGPxn1wN3bSjhrq6af4fCnB5UVRb-r3g4NN_VJxBOc2xGDDoOgaPW9XW-BhSefc2hqRjTwtjaGiZFLdEuZdcq_mUB-AHc0YYD3_4VXw',
 };
+
+export const DEV_JWT =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
 export const securityHeaders = {
   'Permissions-Policy':

@@ -59,7 +59,46 @@ const briefAdviesRapportLabels: WpiRequestStatusLabels = {
 };
 
 const besluitLabels: WpiRequestStatusLabels = {
-  notification: tozoRequestProcess.besluit.notification,
+  notification: {
+    title: (requestProcess, statusStep) => {
+      if (statusStep.decision === 'beschikking') {
+        return `${
+          statusStep.about || requestProcess.about
+        }: Uw uitkering is definitief berekend`;
+      }
+      return tozoRequestProcess.besluit.notification.title?.(
+        requestProcess,
+        statusStep
+      );
+    },
+    description: (requestProcess, statusStep) => {
+      if (statusStep.decision === 'beschikking') {
+        return `Uw Bbz uitkering is definitief berekend.`;
+      }
+      return tozoRequestProcess.besluit.notification.description?.(
+        requestProcess,
+        statusStep
+      );
+    },
+    link: (requestProcess, statusStep) => {
+      if (statusStep.decision === 'beschikking') {
+        const [document] = statusStep!.documents!;
+
+        return {
+          to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+            document.url
+          }`,
+          title: 'Bekijk het besluit',
+          download: documentDownloadName({
+            datePublished: requestProcess.datePublished,
+            title: 'Bbz-beschikking',
+          }),
+        };
+      }
+      const linkFn = tozoRequestProcess.besluit.notification.link!;
+      return linkFn(requestProcess, statusStep);
+    },
+  },
   description: (requestProcess, statusStep) => {
     switch (statusStep?.decision) {
       case 'toekenning':
@@ -105,7 +144,9 @@ const correctiemail: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${document?.url}`,
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+          document.url
+        }`,
         title: 'Bekijk de mail',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
@@ -131,7 +172,9 @@ const informatieOntvangen: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${document?.url}`,
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+          document.url
+        }`,
         title: 'Bekijk uw formulier',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,

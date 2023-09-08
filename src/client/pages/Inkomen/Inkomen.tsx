@@ -174,10 +174,6 @@ export default function Inkomen() {
         startCollapsed={false}
         isLoading={isLoadingWpi}
         hasItems={hasActiveRequests}
-        track={{
-          category: 'Inkomen overzicht / Lopende aanvragen',
-          name: 'Datatabel',
-        }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         className={styles.SectionCollapsible}
       >
@@ -194,10 +190,6 @@ export default function Inkomen() {
         isLoading={isLoadingWpi}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
-        track={{
-          category: 'Inkomen overzicht / Eerdere aanvragen',
-          name: 'Datatabel',
-        }}
         noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
       >
         <Table
@@ -213,10 +205,6 @@ export default function Inkomen() {
         isLoading={isLoadingWpiSpecificaties}
         title="Uitkeringsspecificaties"
         hasItems={!!uitkeringsspecificaties?.length}
-        track={{
-          category: 'Inkomen overzicht / Uitkeringsspecificaties',
-          name: 'Datatabel',
-        }}
         noItemsMessage="Er zijn op dit moment geen uitkeringsspecificaties."
       >
         {itemsSpecificationsMonthly && (
@@ -240,10 +228,6 @@ export default function Inkomen() {
         isLoading={isLoadingWpi}
         title="Jaaropgaven"
         hasItems={!!jaaropgaven?.length}
-        track={{
-          category: 'Inkomen overzicht / Jaaropgaven',
-          name: 'Datatabel',
-        }}
         noItemsMessage="Er zijn op dit moment geen jaaropgaven."
       >
         {itemsSpecificationsYearly && (

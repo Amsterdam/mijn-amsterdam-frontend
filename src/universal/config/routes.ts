@@ -1,9 +1,5 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
-import {
-  LOGIN_URL_DIGID,
-  LOGIN_URL_EHERKENNING,
-} from '../../client/config/api';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
@@ -112,11 +108,6 @@ export const AppRoutesRedirect = [
     to: AppRoutes['INKOMEN/TOZO'],
   },
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
-];
-
-export const ExcludePageViewTrackingUrls = [
-  LOGIN_URL_DIGID,
-  LOGIN_URL_EHERKENNING,
 ];
 
 export const PublicRoutes = [

@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
-
-import { ComponentChildren } from '../../../universal/types';
-import Heading from '../Heading/Heading';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
+import { ReactNode } from 'react';
+import { ComponentChildren } from '../../../universal/types';
+import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './Section.module.scss';
 
 export interface SectionProps {
@@ -32,7 +31,8 @@ export default function Section({
     <section className={classes}>
       {hasTitle && (
         <Heading
-          size="mediumLarge"
+          level={3}
+          size="level-3"
           className={classnames(
             styles.Title,
             hasItems && styles.TitleWithItems

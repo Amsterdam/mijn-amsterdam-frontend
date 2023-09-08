@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+import { describe, expect, it } from 'vitest';
 import { transformIncomSpecificationResponse } from '../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes } from '../../../universal/config';
@@ -173,21 +174,18 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     />
   );
 
-  beforeAll(() => {
-    (window as any).scrollBy = jest.fn();
-  });
-
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Allows filtering (search) the results', () => {
-    render(<Component />);
+  it('Allows filtering (search) the results', async () => {
+    const user = userEvent.setup();
+    const screen = render(<Component />);
 
     expect(screen.getByText('18 januari 2014')).toBeInTheDocument();
 
-    userEvent.click(screen.getByText('Zoeken'));
+    await user.click(screen.getByText('Zoeken'));
 
     expect(screen.getByText('Datum van')).toBeInTheDocument();
     expect(screen.getByDisplayValue('2012-01-18')).toBeInTheDocument();
@@ -199,20 +197,26 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
       screen.getByDisplayValue('Alle regelingen (14)')
     ).toBeInTheDocument();
 
-    userEvent.type(screen.getByDisplayValue('2012-01-18'), '2019-03-23');
+    const input = screen.getByDisplayValue('2012-01-18');
+    await user.tripleClick(screen.getByDisplayValue('2012-01-18'));
+    await user.keyboard('2019-03-23');
 
-    expect(screen.getByDisplayValue('2019-03-23')).toBeInTheDocument();
+    expect(input).toHaveValue('2019-03-23');
     expect(screen.queryByText('18 januari 2014')).toBeNull();
   });
 
-  it('Has pagination', () => {
-    render(<Component />);
+  it('Has pagination', async () => {
+    const user = userEvent.setup();
+    const screen = render(<Component />);
+
     expect(screen.getByText('volgende')).toBeInTheDocument();
     expect(
       screen.getByLabelText('Huidige pagina, pagina 1')
     ).toBeInTheDocument();
     expect(screen.getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
-    userEvent.click(screen.getByText('volgende'));
+
+    await user.click(screen.getByText('volgende'));
+
     expect(
       screen.getByLabelText('Huidige pagina, pagina 2')
     ).toBeInTheDocument();

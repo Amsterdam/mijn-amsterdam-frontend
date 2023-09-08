@@ -1,30 +1,42 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
-import { apiSuccessResult } from '../../universal/helpers';
-import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
-import { dateSort } from '../../universal/helpers/date';
-import { MyNotification, MyTip } from '../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config';
-import { AuthProfileAndToken } from '../helpers/app';
 import {
-  fetchBelastingNotifications,
-  fetchSubsidieNotifications,
-  fetchMilieuzoneNotifications,
-  fetchErfpachtNotifications,
-} from './simple-connect';
+  ApiResponse,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
+import { dateSort } from '../../universal/helpers/date';
+import type { MyNotification, MyTip } from '../../universal/types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../config';
+import type { AuthProfileAndToken } from '../helpers/app';
+import { fetchAVGNotifications } from './avg/avg';
+import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
+import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
+import { fetchHorecaNotifications } from './horeca';
+import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
+import {
+  fetchBelastingNotifications,
+  fetchErfpachtNotifications,
+  fetchMilieuzoneNotifications,
+  fetchSubsidieNotifications,
+} from './simple-connect';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
-import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchHorecaNotifications } from './horeca';
-import { fetchAVGNotifications } from './avg/avg';
-import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
+
+export function sortNotifications(notifications: MyNotification[]) {
+  return (
+    notifications
+      .sort(dateSort('datePublished', 'desc'))
+      // Put the alerts on the top regardless of the publication date
+      .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0))
+  );
+}
 
 export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -44,12 +56,19 @@ export function getTipsAndNotificationsFromApiResults(
 
     // Collection of tips
     if ('tips' in content) {
-      tips.push(...content.tips);
+      for (const tip of content.tips) {
+        // Should we show the tip as Notification?
+        if (tip.isNotification) {
+          notifications.push(tip);
+        } else {
+          tips.push(tip);
+        }
+      }
     }
   }
 
-  const notificationsResult = notifications
-    .map((notification) => {
+  const notificationsResult = sortNotifications(
+    notifications.map((notification) => {
       if (notification.description) {
         notification.description = sanitizeCmsContent(
           marked(notification.description)
@@ -62,9 +81,7 @@ export function getTipsAndNotificationsFromApiResults(
       }
       return notification;
     })
-    .sort(dateSort('datePublished', 'desc'))
-    // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+  );
 
   const tipsResult = tips.map((notification) => {
     if (notification.description) {
@@ -81,10 +98,9 @@ export function getTipsAndNotificationsFromApiResults(
 
 async function fetchServicesNotifications(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  if (profileType === 'commercial') {
+  if (authProfileAndToken.profile.profileType === 'commercial') {
     const [
       milieuzoneNotificationsResult,
       vergunningenNotificationsResult,
@@ -144,7 +160,7 @@ async function fetchServicesNotifications(
     ]);
   }
 
-  if (profileType === 'private') {
+  if (authProfileAndToken.profile.profileType === 'private') {
     const [
       brpNotificationsResult,
       belastingNotificationsResult,
@@ -172,7 +188,11 @@ async function fetchServicesNotifications(
       fetchMaintenanceNotificationsDashboard(requestID),
       fetchToeristischeVerhuurNotifications(requestID, authProfileAndToken),
       fetchKrefiaNotifications(requestID, authProfileAndToken),
-      fetchWiorNotifications(requestID, authProfileAndToken, profileType),
+      fetchWiorNotifications(
+        requestID,
+        authProfileAndToken,
+        authProfileAndToken.profile.profileType
+      ),
       fetchWpiNotifications(requestID, authProfileAndToken),
       fetchKlachtenNotifications(requestID, authProfileAndToken),
       fetchHorecaNotifications(requestID, authProfileAndToken),

@@ -1,8 +1,14 @@
+import { IS_ACCEPTANCE } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
 
-export const BFF_API_BASE_URL = process.env.REACT_APP_BFF_API_URL || '/api/v1';
+const baseUrl =
+  import.meta.env.REACT_APP_BFF_API_URL ||
+  `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/api/v1`;
+
+export const BFF_API_BASE_URL = baseUrl || '/api/v1';
+
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 
 export const BFFApiUrls = {
@@ -18,7 +24,7 @@ export const BFFApiUrls = {
 };
 
 // Urls directly used from front-end
-export const AUTH_PATH = '/auth';
+export const AUTH_PATH = import.meta.env.REACT_APP_BFF_AUTH_PATH || '/auth';
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
@@ -27,7 +33,7 @@ export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL + AUTH_PATH}/yivi/login`;
 
 export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
 
-export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
+export const AUTH_API_URL = `${BFF_API_BASE_URL + AUTH_PATH}/check`;
 export const AUTH_API_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/check`;
 export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/check`;
 
@@ -39,6 +45,11 @@ export const loginUrlByAuthMethod: Record<string, string> = {
   digid: LOGIN_URL_DIGID,
   yivi: LOGIN_URL_YIVI,
 };
+
+export const ExcludePageViewTrackingUrls = [
+  LOGIN_URL_DIGID,
+  LOGIN_URL_EHERKENNING,
+];
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
@@ -151,8 +162,4 @@ export function getApiErrors(appState: AppState): ApiError[] {
   }
 
   return [];
-}
-
-export function relayApiUrl(path: string) {
-  return `${BFF_API_BASE_URL}/relay${path}`;
 }

@@ -28,13 +28,14 @@ import { GPK } from './GPK';
 import { GPP } from './GPP';
 import { Nachtwerkontheffing } from './Nachtwerkontheffing';
 import { Omzettingsvergunning } from './Omzettingsvergunning';
+import { RvvHeleStad } from './RvvHeleStad';
+import { RvvSloterweg } from './RvvSloterweg';
 import { StatusLineItems } from './StatusLineItems';
 import { TVMRVVObject } from './TVMRVVObject';
-import { ZwaarVerkeer } from './ZwaarVerkeer';
-import { Woonvergunningen } from './Woonvergunningen';
 import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
-import { RvvHeleStad } from './RvvHeleStad';
+import { Woonvergunningen } from './Woonvergunningen';
+import { ZwaarVerkeer } from './ZwaarVerkeer';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -110,6 +111,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.RVVHeleStad && (
               <RvvHeleStad vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.RVVSloterweg && (
+              <RvvSloterweg vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (

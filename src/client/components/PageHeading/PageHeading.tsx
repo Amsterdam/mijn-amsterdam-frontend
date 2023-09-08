@@ -1,25 +1,23 @@
-import { HTMLProps } from 'react';
+import { Heading } from '@amsterdam/design-system-react';
+import type { HTMLProps, ReactNode } from 'react';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
-import Heading, { HeadingTagName } from '../Heading/Heading';
 
+import composeClassNames from 'classnames';
 import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import composeClassNames from 'classnames';
 import styles from './PageHeading.module.scss';
 
 export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   children: ComponentChildren;
   backLink?: LinkProps;
-  el?: HeadingTagName;
-  icon?: JSX.Element;
+  icon?: ReactNode;
   className?: string;
   isLoading?: boolean;
 }
 
 export default function PageHeading({
-  el = 'h2',
   children,
   className,
   icon,
@@ -50,7 +48,7 @@ export default function PageHeading({
             {backLink.title}
           </Linkd>
         )}
-        <Heading el={el} size="large">
+        <Heading level={2} size="level-1">
           {isLoading ? (
             <LoadingContent
               className={styles.LoadingContentHeading}

@@ -1,89 +1,116 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] = `
+exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage InkomenSpecificaties SpecificationsTable--annualStatements"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _InkomenSpecificaties_028dc4 _SpecificationsTable--annualStatements_028dc4"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Inkomen"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="28px"
+          viewBox="0 0 32 28"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          inkomen.svg
+          <title>
+            inkomen-icoon
+          </title>
+          <path
+            d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
+            id="Shape"
+          />
+          <rect
+            height="2"
+            id="Rectangle"
+            width="3"
+            x="18"
+            y="15"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Inkomen
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Bijstandsuitkering
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     />
     <section
-      class="Section TableSection"
+      class="_Section_dac924 _TableSection_028dc4"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_dac924 _TitleWithItems_dac924"
       >
         Jaaropgaven
       </h3>
       <button
         aria-expanded="false"
-        class="Button Button__secondary-inverted SearchButton"
+        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
       >
         Zoeken
         <i
-          class="SearchButtonIcon"
+          class="_SearchButtonIcon_028dc4"
         >
           ◢
         </i>
       </button>
       <table
-        class="Table SpecificationsTable"
+        class="_Table_a66dcc _SpecificationsTable_028dc4"
       >
         <thead>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             />
             <th
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               Datum
             </th>
             <th
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               Documenten
             </th>
@@ -91,18 +118,18 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
         </thead>
         <tbody>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Jaaropgave
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -111,30 +138,40 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -142,18 +179,18 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Jaaropgave
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -162,30 +199,40 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -193,18 +240,18 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Jaaropgave
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -213,30 +260,40 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -244,18 +301,18 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Jaaropgave
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -264,30 +321,40 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -301,95 +368,122 @@ exports[`<InkomenSpecificaties /> Jaaropgave Matches the Full Page snapshot 1`] 
 </DocumentFragment>
 `;
 
-exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] = `
+exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage InkomenSpecificaties"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _InkomenSpecificaties_028dc4"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Inkomen"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="28px"
+          viewBox="0 0 32 28"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          inkomen.svg
+          <title>
+            inkomen-icoon
+          </title>
+          <path
+            d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
+            id="Shape"
+          />
+          <rect
+            height="2"
+            id="Rectangle"
+            width="3"
+            x="18"
+            y="15"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Inkomen
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Bijstandsuitkering
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     />
     <section
-      class="Section TableSection"
+      class="_Section_dac924 _TableSection_028dc4"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_dac924 _TitleWithItems_dac924"
       >
         Uitkeringsspecificaties
       </h3>
       <button
         aria-expanded="false"
-        class="Button Button__secondary-inverted SearchButton"
+        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
       >
         Zoeken
         <i
-          class="SearchButtonIcon"
+          class="_SearchButtonIcon_028dc4"
         >
           ◢
         </i>
       </button>
       <table
-        class="Table SpecificationsTable"
+        class="_Table_a66dcc _SpecificationsTable_028dc4"
       >
         <thead>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             />
             <th
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               Regeling
             </th>
             <th
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               Datum
             </th>
             <th
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               Documenten
             </th>
@@ -397,18 +491,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
         </thead>
         <tbody>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -417,10 +511,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -429,30 +523,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -460,18 +564,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -480,10 +584,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -492,30 +596,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -523,18 +637,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -543,10 +657,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -555,30 +669,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -586,18 +710,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -606,10 +730,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -618,30 +742,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=24267681&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=24267681&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -649,18 +783,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -669,10 +803,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -681,30 +815,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=24078481&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=24078481&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -712,18 +856,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -732,10 +876,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -744,30 +888,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=24078491&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=24078491&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -775,18 +929,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -795,10 +949,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -807,30 +961,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=30032581&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=30032581&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -838,18 +1002,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -858,10 +1022,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -870,30 +1034,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -901,18 +1075,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -921,10 +1095,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -933,30 +1107,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -964,18 +1148,18 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
             </td>
           </tr>
           <tr
-            class="TableRow"
+            class="_TableRow_a66dcc"
           >
             <td
-              class="DisplayPropTitle"
+              class="_DisplayPropTitle_a66dcc"
             >
               Uitkeringsspecificatie
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Regeling:
               </span>
@@ -984,10 +1168,10 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Datum:
               </span>
@@ -996,30 +1180,40 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
               </span>
             </td>
             <td
-              class="DisplayProp"
+              class="_DisplayProp_a66dcc"
             >
               <span
-                class="DisplayPropLabel"
+                class="_DisplayPropLabel_a66dcc"
               >
                 Documenten:
               </span>
               <span
-                class="DocumentLinkWrap"
+                class="_DocumentLinkWrap_7ed0ad"
               >
                 <span
-                  class="DownloadIcon"
+                  class="_DownloadIcon_7ed0ad"
                 >
                   <svg
                     aria-hidden="true"
+                    focusable="false"
                     height="14"
+                    viewBox="0 0 32 32"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    Download.svg
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
                   </svg>
                 </span>
                 <a
-                  class="Button Button__plain Button__lean Linkd DocumentLink"
-                  href="/api/v1/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="http://bff-api-host/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  rel="external noopener noreferrer"
                 >
                   PDF
                 </a>
@@ -1030,34 +1224,45 @@ exports[`<InkomenSpecificaties /> Uitkering Matches the Full Page snapshot 1`] =
       </table>
       <nav
         aria-label="Pagina navigatie"
-        class="Pagination Pagination"
+        class="_Pagination_5caf80 _Pagination_028dc4"
       >
         <div
-          class="PageList"
+          class="_PageList_5caf80"
         >
           <button
             aria-current="true"
             aria-label="Huidige pagina, pagina 1"
-            class="PageSelectButton SelectedPage"
+            class="_PageSelectButton_5caf80 _SelectedPage_5caf80"
           >
             1
           </button>
           <button
             aria-current="false"
             aria-label="Ga naar pagina 2"
-            class="PageSelectButton"
+            class="_PageSelectButton_5caf80"
           >
             2
           </button>
           <button
             aria-label="Ga naar de volgende pagina"
-            class="PageSelectButton PageNextButton"
+            class="_PageSelectButton_5caf80 _PageNextButton_5caf80"
           >
             volgende 
             <svg
               aria-hidden="true"
+              focusable="false"
+              height="32px"
+              viewBox="0 0 32 32"
+              width="32px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              Chevron-Right.svg
+              <title>
+                chevron-rechts-icoon
+              </title>
+              <polygon
+                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+              />
             </svg>
           </button>
         </div>

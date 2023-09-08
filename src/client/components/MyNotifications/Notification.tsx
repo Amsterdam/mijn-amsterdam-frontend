@@ -1,25 +1,24 @@
+import { Heading } from '@amsterdam/design-system-react';
 import { useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-import classNames from 'classnames';
 import { useDebouncedCallback } from 'use-debounce';
+import { InnerHtml } from '..';
 import { ChapterTitles } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
   SVGComponent,
 } from '../../../universal/types';
+import { IconChevronRight } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import {
   trackItemClick,
   useContentDimensions,
   useProfileTypeValue,
 } from '../../hooks';
-import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import Heading from '../Heading/Heading';
-import { DocumentLink } from '../DocumentList/DocumentList';
 import Linkd from '../Button/Button';
-import { InnerHtml } from '..';
-import { IconChevronRight } from '../../assets/icons';
+import ChapterIcon from '../ChapterIcon/ChapterIcon';
+import { DocumentLink } from '../DocumentList/DocumentList';
 import styles from './MyNotifications.module.scss';
 
 export interface MyNotification extends MyNotificationBase {
@@ -76,9 +75,9 @@ const Notification = ({
           onClick={() => toggleCollapsed(!isCollapsed)}
         >
           <Heading
-            className={classNames(styles.Title, styles.NotificationHeader)}
-            el="h4"
-            size="small"
+            className={styles.NotificationHeader}
+            level={4}
+            size="level-3"
           >
             {notification.title}
           </Heading>
@@ -92,9 +91,12 @@ const Notification = ({
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
-            <em className={styles.ChapterIndication}>
-              {ChapterTitles[notification.chapter]}
-            </em>
+            {!notification.isTip && (
+              <em className={styles.ChapterIndication}>
+                {ChapterTitles[notification.chapter]}
+              </em>
+            )}
+
             {!notification.hideDatePublished && (
               <time
                 className={styles.Datum}

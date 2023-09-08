@@ -1,4 +1,4 @@
-import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
+import { ThumbsDown, ThumbsUp } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
@@ -122,10 +122,6 @@ export default function Sia() {
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(SIA)}
-        track={{
-          category: 'Sia overzicht / Openstaande meldingen',
-          name: 'Datatabel',
-        }}
       >
         <Table
           className={styles.Table}
@@ -146,10 +142,6 @@ export default function Sia() {
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}
         isLoading={isLoading(SIA)}
-        track={{
-          category: 'Sia overzicht / Afgesloten meldingen',
-          name: 'Datatabel',
-        }}
       >
         <Table
           className={styles.Table}

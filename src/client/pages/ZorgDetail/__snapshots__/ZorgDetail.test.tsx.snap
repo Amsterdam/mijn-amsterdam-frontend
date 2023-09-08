@@ -1,131 +1,140 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishouden (geleverd) 1`] = `
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (geleverd) 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Zorg en ondersteuning"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          zorg.svg
+          <title>
+            zorg-en-ondersteuning-icoon
+          </title>
+          <polygon
+            id="Path"
+            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
+          />
+          <path
+            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+            id="Shape"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/zorg-en-ondersteuning"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Zorg en ondersteuning
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Hulp bij het huishouden (geleverd)
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Emile Thuiszorg
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Besluit
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 15 januari 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 
               
@@ -153,10 +162,10 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <span
-                class="altDocumentContent"
+                class="_altDocumentContent_a12ff2"
               >
                 <p>
                   
@@ -174,37 +183,36 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestart
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -214,42 +222,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestopt
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -259,42 +266,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Einde recht
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -304,157 +310,151 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
 
-exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishouden (gestopt) 1`] = `
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (gestopt) 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Zorg en ondersteuning"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          zorg.svg
+          <title>
+            zorg-en-ondersteuning-icoon
+          </title>
+          <polygon
+            id="Path"
+            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
+          />
+          <path
+            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+            id="Shape"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/zorg-en-ondersteuning"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Zorg en ondersteuning
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Hulp bij het huishouden (gestopt)
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Emile Thuiszorg
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Besluit
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 15 januari 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 
               
@@ -476,10 +476,10 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <span
-                class="altDocumentContent"
+                class="_altDocumentContent_a12ff2"
               >
                 <p>
                   
@@ -497,37 +497,36 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestart
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -537,42 +536,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestopt
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -583,47 +581,46 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end-active ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Einde recht
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 22 januari 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -633,157 +630,151 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
 
-exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishouden (nog niet geleverd) 1`] = `
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (nog niet geleverd) 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Zorg en ondersteuning"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          zorg.svg
+          <title>
+            zorg-en-ondersteuning-icoon
+          </title>
+          <polygon
+            id="Path"
+            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
+          />
+          <path
+            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+            id="Shape"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/zorg-en-ondersteuning"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Zorg en ondersteuning
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Hulp bij het huishouden (nog niet geleverd)
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Emile Thuiszorg
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Besluit
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 15 januari 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 
               
@@ -811,10 +802,10 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <span
-                class="altDocumentContent"
+                class="_altDocumentContent_a12ff2"
               >
                 <p>
                   
@@ -832,37 +823,36 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestart
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -872,42 +862,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestopt
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -917,42 +906,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Einde recht
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -962,157 +950,151 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
 
-exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishouden (tijdelijk gestopt) 1`] = `
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (tijdelijk gestopt) 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Zorg en ondersteuning"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          zorg.svg
+          <title>
+            zorg-en-ondersteuning-icoon
+          </title>
+          <polygon
+            id="Path"
+            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
+          />
+          <path
+            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+            id="Shape"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/zorg-en-ondersteuning"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Zorg en ondersteuning
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Hulp bij het huishouden (tijdelijk gestopt)
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Emile Thuiszorg
         </p>
       </div>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start-checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Besluit
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 15 januari 2022
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 
               
@@ -1140,10 +1122,10 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             >
               <span
-                class="altDocumentContent"
+                class="_altDocumentContent_a12ff2"
               >
                 <p>
                   
@@ -1161,37 +1143,36 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--checked"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestart
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -1201,42 +1182,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--middle-checked-next"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestopt
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -1246,42 +1226,41 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
         <li
-          class="ListItem"
-          style="display: none;"
+          class="_ListItem_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--end"
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
               />
               <span
-                class="Checkmark"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Einde recht
               </strong>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 <p>
                   
@@ -1291,148 +1270,157 @@ exports[`<Zorg /> Matches the Full Page snapshot for item Hulp bij het huishoude
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>
       </ul>
     </div>
-    <button
-      aria-expanded="false"
-      class="Button Button__plain Button__lean MoreStatus MoreStatusClosed"
-    >
-      <svg
-        aria-hidden="true"
-        class="Icon Icon__left"
-        fill="#000"
-        height="14px"
-        width="14px"
-      >
-        Chevron-Left.svg
-      </svg>
-      Toon alles
-    </button>
   </main>
 </DocumentFragment>
 `;
 
-exports[`<Zorg /> Matches the Full Page snapshot for item Wmo item 1 1`] = `
+exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage StatusDetail"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Zorg en ondersteuning"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          zorg.svg
+          <title>
+            zorg-en-ondersteuning-icoon
+          </title>
+          <polygon
+            id="Path"
+            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
+          />
+          <path
+            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+            id="Shape"
+          />
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/zorg-en-ondersteuning"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Zorg en ondersteuning
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Wmo item 1
         </h2>
       </div>
     </header>
     <div
-      class="PageContent DetailPageContent"
+      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
     >
       <div
-        class="InfoDetail"
+        class="_InfoDetail_6f1df2"
       >
         <h3
-          class="Heading Heading__tiny Label"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
         <p
-          class="Value"
+          class="_Value_6f1df2"
         >
           Mantelzorg B.V
         </p>
       </div>
     </div>
     <div
-      class="StatusLine"
+      class="_StatusLine_a12ff2"
     >
       <h4
-        class="Heading Heading__tiny ListHeading"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
       <ul
-        class="List"
+        class="_List_a12ff2"
       >
         <li
-          class="ListItem ListItem--highlight"
-          style="display: block;"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
-            class="ListItemInner"
+            class="_ListItemInner_a12ff2"
           >
             <div
               aria-label="Vinkje, processtap gereed"
-              class="StatusConnection"
+              class="_StatusConnection_a12ff2"
             >
               <span
-                class="ConnectLine ConnectLine--start"
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
               />
               <span
-                class="Checkmark Checkmark--active Checkmark--checked"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
-              class="Panel Panel--status"
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
             >
               <strong
-                class="StatusTitle"
+                class="_StatusTitle_a12ff2"
               >
                 Levering gestart
               </strong>
               <time
-                class="StatusDate"
+                class="_StatusDate_a12ff2"
               >
                 24 juli 2020
               </time>
             </div>
             <div
-              class="Panel Panel--description"
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
             >
               <div
-                class="PanelContent"
+                class="_PanelContent_a12ff2"
               >
                 De levering van uw thuizorg is gestart
               </div>
             </div>
             <div
-              class="Panel Panel--documents"
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
             />
           </div>
         </li>

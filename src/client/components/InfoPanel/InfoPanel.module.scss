@@ -10,7 +10,7 @@
   }
 }
 
-.Title {
+.InfoPanel :global(.amsterdam-heading) {
   margin-left: 16rem;
   margin-bottom: 1.8rem;
 
@@ -27,6 +27,7 @@
 .InfoPanelCollapsible {
   @include select(SectionCollapsible_Title_) {
     @include heading-medium;
+
     @include mq-phone {
       margin-left: 0;
     }
@@ -45,13 +46,14 @@
 
 .Tables {
   width: 59%;
+
   @include mq-phone() {
     width: 100%;
   }
 }
 
 .TableWrap {
-  + .TableWrap {
+  +.TableWrap {
     &:before {
       content: '';
       display: block;
@@ -61,6 +63,7 @@
       border-top: 0.1rem solid $color-neutral-grey2;
       margin-top: -2rem;
     }
+
     margin-top: 2rem;
     padding-top: 2rem;
   }
@@ -68,9 +71,11 @@
   th span {
     white-space: nowrap;
   }
+
   @include mq-desktop() {
     th {
       position: relative;
+
       span {
         position: absolute;
         right: 2rem;
@@ -80,19 +85,19 @@
   }
 }
 
-.InfoPanelTableItem {
-}
+.InfoPanelTableItem {}
 
 .InfoPanelTable {
   border-collapse: collapse;
 
-  tbody > tr {
-    > td {
+  tbody>tr {
+    >td {
       text-align: left;
       white-space: pre-line;
       padding-bottom: 0.5rem;
     }
-    > th {
+
+    >th {
       width: 16rem;
       text-align: right;
       padding-right: 2rem;
@@ -117,17 +122,19 @@
     th {
       display: block;
     }
-    tbody > tr {
-      > th,
-      > td {
+
+    tbody>tr {
+
+      >th,
+      >td {
         width: auto;
         text-align: left;
         width: auto;
         padding-bottom: 0;
       }
 
-      + tr {
-        > th {
+      +tr {
+        >th {
           padding-top: 2rem;
         }
       }
@@ -139,7 +146,7 @@
   @include reset-list-style;
   position: relative;
 
-  > li {
+  >li {
     margin-bottom: 0.6rem;
   }
 

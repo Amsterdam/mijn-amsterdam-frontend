@@ -136,11 +136,13 @@ export async function fetchLoodmetingen(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForLood365(authProfileAndToken);
+
   const requestConfig = getApiConfig('LOOD_365', {
     headers: await getLoodApiHeaders(requestID),
     data,
     transformResponse: transformLood365Response,
   });
+
   requestConfig.url = `${requestConfig.url}/be_getrequestdetails`;
 
   return requestData<LoodMetingen>(requestConfig, requestID);

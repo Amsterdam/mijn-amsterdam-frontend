@@ -58,7 +58,7 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "--build-arg REACT_APP_ENV=development " +
+           "--build-arg MA_OTAP_ENV=development " +
            "--target=serve-ot-bff " +
            "."
         sh "docker push ${IMAGE_TEST}"
@@ -144,7 +144,7 @@ pipeline {
         script { currentBuild.displayName = "ACC Build Front-end #${BUILD_NUMBER}" }
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
-           "--build-arg REACT_APP_ENV=acceptance " +
+           "--build-arg MA_OTAP_ENV=acceptance " +
            "--target=deploy-acceptance-frontend " +
            "--shm-size 1G " +
            "."

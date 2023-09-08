@@ -8,28 +8,28 @@ export function newEventSourceMock() {
   EventSourceMock.OPEN = 1;
   EventSourceMock.CLOSED = 2;
   EventSourceMock.prototype.readyState = 0;
-  EventSourceMock.prototype.init = jest.fn();
+  EventSourceMock.prototype.init = vi.fn();
   EventSourceMock.prototype.setReadyState = function (readyState: number) {
     this.readyState = readyState;
   };
-  EventSourceMock.prototype.open = jest.fn(() => {
+  EventSourceMock.prototype.open = vi.fn(() => {
     EventSourceMock.prototype.evHandlers.open &&
       EventSourceMock.prototype.evHandlers.open();
   });
-  EventSourceMock.prototype.close = jest.fn(() => {
+  EventSourceMock.prototype.close = vi.fn(() => {
     EventSourceMock.prototype.evHandlers.close &&
       EventSourceMock.prototype.evHandlers.close();
   });
-  EventSourceMock.prototype.error = jest.fn((error: any) => {
+  EventSourceMock.prototype.error = vi.fn((error: any) => {
     EventSourceMock.prototype.evHandlers.error &&
       EventSourceMock.prototype.evHandlers.error(error);
   });
-  EventSourceMock.prototype.addEventListener = jest.fn(
+  EventSourceMock.prototype.addEventListener = vi.fn(
     (eventName: string, handler: (args: any) => void) => {
-      EventSourceMock.prototype.evHandlers[eventName] = jest.fn(handler);
+      EventSourceMock.prototype.evHandlers[eventName] = vi.fn(handler);
     }
   );
-  EventSourceMock.prototype.removeEventListener = jest.fn(
+  EventSourceMock.prototype.removeEventListener = vi.fn(
     (eventName: string, handler: () => void) => {
       delete EventSourceMock.prototype.evHandlers[eventName];
     }

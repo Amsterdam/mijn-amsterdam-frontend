@@ -160,10 +160,6 @@ export default function Stadspas() {
           startCollapsed={false}
           isLoading={isLoadingStadspas}
           hasItems={hasStadspas}
-          track={{
-            category: 'Stadspas overzicht / Stadpas',
-            name: 'Datatabel',
-          }}
           className={styles.SectionCollapsibleFirst}
         >
           <Table
@@ -180,10 +176,6 @@ export default function Stadspas() {
         startCollapsed={hasStadspas}
         isLoading={isLoadingStadspas}
         hasItems={hasActiveRequests}
-        track={{
-          category: 'Stadspas overzicht / Lopende aanvragen',
-          name: 'Datatabel',
-        }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         className={styles.SectionCollapsible}
       >
@@ -200,10 +192,6 @@ export default function Stadspas() {
         isLoading={isLoadingStadspas}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
-        track={{
-          category: 'Stadspas overzicht / Eerdere aanvragen',
-          name: 'Datatabel',
-        }}
         noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
       >
         <Table

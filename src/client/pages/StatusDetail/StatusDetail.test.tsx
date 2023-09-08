@@ -78,7 +78,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={false}
           pageContent={pageContent}
           maxStepCount={() => -1}
           highlightKey={false}
@@ -108,7 +107,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
@@ -126,10 +124,6 @@ describe('<StatusDetail />', () => {
 
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
-
-    userEvent.click(screen.getAllByText('Toon alles')[0]);
-
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Shows Unknown item page', () => {
@@ -138,7 +132,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
@@ -170,7 +163,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           chapter="INKOMEN"
           stateKey="WPI_TOZO"
-          showToggleMore={false}
           reverseSteps={true}
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}

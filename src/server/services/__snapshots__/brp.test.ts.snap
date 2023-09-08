@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BRP data api + transformation should transform the source data 1`] = `
-Object {
-  "adres": Object {
+exports[`BRP data api + transformation > should transform the source data 1`] = `
+{
+  "adres": {
     "_adresSleutel": "xxxcasdasfada",
     "adresType": "correspondentie",
     "begindatumVerblijf": "1967-01-01",
@@ -15,8 +15,8 @@ Object {
     "straatnaam": "Amstel",
     "woonplaatsNaam": "Amsterdam",
   },
-  "adresHistorisch": Array [
-    Object {
+  "adresHistorisch": [
+    {
       "adresType": "woon",
       "begindatumVerblijf": "2005-09-01",
       "einddatumVerblijf": "2012-08-01",
@@ -28,7 +28,7 @@ Object {
       "straatnaam": "Ampèrestraat",
       "woonplaatsNaam": "Amsterdam",
     },
-    Object {
+    {
       "adresType": "woon",
       "begindatumVerblijf": "1990-01-01",
       "einddatumVerblijf": "2005-09-01",
@@ -41,63 +41,63 @@ Object {
       "woonplaatsNaam": "Amsterdam",
     },
   ],
-  "identiteitsbewijzen": Array [
-    Object {
+  "identiteitsbewijzen": [
+    {
       "datumAfloop": "2025-10-15",
       "datumUitgifte": "2015-10-15",
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
-      "link": Object {
+      "link": {
         "title": "paspoort",
         "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-1",
       },
       "title": "paspoort",
     },
-    Object {
+    {
       "datumAfloop": "2020-09-11",
       "datumUitgifte": "2010-09-11",
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
-      "link": Object {
+      "link": {
         "title": "europese identiteitskaart",
         "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-2",
       },
       "title": "ID-kaart",
     },
   ],
-  "kinderen": Array [
-    Object {
+  "kinderen": [
+    {
       "bsn": "123456780",
-      "geboortedatum": "2019-07-08",
+      "geboortedatum": "2014-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
       "overlijdensdatum": null,
       "voornamen": "Yassine",
       "voorvoegselGeslachtsnaam": null,
     },
-    Object {
+    {
       "bsn": "123456780",
       "geboortedatum": "2019-07-08",
       "geslachtsaanduiding": "M",
       "geslachtsnaam": "Kosterijk",
-      "overlijdensdatum": "2019-07-08",
+      "overlijdensdatum": null,
       "voornamen": "Marwan",
       "voorvoegselGeslachtsnaam": null,
     },
   ],
   "kvkNummer": "123123123",
-  "ouders": Array [
-    Object {
+  "ouders": [
+    {
       "bsn": "123456780",
       "geboortedatum": "1920-01-01",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboer",
       "indicatieGeboortedatum": "M",
-      "nationaliteiten": Array [
-        Object {
+      "nationaliteiten": [
+        {
           "omschrijving": "Nederlandse",
         },
       ],
@@ -107,14 +107,14 @@ Object {
       "voornamen": "Senior",
       "voorvoegselGeslachtsnaam": null,
     },
-    Object {
+    {
       "bsn": "123456780",
       "geboortedatum": "1920-01-01",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
       "geslachtsnaam": "Beemsterboerin",
-      "nationaliteiten": Array [
-        Object {
+      "nationaliteiten": [
+        {
           "omschrijving": "Nederlandse",
         },
       ],
@@ -124,7 +124,7 @@ Object {
       "voorvoegselGeslachtsnaam": null,
     },
   ],
-  "persoon": Object {
+  "persoon": {
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
     "adresInOnderzoek": "089999",
     "bsn": "129095205",
@@ -137,11 +137,11 @@ Object {
     "indicatieGeboortedatum": "J",
     "indicatieGeheim": true,
     "mokum": true,
-    "nationaliteiten": Array [
-      Object {
+    "nationaliteiten": [
+      {
         "omschrijving": "Nederlandse",
       },
-      Object {
+      {
         "omschrijving": "Turkse",
       },
     ],
@@ -154,11 +154,11 @@ Object {
     "voornamen": "Wesley",
     "voorvoegselGeslachtsnaam": null,
   },
-  "verbintenis": Object {
+  "verbintenis": {
     "datumOntbinding": null,
     "datumSluiting": "1999-01-01",
     "landnaamSluiting": "Marokko",
-    "persoon": Object {
+    "persoon": {
       "bsn": "123456780",
       "geboortedatum": "2019-07-08",
       "geslachtsnaam": "Bakker",
@@ -171,12 +171,12 @@ Object {
     "soortVerbintenis": "H",
     "soortVerbintenisOmschrijving": "Huwelijk",
   },
-  "verbintenisHistorisch": Array [
-    Object {
+  "verbintenisHistorisch": [
+    {
       "datumOntbinding": "1998-07-08",
       "datumSluiting": "1912-01-01",
       "landnaamSluiting": "Marokko",
-      "persoon": Object {
+      "persoon": {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
@@ -189,11 +189,11 @@ Object {
       "soortVerbintenis": "H",
       "soortVerbintenisOmschrijving": "Huwelijk",
     },
-    Object {
+    {
       "datumOntbinding": "2019-07-08",
       "datumSluiting": "",
       "landnaamSluiting": "Marokko",
-      "persoon": Object {
+      "persoon": {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
         "geslachtsnaam": "Bakker",
@@ -205,11 +205,11 @@ Object {
       "soortVerbintenis": "H",
       "soortVerbintenisOmschrijving": "Huwelijk",
     },
-    Object {
+    {
       "datumOntbinding": "2006-01-01",
       "datumSluiting": "2000-01-01",
       "landnaamSluiting": "Nederland",
-      "persoon": Object {
+      "persoon": {
         "bsn": "113731681",
         "geboortedatum": "1950-01-06",
         "geboortelandnaam": "Nederland",
@@ -231,27 +231,27 @@ Object {
 }
 `;
 
-exports[`BRP data api + transformation should transform the source data into notifications 1`] = `
-Array [
-  Object {
+exports[`BRP data api + transformation > should transform the source data into notifications 1`] = `
+[
+  {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",
     "description": "Op dit moment onderzoeken wij op welk adres u nu woont.",
     "id": "brpAdresInOnderzoek",
     "isAlert": true,
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/persoonlijke-gegevens",
     },
     "title": "Adres in onderzoek",
   },
-  Object {
+  {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",
     "description": "U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
     "id": "brpVertrokkenOnbekendWaarheen",
     "isAlert": true,
-    "link": Object {
+    "link": {
       "title": "Meer informatie",
       "to": "/persoonlijke-gegevens",
     },

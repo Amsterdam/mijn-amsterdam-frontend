@@ -1,37 +1,48 @@
-/* eslint-disable testing-library/no-node-access */
-/* eslint-disable testing-library/no-container */
-import { render, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import App from './App';
-import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
+import { vi, describe, it, expect } from 'vitest';
+import { bffApi } from '../test-utils';
 
-jest.mock('./hooks/api/useSessionApi', () => {
-  const module = jest.requireActual('./hooks/api/useSessionApi');
+const mocks = vi.hoisted(() => {
+  return {
+    useSessionApi: vi.fn(),
+    useSessionValue: vi.fn(),
+  };
+});
+
+vi.mock('./hooks/api/useSessionApi', (importOriginal) => {
+  const module = importOriginal();
 
   return {
-    __esModule: true,
     ...module,
-    useSessionApi: jest.fn(),
-    useSessionValue: jest.fn(),
+    useSessionApi: mocks.useSessionApi,
+    useSessionValue: mocks.useSessionValue,
   };
 });
 
 describe('App', () => {
+  bffApi
+    .get('/services/cms/maintenance-notifications?page=landingspagina')
+    .reply(200);
+  bffApi.get('/services/all?optin=false&profileType=private').reply(200);
+  bffApi.get('/services/cms').reply(200);
+
   it('Renders pristine App', () => {
-    (useSessionApi as jest.Mock).mockReturnValue({
+    mocks.useSessionApi.mockReturnValue({
       isPristine: true,
     });
 
-    render(<App />);
+    const screen = render(<App />);
     expect(screen.getByText(/Welkom/i)).toBeInTheDocument();
   });
 
   it('Renders Landing Page', async () => {
-    (useSessionApi as jest.Mock).mockReturnValue({
+    mocks.useSessionApi.mockReturnValue({
       isPristine: false,
       isAuthenticated: false,
     });
 
-    render(<App />);
+    const screen = render(<App />);
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
     await screen.findByText('Voor particulieren en eenmanszaken');
@@ -41,18 +52,19 @@ describe('App', () => {
   });
 
   it('Renders Dashboard', async () => {
-    (window as any).scrollTo = jest.fn();
     const session = {
       isPristine: false,
       isAuthenticated: true,
       isDirty: true,
     };
-    (useSessionValue as jest.Mock).mockReturnValue(session);
-    (useSessionApi as jest.Mock).mockReturnValue(session);
+    mocks.useSessionValue.mockReturnValue(session);
+    mocks.useSessionApi.mockReturnValue(session);
 
-    render(<App />);
+    const screen = render(<App />);
 
-    expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    });
 
     await screen.findByRole('heading', { name: /actueel/i });
 

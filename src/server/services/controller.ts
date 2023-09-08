@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
-import { omit } from '../../universal/helpers';
+import { omit, pick } from '../../universal/helpers';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -47,6 +47,7 @@ import {
 } from './wpi';
 import { fetchSignals } from './sia';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
+import { MyNotification } from '../../universal/types';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -130,13 +131,22 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     return apiSuccessResult([]);
   }
 
-  return (
-    await fetchTipsAndNotifications(
-      requestID,
-      await getAuth(req),
-      getProfileType(req)
-    )
-  ).NOTIFICATIONS;
+  const [
+    tipNotifications,
+    {
+      NOTIFICATIONS: { content: chapterNotifications = [] },
+    },
+  ] = await Promise.all([
+    getTipNotifications(requestID, req),
+    fetchTipsAndNotifications(requestID, await getAuth(req)),
+  ]);
+
+  const notifications: Array<MyNotification> = [
+    ...tipNotifications,
+    ...chapterNotifications,
+  ];
+
+  return apiSuccessResult(notifications);
 };
 
 // Store all services for type derivation
@@ -389,25 +399,57 @@ export async function getServiceResultsForTips(
   return requestData;
 }
 
+async function getTipNotifications(requestID: requestID, req: Request) {
+  const serviceResults = await getServiceResultsForTips(requestID, req);
+  const {
+    profile: { profileType },
+  } = await getAuth(req);
+
+  const ONLY_INCLUDE_TIP_AS_NOTIFICATION = true;
+  const { content: tipNotifications } = await createTipsFromServiceResults(
+    { optin: 'true', profileType },
+    {
+      serviceResults,
+      tipsDirectlyFromServices: [],
+    },
+    ONLY_INCLUDE_TIP_AS_NOTIFICATION
+  );
+
+  return tipNotifications.map((tip) => {
+    return {
+      ...pick(tip, [
+        'chapter',
+        'datePublished',
+        'description',
+        'id',
+        'title',
+        'link',
+      ]),
+      isTip: true,
+      isAlert: false,
+    } as MyNotification;
+  });
+}
+
 export async function getTipsFromServiceResults(
   requestID: requestID,
   req: Request
 ) {
   const serviceResults = await getServiceResultsForTips(requestID, req);
   const tipsDirectlyFromServices =
-    (
-      await fetchTipsAndNotifications(
-        requestID,
-        await getAuth(req),
-        getProfileType(req)
-      )
-    ).TIPS.content ?? [];
+    (await fetchTipsAndNotifications(requestID, await getAuth(req))).TIPS
+      .content ?? [];
 
   try {
-    return createTipsFromServiceResults(queryParams(req), {
-      serviceResults,
-      tipsDirectlyFromServices,
-    });
+    const INCLUDE_TIP_AS_NOTIFICATION = false;
+    return createTipsFromServiceResults(
+      queryParams(req),
+      {
+        serviceResults,
+        tipsDirectlyFromServices,
+      },
+      INCLUDE_TIP_AS_NOTIFICATION
+    );
   } catch (error: unknown) {
     Sentry.captureException(error);
     return apiErrorResult(

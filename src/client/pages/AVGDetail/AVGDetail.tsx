@@ -52,9 +52,6 @@ const AVGDetail = () => {
               label="Toelichting"
               value={verzoek?.toelichting || '-'}
             />
-            {verzoek?.resultaat && (
-              <InfoDetail label="Resultaat" value={verzoek.resultaat} />
-            )}
           </>
         )}
       </PageContent>

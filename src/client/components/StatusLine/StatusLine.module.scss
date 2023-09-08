@@ -27,10 +27,7 @@
 }
 
 .ListHeading {
-  @include centered-block;
   color: $color-neutral-grey4;
-  margin-bottom: 0;
-  font-weight: 500;
 }
 
 .StatusTitle {
@@ -150,10 +147,6 @@
   &--checked {
     background-color: $color-primary-darkblue;
     background-image: url('../../assets/icons/Checkmark__white.svg');
-  }
-
-  &--single {
-    // bliep
   }
 
   &--active {

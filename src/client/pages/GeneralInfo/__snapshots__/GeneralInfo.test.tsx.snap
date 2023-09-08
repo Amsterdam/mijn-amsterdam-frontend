@@ -1,25 +1,25 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<GeneralInfo /> Matches the Full Page snapshot 1`] = `
+exports[`<GeneralInfo /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page TextPage"
+    class="_Page_47d7c0 _TextPage_47d7c0"
   >
     <header
-      class="PageHeading"
+      class="_PageHeading_3b337d"
     >
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Algemene info
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <div>
         <p>

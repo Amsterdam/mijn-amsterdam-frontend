@@ -136,7 +136,7 @@ export default function InkomenSpecificaties() {
     selectedDates[1].toString() !== maxDate.toString();
 
   const selectCategoryFilter = useCallback(
-    (category) => {
+    (category: string) => {
       setSelectedCategory(category);
       history.replace(
         generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {

@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,8 +8,8 @@ import type {
 } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
-  apiPristineResult,
   ApiResponse,
+  apiPristineResult,
   isError,
   isLoading,
 } from '../../../universal/helpers';
@@ -20,7 +21,6 @@ import {
   Button,
   ChapterIcon,
   DetailPage,
-  Heading,
   Linkd,
   LinkdInline,
   LoadingContent,
@@ -32,6 +32,7 @@ import { relayApiUrl } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { relayApiUrl } from '../../utils/utils';
 import styles from './StadspasDetail.module.scss';
 
 const PAGE_SIZE = 10;
@@ -162,7 +163,11 @@ function StadspasBudget({
   return (
     <>
       <PageContent className={styles.PageContentBalance}>
-        <Heading className={styles.PageContentBalanceHeading}>
+        <Heading
+          className={styles.PageContentBalanceHeading}
+          level={3}
+          size="level-3"
+        >
           {budget.description}
         </Heading>
         <BudgetBalance budget={budget} />
@@ -267,7 +272,9 @@ export default function StadspasDetail() {
       </PageContent>
       {!!stadspasItem && (
         <PageContent className={styles.PageContentStadspasInfo}>
-          <Heading size="large">{stadspasItem?.owner}</Heading>
+          <Heading size="level-2" level={3}>
+            {stadspasItem?.owner}
+          </Heading>
           <p className={styles.StadspasNummer}>
             Stadspasnummer: {stadspasItem.passNumber}
           </p>

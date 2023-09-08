@@ -46,6 +46,7 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 # Copy source files
 COPY .env.production /build-space/
 COPY src /build-space/src
+COPY index.html /build-space/
 
 ########################################################################################################################
 ########################################################################################################################
@@ -54,6 +55,11 @@ COPY src /build-space/src
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
+ARG MA_OTAP_ENV=production
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ENV INLINE_RUNTIME_CHUNK=false
+ENV TZ=Europe/Amsterdam
 ARG REACT_APP_OTAP_ENV=production
 ENV REACT_APP_OTAP_ENV=$REACT_APP_OTAP_ENV
 

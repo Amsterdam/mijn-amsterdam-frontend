@@ -1,4 +1,4 @@
-import Heading from '../Heading/Heading';
+import { Heading } from '@amsterdam/design-system-react';
 import Linkd from '../Button/Button';
 import { isValidElement, useMemo } from 'react';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
@@ -143,7 +143,11 @@ export default function InfoPanel({
 }: InfoPanelProps) {
   return (
     <div id={id} className={classnames(styles.InfoPanel, className)}>
-      {!!title && <Heading className={styles.Title}>{title}</Heading>}
+      {!!title && (
+        <Heading className={styles.Title} level={3} size="level-3">
+          {title}
+        </Heading>
+      )}
       <div
         className={classnames(
           styles.InfoPanelContent,

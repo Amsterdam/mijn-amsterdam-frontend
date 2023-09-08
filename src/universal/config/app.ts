@@ -1,4 +1,4 @@
-import { getOtapEnvItem, IS_PRODUCTION } from './env';
+import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -21,7 +21,7 @@ export const FeatureToggle = {
   siaActive: true,
   siaApiActive: true,
   yiviActive: true,
-  aktesActive: false,
+  aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
@@ -55,8 +55,12 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
-  SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrl'),
-  EH_SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrlEH'),
+  SSO_ERFPACHT: `https://mijnerfpacht${
+    IS_ACCEPTANCE ? '.acc' : ''
+  }.amsterdam.nl/saml/login/alias/mijnErfpachtBurger`,
+  EH_SSO_ERFPACHT: `https://mijnerfpacht${
+    IS_ACCEPTANCE ? '.acc' : ''
+  }.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk`,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
@@ -73,8 +77,12 @@ export const ExternalUrls = {
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
   EH_SSO_BELASTINGEN:
     'https://belastingbalie.amsterdam.nl/eherkenning.saml.php?start',
-  SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
-  SSO_SUBSIDIE: getOtapEnvItem('ssoSubsidiesUrl'),
+  SSO_MILIEUZONE: `https://ontheffingen${
+    IS_ACCEPTANCE ? '-acc' : ''
+  }.amsterdam.nl/publiek/aanvragen`,
+  SSO_SUBSIDIE: `https://${
+    IS_ACCEPTANCE ? 'acc.' : ''
+  }mijnsubsidies.amsterdam.nl/dashboard`,
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
@@ -86,7 +94,9 @@ export const ExternalUrls = {
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
-  SSO_SVWI: getOtapEnvItem('ssoSvwi'),
+  SSO_SVWI: IS_ACCEPTANCE
+    ? 'https://mijnwpi-test.mendixcloud.com/p/overzicht'
+    : '',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
@@ -100,7 +110,7 @@ export const ExternalUrls = {
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
   AFVAL_MELDING:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D',
-  KREFIA: getOtapEnvItem('krefiaDirectLink'),
+  KREFIA: `https://krefia${IS_ACCEPTANCE ? '-acceptatie' : ''}.amsterdam.nl`,
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
   STADSPAS: 'https://www.amsterdam.nl/stadspas',
 

@@ -7,6 +7,8 @@ import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
 import styles from './VergunningDetail.module.scss';
+import { getEvenementVergunningLineItems } from './EvenementVergunning';
+import { getRVVSloterwegLineItems } from './RvvSloterweg';
 
 function useVergunningStatusLineItems(vergunning?: Vergunning) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -14,11 +16,18 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       return [];
     }
 
+    switch (vergunning.caseType) {
+      case CaseType.EvenementVergunning:
+        return getEvenementVergunningLineItems(vergunning);
+      case CaseType.RVVSloterweg:
+        return getRVVSloterwegLineItems(vergunning);
+    }
+
     const isDone = vergunning.processed;
     const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
     const inProgressActive = hasWorkflow(vergunning.caseType)
       ? hasDateWorkflowActive && !isDone
-      : !isDone && vergunning.caseType !== CaseType.EvenementVergunning;
+      : !isDone;
 
     const lineItems = [
       {
@@ -30,10 +39,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         isActive: !inProgressActive && !isDone,
         isChecked: true,
       },
-    ];
-
-    if (vergunning.caseType !== CaseType.EvenementVergunning) {
-      lineItems.push({
+      {
         id: 'item-2',
         status: 'In behandeling',
         datePublished: vergunning.dateWorkflowActive || '',
@@ -41,18 +47,17 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         documents: [],
         isActive: inProgressActive,
         isChecked: hasDateWorkflowActive,
-      });
-    }
-
-    lineItems.push({
-      id: 'last-item',
-      status: 'Afgehandeld',
-      datePublished: vergunning.dateDecision || '',
-      description: '',
-      documents: [],
-      isActive: isDone,
-      isChecked: isDone,
-    });
+      },
+      {
+        id: 'last-item',
+        status: 'Afgehandeld',
+        datePublished: vergunning.dateDecision || '',
+        description: '',
+        documents: [],
+        isActive: isDone,
+        isChecked: isDone,
+      },
+    ];
 
     return lineItems;
   }, [vergunning]);
@@ -77,7 +82,6 @@ export function StatusLineItems({
       className={styles.VergunningStatus}
       trackCategory="Vergunningen detail / status"
       items={statusLineItems}
-      showToggleMore={false}
       id={`vergunning-detail-${vergunning.id}`}
       documentPathForTracking={trackPath}
     />

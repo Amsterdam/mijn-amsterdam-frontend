@@ -1,7 +1,6 @@
 import { HTMLAttributes } from 'react';
-
+import { Heading } from '@amsterdam/design-system-react';
 import { IconExternalLink } from '../../assets/icons';
-import Heading from '../Heading/Heading';
 import { LINKS } from './DirectLinks.constants';
 import Linkd from '../Button/Button';
 import classnames from 'classnames';
@@ -22,7 +21,7 @@ export default function DirectLinks({
       className={classnames(styles.DirectLinks, className)}
       id={id}
     >
-      <Heading id={`${id}Header`} size="large">
+      <Heading id={`${id}Header`} level={3} size="level-2">
         Bezoek ook
       </Heading>
       <ul className={styles.LinkList}>

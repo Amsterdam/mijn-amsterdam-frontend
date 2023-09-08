@@ -4,8 +4,22 @@
 @import 'global';
 @import 'normalize';
 
+// Import (NLDesign) Amsterdam design system components
+@import '@amsterdam/design-system-tokens/dist/root.css';
+@import '@amsterdam/design-system-assets/font/index.css';
+@import '@amsterdam/design-system-css/src/heading/heading.scss';
+
 :root {
   --map-container-height: 100%;
+
+  // TODO: Temporary override to confirm with current styling.
+  --amsterdam-heading-font-weight: 600;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 html,
@@ -22,8 +36,8 @@ html {
 }
 
 body {
-  font-family: 'Amsterdam Sans', Arial, Helvetica, sans-serif;
-  color: $color-black;
+  font-family: var(--amsterdam-typography-font-family);
+  color: var(--amsterdam-color-primary-black);
   font-size: 1.6rem;
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
@@ -32,16 +46,10 @@ body {
     position: fixed;
     width: 100vw;
 
-    > *:not(#modal-root) {
+    >*:not(#modal-root) {
       pointer-events: none;
     }
   }
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
 }
 
 #root {
@@ -55,9 +63,11 @@ a {
 
 p a {
   color: $color-primary-darkblue;
+
   &:hover {
     color: $color-primary-red;
   }
+
   &:visited {
     color: $color-support-purple;
   }
@@ -76,15 +86,6 @@ button {
   line-height: inherit;
 }
 
-h4 {
-  @include heading-small;
-  margin: 0;
-}
-h5 {
-  @include heading-tiny;
-  margin: 0;
-}
-
 @import 'print.scss';
 
 .is-typeAheadActive {
@@ -92,12 +93,15 @@ h5 {
     @include select('App') {
       display: none;
     }
+
     @include select('MainFooter') {
       display: none;
     }
+
     @include select('MainHeaderHero') {
       display: none;
     }
+
     @include select('MyArea_MapContainer') {
       display: none;
     }

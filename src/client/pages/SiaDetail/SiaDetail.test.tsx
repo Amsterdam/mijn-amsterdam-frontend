@@ -7,6 +7,8 @@ import { PLACEHOLDER_IMAGE_URL } from '../../config/app';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import SiaDetail from './SiaDetail';
+import { bffApi } from '../../../test-utils';
+import { vi, describe, test, beforeEach, expect } from 'vitest';
 
 const SIA_ITEM = {
   id: 'xbcdefgh',
@@ -39,50 +41,34 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<SiaDetail />', () => {
-  (window as any).scrollTo = jest.fn();
-
-  beforeAll(() => {
-    // Disable real http requests.
-    // All requests should be mocked.
-    nock.disableNetConnect();
-  });
-
   beforeEach(() => {
-    nock('http://localhost')
-      .get('/api/v1/services/signals/xbcdefgh/attachments')
-      .reply(200, {
-        content: [
-          {
-            url: PLACEHOLDER_IMAGE_URL,
-            isImage: true,
-          },
-        ],
-        status: 'OK',
-      });
+    bffApi.get('/services/signals/xbcdefgh/attachments').reply(200, {
+      content: [
+        {
+          url: PLACEHOLDER_IMAGE_URL,
+          isImage: true,
+        },
+      ],
+      status: 'OK',
+    });
 
-    nock('http://localhost')
-      .get('/api/v1/services/signals/xbcdefgh/history')
-      .reply(200, {
-        content: [
-          {
-            status: 'Open',
-            key: 'UPDATE_STATUS',
-            datePublished: '2023-03-30T14:07:49.400270+02:00',
-            description: '',
-          },
-          {
-            status: 'Reactie verzonden',
-            key: 'REACTIE_VERZONDEN',
-            datePublished: '2023-03-31T14:07:49.400270+02:00',
-            description: '',
-          },
-        ],
-        status: 'OK',
-      });
-  });
-
-  afterEach(() => {
-    nock.cleanAll();
+    bffApi.get('/services/signals/xbcdefgh/history').reply(200, {
+      content: [
+        {
+          status: 'Open',
+          key: 'UPDATE_STATUS',
+          datePublished: '2023-03-30T14:07:49.400270+02:00',
+          description: '',
+        },
+        {
+          status: 'Reactie verzonden',
+          key: 'REACTIE_VERZONDEN',
+          datePublished: '2023-03-31T14:07:49.400270+02:00',
+          description: '',
+        },
+      ],
+      status: 'OK',
+    });
   });
 
   const routeEntry = generatePath(AppRoutes['SIA/DETAIL/OPEN'], {

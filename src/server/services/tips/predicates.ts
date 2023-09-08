@@ -1,11 +1,11 @@
 import { differenceInYears, differenceInCalendarDays } from 'date-fns';
-import { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { Vergunning } from '../vergunningen/vergunningen';
-import { WmoItem } from '../wmo';
-import { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
-import { TipsPredicateFN } from './tip-types';
+import type { TipsPredicateFN } from './tip-types';
+import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
+import type { Identiteitsbewijs, Kind } from '../../../universal/types';
+import type { WmoItem } from '../wmo';
+import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -100,16 +100,33 @@ export const hasAOV: TipsPredicateFN = (appState) => {
   );
 };
 
+export const hasKidsBetweenAges = (
+  kinderen: Kind[] | undefined,
+  ageFrom: number,
+  ageTo: number,
+  today: Date = new Date()
+) => {
+  return !!kinderen?.some(
+    (kind: Kind) =>
+      kind.geboortedatum &&
+      !kind.overlijdensdatum &&
+      differenceInYears(today, new Date(kind.geboortedatum)) >= ageFrom &&
+      differenceInYears(today, new Date(kind.geboortedatum)) <= ageTo
+  );
+};
+
 export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return !!appState.BRP?.content?.kinderen?.some(
-    (kind: Kind) =>
-      kind.geboortedatum &&
-      differenceInYears(today, new Date(kind.geboortedatum)) >= 2 &&
-      differenceInYears(today, new Date(kind.geboortedatum)) <= 18
-  );
+  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 2, 18, today);
+};
+
+export const hasKidsBetweenAges4And11: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 4, 11, today);
 };
 
 // Rule 13
@@ -139,19 +156,20 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: Vergunning) => v.caseType === CaseType.VakantieverhuurVergunningaanvraag
+    (v: ToeristischeVerhuurVergunning) =>
+      v.caseType === CaseType.VakantieverhuurVergunningaanvraag
   );
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: Vergunning) => v.caseType === CaseType.BBVergunning
+    (v: ToeristischeVerhuurVergunning) => v.caseType === CaseType.BBVergunning
   );
 };
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: Vergunning) =>
+    (v: ToeristischeVerhuurVergunning) =>
       v.caseType === CaseType.BBVergunning && v.hasTransitionAgreement
   );
 };

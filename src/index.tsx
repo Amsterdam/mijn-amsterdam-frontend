@@ -1,18 +1,12 @@
-/// <reference types="react-scripts" />
-
 import * as Sentry from '@sentry/react';
-import 'react-app-polyfill/stable';
-import 'core-js/features/object/entries';
-import 'core-js/features/object/from-entries';
-import 'core-js/features/array/flat-map';
-import 'core-js/features/object/from-entries';
 import ReactDOM from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
-import { OTAP_ENV, getOtapEnvItem } from './universal/config/env';
+import { OTAP_ENV } from './universal/config/env';
+import { createRoot } from 'react-dom/client';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -32,10 +26,8 @@ console.info(
   process.env.REACT_APP_ADO_BUILD_ID ?? '0'
 );
 
-const sentryDSN = getOtapEnvItem('sentryDsn');
-
 Sentry.init({
-  dsn: sentryDSN,
+  dsn: import.meta.env.REACT_APP_SENTRY_DSN,
   environment: OTAP_ENV,
   debug: OTAP_ENV === 'development',
   ignoreErrors: [
@@ -49,9 +41,10 @@ Sentry.init({
     if (OTAP_ENV === 'development') {
       console.log(hint);
     }
-    if (!sentryDSN) {
+    if (!import.meta.env.REACT_APP_SENTRY_DSN) {
       return null;
     }
+
     return event;
   },
 });
@@ -64,9 +57,10 @@ const sendToSentry = (error: Error, info: { componentStack: string }) => {
   });
 };
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+
+root.render(
   <ErrorBoundary onError={sendToSentry} FallbackComponent={ApplicationError}>
     <App />
-  </ErrorBoundary>,
-  document.getElementById('root')
+  </ErrorBoundary>
 );

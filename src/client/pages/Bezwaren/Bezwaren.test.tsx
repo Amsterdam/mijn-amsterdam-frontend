@@ -12,7 +12,7 @@ const testState = {
       {
         identificatie: 'BI.21.014121.001',
         uuid: '68cdd171-b4fd-44cc-a4d3-06b77341f20a',
-        ontvangstdatum: '2023-04-25',
+        startdatum: '2023-04-25',
         bezwaarnummer: 'BI.21.014121.001',
         omschrijving: 'Korte omschrijving van het bezwaar',
         toelichting:

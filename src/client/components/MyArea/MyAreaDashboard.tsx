@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { generatePath, NavLink } from 'react-router-dom';
 
+import { Heading } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isMokum } from '../../../universal/helpers';
 import { useAppStateGetter } from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import Heading from '../Heading/Heading';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoader from './MyAreaLoader';
 
@@ -23,7 +23,9 @@ export default function MyAreaDashboard() {
       <MyAreaLoader isDashboard={true} />
       <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
         <span className={styles.NavLinkContentWrap}>
-          <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
+          <Heading size="level-2" level={3}>
+            {termReplace(ChapterTitles.BUURT)}
+          </Heading>
           {!mokum ? (
             <p>Uw adres kan niet worden getoond in Mijn Amsterdam.</p>
           ) : (

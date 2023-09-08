@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
@@ -10,7 +11,6 @@ import { trackItemClick, trackLink } from '../../hooks/analytics.hook';
 import { useOptIn } from '../../hooks/useOptIn';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
-import Heading from '../Heading/Heading';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import styles from './MyTips.module.scss';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
@@ -99,7 +99,9 @@ const Tip = ({ tip, profileType }: TipProps) => {
             </div>
           )}
         </div>
-        <Heading el="h4">{tip.title}</Heading>
+        <Heading level={4} size="level-3">
+          {tip.title}
+        </Heading>
         <p>{tip.description}</p>
         <Linkd
           title={`Meer informatie over de tip: ${tip.title}`}
@@ -163,7 +165,9 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
   return (
     <>
       <div className={styles.HeaderBar}>
-        <Heading size="large">Mijn tips</Heading>
+        <Heading size="level-2" level={3}>
+          Mijn tips
+        </Heading>
         {!isPhoneScreen && (
           <Button
             lean={true}

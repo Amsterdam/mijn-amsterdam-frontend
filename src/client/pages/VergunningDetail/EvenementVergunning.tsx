@@ -3,10 +3,40 @@ import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../universal/helpers';
+import { StatusLineItem } from '../../../universal/types';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+
+export function getEvenementVergunningLineItems(
+  vergunning: EvenementVergunningType
+): StatusLineItem[] {
+  const isDone = vergunning.processed;
+
+  const lineItems = [
+    {
+      id: 'item-1',
+      status: 'Ontvangen',
+      datePublished: vergunning.dateRequest,
+      description: '',
+      documents: [],
+      isActive: !isDone,
+      isChecked: true,
+    },
+    {
+      id: 'last-item',
+      status: 'Afgehandeld',
+      datePublished: vergunning.dateDecision || '',
+      description: '',
+      documents: [],
+      isActive: isDone,
+      isChecked: isDone,
+    },
+  ];
+
+  return lineItems;
+}
 
 export function EvenementVergunning({
   vergunning,

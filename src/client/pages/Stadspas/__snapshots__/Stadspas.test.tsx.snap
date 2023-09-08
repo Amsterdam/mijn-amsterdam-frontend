@@ -1,52 +1,75 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
+exports[`<Stadpas /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page OverviewPage Stadspas"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _Stadspas_ef3b7a"
   >
     <header
-      class="PageHeading hasIcon hasBackLink"
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
     >
       <span
         aria-hidden="true"
-        class="Icon"
+        class="_Icon_3b337d"
       >
         <svg
           aria-label="Stadspas"
-          class="ChapterIcon"
+          class="_ChapterIcon_3ea2dd"
           fill="black"
+          height="20px"
+          viewBox="0 0 32 20"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          stadspas.svg
+          <title>
+            Stadspas icoon
+          </title>
+          <g
+            transform="translate(0.000000, -6.000000)"
+          >
+            <path
+              d="M4,6 L28,6 C30.209139,6 32,7.790861 32,10 L32,22 C32,24.209139 30.209139,26 28,26 L4,26 C1.790861,26 2.705415e-16,24.209139 0,22 L0,10 C-2.705415e-16,7.790861 1.790861,6 4,6 Z M16,22 C19.3137085,22 22,19.3137085 22,16 C22,12.6862915 19.3137085,10 16,10 C12.6862915,10 10,12.6862915 10,16 C10,19.3137085 12.6862915,22 16,22 Z"
+            />
+          </g>
         </svg>
       </span>
       <div
-        class="HeadingInner"
+        class="_HeadingInner_3b337d"
       >
         <a
-          class="Button Button__plain Button__lean Linkd BackLink"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Left.svg
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
           </svg>
           Home
         </a>
         <h2
-          class="Heading Heading__large"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Stadspas
         </h2>
       </div>
     </header>
     <div
-      class="PageContent"
+      class="_PageContent_47d7c0"
     >
       <h4>
         Hoe weet ik of ik een geldige Stadspas heb?
@@ -65,72 +88,92 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
       </p>
       <p>
         <a
-          class="Button Button__plain Button__lean Linkd"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.amsterdam.nl/stadspas"
           rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
-            class="Icon Icon__left"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
+            focusable="false"
             height="14px"
+            viewBox="0 0 32 32"
             width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
           Meer informatie over de Stadspas
         </a>
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleFirst"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_ef3b7a"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Stadspas
         </button>
       </h3>
       <div
         aria-hidden="false"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table Table"
+            class="_Table_a66dcc _Table_ef3b7a"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 />
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Stadspasnummer
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Einddatum
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Tegoed
                 </th>
@@ -138,20 +181,20 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span>
                     G Braber   (kind)
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Stadspasnummer:
                   </span>
@@ -160,10 +203,10 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Einddatum:
                   </span>
@@ -172,15 +215,15 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Tegoed:
                   </span>
                   <a
-                    class="Button Button__inline Button__lean Linkd LinkedInline"
+                    class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                     href="/stadspas/saldo/200769"
                   >
                     Bekijk saldo
@@ -193,49 +236,60 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible SectionCollapsible"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsible_ef3b7a"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Lopende aanvragen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table Table"
+            class="_Table_a66dcc _Table_ef3b7a"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 />
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Datum aanvraag
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Status
                 </th>
@@ -243,18 +297,18 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   Aanvraag stadspas 2
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Datum aanvraag:
                   </span>
@@ -263,10 +317,10 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Status:
                   </span>
@@ -281,49 +335,60 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <section
-      class="SectionCollapsible"
+      class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
+        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
-          class="TitleToggle"
+          class="_TitleToggle_b93dc7"
         >
           <svg
             aria-hidden="true"
-            class="CaretIcon"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            Chevron-Right.svg
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
           </svg>
            Eerdere aanvragen
         </button>
       </h3>
       <div
         aria-hidden="true"
-        class="Panel"
+        class="_Panel_b93dc7"
         style="height: 0px;"
       >
         <div
-          class="PanelInner"
+          class="_PanelInner_b93dc7"
         >
           <table
-            class="Table Table"
+            class="_Table_a66dcc _Table_ef3b7a"
           >
             <thead>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 />
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Datum aanvraag
                 </th>
                 <th
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   Datum besluit
                 </th>
@@ -331,18 +396,18 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
             </thead>
             <tbody>
               <tr
-                class="TableRow"
+                class="_TableRow_a66dcc"
               >
                 <td
-                  class="DisplayPropTitle"
+                  class="_DisplayPropTitle_a66dcc"
                 >
                   Aanvraag stadspas
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Datum aanvraag:
                   </span>
@@ -351,10 +416,10 @@ exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
                 <td
-                  class="DisplayProp"
+                  class="_DisplayProp_a66dcc"
                 >
                   <span
-                    class="DisplayPropLabel"
+                    class="_DisplayPropLabel_a66dcc"
                   >
                     Datum besluit:
                   </span>

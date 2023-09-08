@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -16,10 +17,9 @@ import {
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
 import { Button, IconButton } from '../Button/Button';
-import Heading from '../Heading/Heading';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './Search.module.scss';
-import { displayPath, SearchEntry } from './searchConfig';
+import { SearchEntry, displayPath } from './searchConfig';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
@@ -69,7 +69,7 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading className={styles.ResultSetTitle} size="tiny">
+        <Heading className={styles.ResultSetTitle} size="level-4" level={3}>
           {title}
         </Heading>
       )}
@@ -102,7 +102,9 @@ export function ResultSet({
               >
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
-                  : displayPath(term, [result.displayTitle])}
+                  : typeof result.displayTitle === 'string'
+                  ? displayPath(term, [result.displayTitle])
+                  : result.displayTitle}
                 {result.trailingIcon}
                 {extendedResults && (
                   <p className={styles.ResultDescription}>
@@ -151,7 +153,7 @@ export function Search({
   const results = useSearchResults(extendedAMResults);
 
   const setTerm = useCallback(
-    (term) => {
+    (term: string) => {
       if (!term && searchBarRef.current) {
         searchBarRef.current.value = '';
       }
@@ -222,7 +224,7 @@ export function Search({
         searchResult: {
           position: resultNumber,
           title:
-            typeof result.displayTitle === 'function'
+            typeof result.displayTitle !== 'string'
               ? result.description
               : result.displayTitle,
           type: '',
@@ -367,14 +369,13 @@ export function Search({
               extendedResults={extendedAMResults}
               onClickResult={onClickResult}
               results={
-                results?.am?.state === 'hasValue' &&
-                results?.am?.contents !== null
+                results.am?.state === 'hasValue' && results.am.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
               }
               totalAmountOfResults={
                 results?.am?.state === 'hasValue' &&
-                results?.am?.contents !== null
+                results.am.contents !== null
                   ? results.am.contents.length
                   : 0
               }

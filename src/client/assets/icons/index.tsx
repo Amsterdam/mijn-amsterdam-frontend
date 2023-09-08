@@ -2,7 +2,7 @@ export {
   Enlarge as IconEnlarge,
   Minimise as IconMinimise,
   Spinner as IconSpinner,
-} from '@amsterdam/asc-assets';
+} from '@amsterdam/design-system-react-icons';
 export { ReactComponent as IconAlert } from './Alert.svg';
 export { ReactComponent as IconArrowRrimaryWhite } from './Arrow__primary-white.svg';
 export { ReactComponent as IconAVG } from './AVG-verzoeken.svg';

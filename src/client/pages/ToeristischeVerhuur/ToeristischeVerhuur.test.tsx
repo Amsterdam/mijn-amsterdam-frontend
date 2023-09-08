@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
@@ -19,6 +19,17 @@ import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischeVerhuur from './ToeristischeVerhuur';
+import {
+  vi,
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  expect,
+  test,
+  it,
+  describe,
+} from 'vitest';
 
 const vergunningen = transformVergunningenData(
   vergunningenData as ApiSuccessResponse<VergunningenData>
@@ -128,12 +139,12 @@ describe('<ToeristischeVerhuur />', () => {
   );
 
   beforeAll(() => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date('2021-09-22').getTime());
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2021-09-22').getTime());
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Matches the Full Page snapshot', () => {
@@ -142,8 +153,8 @@ describe('<ToeristischeVerhuur />', () => {
   });
 
   it('Shows page for B&B and Vakantieverhuur permits', () => {
-    render(<Component state={testState} />);
-    expect(screen.getByText('Toeristische verhuur')).toBeInTheDocument();
+    const screen = render(<Component state={testState} />);
+    expect(screen.getAllByText(/Toeristische verhuur/)[0]).toBeInTheDocument();
     expect(
       screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();
@@ -151,7 +162,7 @@ describe('<ToeristischeVerhuur />', () => {
       screen.queryAllByText('Registratienummer toeristische verhuur').length
     ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
 
     expect(
@@ -162,7 +173,7 @@ describe('<ToeristischeVerhuur />', () => {
   });
 
   it('Shows alert for missing registration numbers', () => {
-    render(<Component state={testState2} />);
+    const screen = render(<Component state={testState2} />);
 
     expect(
       screen.getByText(
@@ -172,7 +183,7 @@ describe('<ToeristischeVerhuur />', () => {
   });
 
   it('Shows B&B page', () => {
-    render(<Component state={testState3} />);
+    const screen = render(<Component state={testState3} />);
 
     expect(
       screen.getByText('Meer over toeristenbelasting')
@@ -189,7 +200,7 @@ describe('<ToeristischeVerhuur />', () => {
   });
 
   it('Shows Vakantieverhuur page', () => {
-    render(<Component state={testState4} />);
+    const screen = render(<Component state={testState4} />);
 
     expect(
       screen.getByText('Meer over toeristenbelasting')
@@ -199,7 +210,7 @@ describe('<ToeristischeVerhuur />', () => {
       screen.getByText('Meer informatie over particuliere vakantieverhuur')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(3);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
     expect(
       screen.queryByText('Vergunning bed & breakfast')
     ).not.toBeInTheDocument();

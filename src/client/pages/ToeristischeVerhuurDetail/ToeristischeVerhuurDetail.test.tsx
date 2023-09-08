@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import slug from 'slugme';
 
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
@@ -13,6 +12,8 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
+import { describe, expect, it, test } from 'vitest';
+import { bffApi } from '../../../test-utils';
 
 const transformedVergunningen = transformVergunningenData(
   vergunningenData as any
@@ -40,7 +41,10 @@ function state(state: any) {
 }
 
 describe('<ToeristischVerhuurDetail />, vergunning', () => {
-  (window as any).scrollTo = jest.fn();
+  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
+    content: [],
+  });
+
   const vergunning = vergunningen?.find(
     (v) => v.caseType === 'Vakantieverhuur vergunningsaanvraag'
   );
@@ -65,8 +69,8 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
     expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();
-    expect(screen.getByText('01 augustus 2020')).toBeInTheDocument();
-    expect(screen.getAllByText('30 september 2021').length).toBe(2);
+    expect(screen.getByText('01 augustus 2023')).toBeInTheDocument();
+    expect(screen.getAllByText('30 september 2024').length).toBe(2);
     expect(screen.getByText('Verleend')).toBeInTheDocument();
     expect(screen.getByText('Verlopen')).toBeInTheDocument();
   });

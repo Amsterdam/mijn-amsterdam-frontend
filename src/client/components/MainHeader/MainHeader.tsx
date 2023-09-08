@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
-import { AppRoutes, OTAP_ENV } from '../../../universal/config';
+import { Heading } from '@amsterdam/design-system-react';
+import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';
@@ -10,7 +10,6 @@ import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
-import Heading from '../Heading/Heading';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
 import styles from './MainHeader.module.scss';
@@ -66,13 +65,13 @@ export default function MainHeader({
             />
           </a>
           {location.pathname !== AppRoutes.ROOT ? (
-            <Heading size="large" el="h1">
+            <Heading level={2} size="level-1">
               <Link to={AppRoutes.ROOT} title="Terug naar home">
                 Mijn Amsterdam <OtapLabel />
               </Link>
             </Heading>
           ) : (
-            <Heading size="large" el="h1">
+            <Heading level={2} size="level-1">
               Mijn Amsterdam <OtapLabel />
             </Heading>
           )}

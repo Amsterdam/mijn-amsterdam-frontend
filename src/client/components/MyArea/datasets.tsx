@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { PolylineOptions } from 'leaflet';
-import { isValidElement, ReactElement } from 'react';
+import { isValidElement, ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { MaPointFeature } from '../../../server/services/buurt/datasets';
 import {
@@ -49,6 +49,7 @@ import styles from './Datasets.module.scss';
 const DatasetIcon: React.FC<{
   color?: string;
   className?: string;
+  children?: ReactNode;
 }> = ({ children, className, color = Colors.white }) => {
   return (
     <div className={classnames(styles.DatasetIcon, className)}>{children}</div>
@@ -57,7 +58,7 @@ const DatasetIcon: React.FC<{
 
 export const datasetIcons: Record<
   string,
-  ReactElement<any> | Record<string, ReactElement<any>>
+  ReactNode | Record<string, ReactElement<any>>
 > = {
   afvalcontainers: {
     afvalcontainers: (

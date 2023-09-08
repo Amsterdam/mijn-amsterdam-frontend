@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { ReactNode, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
@@ -6,7 +7,6 @@ import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import { useContentDimensions, useSessionStorage } from '../../hooks';
-import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './SectionCollapsible.module.scss';
 
@@ -17,7 +17,6 @@ export interface SectionCollapsibleProps {
   startCollapsed?: boolean;
   className?: string;
   isLoading?: boolean;
-  track?: { category: string; name: string };
   hasItems?: boolean;
   children: ComponentChildren;
 }
@@ -35,7 +34,8 @@ export function SectionCollapsibleHeading({
 }: SectionCollapsibleHeadingProps) {
   return (
     <Heading
-      size="mediumLarge"
+      level={3}
+      size="level-3"
       className={classnames(styles.Title, styles.TitleWithItems)}
     >
       <button
@@ -71,7 +71,6 @@ export default function SectionCollapsible({
   className,
   isLoading = false,
   hasItems = true,
-  track,
   children,
 }: SectionCollapsibleProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);

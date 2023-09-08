@@ -12,12 +12,12 @@ const dateTimeStr = today.getTime();
 
 describe('Afvalwijzer service', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(dateTimeStr);
+    vi.useFakeTimers();
+    vi.setSystemTime(dateTimeStr);
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test('formatKalenderMelding', () => {
@@ -72,7 +72,7 @@ describe('Afvalwijzer service', () => {
         'De afvalservice is momenteel niet beschikbaar. Probeer het later nog eens.'
       )
     ).toBe(
-      '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding" target="_blank">deze link</a>.</p>'
+      '<p>De Afvalwijzer is momenteel niet beschikbaar. Probeer het later nog eens.<br></br>Woont u in het Centrum of Watergraafsmeer en wilt u een afspraak maken voor het ophalen van grof afval, klik dan op <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/grofafval.aspx/Inleiding">deze link</a>.</p>'
     );
   });
 
@@ -83,11 +83,11 @@ describe('Afvalwijzer service', () => {
     };
     expect(exportedForTesting.getBuurtLink(fractionData as GarbageFractionData))
       .toMatchInlineSnapshot(`
-      Object {
-        "title": "Somewhere in a galaxy far away",
-        "to": "/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}",
-      }
-    `);
+        {
+          "title": "Somewhere in a galaxy far away",
+          "to": "/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}",
+        }
+      `);
   });
 
   test('transformFractionData', () => {
@@ -117,12 +117,12 @@ describe('Afvalwijzer service', () => {
         centroid
       )
     ).toMatchInlineSnapshot(`
-      Object {
+      {
         "buitenzetten": "Tussen 06.00 en 07.30 uur",
         "fractieCode": "GA",
         "gebruiksdoelWoonfunctie": false,
         "instructie": "In vuilniszak",
-        "instructieCTA": Object {
+        "instructieCTA": {
           "title": "Hej klik",
           "to": "https://www.afvalgids.nl/afval/inzamelaar/",
         },
@@ -175,37 +175,37 @@ describe('Afvalwijzer service', () => {
 
     expect(transformGarbageDataResponse(response, centroid))
       .toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "buitenzetten": null,
-          "fractieCode": "Textiel",
-          "gebruiksdoelWoonfunctie": undefined,
-          "instructie": null,
-          "instructieCTA": null,
-          "kalendermelding": null,
-          "ophaaldagen": "",
-          "opmerking": null,
-          "stadsdeelAanvulling": null,
-          "titel": "Textiel",
-          "waar": "Somewhere in a galaxy far away",
-        },
-        Object {
-          "buitenzetten": "Tussen 06.00 en 07.30 uur",
-          "fractieCode": "GA",
-          "gebruiksdoelWoonfunctie": true,
-          "instructie": "In vuilniszak",
-          "instructieCTA": Object {
-            "title": "Hej klik",
-            "to": "https://www.afvalgids.nl/afval/inzamelaar/",
+        [
+          {
+            "buitenzetten": null,
+            "fractieCode": "Textiel",
+            "gebruiksdoelWoonfunctie": undefined,
+            "instructie": null,
+            "instructieCTA": null,
+            "kalendermelding": null,
+            "ophaaldagen": "",
+            "opmerking": null,
+            "stadsdeelAanvulling": null,
+            "titel": "Textiel",
+            "waar": "Somewhere in a galaxy far away",
           },
-          "kalendermelding": null,
-          "ophaaldagen": "Maandag en donderdag",
-          "opmerking": "Of breng het naar <a href=\\"https://kaart.amsterdam.nl/afvalpunten\\">een Afvalpunt</a>",
-          "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href=\\"https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum\\" rel=\\"noopener noreferrer\\">aanvullende regels</a> van kracht.",
-          "titel": "Grof afval",
-          "waar": "Aan de rand van de stoep of op de vaste plek",
-        },
-      ]
-    `);
+          {
+            "buitenzetten": "Tussen 06.00 en 07.30 uur",
+            "fractieCode": "GA",
+            "gebruiksdoelWoonfunctie": true,
+            "instructie": "In vuilniszak",
+            "instructieCTA": {
+              "title": "Hej klik",
+              "to": "https://www.afvalgids.nl/afval/inzamelaar/",
+            },
+            "kalendermelding": null,
+            "ophaaldagen": "Maandag en donderdag",
+            "opmerking": "Of breng het naar <a href=\\"https://kaart.amsterdam.nl/afvalpunten\\">een Afvalpunt</a>",
+            "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href=\\"https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum\\" rel=\\"noopener noreferrer\\">aanvullende regels</a> van kracht.",
+            "titel": "Grof afval",
+            "waar": "Aan de rand van de stoep of op de vaste plek",
+          },
+        ]
+      `);
   });
 });

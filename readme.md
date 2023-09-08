@@ -12,8 +12,6 @@ To see the application quickly running locally, clone the repo and cd into the p
 
 ```
 BROWSER=none
-REACT_APP_VERSION=$npm_package_version
-MA_OTAP_ENV=development | test | acceptance | production
 ```
 
 Put the following commands in your terminal:
@@ -33,7 +31,7 @@ Not all browsers in the world are supported. The targeted browsers can be found 
 ## React application
 
 - The language used is `Typescript`
-- The application is built and tested with [create react app](https://create-react-app.dev/).
+- The application is built and tested with [vite/vitest](https://vitejs.dev/).
 - Only functional components are used in combination with the hooks api.
 - For styling we use [scss](https://create-react-app.dev/docs/adding-a-sass-stylesheet) and [scss modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
 
@@ -66,7 +64,7 @@ It's basically an additional development server integrated in the BFF api.
 
 - `node`
 - `typescript`
-- `create-react-app`
+- `vite`
 
 #### IDE plugins
 
@@ -76,7 +74,7 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Testing and development
 
-- `ts-node` for BFF development
+- `vitest` for BFF development
 
 ### Branch naming + PR
 

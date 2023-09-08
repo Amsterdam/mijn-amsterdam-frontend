@@ -16,12 +16,12 @@
   width: 0.8em;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%) rotate(0);
+  transform: translateY(calc(-50% - 1px)) rotate(0);
   left: 0;
   transition: transform 200ms ease-out;
 }
 
-.Title {
+.SectionCollapsible .Title {
   position: relative;
   padding-left: 0.96em;
   margin-left: 16rem;
@@ -33,6 +33,7 @@
     margin-left: 9.5rem;
     white-space: initial;
   }
+
   @include mq-phone() {
     margin-left: 0;
     transform: translateX(0);
@@ -51,7 +52,7 @@
   padding: 0;
   text-align: left;
   color: inherit;
-  
+
   &[aria-expanded='true'] .CaretIcon {
     transform: translateY(-50%) rotate(90deg);
   }
@@ -74,9 +75,11 @@
   @include mq-tablet() {
     text-indent: 12rem;
   }
+
   @include mq-phone() {
     text-indent: 0;
   }
+
   text-indent: 16rem;
   margin-top: 1rem;
   padding-bottom: 3rem;

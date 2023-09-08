@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { newEventSourceMock } from './EventSourceMock';
 import * as sseHook from './useSSE';
 import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE';
@@ -8,13 +8,14 @@ const sseMockResponse = JSON.stringify({
 });
 
 describe('useAppState', () => {
-  jest.spyOn(console, 'log').mockImplementation();
-  jest.spyOn(console, 'info').mockImplementation();
-  jest.spyOn(console, 'error').mockImplementation();
+  vi.spyOn(console, 'log').mockImplementation();
+  vi.spyOn(console, 'info').mockImplementation();
+  vi.spyOn(console, 'error').mockImplementation();
 
   it('Should connect and respond with multiple messages.', async () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const onEventCallback = jest.fn();
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const onEventCallback = vi.fn();
     const hook = renderHook(() =>
       sseHook.useSSE({
         path: 'http://mock-sse',
@@ -41,8 +42,9 @@ describe('useAppState', () => {
   });
 
   it('Should connect fail, retry and respond with an error.', async () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const onEventCallback = jest.fn();
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const onEventCallback = vi.fn();
     renderHook(() =>
       sseHook.useSSE({
         path: 'http://mock-sse',
@@ -73,8 +75,9 @@ describe('useAppState', () => {
   });
 
   it('Should not connect if postponed.', () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const onEventCallback = jest.fn();
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const onEventCallback = vi.fn();
     renderHook(() =>
       sseHook.useSSE({
         path: 'http://mock-sse',
@@ -90,8 +93,9 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is closed but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const onEventCallback = jest.fn();
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const onEventCallback = vi.fn();
     EventSourceMock.prototype.readyState = 2;
 
     renderHook(() =>
@@ -109,8 +113,9 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is open but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
-    const onEventCallback = jest.fn();
+    const EventSourceMock = ((window as any).EventSource =
+      newEventSourceMock());
+    const onEventCallback = vi.fn();
     EventSourceMock.prototype.readyState = 1;
 
     renderHook(() =>

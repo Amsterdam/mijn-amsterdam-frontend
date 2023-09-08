@@ -40,7 +40,7 @@ import { AVGRequest } from '../../../server/services/avg/types';
 
 export interface SearchEntry {
   url: string;
-  displayTitle: ((term: string) => ReactNode) | string;
+  displayTitle: ((term: string) => ReactNode) | ReactNode;
   description: string;
   keywords: string[];
   profileTypes?: ProfileType[];
@@ -71,7 +71,9 @@ export interface ApiSearchConfig {
   generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
-  displayTitle: ((item: any) => ReactNode) | string;
+  displayTitle:
+    | ((item: any) => ReactNode | ((term: string) => ReactNode))
+    | ReactNode;
 
   // The url to link to
   url: string | ((item: any, config: ApiSearchConfig) => string);
@@ -121,7 +123,7 @@ export function displayPath(
   term: string,
   segments: string[],
   replaceTerm: boolean = true
-) {
+): ReactNode {
   const termSplitted = term.trim().split(/\s+/g);
   return (
     <>

@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
 import { FeatureToggle, IS_TEST } from '../../../universal/config';
@@ -5,7 +6,6 @@ import { testAccounts } from '../../../universal/config/auth.development';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
-  Heading,
   LinkdInline,
   MaintenanceNotifications,
   PageContent,
@@ -58,7 +58,11 @@ export default function Landing() {
         />
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
-            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
+            <Heading
+              className={styles.LoginOptionHeading}
+              size="level-4"
+              level={3}
+            >
               Voor particulieren en eenmanszaken
             </Heading>
           )}
@@ -85,7 +89,7 @@ export default function Landing() {
               </span>
             </a>
           </p>
-          <Heading size="tiny" el="h4">
+          <Heading size="level-4" level={4}>
             Hebt u nog geen DigiD? Regel dit dan eerst.
           </Heading>
           <p>
@@ -102,7 +106,11 @@ export default function Landing() {
               styles['LoginOption--eherkenning']
             )}
           >
-            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
+            <Heading
+              className={styles.LoginOptionHeading}
+              size="level-4"
+              level={3}
+            >
               Voor ondernemers
             </Heading>
             <p>
@@ -128,7 +136,7 @@ export default function Landing() {
                 </span>
               </a>
             </p>
-            <Heading size="tiny" el="h4">
+            <Heading size="level-4" level={4}>
               U hebt eHerkenning niveau 3 nodig om in te loggen.
             </Heading>
             <p>
@@ -141,7 +149,7 @@ export default function Landing() {
           </div>
         )}
 
-        <Heading size="tiny" el="h4">
+        <Heading size="level-4" level={4}>
           Vragen over Mijn Amsterdam?
         </Heading>
         <p className={styles.FaqInfo}>
