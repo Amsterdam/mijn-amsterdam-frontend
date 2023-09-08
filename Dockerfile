@@ -130,15 +130,17 @@ COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 ########################################################################################################################
 FROM build-app-bff as deploy-bff
 
-ARG BFF_ADO_BUILD_ID=0
-ENV BFF_ADO_BUILD_ID=$BFF_ADO_BUILD_ID
+ARG MA_ADO_BUILD_ID=0
+ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
 
-ARG BFF_GIT_SHA=0
-ENV BFF_GIT_SHA=$BFF_GIT_SHA
+ARG MA_GIT_SHA=0
+ENV MA_GIT_SHA=$MA_GIT_SHA
 
 WORKDIR /app
 
 ENV TZ=Europe/Amsterdam
+
+# Tell node to use the OpenSSL (OS installed) Certificates
 ENV NODE_OPTIONS=--use-openssl-ca
 
 LABEL name="Mijn.Amsterdam BFF (Back-end for front-end)"
@@ -155,11 +157,11 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-o
 
+ENV MA_OTAP_ENV=development
 CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-t
 
 ENV MA_OTAP_ENV=test
-
 COPY files /app/files
 CMD /usr/local/bin/docker-entrypoint-bff.sh
