@@ -59,6 +59,7 @@ FROM build-deps as build-app-fe
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
 
+# Statically replaced define(...) (vite.config.ts) variables
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
@@ -70,6 +71,13 @@ ENV MA_GIT_SHA=$MA_GIT_SHA
 
 ARG MA_TEST_ACCOUNTS=
 ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
+
+# Statically replaced import.meta variables
+ARG REACT_APP_SENTRY_DSN=
+ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
+
+ARG REACT_APP_ANALYTICS_ID=
+ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
 
 COPY public /build-space/public
 
