@@ -1,50 +1,69 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
+import { describe, expect, it, vi } from 'vitest';
 import MainNavSubmenu from './MainNavSubmenu';
 
 const SUBMENU_TITLE = 'submenutje';
 
 describe('<MainNavSubmenu/> rendering', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
+  vi.useFakeTimers();
 
-  it('Opens/closes the submenu panel on user interaction', () => {
-    const { container, getByText } = render(
+  it('Opens/closes the submenu panel on user interaction', async () => {
+    const user = userEvent.setup();
+
+    const screen = render(
       <BrowserRouter>
         <MainNavSubmenu title={SUBMENU_TITLE} id="een-submenu">
           <a href="/">Linkje</a>
         </MainNavSubmenu>
       </BrowserRouter>
     );
+
+    const submenu = screen.container.querySelector(
+      '[data-submenu-id=een-submenu]'
+    )!;
+
+    fireEvent.mouseEnter(submenu);
+
     act(() => {
-      userEvent.hover(screen.getByText(SUBMENU_TITLE));
-      vi.runAllTimers();
+      vi.advanceTimersToNextTimer();
     });
 
     expect(screen.getByText('Linkje')).toBeInTheDocument();
-    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
+
+    expect(
+      screen.container.querySelector('[aria-hidden=false]')
+    ).toBeInTheDocument();
+
+    fireEvent.mouseLeave(submenu);
 
     act(() => {
-      userEvent.unhover(screen.getByText(SUBMENU_TITLE));
       vi.runAllTimers();
     });
 
-    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+    expect(
+      screen.container.querySelector('[aria-hidden=true]')
+    ).toBeInTheDocument();
+
+    screen.getByText(SUBMENU_TITLE).parentElement?.focus();
 
     act(() => {
-      getByText(SUBMENU_TITLE).parentElement?.focus();
       vi.runAllTimers();
     });
 
-    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
+    expect(
+      screen.container.querySelector('[aria-hidden=false]')
+    ).toBeInTheDocument();
+
+    screen.getByText(SUBMENU_TITLE).parentElement?.blur();
 
     act(() => {
-      getByText(SUBMENU_TITLE).parentElement?.blur();
       vi.runAllTimers();
     });
 
-    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+    expect(
+      screen.container.querySelector('[aria-hidden=true]')
+    ).toBeInTheDocument();
   });
 });

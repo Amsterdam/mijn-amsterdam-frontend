@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import { act } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
@@ -19,6 +18,7 @@ import {
   it,
   vi,
 } from 'vitest';
+import { act, waitFor } from '@testing-library/react';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useOptIn');
@@ -72,9 +72,7 @@ describe('useAppState', () => {
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
 
@@ -82,19 +80,17 @@ describe('useAppState', () => {
     expect(sseSpy).toBeCalledTimes(3);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, stateSliceMock)
+      );
+    });
   });
 
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
@@ -110,19 +106,17 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, stateSliceMock)
+      );
+    });
   });
 
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, waitForNextUpdate } = renderRecoilHook(() =>
-      useAppStateRemote()
-    );
+    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
 
@@ -138,17 +132,17 @@ describe('useAppState', () => {
     expect(dataApiSpy).toBeCalledTimes(5);
     expect(axiosGetSpy).toBeCalledTimes(1);
 
-    await waitForNextUpdate();
-
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, {
-        ALL: {
-          status: 'ERROR',
-          message:
-            'Services.all endpoint could not be reached or returns an error.',
-        },
-      })
-    );
+    await waitFor(() => {
+      expect(result.current).toEqual(
+        Object.assign({}, initialAppState, {
+          ALL: {
+            status: 'ERROR',
+            message:
+              'Services.all endpoint could not be reached or returns an error.',
+          },
+        })
+      );
+    });
   });
 
   describe('isAppStateReady', () => {

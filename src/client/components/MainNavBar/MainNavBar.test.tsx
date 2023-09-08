@@ -65,7 +65,9 @@ describe('<MainNavBar />', () => {
     expect(screen.getAllByText(/Vergunningen/)[0]).toBeInTheDocument();
   });
 
-  it('Renders burger menu on small screens', () => {
+  it('Renders burger menu on small screens', async () => {
+    const user = userEvent.setup();
+
     (useProfileType as Mock).mockReturnValue(['private', vi.fn()]);
     (useProfileTypeValue as Mock).mockReturnValue('private');
     (useTabletScreen as Mock).mockReturnValue(true);
@@ -74,7 +76,9 @@ describe('<MainNavBar />', () => {
 
     expect(screen.getAllByText(/Vergunningen/)[0]).toBeInTheDocument();
     expect(screen.getAllByText('Toon navigatie')[0]).toBeInTheDocument();
-    userEvent.click(screen.getAllByText('Toon navigatie')[0]);
+
+    await user.click(screen.getAllByText('Toon navigatie')[0]);
+
     expect(screen.getAllByText('Verberg navigatie')[0]).toBeInTheDocument();
     expect(screen.getByText('Uitloggen')).toBeInTheDocument();
   });

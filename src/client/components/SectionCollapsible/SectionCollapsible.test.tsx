@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
+import { describe, expect, it } from 'vitest';
 import SectionCollapsible from './SectionCollapsible';
 
 describe('<SectionCollapsible />', () => {
@@ -44,7 +45,9 @@ describe('<SectionCollapsible />', () => {
     expect(screen.getByText('Boohoo!')).toBeInTheDocument();
   });
 
-  it('should collapse/expand when clicking the title', () => {
+  it('should collapse/expand when clicking the title', async () => {
+    const user = userEvent.setup();
+
     const { container, getByText } = render(
       <RecoilRoot>
         <SectionCollapsible
@@ -57,12 +60,15 @@ describe('<SectionCollapsible />', () => {
         </SectionCollapsible>
       </RecoilRoot>
     );
+
     expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
-    userEvent.click(getByText('Click me!'));
+    await user.click(getByText('Click me!'));
     expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
   });
 
-  it('should call trackEvent if tracking info is provided and section is expanded', () => {
+  it('should call trackEvent if tracking info is provided and section is expanded', async () => {
+    const user = userEvent.setup();
+
     const { container, getByText } = render(
       <RecoilRoot>
         <SectionCollapsible
@@ -77,7 +83,7 @@ describe('<SectionCollapsible />', () => {
     );
 
     expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
-    userEvent.click(getByText('Click me!'));
+    await user.click(getByText('Click me!'));
     expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
   });
 
