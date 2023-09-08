@@ -1,4 +1,4 @@
-import { AppRoutes, TrackingConfig } from './routes';
+import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 
 // Within the team we call these Themes
 export type Chapter =
@@ -99,10 +99,9 @@ export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
-export const DocumentTitles: Record<
-  string,
-  string | ((config: TrackingConfig) => string)
-> = {
+export const DocumentTitles: {
+  [key in AppRoute]: string | ((config: TrackingConfig) => string);
+} = {
   [AppRoutes.ROOT]: (config) => {
     switch (true) {
       case config.profileType === 'private-attributes' &&
@@ -118,7 +117,7 @@ export const DocumentTitles: Record<
         return 'Inloggen | Mijn Amsterdam';
     }
   },
-  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} overzicht`,
+  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} | overzicht`,
   [AppRoutes[
     'BURGERZAKEN/ID-KAART'
   ]]: `ID-Kaart | ${ChapterTitles.BURGERZAKEN}`,
@@ -142,13 +141,14 @@ export const DocumentTitles: Record<
   [AppRoutes.BRP]: `Mijn gegevens`,
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
-  [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} overzicht`,
+  [AppRoutes.VERGUNNINGEN]: `${ChapterTitles.VERGUNNINGEN} | overzicht`,
   [AppRoutes[
     'VERGUNNINGEN/DETAIL'
   ]]: `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
   [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.BEZWAREN]: `Bezwaren | overzicht`,
+  [AppRoutes.BEZWAREN]: `${ChapterTitles.BEZWAREN} | overzicht`,
+  [AppRoutes['BEZWAREN/DETAIL']]: `${ChapterTitles.BEZWAREN} | bezwaar`,
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
@@ -157,7 +157,7 @@ export const DocumentTitles: Record<
   [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ChapterTitles.SIA}`,
   [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
   [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
-  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} overzicht`,
+  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ChapterTitles.TOERISTISCHE_VERHUUR} | overzicht`,
   [AppRoutes[
     'TOERISTISCHE_VERHUUR/VERGUNNING'
   ]]: `Vergunning | ${ChapterTitles.TOERISTISCHE_VERHUUR}`,
@@ -170,13 +170,17 @@ export const DocumentTitles: Record<
   [AppRoutes.KREFIA]: `${ChapterTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.PARKEREN]: 'Parkeren',
-  [AppRoutes.KLACHTEN]: 'Klachten',
-  [AppRoutes['KLACHTEN/KLACHT']]: 'Klacht',
-  [AppRoutes.HORECA]: 'Horeca',
+  [AppRoutes.KLACHTEN]: `${ChapterTitles.KLACHTEN} | overzicht`,
+  [AppRoutes['KLACHTEN/KLACHT']]: `${ChapterTitles.KLACHTEN} | klacht`,
+  [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
-  [AppRoutes.AVG]: 'AVG Verzoeken',
-  [AppRoutes['AVG/DETAiL']]: 'AVG | verzoek',
+  [AppRoutes.AVG]: `${ChapterTitles.AVG} | verzoeken`,
+  [AppRoutes['AVG/DETAIL']]: `${ChapterTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  [AppRoutes.BODEM]: 'Bodem',
+  [AppRoutes.BODEM]: 'Bodem | overzicht',
+  [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
 };
