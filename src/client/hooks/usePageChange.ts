@@ -130,12 +130,13 @@ function getCustomTrackingUrl(
 
   if (route) {
     const matchResult = matchPath(pathname, route);
+    const trackingUrlFn = CustomTrackingUrls[route];
 
-    if (!matchResult || !matchResult.isExact) {
+    if (!matchResult || !matchResult.isExact || !trackingUrlFn) {
       return pathname;
     }
 
-    return CustomTrackingUrls[route]!(matchResult, trackingConfig);
+    return trackingUrlFn(matchResult, trackingConfig);
   }
 
   return pathname;
