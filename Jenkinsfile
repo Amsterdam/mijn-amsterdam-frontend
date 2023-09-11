@@ -128,7 +128,7 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
-           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_ACC} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
@@ -175,7 +175,7 @@ pipeline {
 
         // Build the FE production image
         sh "docker build -t ${IMAGE_PRODUCTION} " +
-           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg MA_OTAP_ENV=production " +
@@ -186,7 +186,7 @@ pipeline {
 
         // Build the BFF production image
         sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg MA_OTAP_ENV=production " +
