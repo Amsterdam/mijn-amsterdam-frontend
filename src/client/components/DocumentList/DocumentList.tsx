@@ -31,13 +31,14 @@ function downloadFile(docDownload: GenericDocument) {
   link.click();
 }
 
-function addFileType(url: string, type: string = 'pdf') {
-  if (
-    type &&
-    !url.endsWith('.' + type) &&
-    !url.endsWith('.' + type.toUpperCase())
-  ) {
-    return `${url}.${type}`;
+function addFileType(url: string) {
+  const defaultType = 'pdf';
+  const splitUrl = url.split('.');
+  const lastSection = splitUrl.pop();
+
+  // Assume a file extention would be a maximum of 5 characters.
+  if (lastSection && lastSection.length > 5) {
+    return `${url}.${defaultType}`;
   }
   return url;
 }

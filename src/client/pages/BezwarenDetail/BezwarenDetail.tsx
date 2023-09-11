@@ -31,7 +31,7 @@ const BezwarenDetail = () => {
 
   const documentCategories = uniqueArray(
     !bezwaar ? [] : bezwaar.documenten.map((d) => d.dossiertype).filter(Boolean)
-  );
+  ).sort();
 
   return (
     <DetailPage>
