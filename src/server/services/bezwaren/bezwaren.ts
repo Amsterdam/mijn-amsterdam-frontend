@@ -50,7 +50,6 @@ function transformBezwarenDocumentsResults(
   });
 
   if (Array.isArray(response.results)) {
-    console.log(response);
     try {
       return response.results.map(
         ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
@@ -84,7 +83,7 @@ export async function fetchBezwarenDocuments(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const params = {
-    identificatie: zaakId,
+    identifier: zaakId,
   };
 
   const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
