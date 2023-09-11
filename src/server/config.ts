@@ -106,7 +106,6 @@ export type SourceApiKey =
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
@@ -215,7 +214,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.aktesActive,
   },
   ERFPACHT: {
-    url: process.env.BFF_MIJN_ERFPACHT_API_URL,
+    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
   },
   BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
   AFVAL: {
@@ -226,7 +225,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
-    url: process.env.BFF_LVV_API_URL,
+    url: `${process.env.BFF_LVV_API_URL}`,
     headers: {
       'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
       'Content-Type': 'application/json',
