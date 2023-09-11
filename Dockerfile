@@ -46,6 +46,13 @@ ENV TZ=Europe/Amsterdam
 
 
 FROM build-app as build-fe
+
+ARG REACT_APP_ANALYTICS_ID=
+ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
+
+ARG REACT_APP_SENTRY_DSN=
+ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
+
 # Build client
 RUN npm run build
 
@@ -65,12 +72,6 @@ LABEL name="mijnamsterdam FRONTEND"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
 ENV TZ=Europe/Amsterdam
-
-ARG REACT_APP_ANALYTICS_ID=
-ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
-
-ARG REACT_APP_SENTRY_DSN=
-ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
 
 COPY conf/nginx-server-default.template.conf /etc/nginx/conf.d/default.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
