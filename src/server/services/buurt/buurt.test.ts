@@ -12,8 +12,8 @@ import * as service from './buurt';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
-  DatasetConfig,
   DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+  DatasetConfig,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -24,17 +24,7 @@ import {
   getDynamicDatasetFilters,
 } from './helpers';
 
-import {
-  vi,
-  describe,
-  expect,
-  it,
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  Mock,
-} from 'vitest';
+import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },
@@ -138,8 +128,10 @@ vi.mock('../../helpers/file-cache');
 vi.mock('../../../universal/config/env', () => {
   return {
     IS_AP: true,
+    IS_OT: false,
     IS_PRODUCTION: false,
     IS_ACCEPTANCE: true,
+    IS_TAP: true,
   };
 });
 vi.mock('../../../universal/config/myarea-datasets');
