@@ -170,6 +170,21 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-t
 
+# NOTE: Currently only on Azure
 ENV MA_OTAP_ENV=test
 COPY files /app/files
+CMD /usr/local/bin/docker-entrypoint-bff.sh
+
+FROM deploy-bff as deploy-bff-a
+
+ENV MA_OTAP_ENV=acceptance
+# NOTE: Enable when on Azure
+#COPY files /app/files
+CMD /usr/local/bin/docker-entrypoint-bff.sh
+
+FROM deploy-bff as deploy-bff-p
+
+ENV MA_OTAP_ENV=production
+# NOTE: Enable when on Azure
+#COPY files /app/files
 CMD /usr/local/bin/docker-entrypoint-bff.sh

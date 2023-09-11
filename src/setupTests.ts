@@ -59,6 +59,13 @@ process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = `${remoteApiHost}/subsidies/`;
 process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
 
+// Koppel api base urls
+process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
+
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;
 process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = `${remoteApiHost}/sia-iam-token`;

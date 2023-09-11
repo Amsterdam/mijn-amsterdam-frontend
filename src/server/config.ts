@@ -206,9 +206,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
     cacheTimeout: ONE_HOUR_MS,
   },
-  TIPS: {
-    url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
-  },
   BRP: {
     url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`,
     passthroughOIDCToken: true,

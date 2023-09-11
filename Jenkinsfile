@@ -18,67 +18,6 @@ pipeline {
 
   stages {
 
-    stage('Unit tests') {
-      when {
-        not {
-          anyOf {
-            branch 'test';
-            branch 'test-acc';
-            branch 'test-acc-bff';
-            branch 'test-acc-frontend';
-          }
-        }
-      }
-      options {
-        timeout(time: 6, unit: 'MINUTES')
-      }
-      environment {
-        PROJECT = "${PROJECT_PREFIX}unit"
-      }
-      steps {
-        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
-      }
-      post {
-        always {
-          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-        }
-      }
-    }
-
-    // TEST
-
-    stage('Build TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 30, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER}" }
-        sh "docker build -t ${IMAGE_TEST} " +
-           "--shm-size 1G " +
-           "--build-arg MA_OTAP_ENV=development " +
-           "--target=serve-ot-bff " +
-           "."
-        sh "docker push ${IMAGE_TEST}"
-      }
-    }
-
-    stage('Deploy TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER}" }
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
-        ]
-      }
-    }
-
     // ACCEPTANCE
 
     stage('Build BFF') {
@@ -98,10 +37,41 @@ pipeline {
         script { currentBuild.displayName = "ACC Build BFF #${BUILD_NUMBER}" }
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
-           "--target=deploy-ap-bff " +
+           "--target=deploy-bff-a " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
+      }
+    }
+
+    stage('Unit tests') {
+      when {
+        not {
+          anyOf {
+            branch 'test';
+            branch 'test-acc';
+            branch 'test-acc-bff';
+            branch 'test-acc-frontend';
+          }
+        }
+      }
+      options {
+        timeout(time: 6, unit: 'MINUTES')
+      }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}unit"
+      }
+      steps {
+        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
+        sh "docker run ${IMAGE_ACCEPTANCE} npm test"
+        sh "docker run ${IMAGE_ACCEPTANCE_BFF} npm run bff-api:test"
+        // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
+        // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
+      }
+      post {
+        always {
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
+        }
       }
     }
 
@@ -145,7 +115,7 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
-           "--target=deploy-acceptance-frontend " +
+           "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
@@ -194,7 +164,7 @@ pipeline {
         // Build the BFF production image
         // TODO: Pull ACC image, re tag and set ENV RUN variables
         sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-           "--target=deploy-ap-bff " +
+           "--target=deploy-bff-p " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION_BFF}"
