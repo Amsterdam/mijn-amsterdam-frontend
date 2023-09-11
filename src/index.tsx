@@ -5,7 +5,7 @@ import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
 import { createRoot } from 'react-dom/client';
 import './client/styles/main.scss';
-import { OTAP_ENV } from './universal/config/env';
+import { IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -15,18 +15,18 @@ if (
   window.location.replace('/no-support');
 }
 
-const release = `mijnamsterdam-frontend@${MA_APP_VERSION ?? 'latest-unknown'}`;
+const release = `mijnamsterdam-frontend@${MA_APP_VERSION}`;
 console.info(
   'App version: %s, Commit sha: %s, Build id:, %s',
   release,
-  MA_GIT_SHA ?? 'unknown',
-  MA_ADO_BUILD_ID ?? '0'
+  MA_GIT_SHA ?? '-1',
+  MA_BUILD_ID ?? '-1'
 );
 
 Sentry.init({
   dsn: import.meta.env.REACT_APP_SENTRY_DSN,
   environment: OTAP_ENV,
-  debug: OTAP_ENV === 'development',
+  debug: IS_DEVELOPMENT,
   ignoreErrors: [
     'a[b].target.className.indexOf is not a function',
     "Failed to execute 'removeChild' on 'Node'",
@@ -35,7 +35,7 @@ Sentry.init({
   tracesSampleRate: 0.5,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (OTAP_ENV === 'development') {
+    if (IS_DEVELOPMENT) {
       console.log(hint);
     }
     if (!import.meta.env.REACT_APP_SENTRY_DSN) {

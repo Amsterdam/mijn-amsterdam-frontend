@@ -44,7 +44,7 @@ process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
 
-process.env.BFF_FRONTEND_URL = frontentHost;
+process.env.MA_FRONTEND_URL = frontentHost;
 process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = `${remoteApiHost}/smile`;
 process.env.BFF_OIDC_BASE_URL = bffApiHost;
 process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;

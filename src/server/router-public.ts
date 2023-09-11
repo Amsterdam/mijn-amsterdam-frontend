@@ -169,8 +169,8 @@ router.get(
       status: 'OK',
       otapEnv: OTAP_ENV,
       release: RELEASE_VERSION,
-      gitSha: process.env.BFF_GIT_SHA ?? 'unknown',
-      buildId: process.env.BFF_ADO_BUILD_ID ?? '0',
+      gitSha: process.env.MA_GIT_SHA ?? '-1',
+      buildId: process.env.MA_BUILD_ID ?? '-1',
     });
   }
 );

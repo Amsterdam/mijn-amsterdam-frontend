@@ -1,9 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
-import proxy from 'express-http-proxy';
+// import proxy from 'express-http-proxy';
 import {
-  BFF_MS_API_BASE_URL,
   BffEndpoints,
-  RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
+  // RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
 } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
@@ -61,30 +60,30 @@ router.get(
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
-router.use(
-  BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE_URL, {
-    proxyReqPathResolver: function (req) {
-      return req.url;
-    },
-    proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-      // NOTE: Temporary
-      if (
-        RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
-          srcReq.url.includes(path)
-        )
-      ) {
-        return proxyReqOpts;
-      }
+// router.use(
+//   BffEndpoints.API_RELAY,
+//   proxy(BFF_MS_API_BASE_URL, {
+//     proxyReqPathResolver: function (req) {
+//       return req.url;
+//     },
+//     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+//       // NOTE: Temporary
+//       if (
+//         RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
+//           srcReq.url.includes(path)
+//         )
+//       ) {
+//         return proxyReqOpts;
+//       }
 
-      const { token } = await getAuth(srcReq);
-      const headers = proxyReqOpts.headers || {};
-      headers['Authorization'] = `Bearer ${token}`;
-      proxyReqOpts.headers = headers;
-      return proxyReqOpts;
-    },
-  })
-);
+//       const { token } = await getAuth(srcReq);
+//       const headers = proxyReqOpts.headers || {};
+//       headers['Authorization'] = `Bearer ${token}`;
+//       proxyReqOpts.headers = headers;
+//       return proxyReqOpts;
+//     },
+//   })
+// );
 
 router.get(
   BffEndpoints.SIA_ATTACHMENTS,

@@ -57,7 +57,7 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    let redirectUrl = `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+    let redirectUrl = `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
     switch (req.params.authMethod) {
       case 'yivi':
@@ -74,7 +74,7 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
 
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
-  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+  let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
 
   switch (auth.profile.authMethod) {
     case 'yivi':

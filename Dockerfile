@@ -46,29 +46,29 @@ COPY index.html /build-space/
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
+# Universal env variables (defined in vite.config.ts)
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
-ARG MA_APP_HOST=https://mijn.amsterdam.nl
-ENV MA_APP_HOST=$MA_APP_HOST
+ARG MA_BUILD_ID=-1
+ENV MA_BUILD_ID=$MA_BUILD_ID
 
-ENV INLINE_RUNTIME_CHUNK=false
-
-ARG MA_ADO_BUILD_ID=0
-ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
-
-ARG MA_GIT_SHA=0
+ARG MA_GIT_SHA=-1
 ENV MA_GIT_SHA=$MA_GIT_SHA
 
 ARG MA_TEST_ACCOUNTS=
 ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
 
 # Statically replaced import.meta variables
+ARG REACT_APP_BFF_API_URL=/api/v1
+ENV REACT_APP_BFF_API_URL=$REACT_APP_BFF_API_URL
+
 ARG REACT_APP_SENTRY_DSN=
 ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
 
 ARG REACT_APP_ANALYTICS_ID=
 ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
+
 
 COPY public /build-space/public
 
@@ -90,15 +90,15 @@ FROM nginx:latest as deploy-frontend
 
 WORKDIR /app
 
-ARG MA_APP_HOST=https://mijn.amsterdam.nl
-ENV MA_APP_HOST=$MA_APP_HOST
+ARG MA_FRONTEND_URL=https://mijn.amsterdam.nl
+ENV MA_FRONTEND_URL=$MA_FRONTEND_URL
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
-RUN envsubst '${MA_APP_HOST}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
+RUN envsubst '${MA_FRONTEND_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
@@ -128,13 +128,10 @@ WORKDIR /app
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
-ARG MA_APP_HOST=https://mijn.amsterdam.nl
-ENV MA_APP_HOST=$MA_APP_HOST
+ARG MA_BUILD_ID=0
+ENV MA_BUILD_ID=$MA_BUILD_ID
 
-ARG MA_ADO_BUILD_ID=0
-ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
-
-ARG MA_GIT_SHA=0
+ARG MA_GIT_SHA=-1
 ENV MA_GIT_SHA=$MA_GIT_SHA
 
 # Tell node to use the OpenSSL (OS installed) Certificates

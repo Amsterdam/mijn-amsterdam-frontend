@@ -40,7 +40,6 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.npm_package_vers
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
-export const BFF_MS_API_BASE_URL = `${process.env.BFF_MS_API_BASE_URL}`;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -210,7 +209,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   AKTES: {
-    url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
+    url: `${process.env.BFF_AKTES_BASE_URL}/aktes/aktes`,
     postponeFetch: !FeatureToggle.aktesActive,
   },
   ERFPACHT: {
@@ -421,7 +420,7 @@ const oidcConfigBase: ConfigParams = {
     login: false,
     logout: AUTH_LOGOUT,
     callback: false,
-    postLogoutRedirect: process.env.BFF_FRONTEND_URL,
+    postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
     const claims = jose.JWT.decode(session.id_token) as {
@@ -532,7 +531,7 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
 };
 
 export const corsOptions: CorsOptions = {
-  origin: process.env.BFF_FRONTEND_URL,
+  origin: process.env.MA_FRONTEND_URL,
   credentials: true,
 };
 

@@ -82,7 +82,7 @@ app.use(limiter);
 
 // Request logging
 morgan.token('build', function (req, res) {
-  return `bff-${process.env.BFF_ADO_BUILD_ID ?? 'latest'}`;
+  return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
 app.use(

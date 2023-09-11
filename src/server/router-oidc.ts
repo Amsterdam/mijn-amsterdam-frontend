@@ -83,7 +83,7 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   if (auth.profile.id) {
     countLoggedInVisit(auth.profile.id);
   }
-  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
+  return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
 });
 
 /**
@@ -115,7 +115,7 @@ if (FeatureToggle.eherkenningActive) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
     return res.redirect(
-      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
     );
   });
 
@@ -187,7 +187,7 @@ router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
       return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
     default: {
       // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
-      return res.redirect(`${process.env.BFF_FRONTEND_URL}?sso=1`);
+      return res.redirect(`${process.env.MA_FRONTEND_URL}?sso=1`);
     }
   }
 });
@@ -213,5 +213,5 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
     return res.redirect(redirectUrl);
   }
 
-  return res.redirect(`${process.env.BFF_FRONTEND_URL}`);
+  return res.redirect(`${process.env.MA_FRONTEND_URL}`);
 });

@@ -15,9 +15,9 @@
     "start": "cross-env MA_APP_MODE=development vite",
     "build": "cross-env MA_APP_MODE=production vite build",
     "serve": "vite preview",
-    "test": "cross-env MA_APP_MODE=test vitest src/client",
+    "test": "cross-env MA_APP_MODE=unittest vitest src/client",
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
-    "bff-api:test": "cross-env MA_APP_MODE=test vitest --environment=node src/server src/universal",
+    "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"

@@ -9,14 +9,51 @@ pipeline {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "docker-registry.secure.amsterdam.nl/mijnams/mijnamsterdam"
+    IMAGE_TEST = "${IMAGE_BASE}:test"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}-bff:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}-bff:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
+
+    MA_FRONTEND_URL_ACC = "https://acc.mijn.amsterdam.nl"
+    MA_FRONTEND_URL_PROD = "https://mijn.amsterdam.nl"
+
+    REACT_APP_BFF_API_URL_ACC = "https://acc.mijn-bff.amsterdam.nl/api/v1"
+    REACT_APP_BFF_API_URL_PROD = "https://mijn-bff.amsterdam.nl/api/v1"
+
+    REACT_APP_SENTRY_DSN=
+    REACT_APP_ANALYTICS_ID=
   }
 
   stages {
+
+    // RUN TESTS
+
+    stage('Unit tests') {
+      when {
+        not {
+          anyOf {
+            branch 'test';
+            branch 'test-acc';
+            branch 'test-acc-bff';
+            branch 'test-acc-frontend';
+          }
+        }
+      }
+      options {
+        timeout(time: 6, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
+        sh "docker build -t ${IMAGE_TEST} " +
+           "--target=build-deps " +
+           "--shm-size 1G " +
+           "."
+        sh "docker run ${IMAGE_TEST} npm test"
+        sh "docker run ${IMAGE_TEST} npm run bff-api:test"
+      }
+    }
 
     // ACCEPTANCE
 
@@ -38,40 +75,13 @@ pipeline {
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
            "--target=deploy-bff-a " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_ACC} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=acceptance " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
-      }
-    }
-
-    stage('Unit tests') {
-      when {
-        not {
-          anyOf {
-            branch 'test';
-            branch 'test-acc';
-            branch 'test-acc-bff';
-            branch 'test-acc-frontend';
-          }
-        }
-      }
-      options {
-        timeout(time: 6, unit: 'MINUTES')
-      }
-      environment {
-        PROJECT = "${PROJECT_PREFIX}unit"
-      }
-      steps {
-        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
-        sh "docker run ${IMAGE_ACCEPTANCE} npm test"
-        sh "docker run ${IMAGE_ACCEPTANCE_BFF} npm run bff-api:test"
-        // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
-        // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
-      }
-      post {
-        always {
-          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-        }
       }
     }
 
@@ -115,6 +125,10 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
            "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
@@ -155,16 +169,26 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
+
+        // Build the FE production image
         sh "docker build -t ${IMAGE_PRODUCTION} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=production " +
            "--target=deploy-production-frontend " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION}"
 
         // Build the BFF production image
-        // TODO: Pull ACC image, re tag and set ENV RUN variables
         sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-           "--target=deploy-bff-p " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=production " +
+           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_PROD} " +
+           "--target=deploy-bff " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION_BFF}"
@@ -204,6 +228,7 @@ pipeline {
           [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
         ]
 
+        // Build the FE
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
@@ -216,15 +241,6 @@ pipeline {
   post {
     success {
       echo 'Pipeline success'
-    }
-
-    failure {
-      echo 'Something went wrong while running pipeline'
-      slackSend(
-        channel: 'ci-channel',
-        color: 'danger',
-        message: "${JOB_NAME}: failure ${BUILD_URL}"
-      )
     }
   }
 }

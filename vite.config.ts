@@ -14,9 +14,9 @@ export default defineConfig({
   // See also src/mijnamsterdam.d.ts
   define: {
     MA_OTAP_ENV: JSON.stringify(process.env.MA_OTAP_ENV || 'development'),
-    MA_APP_MODE: JSON.stringify(process.env.MA_APP_MODE || 'development'),
-    MA_APP_VERSION: JSON.stringify(process.env.MA_APP_VERSION || '-1'),
-    MA_ADO_BUILD_ID: JSON.stringify(process.env.MA_ADO_BUILD_ID || '-1'),
+    MA_APP_MODE: JSON.stringify(process.env.MA_APP_MODE || 'production'),
+    MA_APP_VERSION: JSON.stringify(process.env.npm_package_version || '-1'),
+    MA_BUILD_ID: JSON.stringify(process.env.MA_BUILD_ID || '-1'),
     MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
     MA_TEST_ACCOUNTS: JSON.stringify(process.env.MA_TEST_ACCOUNTS || ''),
     MA_PROFILE_DEV_ID: JSON.stringify(process.env.MA_PROFILE_DEV_ID || ''),
