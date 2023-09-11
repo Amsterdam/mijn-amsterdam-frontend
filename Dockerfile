@@ -1,51 +1,41 @@
 ########################################################################################################################
 ########################################################################################################################
-# Start with a node image for build dependencies
+# Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:current-buster as build-deps
+FROM node:current-buster as updated-buster-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
 
-WORKDIR /build-space
-
-# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
-ENV SSH_PASSWD "root:Docker!"
-
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends dialog openssh-server nano inetutils-traceroute \
-  && echo "$SSH_PASSWD" | chpasswd 
+  && apt-get install -y --no-install-recommends dialog openssh-server nano inetutils-traceroute
 
-# Copy certificate
-COPY ca/* /usr/local/share/ca-certificates/extras/
 
-# Update new cert
-RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
-  && update-ca-certificates
+########################################################################################################################
+########################################################################################################################
+# Start with a node image for build dependencies
+########################################################################################################################
+########################################################################################################################
+FROM updated-buster-local as build-deps
+
+WORKDIR /build-space
 
 # Copy packages + Install
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
+COPY vite.config.ts /build-space/
 
 # Install the dependencies
 RUN npm ci --prefer-offline --no-audit --progress=false
-
-# SSH config
-COPY conf/sshd_config /etc/ssh/
 
 # Typescript configs
 COPY tsconfig.json /build-space/
 COPY tsconfig.bff.json /build-space/
 
-# Entrypoint
-COPY conf/docker-entrypoint-bff.sh /usr/local/bin/
-RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
-
 # Copy source files
-COPY .env.production /build-space/
 COPY src /build-space/src
 COPY index.html /build-space/
 
@@ -56,12 +46,13 @@ COPY index.html /build-space/
 ########################################################################################################################
 FROM build-deps as build-app-fe
 
-ENV INLINE_RUNTIME_CHUNK=false
-ENV TZ=Europe/Amsterdam
-
-# Statically replaced define(...) (vite.config.ts) variables
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ARG MA_APP_HOST=https://mijn.amsterdam.nl
+ENV MA_APP_HOST=$MA_APP_HOST
+
+ENV INLINE_RUNTIME_CHUNK=false
 
 ARG MA_ADO_BUILD_ID=0
 ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
@@ -84,10 +75,9 @@ COPY public /build-space/public
 # Build FE
 RUN npm run build
 
-
+# Build BFF
 FROM build-deps as build-app-bff
 
-# Build BFF
 RUN npm run bff-api:build
 
 
@@ -100,13 +90,8 @@ FROM nginx:latest as deploy-frontend
 
 WORKDIR /app
 
-LABEL name="mijnamsterdam FRONTEND"
-LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
-
 ARG MA_APP_HOST=https://mijn.amsterdam.nl
 ENV MA_APP_HOST=$MA_APP_HOST
-
-ENV TZ=Europe/Amsterdam
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
@@ -136,7 +121,15 @@ COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM build-app-bff as deploy-bff
+FROM updated-buster-local as deploy-bff
+
+WORKDIR /app
+
+ARG MA_OTAP_ENV=production
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ARG MA_APP_HOST=https://mijn.amsterdam.nl
+ENV MA_APP_HOST=$MA_APP_HOST
 
 ARG MA_ADO_BUILD_ID=0
 ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
@@ -144,15 +137,26 @@ ENV MA_ADO_BUILD_ID=$MA_ADO_BUILD_ID
 ARG MA_GIT_SHA=0
 ENV MA_GIT_SHA=$MA_GIT_SHA
 
-WORKDIR /app
-
-ENV TZ=Europe/Amsterdam
-
 # Tell node to use the OpenSSL (OS installed) Certificates
 ENV NODE_OPTIONS=--use-openssl-ca
 
-LABEL name="Mijn.Amsterdam BFF (Back-end for front-end)"
-LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
+ENV SSH_PASSWD "root:Docker!"
+
+# Copy certificate
+COPY ca/* /usr/local/share/ca-certificates/extras/
+
+# Update new cert
+RUN  echo "$SSH_PASSWD" | chpasswd \
+  && chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+  && update-ca-certificates
+
+# SSH config
+COPY conf/sshd_config /etc/ssh/
+
+# Entrypoint
+COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
 # Copy the built application files to the current image
 COPY --from=build-app-bff /build-space/build-bff /app/build-bff
@@ -161,30 +165,4 @@ COPY --from=build-app-bff /build-space/package.json /app/package.json
 COPY src/server/views /app/build-bff/server/views
 
 # Run the app
-CMD /usr/local/bin/docker-entrypoint-bff.sh
-
-FROM deploy-bff as deploy-bff-o
-
-ENV MA_OTAP_ENV=development
-CMD /usr/local/bin/docker-entrypoint-bff.sh
-
-FROM deploy-bff as deploy-bff-t
-
-# NOTE: Currently only on Azure
-ENV MA_OTAP_ENV=test
-COPY files /app/files
-CMD /usr/local/bin/docker-entrypoint-bff.sh
-
-FROM deploy-bff as deploy-bff-a
-
-ENV MA_OTAP_ENV=acceptance
-# NOTE: Enable when on Azure
-#COPY files /app/files
-CMD /usr/local/bin/docker-entrypoint-bff.sh
-
-FROM deploy-bff as deploy-bff-p
-
-ENV MA_OTAP_ENV=production
-# NOTE: Enable when on Azure
-#COPY files /app/files
 CMD /usr/local/bin/docker-entrypoint-bff.sh
