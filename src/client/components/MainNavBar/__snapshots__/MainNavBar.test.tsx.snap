@@ -8,7 +8,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
     <div
       class="_LinkContainer_e3ba3b"
       id="MainMenu"
-      style="left: -400px;"
+      style="left: 0px;"
     >
       <div
         class="_secondaryLinks_e3ba3b"

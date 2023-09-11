@@ -1,5 +1,5 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { ReactChildren } from 'react';
+import { renderHook } from '@testing-library/react';
+import { ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Vergunning } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config';
@@ -293,7 +293,7 @@ describe('Search hooks and helpers', () => {
   test('useSearchIndex <failure>', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject() as any);
 
-    const wrapper = ({ children }: { children: ReactChildren }) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <RecoilRoot
         initializeState={(snapshot) => {
           snapshot.set(appStateAtom, {
@@ -306,13 +306,13 @@ describe('Search hooks and helpers', () => {
       </RecoilRoot>
     );
 
-    const { result, waitForNextUpdate } = renderHook(useSearchIndex, {
+    const { result, rerender } = renderHook(useSearchIndex, {
       wrapper,
     });
 
     expect(result.current).toBeUndefined();
 
-    await waitForNextUpdate();
+    rerender();
 
     expect(result.current).toBeUndefined();
   });

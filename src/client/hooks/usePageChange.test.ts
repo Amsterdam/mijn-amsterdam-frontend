@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 import { NOT_FOUND_TITLE } from '../../universal/config/chapter';
@@ -36,6 +36,7 @@ vi.mock('../../universal/config/routes', async (requireActual) => {
       TEST_PAGE_CHANGE: mocks.testRoute,
       FOO_BAR: '/',
       TEST_NO_TITLE: '/no-title',
+      BUURT: '/buurt',
     },
   };
 });
@@ -77,6 +78,7 @@ vi.mock('../../universal/config/chapter', async (requireActual) => {
           : mocks.titleNotAuthenticated;
       },
       '/': 'Foo Bar',
+      '/buurt': 'Mijn buurt',
     },
   };
 });
@@ -140,7 +142,8 @@ describe('usePageChange', () => {
       '[undefined] /no-title',
       '/no-title',
       'private-attributes',
-      'Amsterdam'
+      'Amsterdam',
+      'Mijn Amsterdam algemeen'
     );
   });
 
@@ -155,5 +158,20 @@ describe('usePageChange', () => {
     renderHook(() => usePageChange(false));
 
     expect(document.title).toBe(mocks.titleNotAuthenticated);
+  });
+
+  test('Should track the MA theme of a page', () => {
+    // @ts-ignore
+    rrd.__setPathname('/buurt');
+
+    renderHook(() => usePageChange(true));
+
+    expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
+      'Mijn buurt',
+      '/buurt',
+      'private-attributes',
+      'Amsterdam',
+      'Mijn buurt'
+    );
   });
 });

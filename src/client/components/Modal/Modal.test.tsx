@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
+import { describe, it, expect, vi } from 'vitest';
 import { Dialog } from './Modal';
 
 describe('Modal test', () => {
@@ -42,7 +42,9 @@ describe('Modal test', () => {
     expect(screen.queryByText('Testje')).toBeNull();
   });
 
-  it('Opens and Closes the modal via close callback', () => {
+  it('Opens and Closes the modal via close callback', async () => {
+    const user = userEvent.setup();
+
     const close = vi.fn(() => {
       rerender(
         <Dialog isOpen={false} onClose={close}>
@@ -65,7 +67,9 @@ describe('Modal test', () => {
       </Dialog>
     );
     expect(screen.getByText('Testje')).toBeInTheDocument();
-    userEvent.click(screen.getByTitle('Overlay sluiten'));
+
+    await user.click(screen.getByTitle('Overlay sluiten'));
+
     expect(close).toHaveBeenCalled();
     expect(screen.queryByText('Testje')).toBeNull();
   });

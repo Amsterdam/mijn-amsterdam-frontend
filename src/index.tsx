@@ -6,6 +6,7 @@ import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 
 import './client/styles/main.scss';
 import { ENV } from './universal/config/env';
+import { createRoot } from 'react-dom/client';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -49,9 +50,10 @@ const sendToSentry = (error: Error, info: { componentStack: string }) => {
   });
 };
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+
+root.render(
   <ErrorBoundary onError={sendToSentry} FallbackComponent={ApplicationError}>
     <App />
-  </ErrorBoundary>,
-  document.getElementById('root')
+  </ErrorBoundary>
 );

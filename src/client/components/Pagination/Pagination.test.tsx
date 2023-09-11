@@ -1,10 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Pagination from './Pagination';
+import { describe, it, expect, vi } from 'vitest';
 
 describe('<Pagination />', () => {
   const onPageClick = vi.fn();
   it('Renders without crashing', async () => {
+    const user = userEvent.setup();
+
     const { rerender } = render(
       <Pagination
         totalCount={10}
@@ -18,7 +21,7 @@ describe('<Pagination />', () => {
     ).toBeInTheDocument();
     expect(screen.getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
 
-    userEvent.click(screen.getByLabelText('Ga naar pagina 2'));
+    await user.click(screen.getByLabelText('Ga naar pagina 2'));
     expect(onPageClick).toHaveBeenCalledWith(2);
 
     rerender(

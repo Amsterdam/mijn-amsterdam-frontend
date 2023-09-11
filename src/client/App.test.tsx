@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import App from './App';
 import { vi, describe, it, expect } from 'vitest';
 import { bffApi } from '../test-utils';
@@ -62,7 +62,9 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    });
 
     await screen.findByRole('heading', { name: /actueel/i });
 
