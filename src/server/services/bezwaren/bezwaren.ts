@@ -235,7 +235,7 @@ export async function fetchBezwaarDocument(
 
   return axios({
     url,
-    headers: getBezwarenApiHeaders(authProfileAndToken, isDownload),
+    headers: getBezwarenApiHeaders(authProfileAndToken),
     responseType: isDownload ? 'stream' : 'json',
   });
 }
@@ -405,10 +405,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   return notification;
 }
 
-function getBezwarenApiHeaders(
-  authProfileAndToken: AuthProfileAndToken,
-  isDocumentDownload: boolean = false
-) {
+function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
 
   const tokenData = {
@@ -434,7 +431,7 @@ function getBezwarenApiHeaders(
   }
 
   const header = {
-    'Content-Type': isDocumentDownload ? 'aplication/pdf' : 'application/json',
+    'Content-Type': 'application/json',
     apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
     Authorization: `Bearer ${jose.JWT.sign(
       tokenData,
