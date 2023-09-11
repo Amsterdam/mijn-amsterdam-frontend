@@ -4,6 +4,7 @@ import {
   defaultDateFormat,
   isError,
   isLoading,
+  uniqueArray,
 } from '../../../universal/helpers';
 import {
   Alert,
@@ -28,6 +29,10 @@ const BezwarenDetail = () => {
 
   const noContent = !isLoading(BEZWAREN) && !bezwaar;
 
+  const documentCategories = uniqueArray(
+    !bezwaar ? [] : bezwaar.documenten.map((d) => d.dossiertype).filter(Boolean)
+  );
+
   return (
     <DetailPage>
       <PageHeading
@@ -47,7 +52,7 @@ const BezwarenDetail = () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {!!bezwaar && (
+        {!!bezwaar ? (
           <>
             {bezwaar.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
@@ -77,43 +82,55 @@ const BezwarenDetail = () => {
             {bezwaar.einddatum && bezwaar.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
             )}
-            {!!bezwaar.documenten.length && (
-              <InfoDetailGroup>
-                <InfoDetail
-                  valueWrapperElement="div"
-                  label={`Document${bezwaar.documenten.length > 1 ? 'en' : ''}`}
-                  value={
-                    <ul className={styles.documentlist}>
-                      {bezwaar.documenten.map((document) => (
-                        <li key={`document-link-${document.id}`}>
-                          <DocumentLink
-                            document={document}
-                            label={document.titel}
-                            trackPath={() =>
-                              `bezwaar/document/${document.titel}`
-                            }
-                          ></DocumentLink>
-                        </li>
-                      ))}
-                    </ul>
-                  }
-                />
-                <InfoDetail
-                  valueWrapperElement="div"
-                  label="Datum"
-                  value={
-                    <ul className={styles.documentlist}>
-                      {bezwaar.documenten.map((document) => (
-                        <li key={`document-date-${document.id}`}>
-                          {document.datePublished}
-                        </li>
-                      ))}
-                    </ul>
-                  }
-                />
-              </InfoDetailGroup>
+            {documentCategories.length > 0 && (
+              <>
+                {documentCategories.map((category) => {
+                  const docs = bezwaar.documenten.filter(
+                    (d) => d.dossiertype === category
+                  );
+                  return (
+                    <InfoDetailGroup>
+                      <InfoDetail
+                        valueWrapperElement="div"
+                        label={`Document${
+                          bezwaar.documenten.length > 1 ? 'en' : ''
+                        } ${category.toLowerCase()}`}
+                        value={
+                          <ul className={styles.documentlist}>
+                            {docs.map((document) => (
+                              <li key={`document-link-${document.id}`}>
+                                <DocumentLink
+                                  document={document}
+                                  trackPath={() =>
+                                    `bezwaar/document/${document.titel}`
+                                  }
+                                ></DocumentLink>
+                              </li>
+                            ))}
+                          </ul>
+                        }
+                      />
+                      <InfoDetail
+                        valueWrapperElement="div"
+                        label="Datum"
+                        value={
+                          <ul className={styles.documentlist}>
+                            {docs.map((document) => (
+                              <li key={`document-date-${document.id}`}>
+                                {document.datePublished}
+                              </li>
+                            ))}
+                          </ul>
+                        }
+                      />
+                    </InfoDetailGroup>
+                  );
+                })}
+              </>
             )}
           </>
+        ) : (
+          <></>
         )}
       </PageContent>
       {!!bezwaar && (

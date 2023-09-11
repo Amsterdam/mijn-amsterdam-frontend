@@ -88,15 +88,35 @@ export interface BezwaarDocument {
 
 export interface BezwaarSourceDocument {
   url: string;
-  uuid: string;
-  informatieobject: string;
-  zaak: string;
-  aardRelatieWeergave: string;
+  identificatie: string;
+  bronorganisatie: string | null;
+  creatiedatum: string;
   titel: string;
+  vertrouwelijkheidaanduiding: string;
+  auteur: string;
+  status: string;
+  formaat: string;
+  taal: string;
+  versie: number;
+  beginRegistratie: string;
+  bestandsnaam: string;
+  inhoud: string;
+  bestandsomvang: string | null;
+  link: string | null;
   beschrijving: string;
-  registratiedatum: string;
-  dossiertype: string;
+  ontvangstdatum: string;
   verzenddatum: string;
+  indicatieGebruiksrecht: string | null;
+  verschijningsvorm: string | null;
+  ondertekening: string | null;
+  integriteit: string | null;
+  informatieobjecttype: string;
+  locked: boolean;
+  dossiertype:
+    | 'Online Correspondentie'
+    | 'Online Procesdossier'
+    | 'Online Besluitvorming'
+    | 'Online Aangeleverd';
 }
 
 export interface BezwaarResponse {

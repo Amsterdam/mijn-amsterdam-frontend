@@ -285,7 +285,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             <h3
               class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
-              Documenten
+              Documenten online aangeleverd
             </h3>
             <div
               class="_Value_6f1df2"
@@ -319,9 +319,10 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
-                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                      href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
+                      rel="external noopener noreferrer"
                     >
-                      Constructie.pdf
+                      connector.docx
                     </a>
                   </span>
                 </li>
@@ -351,73 +352,10 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
-                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                      href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
+                      rel="external noopener noreferrer"
                     >
-                      Test document 01.pdf
-                    </a>
-                  </span>
-                </li>
-                <li>
-                  <span
-                    class="_DocumentLinkWrap_7ed0ad"
-                  >
-                    <span
-                      class="_DownloadIcon_7ed0ad"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        height="14"
-                        viewBox="0 0 32 32"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                      >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
-                      </svg>
-                    </span>
-                    <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
-                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
-                    >
-                      Concept besluit.pdf
-                    </a>
-                  </span>
-                </li>
-                <li>
-                  <span
-                    class="_DocumentLinkWrap_7ed0ad"
-                  >
-                    <span
-                      class="_DownloadIcon_7ed0ad"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        height="14"
-                        viewBox="0 0 32 32"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                      >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
-                      </svg>
-                    </span>
-                    <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
-                      href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
-                    >
-                      BZ020001.pdf
+                      Bezwaar_JB20230049.pdf
                     </a>
                   </span>
                 </li>
@@ -439,16 +377,166 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 class="_documentlist_839df0"
               >
                 <li>
-                  23 maart 2023
+                  30 augustus 2023
                 </li>
                 <li>
-                  23 maart 2023
+                  30 augustus 2023
                 </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+            >
+              Documenten online besluitvorming
+            </h3>
+            <div
+              class="_Value_6f1df2"
+            >
+              <ul
+                class="_documentlist_839df0"
+              >
                 <li>
-                  23 maart 2023
+                  <span
+                    class="_DocumentLinkWrap_7ed0ad"
+                  >
+                    <span
+                      class="_DownloadIcon_7ed0ad"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        height="14"
+                        viewBox="0 0 32 32"
+                        width="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                    <a
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
+                      rel="external noopener noreferrer"
+                    >
+                      connector.docx
+                    </a>
+                  </span>
                 </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+            >
+              Datum
+            </h3>
+            <div
+              class="_Value_6f1df2"
+            >
+              <ul
+                class="_documentlist_839df0"
+              >
                 <li>
-                  23 maart 2023
+                  30 augustus 2023
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+            >
+              Documenten online procesdossier
+            </h3>
+            <div
+              class="_Value_6f1df2"
+            >
+              <ul
+                class="_documentlist_839df0"
+              >
+                <li>
+                  <span
+                    class="_DocumentLinkWrap_7ed0ad"
+                  >
+                    <span
+                      class="_DownloadIcon_7ed0ad"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        height="14"
+                        viewBox="0 0 32 32"
+                        width="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                    <a
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
+                      rel="external noopener noreferrer"
+                    >
+                      Bezwaar_JB20230049.pdf
+                    </a>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+            >
+              Datum
+            </h3>
+            <div
+              class="_Value_6f1df2"
+            >
+              <ul
+                class="_documentlist_839df0"
+              >
+                <li>
+                  30 augustus 2023
                 </li>
               </ul>
             </div>

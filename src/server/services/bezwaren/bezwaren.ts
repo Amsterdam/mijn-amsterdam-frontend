@@ -1,3 +1,4 @@
+import { IS_AP } from './../../../universal/config/env';
 import * as Sentry from '@sentry/node';
 import axios from 'axios';
 import jose from 'jose';
@@ -40,33 +41,40 @@ function getZaakUrl(zaakId: string) {
 }
 
 function transformBezwarenDocumentsResults(
-  documents: BezwaarSourceDocument[]
+  response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): GenericDocument[] {
   Sentry.captureMessage('Bezwaren documents', {
     extra: {
-      data: JSON.stringify(documents),
+      data: JSON.stringify(response),
     },
   });
 
-  if (Array.isArray(documents)) {
-    return documents.map(
-      ({ titel, registratiedatum, uuid, dossiertype, verzenddatum }) => {
-        const [documentIdEncrypted] = encrypt(
-          uuid,
-          process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-        );
-        return {
-          id: documentIdEncrypted,
-          title: titel,
-          datePublished: defaultDateFormat(verzenddatum),
-          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-            BffEndpoints.BEZWAREN_ATTACHMENTS,
-            { id: documentIdEncrypted }
-          )}`,
-          dossiertype,
-        };
-      }
-    );
+  if (Array.isArray(response.results)) {
+    console.log(response);
+    try {
+      return response.results.map(
+        ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
+          const [documentIdEncrypted] = IS_AP
+            ? encrypt(
+                identificatie,
+                process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+              )
+            : [identificatie];
+          return {
+            id: documentIdEncrypted,
+            title: bestandsnaam,
+            datePublished: defaultDateFormat(verzenddatum),
+            url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
+              BffEndpoints.BEZWAREN_ATTACHMENTS,
+              { id: documentIdEncrypted }
+            )}`,
+            dossiertype,
+          };
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
   return [];
 }
