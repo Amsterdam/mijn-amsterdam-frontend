@@ -207,6 +207,98 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         </div>
       </section>
     </div>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Lopende bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <p
+            class="_NoItemsMessage_b93dc7"
+          >
+            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Afgehandelde bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <p
+            class="_NoItemsMessage_b93dc7"
+          >
+            U hebt nog geen afgehandelde bezwaren.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </DocumentFragment>
 `;
@@ -418,6 +510,98 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         </div>
       </section>
     </div>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Lopende bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <p
+            class="_NoItemsMessage_b93dc7"
+          >
+            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Afgehandelde bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <p
+            class="_NoItemsMessage_b93dc7"
+          >
+            U hebt nog geen afgehandelde bezwaren.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </DocumentFragment>
 `;
@@ -712,6 +896,181 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         </div>
       </section>
     </div>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Lopende bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <table
+            class="_Table_a66dcc _DocumentsTable_995d68"
+          >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Zaaknummer
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Onderwerp
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Zaaknummer:
+                  </span>
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    BI.21.014121.001
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Ontvangen op:
+                  </span>
+                  <span>
+                    25 april 2023
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Onderwerp:
+                  </span>
+                  <span>
+                    Korte omschrijving van het bezwaar
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
+    >
+      <h3
+        class="_Heading_2bd2a4 _Heading__mediumLarge_2bd2a4 _Title_b93dc7 _TitleWithItems_b93dc7"
+      >
+        <button
+          aria-expanded="true"
+          class="_TitleToggle_b93dc7"
+        >
+          <svg
+            aria-hidden="true"
+            class="_CaretIcon_b93dc7"
+            focusable="false"
+            height="32px"
+            viewBox="0 0 32 32"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-rechts-icoon
+            </title>
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
+           Afgehandelde bezwaren
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="_Panel_b93dc7"
+        style="height: 0px;"
+      >
+        <div
+          class="_PanelInner_b93dc7"
+        >
+          <p
+            class="_NoItemsMessage_b93dc7"
+          >
+            U hebt nog geen afgehandelde bezwaren.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </DocumentFragment>
 `;

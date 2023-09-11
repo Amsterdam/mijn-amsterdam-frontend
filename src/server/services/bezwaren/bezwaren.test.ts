@@ -11,6 +11,8 @@ import {
 } from './bezwaren';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 
+const endpointBase = '/zgw/v1/zaken';
+
 describe('Bezwaren', () => {
   const requestId = '456';
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
@@ -35,7 +37,7 @@ describe('Bezwaren', () => {
   describe('fetch bezwaren', () => {
     beforeEach(() => {
       remoteApi
-        .post(`/bezwaren/zgw/v1/zaken/_zoek?page=1`)
+        .post(`${endpointBase}/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
         .get((uri) => uri.includes('/zaakinformatieobjecten'))
         .times(4)
@@ -142,8 +144,8 @@ describe('Bezwaren', () => {
       };
 
       beforeEach(() => {
-        nock('http://localhost/zgw/v1')
-          .post(`/zaken/_zoek?page=1`)
+        remoteApi
+          .post(`${endpointBase}/_zoek?page=1`)
           .reply(200, emptyResponse);
       });
 
@@ -157,13 +159,13 @@ describe('Bezwaren', () => {
 
     describe('regular flow', () => {
       beforeEach(() => {
-        nock('http://localhost/zgw/v1')
-          .post(`/zaken/_zoek?page=1`)
+        remoteApi
+          .post(`${endpointBase}/_zoek?page=1`)
           .reply(200, {
             ...bezwarenApiResponse,
             count: 8,
           })
-          .post(`/zaken/_zoek?page=2`)
+          .post(`${endpointBase}/_zoek?page=2`)
           .reply(200, {
             ...bezwarenApiResponse,
             count: 8,
