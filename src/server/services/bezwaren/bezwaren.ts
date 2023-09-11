@@ -43,7 +43,9 @@ function transformBezwarenDocumentsResults(
   documents: BezwaarSourceDocument[]
 ): GenericDocument[] {
   Sentry.captureMessage('Bezwaren documents', {
-    extra: { data: JSON.stringify(documents) },
+    extra: {
+      data: JSON.stringify(documents),
+    },
   });
 
   if (Array.isArray(documents)) {
@@ -74,8 +76,7 @@ export async function fetchBezwarenDocuments(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const params = {
-    // We need to pass the entire url as query parameter
-    zaak: getZaakUrl(zaakId),
+    identificatie: zaakId,
   };
 
   const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
