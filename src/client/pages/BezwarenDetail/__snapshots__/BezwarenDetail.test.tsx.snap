@@ -75,7 +75,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
           Bezwaren
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           Bezwaar
         </h2>
@@ -200,7 +200,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           Bezwaren
         </a>
         <h2
-          class="_Heading_2bd2a4 _Heading__large_2bd2a4"
+          class="amsterdam-heading amsterdam-heading-1"
         >
           BI.21.014121.001
         </h2>
@@ -213,7 +213,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Onderwerp
         </h3>
@@ -227,7 +227,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
         >
           Reden bezwaar
         </h3>
@@ -247,7 +247,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Besluit waartegen u bezwaar maakt
             </h3>
@@ -261,7 +261,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Datum
             </h3>
@@ -283,7 +283,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Documenten
             </h3>
@@ -428,7 +428,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _Label_6f1df2"
+              class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
             >
               Datum
             </h3>
@@ -460,7 +460,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="_Heading_2bd2a4 _Heading__tiny_2bd2a4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
       >
         Status
       </h4>

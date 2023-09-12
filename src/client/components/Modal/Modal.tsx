@@ -1,13 +1,13 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 
-import { CloseButton } from '../Button/Button';
-import { ComponentChildren } from '../../../universal/types';
-import FocusTrap from 'focus-trap-react';
-import Heading from '../Heading/Heading';
-import ReactDOM from 'react-dom';
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import styles from './Modal.module.scss';
+import FocusTrap from 'focus-trap-react';
+import ReactDOM from 'react-dom';
+import { ComponentChildren } from '../../../universal/types';
 import { useModalRoot } from '../../hooks';
+import { CloseButton } from '../Button/Button';
+import styles from './Modal.module.scss';
 
 interface ModalProps {
   children: ComponentChildren;
@@ -127,7 +127,7 @@ export function Dialog({
                 }}
               >
                 {!!title && (
-                  <Heading size="small" id="dialog-title">
+                  <Heading size="level-3" level={3} id="dialog-title">
                     {title}
                   </Heading>
                 )}

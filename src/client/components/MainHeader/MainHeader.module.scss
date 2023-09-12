@@ -1,14 +1,11 @@
 @import '../../styles/_global.scss';
 
-.header {
-}
-
 .topBar {
   @include centered-max;
   height: $main-header-topbar-height;
   display: flex;
 
-  @include select(Heading) {
+  @include select(amsterdam-heading) {
     margin: 0.4em 0 0;
   }
 
@@ -16,9 +13,8 @@
     max-width: none;
     height: $main-header-topbar-height--tablet;
 
-    @include select(Heading) {
+    @include select(amsterdam-heading) {
       margin: 1rem 0 0 2rem;
-      font-size: 1.8rem; // Overrides the default responsive size
     }
   }
 }
@@ -27,6 +23,7 @@
   .topBar {
     height: auto;
     border-bottom: 4px solid $color-neutral-grey2;
+
     a {
       font-size: 20pt;
       color: $color-black !important;
@@ -53,6 +50,7 @@
 @media print {
   .logoLink {
     transform: none;
+
     svg {
       width: 80px;
       height: 100px;
@@ -114,7 +112,7 @@
     top: 1rem;
   }
 
-  > a {
+  >a {
     position: absolute;
     margin: 0 auto;
     z-index: 1;

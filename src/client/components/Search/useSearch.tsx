@@ -1,4 +1,4 @@
-import { ExternalLink } from '@amsterdam/asc-assets';
+import { ExternalLink } from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';

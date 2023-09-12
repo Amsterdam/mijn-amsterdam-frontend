@@ -65,10 +65,6 @@
   display: flex;
   margin: 0 0 1.6rem 0;
 
-  @include mq-gt-phone() {
-    align-items: flex-end;
-  }
-
   @include select(Heading_Heading) {
     flex-grow: 1;
   }
@@ -125,6 +121,7 @@
   z-index: 2;
   width: 2.6rem;
   height: 2.6rem;
+
   &:hover {
     @include select(Button_Icon) {
       fill: #fff;

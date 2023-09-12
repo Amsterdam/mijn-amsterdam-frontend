@@ -107,24 +107,6 @@
   margin-top: 2rem;
 }
 
-// TODO: Enable when we have a design and/or decision wether we want to actually implement such a thing.
-// .isUnread {
-//   .Datum {
-//     position: relative;
-//     padding-left: 1em;
-
-//     &:after {
-//       content: '• ';
-//       color: $color-support-lightblue;
-//       font-size: 1.6em;
-//       position: absolute;
-//       left: 0;
-//       top: 50%;
-//       transform: translateY(-50%);
-//     }
-//   }
-// }
-
 .FakeContent {
   padding-left: 0;
 }

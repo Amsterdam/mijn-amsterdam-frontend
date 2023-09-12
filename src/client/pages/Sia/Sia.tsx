@@ -1,4 +1,4 @@
-import { ThumbsDown, ThumbsUp } from '@amsterdam/asc-assets';
+import { ThumbsDown, ThumbsUp } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';

@@ -105,19 +105,17 @@ describe('usePageChange', () => {
   it('should track page view when path is known', () => {
     // @ts-ignore
     rrd.__setPathname('/');
-    const { result } = renderHook(() => usePageChange(true));
+    renderHook(() => usePageChange(true));
 
     expect(trackPageViewWithCustomDimension).toHaveBeenCalled();
-    expect(result.error).toBeUndefined();
   });
 
   it('should NOT track page view when path is unknown', () => {
     // @ts-ignore
     rrd.__setPathname('/abcd');
-    const { result } = renderHook(() => usePageChange(true));
+    renderHook(() => usePageChange(true));
 
     expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
-    expect(result.error).toBeUndefined();
 
     expect(document.title).toBe(NOT_FOUND_TITLE);
   });
@@ -126,10 +124,9 @@ describe('usePageChange', () => {
     // @ts-ignore
     rrd.__setPathname('/not/included');
 
-    const { result } = renderHook(() => usePageChange(true));
+    renderHook(() => usePageChange(true));
 
     expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
-    expect(result.error).toBeUndefined();
   });
 
   test('Should track Undefined page title for route', () => {

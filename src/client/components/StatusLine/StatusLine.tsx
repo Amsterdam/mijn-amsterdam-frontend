@@ -1,3 +1,4 @@
+import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
@@ -6,7 +7,6 @@ import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
-import Heading from '../Heading/Heading';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
 import { AltDocumentContent, StatusLineItem } from './StatusLine.types';
@@ -281,7 +281,7 @@ export default function StatusLine({
 }: StatusLineProps) {
   return (
     <div className={classnames(styles.StatusLine, className)}>
-      <Heading size="tiny" el="h4" className={styles.ListHeading}>
+      <Heading level={4} size="level-4" className={styles.ListHeading}>
         {statusLabel}
       </Heading>
       {!!items.length && (

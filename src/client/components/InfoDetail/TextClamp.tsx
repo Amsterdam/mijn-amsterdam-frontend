@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import styles from './TextClamp.module.scss';
 
 // The difference between maxHeight and actualHeight should be at least this number in pixels
@@ -31,7 +31,7 @@ export function TextClamp({
     undefined
   );
 
-  const callBackRef = useCallback((domNode) => {
+  const callBackRef = useCallback((domNode: HTMLElement) => {
     if (typeof hasOverflow === 'boolean' || !domNode) {
       return;
     }

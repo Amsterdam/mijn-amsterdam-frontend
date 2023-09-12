@@ -1,7 +1,7 @@
 @import '../../styles/_global.scss';
 
 .DirectLinks {
-  @include select(Heading) {
+  @include select(amsterdam-heading) {
     margin-bottom: 1.6rem;
   }
 }
@@ -26,8 +26,10 @@
   }
 
   @include mq-phone() {
+
     // Reset the list style for smaller screens, just 1 column here
     li {
+
       &,
       &:nth-child(-n + 2),
       &:nth-child(odd) {
@@ -36,6 +38,7 @@
         border-top: 0;
         margin-right: 0;
       }
+
       &:nth-child(1) {
         border-top: 0.1rem $color-neutral-grey2 solid;
       }

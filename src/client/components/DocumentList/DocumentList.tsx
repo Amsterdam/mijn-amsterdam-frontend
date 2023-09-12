@@ -53,7 +53,7 @@ export function DocumentLink({
   const userCity = useUserCity();
 
   const onClickDocumentLink = useCallback(
-    (event) => {
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       event.preventDefault();
       if (isLoading) {
         return false;
