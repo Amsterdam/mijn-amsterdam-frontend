@@ -40,17 +40,9 @@ export function useSSE({
 
   const handleOpen = useCallback(() => {
     connectionCounter.current += 1;
-    console.info(
-      '[SSE] Open connection, connectionCount: ',
-      connectionCounter.current
-    );
   }, []);
 
   const closeEventSource = useCallback(() => {
-    console.info(
-      '[SSE] Close connection, connectionCount: ',
-      connectionCounter.current
-    );
     connectionCounter.current = 0;
     es?.close();
   }, [es]);
@@ -63,7 +55,6 @@ export function useSSE({
         'count: ',
         connectionCounter.current
       );
-
       switch (true) {
         // Trying to connect but responding with an error
         case EventSource.CONNECTING === es?.readyState &&
@@ -121,7 +112,6 @@ export function useSSE({
     window.addEventListener('beforeunload', closeEventSource);
 
     return () => {
-      console.info('[SSE] Unmounting hook');
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener(eventName, onMessageEvent);
