@@ -89,7 +89,7 @@ const BezwarenDetail = () => {
                     (d) => d.dossiertype === category
                   );
                   return (
-                    <InfoDetailGroup>
+                    <InfoDetailGroup key={category}>
                       <InfoDetail
                         valueWrapperElement="div"
                         label={`Document${
