@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
-// import proxy from 'express-http-proxy';
-import {
-  BffEndpoints,
-  // RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
-} from './config';
+import proxy from 'express-http-proxy';
+import { pick } from '../universal/helpers/utils';
+import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
+import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -15,9 +15,6 @@ import {
   fetchSignalHistory,
   fetchSignalsListByStatus,
 } from './services/sia';
-import { pick } from '../universal/helpers/utils';
-import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
-import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 
 export const router = express.Router();
 
@@ -60,30 +57,34 @@ router.get(
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
-// router.use(
-//   BffEndpoints.API_RELAY,
-//   proxy(BFF_MS_API_BASE_URL, {
-//     proxyReqPathResolver: function (req) {
-//       return req.url;
-//     },
-//     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-//       // NOTE: Temporary
-//       if (
-//         RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
-//           srcReq.url.includes(path)
-//         )
-//       ) {
-//         return proxyReqOpts;
-//       }
-
-//       const { token } = await getAuth(srcReq);
-//       const headers = proxyReqOpts.headers || {};
-//       headers['Authorization'] = `Bearer ${token}`;
-//       proxyReqOpts.headers = headers;
-//       return proxyReqOpts;
-//     },
-//   })
-// );
+router.use(
+  BffEndpoints.API_RELAY,
+  proxy(
+    (req: Request) => {
+      switch (true) {
+        case req.path.startsWith('/decosjoin/'):
+          return String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
+        case req.path.startsWith('/wpi/'):
+          return String(process.env.BFF_WPI_API_BASE_URL ?? '');
+        case req.path.startsWith('/brp/'):
+          return String(process.env.BFF_MKS_API_BASE_URL ?? '');
+      }
+      return '';
+    },
+    {
+      proxyReqPathResolver: function (req) {
+        return req.url;
+      },
+      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+        const { token } = await getAuth(srcReq);
+        const headers = proxyReqOpts.headers || {};
+        headers['Authorization'] = `Bearer ${token}`;
+        proxyReqOpts.headers = headers;
+        return proxyReqOpts;
+      },
+    }
+  )
+);
 
 router.get(
   BffEndpoints.SIA_ATTACHMENTS,
