@@ -31,8 +31,7 @@ export function TextClamp({
     undefined
   );
 
-  // TODO: Fix type
-  const callBackRef = useCallback((domNode: any) => {
+  const callBackRef = useCallback((domNode: HTMLElement) => {
     if (typeof hasOverflow === 'boolean' || !domNode) {
       return;
     }
