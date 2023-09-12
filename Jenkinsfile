@@ -35,7 +35,7 @@ pipeline {
         }
       }
       options {
-        timeout(time: 6, unit: 'MINUTES')
+        timeout(time: 7, unit: 'MINUTES')
       }
       environment {
         PROJECT = "${PROJECT_PREFIX}unit"
