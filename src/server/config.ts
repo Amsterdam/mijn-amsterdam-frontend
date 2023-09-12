@@ -108,7 +108,6 @@ export type SourceApiKey =
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
-  | 'AKTES'
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'KVK'
@@ -207,10 +206,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BRP: {
     url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`,
     passthroughOIDCToken: true,
-  },
-  AKTES: {
-    url: `${process.env.BFF_AKTES_BASE_URL}/aktes/aktes`,
-    postponeFetch: !FeatureToggle.aktesActive,
   },
   ERFPACHT: {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,

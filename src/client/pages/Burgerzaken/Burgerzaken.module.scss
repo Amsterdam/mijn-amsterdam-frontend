@@ -16,20 +16,3 @@
     width: 70%;
   }
 }
-
-.AktesTable {
-  tr td:first-child {
-    width: 40%;
-  }
-  tr td:nth-child(2) {
-    width: 30%;
-  }
-}
-
-.AktesDisclaimer {
-  margin: 0 auto;
-  max-width: 45rem;
-  text-align: center;
-  color: $color-neutral-grey4;
-  padding: 1rem;
-}

@@ -121,7 +121,6 @@ export const DocumentTitles: {
   [AppRoutes[
     'BURGERZAKEN/ID-KAART'
   ]]: `ID-Kaart | ${ChapterTitles.BURGERZAKEN}`,
-  [AppRoutes['BURGERZAKEN/AKTE']]: `Akte | ${ChapterTitles.BURGERZAKEN}`,
   [AppRoutes.ZORG]: `${ChapterTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
