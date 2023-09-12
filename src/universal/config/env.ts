@@ -1,5 +1,5 @@
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
-type AppModeName = 'development' | 'test' | 'production';
+type AppModeName = 'development' | 'unittest' | 'production';
 
 function getAppMode(): AppModeName {
   const maAppMode =
@@ -15,7 +15,7 @@ export function getOtapEnv(): OtapEnvName {
 
 export const OTAP_ENV = getOtapEnv();
 
-getAppMode() !== 'test' &&
+getAppMode() !== 'unittest' &&
   console.info(
     `App running in ${getAppMode()} mode on the ${OTAP_ENV} environment.`
   );
