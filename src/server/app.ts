@@ -159,9 +159,7 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  // @ts-ignore
-  const responseData = apiErrorResult(err.toString(), null, res.sentry);
-  return res.status(500).json(responseData);
+  return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
 });
 
 app.use((req: Request, res: Response) => {

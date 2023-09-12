@@ -359,4 +359,11 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(LOODMETING_RAPPORT);
     },
   },
+  [`${ApiUrls.LOOD_365_OAUTH}`]: {
+    status: () => 200,
+    method: 'post',
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({ access_token: 'foo-bar' });
+    },
+  },
 };

@@ -11,9 +11,9 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_TAP } from '../../universal/config';
+import { IS_AP, IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { query, queryGET, tableNameLoginCount } from './db';
+import { db } from './db/db';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -22,15 +22,30 @@ import { query, queryGET, tableNameLoginCount } from './db';
 const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
 
-const queries = {
+const queriesSQLITE = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
-  totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? AND auth_method = ?`,
-  totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ?`,
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) as count FROM ${tableNameLoginCount} WHERE date_created BETWEEN ? AND ? GROUP BY uid`,
+  totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
+  totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE DATE((date_created) BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
-};
+});
+
+const queriesPG = (tableNameLoginCount: string) => ({
+  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
+  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
+  dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
+  dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
+});
+
+async function getQueries() {
+  const { tableNameLoginCount } = await db();
+  return (IS_AP ? queriesPG : queriesSQLITE)(tableNameLoginCount);
+}
 
 function hashUserId(userID: string, salt = SALT) {
   if (!salt) {
@@ -42,11 +57,13 @@ function hashUserId(userID: string, salt = SALT) {
   return shasum.digest('hex');
 }
 
-export function countLoggedInVisit(
+export async function countLoggedInVisit(
   userID: string,
   authMethod: AuthMethod = 'digid'
 ) {
   const userIDHashed = hashUserId(userID);
+  const queries = await getQueries();
+  const { query } = await db();
   return query(queries.countLogin, [userIDHashed, authMethod]);
 }
 
@@ -56,6 +73,9 @@ export async function loginStats(req: Request, res: Response) {
       'Supply database credentials and enable your Datapunt VPN to use this view locally.'
     );
   }
+
+  const queries = await getQueries();
+  const { queryGET, tableNameLoginCount } = await db();
 
   let authMethodSelected = '';
 
