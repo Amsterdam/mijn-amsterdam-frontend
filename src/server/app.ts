@@ -39,7 +39,6 @@ import {
   BffEndpoints,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
-import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
@@ -141,8 +140,6 @@ if (IS_OT && !IS_AP) {
 ////////////////////////////////////////////////////////////////////////
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
-app.use(authRouter);
-
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
 

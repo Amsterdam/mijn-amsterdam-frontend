@@ -25,8 +25,8 @@ import { countLoggedInVisit } from './services/visitors';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
-  DEV_LOGOUT: '/api/v1/dev/auth/logout',
-  DEV_AUTH_CHECK: '/api/v1/dev/auth/check',
+  DEV_LOGOUT: '/api/v1/auth/logout',
+  DEV_AUTH_CHECK: '/api/v1/auth/check',
 };
 
 export const authRouterDevelopment = express.Router();
