@@ -1,4 +1,4 @@
-import { IS_ACCEPTANCE } from '../../universal/config/env';
+import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
@@ -19,7 +19,7 @@ export const BFFApiUrls = {
 };
 
 // Urls directly used from front-end
-export const AUTH_PATH = import.meta.env.REACT_APP_BFF_AUTH_PATH || '/auth';
+export const AUTH_PATH = IS_AP ? '/auth' : '/dev/auth';
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${
   BFF_API_BASE_URL + AUTH_PATH
