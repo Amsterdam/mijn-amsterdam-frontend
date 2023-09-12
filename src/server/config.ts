@@ -289,7 +289,6 @@ export const RelayPathsAllowed = {
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
-  TIP_IMAGES: '/tips/static/tip_images/:fileName',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
@@ -385,10 +384,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
-];
-
-export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
-  '/tips/static/tip_images',
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes

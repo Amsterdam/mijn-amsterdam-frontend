@@ -106,15 +106,6 @@ authRouterDevelopment.get(
 
 export const relayDevRouter = express.Router();
 
-relayDevRouter.get(RelayPathsAllowed.TIP_IMAGES, (req, res, next) => {
-  return res.sendFile(
-    path.join(
-      __dirname,
-      'mock-data/tip-image-mock.' + req.path.split('.').pop()
-    )
-  );
-});
-
 relayDevRouter.get(
   [
     RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
