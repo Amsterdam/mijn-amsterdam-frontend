@@ -1,5 +1,4 @@
 import { IS_AP } from './../../../universal/config/env';
-import * as Sentry from '@sentry/node';
 import axios from 'axios';
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
@@ -43,12 +42,6 @@ function getZaakUrl(zaakId: string) {
 function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): GenericDocument[] {
-  Sentry.captureMessage('Bezwaren documents', {
-    extra: {
-      data: JSON.stringify(response),
-    },
-  });
-
   if (Array.isArray(response.results)) {
     try {
       return response.results.map(
@@ -112,10 +105,6 @@ function transformBezwarenResults(
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): BezwaarResponse {
   const results = response.results;
-
-  Sentry.captureMessage('Bezwaren response', {
-    extra: { data: JSON.stringify(response) },
-  });
 
   if (Array.isArray(results)) {
     return {
