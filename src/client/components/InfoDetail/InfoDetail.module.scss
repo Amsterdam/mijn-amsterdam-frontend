@@ -24,6 +24,12 @@
   >.Label {
     margin-top: 1.6rem;
   }
+
+  .InfoDetail:nth-of-type(2) {
+    .Value {
+      padding-right: 10rem;
+    }
+  }
 }
 
 .InfoDetailGroupContent {
