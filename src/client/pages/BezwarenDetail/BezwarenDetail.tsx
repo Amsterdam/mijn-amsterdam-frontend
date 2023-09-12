@@ -52,7 +52,7 @@ const BezwarenDetail = () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {!!bezwaar ? (
+        {!!bezwaar && (
           <>
             {bezwaar.omschrijving && (
               <InfoDetail label="Onderwerp" value={bezwaar.omschrijving} />
@@ -129,8 +129,6 @@ const BezwarenDetail = () => {
               </>
             )}
           </>
-        ) : (
-          <></>
         )}
       </PageContent>
       {!!bezwaar && (
