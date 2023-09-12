@@ -2,7 +2,9 @@ import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
+  AppRoute,
   AppRoutes,
+  ChapterTitles,
   CustomTrackingUrls,
   DocumentTitles,
   NOT_FOUND_TITLE,
@@ -20,7 +22,7 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
     return 0;
   }
   return a.length < b.length ? 1 : -1;
-});
+}) as AppRoute[];
 
 export function usePageChange(isAuthenticated: boolean) {
   const location = useLocation();
@@ -70,6 +72,11 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
+    const thema =
+      Object.values(ChapterTitles).find((t) => {
+        return documentTitle.includes(t);
+      }) ?? 'Mijn Amsterdam algemeen';
+
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
     }
@@ -97,7 +104,8 @@ export function usePageChange(isAuthenticated: boolean) {
           getCustomTrackingUrl(location.pathname, tackingConfig) +
             (location.search ?? ''),
           profileType,
-          userCity
+          userCity,
+          thema
         );
       }
     }
@@ -115,18 +123,20 @@ function getCustomTrackingUrl(
   pathname: string,
   trackingConfig: TrackingConfig
 ) {
-  const route = Object.keys(CustomTrackingUrls).find((r) => {
+  const customTrackingUrlKeys = Object.keys(CustomTrackingUrls) as AppRoute[];
+  const route = customTrackingUrlKeys.find((r) => {
     return matchPath(pathname, r);
   });
 
   if (route) {
     const matchResult = matchPath(pathname, route);
+    const trackingUrlFn = CustomTrackingUrls[route];
 
-    if (!matchResult || !matchResult.isExact) {
+    if (!matchResult || !matchResult.isExact || !trackingUrlFn) {
       return pathname;
     }
 
-    return CustomTrackingUrls[route](matchResult, trackingConfig);
+    return trackingUrlFn(matchResult, trackingConfig);
   }
 
   return pathname;
