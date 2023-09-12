@@ -14,6 +14,11 @@ pipeline {
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}-bff:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
+
+    // Client-side data. Not secret.
+    REACT_APP_SENTRY_DSN = "https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13"
+    REACT_APP_ANALYTICS_ID_ACC = "e63312c0-0efe-4c4f-bba1-3ca1f05374a8"
+    REACT_APP_ANALYTICS_ID_PROD = "f558164e-e388-49e0-864e-5f172552789c"
   }
 
   stages {
@@ -145,6 +150,8 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
+           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
+           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_ACC} " +
            "--target=deploy-acceptance-frontend " +
            "--shm-size 1G " +
            "."
@@ -186,6 +193,8 @@ pipeline {
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_PRODUCTION} " +
+           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
+           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_PROD} " +
            "--target=deploy-production-frontend " +
            "--shm-size 1G " +
            "."
