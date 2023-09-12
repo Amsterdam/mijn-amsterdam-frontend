@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import * as service from './api-service';
 import { remoteApi } from '../../../test-utils';
 import { remoteApiHost } from '../../../setupTests';
@@ -9,28 +9,30 @@ const REQUEST_ID = 'test-x';
 const apiUrlTest = `${remoteApiHost}/api`;
 
 describe('simple-connect/api-service', () => {
-  remoteApi
-    .get('/api')
-    .reply(200, { status: 'OK', content: 'foobar' })
-    .get('/api')
-    .times(3)
-    .reply(200, {
-      status: 'OK',
-      content: {
-        notifications: [
-          {
-            title: 'Dingen en zo',
-            description: 'Bekijk deze mooie site eens!',
-            datePublished: '2022-04-22',
-            link: {
-              title: 'Bekijk hier',
-              to: 'https://mijn.amsterdam.nl',
+  beforeEach(() => {
+    remoteApi
+      .get('/api')
+      .reply(200, { status: 'OK', content: 'foobar' })
+      .get('/api')
+      .times(3)
+      .reply(200, {
+        status: 'OK',
+        content: {
+          notifications: [
+            {
+              title: 'Dingen en zo',
+              description: 'Bekijk deze mooie site eens!',
+              datePublished: '2022-04-22',
+              link: {
+                title: 'Bekijk hier',
+                to: 'https://mijn.amsterdam.nl',
+              },
             },
-          },
-        ],
-        things: ['foo', 'bar'],
-      },
-    });
+          ],
+          things: ['foo', 'bar'],
+        },
+      });
+  });
 
   test('fetchApi 1', async () => {
     const responseContent = await service.fetchService(REQUEST_ID, {
@@ -43,14 +45,12 @@ describe('simple-connect/api-service', () => {
         "status": "OK",
       }
     `);
-  });
 
-  test('fetchApi 2', async () => {
-    const responseContent = await service.fetchService(REQUEST_ID, {
+    const responseContent2 = await service.fetchService(REQUEST_ID, {
       url: apiUrlTest,
     });
 
-    expect(responseContent).toMatchInlineSnapshot(`
+    expect(responseContent2).toMatchInlineSnapshot(`
       {
         "content": {
           "things": [
@@ -61,10 +61,8 @@ describe('simple-connect/api-service', () => {
         "status": "OK",
       }
     `);
-  });
 
-  test('fetchApi 3', async () => {
-    const responseContent = await service.fetchService(
+    const responseContent3 = await service.fetchService(
       REQUEST_ID,
       {
         url: apiUrlTest,
@@ -72,7 +70,7 @@ describe('simple-connect/api-service', () => {
       true
     );
 
-    expect(responseContent).toMatchInlineSnapshot(`
+    expect(responseContent3).toMatchInlineSnapshot(`
       {
         "content": {
           "notifications": [
@@ -94,18 +92,17 @@ describe('simple-connect/api-service', () => {
         "status": "OK",
       }
     `);
-  });
 
-  test('fetchTipsAndNotifications 1', async () => {
-    const responseContent = await service.fetchTipsAndNotifications(
-      REQUEST_ID,
-      {
-        url: apiUrlTest,
-      },
-      'TEST_CHAPTER'
-    );
+    const responseContentTipsAndNotifications =
+      await service.fetchTipsAndNotifications(
+        REQUEST_ID,
+        {
+          url: apiUrlTest,
+        },
+        'TEST_CHAPTER'
+      );
 
-    expect(responseContent).toMatchInlineSnapshot(`
+    expect(responseContentTipsAndNotifications).toMatchInlineSnapshot(`
       {
         "content": {
           "notifications": [

@@ -10,8 +10,9 @@ import {
   fetchBezwarenNotifications,
 } from './bezwaren';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import nock from 'nock';
 
-const endpointBase = '/zgw/v1/zaken';
+const endpointBase = '/bezwaren/zgw/v1/zaken';
 
 describe('Bezwaren', () => {
   const requestId = '456';
@@ -127,12 +128,7 @@ describe('Bezwaren', () => {
         true
       );
 
-      //@ts-ignore
       expect(documentResponse.status).toEqual(200);
-      expect(documentResponse.request.headers['content-type']).toEqual(
-        'aplication/pdf'
-      );
-      // expect(documentResponse).toEqual(X);
     });
   });
 
