@@ -163,3 +163,7 @@ COPY src/server/views /app/build-bff/server/views
 
 # Run the app
 CMD /usr/local/bin/docker-entrypoint-bff.sh
+
+FROM deploy-bff as deploy-bff-az
+
+COPY files /app/files
