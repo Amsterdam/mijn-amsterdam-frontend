@@ -59,7 +59,7 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    let redirectUrl = `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+    let redirectUrl = `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
     switch (req.params.authMethod) {
       case 'yivi':
