@@ -153,13 +153,6 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     }),
     loginStats
   );
-
-  if (IS_OT) {
-    router.get(BffEndpoints.STATUS_ENV, (req: Request, res: Response) => {
-      const env = jsonCopy(process.env);
-      return res.send(env);
-    });
-  }
 }
 
 router.get(

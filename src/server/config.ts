@@ -369,8 +369,6 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/status/health',
-  STATUS_ENV: '/status/env',
-
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
