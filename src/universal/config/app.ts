@@ -36,7 +36,7 @@ export const FeatureToggle = {
   klachtenActive: true,
   bezwarenActive: !IS_PRODUCTION,
   horecaActive: !IS_PRODUCTION,
-  avgActive: !IS_PRODUCTION,
+  avgActive: true,
   svwiLinkActive: !IS_PRODUCTION,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   bodemActive: !IS_PRODUCTION,
