@@ -91,14 +91,16 @@ authRouterDevelopment.get(
   DevelopmentRoutes.DEV_AUTH_CHECK,
   async (req, res) => {
     if (hasSessionCookie(req)) {
-      const auth = await getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: auth.profile.profileType,
-          authMethod: auth.profile.authMethod,
-        })
-      );
+      try {
+        const auth = await getAuth(req);
+        return res.send(
+          apiSuccessResult({
+            isAuthenticated: true,
+            profileType: auth.profile.profileType,
+            authMethod: auth.profile.authMethod,
+          })
+        );
+      } catch (error) {}
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
