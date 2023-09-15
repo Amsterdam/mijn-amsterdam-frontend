@@ -76,7 +76,7 @@ pipeline {
         script { currentBuild.displayName = "ACC Build BFF #${BUILD_NUMBER}" }
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
-           "--target=deploy-bff-a " +
+           "--target=deploy-bff " +
            "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_ACC} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +

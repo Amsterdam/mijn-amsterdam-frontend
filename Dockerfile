@@ -11,7 +11,7 @@ ENV CI=true
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends dialog openssh-server nano inetutils-traceroute
+  && apt-get install -y --no-install-recommends nano inetutils-traceroute
 
 
 ########################################################################################################################
@@ -137,19 +137,12 @@ ENV MA_GIT_SHA=$MA_GIT_SHA
 # Tell node to use the OpenSSL (OS installed) Certificates
 ENV NODE_OPTIONS=--use-openssl-ca
 
-# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
-ENV SSH_PASSWD "root:Docker!"
-
 # Copy certificate
 COPY ca/* /usr/local/share/ca-certificates/extras/
 
 # Update new cert
-RUN  echo "$SSH_PASSWD" | chpasswd \
-  && chmod -R 644 /usr/local/share/ca-certificates/extras/ \
+RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
   && update-ca-certificates
-
-# SSH config
-COPY conf/sshd_config /etc/ssh/
 
 # Entrypoint
 COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
@@ -166,4 +159,12 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 
 FROM deploy-bff as deploy-bff-az
 
+# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
+ENV SSH_PASSWD "root:Docker!"
+
+RUN apt-get install -y --no-install-recommends openssh-server \
+  && echo "$SSH_PASSWD" | chpasswd
+
+# SSH config
+COPY conf/sshd_config /etc/ssh/
 COPY files /app/files
