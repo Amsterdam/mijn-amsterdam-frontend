@@ -16,6 +16,7 @@ import {
   fetchSignalHistory,
   fetchSignalsListByStatus,
 } from './services/sia';
+import { IS_AP } from '../universal/config/env';
 
 export const router = express.Router();
 
@@ -103,23 +104,18 @@ router.use(
           url = String(process.env.BFF_WMO_API_BASE_URL ?? '') + req.url;
           break;
       }
-      Sentry.captureMessage('prxy: ' + url);
       return url;
     },
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
-        Sentry.captureMessage('pth: ' + req.url + '-- ' + req.path);
-        return req.url;
+        return IS_AP ? `/api/${req.url}` : req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
         const headers = proxyReqOpts.headers || {};
         headers['Authorization'] = `Bearer ${token}`;
         proxyReqOpts.headers = headers;
-        Sentry.captureMessage('headers: ' + srcReq.url, {
-          extra: jsonCopy(headers),
-        });
         return proxyReqOpts;
       },
     }
