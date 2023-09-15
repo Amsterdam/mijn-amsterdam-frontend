@@ -63,18 +63,17 @@ router.use(
     (req: Request) => {
       switch (true) {
         case req.path.startsWith('/decosjoin/'):
-          return String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
+          return (
+            String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '') + req.url
+          );
         case req.path.startsWith('/wpi/'):
-          return String(process.env.BFF_WPI_API_BASE_URL ?? '');
+          return String(process.env.BFF_WPI_API_BASE_URL ?? '') + req.url;
         case req.path.startsWith('/brp/'):
-          return String(process.env.BFF_MKS_API_BASE_URL ?? '');
+          return String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
       }
       return '';
     },
     {
-      proxyReqPathResolver: function (req) {
-        return req.url;
-      },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
         const headers = proxyReqOpts.headers || {};
