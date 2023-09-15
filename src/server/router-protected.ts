@@ -91,17 +91,16 @@ router.use(
       let url = '';
       switch (true) {
         case req.path.startsWith('/decosjoin/'):
-          url =
-            String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
           break;
         case req.path.startsWith('/wpi/'):
-          url = String(process.env.BFF_WPI_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
           break;
         case req.path.startsWith('/brp/'):
-          url = String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
           break;
         case req.path.startsWith('/wmoned/'):
-          url = String(process.env.BFF_WMO_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
           break;
       }
       return url;
@@ -109,7 +108,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
-        return IS_AP ? `/api/${req.url}` : req.url;
+        return IS_AP ? `/api${req.url}` : req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
@@ -117,6 +116,10 @@ router.use(
         headers['Authorization'] = `Bearer ${token}`;
         proxyReqOpts.headers = headers;
         return proxyReqOpts;
+      },
+      proxyErrorHandler: (err, res, next) => {
+        Sentry.captureException(err);
+        next();
       },
     }
   )
