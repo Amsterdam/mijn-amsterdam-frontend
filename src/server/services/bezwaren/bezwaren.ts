@@ -26,6 +26,7 @@ import {
   kenmerkKey,
 } from './types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { EMPTY_UUID } from '../../../universal/helpers/bezwaren';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 10 (per page) = 50 bezwaren
 
@@ -119,7 +120,7 @@ function transformBezwarenResults(
               getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
             uuid: bezwaarBron.uuid,
             startdatum: bezwaarBron.startdatum,
-            registratiedatum: bezwaarBron.registratiedatum,
+            ontvangstdatum: bezwaarBron.registratiedatum,
             omschrijving: bezwaarBron.omschrijving,
             toelichting: bezwaarBron.toelichting,
             status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
@@ -148,7 +149,7 @@ function transformBezwarenResults(
           return bezwaar;
         })
         .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort(dateSort('registratiedatum', 'desc')),
+        .sort(dateSort('ontvangstdatum', 'desc')),
       count: response.count,
     };
   }
@@ -363,31 +364,38 @@ export async function fetchBezwarenNotifications(
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
-  const isDone = !!bezwaar.einddatum && !!bezwaar.resultaat;
-  const isWithdrawn = !!bezwaar.datumIntrekking;
+    const index = bezwaar.statussen.findIndex((s) => s.uuid === EMPTY_UUID);
+  const activeIndex = index === -1 || index === 0 ? 0 : index - 1;
+  const activeStatus = bezwaar.statussen[activeIndex];
 
   const notification: MyNotification = {
     chapter: Chapters.BEZWAREN,
     id: bezwaar.identificatie,
-    title: 'Bezwaar in behandeling',
-    description: `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`,
-    datePublished: bezwaar.startdatum,
+    title: 'Bezwaar ontvangen',
+    description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
+    datePublished: activeStatus.datum,
     link: {
       to: bezwaar.link.to,
       title: 'Bekijk uw bezwaar',
     },
   };
 
-  if (isDone) {
-    notification.title = 'Bezwaar afgehandeld';
-    notification.description = `Er is een besluit over uw bezwaar ${bezwaar.identificatie}.`;
-    notification.datePublished = bezwaar.einddatum!;
+  if(activeStatus.statustoelichting === "Beoordeling bezwaarschrift") {
+    notification.title = 'Beoordeling in behandeling nemen bezwaar',
+    notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`,
+    
   }
 
-  if (isWithdrawn) {
-    notification.title = 'Bezwaar ingetrokken';
-    notification.description = `U hebt uw bezwaar ${bezwaar.identificatie} ingetrokken.`;
-    notification.datePublished = bezwaar.datumIntrekking!;
+  if (activeStatus.statustoelichting === "In behandeling") {
+    notification.title = 'Bezwaar in behandeling';
+    notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`;
+
+  }
+
+  if (activeStatus.statustoelichting === "Afgehandeld") {
+    notification.title = 'Bezwaar afgehandeld';
+    notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} afgehandeld.`;
+    
   }
 
   return notification;

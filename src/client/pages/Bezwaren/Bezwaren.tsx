@@ -16,7 +16,7 @@ import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
   identificatie: 'Zaaknummer',
-  registratiedatum: 'Ontvangen op',
+  ontvangstdatum: 'Ontvangen op',
   omschrijving: 'Onderwerp',
 };
 
@@ -34,7 +34,7 @@ export default function BEZWAREN() {
     'identificatie'
   ).map((bezwaar) => ({
     ...bezwaar,
-    registratiedatum: defaultDateFormat(bezwaar.registratiedatum),
+    ontvangstdatum: defaultDateFormat(bezwaar.ontvangstdatum),
   }));
 
   const ingediendeBezwaren =
