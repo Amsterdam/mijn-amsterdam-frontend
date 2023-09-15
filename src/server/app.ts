@@ -59,6 +59,10 @@ const sentryOptions: Sentry.NodeOptions = {
 Sentry.init(sentryOptions);
 
 const app = express();
+
+// Security, disable express header.
+app.disable('x-powered-by');
+
 const viewDir = __dirname.split('/').slice(-2, -1);
 
 app.set('view engine', 'pug');
