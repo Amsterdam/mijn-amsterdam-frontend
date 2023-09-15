@@ -369,11 +369,13 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/status/health',
+  STATUS_HEALTH2: '/bff/status/health',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
+  BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
