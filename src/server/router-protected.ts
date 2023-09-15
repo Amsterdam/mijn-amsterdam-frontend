@@ -108,6 +108,10 @@ router.use(
     },
     {
       memoizeHost: false,
+      proxyReqPathResolver: function (req) {
+        Sentry.captureMessage('pth: ' + req.url + '-- ' + req.path);
+        return req.url;
+      },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
         const headers = proxyReqOpts.headers || {};
