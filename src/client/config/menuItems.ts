@@ -40,7 +40,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.BEZWAREN,
     id: Chapters.BEZWAREN,
     to: AppRoutes.BEZWAREN,
-    profileTypes: ['private'],
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.BELASTINGEN,

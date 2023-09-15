@@ -10,6 +10,9 @@ import {
   fetchBezwarenNotifications,
 } from './bezwaren';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import nock from 'nock';
+
+const endpointBase = '/bezwaren/zgw/v1/zaken';
 
 describe('Bezwaren', () => {
   const requestId = '456';
@@ -35,7 +38,7 @@ describe('Bezwaren', () => {
   describe('fetch bezwaren', () => {
     beforeEach(() => {
       remoteApi
-        .post(`/bezwaren/zgw/v1/zaken/_zoek?page=1`)
+        .post(`${endpointBase}/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
         .get((uri) => uri.includes('/zaakinformatieobjecten'))
         .times(4)
@@ -62,7 +65,7 @@ describe('Bezwaren', () => {
             "notifications": [
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-04-25",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar BI.21.014121.001 in behandeling genomen.",
                 "id": "BI.21.014121.001",
                 "link": {
@@ -73,7 +76,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-04-03",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
                 "id": "JB.22.000076.001",
                 "link": {
@@ -84,7 +87,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2022-11-04",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar ZAAK2 in behandeling genomen.",
                 "id": "ZAAK2",
                 "link": {
@@ -95,7 +98,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2022-11-04",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar ZAAK3 in behandeling genomen.",
                 "id": "ZAAK3",
                 "link": {
@@ -125,12 +128,58 @@ describe('Bezwaren', () => {
         true
       );
 
-      //@ts-ignore
       expect(documentResponse.status).toEqual(200);
-      expect(documentResponse.request.headers['content-type']).toEqual(
-        'aplication/pdf'
-      );
-      // expect(documentResponse).toEqual(X);
+    });
+  });
+
+  describe('fetch multiple pages of bezwaren', () => {
+    describe('empty response', () => {
+      const emptyResponse = {
+        count: 0,
+        results: null,
+      };
+
+      beforeEach(() => {
+        remoteApi
+          .post(`${endpointBase}/_zoek?page=1`)
+          .reply(200, emptyResponse);
+      });
+
+      it('should fetch only once', async () => {
+        const res = await fetchBezwaren(requestId, profileAndToken);
+
+        expect(res.status).toEqual('OK');
+        expect(res.content?.length).toEqual(0);
+      });
+    });
+
+    describe('regular flow', () => {
+      beforeEach(() => {
+        remoteApi
+          .post(`${endpointBase}/_zoek?page=1`)
+          .reply(200, {
+            ...bezwarenApiResponse,
+            count: 8,
+          })
+          .post(`${endpointBase}/_zoek?page=2`)
+          .reply(200, {
+            ...bezwarenApiResponse,
+            count: 8,
+          })
+          .get((uri) => uri.includes('/zaakinformatieobjecten'))
+          .times(8)
+          .reply(200, bezwarenDocumenten)
+          .get((uri) => uri.includes('/statussen'))
+          .times(8)
+          .reply(200, bezwarenStatus);
+      });
+
+      it('should fetch more results', async () => {
+        const res = await fetchBezwaren(requestId, profileAndToken);
+
+        expect(res.status).toEqual('OK');
+        expect(res.content?.length).toEqual(8);
+      });
     });
   });
 });

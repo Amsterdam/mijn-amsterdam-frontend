@@ -1,7 +1,6 @@
 import type { BezwaarStatus } from '../../../server/services/bezwaren/types';
+import { EMPTY_UUID } from '../../../universal/helpers/bezwaren';
 import { StatusLine } from '../../components';
-
-const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
 
 function transformBezwaarStatusToStatusLines(statussen: BezwaarStatus[]) {
   const index = statussen.findIndex((s) => s.uuid === EMPTY_UUID);

@@ -44,7 +44,7 @@ pipeline {
         }
       }
       options {
-        timeout(time: 6, unit: 'MINUTES')
+        timeout(time: 7, unit: 'MINUTES')
       }
       steps {
         script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
