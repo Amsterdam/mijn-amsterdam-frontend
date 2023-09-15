@@ -16,7 +16,9 @@ const DEV_KEY = {
 
 const keystore = jose.JWK.createKeyStore();
 let certContent = '';
-let path = process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT;
+let path =
+  process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT ||
+  process.env.BFF_CLEOPATRA_PUB_KEY; // TODO: Leacy, remove after AZ migration
 
 try {
   if (IS_TAP && path) {
