@@ -14,7 +14,6 @@ pipeline {
     IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}-bff:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}-bff:production"
-    IMAGE_TEST = "${IMAGE_BASE}:test"
 
     // Client-side data. Not secret.
     // Will be deprecated when we move to AZ.
