@@ -184,15 +184,6 @@ export function isAppStateReady(
     }
   );
 
-  if (IS_TEST) {
-    console.debug(
-      profileStates.map(([appStateKey, response]) => [
-        appStateKey,
-        response.status,
-      ])
-    );
-  }
-
   return (
     !!profileStates.length &&
     profileStates.every(([appStateKey, state]) => {
