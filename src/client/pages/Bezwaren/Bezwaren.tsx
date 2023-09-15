@@ -16,7 +16,7 @@ import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN_LOPEND = {
   identificatie: 'Zaaknummer',
-  startdatum: 'Ontvangen op',
+  registratiedatum: 'Ontvangen op',
   omschrijving: 'Onderwerp',
 };
 
@@ -34,7 +34,7 @@ export default function BEZWAREN() {
     'identificatie'
   ).map((bezwaar) => ({
     ...bezwaar,
-    startdatum: defaultDateFormat(bezwaar.startdatum),
+    registratiedatum: defaultDateFormat(bezwaar.registratiedatum),
   }));
 
   const ingediendeBezwaren =
@@ -68,7 +68,7 @@ export default function BEZWAREN() {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Lopende bezwaren"
-        noItemsMessage="U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen."
+        noItemsMessage="U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd."
         startCollapsed={false}
         hasItems={!!ingediendeBezwaren?.length}
         isLoading={isLoading(BEZWAREN)}

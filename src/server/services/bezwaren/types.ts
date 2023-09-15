@@ -44,6 +44,7 @@ export type Bezwaar = {
   zaakkenmerk: string;
   uuid: string;
   startdatum: string;
+  registratiedatum: string;
   omschrijving: string | null;
   toelichting: string | null;
   status: string | null;

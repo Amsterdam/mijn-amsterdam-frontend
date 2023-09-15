@@ -46,12 +46,10 @@ function transformBezwarenDocumentsResults(
     try {
       return response.results.map(
         ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
-          const [documentIdEncrypted] = IS_AP
-            ? encrypt(
-                identificatie,
-                process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-              )
-            : [identificatie];
+          const [documentIdEncrypted] = encrypt(
+            identificatie,
+            process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+          );
           return {
             id: documentIdEncrypted,
             title: bestandsnaam,
@@ -121,6 +119,7 @@ function transformBezwarenResults(
               getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
             uuid: bezwaarBron.uuid,
             startdatum: bezwaarBron.startdatum,
+            registratiedatum: bezwaarBron.registratiedatum,
             omschrijving: bezwaarBron.omschrijving,
             toelichting: bezwaarBron.toelichting,
             status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
@@ -149,7 +148,7 @@ function transformBezwarenResults(
           return bezwaar;
         })
         .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort(dateSort('startdatum', 'desc')),
+        .sort(dateSort('registratiedatum', 'desc')),
       count: response.count,
     };
   }

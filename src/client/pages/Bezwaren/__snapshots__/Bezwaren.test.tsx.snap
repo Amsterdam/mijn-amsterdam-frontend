@@ -156,7 +156,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
+            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
           </p>
         </div>
       </div>
@@ -367,7 +367,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet in behandeling is genomen.
+            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
           </p>
         </div>
       </div>
@@ -644,9 +644,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                   >
                     Ontvangen op:
                   </span>
-                  <span>
-                    25 april 2023
-                  </span>
+                  <span />
                 </td>
                 <td
                   class="_DisplayProp_a66dcc"
