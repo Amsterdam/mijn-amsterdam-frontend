@@ -1,4 +1,4 @@
-import { IS_AP } from './../../../universal/config/env';
+import * as Sentry from '@sentry/node';
 import axios from 'axios';
 import jose from 'jose';
 import { generatePath } from 'react-router-dom';
@@ -63,8 +63,8 @@ function transformBezwarenDocumentsResults(
           };
         }
       );
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }
   return [];

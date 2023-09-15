@@ -26,21 +26,9 @@ interface DocumentListProps {
 function downloadFile(docDownload: GenericDocument) {
   var link = document.createElement('a');
   link.href = docDownload.url;
-  const downloadName = addFileType(docDownload.download || docDownload.title);
+  const downloadName = docDownload.download || docDownload.title;
   link.download = downloadName;
   link.click();
-}
-
-function addFileType(url: string) {
-  const defaultType = 'pdf';
-  const splitUrl = url.split('.');
-  const lastSection = splitUrl.pop();
-
-  // Assume a file extention would be a maximum of 5 characters.
-  if (lastSection && lastSection.length > 5) {
-    return `${url}.${defaultType}`;
-  }
-  return url;
 }
 
 export function DocumentLink({
@@ -83,7 +71,7 @@ export function DocumentLink({
           const trackingUrl = trackPath
             ? trackPath(document)
             : window.location.pathname +
-              addFileType(`/downloads/${document.download || document.title}`);
+              `/downloads/${document.download || document.title}`;
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
           trackPageViewWithCustomDimension(
