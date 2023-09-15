@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import { pick } from '../universal/helpers/utils';
@@ -61,17 +62,21 @@ router.use(
   BffEndpoints.API_RELAY,
   proxy(
     (req: Request) => {
+      let url = '';
       switch (true) {
         case req.path.startsWith('/decosjoin/'):
-          return (
-            String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '') + req.url
-          );
+          url =
+            String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '') + req.url;
+          break;
         case req.path.startsWith('/wpi/'):
-          return String(process.env.BFF_WPI_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_WPI_API_BASE_URL ?? '') + req.url;
+          break;
         case req.path.startsWith('/brp/'):
-          return String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
+          url = String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
+          break;
       }
-      return '';
+      Sentry.captureMessage('prxy: ' + url);
+      return url;
     },
     {
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
