@@ -19,7 +19,7 @@ import {
   useSearchIndex,
 } from './useSearch';
 
-import { vi, test, describe, afterEach, expect } from 'vitest';
+import { vi, test, describe, afterEach, expect, beforeEach } from 'vitest';
 import { bffApi } from '../../../test-utils';
 import * as remoteConfig from './search-config.json';
 
@@ -88,7 +88,9 @@ const krefiaData = {
 };
 
 describe('Search hooks and helpers', () => {
-  bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
+  beforeEach(() => {
+    bffApi.get('/services/search-config').reply(200, { content: remoteConfig });
+  });
 
   afterEach(() => {
     vi.clearAllMocks();
