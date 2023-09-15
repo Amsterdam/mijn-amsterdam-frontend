@@ -74,6 +74,9 @@ router.use(
         case req.path.startsWith('/brp/'):
           url = String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
           break;
+        case req.path.startsWith('/wmoned/'):
+          url = String(process.env.BFF_MKS_API_BASE_URL ?? '') + req.url;
+          break;
       }
       Sentry.captureMessage('prxy: ' + url);
       return url;
