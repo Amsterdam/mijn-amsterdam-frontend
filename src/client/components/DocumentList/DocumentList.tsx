@@ -31,14 +31,15 @@ function downloadFile(docDownload: GenericDocument) {
   link.click();
 }
 
-function addFileType(url: string, type: string = 'pdf') {
-  if (
-    type &&
-    !url.endsWith('.' + type) &&
-    !url.endsWith('.' + type.toUpperCase())
-  ) {
-    return `${url}.${type}`;
+function addFileType(url: string) {
+  const defaultType = 'pdf';
+  const splitUrl = url.split('.');
+
+  // No . in the url then add a filetype.
+  if (splitUrl.length === 1) {
+    return `${url}.${defaultType}`;
   }
+
   return url;
 }
 
