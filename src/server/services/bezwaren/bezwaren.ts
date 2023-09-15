@@ -364,7 +364,7 @@ export async function fetchBezwarenNotifications(
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
-    const index = bezwaar.statussen.findIndex((s) => s.uuid === EMPTY_UUID);
+  const index = bezwaar.statussen.findIndex((s) => s.uuid === EMPTY_UUID);
   const activeIndex = index === -1 || index === 0 ? 0 : index - 1;
   const activeStatus = bezwaar.statussen[activeIndex];
 
@@ -380,22 +380,19 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
     },
   };
 
-  if(activeStatus.statustoelichting === "Beoordeling bezwaarschrift") {
-    notification.title = 'Beoordeling in behandeling nemen bezwaar',
-    notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`,
-    
+  if (activeStatus.statustoelichting === 'Beoordeling bezwaarschrift') {
+    notification.title = 'Beoordeling in behandeling nemen bezwaar';
+    notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`;
   }
 
-  if (activeStatus.statustoelichting === "In behandeling") {
+  if (activeStatus.statustoelichting === 'In behandeling') {
     notification.title = 'Bezwaar in behandeling';
     notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`;
-
   }
 
-  if (activeStatus.statustoelichting === "Afgehandeld") {
+  if (activeStatus.statustoelichting === 'Afgehandeld') {
     notification.title = 'Bezwaar afgehandeld';
     notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} afgehandeld.`;
-    
   }
 
   return notification;
