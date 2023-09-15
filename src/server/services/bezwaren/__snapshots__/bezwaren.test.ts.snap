@@ -14,6 +14,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
         "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
       },
       "omschrijving": "Korte omschrijving van het bezwaar",
+      "ontvangstdatum": "2023-03-31",
       "primairbesluit": "F2021.0008",
       "primairbesluitdatum": "2021-05-01",
       "resultaat": "Niet-ontvankelijk",
@@ -21,12 +22,12 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "status": null,
       "statussen": [
         {
-          "datum": "2023-03-29T10:00:00+02:00",
+          "datum": "2023-09-15T10:00:00+02:00",
           "statustoelichting": "Ontvangen",
           "uuid": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
         },
         {
-          "datum": "2023-03-30T02:53:00+02:00",
+          "datum": "2023-09-15T02:53:00+02:00",
           "statustoelichting": "In behandeling",
           "uuid": "50dcd25b-a826-422b-b51c-9049dda9600c",
         },
@@ -51,6 +52,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
         "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
       },
       "omschrijving": null,
+      "ontvangstdatum": "2023-01-31",
       "primairbesluit": "TESTRB003",
       "primairbesluitdatum": "2021-03-03",
       "resultaat": "Gegrond",
@@ -58,12 +60,12 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "status": null,
       "statussen": [
         {
-          "datum": "2023-03-29T10:00:00+02:00",
+          "datum": "2023-09-15T10:00:00+02:00",
           "statustoelichting": "Ontvangen",
           "uuid": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
         },
         {
-          "datum": "2023-03-30T02:53:00+02:00",
+          "datum": "2023-09-15T02:53:00+02:00",
           "statustoelichting": "In behandeling",
           "uuid": "50dcd25b-a826-422b-b51c-9049dda9600c",
         },
@@ -88,6 +90,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
         "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
       },
       "omschrijving": "Online bezwaar",
+      "ontvangstdatum": "2022-11-03",
       "primairbesluit": null,
       "primairbesluitdatum": null,
       "resultaat": null,
@@ -95,12 +98,12 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "status": null,
       "statussen": [
         {
-          "datum": "2023-03-29T10:00:00+02:00",
+          "datum": "2023-09-15T10:00:00+02:00",
           "statustoelichting": "Ontvangen",
           "uuid": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
         },
         {
-          "datum": "2023-03-30T02:53:00+02:00",
+          "datum": "2023-09-15T02:53:00+02:00",
           "statustoelichting": "In behandeling",
           "uuid": "50dcd25b-a826-422b-b51c-9049dda9600c",
         },
@@ -125,6 +128,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
         "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
       },
       "omschrijving": "Online bezwaar",
+      "ontvangstdatum": "2022-11-03",
       "primairbesluit": null,
       "primairbesluitdatum": "2023-01-03",
       "resultaat": null,
@@ -132,12 +136,12 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "status": null,
       "statussen": [
         {
-          "datum": "2023-03-29T10:00:00+02:00",
+          "datum": "2023-09-15T10:00:00+02:00",
           "statustoelichting": "Ontvangen",
           "uuid": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
         },
         {
-          "datum": "2023-03-30T02:53:00+02:00",
+          "datum": "2023-09-15T02:53:00+02:00",
           "statustoelichting": "In behandeling",
           "uuid": "50dcd25b-a826-422b-b51c-9049dda9600c",
         },

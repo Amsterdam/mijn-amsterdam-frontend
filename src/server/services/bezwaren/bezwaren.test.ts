@@ -65,7 +65,7 @@ describe('Bezwaren', () => {
             "notifications": [
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-04-25",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar BI.21.014121.001 in behandeling genomen.",
                 "id": "BI.21.014121.001",
                 "link": {
@@ -76,7 +76,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-04-03",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
                 "id": "JB.22.000076.001",
                 "link": {
@@ -87,7 +87,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2022-11-04",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar ZAAK2 in behandeling genomen.",
                 "id": "ZAAK2",
                 "link": {
@@ -98,7 +98,7 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2022-11-04",
+                "datePublished": "2023-09-15T02:53:00+02:00",
                 "description": "Wij hebben uw bezwaar ZAAK3 in behandeling genomen.",
                 "id": "ZAAK3",
                 "link": {
