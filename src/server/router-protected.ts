@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { pick } from '../universal/helpers/utils';
+import { jsonCopy, pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
@@ -58,6 +58,31 @@ router.get(
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
+// router.use(
+//   BffEndpoints.API_RELAY,
+//   proxy(BFF_MS_API_BASE, {
+//     proxyReqPathResolver: function (req) {
+//       return BFF_MS_API_BASE_PATH + req.url;
+//     },
+//     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+//       // NOTE: Temporary
+//       if (
+//         RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
+//           srcReq.url.includes(path)
+//         )
+//       ) {
+//         return proxyReqOpts;
+//       }
+
+//       const { token } = await getAuth(srcReq);
+//       const headers = proxyReqOpts.headers || {};
+//       headers['Authorization'] = `Bearer ${token}`;
+//       proxyReqOpts.headers = headers;
+//       return proxyReqOpts;
+//     },
+//   })
+// );
+
 router.use(
   BffEndpoints.API_RELAY,
   proxy(
@@ -82,11 +107,15 @@ router.use(
       return url;
     },
     {
+      memoizeHost: false,
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
         const headers = proxyReqOpts.headers || {};
         headers['Authorization'] = `Bearer ${token}`;
         proxyReqOpts.headers = headers;
+        Sentry.captureMessage('headers: ' + srcReq.url, {
+          extra: jsonCopy(headers),
+        });
         return proxyReqOpts;
       },
     }
