@@ -13,10 +13,10 @@ trigger:
       - package.json
       - package-lock.json
 
-# pr:
-#   branches:
-#     include:
-#       - main
+pr:
+  branches:
+    include:
+      - main
 
 resources:
   repositories:
@@ -29,7 +29,7 @@ variables:
   - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
       - name: dtapName
         value: o
-  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
 
@@ -54,7 +54,12 @@ jobs:
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
+
+      ${{ if eq(variables['Build.Reason'], 'PullRequest')) }}:
+      btdDeploy: false
+      ${{ if ne(variables['Build.Reason'], 'PullRequest')) }}:
       btdDeploy: ${{ parameters.btdDeploy }}
+
       btdAppBFF: true
       btdAppUI: false
       updateAppSettings: ${{ parameters.updateAppSettings }}
