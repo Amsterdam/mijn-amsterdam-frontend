@@ -25,20 +25,6 @@ resources:
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/pipeline-fe
 
-variables:
-  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
-      - name: dtapName
-        value: o
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
-      - name: dtapName
-        value: t
-  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: false
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: ${{ parameters.btdDeploy }}
-
 parameters:
   - name: btdBuild
     type: boolean
@@ -53,6 +39,20 @@ parameters:
   - name: updateAppSettings
     type: boolean
     default: false
+
+variables:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
+      - name: dtapName
+        value: o
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+      - name: dtapName
+        value: t
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: false
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: ${{ parameters.btdDeploy }}
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
