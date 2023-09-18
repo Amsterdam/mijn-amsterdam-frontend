@@ -32,6 +32,12 @@ variables:
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: false
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: ${{ parameters.btdDeploy }}
 
 parameters:
   - name: btdBuild
@@ -54,11 +60,7 @@ jobs:
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
-
-      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-      btdDeploy: false
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      btdDeploy: ${{ parameters.btdDeploy }}
+      btdDeploy: ${{ variables.btdDeploy }}
 
       btdAppBFF: true
       btdAppUI: false
