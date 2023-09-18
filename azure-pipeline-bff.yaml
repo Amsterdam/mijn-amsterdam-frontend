@@ -13,10 +13,10 @@ trigger:
       - package.json
       - package-lock.json
 
-pr:
-  branches:
-    include:
-      - main
+# pr:
+#   branches:
+#     include:
+#       - main
 
 resources:
   repositories:
