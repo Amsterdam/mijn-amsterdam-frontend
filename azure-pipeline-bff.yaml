@@ -55,9 +55,9 @@ jobs:
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
 
-      ${{ if eq(variables['Build.Reason'], 'PullRequest')) }}:
+      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       btdDeploy: false
-      ${{ if ne(variables['Build.Reason'], 'PullRequest')) }}:
+      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       btdDeploy: ${{ parameters.btdDeploy }}
 
       btdAppBFF: true
