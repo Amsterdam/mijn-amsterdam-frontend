@@ -14,6 +14,15 @@ trigger:
       - package-lock.json
 
 pr:
+  autoCancel: true
+  paths:
+    include:
+      - src/server
+      - src/universal
+      - src/bffserver.ts
+      - Dockerfile
+      - package.json
+      - package-lock.json
   branches:
     include:
       - main
