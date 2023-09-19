@@ -90,15 +90,15 @@ FROM nginx:latest as deploy-frontend
 
 WORKDIR /app
 
-ARG MA_FRONTEND_URL=https://mijn.amsterdam.nl
-ENV MA_FRONTEND_URL=$MA_FRONTEND_URL
+ARG MA_FRONTEND_HOST=mijn.amsterdam.nl
+ENV MA_FRONTEND_HOST=$MA_FRONTEND_HOST
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
-RUN envsubst '${MA_FRONTEND_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
+RUN envsubst '${MA_FRONTEND_HOST}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
