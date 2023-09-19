@@ -21,7 +21,6 @@ import {
 import { act, waitFor } from '@testing-library/react';
 
 vi.mock('./api/useTipsApi');
-vi.mock('./useOptIn');
 vi.mock('./useProfileType');
 
 describe('useAppState', () => {

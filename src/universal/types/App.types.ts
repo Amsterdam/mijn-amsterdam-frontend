@@ -52,8 +52,6 @@ export interface MyTip {
   description: string;
   id: string;
   imgUrl?: string;
-  isNotification?: boolean;
-  isPersonalized: boolean;
   link: LinkProps;
   priority?: number;
   profileTypes?: ProfileType[];

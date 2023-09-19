@@ -45,7 +45,6 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.SIA]: IconSiaMeldingen,
   [Chapters.NOTIFICATIONS]: IconMyNotifications,
   [Chapters.ROOT]: IconBurgerZaken,
-  [Chapters.TIPS]: IconTips,
   [Chapters.ERFPACHT]: IconErfpacht,
   [Chapters.SUBSIDIE]: IconSubsidie,
   [Chapters.ZORG]: IconZorg,

@@ -2,15 +2,16 @@ import { act, renderHook } from '@testing-library/react';
 import { newEventSourceMock } from './EventSourceMock';
 import * as sseHook from './useSSE';
 import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE';
+import { describe, expect, vi, it } from 'vitest';
 
 const sseMockResponse = JSON.stringify({
   FOO: { content: { hello: 'world' } },
 });
 
 describe('useAppState', () => {
-  vi.spyOn(console, 'log').mockImplementation();
-  vi.spyOn(console, 'info').mockImplementation();
-  vi.spyOn(console, 'error').mockImplementation();
+  vi.spyOn(console, 'log').mockImplementation(() => void 0);
+  vi.spyOn(console, 'info').mockImplementation(() => void 0);
+  vi.spyOn(console, 'error').mockImplementation(() => void 0);
 
   it('Should connect and respond with multiple messages.', async () => {
     const EventSourceMock = ((window as any).EventSource =

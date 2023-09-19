@@ -1,20 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import {
-  BffEndpoints,
-  BFF_MS_API_BASE,
-  BFF_MS_API_BASE_PATH,
-  RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
-} from './config';
+import { BFF_MS_API_BASE, BFF_MS_API_BASE_PATH, BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
-import {
-  loadServicesAll,
-  loadServicesSSE,
-  loadServicesTips,
-} from './services/controller';
-import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
-import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
+import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
+import { loadServicesAll, loadServicesSSE } from './services/controller';
+import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
 
 export const router = express.Router();
 
@@ -55,8 +46,6 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
-
 router.use(
   BffEndpoints.API_RELAY,
   proxy(BFF_MS_API_BASE, {
@@ -64,15 +53,6 @@ router.use(
       return BFF_MS_API_BASE_PATH + req.url;
     },
     proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-      // NOTE: Temporary
-      if (
-        RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
-          srcReq.url.includes(path)
-        )
-      ) {
-        return proxyReqOpts;
-      }
-
       const { token } = await getAuth(srcReq);
       const headers = proxyReqOpts.headers || {};
       headers['Authorization'] = `Bearer ${token}`;

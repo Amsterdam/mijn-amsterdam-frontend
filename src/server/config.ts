@@ -114,7 +114,6 @@ export type SourceApiKey =
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
@@ -227,9 +226,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
     cacheTimeout: ONE_HOUR_MS,
   },
-  TIPS: {
-    url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
-  },
   BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp`, passthroughOIDCToken: true },
   AKTES: {
     url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
@@ -321,7 +317,6 @@ export const RelayPathsAllowed = {
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
-  TIP_IMAGES: '/tips/static/tip_images/:fileName',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
@@ -347,7 +342,6 @@ export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}
 
 export const BffEndpoints = {
   API_RELAY: '/relay',
-  SERVICES_TIPS: '/services/tips',
   SERVICES_ALL: '/services/all',
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
@@ -415,10 +409,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
-];
-
-export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
-  '/tips/static/tip_images',
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes

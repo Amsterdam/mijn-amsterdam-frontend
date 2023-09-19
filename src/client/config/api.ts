@@ -18,7 +18,6 @@ export const BFFApiUrls = {
   SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
 };
 
 // Urls directly used from front-end
@@ -51,7 +50,6 @@ export const ExcludePageViewTrackingUrls = [
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
-  TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
   WPI_AANVRAGEN: 'Uitkeringaanvragen',

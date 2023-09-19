@@ -7,7 +7,6 @@ import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
-import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 
@@ -22,14 +21,12 @@ export const appStateAtom = atom<AppState>({
 
 interface useAppStateFallbackServiceProps {
   profileType: ProfileType;
-  requestParams: { optin: string; profileType: ProfileType };
   isEnabled: boolean;
   setAppState: SetterOrUpdater<AppState>;
 }
 
 export function useAppStateFallbackService({
   profileType,
-  requestParams,
   isEnabled,
   setAppState,
 }: useAppStateFallbackServiceProps) {
@@ -59,9 +56,8 @@ export function useAppStateFallbackService({
       ...fallbackServiceRequestOptions,
       url: BFFApiUrls.SERVICES_SAURON,
       postpone: false,
-      params: requestParams,
     });
-  }, [fetchFallbackService, isEnabled, profileType, requestParams]);
+  }, [fetchFallbackService, isEnabled, profileType]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
@@ -93,7 +89,6 @@ export function useAppStateRemote() {
   );
 
   const profileType = useProfileTypeValue();
-  const isOptIn = useOptInValue();
   const [appState, setAppState] = useRecoilState(appStateAtom);
 
   // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
@@ -102,16 +97,6 @@ export function useAppStateRemote() {
   useEffect(() => {
     useIncremental.current = true;
   }, []);
-
-  // Request params for the BFF
-  const requestParams = useMemo(() => {
-    return {
-      optin: isOptIn ? 'true' : 'false',
-      profileType,
-    };
-    // Omitting optIn here because TIPS api handles OptIn toggles
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileType]);
 
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback((messageData: any) => {
@@ -135,13 +120,11 @@ export function useAppStateRemote() {
     eventName: 'message',
     callback: onEvent,
     postpone: isFallbackServiceEnabled,
-    requestParams,
   });
 
   useAppStateFallbackService({
     profileType,
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
-    requestParams,
     setAppState,
   });
 

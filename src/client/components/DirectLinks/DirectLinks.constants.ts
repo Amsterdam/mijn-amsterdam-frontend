@@ -11,13 +11,6 @@ export interface DirectLink {
 }
 
 const GenericLinks: Record<string, DirectLink> = {
-  TIPS: {
-    title: 'Mijn tips',
-    url: AppRoutes.TIPS,
-    isPhoneScreenLink: true,
-    id: 'MyTipsHeader',
-    isActive: true,
-  },
   UITLEG: {
     title: 'Dit ziet u in Mijn Amsterdam',
     url: AppRoutes.GENERAL_INFO,

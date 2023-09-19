@@ -2,7 +2,6 @@ import { Chapters } from '../../../universal/config';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { TIPS_IMG_HOST } from '../tips/tips';
 import { fetchTipsAndNotifications, fetchService } from './api-service';
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
@@ -66,8 +65,6 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             title: message.titel,
             description: message.omschrijving,
             reason: message.informatie ? [message.informatie] : [],
-            isPersonalized: true,
-            imgUrl: `${TIPS_IMG_HOST}/img/tips/belastingen.jpg`,
             link: {
               title: message.url_naam,
               to: message.url,
