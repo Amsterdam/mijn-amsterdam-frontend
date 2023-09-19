@@ -46,7 +46,7 @@ describe('Bezwaren', () => {
       remoteApi
         .post(`${endpointBase}/_zoek?page=1`)
         .reply(200, bezwarenApiResponse)
-        .get((uri) => uri.includes('/zaakinformatieobjecten'))
+        .get((uri) => uri.includes('/enkelvoudiginformatieobjecten'))
         .times(4)
         .reply(200, bezwarenDocumenten)
         .get((uri) => uri.includes('/statussen'))
@@ -172,7 +172,7 @@ describe('Bezwaren', () => {
             ...bezwarenApiResponse,
             count: 8,
           })
-          .get((uri) => uri.includes('/zaakinformatieobjecten'))
+          .get((uri) => uri.includes('/enkelvoudiginformatieobjecten'))
           .times(8)
           .reply(200, bezwarenDocumenten)
           .get((uri) => uri.includes('/statussen'))
