@@ -19,6 +19,16 @@ parameters:
     type: boolean
     default: true
 
+  - name: dtapName
+    type: string
+    default: ''
+    values:
+      - ''
+      - o
+      - t
+      # - a
+      # - p
+
   - name: updateAppSettings
     type: boolean
     default: false
@@ -31,12 +41,15 @@ parameters:
     default: true
 
 variables:
-  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
+  - ${{ if and(eq(variables['Build.SourceBranchName'], 'ontwikkelen'), eq(parameters.dtapName, '')) }}:
       - name: dtapName
         value: o
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+  - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, '')) }}:
       - name: dtapName
         value: t
+  - ${{ if ne(parameters.dtapName, '') }}:
+      - name: dtapName
+        value: ${{ parameters.dtapName }}
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: false
