@@ -21,9 +21,9 @@ parameters:
 
   - name: dtapName
     type: string
-    default: ''
+    default: none
     values:
-      -
+      - none
       - o
       - t
       # - a
@@ -41,13 +41,13 @@ parameters:
     default: true
 
 variables:
-  - ${{ if and(eq(variables['Build.SourceBranchName'], 'ontwikkelen'), eq(parameters.dtapName, '')) }}:
+  - ${{ if and(eq(variables['Build.SourceBranchName'], 'ontwikkelen'), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: o
-  - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, '')) }}:
+  - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: t
-  - ${{ if ne(parameters.dtapName, '') }}:
+  - ${{ if ne(parameters.dtapName, 'none') }}:
       - name: dtapName
         value: ${{ parameters.dtapName }}
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
