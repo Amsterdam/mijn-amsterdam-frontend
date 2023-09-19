@@ -23,7 +23,7 @@ parameters:
     type: string
     default: ''
     values:
-      - ''
+      -
       - o
       - t
       # - a
