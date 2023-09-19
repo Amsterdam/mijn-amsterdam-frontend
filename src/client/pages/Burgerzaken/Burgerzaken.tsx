@@ -21,13 +21,8 @@ const DISPLAY_PROPS_ID_KAARTEN = {
   datumAfloop: 'Geldig tot',
 };
 
-const DISPLAY_PROPS_AKTES = {
-  aktenummer: 'Aktenummer',
-  registerjaar: 'Registerjaar',
-};
-
 export default function Burgerzaken() {
-  const { BRP, AKTES } = useAppStateGetter();
+  const { BRP } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {
@@ -41,19 +36,6 @@ export default function Burgerzaken() {
     });
     return addTitleLinkComponent(items);
   }, [BRP.content]);
-
-  const aktes = useMemo(() => {
-    if (!AKTES.content?.length) {
-      return [];
-    }
-    const items = AKTES.content.map((item) => {
-      return {
-        ...item,
-        registerjaar: item.registerjaar,
-      };
-    });
-    return addTitleLinkComponent(items, 'type');
-  }, [AKTES.content]);
 
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
@@ -80,11 +62,6 @@ export default function Burgerzaken() {
             <p>We kunnen op dit moment geen ID-kaarten tonen.</p>
           </Alert>
         )}
-        {isError(AKTES) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen aktes tonen.</p>
-          </Alert>
-        )}
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-offical-documents"
@@ -101,29 +78,6 @@ export default function Burgerzaken() {
           items={documentItems}
         />
       </SectionCollapsible>
-      {!!aktes.length && (
-        <>
-          <SectionCollapsible
-            id="SectionCollapsible-aktes"
-            title="Mijn aktes"
-            className={styles.SectionCollapsibleAktes}
-            startCollapsed={true}
-            hasItems={true}
-            isLoading={false}
-          >
-            <Table
-              titleKey="type"
-              className={styles.AktesTable}
-              displayProps={DISPLAY_PROPS_AKTES}
-              items={aktes}
-            />
-          </SectionCollapsible>
-          <p className={styles.AktesDisclaimer}>
-            Alleen akte indien rechtsfeit in amsterdam Akte is niet rechtsgeldig
-            oid
-          </p>
-        </>
-      )}
     </OverviewPage>
   );
 }

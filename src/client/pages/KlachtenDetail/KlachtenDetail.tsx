@@ -1,5 +1,5 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { Klacht } from '../../../server/services/klachten/types';
+import type { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,

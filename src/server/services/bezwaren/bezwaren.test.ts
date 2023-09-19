@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
 import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
@@ -9,18 +10,23 @@ import {
   fetchBezwaren,
   fetchBezwarenNotifications,
 } from './bezwaren';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import nock from 'nock';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
+
+vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encrypt: () => {
+      return ['test-encrypted-id'];
+    },
+    decrypt: () => 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  };
+});
 
 describe('Bezwaren', () => {
   const requestId = '456';
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
-  const [documentIdEncrypted] = encrypt(
-    documentId,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
+  const documentIdEncrypted = 'test-encrypted-id';
 
   const profileAndToken: AuthProfileAndToken = {
     profile: {

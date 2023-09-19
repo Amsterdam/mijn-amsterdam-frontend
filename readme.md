@@ -33,6 +33,7 @@ Not all browsers in the world are supported. The targeted browsers can be found 
 - The language used is `Typescript`
 - The application is built and tested with [vite/vitest](https://vitejs.dev/).
 - Only functional components are used in combination with the hooks api.
+- For styling we use [scss](https://create-react-app.dev/docs/adding-a-sass-stylesheet) and [scss modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
 
 There is no super strict convention (yet) for grouping components, functions, types etc. For larger components we might want to separate for example additional components, helpers, config and constants
 into other files as done in `src/client/pages/Profile` or `src/server/services/focus`.

@@ -107,7 +107,7 @@ export const hasKidsBetweenAges = (
   today: Date = new Date()
 ) => {
   return !!kinderen?.some(
-    (kind) =>
+    (kind: Kind) =>
       kind.geboortedatum &&
       !kind.overlijdensdatum &&
       differenceInYears(today, new Date(kind.geboortedatum)) >= ageFrom &&

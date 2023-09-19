@@ -1,3 +1,8 @@
+import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+  ApiPostponeResponse,
+} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
@@ -5,16 +10,8 @@ import fs from 'fs';
 import https from 'https';
 import jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_AP } from '../universal/config/env';
-import {
-  ApiErrorResponse,
-  ApiPostponeResponse,
-  ApiSuccessResponse,
-} from './../universal/helpers/api';
+import { IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
-
-const BFF_SERVER_ADP_ROOT_CA = process.env.BFF_SERVER_ADP_ROOT_CA;
-const BFF_SERVER_PRIVATE_G1_CERT = process.env.BFF_SISA_CA;
 
 export function getCertificateSync(path?: string, name?: string) {
   if (!path) {
@@ -33,23 +30,16 @@ export function getCertificateSync(path?: string, name?: string) {
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
-    ? process.env.BFF_REQUEST_CACHE_ENABLED === 'true'
+    ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
     : true;
+
+export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.npm_package_version}`;
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
-export const BFF_PUBLIC_URL = `${
-  process.env.BFF_PUBLIC_URL || `http://${BFF_HOST}:${BFF_PORT}`
-}`;
-
-export const BFF_MS_API_BASE_PATH = IS_AP ? '/api' : '';
-export const BFF_MS_API_BASE = `${process.env.BFF_API_DATA_HOST}`;
-export const BFF_MS_API_BASE_URL = `${BFF_MS_API_BASE}${BFF_MS_API_BASE_PATH}`;
-
-export const BFF_DATAPUNT_API_BASE_URL = 'https://api.data.amsterdam.nl';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -68,6 +58,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
    */
   passthroughOIDCToken?: boolean;
+  debugRequestConfig?: boolean;
 
   combinePaginatedResults?: <T>(
     responseData: any,
@@ -85,8 +76,8 @@ const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
 const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
 
-export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
-export const DEFAULT_CANCEL_TIMEOUT_MS = 20 * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
+export const DEFAULT_API_CACHE_TTL_MS = (IS_OT ? 65 : 45) * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+export const DEFAULT_CANCEL_TIMEOUT_MS = (IS_OT ? 60 : 20) * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -114,11 +105,9 @@ export type SourceApiKey =
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
-  | 'AKTES'
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'KVK'
@@ -134,59 +123,44 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
   WMO: {
-    url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
+    url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
     passthroughOIDCToken: true,
   },
   WPI_E_AANVRAGEN: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/e-aanvragen`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
     passthroughOIDCToken: true,
   },
   WPI_STADSPAS: {
-    url: `${BFF_MS_API_BASE_URL}/wpi/stadspas`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENT: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten`,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
+    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaakinformatieobjecten`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/statussen`,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
     url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
-    }),
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   CLEOPATRA: {
@@ -194,8 +168,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
-      cert: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
-      key: IS_AP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
+      cert: IS_TAP
+        ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT)
+        : [],
+      key: IS_TAP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
     }),
   },
   SIA: {
@@ -203,7 +179,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
-    url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
+    url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
   },
@@ -227,46 +203,36 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
     cacheTimeout: ONE_HOUR_MS,
   },
-  TIPS: {
-    url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
-  },
-  BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp`, passthroughOIDCToken: true },
-  AKTES: {
-    url: `${BFF_MS_API_BASE_URL}/aktes/aktes`,
-    postponeFetch: !FeatureToggle.aktesActive,
+  BRP: {
+    url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`,
+    passthroughOIDCToken: true,
   },
   ERFPACHT: {
-    url: process.env.BFF_MIJN_ERFPACHT_API_URL,
+    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
   },
-  BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
+  BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
   AFVAL: {
-    url: `${BFF_DATAPUNT_API_BASE_URL}/v1/afvalwijzer/afvalwijzer/`,
+    url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
   },
   KVK: {
-    url: `${BFF_MS_API_BASE_URL}/brp/hr`,
+    url: `${process.env.BFF_MKS_API_BASE_URL}/brp/hr`,
     passthroughOIDCToken: true,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
-    url: process.env.BFF_LVV_API_URL,
+    url: `${process.env.BFF_LVV_API_URL}`,
     headers: {
       'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_ADP_ROOT_CA) : [],
-    }),
   },
   KREFIA: {
-    url: `${BFF_MS_API_BASE_URL}/krefia/all`,
+    url: `${process.env.BFF_KREFIA_API_BASE_URL}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
     passthroughOIDCToken: true,
   },
   SUBSIDIE: {
     url: `${process.env.BFF_SISA_API_ENDPOINT}`,
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {
@@ -278,9 +244,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   ENABLEU_2_SMILE: {
     url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
     method: 'POST',
-    httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
-    }),
   },
   LOOD_365: {
     url: `${process.env.BFF_LOOD_API_URL}`,
@@ -321,7 +284,6 @@ export const RelayPathsAllowed = {
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
   WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
-  TIP_IMAGES: '/tips/static/tip_images/:fileName',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
 };
@@ -346,6 +308,7 @@ export const BFF_OIDC_BASE_URL = `${
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
 export const BffEndpoints = {
+  ROOT: '/',
   API_RELAY: '/relay',
   SERVICES_TIPS: '/services/tips',
   SERVICES_ALL: '/services/all',
@@ -405,20 +368,17 @@ export const BffEndpoints = {
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
-  STATUS_HEALTH: '/bff/status/health',
-
+  STATUS_HEALTH: '/status/health',
+  STATUS_HEALTH2: '/bff/status/health',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
+  BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
-];
-
-export const RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER = [
-  '/tips/static/tip_images',
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
@@ -450,7 +410,7 @@ const oidcConfigBase: ConfigParams = {
     login: false,
     logout: AUTH_LOGOUT,
     callback: false,
-    postLogoutRedirect: process.env.BFF_FRONTEND_URL,
+    postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
     const claims = jose.JWT.decode(session.id_token) as {
@@ -542,6 +502,12 @@ export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   yivi: YIVI_ATTR_PRIMARY,
 };
 
+export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
+  digid: ['private'],
+  eherkenning: ['commercial'],
+  yivi: ['private-attributes'],
+};
+
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get eherkenning() {
     return oidcConfigEherkenning.clientID;
@@ -555,7 +521,7 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
 };
 
 export const corsOptions: CorsOptions = {
-  origin: process.env.BFF_FRONTEND_URL,
+  origin: process.env.MA_FRONTEND_URL,
   credentials: true,
 };
 

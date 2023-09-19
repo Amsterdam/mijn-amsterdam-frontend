@@ -24,7 +24,7 @@ import {
 } from './predicates';
 import { Tip } from './tip-types';
 
-export const TIPS_IMG_HOST = process.env.BFF_FRONTEND_URL;
+export const TIPS_IMG_HOST = process.env.MA_FRONTEND_URL;
 
 export const tips: Tip[] = [
   {

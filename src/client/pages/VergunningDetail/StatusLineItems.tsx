@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { hasWorkflow } from '../../../universal/helpers/vergunningen';
 import { GenericDocument } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';

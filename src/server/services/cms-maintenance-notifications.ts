@@ -1,6 +1,6 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 import { marked } from 'marked';
-import { Chapters, IS_AP } from '../../universal/config';
+import { Chapters, IS_TAP } from '../../universal/config';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
@@ -9,7 +9,7 @@ import { requestData } from '../helpers/source-api-request';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
-  cacheTimeMinutes: IS_AP ? 15 : -1, // 15 minutes
+  cacheTimeMinutes: IS_TAP ? 15 : -1, // 15 minutes
 });
 
 interface Tyd {

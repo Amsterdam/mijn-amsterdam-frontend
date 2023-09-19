@@ -6,7 +6,36 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumIntrekking": null,
       "datumbesluit": "2021-05-01",
-      "documenten": [],
+      "documenten": [
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Besluitvorming",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Procesdossier",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+      ],
       "einddatum": null,
       "identificatie": "BI.21.014121.001",
       "link": {
@@ -44,7 +73,36 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumIntrekking": null,
       "datumbesluit": "2021-03-03",
-      "documenten": [],
+      "documenten": [
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Besluitvorming",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Procesdossier",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+      ],
       "einddatum": null,
       "identificatie": "JB.22.000076.001",
       "link": {
@@ -82,7 +140,36 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumIntrekking": null,
       "datumbesluit": null,
-      "documenten": [],
+      "documenten": [
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Besluitvorming",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Procesdossier",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+      ],
       "einddatum": null,
       "identificatie": "ZAAK2",
       "link": {
@@ -120,7 +207,36 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumIntrekking": null,
       "datumbesluit": "2023-01-03",
-      "documenten": [],
+      "documenten": [
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Aangeleverd",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Besluitvorming",
+          "id": "test-encrypted-id",
+          "title": "connector.docx",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+        {
+          "datePublished": "30 augustus 2023",
+          "dossiertype": "Online Procesdossier",
+          "id": "test-encrypted-id",
+          "title": "Bezwaar_JB20230049.pdf",
+          "url": "http://bff-api-host/api/v1/services/bezwaren/test-encrypted-id/attachments",
+        },
+      ],
       "einddatum": "2023-01-04",
       "identificatie": "ZAAK3",
       "link": {

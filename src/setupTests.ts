@@ -39,15 +39,12 @@ export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
-process.env.REACT_APP_BFF_AUTH_PATH = '';
-
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
-process.env.BFF_API_DATA_HOST = remoteApiHost;
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
 
-process.env.BFF_FRONTEND_URL = frontentHost;
+process.env.MA_FRONTEND_URL = frontentHost;
 process.env.BFF_ENABLEU_2_SMILE_ENDPOINT = `${remoteApiHost}/smile`;
 process.env.BFF_OIDC_BASE_URL = bffApiHost;
 process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;
@@ -61,6 +58,13 @@ process.env.BFF_SISA_ENCRYPTION_KEY = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = `${remoteApiHost}/subsidies/`;
 process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
+
+// Koppel api base urls
+process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;

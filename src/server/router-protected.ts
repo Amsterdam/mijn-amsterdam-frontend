@@ -1,20 +1,22 @@
+import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import {
-  BffEndpoints,
-  BFF_MS_API_BASE,
-  BFF_MS_API_BASE_PATH,
-  RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER,
-} from './config';
+import { jsonCopy, pick } from '../universal/helpers/utils';
+import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
+import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import { fetchSignalAttachments, fetchSignalHistory } from './services/sia';
-import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
-import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
+import {
+  fetchSignalAttachments,
+  fetchSignalHistory,
+  fetchSignalsListByStatus,
+} from './services/sia';
+import { IS_AP } from '../universal/config/env';
 
 export const router = express.Router();
 
@@ -59,27 +61,43 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
 router.use(
   BffEndpoints.API_RELAY,
-  proxy(BFF_MS_API_BASE, {
-    proxyReqPathResolver: function (req) {
-      return BFF_MS_API_BASE_PATH + req.url;
-    },
-    proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-      // NOTE: Temporary
-      if (
-        RELAY_PATHS_EXCLUDED_FROM_ADDING_AUTHORIZATION_HEADER.some((path) =>
-          srcReq.url.includes(path)
-        )
-      ) {
-        return proxyReqOpts;
+  proxy(
+    (req: Request) => {
+      let url = '';
+      switch (true) {
+        case req.path.startsWith('/decosjoin/'):
+          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
+          break;
+        case req.path.startsWith('/wpi/'):
+          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
+          break;
+        case req.path.startsWith('/brp/'):
+          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
+          break;
+        case req.path.startsWith('/wmoned/'):
+          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
+          break;
       }
-
-      const { token } = await getAuth(srcReq);
-      const headers = proxyReqOpts.headers || {};
-      headers['Authorization'] = `Bearer ${token}`;
-      proxyReqOpts.headers = headers;
-      return proxyReqOpts;
+      return url;
     },
-  })
+    {
+      memoizeHost: false,
+      proxyReqPathResolver: function (req) {
+        return IS_AP ? `/api${req.url}` : req.url;
+      },
+      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+        const { token } = await getAuth(srcReq);
+        const headers = proxyReqOpts.headers || {};
+        headers['Authorization'] = `Bearer ${token}`;
+        proxyReqOpts.headers = headers;
+        return proxyReqOpts;
+      },
+      proxyErrorHandler: (err, res, next) => {
+        Sentry.captureException(err);
+        next();
+      },
+    }
+  )
 );
 
 router.get(
@@ -115,6 +133,25 @@ router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
   }
 
   return res.send(attachmentsResponse);
+});
+
+router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
+  const authProfileAndToken = await getAuth(req);
+
+  const siaResponse = await fetchSignalsListByStatus(
+    res.locals.requestID,
+    authProfileAndToken,
+    {
+      ...(pick(req.params, ['page', 'status']) as any),
+      pageSize: '20',
+    }
+  );
+
+  if (siaResponse.status === 'ERROR') {
+    res.status(500);
+  }
+
+  return res.send(siaResponse);
 });
 
 router.get(

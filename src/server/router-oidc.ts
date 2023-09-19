@@ -63,7 +63,7 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
       },
     });
   }
-  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
+  return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
 });
 
 router.get(
@@ -76,7 +76,7 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   if (auth.profile.id) {
     countLoggedInVisit(auth.profile.id);
   }
-  return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=digid');
+  return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
 });
 
 /**
@@ -118,7 +118,7 @@ if (FeatureToggle.eherkenningActive) {
       });
     }
     return res.redirect(
-      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
     );
   });
 
@@ -128,7 +128,7 @@ if (FeatureToggle.eherkenningActive) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
     return res.redirect(
-      process.env.BFF_FRONTEND_URL + '?authMethod=eherkenning'
+      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
     );
   });
 
@@ -168,7 +168,7 @@ if (FeatureToggle.yiviActive) {
         },
       });
     }
-    return res.redirect(process.env.BFF_FRONTEND_URL + '?authMethod=yivi');
+    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=yivi');
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
@@ -195,7 +195,7 @@ router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
       return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
     default: {
       // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
-      return res.redirect(`${process.env.BFF_FRONTEND_URL}?sso=1`);
+      return res.redirect(`${process.env.MA_FRONTEND_URL}?sso=1`);
     }
   }
 });
@@ -247,7 +247,7 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
 });
 
 router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
-  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+  let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
   let authMethodRequested = req.query.authMethod;
 
   if (hasSessionCookie(req) && !authMethodRequested) {

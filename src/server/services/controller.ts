@@ -14,7 +14,6 @@ import {
   sendMessage,
 } from '../helpers/app';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
-import { fetchAKTES } from './aktes';
 import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchBRP } from './brp';
@@ -79,7 +78,6 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
 
 // Protected services
 const BRP = callService(fetchBRP);
-const AKTES = callService(fetchAKTES);
 const KVK = callService(fetchKVK);
 const KREFIA = callService(fetchKrefia);
 const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
@@ -152,7 +150,6 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 // Store all services for type derivation
 const SERVICES_INDEX = {
   BRP,
-  AKTES,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
@@ -228,7 +225,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     BRP,
-    AKTES,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,

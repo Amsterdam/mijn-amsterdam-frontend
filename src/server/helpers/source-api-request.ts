@@ -5,7 +5,7 @@ import axios, {
   AxiosResponseHeaders,
 } from 'axios';
 import memoryCache from 'memory-cache';
-import { IS_AP } from '../../universal/config/env';
+import { IS_TAP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -87,7 +87,7 @@ function enableMockAdapter() {
   });
 }
 
-if (!IS_AP && !process.env.BFF_DISABLE_MOCK_ADAPTER) {
+if (!IS_TAP && process.env.BFF_ENABLE_MOCK_ADAPTER === 'true') {
   console.info('Axios Mock adapter enabled');
   enableMockAdapter();
 }
@@ -204,6 +204,10 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
 
+    if (requestConfig.debugRequestConfig) {
+      console.log(requestConfig);
+    }
+
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
 
@@ -275,7 +279,7 @@ export async function requestData<T>(
           },
         });
 
-    const sentryId = !IS_AP ? null : capturedId;
+    const sentryId = !IS_TAP ? null : capturedId;
     const responseData = apiErrorResult(errorMessage, null, sentryId);
 
     if (cache.get(cacheKey)) {

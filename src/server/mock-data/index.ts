@@ -2,14 +2,13 @@ import { apiSuccessResult } from '../../universal/helpers';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
-import { decodeToken } from '../helpers/app';
-import AKTES from './json/aktes.json';
-import AVG from './json/avg.json';
+import { decodeToken } from '../helpers/app.development';
 import AVG_THEMAS from './json/avg-themas.json';
+import AVG from './json/avg.json';
 import BELASTINGEN from './json/belasting.json';
-import BEZWAREN from './json/bezwaren.json';
 import BEZWAREN_DOCUMENTS from './json/bezwaren-documents.json';
 import BEZWAREN_STATUS from './json/bezwaren-status.json';
+import BEZWAREN from './json/bezwaren.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -17,14 +16,14 @@ import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
-import LOODMETINGEN from './json/loodmetingen.json';
 import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
+import LOODMETINGEN from './json/loodmetingen.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
-import SIA from './json/sia-meldingen.json';
-import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
-import SIA_HISTORY from './json/sia-history.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
+import SIA_HISTORY from './json/sia-history.json';
+import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
+import SIA from './json/sia-meldingen.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
@@ -119,16 +118,6 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return await loadMockApiResponseJson(BEZWAREN_STATUS);
-    },
-  },
-  [String(ApiUrls.AKTES)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return await loadMockApiResponseJson(AKTES);
     },
   },
   [String(ApiUrls.WMO)]: {
@@ -357,6 +346,13 @@ export const mockDataConfig: MockDataConfig = {
     method: 'post',
     responseData: async (config: any) => {
       return await loadMockApiResponseJson(LOODMETING_RAPPORT);
+    },
+  },
+  [`${ApiUrls.LOOD_365_OAUTH}`]: {
+    status: () => 200,
+    method: 'post',
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({ access_token: 'foo-bar' });
     },
   },
 };

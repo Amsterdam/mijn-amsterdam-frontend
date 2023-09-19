@@ -30,9 +30,6 @@ import { useUsabilla } from './hooks/useUsabilla';
 import { default as LandingPage } from './pages/Landing/Landing';
 import { loginUrlByAuthMethod } from './config/api';
 
-const BurgerzakenAkte = lazy(
-  () => import('./pages/BurgerzakenDetail/BurgerzakenAkte')
-);
 const Krefia = lazy(() => import('./pages/Krefia/Krefia'));
 const Parkeren = lazy(() => import('./pages/Parkeren/Parkeren'));
 const ProfileCommercial = lazy(
@@ -285,10 +282,6 @@ function AppAuthenticated() {
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
             component={BurgerzakenIDKaart}
-          />
-          <Route
-            path={AppRoutes['BURGERZAKEN/AKTE']}
-            component={BurgerzakenAkte}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (

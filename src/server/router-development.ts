@@ -5,6 +5,7 @@ import express, {
   Response,
 } from 'express';
 import path from 'path';
+import { testAccounts } from '../universal/config/auth.development';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -23,9 +24,9 @@ import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documente
 import { countLoggedInVisit } from './services/visitors';
 
 const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/dev/auth/:authMethod/login',
-  DEV_LOGOUT: '/api/v1/dev/auth/logout',
-  DEV_AUTH_CHECK: '/api/v1/dev/auth/check',
+  DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
+  DEV_LOGOUT: '/api/v1/auth/logout',
+  DEV_AUTH_CHECK: '/api/v1/auth/check',
 };
 
 export const authRouterDevelopment = express.Router();
@@ -35,7 +36,7 @@ authRouterDevelopment.get(
   (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000
+        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
       ),
       httpOnly: true,
       path: '/',
@@ -43,7 +44,8 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userId = process.env.BFF_PROFILE_DEV_ID ?? `xxx-${authMethod}-xxx`;
+    const userName = req.params.user ?? Object.keys(testAccounts)[0];
+    const userId = testAccounts[userName];
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
       userId
@@ -57,7 +59,7 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    let redirectUrl = `${process.env.BFF_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+    let redirectUrl = `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
     switch (req.params.authMethod) {
       case 'yivi':
@@ -74,7 +76,7 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
 
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
-  let redirectUrl = `${process.env.BFF_FRONTEND_URL}`;
+  let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
 
   switch (auth.profile.authMethod) {
     case 'yivi':
@@ -89,14 +91,16 @@ authRouterDevelopment.get(
   DevelopmentRoutes.DEV_AUTH_CHECK,
   async (req, res) => {
     if (hasSessionCookie(req)) {
-      const auth = await getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType: auth.profile.profileType,
-          authMethod: auth.profile.authMethod,
-        })
-      );
+      try {
+        const auth = await getAuth(req);
+        return res.send(
+          apiSuccessResult({
+            isAuthenticated: true,
+            profileType: auth.profile.profileType,
+            authMethod: auth.profile.authMethod,
+          })
+        );
+      } catch (error) {}
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
@@ -105,15 +109,6 @@ authRouterDevelopment.get(
 );
 
 export const relayDevRouter = express.Router();
-
-relayDevRouter.get(RelayPathsAllowed.TIP_IMAGES, (req, res, next) => {
-  return res.sendFile(
-    path.join(
-      __dirname,
-      'mock-data/tip-image-mock.' + req.path.split('.').pop()
-    )
-  );
-});
 
 relayDevRouter.get(
   [

@@ -44,5 +44,17 @@ declare const MA_OTAP_ENV: string;
 // Versie nummer uit packages.json
 declare const MA_APP_VERSION: string;
 
-// Mode: Development Test (unittest) Production
+// Mode: Development Unittest Production
 declare const MA_APP_MODE: string;
+
+// A fixed user id for development purposes, for example when testing yivi an email address can be provided
+declare const MA_PROFILE_DEV_ID: string;
+
+// A list with test-accounts in the form of: foo=123,bar=456,hello=789
+declare const MA_TEST_ACCOUNTS: string;
+
+// The commit sha
+declare const MA_GIT_SHA: string;
+
+// The ID of current build
+declare const MA_BUILD_ID: string;

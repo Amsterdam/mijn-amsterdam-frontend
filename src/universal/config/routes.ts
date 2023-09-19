@@ -6,7 +6,6 @@ export const AppRoutes = {
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
   'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
-  'BURGERZAKEN/AKTE': '/burgerzaken/akte/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 

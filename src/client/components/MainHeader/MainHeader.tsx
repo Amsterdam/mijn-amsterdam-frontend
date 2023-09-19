@@ -1,7 +1,8 @@
+import { Heading } from '@amsterdam/design-system-react';
+import classnames from 'classnames';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heading } from '@amsterdam/design-system-react';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, OTAP_ENV } from '../../../universal/config';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { getApiErrors } from '../../config/api';
@@ -16,6 +17,19 @@ import styles from './MainHeader.module.scss';
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
   isHeroVisible?: boolean;
+}
+
+function OtapLabel() {
+  return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
+    <small
+      className={classnames(
+        styles['otap-env'],
+        styles[`otap-env--${OTAP_ENV}`]
+      )}
+    >
+      {OTAP_ENV}
+    </small>
+  ) : null;
 }
 
 export default function MainHeader({
@@ -53,12 +67,12 @@ export default function MainHeader({
           {location.pathname !== AppRoutes.ROOT ? (
             <Heading level={2} size="level-1">
               <Link to={AppRoutes.ROOT} title="Terug naar home">
-                Mijn Amsterdam
+                Mijn Amsterdam <OtapLabel />
               </Link>
             </Heading>
           ) : (
             <Heading level={2} size="level-1">
-              Mijn Amsterdam
+              Mijn Amsterdam <OtapLabel />
             </Heading>
           )}
         </span>
