@@ -15,6 +15,16 @@ trigger:
       - package-lock.json
 
 pr:
+  autoCancel: true
+  paths:
+    include:
+      - src/client
+      - src/universal
+      - src/index.tsx
+      - public
+      - Dockerfile
+      - package.json
+      - package-lock.json-bff
   branches:
     include:
       - main

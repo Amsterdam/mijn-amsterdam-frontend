@@ -20,6 +20,9 @@ pipeline {
     MA_FRONTEND_URL_ACC = "https://acc.mijn.amsterdam.nl"
     MA_FRONTEND_URL_PROD = "https://mijn.amsterdam.nl"
 
+    MA_FRONTEND_HOST_ACC = "acc.mijn.amsterdam.nl"
+    MA_FRONTEND_HOST_PROD = "mijn.amsterdam.nl"
+
     REACT_APP_BFF_API_URL_ACC = "https://acc.mijn-bff.amsterdam.nl/api/v1"
     REACT_APP_BFF_API_URL_PROD = "https://mijn-bff.amsterdam.nl/api/v1"
 
@@ -127,7 +130,7 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
-           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_ACC} " +
+           "--build-arg MA_FRONTEND_HOST=${MA_FRONTEND_HOST_ACC} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
