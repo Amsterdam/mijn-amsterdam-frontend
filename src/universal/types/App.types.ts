@@ -34,6 +34,7 @@ export interface MyNotification {
   id: string;
   isAlert?: boolean;
   isTip?: boolean;
+  tipReason?: string;
   link?: LinkProps;
   moreInformation?: string;
   subject?: string;
@@ -55,7 +56,7 @@ export interface MyTip {
   link: LinkProps;
   priority?: number;
   profileTypes?: ProfileType[];
-  reason: string[];
+  reason: string;
   title: string;
 }
 

@@ -64,7 +64,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             datePublished: message.datum,
             title: message.titel,
             description: message.omschrijving,
-            reason: message.informatie ? [message.informatie] : [],
+            reason: message.informatie,
             link: {
               title: message.url_naam,
               to: message.url,

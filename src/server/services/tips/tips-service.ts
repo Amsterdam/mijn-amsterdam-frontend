@@ -28,6 +28,7 @@ export function convertTipToNotication(tip: MyTip): MyNotification {
       'title',
       'link',
     ]),
+    tipReason: tip.reason,
     isTip: true,
     isAlert: false,
   } as MyNotification;
