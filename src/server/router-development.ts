@@ -29,6 +29,8 @@ const DevelopmentRoutes = {
   DEV_AUTH_CHECK: '/api/v1/auth/check',
 };
 
+const PREDEFINED_REDIRECT_URLS = ['/api/v1/services/all'];
+
 export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
@@ -44,7 +46,10 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
-    const userName = req.params.user ?? Object.keys(testAccounts)[0];
+    const userName =
+      req.params.user && req.params.user in testAccounts
+        ? req.params.user
+        : Object.keys(testAccounts)[0];
     const userId = testAccounts[userName];
     const appSessionCookieValue = generateDevSessionCookieValue(
       authMethod,
@@ -59,7 +64,11 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    let redirectUrl = `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+    let redirectUrl =
+      req.query.redirectUrl &&
+      PREDEFINED_REDIRECT_URLS.includes(String(req.query.redirectUrl))
+        ? String(req.query.redirectUrl)
+        : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
     switch (req.params.authMethod) {
       case 'yivi':
