@@ -231,8 +231,6 @@ components:
       properties:
         BRP:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        AKTES:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
         CMS_CONTENT:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         CMS_MAINTENANCE_NOTIFICATIONS:

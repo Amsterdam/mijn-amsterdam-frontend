@@ -37,6 +37,11 @@ describe('App', () => {
   });
 
   it('Renders Landing Page', async () => {
+    bffApi
+      .get('/services/cms/maintenance-notifications?page=landingspagina')
+      .reply(200);
+    bffApi.get('/services/cms').reply(200);
+
     mocks.useSessionApi.mockReturnValue({
       isPristine: false,
       isAuthenticated: false,
@@ -52,11 +57,14 @@ describe('App', () => {
   });
 
   it('Renders Dashboard', async () => {
+    bffApi.get('/services/all?optin=false&profileType=private').reply(200);
+
     const session = {
       isPristine: false,
       isAuthenticated: true,
       isDirty: true,
     };
+
     mocks.useSessionValue.mockReturnValue(session);
     mocks.useSessionApi.mockReturnValue(session);
 

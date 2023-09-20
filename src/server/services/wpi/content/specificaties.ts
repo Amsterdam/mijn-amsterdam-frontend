@@ -2,6 +2,7 @@ import { differenceInMonths } from 'date-fns';
 import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
+import { ServiceResults } from '../../tips/tip-types';
 import { documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
@@ -60,7 +61,9 @@ function transformIncomeSpecificationNotification(
   };
 }
 
-export function getNotifications(specificatiesContent: any) {
+export function getNotifications(
+  specificatiesContent: ServiceResults['WPI_SPECIFICATIES']['content']
+) {
   const notifications: MyNotification[] = [];
 
   if (!specificatiesContent) {

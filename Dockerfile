@@ -1,63 +1,83 @@
 ########################################################################################################################
 ########################################################################################################################
-# Start with a node image for build dependencies
+# Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:current-buster as build-deps
+FROM node:current-buster as updated-buster-local
 
-# Indicating we are on a CI environment
+ENV TZ=Europe/Amsterdam
 ENV CI=true
-
-WORKDIR /app
 
 RUN apt-get update \
   && apt-get dist-upgrade -y \
-  && apt-get autoremove -y
+  && apt-get autoremove -y \
+  && apt-get install -y --no-install-recommends nano inetutils-traceroute
 
-COPY vite.config.ts /app/
-COPY tsconfig.json /app/
-COPY tsconfig.bff.json /app/
-COPY package.json /app/
-COPY package-lock.json /app/
-COPY .env.production /app/
-COPY .prettierrc.json /app/
 
-RUN npm ci
+########################################################################################################################
+########################################################################################################################
+# Start with a node image for build dependencies
+########################################################################################################################
+########################################################################################################################
+FROM updated-buster-local as build-deps
 
-COPY index.html /app/
-COPY public /app/public
-COPY src /app/src
+WORKDIR /build-space
+
+# Copy packages + Install
+COPY package-lock.json /build-space/
+COPY package.json /build-space/
+COPY vite.config.ts /build-space/
+
+# Install the dependencies
+RUN npm ci --prefer-offline --no-audit --progress=false
+
+# Typescript configs
+COPY tsconfig.json /build-space/
+COPY tsconfig.bff.json /build-space/
+
+# Copy source files
+COPY src /build-space/src
+COPY index.html /build-space/
 
 ########################################################################################################################
 ########################################################################################################################
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps as build-app
+FROM build-deps as build-app-fe
 
-ENV BROWSER=none
-ENV CI=true
-
+# Universal env variables (defined in vite.config.ts)
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
 
-ENV INLINE_RUNTIME_CHUNK=false
-ENV TZ=Europe/Amsterdam
+ARG MA_BUILD_ID=-1
+ENV MA_BUILD_ID=$MA_BUILD_ID
 
+ARG MA_GIT_SHA=-1
+ENV MA_GIT_SHA=$MA_GIT_SHA
 
-FROM build-app as build-fe
+ARG MA_TEST_ACCOUNTS=
+ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
 
-ARG REACT_APP_ANALYTICS_ID=
-ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
+# Statically replaced import.meta variables
+ARG REACT_APP_BFF_API_URL=/api/v1
+ENV REACT_APP_BFF_API_URL=$REACT_APP_BFF_API_URL
 
 ARG REACT_APP_SENTRY_DSN=
 ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
 
-# Build client
+ARG REACT_APP_ANALYTICS_ID=
+ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
+
+
+COPY public /build-space/public
+
+# Build FE
 RUN npm run build
 
-FROM build-app as build-bff
-# Build bff
+# Build BFF
+FROM build-deps as build-app-bff
+
 RUN npm run bff-api:build
 
 
@@ -66,50 +86,56 @@ RUN npm run bff-api:build
 # Front-end Web server image (Acceptance, Production)
 ########################################################################################################################
 ########################################################################################################################
-FROM nginx:stable-alpine as deploy-ap-frontend
+FROM nginx:latest as deploy-frontend
 
-LABEL name="mijnamsterdam FRONTEND"
-LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+WORKDIR /app
 
-ENV TZ=Europe/Amsterdam
-
-COPY conf/nginx-server-default.template.conf /etc/nginx/conf.d/default.conf
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+ARG MA_FRONTEND_HOST=mijn.amsterdam.nl
+ENV MA_FRONTEND_HOST=$MA_FRONTEND_HOST
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
-CMD nginx -g 'daemon off;'
+COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
+RUN envsubst '${MA_FRONTEND_HOST}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
-COPY --from=build-fe /app/build /usr/share/nginx/html
+COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
+COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.txt
 
-
-########################################################################################################################
-########################################################################################################################
-# Front-end Web server image Acceptance
-########################################################################################################################
-########################################################################################################################
-FROM deploy-ap-frontend as deploy-acceptance-frontend
-COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/nginx/html/robots.txt
-
+CMD nginx -g 'daemon off;'
 
 ########################################################################################################################
 ########################################################################################################################
 # Front-end Web server image Production
 ########################################################################################################################
 ########################################################################################################################
-FROM deploy-ap-frontend as deploy-production-frontend
-COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/nginx/html/robots.txt
+FROM deploy-frontend as deploy-production-frontend
+COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
 ########################################################################################################################
 ########################################################################################################################
-# Bff Web server image (Acceptance, Production)
+# Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM node:current-buster as deploy-ap-bff
+FROM updated-buster-local as deploy-bff
+
+WORKDIR /app
+
+ARG MA_OTAP_ENV=production
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ARG MA_BUILD_ID=0
+ENV MA_BUILD_ID=$MA_BUILD_ID
+
+ARG MA_GIT_SHA=-1
+ENV MA_GIT_SHA=$MA_GIT_SHA
+
+# Tell node to use the OpenSSL (OS installed) Certificates
+ENV NODE_OPTIONS=--use-openssl-ca
 
 # Copy certificate
 COPY ca/* /usr/local/share/ca-certificates/extras/
@@ -118,25 +144,27 @@ COPY ca/* /usr/local/share/ca-certificates/extras/
 RUN chmod -R 644 /usr/local/share/ca-certificates/extras/ \
   && update-ca-certificates
 
-ENV MA_OTAP_ENV=production
-ENV TZ=Europe/Amsterdam
-ENV NODE_OPTIONS=--use-openssl-ca
-
-LABEL name="mijnamsterdam BFF (Back-end for front-end)"
-LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
-
-WORKDIR /app
+# Entrypoint
+COPY scripts/docker-entrypoint-bff.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 
 # Copy the built application files to the current image
-COPY --from=build-bff /app/build-bff /app/build-bff
-COPY --from=build-deps /app/src/server/views /app/build-bff/server/views
-
-# Copy required node modules
-COPY --from=build-bff /app/node_modules /app/node_modules
-COPY --from=build-bff /app/package.json /app/package.json
-
-# RUN apt-get update \
-#   && apt-get install nano
+COPY --from=build-app-bff /build-space/build-bff /app/build-bff
+COPY --from=build-app-bff /build-space/node_modules /app/node_modules
+COPY --from=build-app-bff /build-space/package.json /app/package.json
+COPY src/server/views /app/build-bff/server/views
 
 # Run the app
-ENTRYPOINT npm run bff-api:serve-build
+CMD /usr/local/bin/docker-entrypoint-bff.sh
+
+FROM deploy-bff as deploy-bff-az
+
+# ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
+ENV SSH_PASSWD "root:Docker!"
+
+RUN apt-get install -y --no-install-recommends openssh-server \
+  && echo "$SSH_PASSWD" | chpasswd
+
+# SSH config
+COPY conf/sshd_config /etc/ssh/
+COPY files /app/files

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
-import { IS_AP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -163,15 +163,16 @@ function transformFooterResponse(responseData: any) {
 
 const fileCache = new FileCache({
   name: 'cms-content',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
 async function getGeneralPage(
   requestID: requestID,
-  profileType: ProfileType = 'private'
+  profileType: ProfileType = 'private',
+  forceRenew: boolean = false
 ) {
   const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
-  if (apiData) {
+  if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
   }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
@@ -213,9 +214,9 @@ async function getGeneralPage(
     });
 }
 
-async function getFooter(requestID: requestID) {
+async function getFooter(requestID: requestID, forceRenew: boolean = false) {
   const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
-  if (apiData) {
+  if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
   }
   return requestData<CMSFooterContent>(
@@ -248,12 +249,15 @@ export async function fetchCMSCONTENT(
   requestID: requestID,
   query?: Record<string, string>
 ) {
+  const forceRenew = !!(query?.forceRenew === 'true');
+
   const generalInfoPageRequest = getGeneralPage(
     requestID,
-    query?.profileType as ProfileType
+    query?.profileType as ProfileType,
+    forceRenew
   );
 
-  const footerInfoPageRequest = getFooter(requestID);
+  const footerInfoPageRequest = getFooter(requestID, forceRenew);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>
@@ -274,7 +278,7 @@ export async function fetchCMSCONTENT(
 
 const searchFileCache = new FileCache({
   name: 'search-config',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
 export async function fetchSearchConfig(
@@ -283,13 +287,13 @@ export async function fetchSearchConfig(
 ) {
   const config = searchFileCache.getKey('CONFIG');
 
-  if (IS_AP && config?.content && query?.cache !== 'renew') {
+  if (IS_TAP && config?.content && query?.cache !== 'renew') {
     return Promise.resolve(config);
   }
 
   let dataRequest;
 
-  if (!IS_AP) {
+  if (!IS_TAP) {
     dataRequest = new Promise((resolve, reject) => {
       fs.readFile(
         path.join(

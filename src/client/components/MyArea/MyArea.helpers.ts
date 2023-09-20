@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { LatLngBounds, LatLngBoundsLiteral } from 'leaflet';
 import type { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
 
 // Code taken from https://github.com/yagoferrer/marker-spider/blob/master/lib/oms.coffee
@@ -103,4 +103,13 @@ export function processFeatures(map: L.Map, features: MaSuperClusterFeature[]) {
   }
 
   return markersFinal;
+}
+
+export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
+  const southWest = bounds.getSouthWest();
+  const northEast = bounds.getNorthEast();
+  return [
+    [southWest.lat, southWest.lng],
+    [northEast.lat, northEast.lng],
+  ];
 }

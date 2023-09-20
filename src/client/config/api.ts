@@ -1,13 +1,10 @@
-import { IS_ACCEPTANCE } from '../../universal/config/env';
+import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
 
-const baseUrl =
-  import.meta.env.REACT_APP_BFF_API_URL ||
-  `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/api/v1`;
-
-export const BFF_API_BASE_URL = baseUrl || '/api/v1';
+export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
+export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 
 export const BFFApiUrls = {
   BRP_RESIDENTS_API_URL: `${BFF_API_BASE_URL}/relay/brp/aantal_bewoners`,
@@ -21,19 +18,13 @@ export const BFFApiUrls = {
 };
 
 // Urls directly used from front-end
-export const AUTH_PATH = import.meta.env.REACT_APP_BFF_AUTH_PATH || '/auth';
-export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL + AUTH_PATH}/digid/login`;
-export const LOGIN_URL_EHERKENNING = `${
-  BFF_API_BASE_URL + AUTH_PATH
-}/eherkenning/login`;
-export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL + AUTH_PATH}/yivi/login`;
-
-export const LOGOUT_URL = `${BFF_API_BASE_URL + AUTH_PATH}/logout`;
-
-export const AUTH_API_URL = `${BFF_API_BASE_URL + AUTH_PATH}/check`;
+export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
+export const LOGIN_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/login`;
+export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL}/auth/yivi/login`;
+export const LOGOUT_URL = `${BFF_API_BASE_URL}/auth/logout`;
+export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
 export const AUTH_API_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/check`;
 export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/check`;
-
 export const AUTH_API_URL_EHERKENNING_SSO_CHECK = `${BFF_API_BASE_URL}/auth/eherkenning/sso?checkAuthenticated=1`;
 export const AUTH_API_URL_DIGID_SSO_CHECK = `${BFF_API_BASE_URL}/auth/digid/sso?checkAuthenticated=1`;
 

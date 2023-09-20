@@ -59,10 +59,6 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
-  AKTES: apiPristineResult([], {
-    isActive: FeatureToggle.aktesActive,
-    profileTypes: ['private'],
-  }),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],

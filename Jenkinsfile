@@ -9,19 +9,31 @@ pipeline {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "docker-registry.secure.amsterdam.nl/mijnams/mijnamsterdam"
+    IMAGE_TEST = "${IMAGE_BASE}:test"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}-bff:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}-bff:production"
-    IMAGE_TEST = "${IMAGE_BASE}:test"
 
     // Client-side data. Not secret.
+    // Will be deprecated when we move to AZ.
+    MA_FRONTEND_URL_ACC = "https://acc.mijn.amsterdam.nl"
+    MA_FRONTEND_URL_PROD = "https://mijn.amsterdam.nl"
+
+    MA_FRONTEND_HOST_ACC = "acc.mijn.amsterdam.nl"
+    MA_FRONTEND_HOST_PROD = "mijn.amsterdam.nl"
+
+    REACT_APP_BFF_API_URL_ACC = "https://acc.mijn-bff.amsterdam.nl/api/v1"
+    REACT_APP_BFF_API_URL_PROD = "https://mijn-bff.amsterdam.nl/api/v1"
+
     REACT_APP_SENTRY_DSN = "https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13"
     REACT_APP_ANALYTICS_ID_ACC = "e63312c0-0efe-4c4f-bba1-3ca1f05374a8"
     REACT_APP_ANALYTICS_ID_PROD = "f558164e-e388-49e0-864e-5f172552789c"
   }
 
   stages {
+
+    // RUN TESTS
 
     stage('Unit tests') {
       when {
@@ -37,50 +49,14 @@ pipeline {
       options {
         timeout(time: 9, unit: 'MINUTES')
       }
-      environment {
-        PROJECT = "${PROJECT_PREFIX}unit"
-      }
       steps {
         script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
-      }
-      post {
-        always {
-          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-        }
-      }
-    }
-
-    // TEST
-
-    stage('Build TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 30, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_TEST} " +
+           "--target=build-deps " +
            "--shm-size 1G " +
-           "--build-arg MA_OTAP_ENV=development " +
-           "--target=serve-ot-bff " +
            "."
-        sh "docker push ${IMAGE_TEST}"
-      }
-    }
-
-    stage('Deploy TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER}" }
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
-        ]
+        sh "docker run ${IMAGE_TEST} npm test"
+        sh "docker run ${IMAGE_TEST} npm run bff-api:test"
       }
     }
 
@@ -103,7 +79,11 @@ pipeline {
         script { currentBuild.displayName = "ACC Build BFF #${BUILD_NUMBER}" }
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
-           "--target=deploy-ap-bff " +
+           "--target=deploy-bff " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_ACC} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=acceptance " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
@@ -150,9 +130,11 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
-           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
-           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_ACC} " +
-           "--target=deploy-acceptance-frontend " +
+           "--build-arg MA_FRONTEND_HOST=${MA_FRONTEND_HOST_ACC} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
+           "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
@@ -192,18 +174,26 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
+
+        // Build the FE production image
         sh "docker build -t ${IMAGE_PRODUCTION} " +
-           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
-           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_PROD} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=production " +
            "--target=deploy-production-frontend " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION}"
 
         // Build the BFF production image
-        // TODO: Pull ACC image, re tag and set ENV RUN variables
         sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-           "--target=deploy-ap-bff " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg MA_OTAP_ENV=production " +
+           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_PROD} " +
+           "--target=deploy-bff " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION_BFF}"
@@ -243,6 +233,7 @@ pipeline {
           [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
         ]
 
+        // Build the FE
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
@@ -255,15 +246,6 @@ pipeline {
   post {
     success {
       echo 'Pipeline success'
-    }
-
-    failure {
-      echo 'Something went wrong while running pipeline'
-      slackSend(
-        channel: 'ci-channel',
-        color: 'danger',
-        message: "${JOB_NAME}: failure ${BUILD_URL}"
-      )
     }
   }
 }

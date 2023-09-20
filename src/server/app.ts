@@ -1,15 +1,19 @@
 /* eslint-disable import/first */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
+import {
+  IS_AP,
+  IS_DEVELOPMENT,
+  IS_OT,
+  OTAP_ENV,
+} from '../universal/config/env';
 
-import { ENV, IS_AP } from '../universal/config/env';
-const isDevelopment = ENV === 'development';
-const ENV_FILE = `.env${isDevelopment ? '.local' : '.production'}`;
-
-const envConfig = dotenv.config({ path: ENV_FILE });
-dotenvExpand.expand(envConfig);
-
-console.log('using env', ENV_FILE);
+if (IS_DEVELOPMENT) {
+  const ENV_FILE = '.env.local';
+  console.debug(`trying env file ${ENV_FILE}`);
+  const envConfig = dotenv.config({ path: ENV_FILE });
+  dotenvExpand.expand(envConfig);
+}
 
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
@@ -29,31 +33,30 @@ import morgan from 'morgan';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
-  BffEndpoints,
   corsOptions,
   securityHeaders,
+  RELEASE_VERSION,
+  BffEndpoints,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
-import { router as authRouter } from './router-auth';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
+import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: process.env.BFF_SENTRY_DSN,
-  environment: ENV,
-  debug: isDevelopment,
+  environment: OTAP_ENV,
+  debug: IS_DEVELOPMENT,
   autoSessionTracking: false,
   beforeSend(event, hint) {
-    if (!process.env.BFF_SENTRY_DSN && isDevelopment) {
+    if (IS_DEVELOPMENT) {
       console.log(hint);
-    }
-    if (!process.env.BFF_SENTRY_DSN) {
       return null;
     }
     return event;
   },
-  release: `mijnamsterdam-bff@${process.env.npm_package_version}`,
+  release: RELEASE_VERSION,
 };
 
 Sentry.init(sentryOptions);
@@ -65,11 +68,11 @@ app.disable('x-powered-by');
 
 const viewDir = __dirname.split('/').slice(-2, -1);
 
+// Set-up view engine voor SSR
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
 // set up rate limiter: maximum of five requests per minute
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -80,8 +83,16 @@ const limiter = rateLimit({
 // apply rate limiter to all requests
 app.use(limiter);
 
-// Logging
-app.use(morgan('combined'));
+// Request logging
+morgan.token('build', function (req, res) {
+  return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
+});
+
+app.use(
+  morgan(
+    '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+  )
+);
 
 // Json body parsing
 app.use(express.json());
@@ -94,6 +105,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(compression());
 
+// Generate request id
 app.use(requestID);
 
 app.use((req, res, next) => {
@@ -110,25 +122,39 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get(
-  BffEndpoints.STATUS_HEALTH,
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.json({ status: 'OK' });
-  }
-);
+////////////////////////////////////////////////////////////////////////
+///// [ACCEPTANCE - PRODUCTION]
+///// Public routes Voor Test - Acceptance - Development
+////////////////////////////////////////////////////////////////////////
+if (IS_AP && !IS_OT) {
+  app.use(oidcRouter);
+}
 
-// Public routes
-app.use(authRouter);
 app.use(BFF_BASE_PATH, publicRouter);
 
-// Development routing for mock data
-if (!IS_AP) {
+// Legacy health check. TODO: Remove after migration to az is complete.
+app.get(BffEndpoints.STATUS_HEALTH2, (_req, res) => {
+  return res.redirect(`/api/v1${BffEndpoints.STATUS_HEALTH}`);
+});
+
+////////////////////////////////////////////////////////////////////////
+///// [DEVELOPMENT - TEST]
+///// Development routing for mock data
+////////////////////////////////////////////////////////////////////////
+if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
   app.use(relayDevRouter);
 }
 
+////////////////////////////////////////////////////////////////////////
+///// Generic Router Method for All environments
+////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
+
+app.get(BffEndpoints.ROOT, (req, res) => {
+  return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
+});
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 
@@ -139,7 +165,7 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  return res.redirect(`${process.env.BFF_FRONTEND_URL}/server-error-500`);
+  return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
 });
 
 app.use((req: Request, res: Response) => {
@@ -152,7 +178,7 @@ app.use((req: Request, res: Response) => {
 
 const server = app.listen(BFF_PORT, () => {
   console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDevelopment}]`
+    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
   );
 });
 

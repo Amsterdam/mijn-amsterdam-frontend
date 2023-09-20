@@ -1,4 +1,4 @@
-import { AanbiedenDiensten as AanbiedenDienstenVergunning } from '../../../server/services';
+import type { AanbiedenDiensten as AanbiedenDienstenVergunning } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';

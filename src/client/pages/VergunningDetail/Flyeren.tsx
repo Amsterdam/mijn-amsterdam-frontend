@@ -1,4 +1,4 @@
-import { Flyeren as FlyerenVergunning } from '../../../server/services';
+import type { Flyeren as FlyerenVergunning } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';

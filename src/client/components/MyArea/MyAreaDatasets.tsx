@@ -6,15 +6,15 @@ import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import type {
   MaPointFeature,
-  MaPolylineFeature,
+  MaPolylineFeature
 } from '../../../server/services/buurt/datasets';
-import { toBoundLiteral } from '../../../server/services/buurt/helpers';
 import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
-  DatasetId,
+  DatasetId
 } from '../../../universal/config/myarea-datasets';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
+import { toBoundLiteral } from './MyArea.helpers';
 import {
   getQueryConfig,
   useActiveDatasetFilters,
@@ -23,7 +23,7 @@ import {
   useFetchFeatures,
   useLoadingFeature,
   useOnMarkerClick,
-  useSelectedFeatureCSS,
+  useSelectedFeatureCSS
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';

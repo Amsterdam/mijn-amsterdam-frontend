@@ -1,10 +1,10 @@
 import fs from 'fs';
 import jose from 'node-jose';
-import { Chapters, IS_AP } from '../../../universal/config';
+import { Chapters, IS_TAP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchTipsAndNotifications, fetchService } from './api-service';
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -16,17 +16,19 @@ const DEV_KEY = {
 
 const keystore = jose.JWK.createKeyStore();
 let certContent = '';
-let path = process.env.BFF_CLEOPATRA_PUB_KEY;
+let path =
+  process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT ||
+  process.env.BFF_CLEOPATRA_PUB_KEY; // TODO: Leacy, remove after AZ migration
 
 try {
-  if (IS_AP && path) {
+  if (IS_TAP && path) {
     // NOTE: TEMP Fix for wrong certificate location
     certContent = fs.readFileSync(path).toString();
   }
 } catch (error) {}
 
 const pemPubKey =
-  !IS_AP || !certContent
+  !IS_TAP || !certContent
     ? keystore.add(DEV_KEY, 'json')
     : keystore.add(certContent, 'pem');
 

@@ -1,0 +1,69 @@
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: MamsInfra
+      type: git
+      name: MijnAmsterdam/mijn-amsterdam-infra
+      ref: refs/heads/pipeline-fe
+
+parameters:
+  - name: btdBuild
+    type: boolean
+    default: true
+  - name: btdTest
+    type: boolean
+    default: true
+  - name: btdDeploy
+    type: boolean
+    default: true
+
+  - name: dtapName
+    type: string
+    default: none
+    values:
+      - none
+      - o
+      - t
+      # - a
+      # - p
+
+  - name: updateAppSettings
+    type: boolean
+    default: false
+
+  - name: btdAppBFF
+    type: boolean
+    default: true
+  - name: btdAppUI
+    type: boolean
+    default: true
+
+variables:
+  - ${{ if and(eq(variables['Build.SourceBranchName'], 'ontwikkelen'), eq(parameters.dtapName, 'none')) }}:
+      - name: dtapName
+        value: o
+  - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
+      - name: dtapName
+        value: t
+  - ${{ if ne(parameters.dtapName, 'none') }}:
+      - name: dtapName
+        value: ${{ parameters.dtapName }}
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: false
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: ${{ parameters.btdDeploy }}
+
+jobs:
+  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
+    parameters:
+      dtapName: ${{ variables.dtapName }}
+      btdBuild: ${{ parameters.btdBuild }}
+      btdTest: ${{ parameters.btdTest }}
+      btdDeploy: ${{ variables.btdDeploy }}
+      btdAppBFF: ${{ parameters.btdAppBFF }}
+      btdAppUI: ${{ parameters.btdAppUI }}
+      updateAppSettings: ${{ parameters.updateAppSettings }}

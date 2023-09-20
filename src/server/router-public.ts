@@ -1,7 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { DATASETS, getDatasetCategoryId } from '../universal/config';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers';
-import { BffEndpoints } from './config';
+import basicAuth from 'express-basic-auth';
+import {
+  DATASETS,
+  IS_OT,
+  OTAP_ENV,
+  getDatasetCategoryId,
+} from '../universal/config';
+import { ApiResponse, apiSuccessResult, jsonCopy } from '../universal/helpers';
+import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import {
@@ -15,7 +21,6 @@ import {
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 import { loginStats } from './services/visitors';
-import basicAuth from 'express-basic-auth';
 
 export const router = express.Router();
 
@@ -149,3 +154,16 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     loginStats
   );
 }
+
+router.get(
+  [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
+  (req: Request, res: Response, next: NextFunction) => {
+    return res.json({
+      status: 'OK',
+      otapEnv: OTAP_ENV,
+      release: RELEASE_VERSION,
+      gitSha: process.env.MA_GIT_SHA ?? '-1',
+      buildId: process.env.MA_BUILD_ID ?? '-1',
+    });
+  }
+);

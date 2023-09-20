@@ -20,7 +20,6 @@ export const FeatureToggle = {
   siaActive: true,
   siaApiActive: true,
   yiviActive: true,
-  aktesActive: !IS_AP,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
