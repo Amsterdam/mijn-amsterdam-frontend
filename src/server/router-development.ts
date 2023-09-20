@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 import path from 'path';
 import { testAccounts } from '../universal/config/auth.development';
-import { apiSuccessResult } from '../universal/helpers';
+import { apiSuccessResult, getSettledResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -22,14 +22,16 @@ import {
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
+import axios from 'axios';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
   DEV_LOGOUT: '/api/v1/auth/logout',
   DEV_AUTH_CHECK: '/api/v1/auth/check',
+  DEV_TEST_ACCOUNTS_SEARCH: '/api/v1/testaccounts/search',
 };
 
-const PREDEFINED_REDIRECT_URLS = ['/api/v1/services/all'];
+const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];
 
 export const authRouterDevelopment = express.Router();
 
@@ -64,9 +66,16 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
+    const isValidRedirectOption = PREDEFINED_REDIRECT_URLS.includes(
+      String(req.query.redirectUrl)
+    );
+
+    if (isValidRedirectOption && req.query.redirectUrl === 'noredirect') {
+      return res.send('ok');
+    }
+
     let redirectUrl =
-      req.query.redirectUrl &&
-      PREDEFINED_REDIRECT_URLS.includes(String(req.query.redirectUrl))
+      req.query.redirectUrl && isValidRedirectOption
         ? String(req.query.redirectUrl)
         : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
@@ -77,6 +86,45 @@ authRouterDevelopment.get(
     }
 
     return res.redirect(redirectUrl);
+  }
+);
+
+authRouterDevelopment.get(
+  DevelopmentRoutes.DEV_TEST_ACCOUNTS_SEARCH,
+  async (req, res) => {
+    const queries = [];
+    const testAccountEntries = Object.entries(testAccounts);
+
+    for (const [userName, userId] of testAccountEntries) {
+      const url = `${process.env.BFF_API_BASE_URL}/api/v1/auth/digid/login/${userName}?redirectUrl=noredirect`;
+
+      queries.push(
+        axios.get(url).then((r) => {
+          const Cookie = r.headers['set-cookie']?.[0].toString() ?? '';
+          return axios
+            .get(`${process.env.BFF_API_BASE_URL}/api/v1/services/all`, {
+              headers: {
+                Cookie,
+              },
+            })
+            .then((r) => r.data);
+        })
+      );
+    }
+
+    Promise.allSettled(queries).then((settledResults) => {
+      const accounts = settledResults.map((settledResult, index) => {
+        const queryResult = getSettledResult(settledResult);
+        return {
+          name: testAccountEntries[index][0],
+          id: testAccountEntries[index][1],
+          data: JSON.stringify(queryResult, null, '  '),
+        };
+      });
+      return res.render('test-account-search', {
+        accounts,
+      });
+    });
   }
 );
 

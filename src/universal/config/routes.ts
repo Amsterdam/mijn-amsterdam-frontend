@@ -59,6 +59,7 @@ export const AppRoutes = {
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
   'BODEM/LOOD_METING': '/lood-meting/:id',
+  DATASEARCH: '/data-search',
 } as const;
 
 export const AppRoutesRedirect = [
