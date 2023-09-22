@@ -103,7 +103,7 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
             </div>
           </li>
           <li
-            class="_ListItem_a12ff2"
+            class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
           >
             <div
               class="_ListItemInner_a12ff2"
@@ -113,10 +113,10 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
                 class="_StatusConnection_a12ff2"
               >
                 <span
-                  class="_ConnectLine_a12ff2 _ConnectLine--end-checked_a12ff2"
+                  class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
                 />
                 <span
-                  class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                  class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
                 />
               </div>
               <div
@@ -248,7 +248,7 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
           </div>
         </li>
         <li
-          class="_ListItem_a12ff2"
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -258,10 +258,10 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-checked_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
