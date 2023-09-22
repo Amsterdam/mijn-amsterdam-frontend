@@ -22,7 +22,7 @@ const statussen = [
 describe('BezwarenStatusLines', () => {
   it('should render the right snapshot when status is received', () => {
     expect(
-      render(<BezwarenStatusLines id="1" statussen={statussen} />)
+      render(<BezwarenStatusLines id="1" statussen={statussen} />).asFragment()
     ).toMatchSnapshot();
   });
 
@@ -33,7 +33,7 @@ describe('BezwarenStatusLines', () => {
     modStatus[1].datum = '2023-04-02T10:00:00+02:00';
 
     expect(
-      render(<BezwarenStatusLines id="1" statussen={modStatus} />)
+      render(<BezwarenStatusLines id="1" statussen={modStatus} />).asFragment()
     ).toMatchSnapshot();
   });
 
@@ -46,7 +46,7 @@ describe('BezwarenStatusLines', () => {
     modStatus[2].datum = '2023-04-05T10:00:00+02:00';
 
     expect(
-      render(<BezwarenStatusLines id="1" statussen={modStatus} />)
+      render(<BezwarenStatusLines id="1" statussen={modStatus} />).asFragment()
     ).toMatchSnapshot();
   });
 });
