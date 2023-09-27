@@ -115,7 +115,7 @@ export function trackPageViewWithCustomDimension(
   thema?: string
 ) {
   const dimensions = [profileTypeDimension(profileType)];
-  
+
   if (userCity) {
     dimensions.push(userCityDimension(userCity));
   }
@@ -148,4 +148,27 @@ export function trackItemClick(
   profileType: ProfileType
 ) {
   return trackLink(url, linkTitle, [profileTypeDimension(profileType)]);
+}
+
+export function trackDownload(
+  downloadKind: string,
+  documentKind: string,
+  downloadUrl: string,
+  profileType: ProfileType,
+  userCity: string,
+  thema: string
+) {
+  return (
+    PiwikInstance &&
+    PiwikInstance.trackDownload({
+      downloadKind,
+      documentKind,
+      downloadUrl,
+      customDimension: [
+        profileTypeDimension(profileType),
+        userCityDimension(userCity),
+        maThema(thema),
+      ],
+    })
+  );
 }

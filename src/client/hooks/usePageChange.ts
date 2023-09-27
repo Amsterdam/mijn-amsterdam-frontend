@@ -4,7 +4,6 @@ import { matchPath, useLocation } from 'react-router-dom';
 import {
   AppRoute,
   AppRoutes,
-  ChapterTitles,
   CustomTrackingUrls,
   DocumentTitles,
   NOT_FOUND_TITLE,
@@ -16,6 +15,7 @@ import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
+import { getCurrentThema } from './useThema';
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
@@ -72,10 +72,7 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
-    const thema =
-      Object.values(ChapterTitles).find((t) => {
-        return documentTitle.includes(t);
-      }) ?? 'Mijn Amsterdam algemeen';
+    const thema = getCurrentThema(documentTitle);
 
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;

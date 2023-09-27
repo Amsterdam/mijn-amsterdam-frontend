@@ -4,12 +4,16 @@ import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { trackPageViewWithCustomDimension } from '../../hooks/analytics.hook';
+import {
+  trackDownload,
+  trackPageViewWithCustomDimension,
+} from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
 import Linkd from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './DocumentList.module.scss';
+import useThema from '../../hooks/useThema';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -52,6 +56,7 @@ export function DocumentLink({
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
+  const thema = useThema();
 
   const onClickDocumentLink = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -86,11 +91,21 @@ export function DocumentLink({
               addFileType(`/downloads/${document.download || document.title}`);
 
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackPageViewWithCustomDimension(
-            document.title,
+          // trackPageViewWithCustomDimension(
+          //   document.title,
+          //   trackingUrl,
+          //   profileType,
+          //   userCity ?? ''
+          // );
+
+          //downloadKind, documentKind,downloadUrl
+          trackDownload(
+            'downloadKind',
+            'pdf',
             trackingUrl,
             profileType,
-            userCity ?? ''
+            userCity ?? '',
+            thema
           );
 
           if (!blob) {
