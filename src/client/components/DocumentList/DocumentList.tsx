@@ -90,18 +90,12 @@ export function DocumentLink({
             : window.location.pathname +
               addFileType(`/downloads/${document.download || document.title}`);
 
-          // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          // trackPageViewWithCustomDimension(
-          //   document.title,
-          //   trackingUrl,
-          //   profileType,
-          //   userCity ?? ''
-          // );
+          const splitUrl = trackingUrl.split('.');
+          const fileType = splitUrl[splitUrl.length - 1];
 
-          //downloadKind, documentKind,downloadUrl
           trackDownload(
-            'downloadKind',
-            'pdf',
+            document.title,
+            fileType,
             trackingUrl,
             profileType,
             userCity ?? '',
