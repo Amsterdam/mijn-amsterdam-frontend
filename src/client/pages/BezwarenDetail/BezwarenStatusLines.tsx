@@ -4,7 +4,8 @@ import { StatusLine } from '../../components';
 
 function transformBezwaarStatusToStatusLines(statussen: BezwaarStatus[]) {
   const index = statussen.findIndex((s) => s.uuid === EMPTY_UUID);
-  const activeIndex = index === -1 || index === 0 ? 0 : index - 1;
+  const activeIndex =
+    index > 0 ? index - 1 : index === 0 ? index : statussen.length - 1;
 
   return statussen.map((status, index) => ({
     id: status.statustoelichting,
