@@ -6,7 +6,6 @@ console.debug(`trying env file ${ENV_FILE}`);
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
-// import axios from 'axios';
 import jsonpath from 'jsonpath';
 import * as XLSX from 'xlsx';
 
@@ -34,8 +33,12 @@ import { ServiceResults } from './server/services/tips/tip-types';
 import { Chapter } from './universal/config';
 import { testAccounts } from './universal/config/auth.development';
 
+type ScriptArgs = string[];
+const [targetDirectory = '.', useDisk = '']: ScriptArgs = process.argv.slice(2);
+
 XLSX.set_fs(fs);
 
+const fromDisk = !!useDisk;
 const testAccountEntries = Object.entries(testAccounts);
 
 async function getServiceResults(
@@ -43,7 +46,7 @@ async function getServiceResults(
 ): Promise<Record<string, ServiceResults>> {
   if (fromDisk) {
     const data = JSON.parse(
-      fs.readFileSync('./user-data.json', 'utf8').toString()
+      fs.readFileSync(targetDirectory + '/user-data.json', 'utf8').toString()
     );
     return data;
   }
@@ -60,12 +63,7 @@ async function getServiceResults(
           headers: {
             Cookie,
           },
-        }).then(
-          (r) => r.json(),
-          (err) => {
-            console.error(err);
-          }
-        );
+        }).then((r) => r.json());
       });
       allResults[Username] = serviceResults;
     } catch (error) {
@@ -557,14 +555,17 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-const fromDisk: boolean = false;
-
 getServiceResults(fromDisk).then((resultsByUser) => {
   if (!fromDisk) {
-    fs.writeFileSync('./user-data.json', JSON.stringify(resultsByUser));
+    fs.writeFileSync(
+      targetDirectory + '/user-data.json',
+      JSON.stringify(resultsByUser)
+    );
   }
 
-  const fileName = `Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
+  const fileName =
+    targetDirectory +
+    `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
   const workbook = XLSX.utils.book_new();
 
   addSheets(workbook, [
