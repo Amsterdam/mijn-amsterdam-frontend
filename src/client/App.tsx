@@ -112,8 +112,6 @@ const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
 const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
 
-const DataSearch = lazy(() => import('./pages/DataSearch/DataSearch'));
-
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
   usePageChange(false);
@@ -244,7 +242,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
-          <Route path={AppRoutes.DATASEARCH} component={DataSearch} />
           <Route
             path={AppRoutes['STADSPAS/AANVRAAG']}
             component={StadspasAanvraagDetail}

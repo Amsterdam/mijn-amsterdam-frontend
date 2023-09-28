@@ -182,5 +182,4 @@ export const DocumentTitles: {
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
-  [AppRoutes.DATASEARCH]: 'Data search | Mijn Amsterdam',
 };
