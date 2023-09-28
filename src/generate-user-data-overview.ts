@@ -576,7 +576,3 @@ getServiceResults(fromDisk).then((resultsByUser) => {
 
   XLSX.writeFile(workbook, fileName, { compression: true });
 });
-
-// console.log(getRows(getRowValues({ BRP } as AppState)));
-
-// generate();
