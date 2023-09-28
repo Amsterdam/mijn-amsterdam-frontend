@@ -56,7 +56,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -69,7 +69,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -83,7 +83,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -102,7 +102,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Document
         </h3>
@@ -147,7 +147,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -345,7 +345,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -358,7 +358,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -372,7 +372,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -392,7 +392,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -590,7 +590,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -603,7 +603,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -617,7 +617,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -637,7 +637,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading-4 _ListHeading_a12ff2"
+        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -825,7 +825,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Lood in bodem-check
         </h2>
