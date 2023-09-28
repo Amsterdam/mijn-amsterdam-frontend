@@ -58,12 +58,15 @@ async function getServiceResults(
     try {
       const serviceResults = await fetch(url).then((r) => {
         const Cookie = r.headers.get('Set-Cookie') ?? '';
-
+        console.time(`Fetch data for ${Username}/${userId}`);
         return fetch(`${process.env.BFF_API_BASE_URL}/api/v1/services/all`, {
           headers: {
             Cookie,
           },
-        }).then((r) => r.json());
+        }).then((r) => {
+          console.timeEnd(`Fetch data for ${Username}/${userId}`);
+          return r.json();
+        });
       });
       allResults[Username] = serviceResults;
     } catch (error) {

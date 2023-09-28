@@ -119,16 +119,15 @@ function getServiceResults(fromDisk = false) {
             (_a = r.headers.get('Set-Cookie')) !== null && _a !== void 0
               ? _a
               : '';
+          console.time(`Fetch data for ${Username}/${userId}`);
           return fetch(`${process.env.BFF_API_BASE_URL}/api/v1/services/all`, {
             headers: {
               Cookie,
             },
-          }).then(
-            (r) => r.json(),
-            (err) => {
-              console.error(err);
-            }
-          );
+          }).then((r) => {
+            console.timeEnd(`Fetch data for ${Username}/${userId}`);
+            return r.json();
+          });
         });
         allResults[Username] = serviceResults;
       } catch (error) {
