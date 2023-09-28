@@ -2,7 +2,7 @@ import { ChapterMenuItem } from '../config/menuItems';
 import {
   getChapterMenuItemsAppState,
   isChapterActive,
-} from './useChapters.helpers';
+} from '../../universal/helpers/chapters';
 
 describe('useChapters', () => {
   test('isChapterActive (No AppState Value)', () => {

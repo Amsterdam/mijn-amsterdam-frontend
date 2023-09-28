@@ -26,11 +26,10 @@ import {
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { AppState } from '../client/AppState';
-import { chaptersByProfileType } from '../client/config/menuItems';
-import { isChapterActive } from '../client/hooks/useChapters.helpers';
+import type { AppState } from '../client/AppState';
+import { isChapterActive } from '../universal/helpers/chapters';
 import { ServiceResults } from './services/tips/tip-types';
-import { Chapter } from '../universal/config';
+import { Chapter, myChaptersMenuItems } from '../universal/config';
 import { testAccounts } from '../universal/config/auth.development';
 
 XLSX.set_fs(fs);
@@ -294,12 +293,14 @@ const paths: PathObj[] = [
   return p;
 });
 
-const chaptersAvailable = chaptersByProfileType.private.map(
-  (menuItem) => menuItem.id
+const chapterMenuItems = myChaptersMenuItems.filter((item) =>
+  item.profileTypes.includes('private')
 );
 
+const chaptersAvailable = chapterMenuItems.map((menuItem) => menuItem.id);
+
 function getUserChapters(serviceResults: ServiceResults) {
-  const chapterItems = chaptersByProfileType.private;
+  const chapterItems = chapterMenuItems;
   const items = chapterItems.filter((item) => {
     // Check to see if Chapter has been loaded or if it is directly available
     return (

@@ -6,7 +6,7 @@ import { useProfileTypeValue } from './useProfileType';
 import {
   getChapterMenuItemsAppState,
   isChapterActive,
-} from './useChapters.helpers';
+} from '../../universal/helpers/chapters';
 
 export interface ChaptersState {
   items: ChapterMenuItem[];
