@@ -1,3 +1,5 @@
+name: $(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
 trigger:
   batch: true
   branches:
