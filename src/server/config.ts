@@ -370,6 +370,7 @@ export const BffEndpoints = {
   LOGIN_STATS: '/status/logins/:authMethod?',
   STATUS_HEALTH: '/status/health',
   STATUS_HEALTH2: '/bff/status/health',
+  USER_DATA_OVERVIEW: '/status/user-data-overview',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 

@@ -15,34 +15,31 @@ import {
   dateFormat,
   defaultDateFormat,
   getFullAddress,
-} from './universal/helpers';
+} from '../universal/helpers';
 import {
   Adres,
   Kind,
   MyNotification,
   Persoon,
   Verbintenis,
-} from './universal/types';
+} from '../universal/types';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { AppState } from './client/AppState';
-import { chaptersByProfileType } from './client/config/menuItems';
-import { isChapterActive } from './client/hooks/useChapters.helpers';
-import { ServiceResults } from './server/services/tips/tip-types';
-import { Chapter } from './universal/config';
-import { testAccounts } from './universal/config/auth.development';
-
-type ScriptArgs = string[];
-const [targetDirectory = '.', useDisk = '']: ScriptArgs = process.argv.slice(2);
+import { AppState } from '../client/AppState';
+import { chaptersByProfileType } from '../client/config/menuItems';
+import { isChapterActive } from '../client/hooks/useChapters.helpers';
+import { ServiceResults } from './services/tips/tip-types';
+import { Chapter } from '../universal/config';
+import { testAccounts } from '../universal/config/auth.development';
 
 XLSX.set_fs(fs);
 
-const fromDisk = !!useDisk;
 const testAccountEntries = Object.entries(testAccounts);
 
 async function getServiceResults(
-  fromDisk: boolean = false
+  fromDisk: boolean = false,
+  targetDirectory: string
 ): Promise<Record<string, ServiceResults>> {
   if (fromDisk) {
     const data = JSON.parse(
@@ -558,25 +555,32 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-getServiceResults(fromDisk).then((resultsByUser) => {
-  if (!fromDisk) {
-    fs.writeFileSync(
-      targetDirectory + '/user-data.json',
-      JSON.stringify(resultsByUser)
-    );
-  }
+export async function generateOverview(
+  fromDisk: boolean,
+  targetDirectory: string
+) {
+  return getServiceResults(fromDisk, targetDirectory).then((resultsByUser) => {
+    if (!fromDisk) {
+      fs.writeFileSync(
+        targetDirectory + '/user-data.json',
+        JSON.stringify(resultsByUser)
+      );
+    }
 
-  const fileName =
-    targetDirectory +
-    `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
-  const workbook = XLSX.utils.book_new();
+    const fileName =
+      targetDirectory +
+      `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
+    const workbook = XLSX.utils.book_new();
 
-  addSheets(workbook, [
-    sheetBrpBase(resultsByUser),
-    sheetChapters(resultsByUser),
-    sheetNotifications(resultsByUser),
-    sheetChapterContent(resultsByUser),
-  ]);
+    addSheets(workbook, [
+      sheetBrpBase(resultsByUser),
+      sheetChapters(resultsByUser),
+      sheetNotifications(resultsByUser),
+      sheetChapterContent(resultsByUser),
+    ]);
 
-  XLSX.writeFile(workbook, fileName, { compression: true });
-});
+    XLSX.writeFile(workbook, fileName, { compression: true });
+
+    return fileName;
+  });
+}

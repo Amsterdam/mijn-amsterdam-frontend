@@ -21,6 +21,7 @@ import {
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 import { loginStats } from './services/visitors';
+import { generateOverview } from './generate-user-data-overview';
 
 export const router = express.Router();
 
@@ -143,16 +144,20 @@ router.get(
 );
 
 if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
-  router.get(
-    BffEndpoints.LOGIN_STATS,
-    basicAuth({
-      users: {
-        admin: process.env.BFF_LOGIN_COUNT_ADMIN_PW,
-      },
-      challenge: true,
-    }),
-    loginStats
-  );
+  const auth = basicAuth({
+    users: {
+      admin: process.env.BFF_LOGIN_COUNT_ADMIN_PW,
+    },
+    challenge: true,
+  });
+  router.get(BffEndpoints.LOGIN_STATS, auth, loginStats);
+  router.get(BffEndpoints.USER_DATA_OVERVIEW, auth, async (req, res) => {
+    generateOverview(req.query.fromCache == '1', `${__dirname}/cache`).then(
+      (fileName) => {
+        res.download(fileName);
+      }
+    );
+  });
 }
 
 router.get(
