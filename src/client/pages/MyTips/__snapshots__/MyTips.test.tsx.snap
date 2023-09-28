@@ -76,7 +76,7 @@ exports[`<MyTips /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Mijn tips
         </h2>
@@ -167,7 +167,7 @@ exports[`<MyTips /> > Matches the Full Page snapshot 1`] = `
                 </div>
               </div>
               <h4
-                class="amsterdam-heading amsterdam-heading-3"
+                class="amsterdam-heading amsterdam-heading--3"
               >
                 Tip!!
               </h4>
@@ -215,7 +215,7 @@ exports[`<MyTips /> > Matches the Full Page snapshot 1`] = `
                 />
               </div>
               <h4
-                class="amsterdam-heading amsterdam-heading-3"
+                class="amsterdam-heading amsterdam-heading--3"
               >
                 Tip2!!
               </h4>
