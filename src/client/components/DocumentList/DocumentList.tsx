@@ -85,8 +85,7 @@ export function DocumentLink({
             : window.location.pathname +
               addFileType(`/downloads/${document.download || document.title}`);
 
-          const splitUrl = trackingUrl.split('.');
-          const fileType = splitUrl[splitUrl.length - 1];
+          const fileType = trackingUrl.split('.').pop();
 
           trackDownload(
             document.title,
