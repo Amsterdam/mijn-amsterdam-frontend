@@ -126,7 +126,7 @@
     "uid-safe": "^2.1.5",
     "use-debounce": "^7.0.1",
     "vite-plugin-svgr": "^3.2.0",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
+    "xlsx": "file:vendor/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
