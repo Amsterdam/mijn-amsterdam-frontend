@@ -27,7 +27,7 @@ WORKDIR /build-space
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
-COPY vendor /build-space/
+COPY vendor /build-space/vendor
 
 # Install the dependencies
 RUN npm ci --prefer-offline --no-audit --progress=false
@@ -153,6 +153,7 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 COPY --from=build-app-bff /build-space/build-bff /app/build-bff
 COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
+COPY --from=build-app-bff /build-space/vendor /app/vendor
 COPY src/server/views /app/build-bff/server/views
 
 # Run the app
