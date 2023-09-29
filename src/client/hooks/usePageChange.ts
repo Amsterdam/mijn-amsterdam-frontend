@@ -15,7 +15,6 @@ import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
-import { getCurrentThema } from './useThema';
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
@@ -72,8 +71,6 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
-    const thema = getCurrentThema(documentTitle);
-
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
     }
@@ -101,8 +98,7 @@ export function usePageChange(isAuthenticated: boolean) {
           getCustomTrackingUrl(location.pathname, tackingConfig) +
             (location.search ?? ''),
           profileType,
-          userCity,
-          thema
+          userCity
         );
       }
     }

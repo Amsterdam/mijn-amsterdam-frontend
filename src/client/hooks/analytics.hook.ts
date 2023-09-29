@@ -7,6 +7,7 @@ import {
   TrackSiteSearchResultClick,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
+import { ChapterTitles } from '../../universal/config';
 
 let PiwikInstance: PiwikTracker;
 
@@ -22,6 +23,8 @@ const PiwikTrackerConfig: UserOptions = {
     active: false,
   },
 };
+
+const DEFAULT_THEMA_VALUE = 'Mijn Amsterdam algemeen';
 
 // See dimension Ids specified in aansluitgids MIJN-5416
 enum CustomDimensionId {
@@ -40,6 +43,16 @@ function userCityDimension(userCity: string) {
 
 function maThema(thema: string) {
   return { id: CustomDimensionId.Thema, value: thema };
+}
+
+export function getDerivedThemaNaamFromDocumentTitle() {
+  let title = typeof document !== undefined ? document.title : '';
+
+  return (
+    Object.values(ChapterTitles).find((t) => {
+      return title.includes(t);
+    }) ?? DEFAULT_THEMA_VALUE
+  );
 }
 
 // Initialize connection with analytics
@@ -122,6 +135,9 @@ export function trackPageViewWithCustomDimension(
 
   if (thema) {
     dimensions.push(maThema(thema));
+  } else {
+    thema = getDerivedThemaNaamFromDocumentTitle();
+    dimensions.push(maThema(thema));
   }
 
   return trackPageView(url, dimensions);
@@ -155,9 +171,10 @@ export function trackDownload(
   documentKind: string,
   downloadUrl: string,
   profileType: ProfileType,
-  userCity: string,
-  thema: string
+  userCity: string
 ) {
+  const thema = getDerivedThemaNaamFromDocumentTitle();
+
   return (
     PiwikInstance &&
     PiwikInstance.trackDownload({

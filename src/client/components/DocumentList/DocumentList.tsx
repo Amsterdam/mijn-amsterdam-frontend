@@ -4,16 +4,12 @@ import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import {
-  trackDownload,
-  trackPageViewWithCustomDimension,
-} from '../../hooks/analytics.hook';
+import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
 import Linkd from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './DocumentList.module.scss';
-import useThema from '../../hooks/useThema';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -56,7 +52,6 @@ export function DocumentLink({
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
-  const thema = useThema();
 
   const onClickDocumentLink = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -98,8 +93,7 @@ export function DocumentLink({
             fileType,
             trackingUrl,
             profileType,
-            userCity ?? '',
-            thema
+            userCity ?? ''
           );
 
           if (!blob) {
