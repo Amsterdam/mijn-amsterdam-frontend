@@ -1,6 +1,7 @@
 @import '../../styles/_global.scss';
 
 .Dashboard {
+
   // Dashboard has a different design for the heading, to match the design easily and responsively
   // a pragmatic solution with help of :before is written below.
   @include select(PageHeading_PageHeading) {
@@ -34,6 +35,7 @@
 
   .MyNotificationsHeadingLink {
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
       color: $color-primary-red;
@@ -63,6 +65,7 @@
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
+
     // Adjust some margins to match the design on mobile
     @include mq-gt-phone() {
       flex: 0 0 calc(50% + 2rem);
@@ -77,11 +80,5 @@
 
   @include select(DirectLinks_DirectLinks) {
     @include centered-block;
-  }
-
-  @include select(MyTips_MyTips) {
-    @include centered-block;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
   }
 }

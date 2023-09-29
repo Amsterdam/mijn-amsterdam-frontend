@@ -18,7 +18,6 @@ export type Tip = {
   description: string;
   predicates?: TipsPredicateFN[];
   reason?: string;
-  isPersonalized: boolean;
   link: LinkProps;
   imgUrl?: string;
   alwaysVisible?: boolean;

@@ -1,18 +1,13 @@
 import { MyTip } from '../../../universal/types';
 import { ServiceResults, Tip } from './tip-types';
-import { tips } from './tips';
+import { tips } from './tips-content';
 
-function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
+function tipsFilter(serviceResults: ServiceResults) {
   const now = new Date();
 
   return (t: Tip) => {
     // We want only active tips.
     if (!t.active) {
-      return false;
-    }
-
-    // If user doesn't want personalized tips filter those.
-    if (optIn !== t.isPersonalized) {
       return false;
     }
 
@@ -38,24 +33,17 @@ function tipsFilter(serviceResults: ServiceResults, optIn: boolean) {
 
 export function collectTips(
   serviceResults: ServiceResults,
-  optIn: boolean,
-  isNotification?: true,
   profileType?: ProfileType
 ): MyTip[] {
   /**
    * Iterate over tips database and filter out requested tips based on props:
    * - date period
    * - profileTypes
-   * - personalized
    * - predicates
    *   ...
    */
 
   let filteredTips = tips;
-
-  filteredTips = tips.filter((tip) =>
-    isNotification === true ? tip.isNotification === true : true
-  );
 
   // If we get a profileType first filter all tips using it.
   if (profileType) {
@@ -64,7 +52,7 @@ export function collectTips(
     );
   }
 
-  filteredTips = filteredTips.filter(tipsFilter(serviceResults, optIn));
+  filteredTips = filteredTips.filter(tipsFilter(serviceResults));
 
   return filteredTips.map((t) => ({
     id: t.id,
@@ -72,12 +60,9 @@ export function collectTips(
     title: t.title,
     description: t.description,
     link: t.link,
-    imgUrl: t.imgUrl,
-    isPersonalized: t.isPersonalized,
-    isNotification: t.isNotification ?? false,
     profileTypes: t.profileTypes,
     chapter: t.chapter ?? null,
     priority: t.priority,
-    reason: t.reason ? [t.reason] : [],
+    reason: t.reason,
   })) as MyTip[];
 }

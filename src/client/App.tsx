@@ -18,17 +18,16 @@ import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
-import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
-  useSetDeeplinkEntry,
   useDeeplinkRedirect,
+  useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useUsabilla } from './hooks/useUsabilla';
 
-import { default as LandingPage } from './pages/Landing/Landing';
 import { loginUrlByAuthMethod } from './config/api';
+import { default as LandingPage } from './pages/Landing/Landing';
 
 const Krefia = lazy(() => import('./pages/Krefia/Krefia'));
 const Parkeren = lazy(() => import('./pages/Parkeren/Parkeren'));
@@ -76,7 +75,6 @@ const Klachten = lazy(() => import('./pages/Klachten/Klachten'));
 const KlachtenDetail = lazy(
   () => import('./pages/KlachtenDetail/KlachtenDetail')
 );
-const MyTips = lazy(() => import('./pages/MyTips/MyTips'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
 const Sia = lazy(() => import('./pages/Sia/Sia'));
@@ -176,7 +174,6 @@ function AppNotAuthenticated() {
 
 function AppAuthenticated() {
   useAppStateRemote();
-  useTipsApi();
   usePageChange(true);
 
   const history = useHistory();
@@ -241,7 +238,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['STADSPAS/AANVRAAG']}
             component={StadspasAanvraagDetail}

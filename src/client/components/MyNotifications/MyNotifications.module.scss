@@ -156,3 +156,21 @@
     height: 2rem;
   }
 }
+
+.TipReason {
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  span {
+    display: block;
+  }
+
+  svg {
+    transform: translateY(.3rem);
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: .5rem;
+  }
+}

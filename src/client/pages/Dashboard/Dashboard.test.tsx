@@ -17,23 +17,6 @@ const testState: any = {
       mokum: true,
     },
   },
-  TIPS: {
-    status: 'OK',
-    content: [
-      {
-        id: 'Tip1',
-        title: 'Tip!!',
-        description: 'Tip over dingen',
-        datePublished: '2020-07-24',
-        isPersonalized: true,
-        reason: ['U ziet deze tip omdat!'],
-        link: {
-          to: '/lopende-zaak-1',
-          title: 'Linkje!',
-        },
-      },
-    ],
-  },
   MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 5, lng: 40 } }] },
   NOTIFICATIONS: {
     status: 'OK',

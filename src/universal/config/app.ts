@@ -4,7 +4,6 @@ import { IS_AP, IS_PRODUCTION } from './env';
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
 export const FeatureToggle = {
-  myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
   belastingApiActive: true,
   milieuzoneApiActive: true,

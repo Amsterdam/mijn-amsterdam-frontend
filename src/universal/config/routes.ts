@@ -33,7 +33,6 @@ export const AppRoutes = {
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
-  TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',

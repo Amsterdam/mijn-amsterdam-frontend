@@ -258,14 +258,6 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
           Actueel
         </span>
       </a>
-      <a
-        class="_MainNavLink_e3ba3b"
-        href="/overzicht-tips"
-      >
-        <span>
-          Mijn tips
-        </span>
-      </a>
     </div>
     <div
       class="_InfoButtons_e3ba3b"

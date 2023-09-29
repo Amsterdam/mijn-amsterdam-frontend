@@ -9,9 +9,11 @@ import {
   vi,
 } from 'vitest';
 import {
-  getTipsFromServiceResults,
+  getServiceResultsForTips,
+  getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
+import * as helpers from '../helpers/app';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -20,8 +22,6 @@ const mocks = vi.hoisted(() => {
       datePublished: '2022-06-15',
       description: 'Can we fake it today?',
       id: 'mijn-999',
-      imgUrl: '/api/tips/static/tip_images/openresearch.jpg',
-      isPersonalized: true,
       link: {
         title: 'Kijk op fake.amsterdam',
         to: 'https://fake.amsterdam/',
@@ -39,23 +39,7 @@ vi.mock('./tips-and-notifications', async () => {
     sortNotifications: vi.fn(),
     fetchServicesNotifications: vi.fn(),
     fetchTipsAndNotifications: async () => {
-      return {
-        NOTIFICATIONS: { content: [] },
-        TIPS: { content: [mocks.MOCK_SOURCE_TIP] },
-      };
-    },
-  };
-});
-
-vi.mock('../helpers/app', async (requireActual) => {
-  const origModule = (await requireActual()) as object;
-  return {
-    ...origModule,
-    getAuth: async () => {
-      return {
-        profile: { id: '123456789', profileType: 'private', authMethod: '' },
-        token: 'xxx==',
-      };
+      return [mocks.MOCK_SOURCE_TIP];
     },
   };
 });
@@ -107,54 +91,116 @@ describe('controller', () => {
     Mockdate.reset();
   });
 
-  test('Only persoonlijke tips, not opted-in', async () => {
-    const results = await getTipsFromServiceResults('xx12xx', {
-      query: {
-        optin: 'false',
+  test('Get service results for private:digid tips', async () => {
+    vi.spyOn(helpers, 'getAuth').mockResolvedValueOnce({
+      profile: {
+        id: '123456789',
         profileType: 'private',
+        authMethod: 'digid',
       },
+      token: 'xxx==',
+    });
+
+    const results = await getServiceResultsForTips('xx12xx', {
       cookies: {},
     } as any);
 
-    expect(results.content?.some((tip) => tip.id === 'mijn-14')).toBe(true);
-    expect(results.content?.every((tip) => tip.isPersonalized)).toBe(false);
-    expect(
-      results.content?.every((tip) => tip.profileTypes?.includes('private'))
-    ).toBe(true);
+    expect(results).toMatchInlineSnapshot(`
+      {
+        "BRP": {
+          "content": {
+            "persoon": {
+              "geboortedatum": "2005-06-06",
+            },
+          },
+        },
+      }
+    `);
   });
 
-  test('Only zakelijke tips, not opted-in', async () => {
-    const results = await getTipsFromServiceResults('xx12xx', {
-      query: {
-        optin: 'false',
+  test('Get service results for private:digid tips', async () => {
+    vi.spyOn(helpers, 'getAuth').mockResolvedValueOnce({
+      profile: {
+        id: '90006178',
         profileType: 'commercial',
+        authMethod: 'eherkenning',
       },
+      token: 'xxx==',
+    });
+
+    const results2 = await getServiceResultsForTips('xx12xx', {
       cookies: {},
     } as any);
 
-    expect(results.content?.some((tip) => tip.id === 'mijn-14')).toBe(false);
-    expect(results.content?.some((tip) => tip.id === 'mijn-20')).toBe(true);
-
-    expect(results.content?.every((tip) => tip.isPersonalized)).toBe(false);
-    expect(
-      results.content?.every((tip) => tip.profileTypes?.includes('commercial'))
-    ).toBe(true);
+    expect(results2).toMatchInlineSnapshot(`
+      {
+        "KVK": {
+          "content": {
+            "onderneming": {
+              "datumAanvang": null,
+              "datumEinde": null,
+              "handelsnamen": [
+                "Kruijff Sport",
+                "Local Streetplanet Eenmanszaak",
+              ],
+              "hoofdactiviteit": "Cafés",
+              "kvkNummer": "90006178",
+              "overigeActiviteiten": [
+                "Jachthavens",
+              ],
+              "rechtsvorm": null,
+            },
+            "vestigingen": [],
+          },
+        },
+      }
+    `);
   });
 
-  test('Only persoonlijke tips, opted-in', async () => {
-    const results = await getTipsFromServiceResults('xx12xx2', {
-      query: {
-        optin: 'true',
+  test('getTipNotifications private', async () => {
+    vi.spyOn(helpers, 'getAuth').mockResolvedValue({
+      profile: {
+        id: '123456789',
         profileType: 'private',
+        authMethod: 'digid',
       },
-      cookies: {},
-    } as any);
+      token: 'xxx==',
+    });
 
-    expect(results.content?.some((tip) => tip.id === 'mijn-14')).toBe(false);
-    expect(results.content?.some((tip) => tip.id === 'mijn-28')).toBe(true);
-    expect(results.content?.every((tip) => tip.isPersonalized)).toBe(true);
-    expect(
-      results.content?.every((tip) => tip.profileTypes?.includes('private'))
-    ).toBe(true);
+    const result = await getTipNotifications('xx1xx', { cookies: '' } as any);
+
+    expect(result).toMatchInlineSnapshot(`
+      [
+        {
+          "chapter": "INKOMEN",
+          "datePublished": "2021-02-02",
+          "description": "Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.",
+          "id": "mijn-28",
+          "isAlert": false,
+          "isTip": true,
+          "link": {
+            "title": "Download de app",
+            "to": "https://pingping.amsterdam.nl/",
+          },
+          "tipReason": "Je ziet deze tip omdat je net 18 bent geworden of binnenkort 18 wordt",
+          "title": "Tip: Breng je basis op orde",
+        },
+      ]
+    `);
+  });
+
+  test('getTipNotifications private', async () => {
+    vi.spyOn(helpers, 'getAuth').mockResolvedValue({
+      profile: {
+        id: '90006178',
+        profileType: 'commercial',
+        authMethod: 'eherkenning',
+      },
+      token: 'xxx==',
+    });
+
+    const result = await getTipNotifications('xx2xx', { cookies: '' } as any);
+
+    expect(result).toMatchInlineSnapshot('[]');
   });
 });
