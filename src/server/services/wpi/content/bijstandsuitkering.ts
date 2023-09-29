@@ -4,14 +4,12 @@ import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 
 export const WpiExternalUrls = {
-  BijstandsUitkeringAanvragenRechten:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d',
-  BijstandsUitkeringAanvragenPlichten:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d',
+  BijstandsUitkeringAanvragenRechtenEnPlichten:
+    'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-rechten-regels-controle-en-boetes-e7121',
   BijstandsUitkeringAanvragen:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D',
+    'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-aanvragen-3d5ea',
   BetaalDataUitkering:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
+    'https://www.amsterdam.nl/veelgevraagd/wanneer-krijg-ik-de-bijstandsuitkering-op-mijn-bankrekening-gestort-48ace-kp',
 };
 
 export const requestProcess: WpiRequestProcessLabels = {
@@ -60,15 +58,12 @@ export const requestProcess: WpiRequestProcessLabels = {
             Lees meer over uw
             <br />
             <a
-              href=${WpiExternalUrls.BijstandsUitkeringAanvragenRechten}
+              href=${
+                WpiExternalUrls.BijstandsUitkeringAanvragenRechtenEnPlichten
+              }
               rel="external noopener noreferrer"
             >
-              rechten
-            </a> en <a
-              href=${WpiExternalUrls.BijstandsUitkeringAanvragenPlichten}
-              rel="external noopener noreferrer"
-            >
-              plichten
+              rechten en plichten
             </a>
           </p>
         `,

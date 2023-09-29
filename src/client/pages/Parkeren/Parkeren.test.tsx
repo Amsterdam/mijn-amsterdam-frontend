@@ -6,13 +6,15 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import MockApp from '../MockApp';
 import Parkeren from './Parkeren';
 
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+
 describe('Parkeren', () => {
   beforeAll(() => {
     (window.scrollTo as any) = vi.fn();
   });
 
-  const routeEntry = generatePath(AppRoutes.TIPS);
-  const routePath = AppRoutes.TIPS;
+  const routeEntry = generatePath(AppRoutes.PARKEREN);
+  const routePath = AppRoutes.PARKEREN;
 
   const Component = () => (
     <MockApp

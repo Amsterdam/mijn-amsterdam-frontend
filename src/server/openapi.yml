@@ -110,40 +110,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServicesAllResponse'
-  /services/tips:
-    parameters:
-      - name: optin
-        in: query
-        required: false
-        description: optin?
-        schema:
-          type: boolean
-      - name: profileType
-        in: query
-        required: false
-        description: Users profile type
-        schema:
-          type: string
-          enum: ['private', 'commercial', 'private-attributes']
-    get:
-      description: This endpoint returns relevant hints for the current user.
-      responses:
-        '200':
-          description: Returns a list of Tip objects.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TipsResponse'
-  /services/tips/requestdataoverview:
-    get:
-      description: Endpoint to view the data send to the tips api (not used).
-      responses:
-        '200':
-          description: Does things?
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TipsRequestResponse'
+
   /map/datasets/{datasetId}/{id}:
     parameters:
       - name: datasetId
@@ -385,58 +352,6 @@ components:
                 type: string
                 enum:
                   - close
-    TipsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tip'
-
-    TipsRequestResponse:
-      type: object
-      properties:
-        optin:
-          type: boolean
-        userData:
-          type: object
-        tips:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tip'
-    Tip:
-      type: object
-      properties:
-        id:
-          type: string
-        datePublished:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        link:
-          type: object
-          properties:
-            to:
-              type: string
-            title:
-              type: string
-            target:
-              type: string
-            rel:
-              type: string
-            download:
-              type: string
-        imgUrl:
-          type: string
-        isPersonalized:
-          type: boolean
-        priority:
-          type: number
-        reason:
-          type: array
-          items: {}
-        profileTypes:
-          type: array
-          items: {}
     MapDatasetResponse:
       type: object
       properties:

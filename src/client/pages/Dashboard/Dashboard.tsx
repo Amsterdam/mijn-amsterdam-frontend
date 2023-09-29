@@ -6,7 +6,6 @@ import {
   DirectLinks,
   MyChaptersPanel,
   MyNotifications,
-  MyTips,
   Page,
   PageHeading,
 } from '../../components';
@@ -19,17 +18,12 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
-const MAX_TIPS_VISIBLE = 3;
 
 export default function Dashboard() {
   const appState = useAppStateGetter();
   const history = useHistory();
-  const { TIPS, NOTIFICATIONS } = appState;
+  const { NOTIFICATIONS } = appState;
   const notifications = useAppStateNotifications();
-
-  const tipItems = useMemo(() => {
-    return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
-  }, [TIPS.content]);
 
   const notificationItems = useMemo(() => {
     return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
@@ -77,12 +71,6 @@ export default function Dashboard() {
           />
         </div>
         {!isPhoneScreen && <MyAreaDashboard />}
-        <MyTips
-          isLoading={isLoading(TIPS)}
-          items={tipItems}
-          isEmbedded={true}
-        />
-
         <DirectLinks profileType={profileType} />
       </Page>
     </>

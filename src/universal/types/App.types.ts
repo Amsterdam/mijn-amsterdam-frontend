@@ -34,6 +34,7 @@ export interface MyNotification {
   id: string;
   isAlert?: boolean;
   isTip?: boolean;
+  tipReason?: string;
   link?: LinkProps;
   moreInformation?: string;
   subject?: string;
@@ -52,12 +53,10 @@ export interface MyTip {
   description: string;
   id: string;
   imgUrl?: string;
-  isNotification?: boolean;
-  isPersonalized: boolean;
   link: LinkProps;
   priority?: number;
   profileTypes?: ProfileType[];
-  reason: string[];
+  reason: string;
   title: string;
 }
 

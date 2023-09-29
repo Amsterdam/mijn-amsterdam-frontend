@@ -131,7 +131,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
               data-chapter-id="INKOMEN_SVWI"
-              href=""
+              href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
               rel="external"
             >
               <span
@@ -256,14 +256,6 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
       >
         <span>
           Actueel
-        </span>
-      </a>
-      <a
-        class="_MainNavLink_e3ba3b"
-        href="/overzicht-tips"
-      >
-        <span>
-          Mijn tips
         </span>
       </a>
     </div>

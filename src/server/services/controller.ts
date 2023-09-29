@@ -1,11 +1,12 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
-import { omit, pick } from '../../universal/helpers';
+import { omit } from '../../universal/helpers';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api';
+import { MyNotification } from '../../universal/types';
 import {
   addServiceResultHandler,
   getAuth,
@@ -16,6 +17,7 @@ import {
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
+import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
@@ -25,6 +27,7 @@ import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { fetchProfile } from './profile';
+import { fetchSignals } from './sia';
 import {
   fetchBelasting,
   fetchErfpacht,
@@ -32,7 +35,10 @@ import {
   fetchSubsidie,
 } from './simple-connect';
 import { fetchTipsAndNotifications } from './tips-and-notifications';
-import { createTipsFromServiceResults } from './tips/tips-service';
+import {
+  convertTipToNotication,
+  createTipsFromServiceResults,
+} from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo';
@@ -44,9 +50,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSignals } from './sia';
-import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { MyNotification } from '../../universal/types';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -129,12 +132,7 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     return apiSuccessResult([]);
   }
 
-  const [
-    tipNotifications,
-    {
-      NOTIFICATIONS: { content: chapterNotifications = [] },
-    },
-  ] = await Promise.all([
+  const [tipNotifications, chapterNotifications] = await Promise.all([
     getTipNotifications(requestID, req),
     fetchTipsAndNotifications(requestID, await getAuth(req)),
   ]);
@@ -290,7 +288,7 @@ export const servicesTipsByProfileType = {
   ),
 };
 
-function loadServices(
+export function loadServices(
   requestID: requestID,
   req: Request,
   serviceMap:
@@ -330,17 +328,8 @@ export async function loadServicesSSE(req: Request, res: Response) {
     addServiceResultHandler(res, servicePromise, serviceIds[index])
   );
 
-  // Send service results to tips api for personalized tips
-  const tipsPromise = getTipsFromServiceResults(requestID, req).then(
-    (responseData) => {
-      return { TIPS: responseData };
-    }
-  );
-
-  addServiceResultHandler(res, tipsPromise, 'TIPS');
-
   // Close the connection when all services responded
-  return Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
+  return Promise.allSettled(servicePromises).then(() => {
     sendMessage(res, 'close', 'message', 'close');
     return res.end();
   });
@@ -352,42 +341,28 @@ export async function loadServicesAll(req: Request, res: Response) {
   const serviceMap = getServiceMap(profileType);
   const servicePromises = loadServices(requestID, req, serviceMap);
 
-  const tipsPromise = getTipsFromServiceResults(requestID, req).then(
-    (responseData) => {
-      return {
-        TIPS: responseData,
-      };
-    }
-  );
-
   // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(
     (acc, result, index) => Object.assign(acc, result),
     {}
   );
 
-  const tipsResult = await tipsPromise;
-
-  // Add tips result to final result
-  return Object.assign(serviceResults, tipsResult);
+  return serviceResults;
 }
 
 /**
  * TIPS specific services
  */
-export type ServicesTips = ReturnTypeAsync<typeof getTipsFromServiceResults>;
-
 export async function getServiceResultsForTips(
   requestID: requestID,
   req: Request
 ) {
   let requestData = null;
-
-  const profileType = queryParams(req).profileType as ProfileType;
+  const auth = await getAuth(req);
   const servicePromises = loadServices(
     requestID,
     req,
-    getServiceTipsMap(profileType) as any
+    getServiceTipsMap(auth.profile.profileType) as any
   );
   requestData = (await Promise.allSettled(servicePromises)).reduce(
     (acc, result, index) => Object.assign(acc, getSettledResult(result)),
@@ -397,69 +372,22 @@ export async function getServiceResultsForTips(
   return requestData;
 }
 
-async function getTipNotifications(requestID: requestID, req: Request) {
+export async function getTipNotifications(
+  requestID: requestID,
+  req: Request
+): Promise<MyNotification[]> {
   const serviceResults = await getServiceResultsForTips(requestID, req);
   const {
     profile: { profileType },
   } = await getAuth(req);
 
-  const ONLY_INCLUDE_TIP_AS_NOTIFICATION = true;
   const { content: tipNotifications } = await createTipsFromServiceResults(
-    { optin: 'true', profileType },
+    profileType,
     {
       serviceResults,
       tipsDirectlyFromServices: [],
-    },
-    ONLY_INCLUDE_TIP_AS_NOTIFICATION
+    }
   );
 
-  return tipNotifications.map((tip) => {
-    return {
-      ...pick(tip, [
-        'chapter',
-        'datePublished',
-        'description',
-        'id',
-        'title',
-        'link',
-      ]),
-      isTip: true,
-      isAlert: false,
-    } as MyNotification;
-  });
-}
-
-export async function getTipsFromServiceResults(
-  requestID: requestID,
-  req: Request
-) {
-  const serviceResults = await getServiceResultsForTips(requestID, req);
-  const tipsDirectlyFromServices =
-    (await fetchTipsAndNotifications(requestID, await getAuth(req))).TIPS
-      .content ?? [];
-
-  try {
-    const INCLUDE_TIP_AS_NOTIFICATION = false;
-    return createTipsFromServiceResults(
-      queryParams(req),
-      {
-        serviceResults,
-        tipsDirectlyFromServices,
-      },
-      INCLUDE_TIP_AS_NOTIFICATION
-    );
-  } catch (error: unknown) {
-    Sentry.captureException(error);
-    return apiErrorResult(
-      `Could not load TIPS, error: ${(error as Error).message}`,
-      null
-    );
-  }
-}
-
-export async function loadServicesTips(req: Request, res: Response) {
-  const requestID = res.locals.requestID;
-  const result = await getTipsFromServiceResults(requestID, req);
-
-  return res.json(result);
+  return tipNotifications.map(convertTipToNotication);
 }

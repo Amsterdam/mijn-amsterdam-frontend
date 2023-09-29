@@ -16,6 +16,7 @@ import {
   useContentDimensions,
   useProfileTypeValue,
 } from '../../hooks';
+import { IconInfo } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { DocumentLink } from '../DocumentList/DocumentList';
@@ -39,6 +40,7 @@ const Notification = ({
   const [isCollapsed, toggleCollapsed] = useState(!smallVariant);
   const profileType = useProfileTypeValue();
   const contentDimensions = useContentDimensions(contentRef);
+  const [isTipReasonShown, showTipReason] = useState(false);
 
   const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (contentDimensions.height > 0 && contentDimensions.width > 0) {
@@ -128,40 +130,55 @@ const Notification = ({
             </InnerHtml>
           )}
           {(!!notification.link || !!notification.customLink) && (
-            <p className={styles.Action}>
-              {notification.link?.download ? (
-                <DocumentLink
-                  document={{
-                    id: notification.id,
-                    title: notification.title,
-                    datePublished: notification.datePublished,
-                    url: notification.link.to,
-                    download: notification.link.download,
-                  }}
-                  label={notification.link.title}
-                />
-              ) : (
-                <Linkd
-                  title={`Meer informatie over de melding: ${notification.title}`}
-                  href={notification.customLink ? '#' : notification.link?.to}
-                  external={isLinkExternal}
-                  onClick={() => {
-                    trackItemClick(
-                      notification.link?.to || '#',
-                      `${trackCategory} - ${notification.title}`,
-                      profileType
-                    );
-                    if (notification.customLink?.callback) {
-                      notification.customLink.callback();
-                      return false;
+            <>
+              <p className={styles.Action}>
+                {notification.link?.download ? (
+                  <DocumentLink
+                    document={{
+                      id: notification.id,
+                      title: notification.title,
+                      datePublished: notification.datePublished,
+                      url: notification.link.to,
+                      download: notification.link.download,
+                    }}
+                    label={notification.link.title}
+                  />
+                ) : (
+                  <Linkd
+                    title={`Meer informatie over de melding: ${notification.title}`}
+                    href={notification.customLink ? '#' : notification.link?.to}
+                    external={isLinkExternal}
+                    onClick={() => {
+                      trackItemClick(
+                        notification.link?.to || '#',
+                        `${trackCategory} - ${notification.title}`,
+                        profileType
+                      );
+                      if (notification.customLink?.callback) {
+                        notification.customLink.callback();
+                        return false;
+                      }
+                    }}
+                  >
+                    {(notification.link || notification.customLink)?.title ||
+                      'Meer informatie over ' + notification.title}
+                  </Linkd>
+                )}
+              </p>
+              {notification.isTip && notification.tipReason && (
+                <p className={styles.TipReason}>
+                  <IconInfo />
+                  <a
+                    onClick={() =>
+                      showTipReason((isTipReasonShown) => !isTipReasonShown)
                     }
-                  }}
-                >
-                  {(notification.link || notification.customLink)?.title ||
-                    'Meer informatie over ' + notification.title}
-                </Linkd>
+                  >
+                    Waarom ziet u deze tip?
+                  </a>
+                  {isTipReasonShown && <span>{notification.tipReason}</span>}
+                </p>
               )}
-            </p>
+            </>
           )}
         </div>
       </animated.div>
