@@ -12,7 +12,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           <a
             class="_MyNotificationsHeadingLink_ae30fe"
@@ -41,7 +41,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading-3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -151,7 +151,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading-3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -261,7 +261,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading-3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -408,7 +408,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="_Header_7d9f25"
         >
           <h3
-            class="amsterdam-heading amsterdam-heading-1 _Title_7d9f25"
+            class="amsterdam-heading amsterdam-heading--1 _Title_7d9f25"
           >
             Mijn thema's
           </h3>
@@ -492,7 +492,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-chapter-id="INKOMEN_SVWI"
-            href=""
+            href="https://mijnwpi-test.mendixcloud.com/p/overzicht"
             rel="external"
           >
             <span
@@ -574,7 +574,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-chapter-id="MILIEUZONE"
-            href="https://ontheffingen.amsterdam.nl/publiek/aanvragen"
+            href="https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen"
             rel="external"
           >
             <span
@@ -659,7 +659,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="_NavLinkContentWrap_f20b21"
         >
           <h3
-            class="amsterdam-heading amsterdam-heading-2"
+            class="amsterdam-heading amsterdam-heading--2"
           >
             Mijn buurt
           </h3>
@@ -670,174 +670,11 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       </a>
     </div>
     <div
-      class="_MyTips_99416b _MyTipsEmbedded_99416b"
-    >
-      <div
-        class="_HeaderBar_99416b"
-      >
-        <h3
-          class="amsterdam-heading amsterdam-heading-2"
-        >
-          Mijn tips
-        </h3>
-        <button
-          aria-expanded="false"
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _OptIn_99416b"
-        >
-          <svg
-            aria-hidden="true"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <title>
-              chevron-rechts-icoon
-            </title>
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Maak tips persoonlijk
-        </button>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="/overzicht-tips"
-        >
-          <svg
-            aria-hidden="true"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <title>
-              chevron-rechts-icoon
-            </title>
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Al mijn tips
-        </a>
-      </div>
-      <div
-        class="_TipScrollContainer_99416b"
-      >
-        <ul
-          class="_TipsList_99416b"
-          style="width: 100%;"
-        >
-          <li
-            class="_TipItem_99416b is-personalized"
-          >
-            <article>
-              <div
-                class="_ImageContainer_99416b"
-              >
-                <img
-                  alt=""
-                  class="_Img_99416b"
-                  src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                />
-                <div>
-                  <button
-                    aria-expanded="false"
-                    aria-label="Reden waarom u deze tip ziet"
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _IconButton_c3ab45 _TipFlipButton_99416b"
-                    id="tip-flip-Tip1"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45"
-                      fill="#ffffff"
-                      height="32"
-                      viewBox="0 0 20 20"
-                      width="32"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        info-icoon
-                      </title>
-                      <g
-                        fill-rule="evenodd"
-                        stroke="none"
-                        stroke-width="1"
-                      >
-                        <g
-                          fill-rule="nonzero"
-                        >
-                          <path
-                            d="M9,15 L11,15 L11,9 L9,9 L9,15 Z M10,0 C4.5,0 0,4.5 0,10 C0,15.5 4.5,20 10,20 C15.5,20 20,15.5 20,10 C20,4.5 15.5,0 10,0 Z M10,18 C5.6,18 2,14.4 2,10 C2,5.6 5.6,2 10,2 C14.4,2 18,5.6 18,10 C18,14.4 14.4,18 10,18 Z M9,7 L11,7 L11,5 L9,5 L9,7 Z"
-                          />
-                        </g>
-                      </g>
-                    </svg>
-                  </button>
-                  <p
-                    aria-labelledby="tip-flip-Tip1"
-                    class="_TipFlip_99416b"
-                    hidden=""
-                  >
-                    <span>
-                      U ziet deze tip omdat!
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <h4
-                class="amsterdam-heading amsterdam-heading-3"
-              >
-                Tip!!
-              </h4>
-              <p>
-                Tip over dingen
-              </p>
-              <a
-                class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                href="/lopende-zaak-1"
-                title="Meer informatie over de tip: Tip!!"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="_Icon_c3ab45 _Icon__left_c3ab45"
-                  fill="#000"
-                  focusable="false"
-                  height="14px"
-                  viewBox="0 0 32 32"
-                  width="14px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <title>
-                    chevron-rechts-icoon
-                  </title>
-                  <polygon
-                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                  />
-                </svg>
-                Linkje!
-              </a>
-            </article>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
       class="_DirectLinks_7319b6"
       id="DirectLinks"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading-2"
+        class="amsterdam-heading amsterdam-heading--2"
         id="DirectLinksHeader"
       >
         Bezoek ook

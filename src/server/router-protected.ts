@@ -9,7 +9,6 @@ import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import {
   loadServicesAll,
   loadServicesSSE,
-  loadServicesTips,
 } from './services/controller';
 import {
   fetchSignalAttachments,
@@ -56,8 +55,6 @@ router.get(
     loadServicesSSE(req, res);
   }
 );
-
-router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
 router.use(
   BffEndpoints.API_RELAY,

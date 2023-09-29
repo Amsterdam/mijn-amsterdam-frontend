@@ -13,9 +13,8 @@ describe('simple-connect/belasting', () => {
   test('fetchBelasting: no content', async () => {
     remoteApi.get('/belastingen').reply(200, null as any);
 
-    expect(
-      await fetchBelasting(REQUEST_ID, authProfileAndToken)
-    ).toMatchInlineSnapshot(`
+    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
+      .toMatchInlineSnapshot(`
       {
         "content": {
           "isKnown": false,
@@ -30,9 +29,8 @@ describe('simple-connect/belasting', () => {
       status: 'BSN known',
     });
 
-    expect(
-      await fetchBelasting(REQUEST_ID, authProfileAndToken)
-    ).toMatchInlineSnapshot(`
+    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
+      .toMatchInlineSnapshot(`
       {
         "content": {
           "isKnown": true,
@@ -79,9 +77,8 @@ describe('simple-connect/belasting', () => {
         ],
       });
 
-    expect(
-      await fetchBelasting(REQUEST_ID, authProfileAndToken)
-    ).toMatchInlineSnapshot(`
+    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
+      .toMatchInlineSnapshot(`
       {
         "content": {
           "isKnown": true,
@@ -90,45 +87,40 @@ describe('simple-connect/belasting', () => {
       }
     `);
 
-    expect(
-      await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken)
-    ).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "notifications": [
-            {
-              "chapter": "BELASTINGEN",
-              "datePublished": "2022-05-30T09:00:34Z",
-              "description": "Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.",
-              "id": "belasting-4",
-              "link": {
-                "title": "Betaal direct",
-                "to": "https://belastingbalie-acc.amsterdam.nl/aanslagen.php",
+    expect(await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken))
+      .toMatchInlineSnapshot(`
+        {
+          "content": {
+            "notifications": [
+              {
+                "chapter": "BELASTINGEN",
+                "datePublished": "2022-05-30T09:00:34Z",
+                "description": "Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.",
+                "id": "belasting-4",
+                "link": {
+                  "title": "Betaal direct",
+                  "to": "https://belastingbalie-acc.amsterdam.nl/aanslagen.php",
+                },
+                "title": "Betaal uw aanslagen",
               },
-              "title": "Betaal uw aanslagen",
-            },
-          ],
-          "tips": [
-            {
-              "datePublished": "2022-05-30T09:00:34Z",
-              "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
-              "id": "belasting-5",
-              "imgUrl": "http://frontend-host/img/tips/belastingen.jpg",
-              "isPersonalized": true,
-              "link": {
-                "title": "Vraag direct aan",
-                "to": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
+            ],
+            "tips": [
+              {
+                "datePublished": "2022-05-30T09:00:34Z",
+                "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
+                "id": "belasting-5",
+                "link": {
+                  "title": "Vraag direct aan",
+                  "to": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
+                },
+                "priority": 10,
+                "reason": "U krijgt deze tip omdat u nog niet via automatische incasso betaalt",
+                "title": "Automatische incasso",
               },
-              "priority": 10,
-              "reason": [
-                "U krijgt deze tip omdat u nog niet via automatische incasso betaalt",
-              ],
-              "title": "Automatische incasso",
-            },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+            ],
+          },
+          "status": "OK",
+        }
+      `);
   });
 });

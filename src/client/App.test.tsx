@@ -24,7 +24,7 @@ describe('App', () => {
   bffApi
     .get('/services/cms/maintenance-notifications?page=landingspagina')
     .reply(200);
-  bffApi.get('/services/all?optin=false&profileType=private').reply(200);
+  bffApi.get('/services/all').reply(200);
   bffApi.get('/services/cms').reply(200);
 
   it('Renders pristine App', () => {
@@ -57,7 +57,7 @@ describe('App', () => {
   });
 
   it('Renders Dashboard', async () => {
-    bffApi.get('/services/all?optin=false&profileType=private').reply(200);
+    bffApi.get('/services/all').reply(200);
 
     const session = {
       isPristine: false,

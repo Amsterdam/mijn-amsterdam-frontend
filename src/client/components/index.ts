@@ -23,8 +23,6 @@ export { default as MainNavSubmenu } from './MainNavSubmenu/MainNavSubmenu';
 export { default as Modal } from './Modal/Modal';
 export { default as MyChaptersPanel } from './MyChaptersPanel/MyChaptersPanel';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';
-export { default as MyTips } from './MyTips/MyTips';
-export { default as MyTipsOptInOutModal } from './MyTips/MyTipsOptInOutModal';
 export {
   default as Page,
   DetailPage,

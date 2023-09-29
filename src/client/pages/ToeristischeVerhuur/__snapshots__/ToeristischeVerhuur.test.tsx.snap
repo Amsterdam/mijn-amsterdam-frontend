@@ -58,7 +58,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading-1"
+          class="amsterdam-heading amsterdam-heading--1"
         >
           Toeristische verhuur
         </h2>
@@ -175,7 +175,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -520,7 +520,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading-3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -868,7 +868,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
           Registratienummer toeristische verhuur
         </h3>
