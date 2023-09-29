@@ -1,9 +1,5 @@
 import { createContext } from 'react';
-import type {
-  ServiceID,
-  ServicesTips,
-  ServicesType,
-} from '../server/services/controller';
+import type { ServiceID, ServicesType } from '../server/services/controller';
 import { FeatureToggle } from '../universal/config';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
@@ -11,13 +7,10 @@ export type AppState = {
   [key in ServiceID]: ApiResponse<
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
-} & {
-  TIPS: ServicesTips | ApiResponse<any>;
 };
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated
-  TIPS: apiPristineResult([]),
   NOTIFICATIONS: apiPristineResult([]),
 
   // Direct

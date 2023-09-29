@@ -14,7 +14,6 @@ export type Chapter =
   | 'MILIEUZONE'
   | 'NOTIFICATIONS'
   | 'ROOT'
-  | 'TIPS'
   | 'ERFPACHT'
   | 'ZORG'
   | 'VERGUNNINGEN'
@@ -44,7 +43,6 @@ export const Chapters: Record<Chapter, Chapter> = {
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
-  TIPS: 'TIPS',
   ERFPACHT: 'ERFPACHT',
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
@@ -75,7 +73,6 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
-  TIPS: 'Mijn tips',
   ERFPACHT: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
@@ -148,7 +145,6 @@ export const DocumentTitles: {
   [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.BEZWAREN]: `${ChapterTitles.BEZWAREN} | overzicht`,
   [AppRoutes['BEZWAREN/DETAIL']]: `${ChapterTitles.BEZWAREN} | bezwaar`,
-  [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,

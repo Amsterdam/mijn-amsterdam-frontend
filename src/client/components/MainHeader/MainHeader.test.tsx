@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import MainHeader from './MainHeader';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import MainHeader from './MainHeader';
+
+import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../hooks/media.hook');
 
@@ -36,7 +38,6 @@ describe('<MainHeader />', () => {
       '/header/1600x400-algemeen.jpg'
     );
 
-    expect(screen.getByText(/Mijn tips/)).toBeInTheDocument();
     expect(screen.getByText(/Mijn buurt/)).toBeInTheDocument();
     expect(screen.getByText(/Home/)).toBeInTheDocument();
     expect(screen.getByText(/Mijn thema's/)).toBeInTheDocument();
