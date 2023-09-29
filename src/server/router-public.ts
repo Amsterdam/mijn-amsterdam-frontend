@@ -151,6 +151,9 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     challenge: true,
   });
   router.get(BffEndpoints.LOGIN_STATS, auth, loginStats);
+
+  // Currently this endpoint can only be used when running the application locally.
+  // Rquesting the endpoint on Azure results in a Gateway timeout which cannot be prevented easily at this time.
   router.get(BffEndpoints.USER_DATA_OVERVIEW, auth, async (req, res) => {
     generateOverview(req.query.fromCache == '1', `${__dirname}/cache`).then(
       (fileName) => {
