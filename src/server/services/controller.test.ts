@@ -182,6 +182,7 @@ describe('controller', () => {
             "title": "Download de app",
             "to": "https://pingping.amsterdam.nl/",
           },
+          "tipReason": "Je ziet deze tip omdat je net 18 bent geworden of binnenkort 18 wordt",
           "title": "Tip: Breng je basis op orde",
         },
       ]

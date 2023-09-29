@@ -9,6 +9,7 @@ import { isAppStateReady, useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
+import { act, waitFor } from '@testing-library/react';
 import {
   SpyInstance,
   afterEach,
@@ -18,7 +19,6 @@ import {
   it,
   vi,
 } from 'vitest';
-import { act, waitFor } from '@testing-library/react';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
