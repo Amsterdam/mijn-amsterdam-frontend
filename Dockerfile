@@ -27,6 +27,7 @@ WORKDIR /build-space
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
+COPY vendor /build-space/
 
 # Install the dependencies
 RUN npm ci --prefer-offline --no-audit --progress=false
