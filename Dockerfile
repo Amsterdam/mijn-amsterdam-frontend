@@ -11,7 +11,9 @@ ENV CI=true
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends nano
+  && apt-get install -y --no-install-recommends \
+  nano \
+  python3
 
 
 ########################################################################################################################
