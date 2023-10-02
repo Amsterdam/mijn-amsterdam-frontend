@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:bookworm-slim as updated-local
+FROM node:slim as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -11,7 +11,7 @@ ENV CI=true
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends nano inetutils-traceroute
+  && apt-get install -y --no-install-recommends nano
 
 
 ########################################################################################################################
