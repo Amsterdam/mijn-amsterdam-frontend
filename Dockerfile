@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:slim as updated-local
+FROM node:current-bookworm as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -12,8 +12,7 @@ RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
-  nano \
-  python3
+  nano
 
 
 ########################################################################################################################
