@@ -167,8 +167,8 @@ export function trackItemClick(
 }
 
 export function trackDownload(
-  downloadKind: string,
-  documentKind: string,
+  downloadDescription: string,
+  fileType: string | undefined = 'pdf',
   downloadUrl: string,
   profileType: ProfileType,
   userCity: string
@@ -178,8 +178,8 @@ export function trackDownload(
   return (
     PiwikInstance &&
     PiwikInstance.trackDownload({
-      downloadKind,
-      documentKind,
+      downloadDescription,
+      fileType,
       downloadUrl,
       customDimension: [
         profileTypeDimension(profileType),
