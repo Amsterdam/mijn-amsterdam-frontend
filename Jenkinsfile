@@ -32,6 +32,9 @@ pipeline {
     REACT_APP_SENTRY_DSN = "https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13"
     REACT_APP_ANALYTICS_ID_ACC = "e63312c0-0efe-4c4f-bba1-3ca1f05374a8"
     REACT_APP_ANALYTICS_ID_PROD = "f558164e-e388-49e0-864e-5f172552789c"
+
+    TEAMS_HOST = credentials('TEAMS_HOST')
+    WEBHOOK = credentials('WEBHOOK')
   }
 
   stages {
@@ -60,6 +63,22 @@ pipeline {
            "."
         sh "docker run ${IMAGE_TEST} npm test"
         sh "docker run ${IMAGE_TEST} npm run bff-api:test"
+      }
+    }
+
+    // RELEASE NOTES
+    stage('Release notes') {
+       when {
+        branch 'production-release-v*'
+        branch 'MIJN-6651-release'
+      }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+            sh "docker build -f ./Dockerfile.release" +
+                "--shm-size 1G "  +
+                "."
       }
     }
 
