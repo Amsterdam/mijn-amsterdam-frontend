@@ -42,9 +42,9 @@ pipeline {
     // RELEASE NOTES
 
     stage('Release notes') {
-      when {
+      // when {
         // branch 'production-release-v*';
-      }
+      // }
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
