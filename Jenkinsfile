@@ -42,19 +42,16 @@ pipeline {
     // RELEASE NOTES
 
     stage('Release notes') {
-       when {
-        anyOf { 
-          branch 'production-release-v*';
-          branch 'MIJN-6651-release';
-        }
+      when {
+        // branch 'production-release-v*';
       }
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-            sh "docker build -f ./Dockerfile.release" +
-                "--shm-size 1G "  +
-                "."
+        sh "docker build -f ./Dockerfile.release" +
+            "--shm-size 1G "  +
+            "."
       }
     }
 
