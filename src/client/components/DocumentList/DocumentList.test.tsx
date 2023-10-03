@@ -67,8 +67,7 @@ describe('DocumentList', () => {
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
         'private',
-        '',
-        'Mijn Amsterdam algemeen'
+        ''
       )
     );
 
@@ -108,8 +107,7 @@ describe('DocumentList', () => {
         // The additional leading / is representing window.location.pathname
         '/compleet/ander/pad.pdf',
         'private',
-        '',
-        'Mijn Amsterdam algemeen'
+        ''
       )
     );
 
