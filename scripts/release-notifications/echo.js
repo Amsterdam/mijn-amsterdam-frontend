@@ -1,3 +1,5 @@
+const https = require('https');
+
 const args = process.argv.slice(2);
 
 const PATH = args[0].split('=')[1];
