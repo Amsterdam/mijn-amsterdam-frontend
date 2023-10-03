@@ -51,11 +51,11 @@ pipeline {
       }
       steps {
         sh 'echo "TEAMS_HOST is $TEAMS_HOST"'
-        // sh "docker build -f ./Dockerfile.release " +
-        //     "--build-arg WEBHOOK=${WEBHOOK} " +
-        //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
-        //     "--shm-size 1G "  +
-        //     "."
+        sh "docker build -f ./Dockerfile.release " +
+            "--build-arg WEBHOOK=${WEBHOOK} " +
+            "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
+            "--shm-size 1G "  +
+            "."
       }
     }
 
