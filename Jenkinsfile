@@ -43,8 +43,10 @@ pipeline {
 
     stage('Release notes') {
        when {
-        branch 'production-release-v*'
-        branch 'MIJN-6651-release'
+        anyOf { 
+          branch 'production-release-v*'
+          branch 'MIJN-6651-release'
+        }
       }
       options {
         timeout(time: 5, unit: 'MINUTES')
