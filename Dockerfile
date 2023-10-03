@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:current-bookworm as updated-local
+FROM node:20-bookworm as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
