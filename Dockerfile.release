@@ -23,5 +23,11 @@ FROM updated-buster-local as build-deps
 
 WORKDIR /build-space
 
+ARG WEBHOOK=
+ENV WEBHOOK=$WEBHOOK
+
+ARG TEAMS_HOST=
+ENV TEAMS_HOST=$TEAMS_HOST
+
 RUN echo $WEBHOOK
 RUN echo $TEAMS_HOST
