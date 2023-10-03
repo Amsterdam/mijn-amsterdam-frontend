@@ -50,6 +50,8 @@ pipeline {
       }
       steps {
         sh "docker build -f ./Dockerfile.release " +
+            "--build-arg WEBHOOK=${WEBHOOK} " +
+            "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
             "--shm-size 1G "  +
             "."
       }
