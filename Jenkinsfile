@@ -32,9 +32,6 @@ pipeline {
     REACT_APP_SENTRY_DSN = "https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13"
     REACT_APP_ANALYTICS_ID_ACC = "e63312c0-0efe-4c4f-bba1-3ca1f05374a8"
     REACT_APP_ANALYTICS_ID_PROD = "f558164e-e388-49e0-864e-5f172552789c"
-
-    TEAMS_HOST = credentials('TEAMS_HOST')
-    WEBHOOK = credentials('WEBHOOK')
   }
 
   stages {
@@ -42,6 +39,10 @@ pipeline {
     // RELEASE NOTES
 
     stage('Release notes') {
+      environment {
+        TEAMS_HOST = credentials('TEAMS_HOST')
+        WEBHOOK = credentials('WEBHOOK')
+      }
       // when {
         // branch 'production-release-v*';
       // }
@@ -49,11 +50,12 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        sh "docker build -f ./Dockerfile.release " +
-            "--build-arg WEBHOOK=${WEBHOOK} " +
-            "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
-            "--shm-size 1G "  +
-            "."
+        sh 'echo "TEAMS_HOST is $TEAMS_HOST"'
+        // sh "docker build -f ./Dockerfile.release " +
+        //     "--build-arg WEBHOOK=${WEBHOOK} " +
+        //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
+        //     "--shm-size 1G "  +
+        //     "."
       }
     }
 
