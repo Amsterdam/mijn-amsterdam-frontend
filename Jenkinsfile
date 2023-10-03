@@ -44,8 +44,8 @@ pipeline {
     stage('Release notes') {
        when {
         anyOf { 
-          branch 'production-release-v*'
-          branch 'MIJN-6651-release'
+          branch 'production-release-v*';
+          branch 'MIJN-6651-release';
         }
       }
       options {
