@@ -49,7 +49,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        sh "docker build -f ./Dockerfile.release" +
+        sh "docker build -f ./Dockerfile.release " +
             "--shm-size 1G "  +
             "."
       }
