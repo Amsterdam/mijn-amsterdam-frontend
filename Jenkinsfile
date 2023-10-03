@@ -39,6 +39,24 @@ pipeline {
 
   stages {
 
+    // RELEASE NOTES
+
+    stage('Release notes') {
+       when {
+        branch 'production-release-v*'
+        branch 'MIJN-6651-release'
+      }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+            sh "docker build -f ./Dockerfile.release" +
+                "--shm-size 1G "  +
+                "."
+      }
+    }
+
+
     // RUN TESTS
 
     stage('Unit tests') {
@@ -66,21 +84,6 @@ pipeline {
       }
     }
 
-    // RELEASE NOTES
-    stage('Release notes') {
-       when {
-        branch 'production-release-v*'
-        branch 'MIJN-6651-release'
-      }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-            sh "docker build -f ./Dockerfile.release" +
-                "--shm-size 1G "  +
-                "."
-      }
-    }
 
     // ACCEPTANCE
 
