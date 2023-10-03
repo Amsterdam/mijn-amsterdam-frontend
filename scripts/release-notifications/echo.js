@@ -3,7 +3,7 @@ const args = process.argv.slice(2);
 const PATH = args[0].split('=')[1];
 const HOST = args[1].split('=')[1];
 
-const post_data = {
+const post_data = JSON.stringify({
   type: 'message',
   attachments: [
     {
@@ -21,7 +21,7 @@ const post_data = {
       },
     },
   ],
-};
+});
 
 const post_options = {
   host: HOST,
