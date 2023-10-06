@@ -50,12 +50,14 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        sh 'echo "TEAMS_HOST is $TEAMS_HOST"'
-        sh "docker build -f ./Dockerfile.release " +
-            "--build-arg WEBHOOK=${WEBHOOK} " +
-            "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
-            "--shm-size 1G "  +
-            "."
+        sh "list=git tag -l release-* --sort=-\"version:refname\""
+        sh "tag=list[0]"
+        sh "git rev-list -n 1 "+tag
+        // sh "docker build -f ./Dockerfile.release " +
+        //     "--build-arg WEBHOOK=${WEBHOOK} " +
+        //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
+        //     "--shm-size 1G "  +
+        //     "."
       }
     }
 
