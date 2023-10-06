@@ -55,7 +55,8 @@ pipeline {
           sh "tag=\${$list:0:16}"
           sh "commitid=\$(git rev-list -n 1 \$tag)"
           sh "date=\$(git show -s --format=%ci $commitid)"
-          sh "commits=\$(git log --pretty="%s %cI" --no-merges --since=\"$date\")"
+          sh "commits=\$(git log --pretty="%s %cI" --no-merges --since=\"$date\")"+
+          sh "echo commits:"
           sh "echo $commits"
         }
         // sh "docker build -f ./Dockerfile.release " +
