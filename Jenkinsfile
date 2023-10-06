@@ -50,7 +50,14 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        sh "./scripts/release-notifications/notes.sh"
+        script {
+          sh "list=\$(git tag -l release-* --sort=-\"version:refname\")"
+          sh "tag=\${list:0:16}"
+          sh "commitid=\$(git rev-list -n 1 \$tag)"
+          sh "date=\$(git show -s --format=%ci $commitid)"
+          sh "commits=\$(git log --pretty="%s %cI" --no-merges --since=$date)"
+          sh "echo $commits"
+        }
         // sh "docker build -f ./Dockerfile.release " +
         //     "--build-arg WEBHOOK=${WEBHOOK} " +
         //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
