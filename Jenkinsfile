@@ -50,9 +50,9 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        sh "list=$(git tag -l release-* --sort=-\"version:refname\")"
-        sh "tag=${$list:0:16}"
-        sh "git rev-list -n 1 $tag"
+        sh "list=\$5(git tag -l release-* --sort=-\"version:refname\")"
+        sh "tag=\$5{$list:0:16}"
+        sh "git rev-list -n 1 \$5tag"
         // sh "docker build -f ./Dockerfile.release " +
         //     "--build-arg WEBHOOK=${WEBHOOK} " +
         //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
