@@ -56,14 +56,15 @@ pipeline {
           sh "commitid=\$(git rev-list -n 1 \$tag)"
           sh "date=\$(git show -s --format=%ci $commitid)"
           sh "commits=\$(git log --pretty="%s %cI" --no-merges --since=\"$date\")"+
-          sh "echo commits:"
-          sh "echo $commits"
+          // sh "echo commits:"
+          // sh "echo $commits"
+        sh "docker build -f ./Dockerfile.release " +
+            "--build-arg WEBHOOK=${WEBHOOK} " +
+            "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
+            "--build-arg COMMITS=$commits " +
+            "--shm-size 1G "  +
+            "."
         }
-        // sh "docker build -f ./Dockerfile.release " +
-        //     "--build-arg WEBHOOK=${WEBHOOK} " +
-        //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
-        //     "--shm-size 1G "  +
-        //     "."
       }
     }
 
