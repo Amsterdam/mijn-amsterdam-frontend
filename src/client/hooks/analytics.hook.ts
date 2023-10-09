@@ -140,6 +140,8 @@ export function trackPageViewWithCustomDimension(
     dimensions.push(maThema(thema));
   }
 
+  console.log('dimension', dimensions);
+
   return trackPageView(url, dimensions);
 }
 
@@ -181,7 +183,7 @@ export function trackDownload(
       downloadDescription,
       fileType,
       downloadUrl,
-      customDimension: [
+      customDimensions: [
         profileTypeDimension(profileType),
         userCityDimension(userCity),
         maThema(thema),
