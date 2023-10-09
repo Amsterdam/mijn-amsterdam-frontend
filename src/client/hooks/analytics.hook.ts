@@ -140,8 +140,6 @@ export function trackPageViewWithCustomDimension(
     dimensions.push(maThema(thema));
   }
 
-  console.log('dimension', dimensions);
-
   return trackPageView(url, dimensions);
 }
 
