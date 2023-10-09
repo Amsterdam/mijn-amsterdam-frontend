@@ -669,6 +669,7 @@ function formatWmoStatusLineItems(
                 ? wmoItem.documents?.map((doc) =>
                     Object.assign(doc, {
                       url: doc.url,
+                      title: 'Besluit',
                     })
                   )
                 : []
