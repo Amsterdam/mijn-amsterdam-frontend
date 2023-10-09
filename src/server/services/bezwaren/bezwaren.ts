@@ -148,8 +148,7 @@ function transformBezwarenResults(
 
           return bezwaar;
         })
-        .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort(dateSort('ontvangstdatum', 'desc')),
+        .filter((bezwaar) => !!bezwaar.identificatie), // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
       count: response.count,
     };
   }
@@ -283,7 +282,9 @@ async function enrichBezwaarResponse(
 
   // Always return success regardless of potential errors in the additional api calls. These errors will be captured and sent to Sentry, not bugging the customer.
   // In this case at least the bezwaar is visible (possibly without status and/or documents)
-  return apiSuccessResult(enrichedBezwaren);
+  return apiSuccessResult(
+    enrichedBezwaren.sort(dateSort('ontvangstdatum', 'desc'))
+  );
 }
 
 export async function fetchBezwaren(

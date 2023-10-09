@@ -181,7 +181,7 @@ export function trackDownload(
       downloadDescription,
       fileType,
       downloadUrl,
-      customDimension: [
+      customDimensions: [
         profileTypeDimension(profileType),
         userCityDimension(userCity),
         maThema(thema),
