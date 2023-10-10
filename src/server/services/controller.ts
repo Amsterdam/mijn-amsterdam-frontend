@@ -93,23 +93,31 @@ const WPI_STADSPAS = callService(fetchStadspas);
 const WMO = callService(fetchWmo);
 
 const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
-  fetchToeristischeVerhuur(requestID, await getAuth(req), getProfileType(req));
+  fetchToeristischeVerhuur(
+    requestID,
+    await getAuth(req),
+    await getProfileType(req)
+  );
 
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
-  fetchHorecaVergunningen(requestID, await getAuth(req), getProfileType(req));
+  fetchHorecaVergunningen(
+    requestID,
+    await getAuth(req),
+    await getProfileType(req)
+  );
 
 // Location, address, based services
 const MY_LOCATION = async (requestID: requestID, req: Request) =>
-  fetchMyLocation(requestID, await getAuth(req), getProfileType(req));
+  fetchMyLocation(requestID, await getAuth(req), await getProfileType(req));
 
 const AFVAL = async (requestID: requestID, req: Request) =>
-  fetchAfval(requestID, await getAuth(req), getProfileType(req));
+  fetchAfval(requestID, await getAuth(req), await getProfileType(req));
 
 const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
-  fetchAfvalPunten(requestID, await getAuth(req), getProfileType(req));
+  fetchAfvalPunten(requestID, await getAuth(req), await getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
@@ -125,7 +133,7 @@ const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of 
 
 // Special services that aggeragates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
-  const profileType = getProfileType(req);
+  const profileType = await getProfileType(req);
 
   // No notifications for this profile type
   if (profileType === 'private-attributes') {
@@ -316,7 +324,7 @@ export function loadServices(
 
 export async function loadServicesSSE(req: Request, res: Response) {
   const requestID = res.locals.requestID;
-  const profileType = getProfileType(req);
+  const profileType = await getProfileType(req);
 
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
@@ -337,7 +345,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
 export async function loadServicesAll(req: Request, res: Response) {
   const requestID = res.locals.requestID;
-  const profileType = getProfileType(req);
+  const profileType = await getProfileType(req);
   const serviceMap = getServiceMap(profileType);
   const servicePromises = loadServices(requestID, req, serviceMap);
 

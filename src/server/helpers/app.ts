@@ -160,8 +160,10 @@ export function queryParams(req: Request) {
   return req.query as Record<string, string>;
 }
 
-export function getProfileType(req: Request) {
-  return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
+export async function getProfileType(req: Request): Promise<ProfileType> {
+  const auth = await getAuth(req);
+  const profileType = auth.profile.profileType;
+  return profileType || DEFAULT_PROFILE_TYPE;
 }
 
 export function getOIDCCookieData(jweCookieString: string): {
