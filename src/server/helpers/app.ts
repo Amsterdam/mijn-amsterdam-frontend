@@ -48,7 +48,7 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
       break;
     case oidcConfigYivi.clientID:
       authMethod = 'yivi';
-      profileType = 'private';
+      profileType = 'private-attributes';
       break;
     case oidcConfigDigid.clientID:
     default:
