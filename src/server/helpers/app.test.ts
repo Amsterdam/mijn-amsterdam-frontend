@@ -315,16 +315,18 @@ describe('server/helpers/app', () => {
     expect(result).toBe('test');
   });
 
-  test('getProfileType', () => {
+  test('getProfileType', async () => {
+    const cookieValue =
+      'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjE5ODQ1LCJ1YXQiOjE2NTA2MTk4NDUsImV4cCI6MTY1MDYyMDc0NX0..HUllPK31lXj_KBII.BqZ5b-8qiL8CYsV33qbiS2gBYJFvSOyshlKrWOQDNzXKAEf2Y3BtE-NOcJ8atUqIFSjmMaN-ZTUp7cXzpO3_i1RxBKUB99on7hVO3rinLk8gMbVGgNOE5PgTjzgQQ2gJTdJtssMR_uIKtytVOOF0tlQzaXh0bq-WydAyuHPV3xEDoyt3VrPR53qTjotM52u3jCDV39C4zKXNz9fS_eqHqiVMefxpgUtJNnKsIGiWRRYcIvAO3xFKBY_IA2Jv53gt0x7-sQ7lm5SRSe1WcsmwBBzAf3pYqqnwXtH1Y6RQZgtfWvTFypUFBCMoZ0i8j5JsTNRaCKuJxo3m5qbs8UfKL9oD7i41GkEI4GwFSQ6wnGqptlOwFNjIYt8IFHiTqJ6AIu3WAE_Z-WZ4MjEcLYZ_sTGHB_RfVx629U_fok9Uq0B7ZYFk_8btl3kPvQWDHbmhgxtXOddwHKBGlFEJJiNuPo7zYt3brKGJidZhhm8grwx_oy5Tpqtw_p1CBJyI-T6A-vo__iUuaxhhzLd_mcDa5Oq6kxYoTT-jkn1BK_N15rVE1FRsg3TU4fNZehKZ6CsdXjw7zxfhVUslidyesUP13T6WLAYwfDwM-4r4OAKtqj-ZOnYFffWFoDzJykZiieqeLvYnVJXw6INMqCFCUhBMFMu1uw8ly3onFwc8fqR6so2rhHt4P88ZWOc.m-3fNCjKs5A2seItvXarHQ';
+
+    const req = {
+      cookies: {
+        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
+      },
+    } as unknown as typeof express.request;
     {
-      const result = getProfileType({ query: {} } as any);
+      const result = await getProfileType(req);
       expect(result).toBe('private');
-    }
-    {
-      const result = getProfileType({
-        query: { profileType: 'commercial' },
-      } as any);
-      expect(result).toBe('commercial');
     }
   });
 
