@@ -4,7 +4,6 @@ import { matchPath, useLocation } from 'react-router-dom';
 import {
   AppRoute,
   AppRoutes,
-  ChapterTitles,
   CustomTrackingUrls,
   DocumentTitles,
   NOT_FOUND_TITLE,
@@ -72,11 +71,6 @@ export function usePageChange(isAuthenticated: boolean) {
         })
     );
 
-    const thema =
-      Object.values(ChapterTitles).find((t) => {
-        return documentTitle.includes(t);
-      }) ?? 'Mijn Amsterdam algemeen';
-
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;
     }
@@ -104,8 +98,7 @@ export function usePageChange(isAuthenticated: boolean) {
           getCustomTrackingUrl(location.pathname, tackingConfig) +
             (location.search ?? ''),
           profileType,
-          userCity,
-          thema
+          userCity
         );
       }
     }

@@ -6,7 +6,7 @@ import { RecoilRoot } from 'recoil';
 import { describe, expect, it, vi, Mock } from 'vitest';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
-import { trackPageViewWithCustomDimension } from '../../hooks/analytics.hook';
+import { trackDownload } from '../../hooks/analytics.hook';
 import DocumentList from './DocumentList';
 
 vi.mock('../../hooks/analytics.hook');
@@ -44,7 +44,7 @@ describe('DocumentList', () => {
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
 
-    (trackPageViewWithCustomDimension as Mock).mockReturnValue(null);
+    (trackDownload as Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -61,8 +61,9 @@ describe('DocumentList', () => {
     });
 
     await waitFor(() =>
-      expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
+      expect(trackDownload).toHaveBeenCalledWith(
         ITEMS[0].title,
+        'pdf',
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
         'private',
@@ -82,7 +83,7 @@ describe('DocumentList', () => {
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null });
 
-    (trackPageViewWithCustomDimension as Mock).mockReturnValue(null);
+    (trackDownload as Mock).mockReturnValue(null);
 
     render(
       <RecoilRoot>
@@ -90,7 +91,7 @@ describe('DocumentList', () => {
           <DocumentList
             documents={ITEMS}
             trackPath={(document) => {
-              return '/compleet/ander/pad';
+              return '/compleet/ander/pad.pdf';
             }}
           />
         </BrowserRouter>
@@ -100,10 +101,11 @@ describe('DocumentList', () => {
     await user.click(screen.getAllByText(ITEMS[0].title)[0]);
 
     await waitFor(() =>
-      expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
+      expect(trackDownload).toHaveBeenCalledWith(
         ITEMS[0].title,
+        'pdf',
         // The additional leading / is representing window.location.pathname
-        '/compleet/ander/pad',
+        '/compleet/ander/pad.pdf',
         'private',
         ''
       )
@@ -118,8 +120,7 @@ describe('DocumentList', () => {
     const fetch = ((global as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-    const track = ((analytics as any).trackPageViewWithCustomDimension =
-      vi.fn());
+    const track = ((analytics as any).trackDownload = vi.fn());
     const captureException = ((Sentry as any).captureException = vi.fn());
 
     render(

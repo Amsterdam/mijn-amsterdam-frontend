@@ -139,8 +139,7 @@ describe('usePageChange', () => {
       '[undefined] /no-title',
       '/no-title',
       'private-attributes',
-      'Amsterdam',
-      'Mijn Amsterdam algemeen'
+      'Amsterdam'
     );
   });
 
@@ -167,8 +166,7 @@ describe('usePageChange', () => {
       'Mijn buurt',
       '/buurt',
       'private-attributes',
-      'Amsterdam',
-      'Mijn buurt'
+      'Amsterdam'
     );
   });
 });

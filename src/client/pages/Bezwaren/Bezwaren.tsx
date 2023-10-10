@@ -35,6 +35,7 @@ export default function BEZWAREN() {
   ).map((bezwaar) => ({
     ...bezwaar,
     ontvangstdatum: defaultDateFormat(bezwaar.ontvangstdatum),
+    datumbesluit: defaultDateFormat(bezwaar.ontvangstdatum),
   }));
 
   const ingediendeBezwaren =

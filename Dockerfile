@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:current-buster as updated-buster-local
+FROM node:20-bookworm as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -11,7 +11,8 @@ ENV CI=true
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends nano inetutils-traceroute
+  && apt-get install -y --no-install-recommends \
+  nano
 
 
 ########################################################################################################################
@@ -19,7 +20,7 @@ RUN apt-get update \
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM updated-buster-local as build-deps
+FROM updated-local as build-deps
 
 WORKDIR /build-space
 
@@ -122,7 +123,7 @@ COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM updated-buster-local as deploy-bff
+FROM updated-local as deploy-bff
 
 WORKDIR /app
 
