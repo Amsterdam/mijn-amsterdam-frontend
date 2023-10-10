@@ -233,6 +233,37 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
   vesselName: string | null;
 }
 
+export interface EigenParkeerplaats extends VergunningBase {
+  isNewRequest: boolean | null;
+  isExtension: boolean | null;
+  isLicenceplateChange: boolean | null;
+  isRelocation: boolean | null;
+  isCarsharingpermit: boolean | null;
+  streetLocation1: string | null;
+  housenumberLocation1: string | null;
+  locationkindLocation1: string | null;
+  fiscalnumberLocation1: string | null;
+  urlLocation1: string | null;
+  streetLocation2: string | null;
+  housenumberLocation2: string | null;
+  locationkindLocation2: string | null;
+  fiscalnumberLocation2: string | null;
+  urlLocation2: string | null;
+  licenseplates: string | null;
+  previousLiceneplates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+}
+
+export interface EigenParkeerplaatsOpheffen extends VergunningBase {
+  isCarsharingpermit: string | null;
+  streetLocation1: string | null;
+  housenumberLocation1: string | null;
+  locationkindLocation1: string | null;
+  fiscalnumberLocation1: string | null;
+  dateEnd: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -257,7 +288,9 @@ export type Vergunning =
   | Ligplaatsvergunning
   | ExploitatieHorecabedrijf
   | RVVHeleStad
-  | RVVSloterweg;
+  | RVVSloterweg
+  | EigenParkeerplaats
+  | EigenParkeerplaatsOpheffen;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
