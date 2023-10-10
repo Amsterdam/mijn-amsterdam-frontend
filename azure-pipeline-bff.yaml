@@ -62,6 +62,8 @@ variables:
   - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: ${{ parameters.btdDeploy }}
+      - name: dtapName
+        value: t
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
