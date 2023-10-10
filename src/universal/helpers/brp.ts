@@ -22,6 +22,9 @@ export function getFullAddress(
   } | null,
   extended = false
 ) {
+  if (!adres?.straatnaam) {
+    return 'onbekend adres';
+  }
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''} ${
         adres.huisletter || ''

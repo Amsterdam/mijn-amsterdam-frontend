@@ -92,6 +92,7 @@
     "include-media": "^1.4.10",
     "jose": "^2.0.6",
     "js-cookie": "^3.0.1",
+    "jsonpath": "^1.1.1",
     "jw-paginate": "^1.0.4",
     "leaflet": "^1.7.1",
     "lodash.escaperegexp": "^4.1.2",
@@ -124,11 +125,13 @@
     "typescript": "^4.7.3",
     "uid-safe": "^2.1.5",
     "use-debounce": "^7.0.1",
-    "vite-plugin-svgr": "^3.2.0"
+    "vite-plugin-svgr": "^3.2.0",
+    "xlsx": "file:vendor/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@types/express-http-proxy": "^1.6.3",
+    "@types/jsonpath": "^0.2.1",
     "@vitejs/plugin-react": "^4.0.1",
     "jsdom": "^22.1.0",
     "mockdate": "^3.0.5",
