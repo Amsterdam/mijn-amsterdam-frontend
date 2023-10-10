@@ -235,25 +235,25 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
 
 export interface EigenParkeerplaats extends VergunningBase {
   caseType: CaseType.EigenParkeerplaats;
-  isNewRequest: boolean | null;
-  isExtension: boolean | null;
-  isLicensePlateChange: boolean | null;
-  isRelocation: boolean | null;
-  isCarsharingpermit: boolean | null;
-  streetLocation1: string | null;
-  housenumberLocation1: string | null;
-  locationkindLocation1: string | null;
-  fiscalnumberLocation1: string | null;
-  urlLocation1: string | null;
-  streetLocation2: string | null;
-  housenumberLocation2: string | null;
-  locationkindLocation2: string | null;
-  fiscalnumberLocation2: string | null;
-  urlLocation2: string | null;
   licensePlates: string | null;
   previousLicensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
+  locations:
+    | {
+        fiscalNumber: string;
+        houseNumber: number;
+        street: string;
+        type: string;
+        url: string;
+      }[]
+    | null;
+  requestType:
+    | 'Nieuwe aanvraag'
+    | 'Autodeelbedrijf'
+    | 'Kentekenwijziging'
+    | 'Verhuizing'
+    | 'Verlenging';
 }
 
 export interface EigenParkeerplaatsOpheffen extends VergunningBase {

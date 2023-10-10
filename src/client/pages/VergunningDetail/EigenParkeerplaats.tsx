@@ -1,22 +1,8 @@
 import type { EigenParkeerplaats as EigenParkeerplaatsType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
+import { Linkd } from '../../components';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
-
-function getVerzoekType(vergunning: EigenParkeerplaatsType) {
-  switch (true) {
-    case vergunning.isNewRequest:
-      return 'Nieuwe aanvraag';
-    case vergunning.isCarsharingpermit:
-      return 'Autodeelbedrijf';
-    case vergunning.isLicensePlateChange:
-      return 'Kentekenwijziging';
-    case vergunning.isRelocation:
-      return 'Verhuizing';
-    case vergunning.isExtension:
-      return 'Verlenging';
-  }
-}
 
 export function EigenParkeerplaats({
   vergunning,
@@ -25,54 +11,70 @@ export function EigenParkeerplaats({
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.processed;
+  let location1,
+    location2 = null;
+
+  if (Array.isArray(vergunning.locations)) {
+    [location1, location2] = vergunning.locations;
+  }
 
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
-      <InfoDetail label="Verzoek" value={getVerzoekType(vergunning)} />
+      <InfoDetail label="Verzoek" value={vergunning.requestType} />
 
-      <Location
-        label="Adres"
-        location={`${vergunning.streetLocation1} ${vergunning.housenumberLocation1}`}
-      />
-      <InfoDetail label="Soortplek" value={vergunning.locationkindLocation1} />
-      <InfoDetail label="Parkeervak" value={vergunning.urlLocation1} />
+      {!!location1 && (
+        <>
+          <Location
+            label="Adres"
+            location={`${location1.street} ${location1.houseNumber}`}
+          />
+          <InfoDetail label="Soortplek" value={location1.type} />
+          <InfoDetail
+            label="Parkeervak"
+            value={
+              <Linkd href={location1.url} external={true}>
+                Bekijk parkeervak
+              </Linkd>
+            }
+          />
+        </>
+      )}
 
-      {vergunning.streetLocation2 && (
-        <Location
-          label="Adres"
-          location={`${vergunning.streetLocation2} ${vergunning.housenumberLocation2}`}
-        />
-      )}
-      {vergunning.streetLocation2 && (
-        <InfoDetail
-          label="Soortplek"
-          value={vergunning.locationkindLocation2}
-        />
-      )}
-      {vergunning.streetLocation2 && (
-        <InfoDetail label="Parkeervak" value={vergunning.urlLocation2} />
+      {!!location2 && (
+        <>
+          <Location
+            label="Adres"
+            location={`${location2.street} ${location2.houseNumber}`}
+          />
+          <InfoDetail label="Soortplek" value={location2.type} />
+          <InfoDetail label="Parkeervak" value={location2.url} />
+        </>
       )}
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
-      {vergunning.isLicensePlateChange && (
+
+      {vergunning.requestType === 'Kentekenwijziging' && (
         <InfoDetail
           label="Oude kenteken(s)"
           value={vergunning.previousLicensePlates}
         />
       )}
+
       {isVerleend && vergunning.dateStart && (
         <InfoDetail
           label="Startdatum"
           value={defaultDateFormat(vergunning.dateStart)}
         />
       )}
+
       {isVerleend && vergunning.dateEnd && (
         <InfoDetail
           label="Vervaldatum"
           value={defaultDateFormat(vergunning.dateEnd)}
         />
       )}
+
       {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

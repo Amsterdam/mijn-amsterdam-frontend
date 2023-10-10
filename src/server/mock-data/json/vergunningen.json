@@ -1324,6 +1324,43 @@
         "to": "/vergunningen/rvv-sloterweg/4069415615",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
+    },
+    {
+      "caseType": "Eigen parkeerplaats",
+      "dateDecision": null,
+      "dateEnd": null,
+      "dateRequest": "2023-10-10",
+      "dateStart": null,
+      "dateWorkflowActive": null,
+      "decision": null,
+      "description": "Eigen parkeerplaats  - [verloskundige] T. Test - Oudezijds Voorburgwal 233",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABlJVcsXFVhhc_KycTS0mSh43y5oEasj3ysjNOzmwWq0jfizKqPrPeWuQD-FWTnbwXlHhr22kuOpasPd_5p9nVufKorpGCzVtLsYwbb31CVx8deGAiNFqT4rDcK1B1rWHe56lyY",
+      "id": "1817502388",
+      "identifier": "Z/23/2230352",
+      "isCarsharingpermit": false,
+      "isExtension": false,
+      "isLicensePlateChange": false,
+      "isNewRequest": true,
+      "isRelocation": false,
+      "licensePlates": "PR067L",
+      "locations": [
+        {
+          "fiscalNumber": "121455487005",
+          "houseNumber": 233,
+          "street": "Oudezijds Voorburgwal",
+          "type": "Consul/Huisarts/Verloskundige woonadres",
+          "url": "https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+        }
+      ],
+      "previousLicensePlates": null,
+      "processed": false,
+      "requestType": "Nieuwe aanvraag",
+      "status": "Ontvangen",
+      "title": "Eigen parkeerplaats",
+      "link": {
+        "to": "/vergunningen/eigen-parkeerplaats/1817502388",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
     }
   ],
   "status": "OK"
