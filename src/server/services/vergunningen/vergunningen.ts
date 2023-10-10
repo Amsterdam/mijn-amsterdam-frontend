@@ -234,9 +234,10 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
 }
 
 export interface EigenParkeerplaats extends VergunningBase {
+  caseType: CaseType.EigenParkeerplaats;
   isNewRequest: boolean | null;
   isExtension: boolean | null;
-  isLicenceplateChange: boolean | null;
+  isLicensePlateChange: boolean | null;
   isRelocation: boolean | null;
   isCarsharingpermit: boolean | null;
   streetLocation1: string | null;
@@ -249,13 +250,14 @@ export interface EigenParkeerplaats extends VergunningBase {
   locationkindLocation2: string | null;
   fiscalnumberLocation2: string | null;
   urlLocation2: string | null;
-  licenseplates: string | null;
-  previousLiceneplates: string | null;
+  licensePlates: string | null;
+  previousLicensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
 }
 
 export interface EigenParkeerplaatsOpheffen extends VergunningBase {
+  caseType: CaseType.EigenParkeerplaatsOpheffen;
   isCarsharingpermit: string | null;
   streetLocation1: string | null;
   housenumberLocation1: string | null;

@@ -36,6 +36,7 @@ import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
 import { Woonvergunningen } from './Woonvergunningen';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
+import { EigenParkeerplaats } from './EigenParkeerplaats';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -114,6 +115,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.RVVSloterweg && (
               <RvvSloterweg vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.EigenParkeerplaats && (
+              <EigenParkeerplaats vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (
