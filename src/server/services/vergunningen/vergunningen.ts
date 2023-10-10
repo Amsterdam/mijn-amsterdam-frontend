@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 import { Chapters } from '../../../universal/config/index';
@@ -321,12 +320,6 @@ export function transformVergunningenData(
   if (!Array.isArray(responseData?.content)) {
     return [];
   }
-
-  Sentry.captureMessage('Received vergunningen', {
-    extra: {
-      vergunningen: JSON.stringify(responseData),
-    },
-  });
 
   let vergunningen: Vergunning[] = responseData?.content?.map((item) => {
     const id = hash(
