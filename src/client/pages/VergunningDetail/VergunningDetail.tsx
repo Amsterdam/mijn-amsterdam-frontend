@@ -37,6 +37,7 @@ import styles from './VergunningDetail.module.scss';
 import { Woonvergunningen } from './Woonvergunningen';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { EigenParkeerplaats } from './EigenParkeerplaats';
+import { EigenParkeerplaatsOpheffen } from './EigenParkeerplaatsOpheffen';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -118,6 +119,9 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.EigenParkeerplaats && (
               <EigenParkeerplaats vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.EigenParkeerplaatsOpheffen && (
+              <EigenParkeerplaatsOpheffen vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (

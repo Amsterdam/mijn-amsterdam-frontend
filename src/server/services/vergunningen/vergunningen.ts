@@ -259,10 +259,11 @@ export interface EigenParkeerplaats extends VergunningBase {
 export interface EigenParkeerplaatsOpheffen extends VergunningBase {
   caseType: CaseType.EigenParkeerplaatsOpheffen;
   isCarsharingpermit: string | null;
-  streetLocation1: string | null;
-  housenumberLocation1: string | null;
-  locationkindLocation1: string | null;
-  fiscalnumberLocation1: string | null;
+  street: string | null;
+  houseNumber: string | null;
+  locationType: string | null;
+  fiscalNumber: string | null;
+  locationUrl: string | null;
   dateEnd: string | null;
 }
 
