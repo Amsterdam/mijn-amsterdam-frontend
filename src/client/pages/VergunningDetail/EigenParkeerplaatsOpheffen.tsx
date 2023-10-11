@@ -1,5 +1,4 @@
 import type { EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType } from '../../../server/services';
-import { defaultDateFormat } from '../../../universal/helpers';
 import { Linkd } from '../../components';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
