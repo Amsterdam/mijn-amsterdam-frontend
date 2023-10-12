@@ -23,8 +23,8 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
-  notificationContent,
   NotificationLabels,
+  notificationContent,
 } from './vergunningen-content';
 
 export const toeristischeVerhuurVergunningTypes: Array<

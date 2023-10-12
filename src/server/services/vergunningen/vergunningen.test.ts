@@ -2,15 +2,19 @@ import MockDate from 'mockdate';
 import { afterAll, describe, expect, it } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers';
+import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
 import vergunningenData from '../../mock-data/json/vergunningen.json';
 import {
   BZB,
   BZP,
+  Vergunning,
+  VergunningenSourceData,
+  createVergunningNotification,
   fetchAllVergunningen,
   fetchVergunningenNotifications,
+  getVergunningNotifications,
   transformVergunningenData,
-  VergunningenSourceData,
 } from './vergunningen';
 
 describe('Vergunningen service', () => {
@@ -93,5 +97,95 @@ describe('Vergunningen service', () => {
     );
 
     expect(response).toMatchSnapshot();
+  });
+
+  describe('getVergunningNotifications', () => {
+    const vergunning: Vergunning = {
+      caseType: CaseType.BZP,
+      dateDecision: '2022-09-01',
+      dateEnd: '2022-09-30',
+      dateRequest: '2022-08-31',
+      dateStart: '2022-09-01',
+      dateWorkflowActive: '2022-08-31',
+      decision: 'Verleend',
+      description: 'Ontheffing Blauwe Zone Bewoner',
+      documentsUrl:
+        '/decosjoin/listdocuments/gAAAAABjKYDIW5uIPJMbvPENwMiCHvpFMqPWpGFgnJllKUUZrEDsNjSjcsxQ8gUJ5O0Ub9j5XyXot8je3Ao8BLEvPF0W3CpOmtnQYO2uOSChEpabt70mV3C6Pu7LFwlTo-RVEvHB-4r_',
+      id: '162761969',
+      identifier: 'Z/22/19795384',
+      kenteken: 'GE-12-XD | XY-666-Z',
+      status: 'Afgehandeld',
+      title: 'Parkeerontheffingen Blauwe zone particulieren',
+      processed: true,
+      link: {
+        to: 'https://some.page',
+        title: 'Bekijk details',
+      },
+    };
+
+    it('Returns notification', () => {
+      expect(getVergunningNotifications([vergunning], new Date('2022-08-14')))
+        .toMatchInlineSnapshot(`
+        [
+          {
+            "chapter": "VERGUNNINGEN",
+            "datePublished": "2022-06-30",
+            "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
+            "id": "vergunning-162761969-notification",
+            "link": {
+              "title": "Vraag op tijd een nieuwe ontheffing aan",
+              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+            },
+            "subject": "162761969",
+            "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+          },
+        ]
+      `);
+      expect(getVergunningNotifications([vergunning], new Date('2022-10-14')))
+        .toMatchInlineSnapshot(`
+        [
+          {
+            "chapter": "VERGUNNINGEN",
+            "datePublished": "2022-09-30",
+            "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) is op 30 september 2022 verlopen.",
+            "id": "vergunning-162761969-notification",
+            "link": {
+              "title": "Vraag een nieuwe ontheffing aan",
+              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+            },
+            "subject": "162761969",
+            "title": "Uw ontheffing blauwe zone is verlopen",
+          },
+        ]
+      `);
+    });
+
+    it('Exludes Expired notification', () => {
+      expect(
+        getVergunningNotifications([vergunning], new Date('2023-10-14'))
+      ).toMatchInlineSnapshot('[]');
+    });
+
+    it('Exludes null notification', () => {
+      const vergunningNew = jsonCopy(vergunning);
+      vergunningNew.caseType = 'Non_Existant';
+      expect(
+        getVergunningNotifications([vergunningNew], new Date('2022-09-14'))
+      ).toMatchInlineSnapshot('[]');
+    });
+
+    it('createVergunningNotification: Creates notification', () => {
+      expect(
+        createVergunningNotification(vergunning, [], new Date('2022-09-14'))
+      ).not.toBe(null);
+    });
+
+    it('createVergunningNotification: Returns null', () => {
+      const vergunningNew = jsonCopy(vergunning);
+      vergunningNew.caseType = 'Non_Existant';
+      expect(
+        createVergunningNotification(vergunningNew, [], new Date('2022-09-14'))
+      ).toBe(null);
+    });
   });
 });
