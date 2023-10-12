@@ -469,6 +469,11 @@ export function getVergunningNotifications(
         ] as const
     )
     .filter(([notification, vergunning]) => {
+      // NOTE: See MIJN-7048
+      if (notification === null) {
+        return false;
+      }
+
       const isActual =
         !vergunning.processed ||
         (!!notification &&
