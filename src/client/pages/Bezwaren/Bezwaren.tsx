@@ -39,9 +39,9 @@ export default function BEZWAREN() {
   }));
 
   const ingediendeBezwaren =
-    items.filter((bezwaar) => !bezwaar.einddatum || !bezwaar.resultaat) ?? [];
+    items.filter((bezwaar) => bezwaar.status !== 'Afgehandeld') ?? [];
   const afgehandeldeBezwaren =
-    items.filter((bezwaar) => !!bezwaar.einddatum && !!bezwaar.resultaat) ?? [];
+    items.filter((bezwaar) => bezwaar.status === 'Afgehandeld') ?? [];
 
   return (
     <OverviewPage>
@@ -60,7 +60,7 @@ export default function BEZWAREN() {
         <p>
           <Linkd
             external={true}
-            href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+            href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
           >
             Meer informatie over Bezwaar maken
           </Linkd>
