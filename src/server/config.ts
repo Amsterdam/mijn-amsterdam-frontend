@@ -216,7 +216,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: process.env.BFF_ERFPACHT_API_URL_ONT,
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
-      ca: IS_AP ? getCertificateSync(BFF_SERVER_PRIVATE_G1_CERT) : [],
+      ca: IS_TAP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.erfpachtV2EndpointActive,
   },
