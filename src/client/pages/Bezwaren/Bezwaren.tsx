@@ -14,7 +14,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { defaultDateFormat, isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
-const DISPLAY_PROPS_BEZWAREN_LOPEND = {
+const DISPLAY_PROPS_BEZWAREN = {
   identificatie: 'Zaaknummer',
   ontvangstdatum: 'Ontvangen op',
   omschrijving: 'Onderwerp',
@@ -70,7 +70,7 @@ export default function BEZWAREN() {
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN_LOPEND}
+          displayProps={DISPLAY_PROPS_BEZWAREN}
           items={ingediendeBezwaren}
         />
       </SectionCollapsible>
@@ -86,7 +86,7 @@ export default function BEZWAREN() {
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN_LOPEND}
+          displayProps={DISPLAY_PROPS_BEZWAREN}
           items={afgehandeldeBezwaren}
         />
       </SectionCollapsible>
