@@ -20,12 +20,6 @@ const DISPLAY_PROPS_BEZWAREN_LOPEND = {
   omschrijving: 'Onderwerp',
 };
 
-const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  identificatie: 'Zaaknummer',
-  datumbesluit: 'Datum besluit',
-  omschrijving: 'Onderwerp',
-};
-
 export default function BEZWAREN() {
   const { BEZWAREN } = useAppStateGetter();
 
@@ -35,7 +29,6 @@ export default function BEZWAREN() {
   ).map((bezwaar) => ({
     ...bezwaar,
     ontvangstdatum: defaultDateFormat(bezwaar.ontvangstdatum),
-    datumbesluit: defaultDateFormat(bezwaar.ontvangstdatum),
   }));
 
   const ingediendeBezwaren =
@@ -93,7 +86,7 @@ export default function BEZWAREN() {
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN_AFGEROND}
+          displayProps={DISPLAY_PROPS_BEZWAREN_LOPEND}
           items={afgehandeldeBezwaren}
         />
       </SectionCollapsible>
