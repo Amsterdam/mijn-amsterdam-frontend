@@ -1361,6 +1361,31 @@
         "to": "/vergunningen/eigen-parkeerplaats/1817502388",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
+    },
+    {
+      "caseType": "Eigen parkeerplaats opheffen",
+      "dateDecision": null,
+      "dateEnd": null,
+      "dateRequest": "2023-10-13",
+      "dateWorkflowActive": null,
+      "decision": null,
+      "description": "Eigen parkeerplaats opheffen - consul T. Test - Weesperstraat 113",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABlKUT6uMKa-G_dqooy7qnHCSbOnX387SgvINkKASAAgFp8y5yArOKcgPvYJsDq-VXHOCGkl1DRONHdZDUaMMJDxgLXSt9VaVxFR9qquguf2LR-JPV5WLsLRvd0aGqQ_mMOxKFo",
+      "fiscalNumber": null,
+      "houseNumber": 113,
+      "id": "1679261105",
+      "identifier": "Z/23/2230376",
+      "isCarsharingpermit": false,
+      "locationType": null,
+      "locationUrl": null,
+      "processed": false,
+      "status": "Ontvangen",
+      "street": "Weesperstraat",
+      "title": "Eigen parkeerplaats opheffen",
+      "link": {
+        "to": "/vergunningen/eigen-parkeerplaats-opheffen/1679261105",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
     }
   ],
   "status": "OK"
