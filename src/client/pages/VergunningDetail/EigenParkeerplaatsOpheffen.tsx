@@ -24,7 +24,11 @@ export function EigenParkeerplaatsOpheffen({
         label="Adres"
         location={`${vergunning.street} ${vergunning.houseNumber}`}
       />
-      <InfoDetail label="Soortplek" value={vergunning.locationType} />
+
+      {vergunning.locationType && (
+        <InfoDetail label="Soortplek" value={vergunning.locationType} />
+      )}
+
       {vergunning.locationUrl && (
         <InfoDetail
           label="Parkeervak"
