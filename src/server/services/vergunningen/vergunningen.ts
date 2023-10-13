@@ -322,7 +322,7 @@ export function transformVergunningenData(
     return [];
   }
 
-  let vergunningen: Vergunning[] = responseData?.content?.map((item) => {
+  let vergunningen: Vergunning[] = responseData.content.map((item) => {
     const id = hash(
       `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
