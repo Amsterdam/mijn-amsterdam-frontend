@@ -9,6 +9,7 @@ export function EigenParkeerplaatsOpheffen({
   vergunning: EigenParkeerplaatsOpheffenType;
 }) {
   const isAfgehandeld = vergunning.processed;
+  const { street, type, url, houseNumber } = vergunning.location;
 
   return (
     <>
@@ -20,20 +21,15 @@ export function EigenParkeerplaatsOpheffen({
         }`}
       />
 
-      <Location
-        label="Adres"
-        location={`${vergunning.street} ${vergunning.houseNumber}`}
-      />
+      <Location label="Adres" location={`${street} ${houseNumber}`} />
 
-      {vergunning.locationType && (
-        <InfoDetail label="Soortplek" value={vergunning.locationType} />
-      )}
+      {type && <InfoDetail label="Soortplek" value={type} />}
 
-      {vergunning.locationUrl && (
+      {url && (
         <InfoDetail
           label="Parkeervak"
           value={
-            <Linkd href={vergunning.locationUrl} external={true}>
+            <Linkd href={url} external={true}>
               Bekijk parkeervak
             </Linkd>
           }

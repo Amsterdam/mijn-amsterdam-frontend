@@ -233,21 +233,21 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
   vesselName: string | null;
 }
 
+interface Parkeerplaats {
+  fiscalNumber: string;
+  houseNumber: number;
+  street: string;
+  type: string;
+  url: string;
+}
+
 export interface EigenParkeerplaats extends VergunningBase {
   caseType: CaseType.EigenParkeerplaats;
   licensePlates: string | null;
   previousLicensePlates: string | null;
   dateStart: string | null;
   dateEnd: string | null;
-  locations:
-    | {
-        fiscalNumber: string;
-        houseNumber: number;
-        street: string;
-        type: string;
-        url: string;
-      }[]
-    | null;
+  locations: Parkeerplaats[] | null;
   requestType:
     | 'Nieuwe aanvraag'
     | 'Autodeelbedrijf'
@@ -256,14 +256,12 @@ export interface EigenParkeerplaats extends VergunningBase {
     | 'Verlenging';
 }
 
-export interface EigenParkeerplaatsOpheffen extends VergunningBase {
+export interface EigenParkeerplaatsOpheffen
+  extends Parkeerplaats,
+    VergunningBase {
   caseType: CaseType.EigenParkeerplaatsOpheffen;
   isCarsharingpermit: string | null;
-  street: string | null;
-  houseNumber: string | null;
-  locationType: string | null;
-  fiscalNumber: string | null;
-  locationUrl: string | null;
+  location: Parkeerplaats;
   dateEnd: string | null;
 }
 

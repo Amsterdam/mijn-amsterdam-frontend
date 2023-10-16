@@ -11,8 +11,8 @@ export function EigenParkeerplaats({
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.processed;
-  let location1,
-    location2 = null;
+  let location1 = null;
+  let location2 = null;
 
   if (Array.isArray(vergunning.locations)) {
     [location1, location2] = vergunning.locations;
