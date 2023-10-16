@@ -115,7 +115,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatum": "2021-03-03",
       "resultaat": "Gegrond",
       "startdatum": "2023-04-03",
-      "status": null,
+      "status": "In behandeling",
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",
@@ -249,7 +249,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatum": "2023-01-03",
       "resultaat": null,
       "startdatum": "2022-11-04",
-      "status": null,
+      "status": "Afgehandeld",
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",

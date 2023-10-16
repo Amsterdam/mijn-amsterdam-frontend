@@ -107,6 +107,10 @@
         {
           "kenmerk": "zaakkenmerk",
           "bron": "abc.def"
+        },
+        {
+          "kenmerk": "statustekst",
+          "bron": "In behandeling"
         }
       ],
       "archiefnominatie": null,
@@ -199,6 +203,10 @@
         {
           "kenmerk": "zaakkenmerk",
           "bron": "321.abc.def"
+        },
+        {
+          "kenmerk": "statustekst",
+          "bron": "Afgehandeld"
         }
       ],
       "archiefnominatie": null,
