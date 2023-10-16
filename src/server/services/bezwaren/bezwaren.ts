@@ -365,8 +365,10 @@ export async function fetchBezwarenNotifications(
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
-  const index = bezwaar.statussen.findIndex((s) => s.uuid === EMPTY_UUID);
-  const activeIndex = index === -1 || index === 0 ? 0 : index - 1;
+  const index = bezwaar.statussen.findIndex(
+    (s) => s.statustoelichting === bezwaar.status
+  );
+  const activeIndex = index === -1 ? 0 : index;
   const activeStatus = bezwaar.statussen[activeIndex];
 
   const notification: MyNotification = {

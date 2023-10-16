@@ -14,15 +14,9 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { defaultDateFormat, isLoading } from '../../../universal/helpers';
 import { AppRoutes } from '../../../universal/config';
 
-const DISPLAY_PROPS_BEZWAREN_LOPEND = {
+const DISPLAY_PROPS_BEZWAREN = {
   identificatie: 'Zaaknummer',
   ontvangstdatum: 'Ontvangen op',
-  omschrijving: 'Onderwerp',
-};
-
-const DISPLAY_PROPS_BEZWAREN_AFGEROND = {
-  identificatie: 'Zaaknummer',
-  datumbesluit: 'Datum besluit',
   omschrijving: 'Onderwerp',
 };
 
@@ -35,13 +29,12 @@ export default function BEZWAREN() {
   ).map((bezwaar) => ({
     ...bezwaar,
     ontvangstdatum: defaultDateFormat(bezwaar.ontvangstdatum),
-    datumbesluit: defaultDateFormat(bezwaar.ontvangstdatum),
   }));
 
   const ingediendeBezwaren =
-    items.filter((bezwaar) => !bezwaar.einddatum || !bezwaar.resultaat) ?? [];
+    items.filter((bezwaar) => bezwaar.status !== 'Afgehandeld') ?? [];
   const afgehandeldeBezwaren =
-    items.filter((bezwaar) => !!bezwaar.einddatum && !!bezwaar.resultaat) ?? [];
+    items.filter((bezwaar) => bezwaar.status === 'Afgehandeld') ?? [];
 
   return (
     <OverviewPage>
@@ -60,7 +53,7 @@ export default function BEZWAREN() {
         <p>
           <Linkd
             external={true}
-            href="https://www.amsterdam.nl/belastingen-heffingen/bezwaar-maken/"
+            href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
           >
             Meer informatie over Bezwaar maken
           </Linkd>
@@ -77,7 +70,7 @@ export default function BEZWAREN() {
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN_LOPEND}
+          displayProps={DISPLAY_PROPS_BEZWAREN}
           items={ingediendeBezwaren}
         />
       </SectionCollapsible>
@@ -93,7 +86,7 @@ export default function BEZWAREN() {
       >
         <Table
           className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN_AFGEROND}
+          displayProps={DISPLAY_PROPS_BEZWAREN}
           items={afgehandeldeBezwaren}
         />
       </SectionCollapsible>
