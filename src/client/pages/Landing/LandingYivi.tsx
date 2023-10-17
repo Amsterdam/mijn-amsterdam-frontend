@@ -25,7 +25,7 @@ export default function Landing() {
         Melding openbare ruimte volgen
       </PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
-        {IS_PRODUCTION && (
+        {!FeatureToggle.yiviActive && (
           <Alert type="info">
             <p>
               Vanaf 22 mei kon u online uw meldingen openbare ruimte volgen via
