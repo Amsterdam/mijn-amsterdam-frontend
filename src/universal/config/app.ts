@@ -1,3 +1,4 @@
+import { isDateInPast } from '../helpers';
 import { IS_AP, IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
@@ -19,7 +20,8 @@ export const FeatureToggle = {
   wiorDatasetActive: true,
   siaActive: true,
   siaApiActive: true,
-  yiviActive: true,
+  yiviActive: !IS_PRODUCTION,
+  yiviLandingActive: !isDateInPast(new Date('2023-12-31')),
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,

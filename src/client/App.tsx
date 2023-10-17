@@ -10,7 +10,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { AppRoutes, FeatureToggle } from '../universal/config';
+import { AppRoutes, FeatureToggle, IS_PRODUCTION } from '../universal/config';
 import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -146,7 +146,7 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-          {FeatureToggle.yiviActive && (
+          {(!IS_PRODUCTION || FeatureToggle.yiviLandingActive) && (
             <Route
               exact
               path={AppRoutes.YIVI_LANDING}
