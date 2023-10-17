@@ -1,4 +1,4 @@
-import { isDateInPast } from '../helpers';
+import { isDateInPast } from '../helpers/date';
 import { IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
