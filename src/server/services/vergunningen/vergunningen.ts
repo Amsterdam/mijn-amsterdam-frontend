@@ -233,6 +233,38 @@ export interface Ligplaatsvergunning extends VergunningWithLocation {
   vesselName: string | null;
 }
 
+interface Parkeerplaats {
+  fiscalNumber: string;
+  houseNumber: number;
+  street: string;
+  type: string;
+  url: string;
+}
+
+export interface EigenParkeerplaats extends VergunningBase {
+  caseType: CaseType.EigenParkeerplaats;
+  licensePlates: string | null;
+  previousLicensePlates: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  locations: Parkeerplaats[] | null;
+  requestType:
+    | 'Nieuwe aanvraag'
+    | 'Autodeelbedrijf'
+    | 'Kentekenwijziging'
+    | 'Verhuizing'
+    | 'Verlenging';
+}
+
+export interface EigenParkeerplaatsOpheffen
+  extends Parkeerplaats,
+    VergunningBase {
+  caseType: CaseType.EigenParkeerplaatsOpheffen;
+  isCarsharingpermit: string | null;
+  location: Parkeerplaats;
+  dateEnd: string | null;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
@@ -257,7 +289,9 @@ export type Vergunning =
   | Ligplaatsvergunning
   | ExploitatieHorecabedrijf
   | RVVHeleStad
-  | RVVSloterweg;
+  | RVVSloterweg
+  | EigenParkeerplaats
+  | EigenParkeerplaatsOpheffen;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
@@ -286,7 +320,7 @@ export function transformVergunningenData(
     return [];
   }
 
-  let vergunningen: Vergunning[] = responseData?.content?.map((item) => {
+  let vergunningen: Vergunning[] = responseData.content.map((item) => {
     const id = hash(
       `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
