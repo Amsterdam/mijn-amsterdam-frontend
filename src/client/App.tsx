@@ -146,7 +146,7 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-          {(!IS_PRODUCTION || FeatureToggle.yiviLandingActive) && (
+          {FeatureToggle.yiviLandingActive && (
             <Route
               exact
               path={AppRoutes.YIVI_LANDING}
