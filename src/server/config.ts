@@ -13,16 +13,13 @@ import {
 } from './../universal/helpers/api';
 import { TokenData } from './helpers/app';
 
-export function getCertificateSync(path?: string, name?: string) {
-  if (!path) {
-    if (name) {
-      console.log(`${name}: Certificate path empty ${path}`);
-    }
-    return '';
+export function getCertificateSync(envVarName: string | undefined) {
+  const path = envVarName && process.env[envVarName];
+  if (path) {
+    try {
+      return fs.readFileSync(path).toString();
+    } catch (error) {}
   }
-  try {
-    return fs.readFileSync(path).toString();
-  } catch (error) {}
 
   return undefined;
 }
@@ -35,10 +32,10 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   return undefined;
 }
 
-function getCert(nameOrPath: string | undefined) {
+function getCert(envVarName: string | undefined) {
   return IS_TEST
-    ? decodeBase64EncodedCertificateFromEnv(nameOrPath)
-    : getCertificateSync(nameOrPath);
+    ? decodeBase64EncodedCertificateFromEnv(envVarName)
+    : getCertificateSync(envVarName);
 }
 
 export const BFF_REQUEST_CACHE_ENABLED =
@@ -181,8 +178,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
-      cert: getCert(process.env.BFF_SERVER_CLIENT_CERT),
-      key: getCert(process.env.BFF_SERVER_CLIENT_KEY),
+      cert: getCert('BFF_SERVER_CLIENT_CERT'),
+      key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
   },
   SIA: {
