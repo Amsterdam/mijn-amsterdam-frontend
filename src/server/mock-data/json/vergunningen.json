@@ -1324,6 +1324,70 @@
         "to": "/vergunningen/rvv-sloterweg/4069415615",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
+    },
+    {
+      "caseType": "Eigen parkeerplaats",
+      "dateDecision": null,
+      "dateEnd": null,
+      "dateRequest": "2023-10-10",
+      "dateStart": null,
+      "dateWorkflowActive": null,
+      "decision": null,
+      "description": "Eigen parkeerplaats  - [verloskundige] T. Test - Oudezijds Voorburgwal 233",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABlJVcsXFVhhc_KycTS0mSh43y5oEasj3ysjNOzmwWq0jfizKqPrPeWuQD-FWTnbwXlHhr22kuOpasPd_5p9nVufKorpGCzVtLsYwbb31CVx8deGAiNFqT4rDcK1B1rWHe56lyY",
+      "id": "1817502388",
+      "identifier": "Z/23/2230352",
+      "isCarsharingpermit": false,
+      "isExtension": false,
+      "isLicensePlateChange": false,
+      "isNewRequest": true,
+      "isRelocation": false,
+      "licensePlates": "PR067L",
+      "locations": [
+        {
+          "fiscalNumber": "121455487005",
+          "houseNumber": 233,
+          "street": "Oudezijds Voorburgwal",
+          "type": "Consul/Huisarts/Verloskundige woonadres",
+          "url": "https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+        }
+      ],
+      "previousLicensePlates": null,
+      "processed": false,
+      "requestType": "Nieuwe aanvraag",
+      "status": "Ontvangen",
+      "title": "Eigen parkeerplaats",
+      "link": {
+        "to": "/vergunningen/eigen-parkeerplaats/1817502388",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
+    },
+    {
+      "caseType": "Eigen parkeerplaats opheffen",
+      "dateDecision": null,
+      "dateEnd": null,
+      "dateRequest": "2023-10-13",
+      "dateWorkflowActive": null,
+      "decision": null,
+      "description": "Eigen parkeerplaats opheffen - consul T. Test - Weesperstraat 113",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABlKUT6uMKa-G_dqooy7qnHCSbOnX387SgvINkKASAAgFp8y5yArOKcgPvYJsDq-VXHOCGkl1DRONHdZDUaMMJDxgLXSt9VaVxFR9qquguf2LR-JPV5WLsLRvd0aGqQ_mMOxKFo",
+      "id": "1679261105",
+      "identifier": "Z/23/2230376",
+      "isCarsharingpermit": false,
+      "processed": false,
+      "status": "Ontvangen",
+      "title": "Eigen parkeerplaats opheffen",
+      "link": {
+        "to": "/vergunningen/eigen-parkeerplaats-opheffen/1679261105",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      },
+      "location": {
+        "fiscalNumber": null,
+        "street": "Weesperstraat",
+        "houseNumber": 113,
+        "type": null,
+        "url": null
+      }
     }
   ],
   "status": "OK"
