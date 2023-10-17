@@ -231,6 +231,26 @@ export const notificationContent: NotificationContent = {
   [CaseType.OnttrekkingsvergunningSloop]: defaultNotificationLabels.short,
   [CaseType.VormenVanWoonruimte]: defaultNotificationLabels.long,
   [CaseType.ExploitatieHorecabedrijf]: defaultNotificationLabels.short,
+  [CaseType.EigenParkeerplaats]: defaultNotificationLabels.short,
+  [CaseType.EigenParkeerplaatsOpheffen]: {
+    requested: {
+      ...requestedShort,
+      title: () => 'Opzegging eigen parkeerplaats ontvangen',
+      description: () =>
+        'Wij hebben uw opzegging eigen parkeerplaats ontvangen.',
+    },
+    inProgress: {
+      ...inProgressShort,
+      title: () => 'Opzegging eigen parkeerplaats in behandeling',
+      description: () =>
+        'Wij hebben uw opzegging eigen parkeerplaats in behandeling genomen.',
+    },
+    done: {
+      ...doneShort,
+      title: () => 'Opzegging eigen parkeerplaats afgehandeld',
+      description: () => 'Uw eigen parkeerplaats is opgezegd.',
+    },
+  },
   [CaseType.RVVHeleStad]: {
     requested: {
       ...requestedShort,
