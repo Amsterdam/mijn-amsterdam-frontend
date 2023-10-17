@@ -46,7 +46,7 @@ export default function Landing() {
             </p>
           </Alert>
         )}
-        {!IS_PRODUCTION && (
+        {FeatureToggle. yiviActive && (
           <>
             <p>
               U heeft een melding openbare ruimte gedaan. En u wilt weten wat er
