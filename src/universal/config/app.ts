@@ -1,5 +1,5 @@
-import { isDateInPast } from '../helpers';
-import { IS_AP, IS_PRODUCTION } from './env';
+import { isDateInPast } from '../helpers/date';
+import { IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -21,7 +21,7 @@ export const FeatureToggle = {
   siaActive: true,
   siaApiActive: true,
   yiviActive: !IS_PRODUCTION,
-  yiviLandingActive: !isDateInPast(new Date('2023-12-31')),
+  yiviLandingActive: !isDateInPast(new Date('2023-12-31 23:59:00')),
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
