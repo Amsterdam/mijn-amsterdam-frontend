@@ -18,7 +18,7 @@ export const FeatureToggle = {
   siaActive: true,
   siaApiActive: true,
   yiviActive: !IS_PRODUCTION,
-  yiviLandingActive: !isDateInPast(new Date('2023-12-31 23:59:00')),
+  yiviLandingActive: !isDateInPast(new Date('2023-12-31 23:59:00')) || !IS_PRODUCTION,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
