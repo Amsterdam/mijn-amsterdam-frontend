@@ -1,5 +1,4 @@
 import { Chapters } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
 import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,
@@ -10,7 +9,7 @@ import {
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
-  hasValidId,
+  hasValidIdForVoting,
   hasValidStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
@@ -160,7 +159,7 @@ export const tips: Tip[] = [
     description:
       'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
-      not(hasValidId),
+      not(hasValidIdForVoting),
       is18OrOlder,
       hasStadspasGroeneStip,
       hasDutchNationality,
@@ -177,7 +176,7 @@ export const tips: Tip[] = [
     owner: '',
     dateActiveStart: null,
     dateActiveEnd: null,
-    active: true,
+    active: false,
     priority: 70,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',

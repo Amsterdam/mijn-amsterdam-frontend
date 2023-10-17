@@ -18,6 +18,7 @@ import {
   hasToeristicheVerhuurVergunningen,
   hasTozo,
   hasValidId,
+  hasValidIdForVoting,
   hasValidStadspasRequest,
   is18OrOlder,
   isBetween17and18,
@@ -132,6 +133,31 @@ describe('predicates', () => {
         const appState = getMockAppState(datumAfloop);
 
         expect(hasValidId(appState)).toBe(expected);
+      });
+    });
+
+    describe('hasValidIdForVoting', () => {
+      const getMockAppState = (datumAfloop: string) => {
+        const BRPCopy = { ...BRP };
+
+        BRPCopy.content.identiteitsbewijzen.forEach((i) => {
+          i.datumAfloop = datumAfloop;
+        });
+
+        return getBRPAppState(BRPCopy);
+      };
+
+      it.each([
+        [false, '2002-07-26'],
+        [false, '2017-07-24'],
+        [true, '2017-07-25'],
+        [true, '2022-07-24'],
+        [true, '2022-07-25'],
+        [true, '2028-07-24'],
+      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
+        const appState = getMockAppState(datumAfloop);
+
+        expect(hasValidIdForVoting(appState)).toBe(expected);
       });
     });
 

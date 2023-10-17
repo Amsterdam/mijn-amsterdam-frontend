@@ -42,23 +42,6 @@ describe('createTipsFromServiceResults', () => {
     vi.setSystemTime(vi.getRealSystemTime());
   });
 
-  it('should return tip mijn-28 when age is between 17 and 18', async () => {
-    vi.setSystemTime(new Date('2022-07-25'));
-
-    const BRPCopy = { ...BRP };
-
-    BRPCopy.content.persoon.geboortedatum = '2005-07-24';
-
-    const tips = await createTipsFromServiceResults('private', {
-      serviceResults: {
-        BRP: BRPCopy as ApiSuccessResponse<any>,
-      },
-      tipsDirectlyFromServices: [],
-    });
-
-    expect(tips.content?.find((t) => t.id === 'mijn-28')).toBeTruthy();
-  });
-
   it('should show tip mijn-36', async () => {
     vi.setSystemTime(new Date('2021-09-25'));
 
