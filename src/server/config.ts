@@ -1,8 +1,3 @@
-import {
-  ApiSuccessResponse,
-  ApiErrorResponse,
-  ApiPostponeResponse,
-} from './../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
@@ -10,7 +5,12 @@ import fs from 'fs';
 import https from 'https';
 import jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_OT, IS_TEST } from '../universal/config/env';
+import {
+  ApiErrorResponse,
+  ApiPostponeResponse,
+  ApiSuccessResponse,
+} from './../universal/helpers/api';
 import { TokenData } from './helpers/app';
 
 export function getCertificateSync(path?: string, name?: string) {
@@ -20,12 +20,25 @@ export function getCertificateSync(path?: string, name?: string) {
     }
     return '';
   }
-  let fileContents: string = '';
   try {
-    fileContents = fs.readFileSync(path).toString();
+    return fs.readFileSync(path).toString();
   } catch (error) {}
 
-  return fileContents;
+  return undefined;
+}
+
+function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
+  const data = name && process.env[name];
+  if (data) {
+    return Buffer.from(data, 'base64').toString('utf-8');
+  }
+  return undefined;
+}
+
+function getCert(nameOrPath: string | undefined) {
+  return IS_TEST
+    ? decodeBase64EncodedCertificateFromEnv(nameOrPath)
+    : getCertificateSync(nameOrPath);
 }
 
 export const BFF_REQUEST_CACHE_ENABLED =
@@ -168,10 +181,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
-      cert: IS_TAP
-        ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT)
-        : [],
-      key: IS_TAP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_KEY) : [],
+      cert: getCert(process.env.BFF_SERVER_CLIENT_CERT),
+      key: getCert(process.env.BFF_SERVER_CLIENT_KEY),
     }),
   },
   SIA: {
