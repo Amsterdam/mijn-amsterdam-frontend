@@ -10,9 +10,9 @@ import {
   TextPage,
 } from '../../components';
 import { LOGIN_URL_YIVI } from '../../config/api';
+import { FeatureToggle } from '../../../universal/config';
 import styles from './Landing.module.scss';
 import { ReactComponent as YiviLogo } from './yivi-logo.svg';
-import { IS_PRODUCTION } from '../../../universal/config';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -46,7 +46,7 @@ export default function Landing() {
             </p>
           </Alert>
         )}
-        {FeatureToggle. yiviActive && (
+        {FeatureToggle.yiviActive && (
           <>
             <p>
               U heeft een melding openbare ruimte gedaan. En u wilt weten wat er
