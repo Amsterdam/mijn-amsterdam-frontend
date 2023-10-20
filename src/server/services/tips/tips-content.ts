@@ -299,4 +299,30 @@ export const tips: Tip[] = [
       to: 'https://www.amsterdam.nl/nieuws/nieuwsoverzicht/gratis-ov-kinderen/',
     },
   },
+  {
+    id: 'mijn-43',
+    owner: '',
+    dateActiveStart: '2023-11-23',
+    dateActiveEnd: null,
+    active: true,
+    priority: 82,
+    datePublished: '2023-11-23',
+    title: 'Vraag een gratis ID-kaart aan',
+    chapter: Chapters.BRP,
+    profileTypes: ['private'],
+    description:
+      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de stadspas groene stip krijgt u gratis een nieuwe ID-kaart.',
+    predicates: [
+      not(hasValidId),
+      is18OrOlder,
+      hasStadspasGroeneStip,
+      hasDutchNationality,
+    ],
+    reason:
+      'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
+    link: {
+      title: 'Bekijk de voorwaarden',
+      to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
+    },
+  },
 ];
