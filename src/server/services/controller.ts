@@ -34,7 +34,10 @@ import {
   fetchMilieuzone,
   fetchSubsidie,
 } from './simple-connect';
-import { fetchTipsAndNotifications } from './tips-and-notifications';
+import {
+  fetchTipsAndNotifications,
+  sortNotifications,
+} from './tips-and-notifications';
 import {
   convertTipToNotication,
   createTipsFromServiceResults,
@@ -150,7 +153,7 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     ...chapterNotifications,
   ];
 
-  return apiSuccessResult(notifications);
+  return apiSuccessResult(sortNotifications(notifications));
 };
 
 // Store all services for type derivation

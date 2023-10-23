@@ -64,21 +64,19 @@ export function getTipsAndNotificationsFromApiResults(
     }
   }
 
-  const notificationsResult = sortNotifications(
-    notifications.map((notification) => {
-      if (notification.description) {
-        notification.description = sanitizeCmsContent(
-          marked(notification.description)
-        );
-      }
-      if (notification.moreInformation) {
-        notification.moreInformation = sanitizeCmsContent(
-          marked(notification.moreInformation)
-        );
-      }
-      return notification;
-    })
-  );
+  const notificationsResult = notifications.map((notification) => {
+    if (notification.description) {
+      notification.description = sanitizeCmsContent(
+        marked(notification.description)
+      );
+    }
+    if (notification.moreInformation) {
+      notification.moreInformation = sanitizeCmsContent(
+        marked(notification.moreInformation)
+      );
+    }
+    return notification;
+  });
 
   const tipsResult = tips
     .map((notification) => {

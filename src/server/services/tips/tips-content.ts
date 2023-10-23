@@ -1,5 +1,4 @@
 import { Chapters } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
 import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,
@@ -11,6 +10,7 @@ import {
   hasToeristicheVerhuurVergunningen,
   hasTozo,
   hasValidId,
+  hasValidIdForVoting,
   hasValidStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
@@ -149,18 +149,18 @@ export const tips: Tip[] = [
   {
     id: 'mijn-27',
     owner: '',
-    dateActiveStart: '2021-02-02',
-    dateActiveEnd: '2021-03-10',
+    dateActiveStart: '2023-10-16',
+    dateActiveEnd: '2023-11-20',
     active: true,
     priority: 80,
-    datePublished: '2021-02-02',
+    datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
     chapter: Chapters.BRP,
     profileTypes: ['private'],
     description:
       'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
-      not(hasValidId),
+      not(hasValidIdForVoting),
       is18OrOlder,
       hasStadspasGroeneStip,
       hasDutchNationality,
@@ -177,7 +177,7 @@ export const tips: Tip[] = [
     owner: '',
     dateActiveStart: null,
     dateActiveEnd: null,
-    active: true,
+    active: false,
     priority: 70,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
@@ -197,10 +197,10 @@ export const tips: Tip[] = [
     id: 'mijn-33',
     owner: '',
     dateActiveStart: null,
-    dateActiveEnd: '2021-12-31',
+    dateActiveEnd: '2023-12-31',
     active: true,
     priority: 10,
-    datePublished: '2021-06-15',
+    datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
     chapter: Chapters.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
