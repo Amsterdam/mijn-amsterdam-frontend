@@ -9,6 +9,7 @@ import {
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
+  hasValidId,
   hasValidIdForVoting,
   hasValidStadspasRequest,
   hasVerhuurRegistrations,
