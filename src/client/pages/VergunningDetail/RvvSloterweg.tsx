@@ -7,22 +7,23 @@ import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN = 'Verlopen';
 const RVV_SLOTERWEG_RESULT_GRANTED = 'Verleend';
+const RVV_SLOTERWEG_RESULT_MATURED = 'Vervallen';
 
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
   const isExpired =
-    (vergunning.dateEnd && vergunning.decision === 'Verleend'
+    (vergunning.dateEnd && vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED
       ? new Date(vergunning.dateEnd) < new Date()
-      : false) || vergunning.decision === 'Verlopen';
+      : false) ||
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
 
-  const isRevoked = vergunning.decision === 'Ingetrokken';
-  const isMatured = vergunning.decision === 'Vervallen';
-  // Ontvangen;
-  // Verleend;
-  // Verlopen;
-  // Vervallen;
-  // Ingetrokken;
+  const isRevoked = vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
+  const isMatured = vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED;
+  const isReceived = !vergunning.decision && !vergunning.dateWorkflowActive;
+  const isGranted =
+    vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED &&
+    !!vergunning.dateWorkflowVerleend;
 
   const lineItems = [
     {
@@ -31,43 +32,43 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive: false,
+      isActive: isReceived,
       isChecked: true,
     },
-    {
-      id: 'status-in-behandeling',
-      status: 'In behandeling',
-      datePublished: vergunning.dateWorkflowActive,
-      description: '',
-      documents: [],
-      isActive: false,
-      isChecked: true,
-    },
-
     {
       id: 'status-in-verleend',
       status: 'Verleend',
-      datePublished: vergunning.dateWorkflowVerleend,
+      datePublished: vergunning.dateWorkflowVerleend ?? '',
       description: '',
       documents: [],
-      isActive: false,
-      isChecked: true,
-    },
-
-    {
-      id: 'status-afgehandeld',
-      status: 'Afgehandeld',
-      datePublished: vergunning.dateRequest,
-      description: '',
-      documents: [],
-      isActive: !(
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
-        isExpired ||
-        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
-      ),
-      isChecked: true,
+      isActive: isGranted && !isRevoked && !isMatured && !isExpired,
+      isChecked: isGranted,
     },
   ];
+
+  if (isRevoked) {
+    lineItems.push({
+      id: 'status-ingetrokken',
+      status: 'Ingetrokken',
+      datePublished: vergunning.dateDecision ?? '',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
+
+  if (isMatured) {
+    lineItems.push({
+      id: 'status-vervallen',
+      status: 'Vervallen',
+      datePublished: vergunning.dateDecision ?? '',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
 
   if (isExpired) {
     lineItems.push({
@@ -82,8 +83,8 @@ export function getRVVSloterwegLineItems(
           ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
           : '',
       documents: [],
-      isActive: isExpired,
-      isChecked: isExpired,
+      isActive: true,
+      isChecked: true,
     });
   }
 
