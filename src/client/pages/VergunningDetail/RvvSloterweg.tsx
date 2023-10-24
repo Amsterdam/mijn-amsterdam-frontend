@@ -13,7 +13,7 @@ export function getRVVSloterwegLineItems(
 ): StatusLineItem[] {
   const isRevoked = vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
   const isMatured = vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED;
-  const isReceived = !vergunning.decision && !vergunning.dateWorkflowActive;
+  const isReceived = !vergunning.dateWorkflowActive && !vergunning.decision;
   const isGranted = !!vergunning.dateWorkflowVerleend && !vergunning.decision;
 
   const isExpired =
@@ -22,7 +22,7 @@ export function getRVVSloterwegLineItems(
       : false) ||
     vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
 
-  const lineItems = [
+  const lineItems: StatusLineItem[] = [
     {
       id: 'status-ontvangen',
       status: 'Ontvangen',
@@ -60,7 +60,7 @@ export function getRVVSloterwegLineItems(
       id: 'status-vervallen',
       status: 'Vervallen',
       datePublished: vergunning.dateDecision ?? '',
-      description: '',
+      description: '', //Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
       documents: [],
       isActive: true,
       isChecked: true,
@@ -75,10 +75,7 @@ export function getRVVSloterwegLineItems(
         (isGranted
           ? vergunning.dateEnd // NOTE: Verloopt obv einde ontheffing
           : vergunning.dateDecision) ?? '',
-      description:
-        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
-          ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
-          : '',
+      description: '',
       documents: [],
       isActive: true,
       isChecked: true,
