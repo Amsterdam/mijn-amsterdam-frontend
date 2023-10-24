@@ -4514,26 +4514,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Laan van Vlaanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -4541,12 +4533,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          YY-123-A, ZZ-122-A
+          YY-123-A
         </p>
       </div>
       <div
@@ -4872,26 +4864,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Vaan van Laanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Vaan van Laanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -4899,7 +4883,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
@@ -5230,26 +5214,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Laan van Vlaanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -5257,12 +5233,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          YY-123-A, ZZ-122-A
+          ZZ-122-A
         </p>
       </div>
       <div
@@ -5590,40 +5566,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -5631,12 +5585,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
           BB-344-P, VV-899-C
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          YY-123-A, ZZ-122-A
         </p>
       </div>
       <div
@@ -5962,40 +5944,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -6003,12 +5963,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
           BB-344-P, VV-899-C
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          YY-123-A, ZZ-122-A
         </p>
       </div>
       <div
@@ -6277,40 +6265,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -6318,12 +6284,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          BB-344-P, VV-899-C
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          BB-344-E
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          ZZ-122-C
         </p>
       </div>
       <div
@@ -6649,40 +6643,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -6690,12 +6662,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          BB-344-P, VV-899-C
+          Laan van Vlaanderen
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          BB-344-Q
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          YY-123-B
         </p>
       </div>
       <div

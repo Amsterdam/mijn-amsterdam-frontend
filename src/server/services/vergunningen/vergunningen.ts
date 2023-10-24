@@ -193,7 +193,7 @@ export interface RVVSloterweg extends VergunningBase {
   dateEnd: string | null;
   requestType: 'Nieuw' | 'Wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
-  decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
+  decision: 'Verleend' | 'Verlopen' | 'Ingetrokken' | 'Vervallen';
   status: 'Afgehandeld' | 'Actief' | 'Ontvangen';
 }
 

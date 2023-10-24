@@ -1167,8 +1167,8 @@
       "dateStart": "2023-08-02T00:00:00",
       "dateEnd": "2024-08-02T00:00:00",
       "dateDecision": "2023-07-28T00:00:00",
-      "licensePlates": "BB-344-P, VV-899-C",
-      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "licensePlates": "BB-344-E",
+      "previousLicensePlates": "ZZ-122-C",
       "requestType": "Wijziging",
       "area": "van Vlaanderenlaan"
     },
@@ -1186,8 +1186,8 @@
       "dateStart": "2023-07-12T00:00:00",
       "dateEnd": "2023-07-22T00:00:00",
       "dateDecision": "2023-07-03T00:00:00",
-      "licensePlates": "BB-344-P, VV-899-C",
-      "previousLicensePlates": "YY-123-A, ZZ-122-A",
+      "licensePlates": "BB-344-Q",
+      "previousLicensePlates": "YY-123-B",
       "requestType": "Wijziging",
       "area": "Laan van Vlaanderen"
     },
@@ -1205,7 +1205,7 @@
       "dateStart": "2023-07-12T00:00:00",
       "dateEnd": "2023-07-22T00:00:00",
       "dateDecision": "2023-07-03T00:00:00",
-      "licensePlates": "YY-123-A, ZZ-122-A",
+      "licensePlates": "ZZ-122-A",
       "previousLicensePlates": "",
       "requestType": "Nieuw",
       "area": "Laan van Vlaanderen"
@@ -1224,7 +1224,7 @@
       "dateStart": "2023-07-12T00:00:00",
       "dateEnd": "2023-07-22T00:00:00",
       "dateDecision": "2023-07-03T00:00:00",
-      "licensePlates": "YY-123-A, ZZ-122-A",
+      "licensePlates": "YY-123-A",
       "previousLicensePlates": "",
       "requestType": "Nieuw",
       "area": "Laan van Vlaanderen"
