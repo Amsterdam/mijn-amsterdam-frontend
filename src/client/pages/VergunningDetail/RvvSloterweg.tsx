@@ -42,7 +42,7 @@ export function getRVVSloterwegLineItems(
       description: '',
       documents: [],
       isActive: isGranted && !isRevoked && !isMatured && !isExpired,
-      isChecked: isGranted,
+      isChecked: !isReceived,
     },
   ];
 
