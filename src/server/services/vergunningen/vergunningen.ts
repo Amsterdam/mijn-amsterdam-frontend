@@ -429,6 +429,10 @@ export function getNotificationLabels(
       isNearEndDate(item, compareToDate):
       return notificationContent[item.caseType]?.almostExpired;
 
+    case item.caseType === CaseType.RVVSloterweg &&
+      item.decision === 'Ingetrokken':
+      return notificationContent[item.caseType]?.revoked;
+
     // prettier-ignore
     case !item.processed && hasWorkflow(item.caseType) && !item.dateWorkflowActive:
       return notificationContent[item.caseType]?.requested;
