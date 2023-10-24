@@ -6,24 +6,21 @@ import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN = 'Verlopen';
-const RVV_SLOTERWEG_RESULT_GRANTED = 'Verleend';
 const RVV_SLOTERWEG_RESULT_MATURED = 'Vervallen';
 
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
-  const isExpired =
-    (vergunning.dateEnd && vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED
-      ? new Date(vergunning.dateEnd) < new Date()
-      : false) ||
-    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
-
   const isRevoked = vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
   const isMatured = vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED;
   const isReceived = !vergunning.decision && !vergunning.dateWorkflowActive;
-  const isGranted =
-    vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED &&
-    !!vergunning.dateWorkflowVerleend;
+  const isGranted = !!vergunning.dateWorkflowVerleend && !vergunning.decision;
+
+  const isExpired =
+    (vergunning.dateEnd && isGranted
+      ? new Date(vergunning.dateEnd) < new Date()
+      : false) ||
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
 
   const lineItems = [
     {
@@ -75,7 +72,7 @@ export function getRVVSloterwegLineItems(
       id: 'status-verlopen',
       status: 'Verlopen',
       datePublished:
-        (vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED
+        (isGranted
           ? vergunning.dateEnd // NOTE: Verloopt obv einde ontheffing
           : vergunning.dateDecision) ?? '',
       description:
