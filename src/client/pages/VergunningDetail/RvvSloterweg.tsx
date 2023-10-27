@@ -6,68 +6,79 @@ import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN = 'Verlopen';
-const RVV_SLOTERWEG_RESULT_GRANTED = 'Verleend';
+const RVV_SLOTERWEG_RESULT_MATURED = 'Vervallen';
 
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
-  const isExpired = vergunning.dateEnd
-    ? new Date(vergunning.dateEnd) < new Date()
-    : false;
+  const isRevoked = vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
+  const isMatured = vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED;
+  const isReceived = !vergunning.dateWorkflowActive && !vergunning.decision;
+  const isGranted = !!vergunning.dateWorkflowVerleend && !vergunning.decision;
 
-  const lineItems = [
+  const isExpired =
+    (vergunning.dateEnd && isGranted
+      ? new Date(vergunning.dateEnd) < new Date()
+      : false) ||
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
+
+  const lineItems: StatusLineItem[] = [
     {
       id: 'status-ontvangen',
       status: 'Ontvangen',
       datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive: false,
+      isActive: isReceived,
       isChecked: true,
     },
     {
-      id: 'status-in-behandeling',
-      status: 'In behandeling',
-      datePublished: vergunning.dateRequest,
+      id: 'status-in-verleend',
+      status: 'Verleend',
+      datePublished: vergunning.dateWorkflowVerleend ?? '',
       description: '',
       documents: [],
-      isActive: false,
-      isChecked: true,
-    },
-    {
-      id: 'status-afgehandeld',
-      status: 'Afgehandeld',
-      datePublished: vergunning.dateRequest,
-      description: '',
-      documents: [],
-      isActive: !(
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE ||
-        isExpired ||
-        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
-      ),
-      isChecked: true,
+      isActive: isGranted && !isRevoked && !isMatured && !isExpired,
+      isChecked: !isReceived,
     },
   ];
 
-  if (!!vergunning.decision) {
+  if (isRevoked) {
+    lineItems.push({
+      id: 'status-ingetrokken',
+      status: 'Ingetrokken',
+      datePublished: vergunning.dateDecision ?? '',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
+
+  if (isMatured) {
+    lineItems.push({
+      id: 'status-vervallen',
+      status: 'Vervallen',
+      datePublished: vergunning.dateDecision ?? '',
+      description: '', //Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
+
+  if (isExpired) {
     lineItems.push({
       id: 'status-verlopen',
       status: 'Verlopen',
       datePublished:
-        (vergunning.decision === RVV_SLOTERWEG_RESULT_GRANTED
+        (isGranted
           ? vergunning.dateEnd // NOTE: Verloopt obv einde ontheffing
           : vergunning.dateDecision) ?? '',
-      description:
-        vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN // TODO: Uitvinden welke status we hier moeten checken.
-          ? 'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.'
-          : '',
+      description: '',
       documents: [],
-      isActive:
-        isExpired ||
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
-      isChecked:
-        isExpired ||
-        vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+      isActive: true,
+      isChecked: true,
     });
   }
 
@@ -78,13 +89,18 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
-      <InfoDetailGroup>
-        {vergunning.requestType === 'Wijziging' && (
-          <InfoDetail label="Verzoek" value={vergunning.requestType} />
-        )}
-        <InfoDetail label="Zone" value={vergunning.area} />
-      </InfoDetailGroup>
-      <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
+      {vergunning.requestType === 'Wijziging' && (
+        <InfoDetail label="Verzoek" value={vergunning.requestType} />
+      )}
+      <InfoDetail label="Zone" value={vergunning.area} />
+
+      <InfoDetail label="Kenteken" value={vergunning.licensePlates} />
+      {vergunning.previousLicensePlates && (
+        <InfoDetail
+          label="Vorige kenteken"
+          value={vergunning.previousLicensePlates}
+        />
+      )}
       <InfoDetailGroup>
         <InfoDetail
           label="Van"
