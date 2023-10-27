@@ -46,7 +46,7 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateWorkflowActive ?? '',
       description: '',
       documents: [],
-      isActive: isInprogress,
+      isActive: isInprogress && !isGranted,
       isChecked: isInprogress,
     });
   }
