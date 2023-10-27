@@ -11,9 +11,14 @@ const RVV_SLOTERWEG_RESULT_MATURED = 'Vervallen';
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
+  const isChangeRequest = vergunning.requestType === 'Wijziging';
+
   const isRevoked = vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
   const isMatured = vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED;
-  const isReceived = !vergunning.dateWorkflowActive && !vergunning.decision;
+  const isReceived =
+    (!vergunning.dateWorkflowActive || !vergunning.dateWorkflowVerleend) &&
+    !vergunning.decision;
+  const isInprogress = !!vergunning.dateWorkflowActive && !vergunning.decision;
   const isGranted = !!vergunning.dateWorkflowVerleend && !vergunning.decision;
 
   const isExpired =
@@ -29,19 +34,32 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateRequest,
       description: '',
       documents: [],
-      isActive: isReceived,
+      isActive: isReceived && !isGranted && !isInprogress,
       isChecked: true,
     },
-    {
-      id: 'status-in-verleend',
-      status: 'Verleend',
-      datePublished: vergunning.dateWorkflowVerleend ?? '',
+  ];
+
+  if (isChangeRequest) {
+    lineItems.push({
+      id: 'status-in-in-behandeling',
+      status: 'In behandeling',
+      datePublished: vergunning.dateWorkflowActive ?? '',
       description: '',
       documents: [],
-      isActive: isGranted && !isRevoked && !isMatured && !isExpired,
-      isChecked: !isReceived,
-    },
-  ];
+      isActive: isInprogress && !isGranted,
+      isChecked: isInprogress,
+    });
+  }
+
+  lineItems.push({
+    id: 'status-in-verleend',
+    status: 'Verleend',
+    datePublished: vergunning.dateWorkflowVerleend ?? '',
+    description: '',
+    documents: [],
+    isActive: isGranted,
+    isChecked: !!vergunning.dateWorkflowVerleend,
+  });
 
   if (isRevoked) {
     lineItems.push({
@@ -60,7 +78,8 @@ export function getRVVSloterwegLineItems(
       id: 'status-vervallen',
       status: 'Vervallen',
       datePublished: vergunning.dateDecision ?? '',
-      description: '', //Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
+      description:
+        'Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.',
       documents: [],
       isActive: true,
       isChecked: true,

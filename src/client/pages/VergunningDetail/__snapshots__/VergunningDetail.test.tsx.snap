@@ -4657,10 +4657,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -4892,7 +4892,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         class="_List_a12ff2"
       >
         <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+          class="_ListItem_a12ff2"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -4902,10 +4902,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
@@ -4945,10 +4945,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
@@ -5209,10 +5209,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -5539,10 +5539,53 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                26 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -5869,6 +5912,49 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
+                class="_ConnectLine_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                26 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
                 class="_ConnectLine_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
@@ -6122,6 +6208,49 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
                 class="_StatusDate_a12ff2"
               >
                 24 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                26 juli 2023
               </time>
             </div>
             <div
@@ -6414,6 +6543,49 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
                 class="_StatusDate_a12ff2"
               >
                 01 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                02 juli 2023
               </time>
             </div>
             <div
