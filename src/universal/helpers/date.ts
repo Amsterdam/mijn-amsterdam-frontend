@@ -7,8 +7,10 @@ import {
   parseISO,
 } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
-import { DEFAULT_DATE_FORMAT } from '../config';
 import * as Sentry from '@sentry/react';
+
+// See https://date-fns.org/v1.30.1/docs/format for more formatting options
+const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {

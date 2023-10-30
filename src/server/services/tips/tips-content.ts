@@ -1,5 +1,4 @@
 import { Chapters } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
 import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,
@@ -11,6 +10,7 @@ import {
   hasToeristicheVerhuurVergunningen,
   hasTozo,
   hasValidId,
+  hasValidIdForVoting,
   hasValidStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
@@ -149,18 +149,18 @@ export const tips: Tip[] = [
   {
     id: 'mijn-27',
     owner: '',
-    dateActiveStart: '2021-02-02',
-    dateActiveEnd: '2021-03-10',
+    dateActiveStart: '2023-10-16',
+    dateActiveEnd: '2023-11-20',
     active: true,
     priority: 80,
-    datePublished: '2021-02-02',
+    datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
     chapter: Chapters.BRP,
     profileTypes: ['private'],
     description:
       'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
-      not(hasValidId),
+      not(hasValidIdForVoting),
       is18OrOlder,
       hasStadspasGroeneStip,
       hasDutchNationality,
@@ -177,7 +177,7 @@ export const tips: Tip[] = [
     owner: '',
     dateActiveStart: null,
     dateActiveEnd: null,
-    active: true,
+    active: false,
     priority: 70,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
@@ -197,10 +197,10 @@ export const tips: Tip[] = [
     id: 'mijn-33',
     owner: '',
     dateActiveStart: null,
-    dateActiveEnd: '2021-12-31',
+    dateActiveEnd: '2023-12-31',
     active: true,
     priority: 10,
-    datePublished: '2021-06-15',
+    datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
     chapter: Chapters.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
@@ -297,6 +297,32 @@ export const tips: Tip[] = [
     link: {
       title: 'Hoe vraag je het aan?',
       to: 'https://www.amsterdam.nl/nieuws/nieuwsoverzicht/gratis-ov-kinderen/',
+    },
+  },
+  {
+    id: 'mijn-43',
+    owner: '',
+    dateActiveStart: '2023-11-23',
+    dateActiveEnd: null,
+    active: true,
+    priority: 82,
+    datePublished: '2023-11-23',
+    title: 'Vraag een gratis ID-kaart aan',
+    chapter: Chapters.BRP,
+    profileTypes: ['private'],
+    description:
+      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de stadspas groene stip krijgt u gratis een nieuwe ID-kaart.',
+    predicates: [
+      not(hasValidId),
+      is18OrOlder,
+      hasStadspasGroeneStip,
+      hasDutchNationality,
+    ],
+    reason:
+      'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
+    link: {
+      title: 'Bekijk de voorwaarden',
+      to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
     },
   },
 ];

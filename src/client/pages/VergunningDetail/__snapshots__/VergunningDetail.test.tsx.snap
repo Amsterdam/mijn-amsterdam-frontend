@@ -4514,26 +4514,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Laan van Vlaanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -4541,12 +4533,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          YY-123-A, ZZ-122-A
+          YY-123-A
         </p>
       </div>
       <div
@@ -4596,7 +4588,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <p
           class="_Value_6f1df2"
         >
-          Ingetrokken door gemeente
+          Ingetrokken
         </p>
       </div>
     </div>
@@ -4665,10 +4657,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -4677,56 +4669,8 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                In behandeling
+                Verleend
               </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Afgehandeld
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 juli 2023
-              </time>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
@@ -4763,7 +4707,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Verlopen
+                Ingetrokken
               </strong>
               <time
                 class="_StatusDate_a12ff2"
@@ -4872,26 +4816,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Vaan van Laanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Vaan van Laanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -4899,7 +4835,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
@@ -4942,20 +4878,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             </p>
           </div>
         </div>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-        >
-          Resultaat
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Verleend
-        </p>
       </div>
     </div>
     <div
@@ -5013,49 +4935,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
           </div>
         </li>
         <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                23 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
           class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
         >
           <div
@@ -5066,7 +4945,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
                 class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
@@ -5078,55 +4957,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Afgehandeld
+                Verleend
               </strong>
               <time
                 class="_StatusDate_a12ff2"
               >
-                23 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Verlopen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 augustus 2024
+                27 juli 2023
               </time>
             </div>
             <div
@@ -5230,26 +5066,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Laan van Vlaanderen
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -5257,12 +5085,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          YY-123-A, ZZ-122-A
+          ZZ-122-A
         </p>
       </div>
       <div
@@ -5381,10 +5209,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -5393,56 +5221,8 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                In behandeling
+                Verleend
               </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Afgehandeld
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 juli 2023
-              </time>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
@@ -5492,9 +5272,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
             >
               <div
                 class="_PanelContent_a12ff2"
-              >
-                Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
-              </div>
+              />
             </div>
             <div
               class="_Panel_a12ff2 _Panel--documents_a12ff2"
@@ -5590,40 +5368,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -5631,12 +5387,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
           BB-344-P, VV-899-C
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          YY-123-A, ZZ-122-A
         </p>
       </div>
       <div
@@ -5755,10 +5539,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -5772,7 +5556,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <time
                 class="_StatusDate_a12ff2"
               >
-                24 juli 2023
+                26 juli 2023
               </time>
             </div>
             <div
@@ -5798,10 +5582,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -5810,13 +5594,8 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Afgehandeld
+                Verleend
               </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2023
-              </time>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
@@ -5853,7 +5632,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Verlopen
+                Ingetrokken
               </strong>
               <time
                 class="_StatusDate_a12ff2"
@@ -5962,40 +5741,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -6003,7 +5760,21 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
         </h3>
         <p
           class="_Value_6f1df2"
@@ -6012,318 +5783,17 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
-      >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
-        >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Van
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              02 augustus 2023
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Tot
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              02 augustus 2024
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="_StatusLine_a12ff2 _VergunningStatus_28a267"
-    >
-      <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
-      >
-        Status
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Ontvangen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Afgehandeld
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
-    </div>
-  </main>
-</DocumentFragment>
-`;
-
-exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijziging/Verleend) 1`] = `
-<DocumentFragment>
-  <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
-  >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Vergunningen"
-          class="_ChapterIcon_3ea2dd"
-          fill="black"
-          focusable="false"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <title>
-            Vergunningen
-          </title>
-          <path
-            d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <title>
-              chevron-links-icoon
-            </title>
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen
-        </a>
-        <h2
-          class="amsterdam-heading amsterdam-heading--1"
-        >
-          RVV ontheffing Sloterweg (Wijziging/Verleend)
-        </h2>
-      </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0 _DetailPageContent_28a267"
-    >
-      <div
         class="_InfoDetail_6f1df2"
       >
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenmerk
+          Vorige kenteken
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          Z/23/091823087
-        </p>
-      </div>
-      <div
-        class="_InfoDetailGroup_6f1df2"
-      >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
-        >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              van Vlaanderenlaan
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-        >
-          Kenteken(s)
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          BB-344-P, VV-899-C
+          YY-123-A, ZZ-122-A
         </p>
       </div>
       <div
@@ -6442,10 +5912,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -6459,7 +5929,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <time
                 class="_StatusDate_a12ff2"
               >
-                24 juli 2023
+                26 juli 2023
               </time>
             </div>
             <div
@@ -6475,7 +5945,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
           </div>
         </li>
         <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+          class="_ListItem_a12ff2"
         >
           <div
             class="_ListItemInner_a12ff2"
@@ -6485,10 +5955,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--end-checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
@@ -6497,7 +5967,242 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Afgehandeld
+                Verleend
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                27 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijziging/Verleend) 1`] = `
+<DocumentFragment>
+  <main
+    class="_Page_47d7c0 _DetailPage_47d7c0"
+  >
+    <header
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    >
+      <span
+        aria-hidden="true"
+        class="_Icon_3b337d"
+      >
+        <svg
+          aria-label="Vergunningen"
+          class="_ChapterIcon_3ea2dd"
+          fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <title>
+            Vergunningen
+          </title>
+          <path
+            d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
+          />
+        </svg>
+      </span>
+      <div
+        class="_HeadingInner_3b337d"
+      >
+        <a
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            fill="#000"
+            focusable="false"
+            height="14px"
+            viewBox="0 0 32 32"
+            width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
+          </svg>
+          Vergunningen
+        </a>
+        <h2
+          class="amsterdam-heading amsterdam-heading--1"
+        >
+          RVV ontheffing Sloterweg (Wijziging/Verleend)
+        </h2>
+      </div>
+    </header>
+    <div
+      class="_PageContent_47d7c0 _DetailPageContent_28a267"
+    >
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Z/23/091823087
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Zone
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          van Vlaanderenlaan
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          BB-344-E
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          ZZ-122-C
+        </p>
+      </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+            >
+              Van
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              02 augustus 2023
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+            >
+              Tot
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              02 augustus 2024
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="_StatusLine_a12ff2 _VergunningStatus_28a267"
+    >
+      <h4
+        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+      >
+        Status
+      </h4>
+      <ul
+        class="_List_a12ff2"
+      >
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Ontvangen
               </strong>
               <time
                 class="_StatusDate_a12ff2"
@@ -6528,10 +6233,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
@@ -6540,12 +6245,55 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Verlopen
+                In behandeling
               </strong>
               <time
                 class="_StatusDate_a12ff2"
               >
-                02 augustus 2024
+                26 juli 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Verleend
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                28 juli 2023
               </time>
             </div>
             <div
@@ -6649,40 +6397,18 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Verzoek
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Wijziging
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Zone
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              Laan van Vlaanderen
-            </p>
-          </div>
-        </div>
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Wijziging
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -6690,12 +6416,40 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h3
           class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          Kenteken(s)
+          Zone
         </h3>
         <p
           class="_Value_6f1df2"
         >
-          BB-344-P, VV-899-C
+          Laan van Vlaanderen
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          BB-344-Q
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Vorige kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          YY-123-B
         </p>
       </div>
       <div
@@ -6814,10 +6568,10 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                class="_ConnectLine_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                class="_Checkmark_a12ff2"
               />
             </div>
             <div
@@ -6831,7 +6585,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <time
                 class="_StatusDate_a12ff2"
               >
-                01 juli 2023
+                02 juli 2023
               </time>
             </div>
             <div
@@ -6869,12 +6623,12 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <strong
                 class="_StatusTitle_a12ff2"
               >
-                Afgehandeld
+                Verleend
               </strong>
               <time
                 class="_StatusDate_a12ff2"
               >
-                01 juli 2023
+                28 juli 2023
               </time>
             </div>
             <div
@@ -6925,9 +6679,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
             >
               <div
                 class="_PanelContent_a12ff2"
-              >
-                Uw heeft een nieuw kenteken aangevraagd. Bekijk uw ontheffing in het overzicht.
-              </div>
+              />
             </div>
             <div
               class="_Panel_a12ff2 _Panel--documents_a12ff2"

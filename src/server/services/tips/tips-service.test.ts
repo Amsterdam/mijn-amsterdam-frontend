@@ -3,6 +3,7 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
+import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import { createTipsFromServiceResults } from './tips-service';
 
 import {
@@ -40,23 +41,6 @@ describe('createTipsFromServiceResults', () => {
 
   beforeEach(() => {
     vi.setSystemTime(vi.getRealSystemTime());
-  });
-
-  it('should return tip mijn-28 when age is between 17 and 18', async () => {
-    vi.setSystemTime(new Date('2022-07-25'));
-
-    const BRPCopy = { ...BRP };
-
-    BRPCopy.content.persoon.geboortedatum = '2005-07-24';
-
-    const tips = await createTipsFromServiceResults('private', {
-      serviceResults: {
-        BRP: BRPCopy as ApiSuccessResponse<any>,
-      },
-      tipsDirectlyFromServices: [],
-    });
-
-    expect(tips.content?.find((t) => t.id === 'mijn-28')).toBeTruthy();
   });
 
   it('should show tip mijn-36', async () => {
@@ -101,5 +85,29 @@ describe('createTipsFromServiceResults', () => {
     expect(
       tips.content?.filter((t) => ['mijn-35', 'mijn-36'].includes(t.id)).length
     ).toBe(2);
+  });
+
+  it("should return tip mijn-43 when user has only expired id's", async () => {
+    vi.setSystemTime(new Date('2023-11-25'));
+
+    const BRPCopy = { ...BRP };
+
+    BRPCopy.content.identiteitsbewijzen[0].datumAfloop = '2020-07-24';
+
+    const tips = await createTipsFromServiceResults('private', {
+      serviceResults: {
+        BRP: BRPCopy as ApiSuccessResponse<any>,
+        WPI_STADSPAS: {
+          content: {
+            aanvragen: [],
+            ...WPI_STADSPAS.content,
+          },
+          status: 'OK',
+        },
+      },
+      tipsDirectlyFromServices: [],
+    });
+
+    expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
   });
 });

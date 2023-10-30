@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "4.69.0",
+  "version": "4.71.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
@@ -138,6 +138,6 @@
     "nock": "^13.2.2",
     "sass": "^1.63.6",
     "vite": "^4.3.9",
-    "vitest": "^0.32.2"
+    "vitest": "^0.34.6"
   }
 }

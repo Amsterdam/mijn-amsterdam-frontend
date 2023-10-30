@@ -193,7 +193,7 @@ export interface RVVSloterweg extends VergunningBase {
   dateEnd: string | null;
   requestType: 'Nieuw' | 'Wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
-  decision: 'Verleend' | 'Verlopen' | 'Ingetrokken';
+  decision: 'Verlopen' | 'Ingetrokken' | 'Vervallen';
   status: 'Afgehandeld' | 'Actief' | 'Ontvangen';
 }
 
@@ -428,6 +428,10 @@ export function getNotificationLabels(
       item.decision === 'Verleend' &&
       isNearEndDate(item, compareToDate):
       return notificationContent[item.caseType]?.almostExpired;
+
+    case item.caseType === CaseType.RVVSloterweg &&
+      item.decision === 'Ingetrokken':
+      return notificationContent[item.caseType]?.revoked;
 
     // prettier-ignore
     case !item.processed && hasWorkflow(item.caseType) && !item.dateWorkflowActive:

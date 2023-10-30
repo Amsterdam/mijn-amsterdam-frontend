@@ -19,7 +19,8 @@ type NotificationStatusType =
   | 'isExpired'
   | 'requested'
   | 'inProgress'
-  | 'done';
+  | 'done'
+  | 'revoked';
 
 type NotificationProperty = 'title' | 'description' | 'datePublished' | 'link';
 type NotificationPropertyValue = (
@@ -272,7 +273,7 @@ export const notificationContent: NotificationContent = {
   },
   [CaseType.RVVSloterweg]: {
     requested: {
-      datePublished: requestedShort.datePublished,
+      ...requestedShort,
       title: (item) =>
         `Aanvraag${
           (item as RVVSloterweg).requestType === 'Wijziging'
@@ -285,10 +286,9 @@ export const notificationContent: NotificationContent = {
             ? ' kentekenwijziging'
             : ''
         } ${item.title} ontvangen.`,
-      link: requestedShort.link,
     },
     inProgress: {
-      datePublished: inProgressShort.datePublished,
+      ...inProgressShort,
       title: (item) =>
         `Aanvraag${
           (item as RVVSloterweg).requestType === 'Wijziging'
@@ -303,10 +303,40 @@ export const notificationContent: NotificationContent = {
         } RVV ontheffing Sloterweg (${
           (item as RVVSloterweg).licensePlates
         }) in behandeling genomen`,
-      link: inProgressShort.link,
     },
     done: {
       ...doneShort,
+      title: (item) =>
+        `Aanvraag${
+          (item as RVVSloterweg).requestType === 'Wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg verleend`,
+      description: (item) =>
+        `Wij hebben uw aanvraag voor een${
+          (item as RVVSloterweg).requestType === 'Wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg ${
+          (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
+        } (${(item as RVVSloterweg).licensePlates}) verleend`,
+    },
+    revoked: {
+      ...doneShort,
+      title: (item) =>
+        `Aanvraag${
+          (item as RVVSloterweg).requestType === 'Wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg ingetrokken`,
+      description: (item) =>
+        `Wij hebben uw aanvraag voor een${
+          (item as RVVSloterweg).requestType === 'Wijziging'
+            ? ' kentekenwijziging'
+            : ''
+        } RVV ontheffing Sloterweg ${
+          (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
+        } (${(item as RVVSloterweg).licensePlates}) ingetrokken`,
     },
   },
 };
