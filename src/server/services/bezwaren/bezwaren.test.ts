@@ -71,14 +71,14 @@ describe('Bezwaren', () => {
             "notifications": [
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-09-15T02:53:00+02:00",
-                "description": "Wij hebben uw bezwaar BI.21.014121.001 in behandeling genomen.",
+                "datePublished": "2023-09-15T10:00:00+02:00",
+                "description": "Wij hebben uw bezwaar BI.21.014121.001 ontvangen.",
                 "id": "BI.21.014121.001",
                 "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
                 },
-                "title": "Bezwaar in behandeling",
+                "title": "Bezwaar ontvangen",
               },
               {
                 "chapter": "BEZWAREN",
@@ -93,25 +93,25 @@ describe('Bezwaren', () => {
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-09-15T02:53:00+02:00",
-                "description": "Wij hebben uw bezwaar ZAAK2 in behandeling genomen.",
+                "datePublished": "2023-09-15T10:00:00+02:00",
+                "description": "Wij hebben uw bezwaar ZAAK2 ontvangen.",
                 "id": "ZAAK2",
                 "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
                 },
-                "title": "Bezwaar in behandeling",
+                "title": "Bezwaar ontvangen",
               },
               {
                 "chapter": "BEZWAREN",
-                "datePublished": "2023-09-15T02:53:00+02:00",
-                "description": "Wij hebben uw bezwaar ZAAK3 in behandeling genomen.",
+                "datePublished": "",
+                "description": "Wij hebben uw bezwaar ZAAK3 afgehandeld.",
                 "id": "ZAAK3",
                 "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
                 },
-                "title": "Bezwaar in behandeling",
+                "title": "Bezwaar afgehandeld",
               },
             ],
           },

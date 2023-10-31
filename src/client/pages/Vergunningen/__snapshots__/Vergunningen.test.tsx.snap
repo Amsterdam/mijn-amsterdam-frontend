@@ -170,7 +170,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/1097314015"
+                    href="/vergunningen/rvv-sloterweg/3593173882"
                   >
                     <svg
                       aria-hidden="true"
@@ -190,7 +190,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/2003529
+                    Z/23/2230349
                   </a>
                 </td>
                 <td
@@ -214,7 +214,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Aangevraagd:
                   </span>
                   <span>
-                    29 augustus 2023
+                    27 oktober 2023
                   </span>
                 </td>
               </tr>
@@ -226,7 +226,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/394540596"
+                    href="/vergunningen/eigen-parkeerplaats-opheffen/1679261105"
                   >
                     <svg
                       aria-hidden="true"
@@ -246,7 +246,119 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/2003533
+                    Z/23/2230376
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Eigen parkeerplaats opheffen
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    13 oktober 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/eigen-parkeerplaats/1817502388"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2230352
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Eigen parkeerplaats
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    10 oktober 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/1097314015"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2003529
                   </a>
                 </td>
                 <td
@@ -439,6 +551,62 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     24 juli 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/3368771494"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/98798273423
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Nieuw/Verleend)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    23 juli 2023
                   </span>
                 </td>
               </tr>
@@ -2086,6 +2254,118 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/1600396405"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2230346
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                     
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/394540596"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2003533
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Vervallen
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4198587804"
                   >
                     <svg
@@ -2186,63 +2466,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Resultaat:
                   </span>
                   <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/3368771494"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/98798273423
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Nieuw/Verleend)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
+                     
                   </span>
                 </td>
               </tr>
@@ -2410,7 +2634,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Resultaat:
                   </span>
                   <span>
-                    Ingetrokken door gemeente
+                    Ingetrokken
                   </span>
                 </td>
               </tr>

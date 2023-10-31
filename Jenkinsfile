@@ -23,6 +23,9 @@ pipeline {
     MA_FRONTEND_HOST_ACC = "acc.mijn.amsterdam.nl"
     MA_FRONTEND_HOST_PROD = "mijn.amsterdam.nl"
 
+    MA_API_HOST_ACC = "acc.mijn-bff.amsterdam.nl"
+    MA_API_HOST_PROD = "mijn-bff.amsterdam.nl"
+
     REACT_APP_BFF_API_URL_ACC = "https://acc.mijn-bff.amsterdam.nl/api/v1"
     REACT_APP_BFF_API_URL_PROD = "https://mijn-bff.amsterdam.nl/api/v1"
 
@@ -131,9 +134,11 @@ pipeline {
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg MA_OTAP_ENV=acceptance " +
            "--build-arg MA_FRONTEND_HOST=${MA_FRONTEND_HOST_ACC} " +
+           "--build-arg MA_API_HOST=${MA_API_HOST_ACC} " +
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
+           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
            "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
@@ -175,15 +180,20 @@ pipeline {
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
 
-        // Build the FE production image
+        // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_PRODUCTION} " +
-           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
-           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
-           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg MA_OTAP_ENV=production " +
+           "--build-arg MA_FRONTEND_HOST=${MA_FRONTEND_HOST_PROD} " +
+           "--build-arg MA_API_HOST=${MA_API_HOST_PROD} " +
+           "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
+           "--build-arg MA_FRONTEND_URL=${MA_FRONTEND_URL_PROD} " +
+           "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
+           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_PROD} " +
+           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
            "--target=deploy-production-frontend " +
            "--shm-size 1G " +
            "."
+
         sh "docker push ${IMAGE_PRODUCTION}"
 
         // Build the BFF production image
@@ -192,7 +202,6 @@ pipeline {
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg MA_OTAP_ENV=production " +
-           "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_PROD} " +
            "--target=deploy-bff " +
            "--shm-size 1G " +
            "."

@@ -189,6 +189,7 @@ export default function MyArea({
                     center={location.latlng}
                     zoom={zoom}
                     iconUrl={iconUrlCommercialSecondary}
+                    key={location.label}
                   />
                 ))}
               <ViewerContainer

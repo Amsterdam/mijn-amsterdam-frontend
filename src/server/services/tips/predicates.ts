@@ -32,6 +32,15 @@ export const hasValidId: TipsPredicateFN = (
   });
 };
 
+// To use an ID for voting it needs an expiration date with a maximum of five years ago.
+export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
+  const dateOfVote = new Date('2023-11-20'); // Minus 2 days for request processing.
+  const fiveYearsAgo = new Date(
+    dateOfVote.setFullYear(dateOfVote.getFullYear() - 5)
+  );
+  return hasValidId(appState, fiveYearsAgo);
+};
+
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   const stadspassen = appState.WPI_STADSPAS?.content?.stadspassen ?? [];

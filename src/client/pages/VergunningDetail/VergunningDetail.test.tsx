@@ -39,7 +39,7 @@ export function MockVergunningDetail({ identifier }: { identifier: string }) {
     title: slug(vergunning?.caseType, {
       lower: true,
     }),
-    id: vergunning?.id,
+    id: vergunning?.id ?? '',
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
@@ -265,5 +265,23 @@ describe('<VergunningDetail />', () => {
         expect(asFragment()).toMatchSnapshot();
       });
     }
+  });
+
+  describe('Eigen parkeerplaats', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230352" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Eigen parkeerplaats opheffen', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230376" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });

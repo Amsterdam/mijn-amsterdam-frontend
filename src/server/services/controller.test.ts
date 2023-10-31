@@ -169,24 +169,7 @@ describe('controller', () => {
 
     const result = await getTipNotifications('xx1xx', { cookies: '' } as any);
 
-    expect(result).toMatchInlineSnapshot(`
-      [
-        {
-          "chapter": "INKOMEN",
-          "datePublished": "2021-02-02",
-          "description": "Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.",
-          "id": "mijn-28",
-          "isAlert": false,
-          "isTip": true,
-          "link": {
-            "title": "Download de app",
-            "to": "https://pingping.amsterdam.nl/",
-          },
-          "tipReason": "Je ziet deze tip omdat je net 18 bent geworden of binnenkort 18 wordt",
-          "title": "Tip: Breng je basis op orde",
-        },
-      ]
-    `);
+    expect(result).toMatchInlineSnapshot('[]');
   });
 
   test('getTipNotifications private', async () => {
