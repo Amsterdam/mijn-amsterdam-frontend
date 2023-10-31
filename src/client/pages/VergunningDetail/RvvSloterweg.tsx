@@ -101,10 +101,24 @@ export function getRVVSloterwegLineItems(
     });
   }
 
+  if (isGranted && !isExpired) {
+    lineItems.push({
+      id: 'status-verlopen-placeholder',
+      status: 'Verlopen',
+      datePublished: '',
+      description: '',
+      documents: [],
+      isActive: false,
+      isChecked: false,
+    });
+  }
+
   return lineItems;
 }
 
 export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
+  const isGranted = !!vergunning.dateWorkflowVerleend;
+
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
@@ -127,13 +141,14 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
             vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
           }
         />
-
-        <InfoDetail
-          label="Tot"
-          value={
-            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
+        {isGranted && (
+          <InfoDetail
+            label="Tot"
+            value={
+              vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+            }
+          />
+        )}
       </InfoDetailGroup>
 
       {!!vergunning.decision && (

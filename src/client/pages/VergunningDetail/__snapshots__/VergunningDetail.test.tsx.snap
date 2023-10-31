@@ -4561,20 +4561,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               12 juli 2023
             </p>
           </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Tot
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              22 juli 2023
-            </p>
-          </div>
         </div>
       </div>
       <div
@@ -4945,7 +4931,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
                 class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
@@ -4964,6 +4950,44 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               >
                 27 juli 2023
               </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Verlopen
+              </strong>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
@@ -5111,20 +5135,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               class="_Value_6f1df2"
             >
               12 juli 2023
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Tot
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              22 juli 2023
             </p>
           </div>
         </div>
@@ -5441,20 +5451,6 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_Value_6f1df2"
             >
               02 augustus 2023
-            </p>
-          </div>
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Tot
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            >
-              02 augustus 2024
             </p>
           </div>
         </div>
@@ -6276,7 +6272,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
               />
               <span
                 class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
@@ -6295,6 +6291,44 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               >
                 28 juli 2023
               </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Verlopen
+              </strong>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
