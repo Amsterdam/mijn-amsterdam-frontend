@@ -48,7 +48,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_TONK: 'Aanvraag TONK',
   WPI_BBZ: 'Aanvraag Bbz',
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
-  WPI_STADSPAS_aanvragen: 'Stadspasaanvragen',
+  // WPI_STADSPAS_aanvragen: 'Stadspasaanvragen',
   WPI_STADSPAS_stadspas: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
