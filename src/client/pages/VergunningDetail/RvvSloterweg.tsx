@@ -18,13 +18,18 @@ export function getRVVSloterwegLineItems(
   const isReceived =
     (!vergunning.dateWorkflowActive || !vergunning.dateWorkflowVerleend) &&
     !vergunning.decision;
-  const isInprogress = !!vergunning.dateWorkflowActive && !vergunning.decision;
-  const isGranted = !!vergunning.dateWorkflowVerleend && !vergunning.decision;
+  const isInprogress = !!vergunning.dateWorkflowActive;
+  const isGranted = !!vergunning.dateWorkflowVerleend;
 
   const isExpired =
-    (vergunning.dateEnd && isGranted
+    (vergunning.dateEnd && isGranted && !vergunning.decision
       ? new Date(vergunning.dateEnd) < new Date()
       : false) ||
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
+
+  const hasDecision =
+    isRevoked ||
+    isMatured ||
     vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
 
   const lineItems: StatusLineItem[] = [
@@ -46,20 +51,22 @@ export function getRVVSloterwegLineItems(
       datePublished: vergunning.dateWorkflowActive ?? '',
       description: '',
       documents: [],
-      isActive: isInprogress && !isGranted,
+      isActive: isInprogress && !isGranted && !isRevoked,
       isChecked: isInprogress,
     });
   }
 
-  lineItems.push({
-    id: 'status-in-verleend',
-    status: 'Verleend',
-    datePublished: vergunning.dateWorkflowVerleend ?? '',
-    description: '',
-    documents: [],
-    isActive: isGranted,
-    isChecked: !!vergunning.dateWorkflowVerleend,
-  });
+  if (isGranted || (!isGranted && !isRevoked)) {
+    lineItems.push({
+      id: 'status-in-verleend',
+      status: 'Verleend',
+      datePublished: vergunning.dateWorkflowVerleend ?? '',
+      description: '',
+      documents: [],
+      isActive: isGranted && !hasDecision,
+      isChecked: !!vergunning.dateWorkflowVerleend || hasDecision,
+    });
+  }
 
   if (isRevoked) {
     lineItems.push({
@@ -101,7 +108,7 @@ export function getRVVSloterwegLineItems(
     });
   }
 
-  if (isGranted && !isExpired) {
+  if (isGranted && !isExpired && !isMatured && !isRevoked) {
     lineItems.push({
       id: 'status-verlopen-placeholder',
       status: 'Verlopen',
