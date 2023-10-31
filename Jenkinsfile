@@ -138,6 +138,7 @@ pipeline {
            "--build-arg MA_BUILD_ID=${BUILD_NUMBER} " +
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
+           "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
            "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
