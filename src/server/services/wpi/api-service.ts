@@ -152,6 +152,7 @@ export async function fetchStadspas(
       .map((requestProcess) => addLink(requestProcess));
   };
 
+  // Only request aanvragen when toggle is active
   const aanvragenRequest = FeatureToggle.stadspasRequestsActive
     ? fetchRequestProcess(
         requestID,
