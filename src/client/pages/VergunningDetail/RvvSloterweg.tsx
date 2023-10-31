@@ -108,7 +108,7 @@ export function getRVVSloterwegLineItems(
     });
   }
 
-  if (isGranted && !isExpired && !isMatured && !isRevoked) {
+  if (isGranted && !isExpired && !hasDecision) {
     lineItems.push({
       id: 'status-verlopen-placeholder',
       status: 'Verlopen',
