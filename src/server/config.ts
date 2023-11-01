@@ -447,10 +447,11 @@ export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
-  routes: {
-    ...oidcConfigBase.routes,
-    postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
-  },
+  // TODO: Enable if library supports logout_hint for end_session_endpoints
+  // routes: {
+  //   ...oidcConfigBase.routes,
+  //   postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
+  // },
 };
 
 // Op 1.13 met ketenmachtiging

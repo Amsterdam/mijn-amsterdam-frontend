@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { FeatureToggle } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
@@ -270,23 +270,38 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
   return res.redirect(redirectUrl);
 });
 
-router.get(BffEndpoints.AUTH_LOGOUT_DIGID, async (req, res) => {
-  const frontendUrl = process.env.MA_FRONTEND_URL!;
+function logout(postLogoutRedirectUrl: string) {
+  return async (req: Request, res: Response) => {
+    if (!req.oidc.isAuthenticated()) {
+      return res.redirect(postLogoutRedirectUrl);
+    }
 
-  if (!req.oidc.isAuthenticated()) {
-    return res.redirect(frontendUrl);
-  }
+    const auth = await getAuth(req);
 
-  const auth = await getAuth(req);
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return res.redirect(
+      `${process.env.BFF_OIDC_USERINFO_ENDPOINT!.replace(
+        'userinfo',
+        'end_session_endpoint'
+      )}?post_logout_redirect_uri=${encodeURIComponent(
+        postLogoutRedirectUrl
+      )}&logout_hint=${auth.profile.sid}`
+    );
+  };
+}
 
-  return res.redirect(
-    `${process.env.BFF_OIDC_USERINFO_ENDPOINT!.replace(
-      'userinfo',
-      'end_session_endpoint'
-    )}?post_logout_redirect_uri=${encodeURIComponent(
-      frontendUrl
-    )}&logout_hint=${auth.profile.sid}`
-  );
-});
+router.get(
+  BffEndpoints.AUTH_LOGOUT_DIGID,
+  logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_EHERKENNING,
+  logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_YIVI,
+  logout(process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT!)
+);
