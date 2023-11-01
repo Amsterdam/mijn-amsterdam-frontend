@@ -390,7 +390,7 @@ export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: true,
+  idpLogout: false, // TODO: Re-enable if the express-openid-connect library supports the logout_hint https://github.com/auth0/express-openid-connect/issues/530
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
@@ -408,9 +408,9 @@ const oidcConfigBase: ConfigParams = {
   },
   routes: {
     login: false,
-    logout: AUTH_LOGOUT,
+    logout: false,
     callback: false,
-    postLogoutRedirect: process.env.MA_FRONTEND_URL,
+    // postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
     const claims = jose.JWT.decode(session.id_token) as {

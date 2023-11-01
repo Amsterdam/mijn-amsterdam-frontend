@@ -269,3 +269,24 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
 
   return res.redirect(redirectUrl);
 });
+
+router.get(BffEndpoints.AUTH_LOGOUT_DIGID, async (req, res) => {
+  const frontendUrl = process.env.MA_FRONTEND_URL!;
+
+  if (!req.oidc.isAuthenticated()) {
+    return res.redirect(frontendUrl);
+  }
+
+  const auth = await getAuth(req);
+
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+
+  return res.redirect(
+    `${process.env.BFF_OIDC_USERINFO_ENDPOINT!.replace(
+      'userinfo',
+      'end_session_endpoint'
+    )}?post_logout_redirect_uri=${encodeURIComponent(
+      frontendUrl
+    )}&logout_hint=${auth.profile.sid}`
+  );
+});
