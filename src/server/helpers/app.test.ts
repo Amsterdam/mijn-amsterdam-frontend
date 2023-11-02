@@ -330,22 +330,22 @@ describe('server/helpers/app', () => {
     }
   });
 
-  test('getOIDCToken.success', () => {
+  test('getOIDCToken.success', async () => {
     const jweCookieString =
       'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIwMTMzLCJ1YXQiOjE2NTA2MjAxMzMsImV4cCI6MTY1MDYyMTAzM30..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
 
-    expect(getOIDCToken(jweCookieString)).toMatchInlineSnapshot(
+    expect(await getOIDCToken(jweCookieString)).toMatchInlineSnapshot(
       `"eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJ1cm46ZXRvZWdhbmc6MS45OkVudGl0eUNvbmNlcm5lZElEOkt2S25yIjoiMTIzLWVoZXJrZW5uaW5nLTMyMSIsImF1ZCI6InRlc3QxIiwiaWF0IjoxNjUwNjIwMTMzfQ.qF2JLBflk_ajk11jiyrZqcLklB618aSVjnazeDAyljdRJMN_vUUqVZBNLgLI0CBZ_jTYQwbl2OQsizGIdp9_yUadu1FhU4xGHYFBXvtLmdUk049bLccJoFIFYrvJq9yMAUhhRrBLjUUPJN3M8KijF7JKG74QYwyKyL-MzvsvKOqQNLJKUgQ4wUbsY2n9SjPcWGtB6rvkHrbfGGZZmdozIKXWmsQMYP41cEL9E0S15iF78Zko8jaWiV9oUHNqy3CfyZJz-K0dCbPAhs73q_7NqZQF1UoRgw8cQCVpfami521KpS7U6PK6oYlrigF1sHhsN_MuCwVHeOtu_BvBo_IFMQ"`
     );
   });
 
-  test('getOIDCToken.fail', () => {
+  test('getOIDCToken.fail', async () => {
     const jweCookieString =
       'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjUwNjIyMTM2LCJ1YXQiOjE2NTA2MjIxMzYsImV4cCI6MTY1MDYyMzAzNn0..WJ7z2STbwGapmA7T.efCR3f_rH43BbxSzg7FhHE4zTpjOOA6TRG8KpKw7v_YsEJpmreToyymMPqpiavdHQWsYy13tdArS_B5C-rsTeXPwu53iHDj-RWJJKMt1ojipgB47tEW-T5VA1ZCE4mNRUxuYwHF8Q0S4vat4ZPT6M0Z_ktUznc7yaUtWyQOHsFSW39Ly9vF1cC4JydAfgDw8gosC-_DWSlWtLzSiTUSapH16VSznedPBISMxruukge2dLaCv-khKUKrtPUe3g8JSPO524iSphE47xFefzQNbrj-xQu9__uH31P_XKpxqoJ7O4PzQcgcq2EKxEqmvALRjh86pvSipSK5qVLv4wb1AHqnnd6O5fJkVT4n6W46W9g4B-4duYsFkM8OI6Z0YPUGhjx0DgurdVKLaBZM_gL782rEWDBjRAJD62Mn6MBxverk6Y8auFhontxUypKXh-2RmubkCgFJi473N3ozeeWGFAg550lNxIMY77YvGgKqPXXPUn9ye6l_8I1LpGEniyPnqZsJN8s0aeL2G6hcpChTgBErQ5liaf0XoyX3hEpi7cTNYwGxat1KuuVP5iQtdiWHxp6k-jhRxxLW96SYlpO56O5W3aMP5iJzPt-TVnwF2VnR-9AWzS_jtF3MSsvX35Pq_E-aRha7YHPeI9B4RmjDBx7GLAdYS5X7L33gR9hYZml30UJ0tpnJywvDT-UmBYrPzdns3U3ATiVrgPHgq3HR1n0HdALePCHzSd3sIriDZmKG2wWbwC51KzM5OG3vPmt19N75K.TJ6JzT9e18M_R9KgG9qzwg';
 
     let err;
     try {
-      getOIDCToken(jweCookieString);
+      await getOIDCToken(jweCookieString);
     } catch (error: any) {
       err = error.toString();
     }
