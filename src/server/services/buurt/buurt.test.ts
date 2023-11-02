@@ -132,6 +132,7 @@ vi.mock('../../../universal/config/env', () => {
     IS_PRODUCTION: false,
     IS_ACCEPTANCE: true,
     IS_TAP: true,
+    IS_TEST: true,
   };
 });
 vi.mock('../../../universal/config/myarea-datasets');
