@@ -3,7 +3,7 @@ import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
-import jose from 'jose';
+import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
 import { IS_OT, IS_TEST } from '../universal/config/env';
 import {
@@ -422,7 +422,7 @@ const oidcConfigBase: ConfigParams = {
     postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
-    const claims = jose.JWT.decode(session.id_token) as {
+    const claims = jose.decodeJwt(session.id_token) as {
       nonce: string;
     };
 

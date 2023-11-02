@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import axios, { AxiosRequestConfig } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
-import jose, { JWE, JWK, JWKS } from 'jose';
+import * as jose from 'jose';
 import memoize from 'memoizee';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
@@ -10,14 +10,10 @@ import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
-  DEV_JWK_PRIVATE,
-  DEV_JWK_PUBLIC,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
   OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-  OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
   RelayPathsAllowed,
@@ -27,7 +23,9 @@ import {
   oidcConfigEherkenning,
   oidcConfigYivi,
 } from '../config';
-import { axiosRequest, clearSessionCache } from './source-api-request';
+import { getPublicKeyForDevelopment } from './app.development';
+import { clearSessionCache } from './source-api-request';
+import { createSecretKey } from 'node:crypto';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
@@ -73,7 +71,7 @@ export interface AuthProfileAndToken {
 
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   const combinedCookies = combineCookieChunks(req.cookies);
-  const oidcToken = getOIDCToken(combinedCookies);
+  const oidcToken = await getOIDCToken(combinedCookies);
   const tokenData = await decodeOIDCToken(oidcToken);
   const profile = getAuthProfile(tokenData);
 
@@ -166,27 +164,33 @@ export async function getProfileType(req: Request): Promise<ProfileType> {
   return profileType || DEFAULT_PROFILE_TYPE;
 }
 
-export function getOIDCCookieData(jweCookieString: string): {
+export async function getOIDCCookieData(jweCookieString: string): Promise<{
   id_token: string;
-} {
-  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
+}> {
+  const key = await createSecretKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
 
   const encryptOpts = {
     alg: 'dir',
     enc: 'A256GCM',
   };
 
-  const { cleartext } = JWE.decrypt(jweCookieString, key, {
-    complete: true,
+  const options: jose.DecryptOptions = {
     contentEncryptionAlgorithms: [encryptOpts.enc],
     keyManagementAlgorithms: [encryptOpts.alg],
-  });
+  };
 
-  return JSON.parse(cleartext.toString());
+  const { plaintext, protectedHeader } = await jose.compactDecrypt(
+    jweCookieString,
+    key,
+    options
+  );
+
+  return JSON.parse(new TextDecoder().decode(plaintext));
 }
 
-export function getOIDCToken(jweCookieString: string): string {
-  return getOIDCCookieData(jweCookieString).id_token;
+export async function getOIDCToken(jweCookieString: string): Promise<string> {
+  const cookie = await getOIDCCookieData(jweCookieString);
+  return cookie.id_token;
 }
 
 export interface TokenData {
@@ -196,18 +200,19 @@ export interface TokenData {
 }
 
 const getJWKSKey = memoize(async () => {
-  return IS_AP
-    ? axiosRequest
-        .request({
-          url: process.env.BFF_OIDC_JWKS_URL,
-          responseType: 'json',
-        })
-        .then((response) => JWKS.asKeyStore(response.data))
-    : getPublicKeyForDevelopment();
+  if (IS_AP) {
+    const jwksUrl = process.env.BFF_OIDC_JWKS_URL;
+    if (!jwksUrl) {
+      throw new Error('BFF_OIDC_JWKS_URL env value not provided.');
+    }
+    return jose.createRemoteJWKSet(new URL(jwksUrl))();
+  }
+
+  return getPublicKeyForDevelopment();
 });
 
 export async function decodeOIDCToken(token: string): Promise<TokenData> {
-  const verificationOptions: jose.JWT.VerifyOptions = {
+  const verificationOptions: jose.JWTVerifyOptions = {
     clockTolerance: '2 minutes',
   };
 
@@ -216,11 +221,10 @@ export async function decodeOIDCToken(token: string): Promise<TokenData> {
     verificationOptions.maxTokenAge = OIDC_ID_TOKEN_EXP;
   }
 
-  return jose.JWT.verify(
-    token,
-    await getJWKSKey(),
-    verificationOptions
-  ) as unknown as TokenData;
+  const jwksKey = await getJWKSKey();
+  const verified = await jose.jwtVerify(token, jwksKey, verificationOptions);
+
+  return verified.payload as unknown as TokenData;
 }
 
 export function isRelayAllowed(pathRequested: string) {
@@ -316,10 +320,9 @@ export function verifyAuthenticated(
 }
 
 export function decodeToken<T extends Record<string, string> = {}>(
-  jwtToken: string,
-  options?: jose.JWT.DecodeOptions
+  jwtToken: string
 ): T {
-  return jose.JWT.decode(jwtToken, options) as unknown as T;
+  return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
 export function nocache(_req: Request, res: Response, next: NextFunction) {
@@ -341,59 +344,3 @@ export const isAuthenticated =
     }
     return sendUnauthorized(res);
   };
-
-/**
- *
- * Helpers for development
- */
-
-function encryptDevSessionCookieValue(payload: string, headers: object) {
-  const alg = 'dir';
-  const enc = 'A256GCM';
-  const key = JWK.asKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
-
-  return JWE.encrypt(payload, key, { alg, enc, ...headers });
-}
-
-function getPrivateKeyForDevelopment() {
-  const key = JWK.asKey(DEV_JWK_PRIVATE);
-  return key;
-}
-
-function getPublicKeyForDevelopment() {
-  return JWK.asKey(DEV_JWK_PUBLIC);
-}
-
-function signToken(authMethod: AuthProfile['authMethod'], userID: string) {
-  const idToken = jose.JWT.sign(
-    {
-      [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
-      aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
-    },
-    getPrivateKeyForDevelopment(),
-    {
-      algorithm: 'RS256',
-    }
-  );
-  return idToken;
-}
-
-export function generateDevSessionCookieValue(
-  authMethod: AuthProfile['authMethod'],
-  userID: string
-) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
-
-  const value = encryptDevSessionCookieValue(
-    JSON.stringify({ id_token: signToken(authMethod, userID) }),
-    {
-      iat,
-      uat,
-      exp,
-    }
-  );
-
-  return value;
-}

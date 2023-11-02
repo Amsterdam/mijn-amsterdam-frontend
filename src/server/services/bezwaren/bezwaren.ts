@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import axios from 'axios';
-import jose from 'jose';
+import * as jose from 'jose'
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
@@ -82,7 +82,7 @@ export async function fetchBezwarenDocuments(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
       transformResponse: transformBezwarenDocumentsResults,
-      headers: getBezwarenApiHeaders(authProfileAndToken),
+      headers: await getBezwarenApiHeaders(authProfileAndToken),
     }),
     zaakId
   );
@@ -192,7 +192,7 @@ async function fetchBezwaarStatus(
   const requestConfig = getApiConfig('BEZWAREN_STATUS', {
     params,
     transformResponse: transformBezwaarStatus,
-    headers: getBezwarenApiHeaders(authProfileAndToken),
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
   const bezwarenStatusResponse = await requestData<BezwaarStatus[]>(
@@ -223,7 +223,7 @@ export async function fetchBezwaarDocument(
 
   return axios({
     url,
-    headers: getBezwarenApiHeaders(authProfileAndToken),
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
     responseType: isDownload ? 'stream' : 'json',
   });
 }
@@ -303,7 +303,7 @@ export async function fetchBezwaren(
     data: requestBody,
     params,
     transformResponse: transformBezwarenResults,
-    headers: getBezwarenApiHeaders(authProfileAndToken),
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
   let result: Bezwaar[] = [];
@@ -401,7 +401,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   return notification;
 }
 
-function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
+async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
 
   const tokenData = {
@@ -426,19 +426,13 @@ function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
     tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
   }
 
+  const secret = new TextEncoder().encode(process.env.BFF_BEZWAREN_TOKEN_KEY);
+  const jwt = await new jose.SignJWT(tokenData).setProtectedHeader({ alg: 'HS256', typ: 'JWT' }).sign(secret)
+
   const header = {
     'Content-Type': 'application/json',
     apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
-    Authorization: `Bearer ${jose.JWT.sign(
-      tokenData,
-      process.env.BFF_BEZWAREN_TOKEN_KEY ?? '',
-      {
-        algorithm: 'HS256',
-        header: {
-          typ: 'JWT',
-        },
-      }
-    )}`,
+    Authorization: `Bearer ${jwt}`,
   };
 
   return header;
