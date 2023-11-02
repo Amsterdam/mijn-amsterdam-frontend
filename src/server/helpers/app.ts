@@ -24,7 +24,7 @@ import {
   oidcConfigYivi,
 } from '../config';
 import { getPublicKeyForDevelopment } from './app.development';
-import { clearSessionCache } from './source-api-request';
+import { axiosRequest, clearSessionCache } from './source-api-request';
 import { createSecretKey } from 'node:crypto';
 
 const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
@@ -205,7 +205,12 @@ const getJWKSKey = memoize(async () => {
     if (!jwksUrl) {
       throw new Error('BFF_OIDC_JWKS_URL env value not provided.');
     }
-    return jose.createRemoteJWKSet(new URL(jwksUrl))();
+    return axiosRequest
+      .request({
+        url: process.env.BFF_OIDC_JWKS_URL,
+        responseType: 'json',
+      })
+      .then((response) => jose.importJWK(response.data));
   }
 
   return getPublicKeyForDevelopment();
