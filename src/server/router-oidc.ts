@@ -279,10 +279,10 @@ function logout(postLogoutRedirectUrl: string) {
     const auth = await getAuth(req);
 
     res.oidc.logout({
+      returnTo: postLogoutRedirectUrl,
       logoutParams: {
         id_token_hint: null,
         logout_hint: auth.profile.sid,
-        returnTo: postLogoutRedirectUrl,
       },
     });
   };
