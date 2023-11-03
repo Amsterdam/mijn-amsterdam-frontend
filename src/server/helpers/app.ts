@@ -33,6 +33,7 @@ export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid' | 'yivi';
   profileType: ProfileType;
   id?: string;
+  sid?: string; // TMA Session ID
 }
 
 export function getAuthProfile(tokenData: TokenData): AuthProfile {
@@ -59,6 +60,7 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
 
   return {
     id: tokenData[idAttr],
+    sid: tokenData.sid,
     authMethod,
     profileType,
   };
@@ -196,6 +198,7 @@ export async function getOIDCToken(jweCookieString: string): Promise<string> {
 export interface TokenData {
   sub: string;
   aud: string;
+  sid: string;
   [key: string]: any;
 }
 

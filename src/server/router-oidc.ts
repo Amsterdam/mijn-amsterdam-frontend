@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { FeatureToggle } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
@@ -293,3 +293,36 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
 
   return res.redirect(redirectUrl);
 });
+
+function logout(postLogoutRedirectUrl: string) {
+  return async (req: Request, res: Response) => {
+    if (!req.oidc.isAuthenticated()) {
+      return res.redirect(postLogoutRedirectUrl);
+    }
+
+    const auth = await getAuth(req);
+
+    res.oidc.logout({
+      returnTo: postLogoutRedirectUrl,
+      logoutParams: {
+        id_token_hint: null,
+        logout_hint: auth.profile.sid,
+      },
+    });
+  };
+}
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_DIGID,
+  logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_EHERKENNING,
+  logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_YIVI,
+  logout(process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT!)
+);

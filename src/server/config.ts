@@ -417,9 +417,8 @@ const oidcConfigBase: ConfigParams = {
   },
   routes: {
     login: false,
-    logout: AUTH_LOGOUT,
+    logout: false,
     callback: false,
-    postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
     const claims = jose.decodeJwt(session.id_token) as {
@@ -456,10 +455,6 @@ export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
-  routes: {
-    ...oidcConfigBase.routes,
-    postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
-  },
 };
 
 // Op 1.13 met ketenmachtiging
