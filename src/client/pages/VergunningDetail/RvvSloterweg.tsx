@@ -18,7 +18,7 @@ export function getRVVSloterwegLineItems(
   const isReceived =
     (!vergunning.dateWorkflowActive || !vergunning.dateWorkflowVerleend) &&
     !vergunning.decision;
-  const isInprogress = !!vergunning.dateWorkflowActive;
+  const isInprogress = !!vergunning.dateWorkflowActive || !isChangeRequest;
   const isGranted = !!vergunning.dateWorkflowVerleend;
 
   const isExpired =
@@ -44,19 +44,33 @@ export function getRVVSloterwegLineItems(
     },
   ];
 
-  if (isChangeRequest) {
+  lineItems.push({
+    id: 'status-in-in-behandeling',
+    status: 'In behandeling',
+    datePublished: vergunning.dateWorkflowActive
+      ? vergunning.dateWorkflowActive
+      : !isChangeRequest
+      ? vergunning.dateRequest
+      : '',
+    description: '',
+    documents: [],
+    isActive: isInprogress && !isGranted && !isRevoked,
+    isChecked: isInprogress,
+  });
+
+  if (!isGranted && !hasDecision) {
     lineItems.push({
-      id: 'status-in-in-behandeling',
-      status: 'In behandeling',
-      datePublished: vergunning.dateWorkflowActive ?? '',
+      id: 'status-in-afgehandeld',
+      status: 'Afgehandeld',
+      datePublished: '',
       description: '',
       documents: [],
-      isActive: isInprogress && !isGranted && !isRevoked,
-      isChecked: isInprogress,
+      isActive: false,
+      isChecked: false,
     });
   }
 
-  if (isGranted || (!isGranted && !isRevoked)) {
+  if (isGranted) {
     lineItems.push({
       id: 'status-in-verleend',
       status: 'Verleend',
@@ -137,7 +151,7 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
       <InfoDetail label="Kenteken" value={vergunning.licensePlates} />
       {vergunning.previousLicensePlates && (
         <InfoDetail
-          label="Vorige kenteken"
+          label="Oud kenteken"
           value={vergunning.previousLicensePlates}
         />
       )}
