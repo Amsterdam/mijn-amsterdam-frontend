@@ -213,7 +213,7 @@ const getJWKSKey = memoize(async () => {
         url: process.env.BFF_OIDC_JWKS_URL,
         responseType: 'json',
       })
-      .then((response) => jose.createLocalJWKSet(response.data));
+      .then((response) => jose.createLocalJWKSet(response.data)());
   }
 
   return getPublicKeyForDevelopment();
