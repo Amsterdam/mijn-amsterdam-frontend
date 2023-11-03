@@ -47,7 +47,7 @@ variables:
   - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: t
-  - ${{ if and(eq(variables['Build.SourceBranchName'], 'main'), eq(parameters.dtapName, 'none')) }}:
+  - ${{ if and(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: a
   - ${{ if ne(parameters.dtapName, 'none') }}:
