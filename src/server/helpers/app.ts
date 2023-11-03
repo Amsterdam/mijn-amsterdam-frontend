@@ -202,7 +202,7 @@ export interface TokenData {
   [key: string]: any;
 }
 
-const getJWKSKey = memoize(async () => {
+const getJWK = memoize(async () => {
   if (IS_AP) {
     const jwksUrl = process.env.BFF_OIDC_JWKS_URL;
     if (!jwksUrl) {
@@ -213,7 +213,7 @@ const getJWKSKey = memoize(async () => {
         url: process.env.BFF_OIDC_JWKS_URL,
         responseType: 'json',
       })
-      .then((response) => jose.createLocalJWKSet(response.data)());
+      .then((response) => jose.importJWK(response.data.keys[0]));
   }
 
   return getPublicKeyForDevelopment();
@@ -229,7 +229,7 @@ export async function decodeOIDCToken(token: string): Promise<TokenData> {
     verificationOptions.maxTokenAge = OIDC_ID_TOKEN_EXP;
   }
 
-  const jwksKey = await getJWKSKey();
+  const jwksKey = await getJWK();
   const verified = await jose.jwtVerify(token, jwksKey, verificationOptions);
 
   return verified.payload as unknown as TokenData;
