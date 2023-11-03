@@ -152,13 +152,13 @@ export async function fetchStadspas(
       .map((requestProcess) => addLink(requestProcess));
   };
 
-  // Only request aanvragen when toggle is active
   let aanvragenRequest:
     | Promise<ApiResponse<WpiRequestProcess[] | null>>
     | Promise<ApiSuccessResponse<never[]>> = Promise.resolve(
     apiSuccessResult([])
   );
 
+  // Only request aanvragen when toggle is active
   if (FeatureToggle.stadspasRequestsActive) {
     aanvragenRequest = fetchRequestProcess(
       requestID,
