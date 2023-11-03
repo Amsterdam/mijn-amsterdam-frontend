@@ -282,7 +282,7 @@ function logout(postLogoutRedirectUrl: string) {
       logoutParams: {
         id_token_hint: null,
         logout_hint: auth.profile.sid,
-        postLogoutRedirectUrl,
+        returnTo: postLogoutRedirectUrl,
       },
     });
   };
