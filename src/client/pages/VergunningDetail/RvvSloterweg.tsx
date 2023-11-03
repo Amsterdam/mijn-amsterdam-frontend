@@ -32,6 +32,12 @@ export function getRVVSloterwegLineItems(
     isMatured ||
     vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN;
 
+  let dateInProgress = vergunning.dateWorkflowActive ?? '';
+
+  if (!isChangeRequest) {
+    dateInProgress = vergunning.dateRequest;
+  }
+
   const lineItems: StatusLineItem[] = [
     {
       id: 'status-ontvangen',
@@ -47,11 +53,7 @@ export function getRVVSloterwegLineItems(
   lineItems.push({
     id: 'status-in-in-behandeling',
     status: 'In behandeling',
-    datePublished: vergunning.dateWorkflowActive
-      ? vergunning.dateWorkflowActive
-      : !isChangeRequest
-      ? vergunning.dateRequest
-      : '',
+    datePublished: dateInProgress,
     description: '',
     documents: [],
     isActive: isInprogress && !isGranted && !isRevoked,
