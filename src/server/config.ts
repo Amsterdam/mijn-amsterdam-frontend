@@ -399,7 +399,7 @@ export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
-  idpLogout: false, // TODO: Re-enable if the express-openid-connect library supports the logout_hint https://github.com/auth0/express-openid-connect/issues/530
+  idpLogout: true,
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
@@ -419,7 +419,6 @@ const oidcConfigBase: ConfigParams = {
     login: false,
     logout: false,
     callback: false,
-    // postLogoutRedirect: process.env.MA_FRONTEND_URL,
   },
   afterCallback: (req, res, session) => {
     const claims = jose.JWT.decode(session.id_token) as {
@@ -456,11 +455,6 @@ export const oidcConfigYivi: ConfigParams = {
   ...oidcConfigBase,
   clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
   authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
-  // TODO: Enable if library supports logout_hint for end_session_endpoints
-  // routes: {
-  //   ...oidcConfigBase.routes,
-  //   postLogoutRedirect: process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT,
-  // },
 };
 
 // Op 1.13 met ketenmachtiging

@@ -278,16 +278,13 @@ function logout(postLogoutRedirectUrl: string) {
 
     const auth = await getAuth(req);
 
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-
-    return res.redirect(
-      `${process.env.BFF_OIDC_USERINFO_ENDPOINT!.replace(
-        'userinfo',
-        'end_session_endpoint'
-      )}?post_logout_redirect_uri=${encodeURIComponent(
-        postLogoutRedirectUrl
-      )}&logout_hint=${auth.profile.sid}`
-    );
+    res.oidc.logout({
+      logoutParams: {
+        id_token_hint: null,
+        logout_hint: auth.profile.sid,
+        postLogoutRedirectUrl,
+      },
+    });
   };
 }
 
