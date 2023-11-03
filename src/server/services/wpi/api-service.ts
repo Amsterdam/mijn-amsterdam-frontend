@@ -153,8 +153,10 @@ export async function fetchStadspas(
   };
 
   // Only request aanvragen when toggle is active
-  const aanvragenRequest = FeatureToggle.stadspasRequestsActive
-    ? fetchRequestProcess(
+  let aanvragenRequest = Promise.resolve(apiSuccessResult([]));
+  
+  if (FeatureToggle.stadspasRequestsActive) {
+    aanvragenRequest =  fetchRequestProcess(
         requestID,
         authProfileAndToken,
         () => stadspasRequestProcessLabels,
@@ -164,9 +166,7 @@ export async function fetchStadspas(
           requestCacheKey: 'fetch-aanvragen-' + requestID,
         }
       )
-    : new Promise<ApiSuccessResponse<[]>>((resolve) => {
-        return resolve(apiSuccessResult([]));
-      });
+  }
 
   const stadspasRequest = requestData<WpiStadspasResponseData>(
     getApiConfig('WPI_STADSPAS', {
