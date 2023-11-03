@@ -26,8 +26,8 @@ parameters:
       - none
       - o
       - t
-      # - a
-      # - p
+      - a
+      - p
 
   - name: updateAppSettings
     type: boolean
@@ -47,6 +47,9 @@ variables:
   - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: t
+  - ${{ if and(eq(variables['Build.SourceBranchName'], 'main'), eq(parameters.dtapName, 'none')) }}:
+      - name: dtapName
+        value: a
   - ${{ if ne(parameters.dtapName, 'none') }}:
       - name: dtapName
         value: ${{ parameters.dtapName }}
