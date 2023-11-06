@@ -1214,7 +1214,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             <p
               class="_Value_6f1df2"
             >
-              01 oktober 2022
+              01 september 2022
             </p>
           </div>
           <div
@@ -1228,7 +1228,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             <p
               class="_Value_6f1df2"
             >
-              05 oktober 2022
+              05 september 2022
             </p>
           </div>
           <div
@@ -1242,10 +1242,24 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             <p
               class="_Value_6f1df2"
             >
-              11:00 - 16:00 uur
+              10:00 - 17:00 uur
             </p>
           </div>
         </div>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Verleend
+        </p>
       </div>
     </div>
     <div
@@ -1287,7 +1301,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
               <time
                 class="_StatusDate_a12ff2"
               >
-                08 augustus 2022
+                13 juli 2022
               </time>
             </div>
             <div
@@ -1330,7 +1344,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
               <time
                 class="_StatusDate_a12ff2"
               >
-                08 augustus 2022
+                13 juli 2022
               </time>
             </div>
             <div
@@ -1370,6 +1384,11 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
               >
                 Afgehandeld
               </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                31 juli 2022
+              </time>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"
@@ -4051,6 +4070,70 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           </button>
         </p>
       </div>
+      <div
+        class="_InfoDetailGroup_6f1df2 _DateAndTime_SingleLine_28a267"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+            >
+              Vanaf
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              01 oktober 2022
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+            >
+              Tot en met
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              05 oktober 2022
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+            >
+              Tussen
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              10:15 - 18:35 uur
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Verleend
+        </p>
+      </div>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
@@ -4091,50 +4174,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
               <time
                 class="_StatusDate_a12ff2"
               >
-                16 september 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                16 september 2022
+                13 juli 2022
               </time>
             </div>
             <div
@@ -4160,10 +4200,53 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
               class="_StatusConnection_a12ff2"
             >
               <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
               />
               <span
-                class="_Checkmark_a12ff2"
+                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                13 juli 2022
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
               />
             </div>
             <div
@@ -4174,6 +4257,11 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
               >
                 Afgehandeld
               </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                15 september 2022
+              </time>
             </div>
             <div
               class="_Panel_a12ff2 _Panel--description_a12ff2"

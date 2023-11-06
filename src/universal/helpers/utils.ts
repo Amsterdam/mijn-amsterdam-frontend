@@ -93,12 +93,15 @@ export function sortAlpha(
         break;
     }
 
-    if (aValue < bValue) {
+    const compareResult = aValue.localeCompare(bValue);
+
+    if (compareResult < 0) {
       return sortASC ? -1 : 1;
     }
-    if (aValue > bValue) {
+    if (compareResult > 0) {
       return sortASC ? 1 : -1;
     }
+
     return 0;
   };
 }
