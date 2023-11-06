@@ -82,7 +82,7 @@
     "express": "^4.17.3",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^1.6.3",
-    "express-openid-connect": "^2.5.2",
+    "express-openid-connect": "^2.17.1",
     "express-rate-limit": "^6.4.0",
     "flat-cache": "^3.0.4",
     "focus-trap-react": "^8.8.2",
