@@ -54,8 +54,6 @@ export async function signDevelopmentToken(
     const idToken = await new jose.SignJWT(data)
       .setProtectedHeader({ alg })
       .setIssuedAt()
-      // .setIssuer('urn:example:issuer')
-      // .setAudience('urn:example:audience')
       .setExpirationTime('2h')
       .sign(await getPrivateKeyForDevelopment());
     return idToken;
