@@ -21,10 +21,7 @@ async function encryptDevSessionCookieValue(payload: string, headers: object) {
   const alg = 'dir';
   const enc = 'A256GCM';
   const keySource = deriveKey(OIDC_COOKIE_ENCRYPTION_KEY);
-  // console.log(keySource);
   const key = await createSecretKey(keySource);
-  console.log(key);
-  // const secret = new TextEncoder().encode(OIDC_COOKIE_ENCRYPTION_KEY)
 
   const jwe = await new jose.CompactEncrypt(new TextEncoder().encode(payload))
     .setProtectedHeader({ alg, enc, ...headers })
