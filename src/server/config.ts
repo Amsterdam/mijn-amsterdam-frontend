@@ -5,7 +5,7 @@ import fs from 'fs';
 import https from 'https';
 import jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TEST } from '../universal/config/env';
+import { IS_OT, IS_TAP, IS_TEST } from '../universal/config/env';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -228,6 +228,9 @@ export const ApiConfig: ApiDataRequestConfig = {
       ca: IS_TAP ? getCertificateSync(process.env.BFF_SERVER_CLIENT_CERT) : [],
     }),
     postponeFetch: !FeatureToggle.erfpachtV2EndpointActive,
+    headers: {
+      'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
+    },
   },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
