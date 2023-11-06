@@ -31,7 +31,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-10",
-        "description": "Uw aanvraag voor een eigen parkeerplaats is ontvangen.",
+        "description": "Wij hebben uw aanvraag eigen parkeerplaats ontvangen.",
         "id": "vergunning-1817502388-notification",
         "link": {
           "title": "Bekijk details",
