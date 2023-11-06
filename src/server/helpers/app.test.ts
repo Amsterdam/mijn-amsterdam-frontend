@@ -90,6 +90,7 @@ describe('server/helpers/app', () => {
           "authMethod": "eherkenning",
           "id": "123-eherkenning-321",
           "profileType": "commercial",
+          "sid": undefined,
         },
         "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJ1cm46ZXRvZWdhbmc6MS45OkVudGl0eUNvbmNlcm5lZElEOkt2S25yIjoiMTIzLWVoZXJrZW5uaW5nLTMyMSIsImF1ZCI6InRlc3QxIiwiaWF0IjoxNjUwNjIwMTMzfQ.qF2JLBflk_ajk11jiyrZqcLklB618aSVjnazeDAyljdRJMN_vUUqVZBNLgLI0CBZ_jTYQwbl2OQsizGIdp9_yUadu1FhU4xGHYFBXvtLmdUk049bLccJoFIFYrvJq9yMAUhhRrBLjUUPJN3M8KijF7JKG74QYwyKyL-MzvsvKOqQNLJKUgQ4wUbsY2n9SjPcWGtB6rvkHrbfGGZZmdozIKXWmsQMYP41cEL9E0S15iF78Zko8jaWiV9oUHNqy3CfyZJz-K0dCbPAhs73q_7NqZQF1UoRgw8cQCVpfami521KpS7U6PK6oYlrigF1sHhsN_MuCwVHeOtu_BvBo_IFMQ",
       }
@@ -119,6 +120,7 @@ describe('server/helpers/app', () => {
           "authMethod": "digid",
           "id": "000-digid-999",
           "profileType": "private",
+          "sid": undefined,
         },
         "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhZTjNwTkRVVXloby10UUIyNWFmcThES0NyeHQyVi1iUzZXOWdSazBjZ2sifQ.eyJzdWIiOiIwMDAtZGlnaWQtOTk5IiwiYXVkIjoidGVzdDIiLCJpYXQiOjE2NTA2MTk4NDV9.QvPW0CYDnHiX77VZVAUmXahrQeJW1D0IrR4GBTyayH83nv3xe-nHnUMsXIchuYozmDwnF36CBsd1mm-C16x0PK1QD6-Fu-2PAekMxKaWpRWcI6ICOgliEVyV6a2B_KI3ZHshjlXxLyh59VL_2NegKZBQWEvTsFazn0fzbPmoKM3SVj19IiLug8Us4n-jYvzD8kplGzvWVujl4-1VYeNvn0vSfBrcSdLtGPJI7fcJafPxJs6gY2mrpwyeQ3Pan7DEEhXOqucjs81x9cwRRf4_JbRkehLKCwxb4u1USSusqTEqGhGQm7JGJlD4nZIdScNG7Xyx9LQcGm0EfnrjXOTGcw",
       }
@@ -133,12 +135,14 @@ describe('server/helpers/app', () => {
         sub: '-unused-',
         aud: 'test1',
         [EH_ATTR_PRIMARY_ID]: 'EHERKENNING-KVK',
+        sid: 'test',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EHERKENNING-KVK',
+        sid: 'test',
       });
     }
 
@@ -146,12 +150,14 @@ describe('server/helpers/app', () => {
       const profile = getAuthProfile({
         aud: 'test2',
         [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
+        sid: 'test2',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
+        sid: 'test2',
       });
     }
 
@@ -159,12 +165,14 @@ describe('server/helpers/app', () => {
       const profile = getAuthProfile({
         aud: 'test_x',
         [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
+        sid: 'test2b',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
+        sid: 'test2b',
       });
     }
 
@@ -173,12 +181,14 @@ describe('server/helpers/app', () => {
         sub: '',
         aud: 'test1',
         [EH_ATTR_PRIMARY_ID]: 'EH-KVK1',
+        sid: 'test3',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
+        sid: 'test3',
       });
     }
 
@@ -187,12 +197,14 @@ describe('server/helpers/app', () => {
         sub: '',
         aud: 'test1',
         [EH_ATTR_PRIMARY_ID_LEGACY]: 'EH-KVK1',
+        sid: 'test4',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
+        sid: 'test4',
       });
     }
 
@@ -202,12 +214,14 @@ describe('server/helpers/app', () => {
         aud: 'test1',
         [EH_ATTR_INTERMEDIATE_PRIMARY_ID]: 'EH-KVK1',
         [EH_ATTR_INTERMEDIATE_SECONDARY_ID]: 'EH-KVK2',
+        sid: 'test5',
       } as TokenData);
 
       expect(profile).toStrictEqual({
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
+        sid: 'test5',
       });
     }
   });
