@@ -30,9 +30,9 @@ export function getRVVSloterwegLineItems(
     : '';
 
   if (hasDecision) {
-    decisionText = `${decisionText}<p>Ontheffing ${
-      vergunning.decision
-    } op ${defaultDateFormat(vergunning.dateDecision ?? '')}.</p>`;
+    decisionText = `${decisionText}<p>Ontheffing ${vergunning.decision.toLowerCase()} op ${defaultDateFormat(
+      vergunning.dateDecision ?? ''
+    )}.</p>`;
   }
 
   const lineItems: StatusLineItem[] = [
