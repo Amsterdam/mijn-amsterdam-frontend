@@ -53,7 +53,7 @@
     "@types/lodash.isequal": "^4.5.5",
     "@types/marked": "^4.0.1",
     "@types/memoizee": "^0.4.6",
-    "@types/memory-cache": "^0.2.1",
+    "@types/memory-cache": "^0.2.4",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.19",
     "@types/node-jose": "^1.1.10",
