@@ -52,7 +52,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchErfpachtV2 } from './simple-connect/erfpacht';
+import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -125,7 +125,8 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
-const ERFPACHT = callService(fetchErfpachtV2);
+const ERFPACHT = callService(fetchErfpacht);
+const ERFPACHTv2 = callService(fetchErfpachtV2);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
@@ -178,6 +179,7 @@ const SERVICES_INDEX = {
   MILIEUZONE,
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
+  ERFPACHTv2,
   SUBSIDIE,
   KLACHTEN,
   BEZWAREN,
@@ -211,6 +213,7 @@ type CommercialServices = Pick<
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'SUBSIDIE'
   | 'NOTIFICATIONS'
   | 'MY_LOCATION'
@@ -237,6 +240,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
+    ERFPACHTv2,
     KREFIA,
     WPI_AANVRAGEN,
     WPI_SPECIFICATIES,
@@ -272,6 +276,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
+    ERFPACHTv2,
     NOTIFICATIONS,
     MY_LOCATION,
     KVK,

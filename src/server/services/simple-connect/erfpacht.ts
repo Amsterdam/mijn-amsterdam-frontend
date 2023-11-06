@@ -119,16 +119,6 @@ export async function fetchErfpachtV2(
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
-  const connectieAPIM = requestData(
-    {
-      ...config,
-      url: `${config.url}/resource?param1=sample`,
-      transformResponse: getNamedResponseTransformer('APIM'),
-    },
-    requestID,
-    authProfileAndToken
-  );
-
   const connectieVerniseHealth = requestData(
     {
       ...config,
@@ -150,16 +140,14 @@ export async function fetchErfpachtV2(
   );
 
   const result = await Promise.allSettled([
-    connectieAPIM,
     connectieVerniseHealth,
     connectieErfpachter,
   ]);
 
   return {
     content: {
-      APIM: getSettledResult(result[0]),
-      verniseHealth: getSettledResult(result[1]),
-      erfpachter: getSettledResult(result[2]),
+      verniseHealth: getSettledResult(result[0]),
+      erfpachter: getSettledResult(result[1]),
     },
   };
 }
