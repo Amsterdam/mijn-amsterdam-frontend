@@ -24,7 +24,11 @@ export function getRVVSloterwegLineItems(
       ? new Date(vergunning.dateEnd) < new Date()
       : false;
 
-  const hasDecision = !!vergunning.decision;
+  const hasDecision = [
+    RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+    RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN,
+    RVV_SLOTERWEG_RESULT_MATURED,
+  ].includes(vergunning.decision);
 
   let dateInProgress = vergunning.dateWorkflowActive ?? '';
 
@@ -60,10 +64,12 @@ export function getRVVSloterwegLineItems(
         ? vergunning.dateDecision
         : '',
       description:
-        'Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.',
+        isGranted && !(hasDecision || isExpired)
+          ? 'Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.'
+          : '',
       documents: [],
       isActive: isGranted && !(hasDecision || isExpired),
-      isChecked: isGranted,
+      isChecked: isGranted || hasDecision || isExpired,
     },
   ];
 
