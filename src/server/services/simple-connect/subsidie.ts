@@ -1,4 +1,4 @@
-import jose from 'jose';
+import * as jose from 'jose'
 import { URL, URLSearchParams } from 'url';
 import { Chapters } from '../../../universal/config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -8,17 +8,13 @@ import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 
-function getJWT() {
-  return jose.JWT.sign(
-    {
+async function getJWT() {
+  const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);
+  const jwt = await new jose.SignJWT({
       iss: process.env.BFF_SISA_CLIENT_ID,
       iat: Date.now(),
-    },
-    jose.JWK.asKey(process.env.BFF_SISA_CLIENT_SECRET || ''),
-    {
-      algorithm: 'HS256',
-    }
-  );
+    }).setProtectedHeader({ alg: 'HS256' }).sign(secret)
+  return jwt;
 }
 
 function addAuthMethodToNotificationLinks(
@@ -44,7 +40,7 @@ function addAuthMethodToNotificationLinks(
   });
 }
 
-function getConfig(
+async function getConfig(
   authProfileAndToken: AuthProfileAndToken,
   requestID: requestID
 ) {
@@ -60,12 +56,13 @@ function getConfig(
   );
 
   const url = apiEndpointUrl + ivAndPayload;
+  const jwt = await getJWT();
 
   return getApiConfig('SUBSIDIE', {
     url,
     cacheKey: apiEndpointUrl + requestID,
     headers: {
-      Authorization: `Bearer ${getJWT()}`,
+      Authorization: `Bearer ${jwt}`,
     },
   });
 }
@@ -76,7 +73,7 @@ export async function fetchSubsidie(
 ) {
   return fetchService(
     requestID,
-    getConfig(authProfileAndToken, requestID),
+    await getConfig(authProfileAndToken, requestID),
     false
   );
 }
@@ -87,7 +84,7 @@ export async function fetchSubsidieNotifications(
 ) {
   const response = await fetchTipsAndNotifications(
     requestID,
-    getConfig(authProfileAndToken, requestID),
+    await getConfig(authProfileAndToken, requestID),
     Chapters.SUBSIDIE
   );
 

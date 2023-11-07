@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { ReactComponent as IconComponent } from '../../assets/icons/Alert.svg';
+import { default as IconComponent } from '../../assets/icons/Alert.svg?react';
 import Linkd from './Button';
 
 describe('Linkd', () => {
