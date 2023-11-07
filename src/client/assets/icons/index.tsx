@@ -34,7 +34,7 @@ export { default as MapIconHomeCommercial } from './map/homeCommercial__primary-
 export { default as IconMarker } from './Marker.svg?react';
 export { default as IconMijnGegevens } from './MijnGegevens.svg?react';
 export { default as IconMilieuzone } from './milieuzone.svg?react';
-export { default as IconOvertredingen } from './Close.svg?react';
+export { default as IconOvertredingen } from './Overtredingen.svg?react';
 export {
   default as IconIndeterminate,
   default as IconMin,
