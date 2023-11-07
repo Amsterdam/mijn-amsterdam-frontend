@@ -31,8 +31,10 @@ import { fetchSignals } from './sia';
 import {
   fetchBelasting,
   fetchMilieuzone,
+  fetchOvertredingen,
   fetchSubsidie,
 } from './simple-connect';
+import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import {
   fetchTipsAndNotifications,
   sortNotifications,
@@ -52,7 +54,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -125,6 +126,7 @@ const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
 const MILIEUZONE = callService(fetchMilieuzone);
+const OVERTREDINGEN = callService(fetchOvertredingen);
 const ERFPACHT = callService(fetchErfpacht);
 const ERFPACHTv2 = callService(fetchErfpachtV2);
 const SUBSIDIE = callService(fetchSubsidie);
@@ -177,6 +179,7 @@ const SERVICES_INDEX = {
   AFVALPUNTEN,
   BELASTINGEN,
   MILIEUZONE,
+  OVERTREDINGEN,
   TOERISTISCHE_VERHUUR,
   ERFPACHT,
   ERFPACHTv2,
@@ -219,6 +222,7 @@ type CommercialServices = Pick<
   | 'MY_LOCATION'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'OVERTREDINGEN'
   | 'VERGUNNINGEN'
   | 'TOERISTISCHE_VERHUUR'
   | 'HORECA'
@@ -252,6 +256,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     MY_LOCATION,
     KVK,
     MILIEUZONE,
+    OVERTREDINGEN,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     VERGUNNINGEN,
@@ -281,6 +286,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     MY_LOCATION,
     KVK,
     MILIEUZONE,
+    OVERTREDINGEN,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     VERGUNNINGEN,

@@ -4,7 +4,12 @@ import { Chapters, IS_TAP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchService, fetchTipsAndNotifications } from './api-service';
+import {
+  ApiPatternResponseA,
+  fetchService,
+  fetchTipsAndNotifications,
+} from './api-service';
+import { apiSuccessResult } from '../../../universal/helpers';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -65,8 +70,8 @@ export async function encryptPayload(payload: CleopatraRequestPayloadString) {
     .final();
 }
 
-interface MilieuzoneMessage {
-  thema: 'Milieuzone';
+interface CleopatraMessage {
+  thema: 'Milieuzone' | 'Overtredingen';
   categorie: 'F2' | 'M1' | 'F3';
   nummer: number;
   prioriteit: number;
@@ -81,19 +86,27 @@ interface MilieuzoneMessage {
 type CleopatraRequestPayload = { kvk: string } | { bsn: string };
 type CleopatraRequestPayloadString = string;
 
-function transformCleopatraResponse(response: MilieuzoneMessage[]) {
+type CleoPatraPatternResponse = ApiPatternResponseA & {
+  isKnownMilieuzone: boolean;
+  isKnownOvertredingen: boolean;
+};
+
+function transformCleopatraResponse(response: CleopatraMessage[]) {
   const notifications: MyNotification[] = [];
-  let isKnown: boolean = false;
+  let isKnownMilieuzone: boolean = false;
+  let isKnownOvertredingen: boolean = false;
 
   if (Array.isArray(response)) {
     for (const message of response) {
-      switch (message.categorie) {
-        case 'F2':
-          isKnown = true;
+      switch (true) {
+        case message.categorie === 'F2' && message.thema === 'Overtredingen':
+          isKnownOvertredingen = true;
+          break;
+        case message.categorie === 'F2' && message.thema === 'Milieuzone':
+          isKnownMilieuzone = true;
           break;
         // Melding / Notification
-        case 'M1':
-        case 'F3':
+        case message.categorie === 'M1' || message.categorie === 'F3':
           {
             const chapter =
               message.thema === 'Milieuzone'
@@ -118,7 +131,8 @@ function transformCleopatraResponse(response: MilieuzoneMessage[]) {
   }
 
   return {
-    isKnown,
+    isKnownOvertredingen,
+    isKnownMilieuzone,
     notifications,
   };
 }
@@ -142,7 +156,7 @@ async function fetchCleopatra(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(
+  return fetchService<CleoPatraPatternResponse>(
     requestID,
     await getConfig(authProfileAndToken, requestID),
     false
@@ -156,16 +170,9 @@ export async function fetchMilieuzone(
   const response = await fetchCleopatra(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
-    const notifications = response.content?.notifications;
-    const filter = (notification: MyNotification) =>
-      notification.chapter === Chapters.MILIEUZONE;
-
-    if (notifications?.some(filter)) {
-      return {
-        isKnown: response.content?.isKnown,
-        notifications: response.content?.notifications?.filter(filter),
-      };
-    }
+    return apiSuccessResult({
+      isKnown: response.content?.isKnownMilieuzone ?? false,
+    });
   }
 
   return response;
@@ -178,16 +185,9 @@ export async function fetchOvertredingen(
   const response = await fetchCleopatra(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
-    const notifications = response.content?.notifications;
-    const filter = (notification: MyNotification) =>
-      notification.chapter === Chapters.OVERTREDINGEN;
-
-    if (notifications?.some(filter)) {
-      return {
-        isKnown: response.content?.isKnown,
-        notifications: response.content?.notifications?.filter(filter),
-      };
-    }
+    return apiSuccessResult({
+      isKnown: response.content?.isKnownOvertredingen ?? false,
+    });
   }
 
   return response;
