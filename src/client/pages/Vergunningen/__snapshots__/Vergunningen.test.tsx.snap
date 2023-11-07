@@ -170,7 +170,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/3593173882"
+                    href="/vergunningen/rvv-sloterweg/4039623833"
                   >
                     <svg
                       aria-hidden="true"
@@ -190,7 +190,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/2230349
+                    Z/23/98989234
                   </a>
                 </td>
                 <td
@@ -202,7 +202,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg
+                    RVV ontheffing Sloterweg (Wijziging/Ontvangen)
                   </span>
                 </td>
                 <td
@@ -214,7 +214,63 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Aangevraagd:
                   </span>
                   <span>
-                    27 oktober 2023
+                    24 juli 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/3368771494"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/98798273423
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Nieuw/Verleend)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    23 juli 2023
                   </span>
                 </td>
               </tr>
@@ -338,7 +394,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/1097314015"
+                    href="/vergunningen/rvv-sloterweg/3593173882"
                   >
                     <svg
                       aria-hidden="true"
@@ -358,7 +414,63 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/2003529
+                    Z/23/2230349
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    27 oktober 2023
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/1623553971"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2003534
                   </a>
                 </td>
                 <td
@@ -394,7 +506,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/1623553971"
+                    href="/vergunningen/rvv-sloterweg/1097314015"
                   >
                     <svg
                       aria-hidden="true"
@@ -414,7 +526,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/2003534
+                    Z/23/2003529
                   </a>
                 </td>
                 <td
@@ -495,118 +607,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     17 augustus 2023
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/4039623833"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/98989234
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Wijziging/Ontvangen)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    24 juli 2023
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/3368771494"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/98798273423
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Nieuw/Verleend)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    23 juli 2023
                   </span>
                 </td>
               </tr>
@@ -786,7 +786,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/splitsingsvergunning/4220998766"
+                    href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
                   >
                     <svg
                       aria-hidden="true"
@@ -806,7 +806,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/22/1697573
+                    Z/22/19795392
                   </a>
                 </td>
                 <td
@@ -818,7 +818,119 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Splitsingsvergunning
+                    Parkeerontheffingen Blauwe zone particulieren
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 september 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1979539
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Parkeerontheffingen Blauwe zone bedrijven
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 september 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/samenvoegingsvergunning/3588461895"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1797696
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Samenvoegingsvergunning
                   </span>
                 </td>
                 <td
@@ -898,62 +1010,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/samenvoegingsvergunning/3588461895"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1797696
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Samenvoegingsvergunning
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    01 november 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/woningvormingsvergunning/4289555340"
                   >
                     <svg
@@ -999,6 +1055,62 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     27 oktober 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/splitsingsvergunning/4220998766"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1697573
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Splitsingsvergunning
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 november 2022
                   </span>
                 </td>
               </tr>
@@ -1178,118 +1290,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/19795392
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Parkeerontheffingen Blauwe zone particulieren
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    01 september 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1979539
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Parkeerontheffingen Blauwe zone bedrijven
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    01 september 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/3407608046"
                   >
                     <svg
@@ -1335,454 +1335,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     17 januari 2022
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/evenement-melding/4187042164"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000003
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement melding
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    17 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/evenement-vergunning/3073404626"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/111/000003
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement vergunning
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    01 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/evenement-vergunning/4081922197"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/111/000004
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement vergunning
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    01 oktober 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/omzettingsvergunning/2331715774"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000001.b
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Vergunning voor kamerverhuur (omzettingsvergunning) (Röel)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    28 september 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/omzettingsvergunning/913567999"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000001.c
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Vergunning voor kamerverhuur (omzettingsvergunning)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    28 september 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/e-rvv-tvm/3105266233"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000003
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    03 september 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/gpp/260384730"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000009
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Vaste parkeerplaats voor gehandicapten (GPP)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    07 april 2021
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/omzettingsvergunning/333728632"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000001
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    (WEESP!!!) Vergunning voor kamerverhuur (omzettingsvergunning)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Aangevraagd:
-                  </span>
-                  <span>
-                    28 maart 2021
                   </span>
                 </td>
               </tr>
@@ -2178,6 +1730,454 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                 </td>
               </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/evenement-vergunning/4081922197"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/111/000004
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Evenement vergunning
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/evenement-vergunning/3073404626"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/111/000003
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Evenement vergunning
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    01 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/gpp/260384730"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000009
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vaste parkeerplaats voor gehandicapten (GPP)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    07 april 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/evenement-melding/4187042164"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000003
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Evenement melding
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    17 oktober 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/e-rvv-tvm/3105266233"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000003
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    03 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/omzettingsvergunning/913567999"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000001.c
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/omzettingsvergunning/2331715774"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000001.b
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning) (Röel)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 september 2021
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/omzettingsvergunning/333728632"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000001
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    (WEESP!!!) Vergunning voor kamerverhuur (omzettingsvergunning)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Aangevraagd:
+                  </span>
+                  <span>
+                    28 maart 2021
+                  </span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -2246,6 +2246,174 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/2165183397"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/98744444423
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Nieuw/Verlopen)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verlopen
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/2303699528"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/92222273423
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Wijziging/Verlopen)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verlopen
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/4198587804"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/23423409
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Ingetrokken
+                  </span>
+                </td>
+              </tr>
               <tr
                 class="_TableRow_a66dcc"
               >
@@ -2366,7 +2534,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/4198587804"
+                    href="/vergunningen/vob/3689116237"
                   >
                     <svg
                       aria-hidden="true"
@@ -2386,7 +2554,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/23423409
+                    Z/23/1797714
                   </a>
                 </td>
                 <td
@@ -2398,7 +2566,63 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
+                    Ligplaatsvergunning
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/rvv-sloterweg/4110068165"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/123123456
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    RVV ontheffing Sloterweg (Nieuw/Ingetrokken)
                   </span>
                 </td>
                 <td
@@ -2467,286 +2691,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                      
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/2303699528"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/92222273423
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Wijziging/Verlopen)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verlopen
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/2165183397"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/98744444423
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Nieuw/Verlopen)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verlopen
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/4110068165"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/123123456
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    RVV ontheffing Sloterweg (Nieuw/Ingetrokken)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Ingetrokken
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/vob/3689116237"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/23/1797714
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Ligplaatsvergunning
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/onttrekkingsvergunning/1659133230"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1797707
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Onttrekkingsvergunning voor ander gebruik
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
                   </span>
                 </td>
               </tr>
@@ -2870,6 +2814,230 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/flyeren-sampling/1580959320"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1978055
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Verspreiden reclamemateriaal (sampling)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Ingetrokken
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/onttrekkingsvergunning/1659133230"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1797707
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Onttrekkingsvergunning voor ander gebruik
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/nachtwerkontheffing/321076396"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1691001
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/aanbieden-van-diensten/458936654"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1597602
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Aanbieden van diensten
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/1314482059"
                   >
                     <svg
@@ -2891,6 +3059,62 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       />
                     </svg>
                     Z/22/1597502
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Verspreiden reclamemateriaal (sampling)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/flyeren-sampling/421733388"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/22/1597501
                   </a>
                 </td>
                 <td
@@ -2982,174 +3206,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/flyeren-sampling/1580959320"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1978055
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Verspreiden reclamemateriaal (sampling)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Ingetrokken
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/flyeren-sampling/421733388"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1597501
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Verspreiden reclamemateriaal (sampling)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/nachtwerkontheffing/321076396"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/22/1691001
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/1939428970"
                   >
                     <svg
@@ -3206,7 +3262,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/aanbieden-van-diensten/458936654"
+                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497"
                   >
                     <svg
                       aria-hidden="true"
@@ -3226,7 +3282,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/22/1597602
+                    Z/21/1600000
                   </a>
                 </td>
                 <td
@@ -3238,231 +3294,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Aanbieden van diensten
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/evenement-melding/3446432146"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000002
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement melding
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Gemeld
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/evenement-vergunning/830781715"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/111/000002
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Evenement vergunning
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/omzettingsvergunning/3664304440"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000001.d
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Vergunning voor kamerverhuur (omzettingsvergunning)
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Resultaat:
-                  </span>
-                  <span>
-                    Verleend
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/gpk/1221166450"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Z/000/000008
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Soort vergunning:
-                  </span>
-                  <span>
-                    Europese gehandicaptenparkeerkaart (GPK)
+                    Parkeerontheffingen Blauwe zone bedrijven
                   </span>
                 </td>
                 <td
@@ -3542,7 +3374,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497"
+                    href="/vergunningen/tvm-rvv-object/593205051"
                   >
                     <svg
                       aria-hidden="true"
@@ -3562,7 +3394,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/21/1600000
+                    Z/20/615500
                   </a>
                 </td>
                 <td
@@ -3574,7 +3406,63 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Parkeerontheffingen Blauwe zone bedrijven
+                    Tijdelijke verkeersmaatregel
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/tvm-rvv-object/574064900"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/20/1597205
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Tijdelijke verkeersmaatregel
                   </span>
                 </td>
                 <td
@@ -3878,7 +3766,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/tvm-rvv-object/593205051"
+                    href="/vergunningen/evenement-vergunning/830781715"
                   >
                     <svg
                       aria-hidden="true"
@@ -3898,7 +3786,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/20/615500
+                    Z/111/000002
                   </a>
                 </td>
                 <td
@@ -3910,7 +3798,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Tijdelijke verkeersmaatregel
+                    Evenement vergunning
                   </span>
                 </td>
                 <td
@@ -3934,7 +3822,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/tvm-rvv-object/574064900"
+                    href="/vergunningen/gpk/1221166450"
                   >
                     <svg
                       aria-hidden="true"
@@ -3954,7 +3842,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/20/1597205
+                    Z/000/000008
                   </a>
                 </td>
                 <td
@@ -3966,7 +3854,119 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Tijdelijke verkeersmaatregel
+                    Europese gehandicaptenparkeerkaart (GPK)
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Verleend
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/evenement-melding/3446432146"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000002
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Evenement melding
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Gemeld
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/omzettingsvergunning/3664304440"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/000/000001.d
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Vergunning voor kamerverhuur (omzettingsvergunning)
                   </span>
                 </td>
                 <td

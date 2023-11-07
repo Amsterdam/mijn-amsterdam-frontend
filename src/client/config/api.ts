@@ -1,3 +1,4 @@
+import { FeatureToggle } from '../../universal/config';
 import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
@@ -48,7 +49,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_TONK: 'Aanvraag TONK',
   WPI_BBZ: 'Aanvraag Bbz',
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
-  WPI_STADSPAS_aanvragen: 'Stadspasaanvragen',
   WPI_STADSPAS_stadspas: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
@@ -75,6 +75,10 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AVG: 'Ingediende AVG verzoeken',
   BODEM: 'Bodem: loodmetingen',
 };
+
+if (FeatureToggle.stadspasRequestsActive) {
+  ErrorNames['WPI_STADSPAS_aanvragen'] = 'Stadspasaanvragen';
+}
 
 export function createErrorDisplayData(
   stateKey: string,
