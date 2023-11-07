@@ -30,6 +30,10 @@ export function getRVVSloterwegLineItems(
     RVV_SLOTERWEG_RESULT_MATURED,
   ].includes(vergunning.decision);
 
+  const grantedText = isChangeRequest
+    ? `Wij hebben uw aanvraag voor een ${vergunning.title} verleend.`
+    : `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
+
   let dateInProgress = vergunning.dateWorkflowActive ?? '';
 
   if (!isChangeRequest) {
@@ -63,10 +67,7 @@ export function getRVVSloterwegLineItems(
         : !!vergunning.dateDecision
         ? vergunning.dateDecision
         : '',
-      description:
-        isGranted && !(hasDecision || isExpired)
-          ? 'Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.'
-          : '',
+      description: isGranted && !(hasDecision || isExpired) ? grantedText : '',
       documents: [],
       isActive: isGranted && !(hasDecision || isExpired),
       isChecked: isGranted || hasDecision || isExpired,
@@ -79,12 +80,11 @@ export function getRVVSloterwegLineItems(
       isExpired ||
       vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
     ) {
-      description = 'Uw RVV ontheffing Sloterweg is verlopen.';
+      description = `Uw ${vergunning.title} is verlopen.`;
     }
 
     if (vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE) {
-      description =
-        'Wij hebben uw RVV ontheffing Sloterweg ingetrokken. Bekijk het document voor details.';
+      description = `Wij hebben uw ${vergunning.title} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
     }
 
     if (vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED) {
