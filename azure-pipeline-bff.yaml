@@ -4,7 +4,6 @@ trigger:
     include:
       - ontwikkelen
       - testen
-      - main
   paths:
     include:
       - src/server
