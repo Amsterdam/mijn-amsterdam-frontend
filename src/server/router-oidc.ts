@@ -281,8 +281,8 @@ function logout(postLogoutRedirectUrl: string) {
     res.oidc.logout({
       returnTo: postLogoutRedirectUrl,
       logoutParams: {
-        id_token_hint: auth.token,
-        logout_hint: null,
+        id_token_hint: !IS_PRODUCTION ? auth.token : null,
+        logout_hint: IS_PRODUCTION ? auth.profile.sid : null,
       },
     });
   };
