@@ -4,6 +4,10 @@ import { StatusLineItem } from '../../../universal/types';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 
+const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
+const RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN = 'Verlopen';
+const RVV_SLOTERWEG_RESULT_MATURED = 'Vervallen';
+
 export function getRVVSloterwegLineItems(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
@@ -15,24 +19,21 @@ export function getRVVSloterwegLineItems(
   const isInprogress = !!vergunning.dateWorkflowActive || !isChangeRequest;
   const isGranted = !!vergunning.dateWorkflowVerleend;
 
-  const hasDecision = !!vergunning.decision;
+  const isExpired =
+    vergunning.dateEnd && isGranted
+      ? new Date(vergunning.dateEnd) < new Date()
+      : false;
+
+  const hasDecision = [
+    RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+    RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN,
+    RVV_SLOTERWEG_RESULT_MATURED,
+  ].includes(vergunning.decision);
 
   let dateInProgress = vergunning.dateWorkflowActive ?? '';
 
   if (!isChangeRequest) {
     dateInProgress = vergunning.dateRequest;
-  }
-
-  let decisionText = isGranted
-    ? `<p>Ontheffing verleend op ${defaultDateFormat(
-        vergunning.dateWorkflowVerleend ?? ''
-      )}.</p>`
-    : '';
-
-  if (hasDecision) {
-    decisionText = `${decisionText}<p>Ontheffing ${vergunning.decision.toLowerCase()} op ${defaultDateFormat(
-      vergunning.dateDecision ?? ''
-    )}.</p>`;
   }
 
   const lineItems: StatusLineItem[] = [
@@ -46,28 +47,62 @@ export function getRVVSloterwegLineItems(
       isChecked: true,
     },
     {
-      id: 'status-in-in-behandeling',
+      id: 'status-in-behandeling',
       status: 'In behandeling',
       datePublished: dateInProgress,
       description: '',
       documents: [],
       isActive: isInprogress && !isGranted && !hasDecision,
-      isChecked: isInprogress,
+      isChecked: isInprogress || isGranted || hasDecision,
     },
     {
-      id: 'status-in-afgehandeld',
+      id: 'status-afgehandeld',
       status: 'Afgehandeld',
       datePublished: !!vergunning.dateWorkflowVerleend
         ? vergunning.dateWorkflowVerleend
         : !!vergunning.dateDecision
         ? vergunning.dateDecision
         : '',
-      description: decisionText,
+      description:
+        isGranted && !(hasDecision || isExpired)
+          ? 'Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.'
+          : '',
       documents: [],
-      isActive: isGranted || hasDecision,
-      isChecked: isGranted || hasDecision,
+      isActive: isGranted && !(hasDecision || isExpired),
+      isChecked: isGranted || hasDecision || isExpired,
     },
   ];
+
+  if (hasDecision || isExpired) {
+    let description = '';
+    if (
+      isExpired ||
+      vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
+    ) {
+      description = 'Uw RVV ontheffing Sloterweg is verlopen.';
+    }
+
+    if (vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE) {
+      description =
+        'Wij hebben uw RVV ontheffing Sloterweg ingetrokken. Bekijk het document voor details.';
+    }
+
+    if (vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED) {
+      description =
+        'U heeft een ketekenwijziging doorgegeven. Bekijk de ontheffing voor het nieuwe kenteken in het overzicht.';
+    }
+
+    lineItems.push({
+      id: 'status-gewijzigd',
+      status: 'Gewijzigd',
+      datePublished:
+        (isExpired ? vergunning.dateEnd : vergunning.dateDecision) ?? '',
+      description,
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
 
   return lineItems;
 }
