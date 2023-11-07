@@ -22,7 +22,7 @@ function addApproximateDistance(
           : 0,
       });
     })
-    .sort(sortByNumber('distance'));
+    .sort(sortByNumber('distance', 'asc'));
 }
 
 export function fetchAfvalpunten(latlng: LatLngLiteral | null) {
