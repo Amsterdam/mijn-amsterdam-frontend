@@ -106,6 +106,16 @@ export function sortAlpha(
   };
 }
 
+export function sortByNumber(key: string, direction: 'asc' | 'desc' = 'asc') {
+  return (a: Record<string, any>, b: Record<string, any>) => {
+    const sortASC = direction === 'asc';
+    let aValue = a[key];
+    let bValue = b[key];
+
+    return sortASC ? aValue - bValue : bValue - aValue;
+  };
+}
+
 // https://github.com/darkskyapp/string-hash
 export function hash(str: string) {
   var hash = 5381,

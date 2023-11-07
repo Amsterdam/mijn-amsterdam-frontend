@@ -2,7 +2,7 @@ import { LatLngLiteral } from 'leaflet';
 import {
   apiSuccessResult,
   getApproximateDistance,
-  sortAlpha,
+  sortByNumber,
 } from '../../../universal/helpers';
 import type {
   AfvalPuntenData,
@@ -22,7 +22,7 @@ function addApproximateDistance(
           : 0,
       });
     })
-    .sort(sortAlpha('distance'));
+    .sort(sortByNumber('distance'));
 }
 
 export function fetchAfvalpunten(latlng: LatLngLiteral | null) {
