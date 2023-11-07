@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle, IS_PRODUCTION } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   AUTH_CALLBACK,
@@ -305,8 +305,8 @@ function logout(postLogoutRedirectUrl: string) {
     res.oidc.logout({
       returnTo: postLogoutRedirectUrl,
       logoutParams: {
-        id_token_hint: null,
-        logout_hint: auth.profile.sid,
+        id_token_hint: !IS_PRODUCTION ? auth.token : null,
+        logout_hint: IS_PRODUCTION ? auth.profile.sid : null,
       },
     });
   };
