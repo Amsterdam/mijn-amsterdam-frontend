@@ -4580,7 +4580,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <h2
           class="amsterdam-heading amsterdam-heading--1"
         >
-          RVV ontheffing Sloterweg (Nieuw/Ingetrokken)
+          RVV ontheffing Laan van Vlaanderen (Nieuw/Ingetrokken)
         </h2>
       </div>
     </header>
@@ -4857,7 +4857,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <div
                 class="_PanelContent_a12ff2"
               >
-                Wij hebben uw RVV ontheffing Sloterweg ingetrokken. Bekijk het document voor details.
+                Wij hebben uw RVV ontheffing Laan van Vlaanderen (Nieuw/Ingetrokken) ingetrokken. Zie het intrekkingsbesluit voor meer informatie.
               </div>
             </div>
             <div
@@ -5152,7 +5152,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <div
                 class="_PanelContent_a12ff2"
               >
-                Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.
+                Wij hebben uw kentekenwijziging voor een RVV ontheffing Sloterweg (Nieuw/Verleend) verleend.
               </div>
             </div>
             <div
@@ -5259,7 +5259,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
         <p
           class="_Value_6f1df2"
         >
-          Laan van Vlaanderen
+          Sloterweg
         </p>
       </div>
       <div
@@ -5504,7 +5504,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Nieuw/
               <div
                 class="_PanelContent_a12ff2"
               >
-                Uw RVV ontheffing Sloterweg is verlopen.
+                Uw RVV ontheffing Sloterweg (Nieuw/Verlopen) is verlopen.
               </div>
             </div>
             <div
@@ -5579,7 +5579,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h2
           class="amsterdam-heading amsterdam-heading--1"
         >
-          RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
+          RVV ontheffing van Vlaanderenlaan (Wijziging/Ingetrokken)
         </h2>
       </div>
     </header>
@@ -5870,7 +5870,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <div
                 class="_PanelContent_a12ff2"
               >
-                Wij hebben uw RVV ontheffing Sloterweg ingetrokken. Bekijk het document voor details.
+                Wij hebben uw RVV ontheffing van Vlaanderenlaan (Wijziging/Ingetrokken) ingetrokken. Zie het intrekkingsbesluit voor meer informatie.
               </div>
             </div>
             <div
@@ -5945,7 +5945,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <h2
           class="amsterdam-heading amsterdam-heading--1"
         >
-          RVV ontheffing Sloterweg (Wijziging/Ontvangen)
+          RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen)
         </h2>
       </div>
     </header>
@@ -6207,7 +6207,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <div
                 class="_PanelContent_a12ff2"
               >
-                Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.
+                Wij hebben uw aanvraag voor een RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen) verleend.
               </div>
             </div>
             <div
@@ -6328,7 +6328,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <p
           class="_Value_6f1df2"
         >
-          van Vlaanderenlaan
+          Sloterweg
         </p>
       </div>
       <div
@@ -6530,7 +6530,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <div
                 class="_PanelContent_a12ff2"
               >
-                Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg verleend.
+                Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg (Wijziging/Verleend) verleend.
               </div>
             </div>
             <div
@@ -6651,7 +6651,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
         <p
           class="_Value_6f1df2"
         >
-          Laan van Vlaanderen
+          Sloterweg
         </p>
       </div>
       <div
@@ -6910,7 +6910,7 @@ exports[`<VergunningDetail /> > RVV Sloterweg > RVV ontheffing Sloterweg (Wijzig
               <div
                 class="_PanelContent_a12ff2"
               >
-                Uw RVV ontheffing Sloterweg is verlopen.
+                Uw RVV ontheffing Sloterweg (Wijziging/Verlopen) is verlopen.
               </div>
             </div>
             <div
