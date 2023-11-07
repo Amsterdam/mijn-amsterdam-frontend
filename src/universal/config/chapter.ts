@@ -76,7 +76,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
-  OVERTREDINGEN: 'Voertuig overtredingen',
+  OVERTREDINGEN: 'Overtredingen voertuigen',
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
