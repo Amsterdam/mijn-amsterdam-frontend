@@ -202,7 +202,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg (Wijziging/Ontvangen)
+                    RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen)
                   </span>
                 </td>
                 <td
@@ -482,7 +482,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg
+                    RVV ontheffing Sloterweg West
                   </span>
                 </td>
                 <td
@@ -594,7 +594,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg
+                    RVV ontheffing Sloterweg West
                   </span>
                 </td>
                 <td
@@ -2398,7 +2398,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg (Wijziging/Ingetrokken)
+                    RVV ontheffing van Vlaanderenlaan (Wijziging/Ingetrokken)
                   </span>
                 </td>
                 <td
@@ -2510,7 +2510,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg
+                    RVV ontheffing Sloterweg West
                   </span>
                 </td>
                 <td
@@ -2622,7 +2622,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg (Nieuw/Ingetrokken)
+                    RVV ontheffing Laan van Vlaanderen (Nieuw/Ingetrokken)
                   </span>
                 </td>
                 <td
