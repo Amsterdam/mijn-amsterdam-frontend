@@ -15,6 +15,7 @@ export type Chapter =
   | 'STADSPAS'
   | 'BRP'
   | 'MILIEUZONE'
+  | 'OVERTREDINGEN'
   | 'NOTIFICATIONS'
   | 'ROOT'
   | 'ERFPACHT'
@@ -44,6 +45,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   STADSPAS: 'STADSPAS',
   BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
+  OVERTREDINGEN: 'OVERTREDINGEN',
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
   ERFPACHT: 'ERFPACHT',
@@ -74,6 +76,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
+  OVERTREDINGEN: 'Voertuig overtredingen',
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
@@ -299,6 +302,13 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.MILIEUZONE,
     id: Chapters.MILIEUZONE,
     to: ExternalUrls.SSO_MILIEUZONE || '',
+    rel: 'external',
+    profileTypes: ['private', 'commercial'],
+  },
+  {
+    title: ChapterTitles.OVERTREDINGEN,
+    id: Chapters.OVERTREDINGEN,
+    to: ExternalUrls.SSO_MILIEUZONE || '', // TODO: In de toekomst wordt dit een andere link
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },

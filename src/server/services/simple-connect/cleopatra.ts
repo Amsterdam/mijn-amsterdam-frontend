@@ -35,7 +35,7 @@ const pemPubKey =
 export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
 ): string {
-  const payload: MilieuzoneRequestPayload =
+  const payload: CleopatraRequestPayload =
     profile.profileType === 'commercial'
       ? {
           kvk: profile.id!,
@@ -46,7 +46,7 @@ export function getJSONRequestPayload(
   return JSON.stringify(payload);
 }
 
-export async function encryptPayload(payload: MilieuzoneRequestPayloadString) {
+export async function encryptPayload(payload: CleopatraRequestPayloadString) {
   const key = await pemPubKey;
 
   return jose.JWE.createEncrypt(
@@ -78,10 +78,10 @@ interface MilieuzoneMessage {
   informatie: string;
 }
 
-type MilieuzoneRequestPayload = { kvk: string } | { bsn: string };
-type MilieuzoneRequestPayloadString = string;
+type CleopatraRequestPayload = { kvk: string } | { bsn: string };
+type CleopatraRequestPayloadString = string;
 
-function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
+function transformCleopatraResponse(response: MilieuzoneMessage[]) {
   const notifications: MyNotification[] = [];
   let isKnown: boolean = false;
 
@@ -94,17 +94,24 @@ function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
         // Melding / Notification
         case 'M1':
         case 'F3':
-          notifications.push({
-            id: `milieuzone-${message.categorie}`,
-            chapter: Chapters.MILIEUZONE,
-            title: message.titel,
-            datePublished: message.datum,
-            description: message.omschrijving,
-            link: {
-              title: message.urlNaam,
-              to: message.url,
-            },
-          });
+          {
+            const chapter =
+              message.thema === 'Milieuzone'
+                ? Chapters.MILIEUZONE
+                : Chapters.OVERTREDINGEN;
+
+            notifications.push({
+              id: `${chapter}-${message.categorie}`,
+              chapter,
+              title: message.titel,
+              datePublished: message.datum,
+              description: message.omschrijving,
+              link: {
+                title: message.urlNaam,
+                to: message.url,
+              },
+            });
+          }
           break;
       }
     }
@@ -125,13 +132,13 @@ async function getConfig(
   );
 
   return getApiConfig('CLEOPATRA', {
-    transformResponse: transformMilieuzoneResponse,
+    transformResponse: transformCleopatraResponse,
     cacheKey: `cleopatra-${requestID}`,
     data: postData,
   });
 }
 
-export async function fetchMilieuzone(
+async function fetchCleopatra(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -142,6 +149,50 @@ export async function fetchMilieuzone(
   );
 }
 
+export async function fetchMilieuzone(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    const notifications = response.content?.notifications;
+    const filter = (notification: MyNotification) =>
+      notification.chapter === Chapters.MILIEUZONE;
+
+    if (notifications?.some(filter)) {
+      return {
+        isKnown: response.content?.isKnown,
+        notifications: response.content?.notifications?.filter(filter),
+      };
+    }
+  }
+
+  return response;
+}
+
+export async function fetchOvertredingen(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    const notifications = response.content?.notifications;
+    const filter = (notification: MyNotification) =>
+      notification.chapter === Chapters.OVERTREDINGEN;
+
+    if (notifications?.some(filter)) {
+      return {
+        isKnown: response.content?.isKnown,
+        notifications: response.content?.notifications?.filter(filter),
+      };
+    }
+  }
+
+  return response;
+}
+
 export async function fetchMilieuzoneNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
@@ -150,6 +201,19 @@ export async function fetchMilieuzoneNotifications(
     requestID,
     await getConfig(authProfileAndToken, requestID),
     Chapters.MILIEUZONE
+  );
+
+  return response;
+}
+
+export async function fetchOvertredingenNotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const response = await fetchTipsAndNotifications(
+    requestID,
+    await getConfig(authProfileAndToken, requestID),
+    Chapters.OVERTREDINGEN
   );
 
   return response;
