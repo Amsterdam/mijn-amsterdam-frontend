@@ -8,8 +8,8 @@ import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
-// @ts-expect-error
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
+import { isUiElementVisible } from '../../config/app';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -18,23 +18,22 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { IconButton } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LogoutLink from './LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
+import LogoutLink from './LogoutLink';
 import {
+  MenuItem,
   isMenuItemVisible,
   mainMenuItemId,
   mainMenuItems,
-  MenuItem,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { isUiElementVisible } from '../../config/app';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';

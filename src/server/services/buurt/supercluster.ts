@@ -1,4 +1,4 @@
-import Supercluster, { AnyProps, PointFeature } from 'supercluster';
+import { AnyProps, PointFeature } from 'supercluster';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -13,6 +13,7 @@ import {
 
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (!!features?.length) {
+    const Supercluster = (await import('supercluster')).default;
     const superClusterIndex = new Supercluster({
       log: true,
       radius: 40,
