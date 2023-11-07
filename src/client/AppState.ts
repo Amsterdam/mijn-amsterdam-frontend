@@ -46,6 +46,7 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult({ isKnown: false }),
+  ERFPACHTv2: apiPristineResult(null),
   SUBSIDIE: apiPristineResult(
     { isKnown: false, notifications: [] },
     { isActive: FeatureToggle.subsidieActive }

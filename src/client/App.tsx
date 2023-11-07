@@ -238,10 +238,12 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          <Route
-            path={AppRoutes['STADSPAS/AANVRAAG']}
-            component={StadspasAanvraagDetail}
-          />
+          {FeatureToggle.stadspasRequestsActive && (
+            <Route
+              path={AppRoutes['STADSPAS/AANVRAAG']}
+              component={StadspasAanvraagDetail}
+            />
+          )}
           <Route
             path={AppRoutes['STADSPAS/SALDO']}
             component={StadspasDetail}

@@ -1,8 +1,11 @@
+import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import { Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
+import { requestData } from '../../helpers';
+import { getSettledResult } from '../../../universal/helpers';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
@@ -96,4 +99,55 @@ export async function fetchErfpachtNotifications(
   );
 
   return response;
+}
+
+function getNamedResponseTransformer(apiName: string) {
+  return function transformResponse(res: any) {
+    Sentry.captureMessage(`${apiName}: response`, {
+      extra: {
+        data: JSON.stringify(res),
+      },
+    });
+
+    return res;
+  };
+}
+
+export async function fetchErfpachtV2(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const config = getApiConfig('ERFPACHTv2');
+
+  const connectieVerniseHealth = requestData(
+    {
+      ...config,
+      url: `${config.url}/vernise/management/health`,
+      transformResponse: getNamedResponseTransformer('vernise-health'),
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  const connectieErfpachter = requestData(
+    {
+      ...config,
+      url: `${config.url}/vernise/api/erfpachter `,
+      transformResponse: getNamedResponseTransformer('vernise-erfpachter'),
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  const result = await Promise.allSettled([
+    connectieVerniseHealth,
+    connectieErfpachter,
+  ]);
+
+  return {
+    content: {
+      verniseHealth: getSettledResult(result[0]),
+      erfpachter: getSettledResult(result[1]),
+    },
+  };
 }
