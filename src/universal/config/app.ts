@@ -24,7 +24,7 @@ export const FeatureToggle = {
   isSearchEnabled: true,
   meldingenBuurtActive: true,
   inkomenBBZActive: true,
-  erfpachtV2EndpointActive: true,
+  erfpachtV2EndpointActive: !IS_PRODUCTION,
   subsidieActive: true,
   wiorMeldingen: true,
   parkerenActive: true,
