@@ -156,10 +156,11 @@ async function fetchCleopatra(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const INCLUDE_TIPS_AND_NOTIFICATIONS = true;
   return fetchService<CleoPatraPatternResponse>(
     requestID,
     await getConfig(authProfileAndToken, requestID),
-    false
+    INCLUDE_TIPS_AND_NOTIFICATIONS
   );
 }
 
@@ -197,11 +198,16 @@ export async function fetchMilieuzoneNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchTipsAndNotifications(
-    requestID,
-    await getConfig(authProfileAndToken, requestID),
-    Chapters.MILIEUZONE
-  );
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      notifications:
+        response.content?.notifications?.filter(
+          (notifiction) => notifiction.chapter === Chapters.MILIEUZONE
+        ) ?? [],
+    });
+  }
 
   return response;
 }
@@ -210,11 +216,16 @@ export async function fetchOvertredingenNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchTipsAndNotifications(
-    requestID,
-    await getConfig(authProfileAndToken, requestID),
-    Chapters.OVERTREDINGEN
-  );
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      notifications:
+        response.content?.notifications?.filter(
+          (notifiction) => notifiction.chapter === Chapters.OVERTREDINGEN
+        ) ?? [],
+    });
+  }
 
   return response;
 }
