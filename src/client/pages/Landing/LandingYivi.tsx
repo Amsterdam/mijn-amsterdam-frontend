@@ -12,7 +12,7 @@ import {
 import { LOGIN_URL_YIVI } from '../../config/api';
 import { FeatureToggle } from '../../../universal/config';
 import styles from './Landing.module.scss';
-import { ReactComponent as YiviLogo } from './yivi-logo.svg';
+import { default as YiviLogo } from './yivi-logo.svg?react';
 
 export default function Landing() {
   const loginButton = useRef(null);

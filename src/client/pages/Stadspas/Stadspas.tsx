@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import type { WpiStadspas } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  ChapterTitles,
+  FeatureToggle,
+} from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -170,36 +174,40 @@ export default function Stadspas() {
         </SectionCollapsible>
       )}
 
-      <SectionCollapsible
-        id="SectionCollapsible-stadspas-request-process"
-        title="Lopende aanvragen"
-        startCollapsed={hasStadspas}
-        isLoading={isLoadingStadspas}
-        hasItems={hasActiveRequests}
-        noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={styles.SectionCollapsible}
-      >
-        <Table
-          items={itemsRequested}
-          displayProps={requestsDisplayProps}
-          className={styles.Table}
-        />
-      </SectionCollapsible>
+      {FeatureToggle.stadspasRequestsActive && (
+        <>
+          <SectionCollapsible
+            id="SectionCollapsible-stadspas-request-process"
+            title="Lopende aanvragen"
+            startCollapsed={hasStadspas}
+            isLoading={isLoadingStadspas}
+            hasItems={hasActiveRequests}
+            noItemsMessage="U hebt op dit moment geen lopende aanvragen."
+            className={styles.SectionCollapsible}
+          >
+            <Table
+              items={itemsRequested}
+              displayProps={requestsDisplayProps}
+              className={styles.Table}
+            />
+          </SectionCollapsible>
 
-      <SectionCollapsible
-        id="SectionCollapsible-stadspas-request-process-decisions"
-        startCollapsed={true}
-        isLoading={isLoadingStadspas}
-        hasItems={hasActiveDescisions}
-        title="Eerdere aanvragen"
-        noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
-      >
-        <Table
-          items={itemsCompleted}
-          displayProps={decisionsDisplayProps}
-          className={styles.Table}
-        />
-      </SectionCollapsible>
+          <SectionCollapsible
+            id="SectionCollapsible-stadspas-request-process-decisions"
+            startCollapsed={true}
+            isLoading={isLoadingStadspas}
+            hasItems={hasActiveDescisions}
+            title="Eerdere aanvragen"
+            noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
+          >
+            <Table
+              items={itemsCompleted}
+              displayProps={decisionsDisplayProps}
+              className={styles.Table}
+            />
+          </SectionCollapsible>
+        </>
+      )}
     </OverviewPage>
   );
 }

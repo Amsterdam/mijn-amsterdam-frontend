@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
 import {
   ApiResponse,
   ApiSuccessResponse,
@@ -152,16 +152,25 @@ export async function fetchStadspas(
       .map((requestProcess) => addLink(requestProcess));
   };
 
-  const aanvragenRequest = fetchRequestProcess(
-    requestID,
-    authProfileAndToken,
-    () => stadspasRequestProcessLabels,
-    {
-      apiConfigName: 'WPI_AANVRAGEN',
-      filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + requestID,
-    }
+  let aanvragenRequest:
+    | Promise<ApiResponse<WpiRequestProcess[] | null>>
+    | Promise<ApiSuccessResponse<never[]>> = Promise.resolve(
+    apiSuccessResult([])
   );
+
+  // Only request aanvragen when toggle is active
+  if (FeatureToggle.stadspasRequestsActive) {
+    aanvragenRequest = fetchRequestProcess(
+      requestID,
+      authProfileAndToken,
+      () => stadspasRequestProcessLabels,
+      {
+        apiConfigName: 'WPI_AANVRAGEN',
+        filterResponse,
+        requestCacheKey: 'fetch-aanvragen-' + requestID,
+      }
+    );
+  }
 
   const stadspasRequest = requestData<WpiStadspasResponseData>(
     getApiConfig('WPI_STADSPAS', {

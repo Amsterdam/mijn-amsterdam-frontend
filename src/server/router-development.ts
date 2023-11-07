@@ -14,7 +14,6 @@ import {
 } from './config';
 import {
   AuthProfile,
-  generateDevSessionCookieValue,
   getAuth,
   hasSessionCookie,
   sendUnauthorized,
@@ -22,7 +21,7 @@ import {
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
-import axios from 'axios';
+import { generateDevSessionCookieValue } from './helpers/app.development';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
@@ -36,7 +35,7 @@ export const authRouterDevelopment = express.Router();
 
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
         new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
@@ -52,7 +51,7 @@ authRouterDevelopment.get(
         ? req.params.user
         : Object.keys(testAccounts)[0];
     const userId = testAccounts[userName];
-    const appSessionCookieValue = generateDevSessionCookieValue(
+    const appSessionCookieValue = await generateDevSessionCookieValue(
       authMethod,
       userId
     );

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
+import { ChapterMenuItem } from '../../universal/config';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers';
-import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
+import { chaptersByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import {
