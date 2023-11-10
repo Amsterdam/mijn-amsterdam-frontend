@@ -74,12 +74,19 @@ async function getServiceResults(
 }
 
 function naam(persoon: Persoon) {
-  return persoon.voornamen
+  const voornamen = persoon.voornamen
     ?.split(' ')
     .map((naam, index) => {
       return index === 0 ? naam : naam.charAt(0) + '.';
     })
     .join(' ');
+  const adellijkeTitel = persoon.omschrijvingAdellijkeTitel
+    ? ` (${persoon.omschrijvingAdellijkeTitel})`
+    : '';
+  const voorvoegsel = persoon.voorvoegselGeslachtsnaam
+    ? `${persoon.voorvoegselGeslachtsnaam} `
+    : '';
+  return `${voornamen} ${voorvoegsel}${persoon.geslachtsnaam}${adellijkeTitel}`;
 }
 
 function oudersOfKinderen(
@@ -144,6 +151,9 @@ const paths: PathObj[] = [
     label: 'Achternaam (Titel)',
     path: '$.BRP.content.persoon',
     transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
       return (
         `${
           persoon?.voorvoegselGeslachtsnaam
@@ -159,9 +169,19 @@ const paths: PathObj[] = [
   },
   {
     label: 'Geboortedatum',
-    path: '$.BRP.content.persoon.geboortedatum',
-    transform: (value: string | null) => {
-      return value !== null ? defaultDateFormat(value) : 'onbekend';
+    path: '$.BRP.content.persoon',
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const { geboortedatum, geboortelandnaam } = persoon;
+      return `${
+        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
+      } (${
+        geboortelandnaam !== 'Nederland'
+          ? `(${geboortelandnaam})` ?? 'onbekend'
+          : ''
+      })`;
     },
   },
   {
@@ -173,6 +193,21 @@ const paths: PathObj[] = [
           ? differenceInYears(new Date(), parseISO(value)) + ''
           : 'onbekend';
       return age;
+    },
+  },
+  {
+    label: 'Geslacht',
+    path: '$.BRP.content.persoon',
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const nationaleiten = persoon.nationaliteiten
+        ?.map(({ omschrijving }) => omschrijving)
+        .join(', ');
+      return `${persoon.omschrijvingGeslachtsaanduiding} ${
+        nationaleiten !== 'Nederlandse' ? `(${nationaleiten})` : ''
+      }`;
     },
   },
   {
@@ -193,7 +228,9 @@ const paths: PathObj[] = [
             : ''
         }` +
         `${
-          serviceResults.BRP.content?.persoon?.indicateGeheim ? ' (Geheim)' : ''
+          serviceResults.BRP.content?.persoon?.indicatieGeheim
+            ? ' (Geheim)'
+            : ''
         }`
       );
     },
@@ -274,17 +311,6 @@ const paths: PathObj[] = [
         .join(', ');
     },
     wch: 80,
-  },
-  {
-    label: 'Geboorteland',
-    path: '$.BRP.content.persoon.geboortelandnaam',
-  },
-  {
-    label: 'Nationaliteiten',
-    path: '$.BRP.content.persoon.nationaliteiten',
-    transform: (value: Array<{ omschrijving: string }>) => {
-      return value?.map(({ omschrijving }) => omschrijving).join(', ');
-    },
   },
 ].map((p) => {
   if (!p.hpx) {
