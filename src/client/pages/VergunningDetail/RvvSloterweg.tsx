@@ -34,11 +34,7 @@ export function getRVVSloterwegLineItems(
     ? `Wij hebben uw aanvraag voor een ${vergunning.title} verleend.`
     : `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
 
-  let dateInProgress = vergunning.dateWorkflowActive ?? '';
-
-  if (!isChangeRequest) {
-    dateInProgress = vergunning.dateRequest;
-  }
+  let dateInProgress = vergunning.dateWorkflowActive ?? vergunning.dateRequest;
 
   const lineItems: StatusLineItem[] = [
     {
