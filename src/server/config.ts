@@ -177,7 +177,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CLEOPATRA: {
     url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
-    postponeFetch: !FeatureToggle.milieuzoneApiActive,
+    postponeFetch: !FeatureToggle.cleopatraApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),

@@ -30,11 +30,11 @@ export { default as IconInkomenSVWI } from './inkomen-svwi.svg?react';
 export { default as IconKlachten } from './IconKlachten.svg?react';
 export { default as IconKrefia } from './krefia.svg?react';
 export { default as IconLogout } from './Logout.svg?react';
-// Map icons
 export { default as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg?react';
 export { default as IconMarker } from './Marker.svg?react';
 export { default as IconMijnGegevens } from './MijnGegevens.svg?react';
 export { default as IconMilieuzone } from './milieuzone.svg?react';
+export { default as IconOvertredingen } from './Overtredingen.svg?react';
 export {
   default as IconIndeterminate,
   default as IconMin,

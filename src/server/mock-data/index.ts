@@ -18,7 +18,7 @@ import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import LOODMETING_RAPPORT from './json/loodmeting_rapport.json';
 import LOODMETINGEN from './json/loodmetingen.json';
-import MILIEUZONE from './json/milieuzone.json';
+import CLEOPATRA from './json/cleopatra.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
 import SIA_HISTORY from './json/sia-history.json';
@@ -226,7 +226,7 @@ export const mockDataConfig: MockDataConfig = {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(MILIEUZONE);
+      return await loadMockApiResponseJson(CLEOPATRA);
     },
   },
   [String(ApiUrls.VERGUNNINGEN)]: {

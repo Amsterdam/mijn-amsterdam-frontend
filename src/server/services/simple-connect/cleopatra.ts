@@ -4,7 +4,12 @@ import { Chapters, IS_TAP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchService, fetchTipsAndNotifications } from './api-service';
+import {
+  ApiPatternResponseA,
+  fetchService,
+  fetchTipsAndNotifications,
+} from './api-service';
+import { apiSuccessResult } from '../../../universal/helpers';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -35,7 +40,7 @@ const pemPubKey =
 export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
 ): string {
-  const payload: MilieuzoneRequestPayload =
+  const payload: CleopatraRequestPayload =
     profile.profileType === 'commercial'
       ? {
           kvk: profile.id!,
@@ -46,7 +51,7 @@ export function getJSONRequestPayload(
   return JSON.stringify(payload);
 }
 
-export async function encryptPayload(payload: MilieuzoneRequestPayloadString) {
+export async function encryptPayload(payload: CleopatraRequestPayloadString) {
   const key = await pemPubKey;
 
   return jose.JWE.createEncrypt(
@@ -65,8 +70,8 @@ export async function encryptPayload(payload: MilieuzoneRequestPayloadString) {
     .final();
 }
 
-interface MilieuzoneMessage {
-  thema: 'Milieuzone';
+interface CleopatraMessage {
+  thema: 'Milieuzone' | 'Overtredingen';
   categorie: 'F2' | 'M1' | 'F3';
   nummer: number;
   prioriteit: number;
@@ -78,40 +83,56 @@ interface MilieuzoneMessage {
   informatie: string;
 }
 
-type MilieuzoneRequestPayload = { kvk: string } | { bsn: string };
-type MilieuzoneRequestPayloadString = string;
+type CleopatraRequestPayload = { kvk: string } | { bsn: string };
+type CleopatraRequestPayloadString = string;
 
-function transformMilieuzoneResponse(response: MilieuzoneMessage[]) {
+type CleoPatraPatternResponse = ApiPatternResponseA & {
+  isKnownMilieuzone: boolean;
+  isKnownOvertredingen: boolean;
+};
+
+function transformCleopatraResponse(response: CleopatraMessage[]) {
   const notifications: MyNotification[] = [];
-  let isKnown: boolean = false;
+  let isKnownMilieuzone: boolean = false;
+  let isKnownOvertredingen: boolean = false;
 
   if (Array.isArray(response)) {
     for (const message of response) {
-      switch (message.categorie) {
-        case 'F2':
-          isKnown = true;
+      switch (true) {
+        case message.categorie === 'F2' && message.thema === 'Overtredingen':
+          isKnownOvertredingen = true;
+          break;
+        case message.categorie === 'F2' && message.thema === 'Milieuzone':
+          isKnownMilieuzone = true;
           break;
         // Melding / Notification
-        case 'M1':
-        case 'F3':
-          notifications.push({
-            id: `milieuzone-${message.categorie}`,
-            chapter: Chapters.MILIEUZONE,
-            title: message.titel,
-            datePublished: message.datum,
-            description: message.omschrijving,
-            link: {
-              title: message.urlNaam,
-              to: message.url,
-            },
-          });
+        case message.categorie === 'M1' || message.categorie === 'F3':
+          {
+            const chapter =
+              message.thema === 'Milieuzone'
+                ? Chapters.MILIEUZONE
+                : Chapters.OVERTREDINGEN;
+
+            notifications.push({
+              id: `${chapter}-${message.categorie}`,
+              chapter,
+              title: message.titel,
+              datePublished: message.datum,
+              description: message.omschrijving,
+              link: {
+                title: message.urlNaam,
+                to: message.url,
+              },
+            });
+          }
           break;
       }
     }
   }
 
   return {
-    isKnown,
+    isKnownOvertredingen,
+    isKnownMilieuzone,
     notifications,
   };
 }
@@ -125,32 +146,86 @@ async function getConfig(
   );
 
   return getApiConfig('CLEOPATRA', {
-    transformResponse: transformMilieuzoneResponse,
+    transformResponse: transformCleopatraResponse,
     cacheKey: `cleopatra-${requestID}`,
     data: postData,
   });
+}
+
+async function fetchCleopatra(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const INCLUDE_TIPS_AND_NOTIFICATIONS = true;
+  return fetchService<CleoPatraPatternResponse>(
+    requestID,
+    await getConfig(authProfileAndToken, requestID),
+    INCLUDE_TIPS_AND_NOTIFICATIONS
+  );
 }
 
 export async function fetchMilieuzone(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(
-    requestID,
-    await getConfig(authProfileAndToken, requestID),
-    false
-  );
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      isKnown: response.content?.isKnownMilieuzone ?? false,
+    });
+  }
+
+  return response;
+}
+
+export async function fetchOvertredingen(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      isKnown: response.content?.isKnownOvertredingen ?? false,
+    });
+  }
+
+  return response;
 }
 
 export async function fetchMilieuzoneNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchTipsAndNotifications(
-    requestID,
-    await getConfig(authProfileAndToken, requestID),
-    Chapters.MILIEUZONE
-  );
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      notifications:
+        response.content?.notifications?.filter(
+          (notifiction) => notifiction.chapter === Chapters.MILIEUZONE
+        ) ?? [],
+    });
+  }
+
+  return response;
+}
+
+export async function fetchOvertredingenNotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      notifications:
+        response.content?.notifications?.filter(
+          (notifiction) => notifiction.chapter === Chapters.OVERTREDINGEN
+        ) ?? [],
+    });
+  }
 
   return response;
 }

@@ -4,7 +4,7 @@ import { IS_PRODUCTION } from './env';
 export const FeatureToggle = {
   garbageInformationPage: true,
   belastingApiActive: true,
-  milieuzoneApiActive: true,
+  cleopatraApiActive: true,
   identiteitsbewijzenActive: true,
   eherkenningActive: true,
   vergunningenActive: true,

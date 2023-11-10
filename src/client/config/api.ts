@@ -56,6 +56,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Actuele updates over uw belastingen',
   MILIEUZONE: 'Milieuzone',
+  OVERTREDINGEN: 'Overtredingen voertuigen',
   MY_LOCATION: 'Uw locatie op de kaart',
   VERGUNNINGEN: 'Vergunningen',
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden

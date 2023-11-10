@@ -18,6 +18,7 @@ import {
   fetchBelastingNotifications,
   fetchErfpachtNotifications,
   fetchMilieuzoneNotifications,
+  fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
 } from './simple-connect';
 import { convertTipToNotication } from './tips/tips-service';
@@ -104,6 +105,7 @@ type NotificationServices = Record<
 const notificationServices: NotificationServices = {
   commercial: {
     milieuzone: fetchMilieuzoneNotifications,
+    overtredingen: fetchOvertredingenNotifications,
     vergunningen: fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
@@ -128,6 +130,7 @@ const notificationServices: NotificationServices = {
     brp: fetchBrpNotifications,
     belasting: fetchBelastingNotifications,
     milieuzone: fetchMilieuzoneNotifications,
+    overtredingen: fetchOvertredingenNotifications,
     vergunningen: fetchVergunningenNotifications,
     erfpacht: fetchErfpachtNotifications,
     subsidie: fetchSubsidieNotifications,
