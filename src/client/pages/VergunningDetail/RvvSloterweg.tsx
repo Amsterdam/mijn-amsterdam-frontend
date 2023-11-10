@@ -62,10 +62,10 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-afgehandeld',
       status: 'Afgehandeld',
-      datePublished: !!vergunning.dateWorkflowVerleend
-        ? vergunning.dateWorkflowVerleend
-        : !!vergunning.dateDecision
+      datePublished: !!vergunning.dateDecision
         ? vergunning.dateDecision
+        : !!vergunning.dateWorkflowVerleend
+        ? vergunning.dateWorkflowVerleend
         : '',
       description: isGranted && !(hasDecision || isExpired) ? grantedText : '',
       documents: [],
