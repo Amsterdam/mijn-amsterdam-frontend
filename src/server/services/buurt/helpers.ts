@@ -91,8 +91,8 @@ export function isCoordWithingBoundingBox(
   yIndex = 0
 ) {
   const [x1, y1, x2, y2] = bbox;
-  const y = coord[yIndex];
-  const x = coord[xIndex];
+  const y = coord[yIndex]!;
+  const x = coord[xIndex]!;
 
   if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
     return true;

@@ -1,8 +1,8 @@
 import { apiSuccessResult } from '../../universal/helpers';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
+import { decodeToken } from '../helpers/app';
 // Import JSON files because they get included in the bundle this way.
 // The JSON files represent the data output of the MA Python api's.
-import { decodeToken } from '../helpers/app.development';
 import AVG_THEMAS from './json/avg-themas.json';
 import AVG from './json/avg.json';
 import BELASTINGEN from './json/belasting.json';

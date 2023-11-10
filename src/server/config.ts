@@ -3,9 +3,9 @@ import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
-import jose from 'jose';
+import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TEST } from '../universal/config/env';
+import { IS_OT, IS_TAP, IS_TEST } from '../universal/config/env';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -118,6 +118,7 @@ export type SourceApiKey =
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'BRP'
   | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'BAG'
   | 'AFVAL'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
@@ -220,6 +221,17 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
   },
   BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
+  ERFPACHTv2: {
+    url: process.env.BFF_ERFPACHT_API_URL_ONT,
+    passthroughOIDCToken: true,
+    httpsAgent: new https.Agent({
+      ca: IS_TAP ? getCert(process.env.BFF_SERVER_CLIENT_CERT) : [],
+    }),
+    postponeFetch: !FeatureToggle.erfpachtV2EndpointActive,
+    headers: {
+      'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
+    },
+  },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
   },
@@ -421,7 +433,7 @@ const oidcConfigBase: ConfigParams = {
     callback: false,
   },
   afterCallback: (req, res, session) => {
-    const claims = jose.JWT.decode(session.id_token) as {
+    const claims = jose.decodeJwt(session.id_token) as {
       nonce: string;
     };
 

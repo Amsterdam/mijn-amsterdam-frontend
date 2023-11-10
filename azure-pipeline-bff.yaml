@@ -2,9 +2,8 @@ trigger:
   batch: true
   branches:
     include:
-      - ontwikkelen
       - testen
-      - main
+      - az-acceptance
   paths:
     include:
       - src/server
@@ -51,9 +50,6 @@ parameters:
     default: false
 
 variables:
-  - ${{ if eq(variables['Build.SourceBranchName'], 'ontwikkelen') }}:
-      - name: dtapName
-        value: o
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
@@ -80,3 +76,4 @@ jobs:
       btdAppBFF: true
       btdAppUI: false
       updateAppSettings: ${{ parameters.updateAppSettings }}
+      aquaScan: ${{ eq(variables['Build.Reason'], 'PullRequest') }}

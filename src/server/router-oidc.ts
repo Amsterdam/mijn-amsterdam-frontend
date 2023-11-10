@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle, IS_PRODUCTION } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   AUTH_CALLBACK,
@@ -72,9 +72,17 @@ router.get(
 );
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
-  const auth = await getAuth(req);
-  if (auth.profile.id) {
-    countLoggedInVisit(auth.profile.id);
+  try {
+    const auth = await getAuth(req);
+    if (auth.profile.id) {
+      countLoggedInVisit(auth.profile.id);
+    }
+  } catch (error) {
+    Sentry.captureException(error, {
+      extra: {
+        at: 'Digid landing',
+      },
+    });
   }
   return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
 });
@@ -160,11 +168,19 @@ if (FeatureToggle.yiviActive) {
   );
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI, async (req, res) => {
-    if (!(await isRequestAuthenticated(req, 'yivi'))) {
-      return res.oidc.login({
-        returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
-        authorizationParams: {
-          redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
+    try {
+      if (!(await isRequestAuthenticated(req, 'yivi'))) {
+        return res.oidc.login({
+          returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
+          authorizationParams: {
+            redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
+          },
+        });
+      }
+    } catch (error) {
+      Sentry.captureException(error, {
+        extra: {
+          at: 'Eherkenning landing',
         },
       });
     }
@@ -172,9 +188,17 @@ if (FeatureToggle.yiviActive) {
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
-    const auth = await getAuth(req);
-    if (auth.profile.id) {
-      countLoggedInVisit(auth.profile.id, 'yivi');
+    try {
+      const auth = await getAuth(req);
+      if (auth.profile.id) {
+        countLoggedInVisit(auth.profile.id, 'yivi');
+      }
+    } catch (error) {
+      Sentry.captureException(error, {
+        extra: {
+          at: 'Yivi landing',
+        },
+      });
     }
     return res.redirect(`${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`);
   });
@@ -281,8 +305,8 @@ function logout(postLogoutRedirectUrl: string) {
     res.oidc.logout({
       returnTo: postLogoutRedirectUrl,
       logoutParams: {
-        id_token_hint: null,
-        logout_hint: auth.profile.sid,
+        id_token_hint: !IS_PRODUCTION ? auth.token : null,
+        logout_hint: IS_PRODUCTION ? auth.profile.sid : null,
       },
     });
   };

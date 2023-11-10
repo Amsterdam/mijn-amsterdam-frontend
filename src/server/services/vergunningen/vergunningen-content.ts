@@ -301,7 +301,9 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } ${item.title} ontvangen.`,
+        } ${item.title} ${
+          (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
+        }(${(item as RVVSloterweg).licensePlates}) ontvangen.`,
     },
     inProgress: {
       ...inProgressShort,
@@ -310,15 +312,15 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg in behandeling`,
+        } ${item.title} in behandeling`,
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg (${
-          (item as RVVSloterweg).licensePlates
-        }) in behandeling genomen`,
+        } ${item.title} ${
+          (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
+        }(${(item as RVVSloterweg).licensePlates}) in behandeling genomen`,
     },
     done: {
       ...doneShort,
@@ -327,15 +329,15 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg verleend`,
+        } ${item.title} verleend`,
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg ${
+        } ${item.title} ${
           (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
-        } (${(item as RVVSloterweg).licensePlates}) verleend`,
+        }(${(item as RVVSloterweg).licensePlates}) verleend`,
     },
     revoked: {
       ...doneShort,
@@ -344,15 +346,15 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg ingetrokken`,
+        } ${item.title} ingetrokken`,
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing Sloterweg ${
+        } ${item.title} ${
           (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
-        } (${(item as RVVSloterweg).licensePlates}) ingetrokken`,
+        }(${(item as RVVSloterweg).licensePlates}) ingetrokken`,
     },
   },
 };

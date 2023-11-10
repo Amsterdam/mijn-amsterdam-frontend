@@ -1119,7 +1119,7 @@
     {
       "caseType": "RVV Sloterweg",
       "id": "unique-id-of-zaak",
-      "title": "RVV ontheffing Sloterweg (Wijziging/Ontvangen)",
+      "title": "RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen)",
       "identifier": "Z/23/98989234",
       "dateRequest": "2023-07-24T11:21:33",
       "status": "Ontvangen",
@@ -1138,7 +1138,7 @@
     {
       "caseType": "RVV Sloterweg",
       "id": "unique-id-of-zaak",
-      "title": "RVV ontheffing Sloterweg (Wijziging/Ingetrokken)",
+      "title": "RVV ontheffing van Vlaanderenlaan (Wijziging/Ingetrokken)",
       "identifier": "Z/23/23423409",
       "dateRequest": "2023-07-24T11:21:33",
       "status": "Ontvangen",
@@ -1171,7 +1171,7 @@
       "licensePlates": "BB-344-E",
       "previousLicensePlates": "ZZ-122-C",
       "requestType": "Wijziging",
-      "area": "van Vlaanderenlaan"
+      "area": "Sloterweg"
     },
     {
       "caseType": "RVV Sloterweg",
@@ -1190,7 +1190,7 @@
       "licensePlates": "BB-344-Q",
       "previousLicensePlates": "YY-123-B",
       "requestType": "Wijziging",
-      "area": "Laan van Vlaanderen"
+      "area": "Sloterweg"
     },
     {
       "caseType": "RVV Sloterweg",
@@ -1201,7 +1201,7 @@
       "status": "iets?",
       "decision": "Verlopen",
       "dateWorkflowActive": "2023-07-02T00:00:00",
-      "dateWorkflowVerleend": null,
+      "dateWorkflowVerleend": "2023-07-02T00:00:00",
       "processed": true,
       "dateStart": "2023-07-12T00:00:00",
       "dateEnd": "2023-07-22T00:00:00",
@@ -1209,18 +1209,18 @@
       "licensePlates": "ZZ-122-A",
       "previousLicensePlates": "",
       "requestType": "Nieuw",
-      "area": "Laan van Vlaanderen"
+      "area": "Sloterweg"
     },
     {
       "caseType": "RVV Sloterweg",
       "id": "unique-id-of-zaak",
-      "title": "RVV ontheffing Sloterweg (Nieuw/Ingetrokken)",
+      "title": "RVV ontheffing Laan van Vlaanderen (Nieuw/Ingetrokken)",
       "identifier": "Z/23/123123456",
       "dateRequest": "2023-07-01T11:21:33",
       "status": "iets?",
       "decision": "Ingetrokken",
       "dateWorkflowActive": "2023-07-02T00:00:00",
-      "dateWorkflowVerleend": null,
+      "dateWorkflowVerleend": "2023-07-02T00:00:00",
       "processed": true,
       "dateStart": "2023-07-12T00:00:00",
       "dateEnd": "2023-07-22T00:00:00",
@@ -1231,7 +1231,7 @@
       "area": "Laan van Vlaanderen"
     },
     {
-      "area": "Laan van Vlaanderen",
+      "area": "Sloterweg",
       "caseType": "RVV Sloterweg",
       "dateDecision": null,
       "dateEnd": "2025-08-31",
@@ -1272,14 +1272,14 @@
       "processed": true,
       "requestType": "Nieuw",
       "status": "Afgehandeld",
-      "title": "RVV ontheffing Sloterweg",
+      "title": "RVV ontheffing Sloterweg West",
       "link": {
         "to": "/vergunningen/rvv-sloterweg/394540596",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
     },
     {
-      "area": "Laan van Vlaanderen",
+      "area": "Sloterweg West",
       "caseType": "RVV Sloterweg",
       "dateDecision": null,
       "dateEnd": "2025-08-31",
@@ -1296,14 +1296,14 @@
       "processed": false,
       "requestType": "Wijziging",
       "status": "Actief",
-      "title": "RVV ontheffing Sloterweg",
+      "title": "RVV ontheffing Sloterweg West",
       "link": {
         "to": "/vergunningen/rvv-sloterweg/1623553971",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
     },
     {
-      "area": "Laan van Vlaanderen",
+      "area": "Sloterweg West",
       "caseType": "RVV Sloterweg",
       "dateDecision": null,
       "dateEnd": "2025-08-19",
@@ -1320,7 +1320,7 @@
       "processed": false,
       "requestType": "Nieuw",
       "status": "Ontvangen",
-      "title": "RVV ontheffing Sloterweg",
+      "title": "RVV ontheffing Sloterweg West",
       "link": {
         "to": "/vergunningen/rvv-sloterweg/4069415615",
         "title": "Bekijk hoe het met uw aanvraag staat"

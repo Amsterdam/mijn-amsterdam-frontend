@@ -1,4 +1,4 @@
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import { default as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg?react';
 import { SecondaryLinks } from './MainNavBar';
 import styles from './MainNavBar.module.scss';
 

@@ -5,7 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
-import { hash } from '../../../universal/helpers/utils';
+import { hash, sortAlpha } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
@@ -330,7 +330,7 @@ export function transformVergunningenData(
     return vergunning;
   });
 
-  return vergunningen.sort(dateSort('dateRequest', 'desc'));
+  return vergunningen.sort(sortAlpha('identifier', 'desc'));
 }
 
 export function fetchAllVergunningen(

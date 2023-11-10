@@ -96,7 +96,6 @@ app.use(
 
 // Json body parsing
 app.use(express.json());
-app.set('trust proxy', true);
 
 // Error handler
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
