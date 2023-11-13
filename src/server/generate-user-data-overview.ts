@@ -168,7 +168,7 @@ const paths: PathObj[] = [
     wch: 40,
   },
   {
-    label: 'Geboortedatum',
+    label: 'Geboortedatum (Geboorteland)',
     path: '$.BRP.content.persoon',
     transform: (persoon: Persoon) => {
       if (!persoon) {
@@ -196,7 +196,7 @@ const paths: PathObj[] = [
     },
   },
   {
-    label: 'Geslacht',
+    label: 'Geslacht (Nationaliteit)',
     path: '$.BRP.content.persoon',
     transform: (persoon: Persoon) => {
       if (!persoon) {
@@ -206,7 +206,9 @@ const paths: PathObj[] = [
         ?.map(({ omschrijving }) => omschrijving)
         .join(', ');
       return `${persoon.omschrijvingGeslachtsaanduiding} ${
-        nationaleiten !== 'Nederlandse' ? `(${nationaleiten})` : ''
+        nationaleiten !== 'Nederlandse' && nationaleiten
+          ? `(${nationaleiten})`
+          : ''
       }`;
     },
   },
@@ -245,7 +247,7 @@ const paths: PathObj[] = [
     },
   },
   {
-    label: 'Verbintenis',
+    label: 'Verbintenis (Partner)',
     path: '$.BRP.content.verbintenis',
     wch: 50,
     transform: (verbintenis: Verbintenis) => {
