@@ -2,8 +2,9 @@ trigger:
   batch: true
   branches:
     include:
+      - ontwikkelen
       - testen
-      - az-acceptance
+      - main
   paths:
     include:
       - src/client
@@ -80,4 +81,3 @@ jobs:
       btdAppBFF: false
       btdAppUI: true
       updateAppSettings: ${{ parameters.updateAppSettings }}
-      aquaScan: ${{ eq(variables['Build.Reason'], 'PullRequest') }}

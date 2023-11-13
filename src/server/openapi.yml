@@ -265,6 +265,8 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         MILIEUZONE:
           $ref: '#/components/schemas/ApiSearchConfigResult'
+        OVERTREDINGEN:
+          $ref: '#/components/schemas/ApiSearchConfigResult'
         TOERISTISCHE_VERHUUR:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         ERFPACHT:
@@ -324,6 +326,8 @@ components:
         KVK:
           type: object
         MILIEUZONE:
+          type: object
+        OVERTREDINGEN:
           type: object
         TOERISTISCHE_VERHUUR:
           type: object

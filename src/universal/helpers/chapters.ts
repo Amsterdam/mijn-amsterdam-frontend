@@ -16,6 +16,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     BRP,
     BELASTINGEN,
     MILIEUZONE,
+    OVERTREDINGEN,
     VERGUNNINGEN,
     SIA,
     TOERISTISCHE_VERHUUR,
@@ -83,8 +84,14 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     case Chapters.MILIEUZONE:
       return (
         !isLoading(MILIEUZONE) &&
-        (FeatureToggle.milieuzoneApiActive
-          ? MILIEUZONE.content?.isKnown
+        (FeatureToggle.cleopatraApiActive ? MILIEUZONE.content?.isKnown : false)
+      );
+
+    case Chapters.OVERTREDINGEN:
+      return (
+        !isLoading(OVERTREDINGEN) &&
+        (FeatureToggle.cleopatraApiActive
+          ? OVERTREDINGEN.content?.isKnown
           : false)
       );
 

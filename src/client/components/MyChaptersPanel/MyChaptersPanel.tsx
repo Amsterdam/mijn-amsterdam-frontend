@@ -1,6 +1,5 @@
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, ChapterMenuItem } from '../../../universal/config';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { ChapterMenuItem } from '../../config/menuItems';
 import { Heading } from '@amsterdam/design-system-react';
 import { IconInfo } from '../../assets/icons';
 import Linkd from '../Button/Button';
