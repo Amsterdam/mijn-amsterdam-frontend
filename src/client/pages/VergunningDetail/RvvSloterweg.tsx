@@ -31,8 +31,8 @@ export function getRVVSloterwegLineItems(
   ].includes(vergunning.decision);
 
   const grantedText = isChangeRequest
-    ? `Wij hebben uw aanvraag voor een ${vergunning.title} verleend.`
-    : `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
+    ? `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`
+    : `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area}  kenteken ${vergunning.licensePlates} verleend.`;
 
   let dateInProgress =
     vergunning.dateWorkflowActive ?? vergunning.dateWorkflowVerleend;
@@ -77,16 +77,16 @@ export function getRVVSloterwegLineItems(
       isExpired ||
       vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WIHT_NEW_KENTEKEN
     ) {
-      description = `Uw ${vergunning.title} is verlopen.`;
+      description = `Uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.licensePlates} is verlopen.`;
     }
 
     if (vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE) {
-      description = `Wij hebben uw ${vergunning.title} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
+      description = `Wij hebben uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.licensePlates} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
     }
 
     if (vergunning.decision === RVV_SLOTERWEG_RESULT_MATURED) {
       description =
-        'U heeft een ketekenwijziging doorgegeven. Bekijk de ontheffing voor het nieuwe kenteken in het overzicht.';
+        'U heeft een nieuw kenteken doorgegeven. Bekijk de ontheffing voor het nieuwe kenteken in het overzicht.';
     }
 
     lineItems.push({
