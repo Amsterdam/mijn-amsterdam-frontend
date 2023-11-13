@@ -64,7 +64,7 @@
     "@types/sanitize-html": "^2.5.0",
     "@types/supercluster": "^7.1.2",
     "@types/throttle-debounce": "^5.0.1",
-    "@types/uid-safe": "^2.1.2",
+    "@types/uid-safe": "^2.1.5",
     "axios": "^1.6.0",
     "axios-mock-adapter": "^1.21.4",
     "better-sqlite3": "^9.0.0",
