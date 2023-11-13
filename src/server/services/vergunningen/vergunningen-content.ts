@@ -102,9 +102,7 @@ const inProgress: NotificationLabels = {
   description: (item, titleLower) =>
     `Uw vergunningsaanvraag ${titleLower} is in behandeling genomen.`,
   datePublished: (item) =>
-    !hasWorkflow(item.caseType)
-      ? item.dateRequest
-      : item.dateWorkflowActive
+    hasWorkflow(item.caseType) && item.dateWorkflowActive
       ? item.dateWorkflowActive
       : item.dateRequest,
   link,
@@ -355,6 +353,8 @@ export const notificationContent: NotificationContent = {
         } ${item.title} ${
           (item as RVVSloterweg).requestType === 'Wijziging' ? 'naar ' : ''
         }(${(item as RVVSloterweg).licensePlates}) ingetrokken`,
+      datePublished: (item) =>
+        (item as RVVSloterweg).dateDecision ?? item.dateRequest,
     },
   },
 };

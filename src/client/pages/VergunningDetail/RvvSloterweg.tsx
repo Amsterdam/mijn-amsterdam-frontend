@@ -34,11 +34,8 @@ export function getRVVSloterwegLineItems(
     ? `Wij hebben uw aanvraag voor een ${vergunning.title} verleend.`
     : `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
 
-  let dateInProgress = vergunning.dateWorkflowActive ?? '';
-
-  if (!isChangeRequest) {
-    dateInProgress = vergunning.dateRequest;
-  }
+  let dateInProgress =
+    vergunning.dateWorkflowActive ?? vergunning.dateWorkflowVerleend;
 
   const lineItems: StatusLineItem[] = [
     {
@@ -53,7 +50,7 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-in-behandeling',
       status: 'In behandeling',
-      datePublished: dateInProgress,
+      datePublished: dateInProgress ?? '',
       description: '',
       documents: [],
       isActive: isInprogress && !isGranted && !hasDecision,
@@ -62,10 +59,10 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-afgehandeld',
       status: 'Afgehandeld',
-      datePublished: !!vergunning.dateWorkflowVerleend
-        ? vergunning.dateWorkflowVerleend
-        : !!vergunning.dateDecision
+      datePublished: !!vergunning.dateDecision
         ? vergunning.dateDecision
+        : !!vergunning.dateWorkflowVerleend
+        ? vergunning.dateWorkflowVerleend
         : '',
       description: isGranted && !(hasDecision || isExpired) ? grantedText : '',
       documents: [],
