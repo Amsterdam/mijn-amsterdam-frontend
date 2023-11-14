@@ -63,11 +63,6 @@ function getChangesSinceLastRelease() {
 
       if (!!match) {
         // each line is a commit message since the last release
-        // console.log(line);
-        // console.log('Ticket #', match[1]);
-        // console.log('Desc', match[4]);
-        // console.log('PR #', match[5]);
-        // console.log('Date', new Date(line.slice(-25)));
 
         return {
           ticket: match[1].trim().replace(' ', '-'),

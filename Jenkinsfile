@@ -63,7 +63,6 @@ pipeline {
       }
     }
 
-
     // ACCEPTANCE
 
     stage('Build BFF') {
