@@ -5,7 +5,7 @@ on:
     types: [opened, edited, synchronize]
 jobs:
   create-notification:
-    if: ${{ contains(github.ref, 'refs/heads/MIJN-6651') }}
+    if: ${{ contains(github.ref, 'MIJN-6651') }}
     runs-on: ubuntu-latest
     steps:
       - name: Create release notification
