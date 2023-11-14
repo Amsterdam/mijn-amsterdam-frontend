@@ -8,7 +8,7 @@ is a portal for official communication with the municipality of Amsterdam. The a
 - React application
 - Node Express back-end-for-frontend (BFF)
 
-To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the following content inside the file:
+To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the following content inside the file AND ask one of the developers for more environment settings:
 
 ```
 BROWSER=none
@@ -49,7 +49,7 @@ The codebase is also written in typescript so a compilation step is required for
 
 ### Authentication
 
-We use an OIDC idp to authenticate the users via Digid or Eherkenning. The max session duration is 15 * 60 seconds = 15 minutes. Incoming tokens are verified and passed along with the requests to the microservices.
+We use an OIDC idp to authenticate the users via Digid or Eherkenning. The max session duration is 15 \* 60 seconds = 15 minutes. Incoming tokens are verified and passed along with the requests to the microservices.
 In the microservices these tokens are verified once more for added security.
 
 ### BFF Development api
