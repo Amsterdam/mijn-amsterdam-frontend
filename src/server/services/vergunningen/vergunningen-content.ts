@@ -303,11 +303,7 @@ export const notificationContent: NotificationContent = {
         RVV ontheffing ${(item as RVVSloterweg).area} 
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? 'van ' +
-              '(' +
-              (item as RVVSloterweg).previousLicensePlates +
-              ')' +
-              ' naar'
+            ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
             : ''
         }
         (${(item as RVVSloterweg).licensePlates}) ontvangen.`,
@@ -329,11 +325,7 @@ export const notificationContent: NotificationContent = {
         RVV ontheffing ${(item as RVVSloterweg).area} 
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? 'van ' +
-              '(' +
-              (item as RVVSloterweg).previousLicensePlates +
-              ')' +
-              ' naar'
+            ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
             : ''
         }
         (${(item as RVVSloterweg).licensePlates}) in behandeling genomen.`,
@@ -355,11 +347,7 @@ export const notificationContent: NotificationContent = {
         RVV ontheffing ${(item as RVVSloterweg).area} 
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? 'van ' +
-              '(' +
-              (item as RVVSloterweg).previousLicensePlates +
-              ')' +
-              ' naar'
+            ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
             : ''
         }
         (${(item as RVVSloterweg).licensePlates}) verleend.`,
@@ -377,18 +365,13 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } 
-    RVV ontheffing ${(item as RVVSloterweg).area} 
-    ${
-      (item as RVVSloterweg).requestType === 'Wijziging'
-        ? 'van ' +
-          '(' +
-          (item as RVVSloterweg).previousLicensePlates +
-          ')' +
-          ' naar'
-        : ''
-    }
-    (${(item as RVVSloterweg).licensePlates}) ingetrokken.`,
+        } RVV ontheffing ${(item as RVVSloterweg).area} 
+        ${
+          (item as RVVSloterweg).requestType === 'Wijziging'
+            ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
+            : ''
+        }
+        (${(item as RVVSloterweg).licensePlates}) ingetrokken.`,
     },
   },
 };
