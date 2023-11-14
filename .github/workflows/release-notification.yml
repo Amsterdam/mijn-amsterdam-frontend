@@ -5,7 +5,7 @@ on:
     types: [opened, edited, synchronize]
 jobs:
   create-notification:
-    if: ${{ contains(github.ref, 'release-v') }}
+    # if: ${{ contains(github.ref, 'release-v') }}
     runs-on: ubuntu-latest
     steps:
       - name: Log
