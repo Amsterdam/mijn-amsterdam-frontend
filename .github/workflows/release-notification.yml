@@ -1,17 +1,10 @@
 name: 'Release notification'
-# on: create
-on:
-  pull_request:
-    types: [opened, edited, synchronize]
+on: create
 jobs:
   create-notification:
-    # if: ${{ contains(github.ref, 'release-v') }}
+    if: ${{ contains(github.ref, 'release-v') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Log
-        env:
-          branch: ${{ github.ref }}
-        run: echo "branch is $branch"
       - name: Checkout
         uses: actions/checkout@v4
         with:
