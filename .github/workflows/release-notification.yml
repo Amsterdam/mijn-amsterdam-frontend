@@ -1,13 +1,9 @@
 name: 'Release notification'
-on:
-  create:
+on: create
 jobs:
   create-notification:
+    if: ${{ contains(github.ref, 'refs/heads/MIJN-6651') }}
     runs-on: ubuntu-latest
     steps:
       - name: Create release notification
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-          GITHUB_REF
+        run: npm run release:notification

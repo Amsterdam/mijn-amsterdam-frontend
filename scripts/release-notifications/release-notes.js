@@ -4,11 +4,6 @@ const { sendTeamsMessage } = require('./teams');
 
 const RELEASE_MERGE_MESSAGE = 'Bump!';
 
-const args = process.argv.slice(2); // Read commandline args
-
-const PATH = args[0].split('=')[1];
-const HOST = args[1].split('=')[1];
-
 // Small wrapper
 function executeCommandSync(command) {
   return child_process.execSync(command).toString();
@@ -86,5 +81,5 @@ function getChangesSinceLastRelease() {
 }
 
 const changes = getChangesSinceLastRelease();
-const cardJson = getReleaseCardJson(changes);
-sendTeamsMessage(cardJson, HOST, PATH);
+// const cardJson = getReleaseCardJson(changes);
+// sendTeamsMessage(cardJson, HOST, PATH);
