@@ -7,7 +7,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
         RVV ontheffing Laan van Vlaanderen 
         van (PR067L) naar 
         (AAYYAA) in behandeling genomen.",
@@ -22,7 +22,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-07-26T00:00:00",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
         RVV ontheffing van Vlaanderenlaan 
         van (YY-123-A, ZZ-122-A) naar 
         (BB-344-P, VV-899-C) in behandeling genomen.",
@@ -76,7 +76,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
         RVV ontheffing Laan van Vlaanderen 
         van (PR067L) naar 
         (TT148N) in behandeling genomen.",
@@ -91,7 +91,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging RVV ontheffing 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
         RVV ontheffing Sloterweg West 
         van (PR067L) naar 
         (TT148N) ontvangen.",
