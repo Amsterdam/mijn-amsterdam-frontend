@@ -12,10 +12,11 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_TAP } from '../../universal/config';
+import { IS_PRODUCTION, IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { IS_PG } from './db/config';
+import { IS_PG, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
+import { execDB } from './db/sqlite3';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -44,8 +45,49 @@ const queriesPG = (tableNameLoginCount: string) => ({
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
 
+async function setupTables() {
+  const { query } = await db();
+
+  if (IS_PRODUCTION) {
+    if (IS_PG) {
+      const createTableQuery = `
+    -- Sequence and defined type
+    CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
+
+    -- Table Definition
+    CREATE TABLE IF NOT EXISTS "public"."${tableNameLoginCount}" (
+        "id" int4 NOT NULL DEFAULT nextval('${tableNameLoginCount}_id_seq'::regclass),
+        "uid" varchar(100) NOT NULL,
+        "authMethod" varchar(100) NOT NULL,
+        "date_created" timestamp NOT NULL DEFAULT now(),
+        PRIMARY KEY ("id")
+    );
+    `;
+
+      const alterTableQuery1 = `
+      ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
+      ADD IF NOT EXISTS "authMethod" VARCHAR(100);
+    `;
+
+      await query(createTableQuery);
+      await query(alterTableQuery1);
+    } else {
+      // Create the table
+      execDB(`
+      CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
+          "id" INTEGER PRIMARY KEY,
+          "uid" VARCHAR(100) NOT NULL,
+          "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
+          "auth_method" VARCHAR(100) DEFAULT NULL
+      );
+    `);
+    }
+  }
+}
+
+setupTables();
+
 async function getQueries() {
-  const { tableNameLoginCount } = await db();
   return (IS_PG ? queriesPG : queriesSQLITE)(tableNameLoginCount);
 }
 
@@ -77,7 +119,7 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const queries = await getQueries();
-  const { queryGET, queryALL, tableNameLoginCount } = await db();
+  const { queryGET, queryALL } = await db();
 
   let authMethodSelected = '';
 
@@ -246,7 +288,7 @@ export async function loginStats(req: Request, res: Response) {
 }
 
 export async function rawDataTable(req: Request, res: Response) {
-  const { queryGET, queryALL, tableNameLoginCount } = await db();
+  const { queryGET, queryALL } = await db();
 
   function generateHtmlTable(rows: any[]) {
     if (rows.length === 0) {

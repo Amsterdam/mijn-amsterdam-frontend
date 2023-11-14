@@ -1,7 +1,6 @@
 import { IS_PG } from './config';
 
 type DBAdapter = {
-  tableNameLoginCount: string;
   query: (query: string, values?: any[] | undefined) => Promise<unknown>;
   queryGET: (query: string, values?: any[] | undefined) => Promise<unknown>;
   queryALL: (query: string, values?: any[] | undefined) => Promise<unknown>;

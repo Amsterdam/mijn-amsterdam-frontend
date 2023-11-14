@@ -15,16 +15,6 @@ const db = new Database(SQLITE3_DB_PATH_FILE, dbOptions);
 // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
 db.pragma('journal_mode = WAL');
 
-// Create the table
-db.exec(`
-CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
-    "id" INTEGER PRIMARY KEY,
-    "uid" VARCHAR(100) NOT NULL,
-    "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
-    "auth_method" VARCHAR(100) DEFAULT NULL
-);
-`);
-
 export async function query(
   query: string,
   values?: any[]
@@ -56,6 +46,10 @@ export async function queryALL(
     return statement.all(...values);
   }
   return statement.all();
+}
+
+export function execDB(query: string) {
+  return db.exec(query);
 }
 
 process.on('beforeExit', () => {
