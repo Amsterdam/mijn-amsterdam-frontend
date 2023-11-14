@@ -1,10 +1,10 @@
-import { IS_AP } from '../../../universal/config';
+import { IS_PG } from './config';
 
 type DBAdapter = {
-  tableNameLoginCount: string;
   query: (query: string, values?: any[] | undefined) => Promise<unknown>;
   queryGET: (query: string, values?: any[] | undefined) => Promise<unknown>;
+  queryALL: (query: string, values?: any[] | undefined) => Promise<unknown>;
 };
 
 export const db: () => Promise<DBAdapter> = () =>
-  IS_AP ? import('./postgres') : import('./sqlite3');
+  IS_PG ? import('./postgres') : import('./sqlite3');

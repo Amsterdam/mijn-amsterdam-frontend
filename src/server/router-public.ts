@@ -20,7 +20,7 @@ import {
 } from './services';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
-import { loginStats } from './services/visitors';
+import { loginStats, rawDataTable } from './services/visitors';
 import { generateOverview } from './generate-user-data-overview';
 
 export const router = express.Router();
@@ -150,6 +150,7 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
     },
     challenge: true,
   });
+  router.get(BffEndpoints.LOGIN_RAW, auth, rawDataTable);
   router.get(BffEndpoints.LOGIN_STATS, auth, loginStats);
 
   // Currently this endpoint can only be used when running the application locally.
