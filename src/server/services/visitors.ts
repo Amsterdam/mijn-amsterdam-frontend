@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import {
   add,
@@ -11,9 +12,11 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_AP, IS_TAP } from '../../universal/config';
+import { IS_PRODUCTION, IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
+import { IS_PG, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
+import { execDB } from './db/sqlite3';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -26,25 +29,68 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
   totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
   totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE DATE((date_created) BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? GROUP BY uid`,
+  uniqueLogins: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
+  uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
+  rawOverview: `SELECT uid, count(uid) as count, auth_method FROM ${tableNameLoginCount} WHERE auth_method IS NOT null GROUP BY auth_method, uid ORDER BY auth_method ASC, count DESC, uid ASC`,
 });
 
 const queriesPG = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
-  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
+  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
+  uniqueLogins: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date`,
+  uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
+  rawOverview: `SELECT uid, count(uid) as count, "authMethod" FROM ${tableNameLoginCount} WHERE "authMethod" IS NOT null GROUP BY "authMethod", uid ORDER BY "authMethod" ASC, count DESC, uid ASC`,
 });
 
+async function setupTables() {
+  const { query } = await db();
+
+  if (IS_PRODUCTION) {
+    if (IS_PG) {
+      const createTableQuery = `
+    -- Sequence and defined type
+    CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
+
+    -- Table Definition
+    CREATE TABLE IF NOT EXISTS "public"."${tableNameLoginCount}" (
+        "id" int4 NOT NULL DEFAULT nextval('${tableNameLoginCount}_id_seq'::regclass),
+        "uid" varchar(100) NOT NULL,
+        "authMethod" varchar(100) NOT NULL,
+        "date_created" timestamp NOT NULL DEFAULT now(),
+        PRIMARY KEY ("id")
+    );
+    `;
+
+      const alterTableQuery1 = `
+      ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
+      ADD IF NOT EXISTS "authMethod" VARCHAR(100);
+    `;
+
+      await query(createTableQuery);
+      await query(alterTableQuery1);
+    } else {
+      // Create the table
+      execDB(`
+      CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
+          "id" INTEGER PRIMARY KEY,
+          "uid" VARCHAR(100) NOT NULL,
+          "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
+          "auth_method" VARCHAR(100) DEFAULT NULL
+      );
+    `);
+    }
+  }
+}
+
+setupTables();
+
 async function getQueries() {
-  const { tableNameLoginCount } = await db();
-  return (IS_AP ? queriesPG : queriesSQLITE)(tableNameLoginCount);
+  return (IS_PG ? queriesPG : queriesSQLITE)(tableNameLoginCount);
 }
 
 function hashUserId(userID: string, salt = SALT) {
@@ -75,7 +121,7 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const queries = await getQueries();
-  const { queryGET, tableNameLoginCount } = await db();
+  const { queryGET, queryALL } = await db();
 
   let authMethodSelected = '';
 
@@ -145,22 +191,38 @@ export async function loginStats(req: Request, res: Response) {
   });
 
   const dateMinResult = (await queryGET(queries.dateMinAll)) as {
-    date_min: string;
+    date_min: string | Date;
   };
 
   const dateMaxResult = (await queryGET(queries.dateMaxAll)) as {
-    date_max: string;
+    date_max: string | Date;
   };
 
-  let dateMin: Date | null = null;
-  let dateMax: Date | null = null;
+  let dateMin: Date = sub(new Date(), { years: 1 });
+  let dateMax: Date = new Date();
 
-  if (dateMinResult) {
-    dateMin = parseISO(dateMinResult.date_min);
-  }
+  try {
+    if (dateMinResult.date_min) {
+      dateMin =
+        dateMinResult.date_min instanceof Date
+          ? dateMinResult.date_min
+          : parseISO(dateMinResult.date_min);
+    }
 
-  if (dateMaxResult) {
-    dateMax = parseISO(dateMaxResult.date_max);
+    if (dateMaxResult.date_max) {
+      dateMax =
+        dateMaxResult.date_max instanceof Date
+          ? dateMaxResult.date_max
+          : parseISO(dateMaxResult.date_max);
+    }
+  } catch (error) {
+    Sentry.captureException(error),
+      {
+        extra: {
+          dateMaxResult,
+          dateMinResult,
+        },
+      };
   }
 
   let dateStart: string = dateMin
@@ -225,4 +287,52 @@ export async function loginStats(req: Request, res: Response) {
     tableNameLoginCount,
     authMethodSelected,
   });
+}
+
+export async function rawDataTable(req: Request, res: Response) {
+  const { queryGET, queryALL } = await db();
+  const queries = await getQueries();
+
+  function generateHtmlTable(rows: any[]) {
+    if (rows.length === 0) {
+      return '<p>No data found.</p>';
+    }
+
+    const tableHeader = Object.keys(rows[0])
+      .map((columnName) => `<th>${columnName}</th>`)
+      .join('');
+
+    const tableRows = rows
+      .map(
+        (row) =>
+          `<tr>${Object.values(row)
+            .map((value) => `<td>${value}</td>`)
+            .join('')}</tr>`
+      )
+      .join('');
+
+    const htmlTable = `
+    <table border="1">
+      <thead>
+        <tr>${tableHeader}</tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
+  `;
+
+    return htmlTable;
+  }
+
+  // SQLite3 query to select all data from the specified table
+  const query = queries.rawOverview;
+
+  // Execute the query and retrieve the results
+  const rows = (await queryALL(query)) as any[];
+
+  // Generate and display the HTML table
+  const htmlTable = generateHtmlTable(rows);
+
+  return res.send(htmlTable);
 }
