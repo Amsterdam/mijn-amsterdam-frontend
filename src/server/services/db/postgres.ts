@@ -60,7 +60,6 @@ export async function query(queryString: string, values?: any[]) {
     }
     result = await pool.query(queryString, values);
   } catch (error) {
-    console.error(error);
     Sentry.captureException(error);
   }
   return result;
