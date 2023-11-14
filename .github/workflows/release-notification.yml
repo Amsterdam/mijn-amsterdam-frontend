@@ -12,5 +12,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 25
+          fetch-tags: true
       - name: Create release notification
         run: npm run release:notification
