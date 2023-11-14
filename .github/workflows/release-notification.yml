@@ -15,3 +15,6 @@ jobs:
           fetch-tags: true
       - name: Create release notification
         run: npm run release:notification
+        env:
+          webhook-host: ${{ secrets.MS_TEAMS_WEBHOOK_HOST }}
+          webhook-path: ${{ secrets.MS_TEAMS_RELEASE_NOTIFICATION_WEBHOOK_PATH }}

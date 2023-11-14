@@ -81,5 +81,9 @@ function getChangesSinceLastRelease() {
 }
 
 const changes = getChangesSinceLastRelease();
-// const cardJson = getReleaseCardJson(changes);
-// sendTeamsMessage(cardJson, HOST, PATH);
+const cardJson = getReleaseCardJson(changes);
+sendTeamsMessage(
+  cardJson,
+  process.env['webhook-host'],
+  process.env['webhook-path']
+);
