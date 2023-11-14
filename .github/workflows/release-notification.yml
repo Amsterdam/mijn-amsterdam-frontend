@@ -1,5 +1,8 @@
 name: 'Release notification'
-on: create
+# on: create
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
 jobs:
   create-notification:
     if: ${{ contains(github.ref, 'refs/heads/MIJN-6651') }}
