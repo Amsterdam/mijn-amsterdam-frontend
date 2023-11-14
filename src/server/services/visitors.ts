@@ -33,6 +33,7 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
   uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
+  rawOverview: `SELECT uid, count(uid) as count, auth_method FROM ${tableNameLoginCount} GROUP BY auth_method, uid`,
 });
 
 const queriesPG = (tableNameLoginCount: string) => ({
@@ -43,6 +44,7 @@ const queriesPG = (tableNameLoginCount: string) => ({
   uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
+  rawOverview: `SELECT uid, count(uid) as count, "authMethod" FROM ${tableNameLoginCount} GROUP BY "authMethod", uid`,
 });
 
 async function setupTables() {
@@ -289,6 +291,7 @@ export async function loginStats(req: Request, res: Response) {
 
 export async function rawDataTable(req: Request, res: Response) {
   const { queryGET, queryALL } = await db();
+  const queries = await getQueries();
 
   function generateHtmlTable(rows: any[]) {
     if (rows.length === 0) {
@@ -323,7 +326,7 @@ export async function rawDataTable(req: Request, res: Response) {
   }
 
   // SQLite3 query to select all data from the specified table
-  const query = `SELECT * FROM ${tableNameLoginCount};`;
+  const query = queries.rawOverview;
 
   // Execute the query and retrieve the results
   const rows = (await queryALL(query)) as any[];
