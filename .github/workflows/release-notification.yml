@@ -5,9 +5,13 @@ on:
     types: [opened, edited, synchronize]
 jobs:
   create-notification:
-    # if: ${{ contains(github.ref, 'MIJN-6651') }}
+    if: ${{ contains(github.ref, 'release-v') }}
     runs-on: ubuntu-latest
     steps:
+      - name: Log
+        env:
+          branch: ${{ github.ref }}
+        run: echo "branch is $branch"
       - name: Checkout
         uses: actions/checkout@v4
         with:
