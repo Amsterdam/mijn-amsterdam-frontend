@@ -297,7 +297,7 @@ export const notificationContent: NotificationContent = {
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? ' kentekenwijziging RVV ontheffing'
+            ? ' kentekenwijziging'
             : ''
         } 
         RVV ontheffing ${(item as RVVSloterweg).area} 
@@ -319,7 +319,7 @@ export const notificationContent: NotificationContent = {
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? ' kentekenwijziging RVV ontheffing'
+            ? ' kentekenwijziging'
             : ''
         } 
         RVV ontheffing ${(item as RVVSloterweg).area} 
