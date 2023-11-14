@@ -36,34 +36,6 @@ pipeline {
 
   stages {
 
-    // RELEASE NOTES
-
-    stage('Release notes') {
-      environment {
-        TEAMS_HOST = credentials('TEAMS_HOST')
-        WEBHOOK = credentials('WEBHOOK')
-      }
-      // when {
-        // branch 'production-release-v*';
-      // }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        
-      
-          sh "./scripts/release-notifications/script.sh"
-        // sh "docker build -f ./Dockerfile.release " +
-        //     "--build-arg WEBHOOK=${WEBHOOK} " +
-        //     "--build-arg TEAMS_HOST=${TEAMS_HOST} " +
-        //     "--build-arg COMMITS=$commits " +
-        //     "--shm-size 1G "  +
-        //     "."
-        }
-      }
-    
-
-
     // RUN TESTS
 
     stage('Unit tests') {
