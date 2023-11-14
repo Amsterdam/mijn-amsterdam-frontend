@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { IS_OT } from '../../../universal/config';
+import { IS_VERBOSE } from './config';
 
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE ?? 'login_count';
@@ -7,23 +7,13 @@ export const tableNameLoginCount =
 const SQLITE3_DB_PATH_FILE = `${process.env.BFF_DB_FILE}`;
 
 const dbOptions: Database.Options = {
-  verbose: IS_OT ? console.log : undefined,
+  verbose: IS_VERBOSE ? console.log : undefined,
 };
 
 const db = new Database(SQLITE3_DB_PATH_FILE, dbOptions);
 
 // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
 db.pragma('journal_mode = WAL');
-
-// Create the table
-db.exec(`
-CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
-    "id" INTEGER PRIMARY KEY,
-    "uid" VARCHAR(100) NOT NULL,
-    "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
-    "auth_method" VARCHAR(100) DEFAULT NULL
-);
-`);
 
 export async function query(
   query: string,
@@ -44,8 +34,22 @@ export async function queryGET(
   if (Array.isArray(values)) {
     return statement.get(...values);
   }
-  const rs = await statement.get();
-  return rs;
+  return statement.get();
+}
+
+export async function queryALL(
+  query: string,
+  values?: any[]
+): Promise<unknown> {
+  const statement = db.prepare(query);
+  if (Array.isArray(values)) {
+    return statement.all(...values);
+  }
+  return statement.all();
+}
+
+export function execDB(query: string) {
+  return db.exec(query);
 }
 
 process.on('beforeExit', () => {

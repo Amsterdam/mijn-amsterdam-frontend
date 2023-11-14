@@ -17,39 +17,6 @@ let isConnected = false;
 /**
  * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
  */
-export const tableNameLoginCount =
-  process.env.BFF_LOGIN_COUNT_TABLE ??
-  (IS_PRODUCTION ? 'prod_login_count' : 'acc_login_count');
-
-const createTableQuery = `
--- Sequence and defined type
-CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
-
--- Table Definition
-CREATE TABLE IF NOT EXISTS "public"."${tableNameLoginCount}" (
-    "id" int4 NOT NULL DEFAULT nextval('${tableNameLoginCount}_id_seq'::regclass),
-    "uid" varchar(100) NOT NULL,
-    "authMethod" varchar(100) NOT NULL,
-    "date_created" timestamp NOT NULL DEFAULT now(),
-    PRIMARY KEY ("id")
-);
-`;
-
-const alterTableQuery1 = `
-  ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
-  ADD IF NOT EXISTS "authMethod" VARCHAR(100);
-`;
-
-if (IS_PRODUCTION) {
-  (function setupTable() {
-    pool.query(createTableQuery, (err, res) => {
-      console.log(err, res);
-    });
-    pool.query(alterTableQuery1, (err, res) => {
-      console.log(err, res);
-    });
-  })();
-}
 
 export async function query(queryString: string, values?: any[]) {
   let result = null;
@@ -68,6 +35,11 @@ export async function query(queryString: string, values?: any[]) {
 export async function queryGET(queryString: string, values?: any[]) {
   const result = await query(queryString, values);
   return result?.rows[0] ?? null;
+}
+
+export async function queryALL(queryString: string, values?: any[]) {
+  const result = await query(queryString, values);
+  return result?.rows ?? [];
 }
 
 process.on('beforeExit', () => {

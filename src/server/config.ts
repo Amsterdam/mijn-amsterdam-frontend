@@ -388,6 +388,7 @@ export const BffEndpoints = {
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
+  LOGIN_RAW: '/status/logins/table',
   STATUS_HEALTH: '/status/health',
   STATUS_HEALTH2: '/bff/status/health',
   USER_DATA_OVERVIEW: '/status/user-data-overview',
