@@ -14,6 +14,7 @@ import { Request, Response } from 'express';
 import { IS_AP, IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { db } from './db/db';
+import * as Sentry from '@sentry/node';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -34,10 +35,10 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
 
 const queriesPG = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
-  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND $1::daterange @> date_created::date GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE $1::daterange @> date_created::date GROUP BY uid`,
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
+  totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
+  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
@@ -145,22 +146,38 @@ export async function loginStats(req: Request, res: Response) {
   });
 
   const dateMinResult = (await queryGET(queries.dateMinAll)) as {
-    date_min: string;
+    date_min: string | Date;
   };
 
   const dateMaxResult = (await queryGET(queries.dateMaxAll)) as {
-    date_max: string;
+    date_max: string | Date;
   };
 
-  let dateMin: Date | null = null;
-  let dateMax: Date | null = null;
+  let dateMin: Date = sub(new Date(), { years: 1 });
+  let dateMax: Date = new Date();
 
-  if (dateMinResult) {
-    dateMin = parseISO(dateMinResult.date_min);
-  }
+  try {
+    if (dateMinResult.date_min) {
+      dateMin =
+        dateMinResult.date_min instanceof Date
+          ? dateMinResult.date_min
+          : parseISO(dateMinResult.date_min);
+    }
 
-  if (dateMaxResult) {
-    dateMax = parseISO(dateMaxResult.date_max);
+    if (dateMaxResult.date_max) {
+      dateMax =
+        dateMaxResult.date_max instanceof Date
+          ? dateMaxResult.date_max
+          : parseISO(dateMaxResult.date_max);
+    }
+  } catch (error) {
+    Sentry.captureException(error),
+      {
+        extra: {
+          dateMaxResult,
+          dateMinResult,
+        },
+      };
   }
 
   let dateStart: string = dateMin
