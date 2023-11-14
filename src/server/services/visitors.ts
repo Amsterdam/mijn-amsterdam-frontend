@@ -33,7 +33,7 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
   uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
-  rawOverview: `SELECT uid, count(uid) as count, auth_method FROM ${tableNameLoginCount} GROUP BY auth_method, uid`,
+  rawOverview: `SELECT uid, count(uid) as count, auth_method FROM ${tableNameLoginCount} WHERE auth_method IS NOT null GROUP BY auth_method, uid ORDER BY auth_method ASC, count DESC, uid ASC`,
 });
 
 const queriesPG = (tableNameLoginCount: string) => ({
@@ -44,7 +44,7 @@ const queriesPG = (tableNameLoginCount: string) => ({
   uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
-  rawOverview: `SELECT uid, count(uid) as count, "authMethod" FROM ${tableNameLoginCount} GROUP BY "authMethod", uid`,
+  rawOverview: `SELECT uid, count(uid) as count, "authMethod" FROM ${tableNameLoginCount} WHERE "authMethod" IS NOT null GROUP BY "authMethod", uid ORDER BY "authMethod" ASC, count DESC, uid ASC`,
 });
 
 async function setupTables() {
