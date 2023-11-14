@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import {
   add,
@@ -11,10 +12,10 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_AP, IS_TAP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
+import { IS_PG } from './db/config';
 import { db } from './db/db';
-import * as Sentry from '@sentry/node';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -27,25 +28,25 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
   totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
   totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE DATE((date_created) BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? GROUP BY uid`,
+  uniqueLogins: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
 
 const queriesPG = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
-  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
+  totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
   totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$2 AND date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(uid) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
+  uniqueLogins: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
+  uniqueLoginsAll: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
 
 async function getQueries() {
   const { tableNameLoginCount } = await db();
-  return (IS_AP ? queriesPG : queriesSQLITE)(tableNameLoginCount);
+  return (IS_PG ? queriesPG : queriesSQLITE)(tableNameLoginCount);
 }
 
 function hashUserId(userID: string, salt = SALT) {
@@ -76,7 +77,7 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const queries = await getQueries();
-  const { queryGET, tableNameLoginCount } = await db();
+  const { queryGET, queryALL, tableNameLoginCount } = await db();
 
   let authMethodSelected = '';
 
@@ -242,4 +243,51 @@ export async function loginStats(req: Request, res: Response) {
     tableNameLoginCount,
     authMethodSelected,
   });
+}
+
+export async function rawDataTable(req: Request, res: Response) {
+  const { queryGET, queryALL, tableNameLoginCount } = await db();
+
+  function generateHtmlTable(rows: any[]) {
+    if (rows.length === 0) {
+      return '<p>No data found.</p>';
+    }
+
+    const tableHeader = Object.keys(rows[0])
+      .map((columnName) => `<th>${columnName}</th>`)
+      .join('');
+
+    const tableRows = rows
+      .map(
+        (row) =>
+          `<tr>${Object.values(row)
+            .map((value) => `<td>${value}</td>`)
+            .join('')}</tr>`
+      )
+      .join('');
+
+    const htmlTable = `
+    <table border="1">
+      <thead>
+        <tr>${tableHeader}</tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
+  `;
+
+    return htmlTable;
+  }
+
+  // SQLite3 query to select all data from the specified table
+  const query = `SELECT * FROM ${tableNameLoginCount};`;
+
+  // Execute the query and retrieve the results
+  const rows = (await queryALL(query)) as any[];
+
+  // Generate and display the HTML table
+  const htmlTable = generateHtmlTable(rows);
+
+  return res.send(htmlTable);
 }

@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { IS_OT } from '../../../universal/config';
+import { IS_VERBOSE } from './config';
 
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE ?? 'login_count';
@@ -7,7 +7,7 @@ export const tableNameLoginCount =
 const SQLITE3_DB_PATH_FILE = `${process.env.BFF_DB_FILE}`;
 
 const dbOptions: Database.Options = {
-  verbose: IS_OT ? console.log : undefined,
+  verbose: IS_VERBOSE ? console.log : undefined,
 };
 
 const db = new Database(SQLITE3_DB_PATH_FILE, dbOptions);
@@ -44,8 +44,18 @@ export async function queryGET(
   if (Array.isArray(values)) {
     return statement.get(...values);
   }
-  const rs = await statement.get();
-  return rs;
+  return statement.get();
+}
+
+export async function queryALL(
+  query: string,
+  values?: any[]
+): Promise<unknown> {
+  const statement = db.prepare(query);
+  if (Array.isArray(values)) {
+    return statement.all(...values);
+  }
+  return statement.all();
 }
 
 process.on('beforeExit', () => {

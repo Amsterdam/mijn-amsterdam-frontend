@@ -70,6 +70,11 @@ export async function queryGET(queryString: string, values?: any[]) {
   return result?.rows[0] ?? null;
 }
 
+export async function queryALL(queryString: string, values?: any[]) {
+  const result = await query(queryString, values);
+  return result?.rows ?? [];
+}
+
 process.on('beforeExit', () => {
   pool.end();
 });
