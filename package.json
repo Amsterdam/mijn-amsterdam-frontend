@@ -63,7 +63,7 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/sanitize-html": "^2.5.0",
     "@types/supercluster": "^7.1.2",
-    "@types/throttle-debounce": "^5.0.1",
+    "@types/throttle-debounce": "^5.0.2",
     "@types/uid-safe": "^2.1.5",
     "axios": "^1.6.0",
     "axios-mock-adapter": "^1.21.4",
