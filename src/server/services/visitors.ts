@@ -28,8 +28,8 @@ const queriesSQLITE = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
   totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
   totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
-  uniqueLogins: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ? GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? GROUP BY uid`,
+  uniqueLogins: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
+  uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
@@ -38,8 +38,8 @@ const queriesPG = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
   totalLogins: `SELECT count(id) FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
   totalLoginsAll: `SELECT count(id) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`, // NOTE: can be another, faster query if we'd have millions of records
-  uniqueLogins: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
-  uniqueLoginsAll: `SELECT uid, count(distinct uid) FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date GROUP BY uid`,
+  uniqueLogins: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE "authMethod"=$3 AND date_created >= $1::date AND date_created <= $2::date`,
+  uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE date_created >= $1::date AND date_created <= $2::date`,
   dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
   dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
 });
