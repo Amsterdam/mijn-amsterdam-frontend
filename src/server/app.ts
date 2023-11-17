@@ -164,7 +164,7 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  res.send(JSON.stringify(err));
+  res.send({ error: JSON.stringify(err), stack: JSON.stringify(err.stack) });
   // return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
 });
 
