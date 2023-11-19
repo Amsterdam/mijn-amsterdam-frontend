@@ -1,31 +1,33 @@
 import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { jsonCopy, pick } from '../universal/helpers/utils';
+import { IS_AP } from '../universal/config/env';
+import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
-import {
-  loadServicesAll,
-  loadServicesSSE,
-} from './services/controller';
+import { loadServicesAll, loadServicesSSE } from './services/controller';
+import { isBlacklistedHandler } from './services/session-blacklist';
 import {
   fetchSignalAttachments,
   fetchSignalHistory,
   fetchSignalsListByStatus,
 } from './services/sia';
-import { IS_AP } from '../universal/config/env';
 
 export const router = express.Router();
 
-router.use((req: Request, res: Response, next: NextFunction) => {
-  // Skip router if we've entered a public route.
-  if (!isProtectedRoute(req.path)) {
-    return next('router');
-  }
-  return next();
-}, isAuthenticated());
+router.use(
+  (req: Request, res: Response, next: NextFunction) => {
+    // Skip router if we've entered a public route.
+    if (!isProtectedRoute(req.path)) {
+      return next('router');
+    }
+    return next();
+  },
+  isAuthenticated,
+  isBlacklistedHandler
+);
 
 router.get(
   BffEndpoints.SERVICES_ALL,

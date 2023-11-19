@@ -43,6 +43,7 @@ import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { router as publicRouter } from './router-public';
+import { adminRouter } from './router-admin';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: process.env.BFF_SENTRY_DSN,
@@ -149,7 +150,7 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, nocache, protectedRouter);
+app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
 
 app.get(BffEndpoints.ROOT, (req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);

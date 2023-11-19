@@ -508,7 +508,7 @@ describe('server/helpers/app', () => {
     } as unknown as Response;
 
     expect(
-      await isAuthenticated()(req, res, vi.fn() as unknown as NextFunction)
+      await isAuthenticated(req, res, vi.fn() as unknown as NextFunction)
     ).toStrictEqual({
       content: null,
       message: 'Unauthorized',
@@ -534,7 +534,7 @@ describe('server/helpers/app', () => {
 
     const nextFn = vi.fn();
 
-    await isAuthenticated()(req, res, nextFn);
+    await isAuthenticated(req, res, nextFn);
 
     expect(nextFn).toHaveBeenCalled();
   });

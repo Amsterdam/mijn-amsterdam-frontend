@@ -20,12 +20,10 @@ const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 async function encryptDevSessionCookieValue(payload: string, headers: object) {
   const alg = 'dir';
   const enc = 'A256GCM';
-  const keySource = deriveKey(OIDC_COOKIE_ENCRYPTION_KEY);
-  const key = await createSecretKey(keySource);
 
   const jwe = await new jose.CompactEncrypt(new TextEncoder().encode(payload))
     .setProtectedHeader({ alg, enc, ...headers })
-    .encrypt(key);
+    .encrypt(createSecretKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY)));
 
   return jwe;
 }
@@ -40,11 +38,13 @@ export function getPublicKeyForDevelopment(): Promise<jose.KeyLike> {
 
 export async function signDevelopmentToken(
   authMethod: AuthProfile['authMethod'],
-  userID: string
+  userID: string,
+  sessionID: string
 ) {
   const data = {
     [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
     aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
+    sid: sessionID,
   };
   const alg = 'RS256';
   try {
@@ -61,7 +61,8 @@ export async function signDevelopmentToken(
 
 export async function generateDevSessionCookieValue(
   authMethod: AuthProfile['authMethod'],
-  userID: string
+  userID: string,
+  sessionID: string
 ) {
   const uat = (Date.now() / 1000) | 0;
   const iat = uat;
@@ -69,7 +70,7 @@ export async function generateDevSessionCookieValue(
 
   const value = await encryptDevSessionCookieValue(
     JSON.stringify({
-      id_token: await signDevelopmentToken(authMethod, userID),
+      id_token: await signDevelopmentToken(authMethod, userID, sessionID),
     }),
     {
       iat,

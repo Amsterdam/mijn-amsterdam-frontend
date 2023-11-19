@@ -340,15 +340,18 @@ export function nocache(_req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export const isAuthenticated =
-  () => async (req: Request, res: Response, next: NextFunction) => {
-    if (hasSessionCookie(req)) {
-      try {
-        await getAuth(req);
-        return next();
-      } catch (error) {
-        Sentry.captureException(error);
-      }
+export async function isAuthenticated(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (hasSessionCookie(req)) {
+    try {
+      await getAuth(req);
+      return next();
+    } catch (error) {
+      Sentry.captureException(error);
     }
-    return sendUnauthorized(res);
-  };
+  }
+  return sendUnauthorized(res);
+}
