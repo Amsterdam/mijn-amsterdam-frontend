@@ -60,7 +60,10 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
-  OVERTREDINGEN: apiPristineResult({ isKnown: false }),
+  OVERTREDINGEN: apiPristineResult(
+    { isKnown: false },
+    { isActive: FeatureToggle.overtredingenActive }
+  ),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vergunningen: [],
     registraties: [],

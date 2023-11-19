@@ -1,6 +1,6 @@
 import fs from 'fs';
 import jose from 'node-jose';
-import { Chapters, IS_TAP } from '../../../universal/config';
+import { Chapters, FeatureToggle, IS_TAP } from '../../../universal/config';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -108,10 +108,14 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         // Melding / Notification
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
-            const chapter =
+            let chapter = Chapters.MILIEUZONE;
+
+            if (
+              FeatureToggle.overtredingenActive &&
               message.thema === 'Milieuzone'
-                ? Chapters.MILIEUZONE
-                : Chapters.OVERTREDINGEN;
+            ) {
+              chapter = Chapters.OVERTREDINGEN;
+            }
 
             notifications.push({
               id: `${chapter}-${message.categorie}`,
