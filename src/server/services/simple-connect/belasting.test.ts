@@ -106,6 +106,7 @@ describe('simple-connect/belasting', () => {
             ],
             "tips": [
               {
+                "chapter": "BELASTINGEN",
                 "datePublished": "2022-05-30T09:00:34Z",
                 "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
                 "id": "belasting-5",
