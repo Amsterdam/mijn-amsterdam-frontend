@@ -64,9 +64,9 @@ async function setupTables() {
 
 setupTables();
 
-async function cleanupSessionIds() {
+export async function cleanupSessionIds() {
   const { query } = await db();
-  // Deletes all session ids added to the blacklist more than 3 hours ago.
+  // Deletes all session ids added to the blacklist more than $MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED hours ago.
   const dateCreatedBefore = sub(new Date(), {
     hours: MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED,
   });
