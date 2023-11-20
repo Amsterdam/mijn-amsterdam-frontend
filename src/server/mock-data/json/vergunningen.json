@@ -1464,6 +1464,30 @@
         "to": "/vergunningen/rvv-sloterweg/3593173882",
         "title": "Bekijk hoe het met uw aanvraag staat"
       }
+    },
+    {
+      "area": "Laan van Vlaanderen",
+      "caseType": "RVV Sloterweg",
+      "dateDecision": null,
+      "dateEnd": "2025-11-01",
+      "dateRequest": "2023-10-27",
+      "dateStart": "2023-11-01",
+      "dateWorkflowActive": "2023-10-27",
+      "dateWorkflowVerleend": "2023-10-28",
+      "decision": "Verleend",
+      "description": "RVV-ontheffing Sloterweg",
+      "documentsUrl": "/decosjoin/listdocuments/gAAAAABlO4uCHh8ARMzyGZBP1Vsan0c2N7iL2PoS27A2s3PeSk_W3Oc_hJ54wLT5o6KKrOTA4JMV8cjy9O54XjH4LzmWxytyAU4GuTKbNrnfcX_KuHEBifQ97-vBOyp0QNmbonK9S3ho",
+      "id": "3593173882",
+      "identifier": "Z/23/999999999",
+      "licensePlates": "AAYYAA",
+      "processed": true,
+      "requestType": "Nieuw",
+      "status": "Actief",
+      "title": "RVV ontheffing Laan van Vlaanderen (AAYYAA)",
+      "link": {
+        "to": "/vergunningen/rvv-sloterweg/3593173882",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
     }
   ],
   "status": "OK"

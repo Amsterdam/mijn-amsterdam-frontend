@@ -32,7 +32,7 @@ export function getRVVSloterwegLineItems(
 
   const grantedText = isChangeRequest
     ? `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`
-    : `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area} kenteken ${vergunning.licensePlates} verleend.`;
+    : `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area} (${vergunning.licensePlates}) verleend.`;
 
   let dateInProgress =
     vergunning.dateWorkflowActive ?? vergunning.dateWorkflowVerleend;
