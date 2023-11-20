@@ -24,7 +24,6 @@ parameters:
     default: none
     values:
       - none
-      - o
       - t
       - a
       - p
@@ -41,9 +40,6 @@ parameters:
     default: true
 
 variables:
-  - ${{ if and(eq(variables['Build.SourceBranchName'], 'ontwikkelen'), eq(parameters.dtapName, 'none')) }}:
-      - name: dtapName
-        value: o
   - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
       - name: dtapName
         value: t
