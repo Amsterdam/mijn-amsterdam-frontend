@@ -91,21 +91,6 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       },
       {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2023-07-26T00:00:00",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing van Vlaanderenlaan 
-        van (YY-123-A, ZZ-122-A) naar 
-        (BB-344-P, VV-899-C) in behandeling genomen.",
-        "id": "vergunning-4039623833-notification",
-        "link": {
-          "title": "Bekijk details",
-          "to": "/vergunningen/rvv-sloterweg/4039623833",
-        },
-        "subject": "4039623833",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen) in behandeling",
-      },
-      {
-        "chapter": "VERGUNNINGEN",
         "datePublished": "2023-07-23T11:21:33",
         "description": "Wij hebben uw aanvraag voor een 
         RVV ontheffing Vaan van Laanderen 
@@ -623,21 +608,6 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         },
         "subject": "1132545854",
         "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) in behandeling",
-      },
-      {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2023-07-26T00:00:00",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing van Vlaanderenlaan 
-        van (YY-123-A, ZZ-122-A) naar 
-        (BB-344-P, VV-899-C) in behandeling genomen.",
-        "id": "vergunning-4039623833-notification",
-        "link": {
-          "title": "Bekijk details",
-          "to": "/vergunningen/rvv-sloterweg/4039623833",
-        },
-        "subject": "4039623833",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -1222,17 +1192,17 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "area": "van Vlaanderenlaan",
     "caseType": "RVV Sloterweg",
     "dateDecision": null,
-    "dateEnd": "2024-08-02T00:00:00",
-    "dateRequest": "2023-07-24T11:21:33",
-    "dateStart": "2023-08-02T00:00:00",
-    "dateWorkflowActive": "2023-07-26T00:00:00",
-    "dateWorkflowVerleend": "2023-07-27T00:00:00",
+    "dateEnd": "2024-10-02T00:00:00",
+    "dateRequest": "2023-09-24T11:21:33",
+    "dateStart": "2023-10-02T00:00:00",
+    "dateWorkflowActive": "2023-09-26T00:00:00",
+    "dateWorkflowVerleend": "2023-09-28T00:00:00",
     "decision": "Verleend",
-    "id": "4039623833",
+    "id": "2018708759",
     "identifier": "Z/23/98989234",
-    "licensePlates": "BB-344-P, VV-899-C",
-    "previousLicensePlates": "YY-123-A, ZZ-122-A",
-    "processed": false,
+    "licensePlates": "AA-899-C",
+    "previousLicensePlates": "CC-122-A",
+    "processed": true,
     "requestType": "Wijziging",
     "status": "Ontvangen",
     "title": "RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen)",

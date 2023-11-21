@@ -338,6 +338,12 @@ export const notificationContent: NotificationContent = {
             ? ' kentekenwijziging RVV ontheffing'
             : ''
         } ${item.title} verleend`,
+      datePublished: (item) =>
+        (!!item.dateDecision
+          ? item.dateDecision
+          : !!(item as RVVSloterweg).dateWorkflowVerleend
+          ? (item as RVVSloterweg).dateWorkflowVerleend
+          : item.dateRequest) ?? '',
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
