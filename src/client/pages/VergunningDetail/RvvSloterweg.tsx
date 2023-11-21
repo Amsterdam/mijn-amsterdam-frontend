@@ -106,6 +106,7 @@ export function getRVVSloterwegLineItems(
 
 export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
   const isGranted = !!vergunning.dateWorkflowVerleend;
+  const isChangeRequest = vergunning.requestType === 'Wijziging';
 
   return (
     <>
@@ -115,7 +116,10 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
       )}
       <InfoDetail label="Zone" value={vergunning.area} />
 
-      <InfoDetail label="Kenteken" value={vergunning.licensePlates} />
+      <InfoDetail
+        label={isChangeRequest ? 'Nieuw kenteken' : 'Kenteken'}
+        value={vergunning.licensePlates}
+      />
       {vergunning.previousLicensePlates && (
         <InfoDetail
           label="Oud kenteken"
