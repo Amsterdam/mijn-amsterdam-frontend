@@ -160,7 +160,7 @@ async function fetchServicesNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
-  if (authProfileAndToken.profile.profileType === 'private') {
+  if (authProfileAndToken.profile.profileType !== 'private-attributes') {
     const results = await Promise.allSettled(
       Object.values(
         notificationServices[authProfileAndToken.profile.profileType]

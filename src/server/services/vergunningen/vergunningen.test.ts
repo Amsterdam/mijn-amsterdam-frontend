@@ -71,12 +71,27 @@ describe('Vergunningen service', () => {
     expect(response).toStrictEqual(errorResponse);
   });
 
-  it('fetchVergunningenNotifications', async () => {
+  it('fetchVergunningenNotifications private', async () => {
     remoteApi.get('/decosjoin/getvergunningen').reply(200, DUMMY_RESPONSE);
 
     const response = await fetchVergunningenNotifications(
       'x4',
       authProfileAndToken,
+      new Date('2020-06-23')
+    );
+
+    expect(response).toMatchSnapshot();
+  });
+
+  it('fetchVergunningenNotifications commercial', async () => {
+    remoteApi.get('/decosjoin/getvergunningen').reply(200, DUMMY_RESPONSE);
+
+    const response = await fetchVergunningenNotifications(
+      'x4',
+      {
+        profile: { authMethod: 'eherkenning', profileType: 'commercial' },
+        token: 'xxxxxx',
+      },
       new Date('2020-06-23')
     );
 
