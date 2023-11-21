@@ -39,6 +39,8 @@ function getCert(envVarName: string | undefined) {
     : getCertificateSync(envVarName);
 }
 
+export const IS_DEBUG = process.env.DEBUG === '1';
+
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
     ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
@@ -98,6 +100,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   passthroughOIDCToken: false,
   page: 1,
   maximumAmountOfPages: 0,
+  debugRequestConfig: IS_DEBUG,
 };
 
 export type SourceApiKey =

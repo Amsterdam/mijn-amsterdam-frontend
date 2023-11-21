@@ -22,6 +22,7 @@ import {
   BFF_REQUEST_CACHE_ENABLED,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
+  IS_DEBUG,
   apiUrlEntries,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
@@ -246,6 +247,10 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error: any) {
+    if (IS_DEBUG) {
+      console.log('Response error for:', requestConfig.url);
+      console.error(error);
+    }
     // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
     // to the client to pass through.
     const shouldCaptureMessage =
@@ -299,8 +304,8 @@ export function findApiByRequestUrl(
 ) {
   const api = apiUrlEntries.find(([_apiName, url]) => {
     if (typeof url === 'object') {
-      return Object.entries(url as object).some(([_profileType, url]) =>
-        requestUrl?.startsWith(url)
+      return Object.entries(url as object).some(
+        ([_profileType, url]) => requestUrl?.startsWith(url)
       );
     }
     return requestUrl?.startsWith(url);
