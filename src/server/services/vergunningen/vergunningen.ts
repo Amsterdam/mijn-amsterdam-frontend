@@ -310,7 +310,9 @@ export type Vergunning =
   | RVVHeleStad
   | RVVSloterweg
   | EigenParkeerplaats
-  | EigenParkeerplaatsOpheffen;
+  | EigenParkeerplaatsOpheffen
+  | TouringcarDagontheffing
+  | TouringcarJaarontheffing;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
