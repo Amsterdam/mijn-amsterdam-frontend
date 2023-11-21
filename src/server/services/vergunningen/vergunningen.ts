@@ -197,6 +197,25 @@ export interface RVVSloterweg extends VergunningBase {
   status: 'Afgehandeld' | 'Actief' | 'Ontvangen';
 }
 
+export interface TouringcarDagontheffing extends VergunningBase {
+  caseType: CaseType.TouringcarDagontheffing;
+  dateStart: string | null;
+  timeStart: string | null;
+  dateEnd: string | null;
+  timeEnd: string | null;
+  licensePlate: string | null;
+  destination: string | null;
+}
+
+export interface TouringcarJaarontheffing extends VergunningBase {
+  caseType: CaseType.TouringcarJaarontheffing;
+  dateStart: string | null;
+  dateEnd: string | null;
+  licensePlates: string | null;
+  destination: string | null;
+  routetest: boolean;
+}
+
 export interface Samenvoegingsvergunning extends VergunningWithLocation {
   caseType: CaseType.Samenvoegingsvergunning;
 }
