@@ -259,6 +259,7 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
       return res.send(
         apiSuccessResult({
           tokenData: await decodeOIDCToken(auth.token),
+          token: auth.token,
           profile: auth.profile,
         })
       );
