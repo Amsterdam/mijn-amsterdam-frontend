@@ -90,7 +90,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     case Chapters.OVERTREDINGEN:
       return (
         !isLoading(OVERTREDINGEN) &&
-        (FeatureToggle.cleopatraApiActive
+        (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
           ? OVERTREDINGEN.content?.isKnown
           : false)
       );
