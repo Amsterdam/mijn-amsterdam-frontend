@@ -65,13 +65,13 @@ export default function MainHeader({
             />
           </a>
           {location.pathname !== AppRoutes.ROOT ? (
-            <Heading level={2} size="level-1">
+            <Heading level={2} size="level-1" key="heading-back">
               <Link to={AppRoutes.ROOT} title="Terug naar home">
                 Mijn Amsterdam <OtapLabel />
               </Link>
             </Heading>
           ) : (
-            <Heading level={2} size="level-1">
+            <Heading level={2} size="level-1" key="heading-home">
               Mijn Amsterdam <OtapLabel />
             </Heading>
           )}
