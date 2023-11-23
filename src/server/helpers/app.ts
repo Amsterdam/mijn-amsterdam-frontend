@@ -25,9 +25,9 @@ import {
 } from '../config';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import { createSecretKey } from 'node:crypto';
+import { createSecretKey, hkdfSync } from 'node:crypto';
 
-const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
+// const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid' | 'yivi';
@@ -166,28 +166,58 @@ export async function getProfileType(req: Request): Promise<ProfileType> {
   return profileType || DEFAULT_PROFILE_TYPE;
 }
 
-export async function getOIDCCookieData(jweCookieString: string): Promise<{
-  id_token: string;
-}> {
-  const key = await createSecretKey(deriveKey(OIDC_COOKIE_ENCRYPTION_KEY));
+export function createCookieEncriptionKey() {
+  const BYTE_LENGTH = 32;
+  const ENCRYPTION_INFO = 'JWE CEK';
+  const DIGEST = 'sha256';
 
-  const encryptOpts = {
-    alg: 'dir',
-    enc: 'A256GCM',
-  };
+  const k = Buffer.from(
+    hkdfSync(
+      DIGEST,
+      OIDC_COOKIE_ENCRYPTION_KEY,
+      Buffer.alloc(0),
+      ENCRYPTION_INFO,
+      BYTE_LENGTH
+    )
+  );
+  return createSecretKey(k);
+}
 
+const encryptOpts = {
+  alg: 'dir',
+  enc: 'A256GCM',
+};
+
+export const encryptionKey = createCookieEncriptionKey();
+
+export async function encryptCookieValue(payload: string, headers: object) {
+  const jwe = await new jose.CompactEncrypt(new TextEncoder().encode(payload))
+    .setProtectedHeader({ ...encryptOpts, ...headers })
+    .encrypt(encryptionKey);
+
+  return jwe;
+}
+
+export async function decryptCookieValue(cookieValueEncrypted: string) {
   const options: jose.DecryptOptions = {
     contentEncryptionAlgorithms: [encryptOpts.enc],
     keyManagementAlgorithms: [encryptOpts.alg],
   };
 
   const { plaintext, protectedHeader } = await jose.compactDecrypt(
-    jweCookieString,
-    key,
+    cookieValueEncrypted,
+    encryptionKey,
     options
   );
 
-  return JSON.parse(new TextDecoder().decode(plaintext));
+  return plaintext.toString();
+}
+
+export async function getOIDCCookieData(cookieValueEncrypted: string): Promise<{
+  id_token: string;
+}> {
+  const decryptedCookieValue = await decryptCookieValue(cookieValueEncrypted);
+  return JSON.parse(decryptedCookieValue);
 }
 
 export async function getOIDCToken(jweCookieString: string): Promise<string> {
@@ -303,6 +333,7 @@ export async function isRequestAuthenticated(
       );
     }
   } catch (error) {
+    console.error(error);
     Sentry.captureException(error);
   }
   return false;
