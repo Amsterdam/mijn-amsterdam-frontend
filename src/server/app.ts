@@ -64,6 +64,8 @@ Sentry.init(sentryOptions);
 
 const app = express();
 
+app.set('trust proxy', true);
+
 // Security, disable express header.
 app.disable('x-powered-by');
 

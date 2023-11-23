@@ -1,0 +1,17 @@
+name: 'Release notification'
+on: create
+jobs:
+  create-notification:
+    if: ${{ contains(github.ref, 'release-v') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Create release notification
+        env:
+          webhook_host: ${{ secrets.MS_TEAMS_WEBHOOK_HOST }}
+          webhook_path: ${{ secrets.MS_TEAMS_RELEASE_NOTIFICATION_WEBHOOK_PATH }}
+        run: npm run release:notification

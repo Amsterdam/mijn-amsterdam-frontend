@@ -29,7 +29,7 @@ pipeline {
     REACT_APP_BFF_API_URL_ACC = "https://acc.mijn-bff.amsterdam.nl/api/v1"
     REACT_APP_BFF_API_URL_PROD = "https://mijn-bff.amsterdam.nl/api/v1"
 
-    REACT_APP_SENTRY_DSN = "https://d9bff634090c4624bce9ba7d8f0875dd@sentry-new.data.amsterdam.nl/13"
+    REACT_APP_SENTRY_DSN = "https://82d51b217a684d9482ccef4655ff4890@sentry-new.data.amsterdam.nl/3"
     REACT_APP_ANALYTICS_ID_ACC = "e63312c0-0efe-4c4f-bba1-3ca1f05374a8"
     REACT_APP_ANALYTICS_ID_PROD = "f558164e-e388-49e0-864e-5f172552789c"
   }
