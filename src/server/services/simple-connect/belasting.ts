@@ -65,6 +65,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             title: message.titel,
             description: message.omschrijving,
             reason: message.informatie,
+            chapter: Chapters.BELASTINGEN,
             link: {
               title: message.url_naam,
               to: message.url,

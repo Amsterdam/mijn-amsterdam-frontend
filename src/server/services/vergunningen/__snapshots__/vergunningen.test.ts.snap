@@ -1,6 +1,76 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
+exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
+{
+  "content": {
+    "notifications": [
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-09-01",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone particulieren is in behandeling genomen.",
+        "id": "vergunning-2295682720-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720",
+        },
+        "subject": "2295682720",
+        "title": "Aanvraag parkeerontheffingen blauwe zone particulieren in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-09-01",
+        "description": "Uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven is in behandeling genomen.",
+        "id": "vergunning-2191426354-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354",
+        },
+        "subject": "2191426354",
+        "title": "Aanvraag parkeerontheffingen blauwe zone bedrijven in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-06-30",
+        "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
+        "id": "vergunning-302573541-notification",
+        "link": {
+          "title": "Vraag op tijd een nieuwe ontheffing aan",
+          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+        },
+        "subject": "302573541",
+        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-06-30",
+        "description": "Uw ontheffing blauwe zone bedrijven (Z/22/1979538) loopt op 30 september 2022 af.",
+        "id": "vergunning-162761969-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969",
+        },
+        "subject": "162761969",
+        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-07-02",
+        "description": "Uw ontheffing blauwe zone bedrijven (Z/21/1600000) is op 02 juli 2022 verlopen.",
+        "id": "vergunning-3577730497-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
+        },
+        "subject": "3577730497",
+        "title": "Uw ontheffing blauwe zone is verlopen",
+      },
+    ],
+  },
+  "status": "OK",
+}
+`;
+
+exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = `
 {
   "content": {
     "notifications": [
@@ -18,21 +88,6 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
         },
         "subject": "1132545854",
         "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) in behandeling",
-      },
-      {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2023-07-26T00:00:00",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing van Vlaanderenlaan 
-        van (YY-123-A, ZZ-122-A) naar 
-        (BB-344-P, VV-899-C) in behandeling genomen.",
-        "id": "vergunning-4039623833-notification",
-        "link": {
-          "title": "Bekijk details",
-          "to": "/vergunningen/rvv-sloterweg/4039623833",
-        },
-        "subject": "4039623833",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -535,10 +590,160 @@ exports[`Vergunningen service > fetchVergunningenNotifications 1`] = `
 }
 `;
 
-exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
+exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
 {
   "content": {
     "notifications": [
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-10-27",
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
+        RVV ontheffing Laan van Vlaanderen 
+        van (PR067L) naar 
+        (AAYYAA) in behandeling genomen.",
+        "id": "vergunning-1132545854-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/1132545854",
+        },
+        "subject": "1132545854",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-07-23T11:21:33",
+        "description": "Wij hebben uw aanvraag voor een 
+        RVV ontheffing Vaan van Laanderen 
+        
+        (YY-123-A, ZZ-122-A) ontvangen.",
+        "id": "vergunning-3368771494-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3368771494",
+        },
+        "subject": "3368771494",
+        "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-10-13",
+        "description": "Wij hebben uw opzegging eigen parkeerplaats ontvangen.",
+        "id": "vergunning-1679261105-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/eigen-parkeerplaats-opheffen/1679261105",
+        },
+        "subject": "1679261105",
+        "title": "Opzegging eigen parkeerplaats ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-10-10",
+        "description": "Wij hebben uw aanvraag eigen parkeerplaats ontvangen.",
+        "id": "vergunning-1817502388-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/eigen-parkeerplaats/1817502388",
+        },
+        "subject": "1817502388",
+        "title": "Aanvraag eigen parkeerplaats ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-10-27",
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
+        RVV ontheffing Laan van Vlaanderen 
+        van (PR067L) naar 
+        (TT148N) in behandeling genomen.",
+        "id": "vergunning-3593173882-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3593173882",
+        },
+        "subject": "3593173882",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-08-29",
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
+        RVV ontheffing Sloterweg West 
+        van (PR067L) naar 
+        (TT148N) ontvangen.",
+        "id": "vergunning-1623553971-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/1623553971",
+        },
+        "subject": "1623553971",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-08-29",
+        "description": "Wij hebben uw aanvraag voor een 
+        RVV ontheffing Sloterweg 
+        
+        (37BHK4) ontvangen.",
+        "id": "vergunning-1097314015-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/1097314015",
+        },
+        "subject": "1097314015",
+        "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-08-17",
+        "description": "Wij hebben uw aanvraag voor een 
+        RVV ontheffing Sloterweg West 
+        
+        (37BHK4) ontvangen.",
+        "id": "vergunning-4069415615-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/4069415615",
+        },
+        "subject": "4069415615",
+        "title": "Aanvraag RVV ontheffing Sloterweg West ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-04-25T00:00:00",
+        "description": "Uw aanvraag voor een RVV-verkeersontheffing is in behandeling genomen.",
+        "id": "vergunning-1656544835-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-hele-stad/1656544835",
+        },
+        "subject": "1656544835",
+        "title": "Aanvraag RVV-verkeersontheffing in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-03-09T00:00:00",
+        "description": "Uw aanvraag voor een ligplaatsvergunning is ontvangen.",
+        "id": "vergunning-3229752453-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/vob/3229752453",
+        },
+        "subject": "3229752453",
+        "title": "Aanvraag ligplaatsvergunning ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-01-03T00:00:00",
+        "description": "Uw aanvraag voor een ligplaatsvergunning is in behandeling genomen.",
+        "id": "vergunning-513492494-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/vob/513492494",
+        },
+        "subject": "513492494",
+        "title": "Aanvraag ligplaatsvergunning in behandeling",
+      },
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
@@ -565,39 +770,339 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
       },
       {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-06-30",
-        "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
-        "id": "vergunning-302573541-notification",
+        "datePublished": "2022-11-01T00:00:00",
+        "description": "Uw aanvraag voor een samenvoegingsvergunning is in behandeling genomen.",
+        "id": "vergunning-3588461895-notification",
         "link": {
-          "title": "Vraag op tijd een nieuwe ontheffing aan",
-          "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          "title": "Bekijk details",
+          "to": "/vergunningen/samenvoegingsvergunning/3588461895",
         },
-        "subject": "302573541",
-        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+        "subject": "3588461895",
+        "title": "Aanvraag samenvoegingsvergunning in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-06-30",
-        "description": "Uw ontheffing blauwe zone bedrijven (Z/22/1979538) loopt op 30 september 2022 af.",
-        "id": "vergunning-162761969-notification",
+        "datePublished": "2022-11-01T00:00:00",
+        "description": "Uw aanvraag voor een onttrekkingsvergunning voor sloop is ontvangen.",
+        "id": "vergunning-2377704102-notification",
         "link": {
           "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969",
+          "to": "/vergunningen/onttrekkingsvergunning-voor-sloop/2377704102",
         },
-        "subject": "162761969",
-        "title": "Uw ontheffing blauwe zone verloopt binnenkort",
+        "subject": "2377704102",
+        "title": "Aanvraag onttrekkingsvergunning voor sloop ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
-        "datePublished": "2022-07-02",
-        "description": "Uw ontheffing blauwe zone bedrijven (Z/21/1600000) is op 02 juli 2022 verlopen.",
-        "id": "vergunning-3577730497-notification",
+        "datePublished": "2022-11-01T00:00:00",
+        "description": "Uw vergunningsaanvraag vormen van woonruimte is in behandeling genomen.",
+        "id": "vergunning-4289555340-notification",
         "link": {
           "title": "Bekijk details",
-          "to": "/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497",
+          "to": "/vergunningen/woningvormingsvergunning/4289555340",
         },
-        "subject": "3577730497",
-        "title": "Uw ontheffing blauwe zone is verlopen",
+        "subject": "4289555340",
+        "title": "Aanvraag vormen van woonruimte in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-11-01T00:00:00",
+        "description": "Uw aanvraag voor een splitsingsvergunning is in behandeling genomen.",
+        "id": "vergunning-4220998766-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/splitsingsvergunning/4220998766",
+        },
+        "subject": "4220998766",
+        "title": "Aanvraag splitsingsvergunning in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-10-21",
+        "description": "Uw aanvraag voor een ontheffing zwaar verkeer is in behandeling genomen.",
+        "id": "vergunning-2318111872-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/zwaar-verkeer/2318111872",
+        },
+        "subject": "2318111872",
+        "title": "Aanvraag ontheffing zwaar verkeer in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-10-16T00:00:00",
+        "description": "Uw aanvraag voor een ontheffing zwaar verkeer is ontvangen.",
+        "id": "vergunning-1863159343-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/zwaar-verkeer/1863159343",
+        },
+        "subject": "1863159343",
+        "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-09-16T00:00:00",
+        "description": "Uw aanvraag voor een geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) is in behandeling genomen.",
+        "id": "vergunning-504231399-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/nachtwerkontheffing/504231399",
+        },
+        "subject": "504231399",
+        "title": "Aanvraag geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2022-01-17T00:00:00",
+        "description": "Uw vergunningsaanvraag aanbieden van diensten is in behandeling genomen.",
+        "id": "vergunning-3407608046-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/aanbieden-van-diensten/3407608046",
+        },
+        "subject": "3407608046",
+        "title": "Aanvraag aanbieden van diensten in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-07-02",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
+        "id": "vergunning-3607535691-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3607535691",
+        },
+        "subject": "3607535691",
+        "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
+        "id": "vergunning-3276988108-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3276988108",
+        },
+        "subject": "3276988108",
+        "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-07-01",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
+        "id": "vergunning-2804017741-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/2804017741",
+        },
+        "subject": "2804017741",
+        "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-07-02",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
+        "id": "vergunning-1324498924-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/1324498924",
+        },
+        "subject": "1324498924",
+        "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-3452781026-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3452781026",
+        },
+        "subject": "3452781026",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-2872491299-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/2872491299",
+        },
+        "subject": "2872491299",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-3490212832-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3490212832",
+        },
+        "subject": "3490212832",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-2909923105-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/2909923105",
+        },
+        "subject": "2909923105",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-24T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-3706696166-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3706696166",
+        },
+        "subject": "3706696166",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-25",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
+        "id": "vergunning-976898368-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/976898368",
+        },
+        "subject": "976898368",
+        "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-08T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-2594256166-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/2594256166",
+        },
+        "subject": "2594256166",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-03T00:00:00",
+        "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
+        "id": "vergunning-3468041544-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/tvm-rvv-object/3468041544",
+        },
+        "subject": "3468041544",
+        "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-01",
+        "description": "Uw aanvraag voor een evenement vergunning is in behandeling genomen.",
+        "id": "vergunning-4081922197-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/evenement-vergunning/4081922197",
+        },
+        "subject": "4081922197",
+        "title": "Aanvraag evenement vergunning in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-01",
+        "description": "Uw aanvraag voor een evenement vergunning is in behandeling genomen.",
+        "id": "vergunning-3073404626-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/evenement-vergunning/3073404626",
+        },
+        "subject": "3073404626",
+        "title": "Aanvraag evenement vergunning in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-04-07",
+        "description": "Uw vergunningsaanvraag vaste parkeerplaats voor gehandicapten (gpp) is in behandeling genomen.",
+        "id": "vergunning-260384730-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/gpp/260384730",
+        },
+        "subject": "260384730",
+        "title": "Aanvraag vaste parkeerplaats voor gehandicapten (gpp) in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-17",
+        "description": "Uw aanvraag voor een evenement melding is in behandeling genomen.",
+        "id": "vergunning-4187042164-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/evenement-melding/4187042164",
+        },
+        "subject": "4187042164",
+        "title": "Aanvraag evenement melding in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-09-03",
+        "description": "Uw vergunningsaanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling genomen.",
+        "id": "vergunning-3105266233-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/e-rvv-tvm/3105266233",
+        },
+        "subject": "3105266233",
+        "title": "Aanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-09-28",
+        "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "id": "vergunning-913567999-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/omzettingsvergunning/913567999",
+        },
+        "subject": "913567999",
+        "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-10-08",
+        "description": "Uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) is in behandeling genomen.",
+        "id": "vergunning-2331715774-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/omzettingsvergunning/2331715774",
+        },
+        "subject": "2331715774",
+        "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2021-03-28",
+        "description": "Uw aanvraag voor een (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) is ontvangen.",
+        "id": "vergunning-333728632-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/omzettingsvergunning/333728632",
+        },
+        "subject": "333728632",
+        "title": "Aanvraag (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
     ],
   },
@@ -687,17 +1192,17 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "area": "van Vlaanderenlaan",
     "caseType": "RVV Sloterweg",
     "dateDecision": null,
-    "dateEnd": "2024-08-02T00:00:00",
-    "dateRequest": "2023-07-24T11:21:33",
-    "dateStart": "2023-08-02T00:00:00",
-    "dateWorkflowActive": "2023-07-26T00:00:00",
-    "dateWorkflowVerleend": "2023-07-27T00:00:00",
+    "dateEnd": "2024-10-02T00:00:00",
+    "dateRequest": "2023-09-24T11:21:33",
+    "dateStart": "2023-10-02T00:00:00",
+    "dateWorkflowActive": "2023-09-26T00:00:00",
+    "dateWorkflowVerleend": "2023-09-28T00:00:00",
     "decision": "Verleend",
-    "id": "4039623833",
+    "id": "2018708759",
     "identifier": "Z/23/98989234",
-    "licensePlates": "BB-344-P, VV-899-C",
-    "previousLicensePlates": "YY-123-A, ZZ-122-A",
-    "processed": false,
+    "licensePlates": "AA-899-C",
+    "previousLicensePlates": "CC-122-A",
+    "processed": true,
     "requestType": "Wijziging",
     "status": "Ontvangen",
     "title": "RVV ontheffing van Vlaanderenlaan (Wijziging/Ontvangen)",
