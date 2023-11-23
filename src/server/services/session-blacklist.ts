@@ -5,17 +5,18 @@ import { execDB } from './db/sqlite3';
 import { NextFunction, Request, Response } from 'express';
 import { getAuth, sendUnauthorized } from '../helpers/app';
 import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
+import { APP_MODE } from '../../universal/config/env';
 
 const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
 
-const queriesPG = (tableNameSessionBlacklist: string) => ({
+export const queriesPG = (tableNameSessionBlacklist: string) => ({
   addToBlackList: `INSERT INTO ${tableNameSessionBlacklist} (session_id) VALUES ($1) RETURNING id`,
   isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = $1) AS count`,
   cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= $1`,
   rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
 });
 
-const queriesSQLITE = (tableNameSessionBlacklist: string) => ({
+export const queriesSQLITE = (tableNameSessionBlacklist: string) => ({
   addToBlackList: `INSERT INTO ${tableNameSessionBlacklist}  (session_id) VALUES (?)`,
   isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = ?) AS count`,
   cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= ?`,
@@ -62,7 +63,9 @@ async function setupTables() {
   }
 }
 
-setupTables();
+if (APP_MODE !== 'unittest') {
+  setupTables();
+}
 
 export async function cleanupSessionIds() {
   const { query } = await db();

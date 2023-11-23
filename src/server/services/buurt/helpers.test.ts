@@ -1,11 +1,11 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { ApiResponse } from '../../../universal/helpers';
 import {
   DatasetConfig,
-  datasetEndpoints,
   DatasetResponse,
   MaPointFeature,
   MaPolylineFeature,
+  datasetEndpoints,
 } from './datasets';
 import {
   createDynamicFilterConfig,

@@ -15,9 +15,11 @@ export function getOtapEnv(): OtapEnvName {
 
 export const OTAP_ENV = getOtapEnv();
 
-getAppMode() !== 'unittest' &&
+export const APP_MODE = getAppMode();
+
+APP_MODE !== 'unittest' &&
   console.info(
-    `App running in ${getAppMode()} mode on the ${OTAP_ENV} environment.`
+    `App running in ${APP_MODE} mode on the ${OTAP_ENV} environment.`
   );
 
 export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
