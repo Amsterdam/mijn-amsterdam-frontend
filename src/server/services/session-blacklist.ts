@@ -1,11 +1,10 @@
 import { sub } from 'date-fns';
+import { NextFunction, Request, Response } from 'express';
+import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
+import { getAuth, sendUnauthorized } from '../helpers/app';
 import { IS_PG, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
 import { execDB } from './db/sqlite3';
-import { NextFunction, Request, Response } from 'express';
-import { getAuth, sendUnauthorized } from '../helpers/app';
-import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
-import { APP_MODE } from '../../universal/config/env';
 
 const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
 
@@ -63,16 +62,17 @@ async function setupTables() {
   }
 }
 
-if (APP_MODE !== 'unittest') {
-  setupTables();
-}
+setupTables();
 
-export async function cleanupSessionIds() {
+export async function cleanupSessionIds(
+  minHoursToKeepSessionsBlacklisted: number = MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED
+) {
   const { query } = await db();
   // Deletes all session ids added to the blacklist more than $MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED hours ago.
   const dateCreatedBefore = sub(new Date(), {
-    hours: MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED,
-  });
+    hours: minHoursToKeepSessionsBlacklisted,
+  }).toISOString();
+
   return query(queries.cleanupSessionIds, [dateCreatedBefore]);
 }
 

@@ -9,7 +9,7 @@ const SQLITE3_DB_PATH_FILE = `${process.env.BFF_DB_FILE}`;
 const dbOptions: Database.Options = {
   verbose: IS_VERBOSE ? console.log : undefined,
 };
-
+console.log('SQLITE3_DB_PATH_FILE', SQLITE3_DB_PATH_FILE);
 const db = new Database(SQLITE3_DB_PATH_FILE, dbOptions);
 
 // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
