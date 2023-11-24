@@ -282,7 +282,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/vergunningen/rvv-sloterweg/3970992213"
+                    href="/vergunningen/touringcar-jaarontheffing/852482654"
                   >
                     <svg
                       aria-hidden="true"
@@ -302,7 +302,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Z/23/789076676
+                    Z/23/2230478
                   </a>
                 </td>
                 <td
@@ -314,7 +314,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken)
+                    Touringcar jaarontheffing
                   </span>
                 </td>
                 <td
@@ -326,7 +326,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Aangevraagd:
                   </span>
                   <span>
-                    17 november 2023
+                    14 november 2023
                   </span>
                 </td>
               </tr>
@@ -2579,6 +2579,62 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   </span>
                   <span>
                     Ingetrokken
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/vergunningen/touringcar-dagontheffing/2260364373"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Z/23/2230474
+                  </a>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
+                  <span>
+                    Touringcar dagontheffing
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Resultaat:
+                  </span>
+                  <span>
+                    Niet verleend
                   </span>
                 </td>
               </tr>
