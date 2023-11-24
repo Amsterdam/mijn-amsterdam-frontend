@@ -242,4 +242,22 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('Touringcar dagontheffing', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230474" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+
+  describe('Touringcar jaarontheffing', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230478" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });
