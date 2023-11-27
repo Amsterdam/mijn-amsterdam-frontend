@@ -1,0 +1,26 @@
+# Taken from: https://levelup.gitconnected.com/enforcing-jira-ticket-formatting-in-github-pr-titles-and-commit-messages-78d9755568df
+name: 'PR Title Check'
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const payload = context.payload
+            const prTitle = payload.pull_request.title
+
+            // Titel moet beginnen met mijn-xxxx of Bump!
+            const jiraPattern = /(mijn-\d+|bump!)/gi
+            if (!jiraPattern.test(prTitle)) {
+              console.log('The PR title does not match JIRA ticket format!')
+              // Fails the workflow
+              core.setFailed('PR title does not match JIRA ticket format!')
+            } else {
+              console.log('PR title format is correct.')
+            }
