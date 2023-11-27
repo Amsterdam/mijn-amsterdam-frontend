@@ -34,7 +34,7 @@ function getDateDiff(date1, date2 = new Date()) {
 function getChangesSinceLastRelease() {
   const tag = executeCommandSync(
     'git tag -l release-* --sort=-"version:refname"'
-  ).slice(0, 16);
+  ).slice(16, 32);
   console.log(`Latest release tag found: ${tag}`);
 
   const commitId = executeCommandSync(`git rev-list -n 1 ${tag}`);
