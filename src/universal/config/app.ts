@@ -38,7 +38,7 @@ export const FeatureToggle = {
   avgActive: true,
   svwiLinkActive: !IS_PRODUCTION,
   ehKetenmachtigingActive: !IS_PRODUCTION,
-  bodemActive: !IS_PRODUCTION,
+  bodemActive: true,
   stadspasRequestsActive: false,
 };
 
