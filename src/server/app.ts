@@ -5,6 +5,7 @@ import {
   IS_AP,
   IS_DEVELOPMENT,
   IS_OT,
+  IS_PRODUCTION,
   OTAP_ENV,
 } from '../universal/config/env';
 
@@ -164,8 +165,17 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  res.send({ error: JSON.stringify(err), stack: JSON.stringify(err.stack) });
-  // return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
+  Sentry.captureException(err);
+  if (!IS_PRODUCTION) {
+    return res.redirect(
+      `${process.env.MA_FRONTEND_URL}/server-error-500?stack=${JSON.stringify(
+        err.stack,
+        null,
+        2
+      )}`
+    );
+  }
+  return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
 });
 
 app.use((req: Request, res: Response) => {
