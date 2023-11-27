@@ -139,6 +139,7 @@ pipeline {
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_ACC} " +
            "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
+           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_ACC} " +
            "--target=deploy-frontend " +
            "--shm-size 1G " +
            "."
@@ -190,6 +191,7 @@ pipeline {
            "--build-arg MA_GIT_SHA=${COMMIT_HASH} " +
            "--build-arg REACT_APP_BFF_API_URL=${REACT_APP_BFF_API_URL_PROD} " +
            "--build-arg REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN} " +
+           "--build-arg REACT_APP_ANALYTICS_ID=${REACT_APP_ANALYTICS_ID_PROD} " +
            "--target=deploy-production-frontend " +
            "--shm-size 1G " +
            "."
