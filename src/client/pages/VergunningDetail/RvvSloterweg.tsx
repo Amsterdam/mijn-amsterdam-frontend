@@ -64,7 +64,7 @@ export function getRVVSloterwegLineItems(
         : !!vergunning.dateWorkflowVerleend
         ? vergunning.dateWorkflowVerleend
         : '',
-      description: isGranted && !(hasDecision || isExpired) ? grantedText : '',
+      description: isGranted ? grantedText : '',
       documents: [],
       isActive: isGranted && !(hasDecision || isExpired),
       isChecked: isGranted || hasDecision || isExpired,
