@@ -5,6 +5,7 @@ export const FeatureToggle = {
   garbageInformationPage: true,
   belastingApiActive: true,
   cleopatraApiActive: true,
+  overtredingenActive: !IS_PRODUCTION,
   identiteitsbewijzenActive: true,
   eherkenningActive: true,
   vergunningenActive: true,
