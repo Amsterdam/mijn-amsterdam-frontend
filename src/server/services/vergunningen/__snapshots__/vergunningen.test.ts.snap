@@ -87,7 +87,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/rvv-sloterweg/1132545854",
         },
         "subject": "1132545854",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) in behandeling",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -103,6 +103,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         },
         "subject": "3368771494",
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (9998877) ingetrokken.",
+        "id": "vergunning-3970992213-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3970992213",
+        },
+        "subject": "3970992213",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -141,7 +155,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/rvv-sloterweg/3593173882",
         },
         "subject": "3593173882",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg (Verleend) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -156,7 +170,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/rvv-sloterweg/1623553971",
         },
         "subject": "1623553971",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West ontvangen",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West (Wijziging / ontvangen) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -171,7 +185,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/rvv-sloterweg/1097314015",
         },
         "subject": "1097314015",
-        "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+        "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw / In behandeling) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -186,7 +200,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/rvv-sloterweg/4069415615",
         },
         "subject": "4069415615",
-        "title": "Aanvraag RVV ontheffing Sloterweg West ontvangen",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Nieuw in behandeling) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -223,6 +237,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         },
         "subject": "513492494",
         "title": "Aanvraag ligplaatsvergunning in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (1234356) ingetrokken.",
+        "id": "vergunning-2720598005-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/2720598005",
+        },
+        "subject": "2720598005",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging ingetrokken) ingetrokken",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -607,7 +635,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/rvv-sloterweg/1132545854",
         },
         "subject": "1132545854",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) in behandeling",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -623,6 +651,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         },
         "subject": "3368771494",
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (9998877) ingetrokken.",
+        "id": "vergunning-3970992213-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3970992213",
+        },
+        "subject": "3970992213",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -661,7 +703,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/rvv-sloterweg/3593173882",
         },
         "subject": "3593173882",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg in behandeling",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg (Verleend) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -676,7 +718,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/rvv-sloterweg/1623553971",
         },
         "subject": "1623553971",
-        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West ontvangen",
+        "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West (Wijziging / ontvangen) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -691,7 +733,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/rvv-sloterweg/1097314015",
         },
         "subject": "1097314015",
-        "title": "Aanvraag RVV ontheffing Sloterweg ontvangen",
+        "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw / In behandeling) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -706,7 +748,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/rvv-sloterweg/4069415615",
         },
         "subject": "4069415615",
-        "title": "Aanvraag RVV ontheffing Sloterweg West ontvangen",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Nieuw in behandeling) ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -743,6 +785,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         },
         "subject": "513492494",
         "title": "Aanvraag ligplaatsvergunning in behandeling",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (1234356) ingetrokken.",
+        "id": "vergunning-2720598005-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/2720598005",
+        },
+        "subject": "2720598005",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging ingetrokken) ingetrokken",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -1186,7 +1242,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": false,
     "requestType": "Wijziging",
     "status": "Actief",
-    "title": "RVV ontheffing Laan van Vlaanderen (AAYYAA)",
+    "title": "RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend)",
   },
   {
     "area": "van Vlaanderenlaan",
@@ -1263,6 +1319,30 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "requestType": "Wijziging",
     "status": "iets?",
     "title": "RVV ontheffing Sloterweg (Wijziging/Verlopen)",
+  },
+  {
+    "area": "Sloterweg West",
+    "caseType": "RVV Sloterweg",
+    "dateDecision": null,
+    "dateEnd": "2025-08-19",
+    "dateRequest": "2023-11-17",
+    "dateStart": "2023-11-19",
+    "dateWorkflowActive": null,
+    "dateWorkflowVerleend": "2023-11-20",
+    "decision": "Ingetrokken",
+    "description": "RVV-ontheffing Sloterweg",
+    "id": "3970992213",
+    "identifier": "Z/23/789076676",
+    "licensePlates": "9998877",
+    "link": {
+      "title": "Bekijk hoe het met uw aanvraag staat",
+      "to": "/vergunningen/rvv-sloterweg/4069415615",
+    },
+    "previousLicensePlates": null,
+    "processed": false,
+    "requestType": "Kenteken wijziging",
+    "status": "Ontvangen",
+    "title": "RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken)",
   },
   {
     "area": "van Vlaanderenlaan",
@@ -1370,7 +1450,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": false,
     "requestType": "Wijziging",
     "status": "Ontvangen",
-    "title": "RVV ontheffing Sloterweg",
+    "title": "RVV ontheffing Sloterweg (Verleend)",
   },
   {
     "area": "Laan van Vlaanderen",
@@ -1419,7 +1499,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": false,
     "requestType": "Wijziging",
     "status": "Actief",
-    "title": "RVV ontheffing Sloterweg West",
+    "title": "RVV ontheffing Sloterweg West (Wijziging / ontvangen)",
   },
   {
     "area": "Sloterweg West",
@@ -1443,7 +1523,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": true,
     "requestType": "Nieuw",
     "status": "Afgehandeld",
-    "title": "RVV ontheffing Sloterweg West",
+    "title": "RVV ontheffing Sloterweg West (Nieuw vervallen)",
   },
   {
     "area": "Sloterweg",
@@ -1467,7 +1547,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": false,
     "requestType": "Nieuw",
     "status": "Actief",
-    "title": "RVV ontheffing Sloterweg",
+    "title": "RVV ontheffing Sloterweg (Nieuw / In behandeling)",
   },
   {
     "area": "Sloterweg West",
@@ -1491,7 +1571,31 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": false,
     "requestType": "Nieuw",
     "status": "Ontvangen",
-    "title": "RVV ontheffing Sloterweg West",
+    "title": "RVV ontheffing Sloterweg West (Nieuw in behandeling)",
+  },
+  {
+    "area": "Sloterweg West",
+    "caseType": "RVV Sloterweg",
+    "dateDecision": "2023-09-01",
+    "dateEnd": "2024-08-31",
+    "dateRequest": "2023-08-29",
+    "dateStart": "2023-08-31",
+    "dateWorkflowActive": null,
+    "dateWorkflowVerleend": "2023-08-31",
+    "decision": "Vervallen",
+    "description": "RVV-ontheffing Sloterweg",
+    "id": "627439937",
+    "identifier": "Z/23/200323232323",
+    "licensePlates": "PR067L",
+    "link": {
+      "title": "Bekijk hoe het met uw aanvraag staat",
+      "to": "/vergunningen/rvv-sloterweg/394540596",
+    },
+    "previousLicensePlates": null,
+    "processed": true,
+    "requestType": "Wijziging",
+    "status": "Afgehandeld",
+    "title": "RVV ontheffing Sloterweg West (Wijziging vervallen)",
   },
   {
     "caseType": "Horeca vergunning exploitatie Horecabedrijf",
@@ -1631,6 +1735,30 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "requestType": "Nieuw",
     "status": "iets?",
     "title": "RVV ontheffing Laan van Vlaanderen (Nieuw/Ingetrokken)",
+  },
+  {
+    "area": "Sloterweg West",
+    "caseType": "RVV Sloterweg",
+    "dateDecision": null,
+    "dateEnd": "2025-08-19",
+    "dateRequest": "2023-11-17",
+    "dateStart": "2023-11-19",
+    "dateWorkflowActive": null,
+    "dateWorkflowVerleend": null,
+    "decision": "Ingetrokken",
+    "description": "RVV-ontheffing Sloterweg",
+    "id": "2720598005",
+    "identifier": "Z/23/123123123",
+    "licensePlates": "1234356",
+    "link": {
+      "title": "Bekijk hoe het met uw aanvraag staat",
+      "to": "/vergunningen/rvv-sloterweg/4069415615",
+    },
+    "previousLicensePlates": null,
+    "processed": false,
+    "requestType": "Kenteken wijziging",
+    "status": "Ontvangen",
+    "title": "RVV ontheffing Sloterweg West (Wijziging ingetrokken)",
   },
   {
     "area": "Sloterweg",
