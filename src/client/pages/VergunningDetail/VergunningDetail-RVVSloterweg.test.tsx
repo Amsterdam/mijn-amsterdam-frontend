@@ -57,6 +57,10 @@ describe('RVV Sloterweg status line items', () => {
       title: 'RVV ontheffing Sloterweg West (Nieuw vervallen)',
     },
     {
+      identifier: 'Z/23/200323232323',
+      title: 'RVV ontheffing Sloterweg West (Wijziging vervallen)',
+    },
+    {
       identifier: 'Z/23/2003534',
       title: 'RVV ontheffing Sloterweg West (Wijziging / ontvangen)',
     },

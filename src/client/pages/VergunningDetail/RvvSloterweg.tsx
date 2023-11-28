@@ -91,7 +91,7 @@ export function getRVVSloterwegLineItems(
     },
   ];
 
-  if (isGranted && (isIngetrokken || isExpired)) {
+  if (isGranted && (isIngetrokken || isExpired || hasUpdatedKenteken)) {
     let description = '';
 
     switch (true) {
