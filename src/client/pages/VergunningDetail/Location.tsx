@@ -50,6 +50,9 @@ export function Location({
     {
       url: '',
       postpone: true,
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
     },
     null
   );
