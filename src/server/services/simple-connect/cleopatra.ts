@@ -112,7 +112,7 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
 
             if (
               FeatureToggle.overtredingenActive &&
-              message.thema === 'Milieuzone'
+              message.thema === 'Overtredingen'
             ) {
               chapter = Chapters.OVERTREDINGEN;
             }
