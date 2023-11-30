@@ -1,5 +1,11 @@
 {
-  "isErfpachter": true,
-  "relationID": "123abc",
-  "name": "E.R.F Pacht"
+  "erfpachter": true,
+  "relationID": "string",
+  "relationCode": "string",
+  "name": "string",
+  "email": "string",
+  "phoneNumber": "string",
+  "aantalRechten": 0,
+  "laatsteMutatieDatum": "string",
+  "businessType": "Notariskantoor"
 }

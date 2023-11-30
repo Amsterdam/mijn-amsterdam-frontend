@@ -1,0 +1,125 @@
+{
+  "dossierNummer": "E12345/987",
+  "titelDossierNummer": "Dossiernummer",
+  "eersteUitgifte": "string",
+  "titelEersteUitgifte": "Datum eerste uitgifte",
+  "voorkeursadres": "string",
+  "titelVoorkeursadres": "Adres",
+  "kadastraleaanduiding": [
+    {
+      "gemeenteCode": "string",
+      "gemeenteNaam": "string",
+      "sectie": "string",
+      "perceelsnummer": 0,
+      "letter": "string",
+      "volgnummer": 0,
+      "samengesteld": "string"
+    }
+  ],
+  "titelKadastraleaanduiding": "Kadastrale aanduiding",
+  "plaatselijkeaanduidingen": [
+    {
+      "straatnaam": "string",
+      "titelStraatnaam": "string",
+      "titelHuisnummer": "string",
+      "huisnummer": "string",
+      "huisnummerLetter": "string",
+      "huisnummerToevoeging": "string",
+      "titelPostcode": "string",
+      "postcode": "string",
+      "titelGemeente": "string",
+      "gemeente": "string",
+      "samengesteld": "string"
+    }
+  ],
+  "titelPlaatselijkeaanduidingen": "string",
+  "relaties": [
+    {
+      "relatieNaam": "string",
+      "betaler": true,
+      "indicatieGeheim": true
+    }
+  ],
+  "titelBetaler": "Betaler",
+  "juridisch": {
+    "ingangsdatum": "2021-06-30",
+    "titelIngangsdatum": "Ingangsdatum",
+    "algemeneBepaling": "AB2016",
+    "titelAlgemeneBepaling": "Algemene bepaling",
+    "soortErfpacht": "string",
+    "uitgeschrevenSoortErfpacht": "string",
+    "titelSoortErfpacht": "Soort erfpacht"
+  },
+  "bestemmingen": [
+    {
+      "samengesteldeOmschrijving": "Koopwoning/Woning",
+      "titelBestemmingOmschrijving": "Bestemming",
+      "categorie": "Wonen",
+      "subCategorie": "Koopwoning",
+      "omschrijving": "Woning",
+      "oppervlakte": 160,
+      "eenheid": "string",
+      "titelBestemmingEenheidBVO": "Bruto vloeroppervlak",
+      "titelBestemmingEenheidGO": "Gebruiksoppervlak"
+    }
+  ],
+  "financieel": {
+    "huidigePeriode": {
+      "periodeVan": "string",
+      "titelFinancieelPeriodeVan": "Huidige periode",
+      "periodeTm": "string",
+      "algemeneBepaling": "AB2016",
+      "titelFinancieelAlgemeneBepaling": "Algemene bepaling",
+      "regime": "Afkoop",
+      "titelFinancieelRegime": "Regime",
+      "canons": [
+        {
+          "canonBedrag": "12.34",
+          "formattedCanonBedrag": "€ 12,34",
+          "canonBeginJaar": "string",
+          "samengesteld": "string"
+        }
+      ],
+      "titelFinancieelCanon": "Canon"
+    },
+    "toekomstigePeriodeList": [
+      {
+        "periodeVan": "string",
+        "titelFinancieelToekomstigePeriodeVan": "Toekomstige periode",
+        "periodeTm": "string",
+        "algemeneBepaling": "AB2016",
+        "titelFinancieelToekomstigeAlgemeneBepaling": "Algemene bepaling",
+        "regime": "Afkoop",
+        "titelFinancieelToekomstigeRegime": "Regime",
+        "canonOmschrijvingen": [
+          "string"
+        ],
+        "titelFinancieelToekomstigeCanon": "Opbouw toekomstige canon"
+      }
+    ]
+  },
+  "facturen": {
+    "betaler": "string",
+    "debiteurnummer": "string",
+    "notas": [
+      {
+        "dossierAdres": "string",
+        "titelFacturenDossierAdres": "string",
+        "status": "string",
+        "titelFacturenStatus": "string",
+        "stopcode": "string",
+        "open": true,
+        "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
+        "titelFacturenNotaNummer": "Factuurnummer",
+        "factuurBedrag": "string",
+        "formattedFactuurBedrag": "€ 12,34",
+        "titelFacturenFactuurBedrag": "Factuurbedrag",
+        "openstaandBedrag": "string",
+        "formattedOpenstaandBedrag": "€ 12,34",
+        "titelFacturenOpenstaandBedrag": "Openstaand",
+        "vervalDatum": "string",
+        "titelFacturenVervaldatum": "Vervaldatum"
+      }
+    ]
+  }
+}
