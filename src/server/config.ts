@@ -223,7 +223,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   ERFPACHT: {
     url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
   },
-  BAG: { url: `https://api.data.amsterdam.nl/atlas/search/adres/` },
+  BAG: {
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
+  },
   ERFPACHTv2: {
     url: process.env.BFF_ERFPACHT_API_URL_ONT,
     passthroughOIDCToken: true,
@@ -237,6 +239,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
+    headers: { 'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY },
   },
   KVK: {
     url: `${process.env.BFF_MKS_API_BASE_URL}/brp/hr`,
