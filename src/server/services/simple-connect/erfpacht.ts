@@ -307,7 +307,7 @@ export async function fetchErfpachtV2(
 export async function fetchErfpachtV2Details(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  dossierId: 
+  dossierId: string
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
