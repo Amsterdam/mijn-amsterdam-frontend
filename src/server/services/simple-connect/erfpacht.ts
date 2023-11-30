@@ -209,6 +209,7 @@ interface ErfpachtDossierInfoDetailJuridisch {
   algemeneBepaling: string;
   titelAlgemeneBepaling: string;
   soortErfpacht: string;
+  uitgeschrevenSoortErfpacht: string;
   titelSoortErfpacht: string;
 }
 
@@ -304,10 +305,10 @@ export async function fetchErfpachtV2(
   return isErfpachterResponse;
 }
 
-export async function fetchErfpachtV2Details(
+export async function fetchErfpachtV2DossierDetails(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  dossierId: string
+  dossierNummer: Erfpachtv2Dossier['dossierNummer']
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
@@ -315,7 +316,7 @@ export async function fetchErfpachtV2Details(
     await requestData<Erfpachtv2DossierInfoDetailsResponse>(
       {
         ...config,
-        url: `${config.url}/vernise/api/dossierinfo/${dossierId}`,
+        url: `${config.url}/vernise/api/dossierinfo/${dossierNummer}`,
       },
       requestID
     );
