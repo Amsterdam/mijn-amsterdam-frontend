@@ -12,7 +12,8 @@ import BEZWAREN from './json/bezwaren.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
-import ERFPACHTv2_DOSSIERINFO from './json/erfpacht-v2-dossierinfo.json';
+import ERFPACHTv2_DOSSIERS from './json/erfpacht-v2-dossierinfo.json';
+import ERFPACHTv2_DOSSIERINFO_DETAILS from './json/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_ERFPACHTER from './json/erfpacht-v2-erfpachter.json';
 import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
@@ -172,10 +173,11 @@ export const mockDataConfig: MockDataConfig = {
     pathReg: new RegExp('/remote/erfpachtv2/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      console.log('kkk::::', config.url);
+      if (config.url.includes('dossierinfo/')) {
+        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERINFO_DETAILS);
+      }
       if (config.url.includes('dossierinfo')) {
-        console.log('dat dus!!');
-        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERINFO);
+        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERS);
       }
       return loadMockApiResponseJson(ERFPACHTv2_ERFPACHTER);
     },
