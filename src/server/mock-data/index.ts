@@ -12,6 +12,8 @@ import BEZWAREN from './json/bezwaren.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
+import ERFPACHTv2_DOSSIERINFO from './json/erfpacht-v2-dossierinfo.json';
+import ERFPACHTv2_ERFPACHTER from './json/erfpacht-v2-erfpachter.json';
 import KLACHTEN from './json/klachten.json';
 import KREFIA from './json/krefia.json';
 import KVK1 from './json/kvk-handelsregister.json';
@@ -76,7 +78,7 @@ export const mockDataConfig: MockDataConfig = {
   [String(ApiUrls.BELASTINGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(BELASTINGEN);
+      return loadMockApiResponseJson(BELASTINGEN);
     },
   },
   [String(ApiUrls.BRP)]: {
@@ -86,7 +88,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(BRP);
+      return loadMockApiResponseJson(BRP);
     },
   },
   [String(ApiUrls.BEZWAREN_LIST)]: {
@@ -97,7 +99,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(BEZWAREN);
+      return loadMockApiResponseJson(BEZWAREN);
     },
   },
   [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
@@ -107,7 +109,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
+      return loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
     },
   },
   [String(ApiUrls.BEZWAREN_STATUS)]: {
@@ -117,7 +119,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(BEZWAREN_STATUS);
+      return loadMockApiResponseJson(BEZWAREN_STATUS);
     },
   },
   [String(ApiUrls.WMO)]: {
@@ -126,7 +128,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(WMO);
+      return loadMockApiResponseJson(WMO);
     },
   },
   [String(ApiUrls.WPI_AANVRAGEN)]: {
@@ -136,7 +138,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(WPI_AANVRAGEN);
+      return loadMockApiResponseJson(WPI_AANVRAGEN);
     },
   },
   [String(ApiUrls.WPI_E_AANVRAGEN)]: {
@@ -145,7 +147,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(WPI_E_AANVRAGEN);
+      return loadMockApiResponseJson(WPI_E_AANVRAGEN);
     },
   },
   [String(ApiUrls.WPI_STADSPAS)]: {
@@ -154,7 +156,7 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(WPI_STADSPAS);
+      return loadMockApiResponseJson(WPI_STADSPAS);
     },
   },
   [String(ApiUrls.WPI_SPECIFICATIES)]: {
@@ -163,7 +165,19 @@ export const mockDataConfig: MockDataConfig = {
       if (isCommercialUser(config)) {
         return 'no-content';
       }
-      return await loadMockApiResponseJson(WPI_SPECIFICATIES);
+      return loadMockApiResponseJson(WPI_SPECIFICATIES);
+    },
+  },
+  [String(ApiUrls.ERFPACHTv2)]: {
+    pathReg: new RegExp('/remote/erfpachtv2/*'),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      console.log('kkk::::', config.url);
+      if (config.url.includes('dossierinfo')) {
+        console.log('dat dus!!');
+        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERINFO);
+      }
+      return loadMockApiResponseJson(ERFPACHTv2_ERFPACHTER);
     },
   },
   [String(ApiUrls.ERFPACHT)]: {
@@ -171,16 +185,16 @@ export const mockDataConfig: MockDataConfig = {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (config.url.includes('/notifications/')) {
-        return await loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
+        return loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
       }
-      return await loadMockApiResponseJson(ERFPACHT);
+      return loadMockApiResponseJson(ERFPACHT);
     },
   },
   [String(ApiUrls.SUBSIDIE)]: {
     pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(SUBSIDIE);
+      return loadMockApiResponseJson(SUBSIDIE);
     },
   },
   [`${ApiUrls.SIA}`]: {
@@ -195,20 +209,20 @@ export const mockDataConfig: MockDataConfig = {
   [`${ApiUrls.SIA}:id/attachments`]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(SIA_ATTACHMENTS);
+      return loadMockApiResponseJson(SIA_ATTACHMENTS);
     },
   },
   [`${ApiUrls.SIA}:id/history`]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(SIA_HISTORY);
+      return loadMockApiResponseJson(SIA_HISTORY);
     },
   },
   [String(process.env.BFF_SIA_IAM_TOKEN_ENDPOINT)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     method: 'post',
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson({
+      return loadMockApiResponseJson({
         access_token: 'xxxx',
       });
     },
@@ -219,14 +233,14 @@ export const mockDataConfig: MockDataConfig = {
   //     // if (isCommercialUser(config)) {
   //     //   return 'no-content';
   //     // }
-  //     return await loadMockApiResponseJson(AFVAL);
+  //     return loadMockApiResponseJson(AFVAL);
   //   },
   // },
   [String(ApiUrls.CLEOPATRA)]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(CLEOPATRA);
+      return loadMockApiResponseJson(CLEOPATRA);
     },
   },
   [String(ApiUrls.VERGUNNINGEN)]: {
@@ -242,11 +256,11 @@ export const mockDataConfig: MockDataConfig = {
             ].includes(vergunning.caseType);
           }
         );
-        return await loadMockApiResponseJson(
+        return loadMockApiResponseJson(
           apiSuccessResult(vergunningenCommercial)
         );
       }
-      return await loadMockApiResponseJson(VERGUNNINGEN);
+      return loadMockApiResponseJson(VERGUNNINGEN);
     },
   },
 
@@ -255,9 +269,9 @@ export const mockDataConfig: MockDataConfig = {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return await loadMockApiResponseJson(KVK2);
+        return loadMockApiResponseJson(KVK2);
       }
-      return await loadMockApiResponseJson(KVK1);
+      return loadMockApiResponseJson(KVK1);
     },
   },
   [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn')]: {
@@ -265,20 +279,18 @@ export const mockDataConfig: MockDataConfig = {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      //   return loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
       // }
-      return await loadMockApiResponseJson(
-        TOERISTISCHE_VERHUUR_REGISTRATIES_BSN
-      );
+      return loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES_BSN);
     },
   },
   [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/:number')]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
+      //   return loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
       // }
-      return await loadMockApiResponseJson({
+      return loadMockApiResponseJson({
         ...TOERISTISCHE_VERHUUR_REGISTRATIE,
         registrationNumber: config.url.split('/').pop(),
       });
@@ -288,9 +300,9 @@ export const mockDataConfig: MockDataConfig = {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       // if (isCommercialUser(config)) {
-      //   return await loadMockApiResponseJson(KREFIA);
+      //   return loadMockApiResponseJson(KREFIA);
       // }
-      return await loadMockApiResponseJson(KREFIA);
+      return loadMockApiResponseJson(KREFIA);
     },
   },
   [String(ApiUrls.ENABLEU_2_SMILE)]: [
@@ -298,7 +310,7 @@ export const mockDataConfig: MockDataConfig = {
       status: (config: any) => (isCommercialUser(config) ? 500 : 200),
       method: 'post',
       responseData: async (config: any) => {
-        return await loadMockApiResponseJson(KLACHTEN);
+        return loadMockApiResponseJson(KLACHTEN);
       },
       params: {
         asymmetricMatch: function (actual: any) {
@@ -310,7 +322,7 @@ export const mockDataConfig: MockDataConfig = {
       status: (config: any) => (isCommercialUser(config) ? 500 : 200),
       method: 'post',
       responseData: async (config: any) => {
-        return await loadMockApiResponseJson(AVG);
+        return loadMockApiResponseJson(AVG);
       },
       params: {
         asymmetricMatch: function (actual: any) {
@@ -322,7 +334,7 @@ export const mockDataConfig: MockDataConfig = {
       status: (config: any) => (isCommercialUser(config) ? 500 : 200),
       method: 'post',
       responseData: async (config: any) => {
-        return await loadMockApiResponseJson(AVG_THEMAS);
+        return loadMockApiResponseJson(AVG_THEMAS);
       },
       params: {
         asymmetricMatch: function (actual: any) {
@@ -338,21 +350,21 @@ export const mockDataConfig: MockDataConfig = {
     status: () => 200,
     method: 'post',
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(LOODMETINGEN);
+      return loadMockApiResponseJson(LOODMETINGEN);
     },
   },
   [`${ApiUrls.LOOD_365}/be_downloadleadreport`]: {
     status: () => 200,
     method: 'post',
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson(LOODMETING_RAPPORT);
+      return loadMockApiResponseJson(LOODMETING_RAPPORT);
     },
   },
   [`${ApiUrls.LOOD_365_OAUTH}`]: {
     status: () => 200,
     method: 'post',
     responseData: async (config: any) => {
-      return await loadMockApiResponseJson({ access_token: 'foo-bar' });
+      return loadMockApiResponseJson({ access_token: 'foo-bar' });
     },
   },
 };

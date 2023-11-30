@@ -113,41 +113,146 @@ function getNamedResponseTransformer(apiName: string) {
   };
 }
 
+interface Erfpachtv2ErpachterResponseSource {
+  isErfpachter: boolean;
+  relationID: string;
+  name: string;
+}
+
+interface Erfpachtv2ErpachterResponse {
+  isKnown: boolean;
+}
+
+function transformIsErfpachterResponseSource(
+  response: Erfpachtv2ErpachterResponseSource
+): Erfpachtv2ErpachterResponse {
+  console.log('isErfpachter:', response);
+  return {
+    isKnown: response.isErfpachter,
+  };
+}
+
+interface ErfpachtDossierInfoFactuur {
+  notaNummer: string;
+  titelFacturenNotaNummer: string;
+  factuurBedrag: string;
+  titelFacturenFactuurBedrag: string;
+  openstaandBedrag: string;
+  titelFacturenOpenstaandBedrag: string;
+  vervalDatum: string;
+  titelFacturenVervaldatum: string;
+}
+
+interface ErfpachtDossierInfoToekomstigePeriode {
+  periodeVan: string;
+  titelFinancieelToekomstigePeriodeVan: string;
+  algemeneBepaling: string;
+  titelFinancieelToekomstigeAlgemeneBepaling: string;
+  regime: string;
+  titelFinancieelToekomstigeRegime: string;
+  canonOmschrijving: string;
+  titelFinancieelToekomstigeCanon: string;
+}
+
+interface ErfpachtDossierInfoHuidigePeriode {
+  periodeVan: string;
+  titelFinancieelPeriodeVan: string;
+  periodeTm: string;
+  algemeneBepaling: string;
+  titelFinancieelAlgemeneBepaling: string;
+  regime: string;
+  titelFinancieelRegime: string;
+  canonOmschrijving: string;
+  titelFinancieelCanon: string;
+}
+
+interface ErfpachtDossierInfoVoorkeursAdres {
+  adres: string;
+}
+interface ErfpachtDossierInfoKadastraleAanduiding {
+  gemeenteCode: string;
+  gemeenteNaam: string;
+  sectie: string;
+  perceelsnummer: 0;
+  letter: string;
+  volgnummer: 0;
+  samengesteld: string;
+}
+interface ErfpachtDossierInfoRelatie {
+  relatieNaam: string;
+  betaler: true;
+  indicatieGeheim: true;
+}
+interface ErfpachtDossierInfoJuridisch {
+  ingangsdatum: string;
+  titelIngangsdatum: string;
+  algemeneBepaling: string;
+  titelAlgemeneBepaling: string;
+  soortErfpacht: string;
+  titelSoortErfpacht: string;
+}
+interface ErfpachtDossierInfoBestemming {
+  omschrijving: string;
+  titelBestemmingOmschrijving: string;
+  categorie: string;
+  oppervlakte: number;
+  eenheid: string;
+  titelBestemmingEenheidBVO: string;
+  titelBestemmingEenheidGO: string;
+}
+
+interface Erfpachtv2DossierInfoResponseSource {
+  dossierNummer: string;
+  titelDossierNummer: string;
+  voorkeursadres: ErfpachtDossierInfoVoorkeursAdres[];
+  titelVoorkeursadres: string;
+  kadastraleaanduiding: ErfpachtDossierInfoKadastraleAanduiding[];
+  titelKadastraleaanduiding: string;
+  eersteUitgifte: string;
+  titelEersteUitgifte: string;
+  relaties: ErfpachtDossierInfoRelatie[];
+  titelBetaler: string;
+  juridisch: ErfpachtDossierInfoJuridisch;
+  bestemmingen: ErfpachtDossierInfoBestemming[];
+  financieel: {
+    huidigePeriode: ErfpachtDossierInfoHuidigePeriode;
+    toekomstigePeriode: ErfpachtDossierInfoToekomstigePeriode;
+  };
+  facturen: ErfpachtDossierInfoFactuur[];
+}
+
+type Erfpachtv2DossierInfoResponse = Erfpachtv2DossierInfoResponseSource;
+
 export async function fetchErfpachtV2(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
-  const connectieVerniseHealth = requestData(
-    {
-      ...config,
-      url: `${config.url}/vernise/management/health`,
-      transformResponse: getNamedResponseTransformer('vernise-health'),
-    },
-    requestID,
-    authProfileAndToken
-  );
-
-  const connectieErfpachter = requestData(
+  const isErfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
     {
       ...config,
       url: `${config.url}/vernise/api/erfpachter `,
-      transformResponse: getNamedResponseTransformer('vernise-erfpachter'),
+      transformResponse: transformIsErfpachterResponseSource,
     },
     requestID,
     authProfileAndToken
   );
 
-  const result = await Promise.allSettled([
-    connectieVerniseHealth,
-    connectieErfpachter,
-  ]);
+  if (isErfpachterResponse.status === 'OK') {
+    if (isErfpachterResponse.content.isKnown) {
+      const dossierInfoResponse =
+        await requestData<Erfpachtv2DossierInfoResponse>(
+          {
+            ...config,
+            url: `${config.url}/vernise/api/dossierinfo`,
+          },
+          requestID
+        );
 
-  return {
-    content: {
-      verniseHealth: getSettledResult(result[0]),
-      erfpachter: getSettledResult(result[1]),
-    },
-  };
+      return dossierInfoResponse;
+    }
+  }
+
+  return isErfpachterResponse;
 }
