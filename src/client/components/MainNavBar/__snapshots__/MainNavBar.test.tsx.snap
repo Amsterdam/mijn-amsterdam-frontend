@@ -157,7 +157,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
               <span
                 class="_SubmenuItemTitle_c3c96e"
               >
-                Vergunningen
+                Vergunningen en ontheffingen
               </span>
             </a>
             <a

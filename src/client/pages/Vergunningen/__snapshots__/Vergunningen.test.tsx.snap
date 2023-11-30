@@ -13,7 +13,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         class="_Icon_3b337d"
       >
         <svg
-          aria-label="Vergunningen"
+          aria-label="Vergunningen en ontheffingen"
           class="_ChapterIcon_3ea2dd"
           fill="black"
           focusable="false"
@@ -61,7 +61,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         <h2
           class="amsterdam-heading amsterdam-heading--1"
         >
-          Vergunningen
+          Vergunningen en ontheffingen
         </h2>
       </div>
     </header>
