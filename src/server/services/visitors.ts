@@ -50,9 +50,8 @@ const queriesPG = (tableNameLoginCount: string) => ({
 async function setupTables() {
   const { query } = await db();
 
-  if (IS_PRODUCTION) {
-    if (IS_PG) {
-      const createTableQuery = `
+  if (IS_PG) {
+    const createTableQuery = `
     -- Sequence and defined type
     CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
 
@@ -66,16 +65,16 @@ async function setupTables() {
     );
     `;
 
-      const alterTableQuery1 = `
+    const alterTableQuery1 = `
       ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
       ADD IF NOT EXISTS "authMethod" VARCHAR(100);
     `;
 
-      await query(createTableQuery);
-      await query(alterTableQuery1);
-    } else {
-      // Create the table
-      execDB(`
+    await query(createTableQuery);
+    await query(alterTableQuery1);
+  } else {
+    // Create the table
+    execDB(`
       CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
           "id" INTEGER PRIMARY KEY,
           "uid" VARCHAR(100) NOT NULL,
@@ -83,7 +82,6 @@ async function setupTables() {
           "auth_method" VARCHAR(100) DEFAULT NULL
       );
     `);
-    }
   }
 }
 
@@ -121,7 +119,7 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const queries = await getQueries();
-  const { queryGET, queryALL } = await db();
+  const { queryGET } = await db();
 
   let authMethodSelected = '';
 
@@ -289,8 +287,8 @@ export async function loginStats(req: Request, res: Response) {
   });
 }
 
-export async function rawDataTable(req: Request, res: Response) {
-  const { queryGET, queryALL } = await db();
+export async function loginStatsTable(req: Request, res: Response) {
+  const { queryALL } = await db();
   const queries = await getQueries();
 
   function generateHtmlTable(rows: any[]) {

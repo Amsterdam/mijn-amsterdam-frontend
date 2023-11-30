@@ -85,9 +85,11 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   maximumAmountOfPages?: number;
 }
 
-const ONE_SECOND_MS = 1000;
-const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
-const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
+export const ONE_SECOND_MS = 1000;
+export const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
+export const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
+
+export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
 
 export const DEFAULT_API_CACHE_TTL_MS = (IS_OT ? 65 : 45) * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = (IS_OT ? 60 : 20) * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
@@ -232,7 +234,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     httpsAgent: new https.Agent({
       ca: IS_TAP ? getCert(process.env.BFF_SERVER_CLIENT_CERT) : [],
     }),
-    postponeFetch: !FeatureToggle.erfpachtV2EndpointActive,
+    postponeFetch:
+      !FeatureToggle.erfpachtV2EndpointActive ||
+      !process.env.BFF_ERFPACHT_API_URL_ONT,
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
     },
@@ -395,9 +399,10 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/status/cache',
   LOGIN_STATS: '/status/logins/:authMethod?',
   LOGIN_RAW: '/status/logins/table',
+  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
   STATUS_HEALTH2: '/bff/status/health',
-  USER_DATA_OVERVIEW: '/status/user-data-overview',
+  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
@@ -428,7 +433,6 @@ const oidcConfigBase: ConfigParams = {
   attemptSilentLogin: false,
   authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
-  // @ts-ignore
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
