@@ -1,12 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
-import basicAuth from 'express-basic-auth';
-import {
-  DATASETS,
-  IS_OT,
-  OTAP_ENV,
-  getDatasetCategoryId,
-} from '../universal/config';
-import { ApiResponse, apiSuccessResult, jsonCopy } from '../universal/helpers';
+import { DATASETS, OTAP_ENV, getDatasetCategoryId } from '../universal/config';
+import { ApiResponse, apiSuccessResult } from '../universal/helpers';
 import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
@@ -20,8 +14,6 @@ import {
 } from './services';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
-import { loginStats, rawDataTable } from './services/visitors';
-import { generateOverview } from './generate-user-data-overview';
 
 export const router = express.Router();
 
@@ -142,27 +134,6 @@ router.get(
     }
   }
 );
-
-if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
-  const auth = basicAuth({
-    users: {
-      admin: process.env.BFF_LOGIN_COUNT_ADMIN_PW,
-    },
-    challenge: true,
-  });
-  router.get(BffEndpoints.LOGIN_RAW, auth, rawDataTable);
-  router.get(BffEndpoints.LOGIN_STATS, auth, loginStats);
-
-  // Currently this endpoint can only be used when running the application locally.
-  // Requesting the endpoint on Azure results in a Gateway timeout which cannot be prevented easily at this time.
-  router.get(BffEndpoints.USER_DATA_OVERVIEW, auth, async (req, res) => {
-    generateOverview(req.query.fromCache == '1', `${__dirname}/cache`).then(
-      (fileName) => {
-        res.download(fileName);
-      }
-    );
-  });
-}
 
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
