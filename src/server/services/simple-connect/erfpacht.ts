@@ -10,6 +10,7 @@ import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
+  defaultDateFormat,
 } from '../../../universal/helpers';
 import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../../../universal/types';
@@ -296,9 +297,17 @@ function transformDossierResponse(response: Erfpachtv2DossierResponsePayload) {
         id,
         title,
         link: {
-          to: generatePath(AppRoutes['ERFPACHTv2/DOSSIER'], { id }),
+          to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], { id }),
           title,
         },
+      };
+    });
+  }
+  if (response.openFacturen.length) {
+    response.openFacturen = response.openFacturen.map((factuur) => {
+      return {
+        ...factuur,
+        vervalDatum: defaultDateFormat(factuur.vervalDatum),
       };
     });
   }

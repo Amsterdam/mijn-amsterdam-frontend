@@ -3,9 +3,11 @@ import {
   ParagraphProps,
 } from '@amsterdam/design-system-react';
 import styles from './Paragraph.module.scss';
+import classNames from 'classnames';
 
 type MAParagraphProps = ParagraphProps & {
   mb?: '0' | '2' | '3' | '4';
+  textAlign?: 'left' | 'right' | 'center';
 };
 
 const bottomMargins = {
@@ -18,10 +20,17 @@ const bottomMargins = {
 export function MaParagraph({
   children,
   mb = '2',
+  textAlign = 'left',
   ...props
 }: MAParagraphProps) {
   return (
-    <Paragraph_ className={bottomMargins[`mb-${mb}`]} {...props}>
+    <Paragraph_
+      className={classNames(
+        bottomMargins[`mb-${mb}`],
+        styles[`Paragraph__text_align_${textAlign}`]
+      )}
+      {...props}
+    >
       {children}
     </Paragraph_>
   );

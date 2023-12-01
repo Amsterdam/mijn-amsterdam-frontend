@@ -1,6 +1,7 @@
 .Table {
   width: 100%;
-  margin-bottom: 2rem;
+  border-collapse: separate;
+  border-spacing: 0 3rem;
 
   thead {
 
@@ -10,4 +11,5 @@
       text-align: left;
     }
   }
+
 }

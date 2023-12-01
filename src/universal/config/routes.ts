@@ -61,7 +61,9 @@ export const AppRoutes = {
 
   // Erfpacht v2
   ERFPACHTv2: '/erfpacht',
-  'ERFPACHTv2/DOSSIER': '/erfpacht/dossier/:id',
+  'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
+  'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:id',
+  'ERFPACHTv2/FACTUREN': '/erfpacht/facturen/:page?',
 } as const;
 
 export const AppRoutesRedirect = [
@@ -172,7 +174,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['ERFPACHTv2/DOSSIER']]: () => '/erfpacht/dossier',
+  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
   [AppRoutes['SIA/DETAIL/OPEN']]: (match: Match) =>
     `/yivi/open-melding/${match.params?.id}`,

@@ -49,3 +49,5 @@ export function isUiElementHidden(
 ): boolean {
   return !isUiElementVisible(profileType, uiElementName);
 }
+
+export const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 3;

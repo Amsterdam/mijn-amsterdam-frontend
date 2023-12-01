@@ -1,15 +1,29 @@
-.Paragraph__bottom_margin_0 {
-  margin-bottom: 0;
-}
+.Paragraph {
+  &__bottom_margin_0 {
+    margin-bottom: 0;
+  }
 
-.Paragraph__bottom_margin_2 {
-  margin-bottom: 2rem;
-}
+  &__bottom_margin_2 {
+    margin-bottom: 2rem;
+  }
 
-.Paragraph__bottom_margin_3 {
-  margin-bottom: 3rem;
-}
+  &__bottom_margin_3 {
+    margin-bottom: 3rem;
+  }
 
-.Paragraph__bottom_margin_4 {
-  margin-bottom: 4rem;
+  &__bottom_margin_4 {
+    margin-bottom: 4rem;
+  }
+
+  &__text_align_right {
+    text-align: right;
+  }
+
+  &__text_align_center {
+    text-align: center;
+  }
+
+  &__text_align_left {
+    text-align: left;
+  }
 }

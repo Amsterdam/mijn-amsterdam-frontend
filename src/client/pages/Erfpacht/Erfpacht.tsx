@@ -9,25 +9,35 @@ import {
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import {
-  ChapterIcon,
-  OverviewPage,
-  PageContent,
-  PageHeading,
-  addTitleLinkComponent,
-} from '../../components';
+import { ChapterIcon, OverviewPage, PageHeading } from '../../components';
 import { useAppStateGetter } from '../../hooks';
-import styles from './Erfpacht.module.scss';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MaParagraph } from '../../components/Paragraph/Paragraph';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { addLinkElementToProperty } from '../../components/Table/Table';
 
-export default function Erfpacht() {
+export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
-  const dossiers = addTitleLinkComponent(
+  const dossiers_ = addLinkElementToProperty(
     ERFPACHTv2.content?.dossiers ?? [],
     'voorkeursadres'
   );
-  const openFacturen = ERFPACHTv2.content?.openFacturen ?? [];
+  const dossiers = Array.from({ length: 20 }, () => dossiers_)
+    .flat()
+    .map((d, index) => {
+      return Object.assign({}, d, {
+        dossierNummer: `${index} - ${d.dossierNummer}`,
+      });
+    });
+  const openFacturen_ = ERFPACHTv2.content?.openFacturen ?? [];
+  const openFacturen = Array.from({ length: 20 }, () => openFacturen_)
+    .flat()
+    .map((f, index) => {
+      return Object.assign({}, f, {
+        dossierAdres: `${index} - ${f.dossierAdres}`,
+      });
+    });
 
   let displayPropsDossiers = {};
   let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
@@ -53,6 +63,27 @@ export default function Erfpacht() {
       vervalDatum: openFactuur.titelFacturenVervaldatum,
     };
   }
+  return {
+    ERFPACHTv2,
+    openFacturen,
+    dossiers,
+    displayPropsDossiers,
+    displayPropsOpenFacturen,
+    titleDossiers,
+    titleOpenFacturen,
+  };
+}
+
+export default function Erfpacht() {
+  const {
+    ERFPACHTv2,
+    openFacturen,
+    dossiers,
+    displayPropsDossiers,
+    displayPropsOpenFacturen,
+    titleDossiers,
+    titleOpenFacturen,
+  } = useErfpachtV2Data();
 
   return (
     <OverviewPage>
@@ -68,12 +99,12 @@ export default function Erfpacht() {
       </PageHeading>
       <Screen>
         <style>
-          {`
+          {/* {`
           :root {
             --mams-font-size: initial;
             --mams-line-height: initial;
           }
-          `}
+          `} */}
         </style>
         <Grid>
           <Grid.Cell span={7} start={1}>
@@ -128,32 +159,62 @@ export default function Erfpacht() {
               </UnorderedList.Item>
             </UnorderedList>
           </Grid.Cell>
-          <Grid.Cell fullWidth>
-            {isError(ERFPACHTv2) && (
+
+          {isError(ERFPACHTv2) && (
+            <Grid.Cell fullWidth>
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpacht dossiers tonen.
                 </Paragraph>
               </Alert>
-            )}
-          </Grid.Cell>
+            </Grid.Cell>
+          )}
+
           <Grid.Cell fullWidth>
             <Heading level={3} size="level-2">
               {titleDossiers}
             </Heading>
-            <TableV2
-              titleKey="voorkeursadres"
-              items={dossiers}
-              displayProps={displayPropsDossiers}
-            />
+
+            {!!dossiers.length ? (
+              <TableV2
+                titleKey="voorkeursadres"
+                items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                displayProps={displayPropsDossiers}
+              />
+            ) : (
+              <MaParagraph>
+                U heeft geen {titleDossiers?.toLowerCase()}
+              </MaParagraph>
+            )}
+
+            {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+              <MaParagraph textAlign="right">
+                <LinkToListPage
+                  count={dossiers.length}
+                  route={AppRoutes['ERFPACHTv2/DOSSIERS']}
+                />
+              </MaParagraph>
+            )}
             <Heading level={3} size="level-2">
               {titleOpenFacturen}
             </Heading>
-            <TableV2
-              titleKey="dossieradres"
-              items={openFacturen}
-              displayProps={displayPropsOpenFacturen}
-            />
+            {!!openFacturen.length ? (
+              <TableV2
+                titleKey="dossieradres"
+                items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                displayProps={displayPropsOpenFacturen}
+              />
+            ) : (
+              <MaParagraph>
+                U heeft geen {titleOpenFacturen?.toLowerCase()}
+              </MaParagraph>
+            )}
+            <MaParagraph textAlign="right">
+              <LinkToListPage
+                count={openFacturen.length}
+                route={AppRoutes['ERFPACHTv2/FACTUREN']}
+              />
+            </MaParagraph>
           </Grid.Cell>
         </Grid>
       </Screen>

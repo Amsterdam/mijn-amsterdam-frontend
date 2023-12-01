@@ -9,6 +9,7 @@ import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './TableV2.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { Link } from '@amsterdam/design-system-react';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -35,7 +36,7 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [titleKey]: (
-        <Linkd href={item.link.to}>{capitalizeFirstLetter(title)}</Linkd>
+        <Link href={item.link.to}>{capitalizeFirstLetter(title)}</Link>
       ),
     };
   });
