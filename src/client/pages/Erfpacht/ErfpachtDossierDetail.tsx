@@ -95,7 +95,7 @@ export default function ErfpachtDossierDetail() {
               >
                 {dossier.kadastraleaanduiding.map((kadestraleAanduiding) => {
                   return (
-                    <OrderedList.Item>
+                    <OrderedList.Item key={kadestraleAanduiding.perceelsnummer}>
                       {kadestraleAanduiding.samengesteld}
                     </OrderedList.Item>
                   );
@@ -111,7 +111,9 @@ export default function ErfpachtDossierDetail() {
               <OrderedList markers={false}>
                 {dossier.relaties.map((relatie) => {
                   return (
-                    <OrderedList.Item>{relatie.relatieNaam}</OrderedList.Item>
+                    <OrderedList.Item key={relatie.relatieNaam}>
+                      {relatie.relatieNaam}
+                    </OrderedList.Item>
                   );
                 })}
               </OrderedList>
