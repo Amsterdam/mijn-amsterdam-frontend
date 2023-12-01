@@ -1,7 +1,7 @@
 export {
-  Enlarge as IconEnlarge,
-  Minimise as IconMinimise,
-  Spinner as IconSpinner,
+  EnlargeIcon as IconEnlarge,
+  MinimiseIcon as IconMinimise,
+  SpinnerIcon as IconSpinner,
 } from '@amsterdam/design-system-react-icons';
 export { default as IconAlert } from './Alert.svg?react';
 export { default as IconArrowRrimaryWhite } from './Arrow__primary-white.svg?react';
@@ -18,6 +18,7 @@ export { default as IconClose } from './Close.svg?react';
 export { default as IconDocument } from './Document.svg?react';
 export { default as IconDownload } from './Download.svg?react';
 export { default as IconErfpacht } from './erfpacht.svg?react';
+export { default as IconErfpachtV2 } from './erfpachtv2.svg?react';
 export { default as IconExternalLink } from './External-Link.svg?react';
 export { default as IconFilter } from './Filter.svg?react';
 export { default as IconHomeCommercial } from './home-commercial.svg?react';

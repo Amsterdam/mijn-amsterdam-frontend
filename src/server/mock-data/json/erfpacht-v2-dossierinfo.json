@@ -1,40 +1,40 @@
-[
-  {
-    "titelDossiersKop": "Dossier overzicht",
-    "dossiers": [
-      {
-        "dossierNummer": "E12345/987",
-        "titelDossierNummer": "Dossiernummer",
-        "voorkeursadres": "string",
-        "titelVoorkeursadres": "Adres",
-        "titelZaaknummer": "string",
-        "zaaknummer": "string",
-        "titelWijzigingsAanvragen": "string",
-        "wijzigingsAanvragen": [
-          "string"
-        ]
-      }
-    ],
-    "titelOpenFacturenKop": "Open facturen",
-    "openFacturen": [
-      {
-        "dossierAdres": "string",
-        "titelFacturenDossierAdres": "string",
-        "status": "string",
-        "titelFacturenStatus": "string",
-        "stopcode": "string",
-        "open": true,
-        "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
-        "titelFacturenNotaNummer": "Factuurnummer",
-        "factuurBedrag": "string",
-        "formattedFactuurBedrag": "€ 12,34",
-        "titelFacturenFactuurBedrag": "Factuurbedrag",
-        "openstaandBedrag": "string",
-        "formattedOpenstaandBedrag": "€ 12,34",
-        "titelFacturenOpenstaandBedrag": "Openstaand",
-        "vervalDatum": "string",
-        "titelFacturenVervaldatum": "Vervaldatum"
-      }
-    ]
-  }
-]
+{
+  "titelDossiersKop": "Dossier overzicht",
+  "dossiers": [
+    {
+      "dossierNummer": "E12345/987",
+      "titelDossierNummer": "Dossiernummer",
+      "voorkeursadres": "Dam 1 Amsterdam",
+      "titelVoorkeursadres": "Adres",
+      "titelZaaknummer": "Zaaknummer",
+      "zaaknummer": "123-456-abc",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvragen",
+      "wijzigingsAanvragen": [
+        "Wijziging 1",
+        "Wijziging 2",
+        "Wijziging 3"
+      ]
+    }
+  ],
+  "titelOpenFacturenKop": "Open facturen",
+  "openFacturen": [
+    {
+      "dossierAdres": "Dam 1 Amsterdam",
+      "titelFacturenDossierAdres": "Adres",
+      "status": "Openstaand",
+      "titelFacturenStatus": "Status",
+      "stopcode": "string",
+      "open": true,
+      "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
+      "titelFacturenNotaNummer": "Factuurnummer",
+      "factuurBedrag": "string",
+      "formattedFactuurBedrag": "€ 12,34",
+      "titelFacturenFactuurBedrag": "Factuurbedrag",
+      "openstaandBedrag": "string",
+      "formattedOpenstaandBedrag": "€ 12,34",
+      "titelFacturenOpenstaandBedrag": "Openstaand",
+      "vervalDatum": "2023-11-24",
+      "titelFacturenVervaldatum": "Vervaldatum"
+    }
+  ]
+}

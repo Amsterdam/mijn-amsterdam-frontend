@@ -19,6 +19,7 @@ export type Chapter =
   | 'NOTIFICATIONS'
   | 'ROOT'
   | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'ZORG'
   | 'VERGUNNINGEN'
   | 'KVK'
@@ -49,6 +50,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
   ERFPACHT: 'ERFPACHT',
+  ERFPACHTv2: 'ERFPACHTv2',
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
@@ -80,6 +82,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
+  ERFPACHTv2: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
@@ -181,6 +184,8 @@ export const DocumentTitles: {
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
   [AppRoutes.BODEM]: 'Bodem | overzicht',
   [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
+  [AppRoutes['ERFPACHTv2/DOSSIER']]: 'Erfpacht | dossier',
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
@@ -239,6 +244,12 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
     profileTypes: ['private'],
+  },
+  {
+    title: ChapterTitles.ERFPACHTv2,
+    id: Chapters.ERFPACHTv2,
+    to: AppRoutes.ERFPACHTv2,
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.ERFPACHT,

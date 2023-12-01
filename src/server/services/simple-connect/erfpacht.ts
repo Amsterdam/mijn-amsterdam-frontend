@@ -1,11 +1,20 @@
 import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
-import { Chapters } from '../../../universal/config';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import { DataRequestConfig, getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { requestData } from '../../helpers';
-import { getSettledResult } from '../../../universal/helpers';
+import {
+  ApiErrorResponse,
+  ApiResponse,
+  ApiSuccessResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers';
+import { generatePath } from 'react-router-dom';
+import { LinkProps } from '../../../universal/types';
+import slug from 'slugme';
+import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
@@ -261,22 +270,57 @@ interface Erfpachtv2Dossier {
   zaaknummer: string;
   titelWijzigingsAanvragen: string;
   wijzigingsAanvragen: string[];
+
+  // Added specifically for front-end
+  id: string;
+  link: LinkProps;
+  title: string;
 }
 
-interface Erfpachtv2DossierResponseSource {
+interface Erfpachtv2DossierResponsePayloadSource {
   titelDossiersKop: string;
   dossiers: Erfpachtv2Dossier[];
-  titelOpenFacturenKop: 'Open facturen';
+  titelOpenFacturenKop: string;
   openFacturen: ErfpachtDossierInfoDetailNota[];
 }
 
-type Erfpachtv2DossierResponse = Erfpachtv2DossierResponseSource;
+type Erfpachtv2DossierResponsePayload = Erfpachtv2DossierResponsePayloadSource;
+
+function transformDossierResponse(response: Erfpachtv2DossierResponsePayload) {
+  if (response?.dossiers?.length) {
+    response.dossiers = response.dossiers.map((dossier) => {
+      const id = slug(dossier.dossierNummer);
+      const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
+      return {
+        ...dossier,
+        id,
+        title,
+        link: {
+          to: generatePath(AppRoutes['ERFPACHTv2/DOSSIER'], { id }),
+          title,
+        },
+      };
+    });
+  }
+  return response;
+}
 
 export async function fetchErfpachtV2(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('ERFPACHTv2');
+
+  const dossierInfoResponsePayloadEmpty: Erfpachtv2DossierResponsePayload = {
+    dossiers: [],
+    openFacturen: [],
+    titelDossiersKop: '',
+    titelOpenFacturenKop: '',
+  };
+
+  const dossierInfoResponseEmpty = apiSuccessResult(
+    dossierInfoResponsePayloadEmpty
+  );
 
   const isErfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
     {
@@ -290,16 +334,17 @@ export async function fetchErfpachtV2(
 
   if (isErfpachterResponse.status === 'OK') {
     if (isErfpachterResponse.content.isKnown) {
-      const dossierInfoResponse = await requestData<Erfpachtv2DossierResponse>(
+      return requestData<Erfpachtv2DossierResponsePayload>(
         {
           ...config,
           url: `${config.url}/vernise/api/dossierinfo`,
+          transformResponse: transformDossierResponse,
         },
         requestID
       );
-
-      return dossierInfoResponse;
     }
+
+    return dossierInfoResponseEmpty;
   }
 
   return isErfpachterResponse;
@@ -308,10 +353,13 @@ export async function fetchErfpachtV2(
 export async function fetchErfpachtV2DossierDetails(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  dossierNummer: Erfpachtv2Dossier['dossierNummer']
+  dossierNummerEncrypted: string
 ) {
   const config = getApiConfig('ERFPACHTv2');
-
+  const dossierNummer = decrypt(
+    dossierNummerEncrypted,
+    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  );
   const dossierInfoResponse =
     await requestData<Erfpachtv2DossierInfoDetailsResponse>(
       {

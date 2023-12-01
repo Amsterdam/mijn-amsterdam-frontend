@@ -109,6 +109,8 @@ const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 
 const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
 const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
+const Erfpacht = lazy(() => import('./pages/Erfpacht/Erfpacht'));
+const ErfpachtDetail = lazy(() => import('./pages/Erfpacht/Erfpacht'));
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -344,6 +346,15 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route path={AppRoutes.ERFPACHTv2} component={Erfpacht} />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/DOSSIER']}
+              component={ErfpachtDetail}
             />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />

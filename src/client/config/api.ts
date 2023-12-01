@@ -50,6 +50,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
   WPI_STADSPAS_stadspas: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
+  ERFPACHTv2: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',

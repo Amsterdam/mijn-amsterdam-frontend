@@ -8,12 +8,23 @@
 @import '@amsterdam/design-system-tokens/dist/root.css';
 @import '@amsterdam/design-system-assets/font/index.css';
 @import '@amsterdam/design-system-css/src/heading/heading.scss';
+@import '@amsterdam/design-system-css/src/paragraph/paragraph.scss';
+@import '@amsterdam/design-system-css/src/alert/alert.scss';
+@import '@amsterdam/design-system-css/src/grid/grid-cell.scss';
+@import '@amsterdam/design-system-css/src/grid/grid.scss';
+@import '@amsterdam/design-system-css/src/screen/screen.scss';
+@import '@amsterdam/design-system-css/src/link/link.scss';
+@import '@amsterdam/design-system-css/src/icon/icon.scss';
+@import '@amsterdam/design-system-css/src/ordered-list/ordered-list.scss';
+@import '@amsterdam/design-system-css/src/unordered-list/unordered-list.scss';
 
 :root {
   --map-container-height: 100%;
 
   // TODO: Temporary override to confirm with current styling.
   --amsterdam-heading-font-weight: 600;
+  --mams-font-size: 62.5%;
+  --mams-line-height: 1.375;
 }
 
 *,
@@ -30,9 +41,10 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  font-size: 62.5%; // translates to 10px which makes 1rem = 10px in all other elemens contained within body
-  line-height: 1.375;
+  font-size: var(--mams-font-size); // translates to 10px which makes 1rem = 10px in all other elemens contained within body
+  line-height: var(--mams-line-height);
   height: 100%;
+  background-color: var(--mams-bg-color);
 }
 
 body {

@@ -233,7 +233,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
-      !process.env.BFF_ERFPACHT_API_URL_ONT,
+      !process.env.BFF_ERFPACHT_API_URL,
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
     },

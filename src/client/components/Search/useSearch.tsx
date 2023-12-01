@@ -1,4 +1,4 @@
-import { ExternalLink } from '@amsterdam/design-system-react-icons';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
@@ -155,7 +155,11 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
         description: page.description,
         url: page.url,
         trailingIcon: (
-          <ExternalLink width="14" height="14" className={styles.ExternalUrl} />
+          <ExternalLinkIcon
+            width="14"
+            height="14"
+            className={styles.ExternalUrl}
+          />
         ),
       };
     });
