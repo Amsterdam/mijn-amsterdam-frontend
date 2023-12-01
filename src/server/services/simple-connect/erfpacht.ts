@@ -1,21 +1,18 @@
 import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
+import { generatePath } from 'react-router-dom';
+import slugMe from 'slugme';
 import { AppRoutes, Chapters } from '../../../universal/config';
+import {
+  apiSuccessResult,
+  defaultDateFormat,
+} from '../../../universal/helpers';
+import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { LinkProps } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import {
-  ApiErrorResponse,
-  ApiResponse,
-  ApiSuccessResponse,
-  apiSuccessResult,
-  defaultDateFormat,
-} from '../../../universal/helpers';
-import { generatePath } from 'react-router-dom';
-import { LinkProps } from '../../../universal/types';
-import slug from 'slugme';
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
@@ -235,7 +232,7 @@ interface ErfpachtDossierInfoDetailBestemming {
   titelBestemmingEenheidGO: string;
 }
 
-interface Erfpachtv2DossierInfoDetailsResponseSource {
+export interface Erfpachtv2DossierInfoDetailsResponseSource {
   dossierNummer: string;
   titelDossierNummer: string;
   voorkeursadres: string;
@@ -257,6 +254,9 @@ interface Erfpachtv2DossierInfoDetailsResponseSource {
     debiteurnummer: string;
     notas: ErfpachtDossierInfoDetailNota[];
   };
+
+  // Added specifically for front-end
+  title: string;
 }
 
 type Erfpachtv2DossierInfoDetailsResponse =
@@ -274,6 +274,7 @@ interface Erfpachtv2Dossier {
 
   // Added specifically for front-end
   id: string;
+  slug: string;
   link: LinkProps;
   title: string;
 }
@@ -290,11 +291,16 @@ type Erfpachtv2DossierResponsePayload = Erfpachtv2DossierResponsePayloadSource;
 function transformDossierResponse(response: Erfpachtv2DossierResponsePayload) {
   if (response?.dossiers?.length) {
     response.dossiers = response.dossiers.map((dossier) => {
-      const id = slug(dossier.dossierNummer);
+      const slug = slugMe(dossier.dossierNummer);
+      const [id] = encrypt(
+        dossier.dossierNummer,
+        process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+      );
       const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
       return {
         ...dossier,
         id,
+        slug,
         title,
         link: {
           to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], { id }),

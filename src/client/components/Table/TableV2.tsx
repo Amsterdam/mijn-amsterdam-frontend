@@ -89,7 +89,7 @@ export function TableV2<T extends ObjectWithOptionalId>({
       <tbody>
         {items.map((item, index) => (
           <tr
-            key={item.id || `${String(titleKey)}-${index}`}
+            key={item.id ?? `${String(titleKey)}-${index}`}
             className={styles.TableRow}
           >
             {titleKey in item && (

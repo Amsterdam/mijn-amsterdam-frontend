@@ -28,6 +28,7 @@ export function useErfpachtV2Data() {
     .map((d, index) => {
       return Object.assign({}, d, {
         dossierNummer: `${index} - ${d.dossierNummer}`,
+        id: d.id,
       });
     });
   const openFacturen_ = ERFPACHTv2.content?.openFacturen ?? [];
