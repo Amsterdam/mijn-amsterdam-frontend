@@ -190,6 +190,31 @@ const informatieOntvangen: WpiRequestStatusLabels = {
     '<p>Wij maken een definitieve berekening van uw Bbz-uitkering en sturen u een besluit. We proberen dit binnen 3 maanden te doen. Het kan langer duren doordat het nog erg druk is op onze afdeling.</p>',
 };
 
+const algemeenBatchDocument: WpiRequestStatusLabels = {
+  notification: {
+    title: (requestProcess, statusStep) =>
+      `${
+        statusStep.about || requestProcess.about
+      }: Wij hebben u een brief gestuurd`,
+    description: () => `Wij hebben u een brief gestuurd over uw Bbz uitkering.`,
+    link: (requestProcess, statusStep) => {
+      const [document] = statusStep!.documents!;
+      return {
+        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
+          document.url
+        }`,
+        title: 'Bekijk de brief voor meer details.',
+        download: documentDownloadName({
+          datePublished: requestProcess.datePublished,
+          title: 'Bbz-brief',
+        }),
+      };
+    },
+  },
+  description: () =>
+    `<p>Wij hebben u een brief gestuurd. Bekijk de brief voor meer details.</p>`,
+};
+
 export const requestProcess = {
   aanvraag: aanvraagLabels,
   voorschot: tozoRequestProcess.voorschot,
@@ -203,4 +228,5 @@ export const requestProcess = {
   beslisTermijn: beslisTermijnLabels,
   correctiemail,
   informatieOntvangen,
+  algemeenBatchDocument,
 };
