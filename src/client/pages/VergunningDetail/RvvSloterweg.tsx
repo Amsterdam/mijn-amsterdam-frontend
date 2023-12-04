@@ -27,7 +27,9 @@ export function getRVVSloterwegLineItems(
     isExpiredByEndDate || vergunning.decision === RVV_SLOTERWEG_RESULT_EXPIRED;
 
   const dateInProgress =
-    vergunning.dateWorkflowActive ?? vergunning.dateStart ?? '';
+    (isChangeRequest
+      ? vergunning.dateWorkflowActive
+      : vergunning.dateRequest) ?? '';
 
   const hasDecision = [
     RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
