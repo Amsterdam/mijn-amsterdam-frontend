@@ -2,33 +2,16 @@ import * as jose from 'jose';
 import {
   DEV_JWK_PRIVATE,
   DEV_JWK_PUBLIC,
-  OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
 } from '../config';
-import type { AuthProfile } from './app';
-import { createSecretKey } from 'node:crypto';
-
-const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
+import { encryptCookieValue, type AuthProfile } from './app';
 
 /**
  *
  * Helpers for development
  */
-
-async function encryptDevSessionCookieValue(payload: string, headers: object) {
-  const alg = 'dir';
-  const enc = 'A256GCM';
-  const keySource = deriveKey(OIDC_COOKIE_ENCRYPTION_KEY);
-  const key = await createSecretKey(keySource);
-
-  const jwe = await new jose.CompactEncrypt(new TextEncoder().encode(payload))
-    .setProtectedHeader({ alg, enc, ...headers })
-    .encrypt(key);
-
-  return jwe;
-}
 
 export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
@@ -40,11 +23,13 @@ export function getPublicKeyForDevelopment(): Promise<jose.KeyLike> {
 
 export async function signDevelopmentToken(
   authMethod: AuthProfile['authMethod'],
-  userID: string
+  userID: string,
+  sessionID: string
 ) {
   const data = {
     [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
     aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
+    sid: sessionID,
   };
   const alg = 'RS256';
   try {
@@ -61,15 +46,16 @@ export async function signDevelopmentToken(
 
 export async function generateDevSessionCookieValue(
   authMethod: AuthProfile['authMethod'],
-  userID: string
+  userID: string,
+  sessionID: string
 ) {
   const uat = (Date.now() / 1000) | 0;
   const iat = uat;
   const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
 
-  const value = await encryptDevSessionCookieValue(
+  const value = await encryptCookieValue(
     JSON.stringify({
-      id_token: await signDevelopmentToken(authMethod, userID),
+      id_token: await signDevelopmentToken(authMethod, userID, sessionID),
     }),
     {
       iat,
