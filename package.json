@@ -50,7 +50,7 @@
     "@types/flat-cache": "^2.0.0",
     "@types/js-cookie": "^3.0.1",
     "@types/leaflet": "^1.7.6",
-    "@types/lodash.escaperegexp": "^4.1.6",
+    "@types/lodash.escaperegexp": "^4.1.9",
     "@types/lodash.isequal": "^4.5.5",
     "@types/memoizee": "^0.4.6",
     "@types/memory-cache": "^0.2.4",
