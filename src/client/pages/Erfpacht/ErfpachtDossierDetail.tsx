@@ -19,6 +19,7 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import styles from './ErfpachtDossierDetail.module.scss';
+import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 
 export default function ErfpachtDossierDetail() {
   const { id } = useParams<{ id: string }>();
@@ -46,14 +47,7 @@ export default function ErfpachtDossierDetail() {
         {dossier?.title ?? ChapterTitles.ERFPACHTv2}
       </PageHeading>
       <Screen>
-        <style>
-          {`
-          :root {
-            --mams-font-size: initial;
-            --mams-line-height: initial;
-          }
-          `}
-        </style>
+        <DesignSystemStyleAdjust />
         <Grid className={styles.Grid}>
           {(api.isError || noContent) && (
             <Grid.Cell fullWidth>

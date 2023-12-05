@@ -16,6 +16,7 @@ import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { addLinkElementToProperty } from '../../components/Table/Table';
+import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
@@ -99,14 +100,7 @@ export default function Erfpacht() {
         {ChapterTitles.ERFPACHTv2}
       </PageHeading>
       <Screen>
-        <style>
-          {/* {`
-          :root {
-            --mams-font-size: initial;
-            --mams-line-height: initial;
-          }
-          `} */}
-        </style>
+        <DesignSystemStyleAdjust />
         <Grid>
           <Grid.Cell span={7} start={1}>
             <MaParagraph>

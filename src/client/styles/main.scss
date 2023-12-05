@@ -7,25 +7,26 @@
 // Import (NLDesign) Amsterdam design system components
 @import '@amsterdam/design-system-tokens/dist/root.css';
 @import '@amsterdam/design-system-assets/font/index.css';
-@import '@amsterdam/design-system-css/src/heading/heading.scss';
-@import '@amsterdam/design-system-css/src/paragraph/paragraph.scss';
-@import '@amsterdam/design-system-css/src/alert/alert.scss';
-@import '@amsterdam/design-system-css/src/grid/grid-cell.scss';
-@import '@amsterdam/design-system-css/src/grid/grid.scss';
-@import '@amsterdam/design-system-css/src/screen/screen.scss';
-@import '@amsterdam/design-system-css/src/link/link.scss';
-@import '@amsterdam/design-system-css/src/icon/icon.scss';
-@import '@amsterdam/design-system-css/src/ordered-list/ordered-list.scss';
-@import '@amsterdam/design-system-css/src/unordered-list/unordered-list.scss';
-@import '@amsterdam/design-system-css/src/pagination/pagination.scss';
-@import '@amsterdam/design-system-css/src/button/button.scss';
+@import '@amsterdam/design-system-css/src/components/heading/heading.scss';
+@import '@amsterdam/design-system-css/src/components/paragraph/paragraph.scss';
+@import '@amsterdam/design-system-css/src/components/alert/alert.scss';
+@import '@amsterdam/design-system-css/src/components/grid/grid-cell.scss';
+@import '@amsterdam/design-system-css/src/components/grid/grid.scss';
+@import '@amsterdam/design-system-css/src/components/screen/screen.scss';
+@import '@amsterdam/design-system-css/src/components/link/link.scss';
+@import '@amsterdam/design-system-css/src/components/icon/icon.scss';
+@import '@amsterdam/design-system-css/src/components/ordered-list/ordered-list.scss';
+@import '@amsterdam/design-system-css/src/components/unordered-list/unordered-list.scss';
+@import '@amsterdam/design-system-css/src/components/pagination/pagination.scss';
+@import '@amsterdam/design-system-css/src/components/button/button.scss';
 
 :root {
   --map-container-height: 100%;
 
   // TODO: Temporary override to confirm with current styling.
   --amsterdam-heading-font-weight: 600;
-  --mams-font-size: 62.5%;
+  --mams-font-size-rem-adjust: 62.5%;
+  --mams-font-size-body: 1.6rem;
   --mams-line-height: 1.375;
 }
 
@@ -43,7 +44,7 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  font-size: var(--mams-font-size); // translates to 10px which makes 1rem = 10px in all other elemens contained within body
+  font-size: var(--mams-font-size-rem-adjust); // translates to 10px which makes 1rem = 10px in all other elemens contained within body
   line-height: var(--mams-line-height);
   height: 100%;
   background-color: var(--mams-bg-color);
@@ -52,7 +53,7 @@ html {
 body {
   font-family: var(--amsterdam-typography-font-family);
   color: var(--amsterdam-color-primary-black);
-  font-size: 1.6rem;
+  font-size: var(--mams-font-size-body);
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
 
