@@ -324,7 +324,7 @@ function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
       return addErfpachtDossierPropertiesForFrontend(dossier);
     });
   }
-  if (response.openFacturen.length) {
+  if (response?.openFacturen?.length) {
     response.openFacturen = response.openFacturen.map((factuur) => {
       return {
         ...factuur,
