@@ -2,7 +2,15 @@
   margin-bottom: 2rem;
 }
 
+.Grid {
+  gap: 0;
+}
+
 .ErfpachtDetail {
+
+  dl {
+    margin: 0;
+  }
 
   // TODO: Find a way to use the h4 style without re-declarin
   dt {
@@ -24,6 +32,38 @@
 
   dd {
     padding: 0;
-    margin: 0 0 3rem 0;
+    margin: 0 0 2rem 0;
+
+    &:last-of-type:not(:first-of-type) {
+      margin-bottom: 0;
+    }
   }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    text-align: left;
+  }
+}
+
+.Section {
+  margin-top: 3rem;
+  // border: 1px solid red;
+
+
+}
+
+.Section__heading {
+  margin-bottom: 1rem;
+}
+
+.Section__heading_nested {
+  margin-top: 3rem;
+}
+
+.GridNested {
+  padding: 0;
 }
