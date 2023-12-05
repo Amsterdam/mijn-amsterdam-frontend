@@ -26,14 +26,13 @@ import { useErfpachtV2Data } from './Erfpacht';
 import { useParams } from 'react-router-dom';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { BFFApiUrls } from '../../config/api';
-import type { Erfpachtv2DossierInfoDetailsResponseSource } from '../../../server/services/simple-connect/erfpacht';
+
 import styles from './ErfpachtDossierDetail.module.scss';
+import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 
 export default function ErfpachtDossierDetail() {
   const { id } = useParams<{ id: string }>();
-  const [api] = useDataApi<
-    ApiResponse<Erfpachtv2DossierInfoDetailsResponseSource | null>
-  >(
+  const [api] = useDataApi<ApiResponse<ErfpachtV2DossiersDetail | null>>(
     {
       url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${id}`,
       // postpone: !fromApiDirectly,

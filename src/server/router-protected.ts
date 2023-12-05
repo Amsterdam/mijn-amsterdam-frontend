@@ -14,7 +14,7 @@ import {
   fetchSignalHistory,
   fetchSignalsListByStatus,
 } from './services/sia';
-import { fetchErfpachtV2DossierDetails } from './services/simple-connect/erfpacht';
+import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 
 export const router = express.Router();
 
@@ -204,7 +204,7 @@ router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
-    const response = await fetchErfpachtV2DossierDetails(
+    const response = await fetchErfpachtV2DossiersDetail(
       res.locals.requestID,
       authProfileAndToken,
       req.params.id
