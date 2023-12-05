@@ -355,7 +355,8 @@ export const BffEndpoints = {
   BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
 
   // ErfpachtV2
-  ERFPACHTv2_DOSSIER_DETAILS: '/services/erfpachtv2/dossier/:id?',
+  ERFPACHTv2_DOSSIER_DETAILS:
+    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

@@ -207,7 +207,7 @@ router.get(
     const response = await fetchErfpachtV2DossiersDetail(
       res.locals.requestID,
       authProfileAndToken,
-      req.params.id
+      req.params.dossierNummerUrlParam
     );
 
     if (response.status === 'ERROR') {

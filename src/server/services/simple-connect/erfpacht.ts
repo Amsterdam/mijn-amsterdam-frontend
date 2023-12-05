@@ -246,7 +246,7 @@ interface ErfpachtV2DossiersDetailSource {
 
 interface ErfpachtDossierPropsFrontend {
   id: string;
-  slug: string;
+  dossierNummerUrlParam: string;
   link: LinkProps;
   title: string;
 }
@@ -282,7 +282,9 @@ interface ErfpachtV2DossiersResponse extends ErfpachtV2DossiersResponseSource {
 function addErfpachtDossierPropertiesForFrontend<
   T extends ErfpachtV2DossiersSource | ErfpachtV2DossiersDetailSource,
 >(dossier: T): T & ErfpachtDossierPropsFrontend {
-  const slug = slugMe(dossier.dossierNummer);
+  const dossierNummerUrlParam = `E${dossier.dossierNummer
+    .split(/E|\//)
+    .join('.')}`;
   const [id] = encrypt(
     dossier.dossierNummer,
     process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
@@ -299,10 +301,12 @@ function addErfpachtDossierPropertiesForFrontend<
   return {
     ...dossier,
     id,
-    slug,
+    dossierNummerUrlParam,
     title,
     link: {
-      to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], { id }),
+      to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
+        dossierNummerUrlParam,
+      }),
       title,
     },
   };
@@ -371,17 +375,17 @@ export async function fetchErfpachtV2(
 export async function fetchErfpachtV2DossiersDetail(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  dossierNummerEncrypted: string
+  dossierNummerUrlParam: string
 ) {
   const config = getApiConfig('ERFPACHTv2');
-  const dossierNummer = decrypt(
-    dossierNummerEncrypted,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
+  // const dossierNummer = decrypt(
+  //   dossierNummerEncrypted,
+  //   process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  // );
   const dossierInfoResponse = await requestData<ErfpachtV2DossiersDetail>(
     {
       ...config,
-      url: `${config.url}/vernise/api/dossierinfo/${dossierNummer}`,
+      url: `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`,
       transformResponse: addErfpachtDossierPropertiesForFrontend,
     },
     requestID
