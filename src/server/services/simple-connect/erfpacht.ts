@@ -298,6 +298,12 @@ function addErfpachtDossierPropertiesForFrontend<
     );
   }
 
+  if ('juridisch' in dossier) {
+    dossier.juridisch.ingangsdatum = defaultDateFormat(
+      dossier.juridisch.ingangsdatum
+    );
+  }
+
   return {
     ...dossier,
     id,
