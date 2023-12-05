@@ -131,7 +131,7 @@ export default function ErfpachtDossierDetail() {
                     </thead>
                     {dossier.bestemmingen.map((bestemming) => {
                       return (
-                        <tr>
+                        <tr key={bestemming.samengesteldeOmschrijving}>
                           <td>{bestemming.samengesteldeOmschrijving}</td>
                           <td>
                             {bestemming.oppervlakte}
@@ -179,7 +179,7 @@ export default function ErfpachtDossierDetail() {
                         {dossier.financieel.huidigePeriode.canons.map(
                           (canon) => {
                             return (
-                              <OrderedList.Item>
+                              <OrderedList.Item key={canon.samengesteld}>
                                 {canon.samengesteld}
                               </OrderedList.Item>
                             );
