@@ -60,18 +60,18 @@ parameters:
     default: false
 
 variables:
-  - ${{ if and(or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')), eq(parameters.dtapName, 'none')) }}:
+      - name: btdDeploy
+        value: ${{ parameters.btdDeploy }}
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
-  - ${{ if and(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(parameters.dtapName, 'none')) }}:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'az-acceptance') }}:
       - name: dtapName
         value: a
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: false
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: ${{ parameters.btdDeploy }}
+  - ${{ if ne(parameters.dtapName, 'none') }}:
       - name: dtapName
         value: ${{ parameters.dtapName }}
 
