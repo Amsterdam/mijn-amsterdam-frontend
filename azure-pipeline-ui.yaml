@@ -60,8 +60,8 @@ parameters:
     default: false
 
 variables:
-      - name: btdDeploy
-        value: ${{ parameters.btdDeploy }}
+  - name: btdDeploy
+    value: ${{ parameters.btdDeploy }}
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
