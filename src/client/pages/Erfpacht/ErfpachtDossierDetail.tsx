@@ -15,7 +15,6 @@ import { ChapterIcon, DetailPage, PageHeading } from '../../components';
 import { TableV2 } from '../../components/Table/TableV2';
 import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
-
 import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import styles from './ErfpachtDossierDetail.module.scss';
@@ -230,7 +229,7 @@ export default function ErfpachtDossierDetail() {
               </Grid.Cell>
               <Grid.Cell className={styles.Section} fullWidth>
                 <CollapsiblePanel title="Facturen">
-                  <Grid className={styles.GridNested}>
+                  <Grid className={styles.FacturenBetaler}>
                     <Grid.Cell span={3} start={1}>
                       <dl>
                         <dt>{dossier.titelBetaler}</dt>

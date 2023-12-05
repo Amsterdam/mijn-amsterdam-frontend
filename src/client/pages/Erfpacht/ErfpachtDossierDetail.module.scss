@@ -2,10 +2,6 @@
   margin-bottom: 2rem;
 }
 
-.Grid {
-  gap: 0;
-}
-
 .ErfpachtDetail {
 
   dl {
@@ -14,23 +10,13 @@
 
   // TODO: Find a way to use the h4 style without re-declarin
   dt {
-    break-after: avoid;
-    break-inside: avoid;
-    color: var(--amsterdam-heading-color);
     font-family: var(--amsterdam-heading-font-family);
     font-weight: var(--amsterdam-heading-font-weight);
-    box-sizing: border-box;
-    margin-block: 0;
-    -webkit-text-size-adjust: 100%;
   }
 
   dd {
     padding: 0;
     margin: 0 0 2rem 0;
-
-    &:last-of-type:not(:first-of-type) {
-      margin-bottom: 0;
-    }
   }
 
   table {
@@ -43,13 +29,6 @@
   }
 }
 
-.Section {
-  margin-top: 3rem;
-  // border: 1px solid red;
-
-
-}
-
 .Section__heading {
   margin-bottom: 1rem;
 }
@@ -58,6 +37,11 @@
   margin-top: 3rem;
 }
 
-.GridNested {
+.FacturenBetaler {
   padding: 0;
+  gap: 0;
+
+  dl dd {
+    margin-bottom: 0;
+  }
 }
