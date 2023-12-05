@@ -35,8 +35,18 @@
   "titelPlaatselijkeaanduidingen": "string",
   "relaties": [
     {
-      "relatieNaam": "string",
+      "relatieNaam": "H. Karveel",
       "betaler": true,
+      "indicatieGeheim": false
+    },
+    {
+      "relatieNaam": "C. Bedankt",
+      "betaler": false,
+      "indicatieGeheim": false
+    },
+    {
+      "relatieNaam": "G.H.I Jeeka",
+      "betaler": false,
       "indicatieGeheim": true
     }
   ],

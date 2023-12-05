@@ -194,8 +194,8 @@ interface ErfpachtDossierDetailKadastraleAanduiding {
 
 interface ErfpachtDossierDetailRelatie {
   relatieNaam: string;
-  betaler: true;
-  indicatieGeheim: true;
+  betaler: boolean;
+  indicatieGeheim: boolean;
 }
 
 interface ErfpachtDossierDetailJuridisch {
@@ -288,6 +288,14 @@ function addErfpachtDossierPropertiesForFrontend<
     process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
   );
   const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
+
+  // Filter out relaties that we don't want to show in the frontend.
+  if ('relaties' in dossier) {
+    dossier.relaties = dossier.relaties.filter(
+      (relatie) => relatie.indicatieGeheim === false
+    );
+  }
+
   return {
     ...dossier,
     id,
@@ -374,6 +382,7 @@ export async function fetchErfpachtV2DossiersDetail(
     {
       ...config,
       url: `${config.url}/vernise/api/dossierinfo/${dossierNummer}`,
+      transformResponse: addErfpachtDossierPropertiesForFrontend,
     },
     requestID
   );

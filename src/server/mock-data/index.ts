@@ -12,7 +12,7 @@ import BEZWAREN from './json/bezwaren.json';
 import BRP from './json/brp.json';
 import ERFPACHT_NOTIFICATIONS from './json/erfpacht-notifications.json';
 import ERFPACHT from './json/erfpacht.json';
-import ERFPACHTv2_DOSSIERS from './json/erfpacht-v2-dossierinfo.json';
+import ERFPACHTv2_DOSSIERS from './json/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_DOSSIERINFO_DETAILS from './json/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_ERFPACHTER from './json/erfpacht-v2-erfpachter.json';
 import KLACHTEN from './json/klachten.json';
