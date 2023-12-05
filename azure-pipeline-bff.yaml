@@ -55,7 +55,7 @@ parameters:
 
   - name: updateAppSettings
     type: boolean
-    default: false 
+    default: false
 
 variables:
       - name: btdDeploy
