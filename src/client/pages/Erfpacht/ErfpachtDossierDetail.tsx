@@ -101,7 +101,7 @@ export default function ErfpachtDossierDetail() {
                   </dd>
                 </dl>
               </Grid.Cell>
-              <Grid.Cell fullWidth className={styles.Section}>
+              <Grid.Cell start={1} span={10} className={styles.Sectio1}>
                 <CollapsiblePanel title="Juridisch">
                   <dl>
                     <dt>{dossier.juridisch.titelAlgemeneBepaling}</dt>
@@ -115,7 +115,7 @@ export default function ErfpachtDossierDetail() {
                   </dl>
                 </CollapsiblePanel>
               </Grid.Cell>
-              <Grid.Cell fullWidth className={styles.Section}>
+              <Grid.Cell start={1} span={10} className={styles.Sectio1}>
                 <CollapsiblePanel title="Bijzondere bepalingen">
                   <table>
                     <thead>
@@ -145,7 +145,8 @@ export default function ErfpachtDossierDetail() {
               </Grid.Cell>
               <Grid.Cell
                 className={classname(styles.Section, styles.Section_Financieel)}
-                fullWidth
+                start={1}
+                span={11}
               >
                 <CollapsiblePanel title="Financieel">
                   <Heading level={3} className={styles.Section__heading}>
@@ -227,7 +228,7 @@ export default function ErfpachtDossierDetail() {
                   })}
                 </CollapsiblePanel>
               </Grid.Cell>
-              <Grid.Cell className={styles.Section} fullWidth>
+              <Grid.Cell className={styles.Section} start={1} span={11}>
                 <CollapsiblePanel title="Facturen">
                   <Grid className={styles.FacturenBetaler}>
                     <Grid.Cell span={3} start={1}>
@@ -242,7 +243,7 @@ export default function ErfpachtDossierDetail() {
                         <dd>{dossier.facturen.debiteurnummer}</dd>
                       </dl>
                     </Grid.Cell>
-                    <Grid.Cell fullWidth>
+                    <Grid.Cell start={1} span={11}>
                       {!!dossier.facturen.notas.length && (
                         <TableV2
                           titleKey="dossieradres"
