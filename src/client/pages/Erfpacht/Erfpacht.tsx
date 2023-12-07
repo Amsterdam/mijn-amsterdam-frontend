@@ -130,21 +130,24 @@ export default function Erfpacht() {
             </Heading>
             <MaParagraph>
               Wilt u uw facturen voor erfpacht en canon op een nieuw adres
-              ontvangen? Stuur een e-mail naar
-              erfpachtadministratie@amsterdam.nl. Zet in het onderwerp
-              'Adreswijziging'. Vermeld in de mail uw debiteurennummer of het
-              E-dossiernummer en uw nieuwe adresgegevens. U krijgt binnen 3
-              werkdagen een reactie.
+              ontvangen? Stuur een e-mail naar{' '}
+              <Link href="mailto:erfpachtadministratie@amsterdam.nl">
+                erfpachtadministratie@amsterdam.nl
+              </Link>
+              . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
+              debiteurennummer of het E-dossiernummer en uw nieuwe
+              adresgegevens. U krijgt binnen 3 werkdagen een reactie.
             </MaParagraph>
             <Heading level={4} size="level-4">
               Factuur via e-mail
             </Heading>
             <MaParagraph>
               U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
-              e-mailadres en debiteurennummer naar
-              debiteurenadministratie@amsterdam.nl. Meer informatie over
-              erfpacht in Amsterdam Meer over wijzigen van uw erfpacht
-              Overstappen erfpachtrecht
+              e-mailadres en debiteurennummer naar{' '}
+              <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+                debiteurenadministratie@amsterdam.nl
+              </Link>
+              .
             </MaParagraph>
             <UnorderedList markers={false}>
               <UnorderedList.Item>

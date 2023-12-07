@@ -2,7 +2,8 @@
 export const Breakpoints = {
   tablet: 1024,
   phone: 640,
-  wideScreen: 768,
+  minWidthMediumScreen: 576,
+  minWidthWideScreen: 1088,
 };
 
 export const PLACEHOLDER_IMAGE_URL =

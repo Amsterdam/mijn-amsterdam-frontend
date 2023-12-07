@@ -225,7 +225,7 @@ interface ErfpachtV2DossiersDetailSource {
   titelDossierNummer: string;
   voorkeursadres: string;
   titelVoorkeursadres: string;
-  kadastraleaanduiding: ErfpachtDossierDetailKadastraleAanduiding[];
+  kadastraleaanduidingen: ErfpachtDossierDetailKadastraleAanduiding[];
   titelKadastraleaanduiding: string;
   eersteUitgifte: string;
   titelEersteUitgifte: string;

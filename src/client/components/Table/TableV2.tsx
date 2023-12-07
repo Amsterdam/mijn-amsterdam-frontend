@@ -49,6 +49,7 @@ export interface TableProps<T> {
   className?: string;
   titleKey?: keyof T | string;
   displayProps?: DisplayProps<T>;
+  colWidths?: number[];
 }
 
 export function TableV2<T extends ObjectWithOptionalId>({
@@ -56,6 +57,7 @@ export function TableV2<T extends ObjectWithOptionalId>({
   displayProps,
   titleKey = 'title',
   className,
+  colWidths,
 }: TableProps<T>) {
   const defaultDisplayProps: DisplayProps<Unshaped> = { [titleKey]: ' ' };
   const displayPropsFinal = !displayProps ? defaultDisplayProps : displayProps;
@@ -69,6 +71,13 @@ export function TableV2<T extends ObjectWithOptionalId>({
 
   return (
     <table className={classnames(styles.Table, className)}>
+      <colgroup>
+        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
+        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
+        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
+        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
+        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
+      </colgroup>
       {hasDisplayPropTableHeadingLabels && (
         <thead>
           <tr className={styles.TableRow}>

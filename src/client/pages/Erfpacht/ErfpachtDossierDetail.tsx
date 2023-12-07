@@ -19,6 +19,24 @@ import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-c
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
+import {
+  useMediumScreen,
+  usePhoneScreen,
+  useTabletScreen,
+  useWidescreen,
+} from '../../hooks';
+
+function gridClassName(index: number, count: number, divide: number = 3) {
+  if (divide <= 0) {
+    return undefined;
+  }
+  const sep = Math.round(count / divide);
+  for (let i = 1; i <= divide; i++) {
+    if (index < i * sep) {
+      return styles[`col${i}`];
+    }
+  }
+}
 
 export default function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
@@ -33,6 +51,8 @@ export default function ErfpachtDossierDetail() {
 
   const dossier = api.data.content;
   const noContent = !api.isLoading && !dossier;
+  const isWideScreen = useWidescreen();
+  const isMediumScreen = useMediumScreen();
 
   return (
     <DetailPage className={styles.ErfpachtDetail}>
@@ -67,7 +87,7 @@ export default function ErfpachtDossierDetail() {
 
           {!!dossier && (
             <>
-              <Grid.Cell start={1} span={11}>
+              <Grid.Cell start={1} span={12}>
                 <dl>
                   <dt>{dossier.titelDossierNummer}</dt>
                   <dd>{dossier.dossierNummer}</dd>
@@ -96,14 +116,23 @@ export default function ErfpachtDossierDetail() {
                   <dd>{dossier.eersteUitgifte}</dd>
                   <dt>Erfpachters</dt>
                   <dd>
-                    <OrderedList markers={false}>
-                      {dossier.relaties?.map((relatie) => {
-                        return (
-                          <OrderedList.Item key={relatie.relatieNaam}>
-                            {relatie.relatieNaam}
-                          </OrderedList.Item>
-                        );
-                      })}
+                    <OrderedList markers={false} className={styles.ColumnList}>
+                      {Array.from({ length: 20 }, () => dossier.relaties)
+                        .flat()
+                        ?.map((relatie, index, all) => {
+                          return (
+                            <OrderedList.Item
+                              key={relatie.relatieNaam}
+                              className={gridClassName(
+                                index,
+                                all.length,
+                                isMediumScreen ? (isWideScreen ? 3 : 2) : 0
+                              )}
+                            >
+                              {index}-{relatie.relatieNaam}
+                            </OrderedList.Item>
+                          );
+                        })}
                     </OrderedList>
                   </dd>
                 </dl>
@@ -291,6 +320,9 @@ export default function ErfpachtDossierDetail() {
                                 .titelFacturenVervaldatum,
                           }}
                         />
+                      )}
+                      {!dossier.facturen?.notas?.length && (
+                        <Paragraph>U heeft geen facturen.</Paragraph>
                       )}
                     </Grid.Cell>
                   </Grid>
