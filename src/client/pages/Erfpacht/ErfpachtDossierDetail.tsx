@@ -21,11 +21,12 @@ import styles from './ErfpachtDossierDetail.module.scss';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 
 export default function ErfpachtDossierDetail() {
-  const { id } = useParams<{ id: string }>();
+  const { dossierNummerUrlParam } = useParams<{
+    dossierNummerUrlParam: string;
+  }>();
   const [api] = useDataApi<ApiResponse<ErfpachtV2DossiersDetail | null>>(
     {
-      url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${id}`,
-      // postpone: !fromApiDirectly,
+      url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     },
     apiPristineResult(null)
   );
@@ -40,7 +41,6 @@ export default function ErfpachtDossierDetail() {
           to: AppRoutes.ERFPACHTv2,
           title: ChapterTitles.ERFPACHTv2,
         }}
-        isLoading={api.isLoading}
         icon={<ChapterIcon />}
       >
         {dossier?.title ?? ChapterTitles.ERFPACHTv2}
@@ -48,6 +48,13 @@ export default function ErfpachtDossierDetail() {
       <Screen>
         <DesignSystemStyleAdjust />
         <Grid className={styles.Grid}>
+          {api.isLoading && (
+            <Grid.Cell fullWidth>
+              <Paragraph>
+                Erfpacht dossier gegevens worden opgehaald...
+              </Paragraph>
+            </Grid.Cell>
+          )}
           {(api.isError || noContent) && (
             <Grid.Cell fullWidth>
               <Alert title="Foutmelding" icon severity="error">
@@ -72,7 +79,7 @@ export default function ErfpachtDossierDetail() {
                       className={styles.DossierDetail__ordered_list}
                       markers={false}
                     >
-                      {dossier.kadastraleaanduiding.map(
+                      {dossier.kadastraleaanduidingen?.map(
                         (kadestraleAanduiding) => {
                           return (
                             <OrderedList.Item
@@ -90,7 +97,7 @@ export default function ErfpachtDossierDetail() {
                   <dt>Erfpachters</dt>
                   <dd>
                     <OrderedList markers={false}>
-                      {dossier.relaties.map((relatie) => {
+                      {dossier.relaties?.map((relatie) => {
                         return (
                           <OrderedList.Item key={relatie.relatieNaam}>
                             {relatie.relatieNaam}
@@ -101,46 +108,54 @@ export default function ErfpachtDossierDetail() {
                   </dd>
                 </dl>
               </Grid.Cell>
+
               <Grid.Cell start={1} span={10} className={styles.Sectio1}>
                 <CollapsiblePanel title="Juridisch">
-                  <dl>
-                    <dt>{dossier.juridisch.titelAlgemeneBepaling}</dt>
-                    <dd>
-                      <Link href="">{dossier.juridisch.algemeneBepaling}</Link>
-                    </dd>
-                    <dt>{dossier.juridisch.titelIngangsdatum}</dt>
-                    <dd>{dossier.juridisch.ingangsdatum}</dd>
-                    <dt>{dossier.juridisch.titelSoortErfpacht}</dt>
-                    <dd>{dossier.juridisch.soortErfpacht}</dd>
-                  </dl>
+                  {!!dossier.juridisch && (
+                    <dl>
+                      <dt>{dossier.juridisch.titelAlgemeneBepaling}</dt>
+                      <dd>
+                        <Link href="">
+                          {dossier.juridisch.algemeneBepaling}
+                        </Link>
+                      </dd>
+                      <dt>{dossier.juridisch.titelIngangsdatum}</dt>
+                      <dd>{dossier.juridisch.ingangsdatum}</dd>
+                      <dt>{dossier.juridisch.titelSoortErfpacht}</dt>
+                      <dd>{dossier.juridisch.uitgeschrevenSoortErfpacht}</dd>
+                    </dl>
+                  )}
                 </CollapsiblePanel>
               </Grid.Cell>
+
               <Grid.Cell start={1} span={10} className={styles.Sectio1}>
                 <CollapsiblePanel title="Bijzondere bepalingen">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>
-                          {
-                            dossier.bestemmingen?.[0]
-                              .titelBestemmingOmschrijving
-                          }
-                        </th>
-                        <th>Oppervlakte</th>
-                      </tr>
-                    </thead>
-                    {dossier.bestemmingen.map((bestemming) => {
-                      return (
-                        <tr key={bestemming.samengesteldeOmschrijving}>
-                          <td>{bestemming.samengesteldeOmschrijving}</td>
-                          <td>
-                            {bestemming.oppervlakte}
-                            {bestemming.eenheid}
-                          </td>
+                  {!!dossier.bestemmingen && (
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>
+                            {
+                              dossier.bestemmingen?.[0]
+                                .titelBestemmingOmschrijving
+                            }
+                          </th>
+                          <th>Oppervlakte</th>
                         </tr>
-                      );
-                    })}
-                  </table>
+                      </thead>
+                      {dossier.bestemmingen.map((bestemming) => {
+                        return (
+                          <tr key={bestemming.omschrijving}>
+                            <td>{bestemming.omschrijving}</td>
+                            <td>
+                              {bestemming.oppervlakte}
+                              {bestemming.eenheid}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </table>
+                  )}
                 </CollapsiblePanel>
               </Grid.Cell>
               <Grid.Cell
@@ -151,100 +166,114 @@ export default function ErfpachtDossierDetail() {
                 <CollapsiblePanel title="Financieel">
                   <Heading level={3} className={styles.Section__heading}>
                     {
-                      dossier.financieel.huidigePeriode
+                      dossier.financieel?.huidigePeriode
                         .titelFinancieelPeriodeVan
                     }{' '}
-                    {dossier.financieel.huidigePeriode.periodeVan} t/m{' '}
-                    {dossier.financieel.huidigePeriode.periodeTm}
+                    {dossier.financieel?.huidigePeriode.periodeVan}{' '}
+                    {!!dossier.financieel?.huidigePeriode.periodeTm && 't/m '}
+                    {dossier.financieel?.huidigePeriode.periodeTm}
                   </Heading>
-                  <dl>
-                    <dt>
-                      {
-                        dossier.financieel.huidigePeriode
-                          .titelFinancieelAlgemeneBepaling
-                      }
-                    </dt>
-                    <dd>
-                      {dossier.financieel.huidigePeriode.algemeneBepaling}
-                    </dd>
-                    <dt>
-                      {dossier.financieel.huidigePeriode.titelFinancieelRegime}
-                    </dt>
-                    <dd>{dossier.financieel.huidigePeriode.regime}</dd>
-                    <dt>
-                      {dossier.financieel.huidigePeriode.titelFinancieelCanon}
-                    </dt>
-                    <dd>
-                      <OrderedList markers={false}>
-                        {dossier.financieel.huidigePeriode.canons.map(
-                          (canon) => {
-                            return (
-                              <OrderedList.Item key={canon.samengesteld}>
-                                {canon.samengesteld}
-                              </OrderedList.Item>
-                            );
-                          }
-                        )}
-                      </OrderedList>
-                    </dd>
-                  </dl>
-                  {dossier.financieel.toekomstigePeriodeList.map((periode) => {
-                    return (
-                      <>
-                        <Heading
-                          level={3}
-                          className={classname(
-                            styles.Section__heading,
-                            styles.Section__heading_nested
+                  {!!dossier.financieel?.huidigePeriode && (
+                    <dl>
+                      <dt>
+                        {
+                          dossier.financieel.huidigePeriode
+                            .titelFinancieelAlgemeneBepaling
+                        }
+                      </dt>
+                      <dd>
+                        {dossier.financieel.huidigePeriode.algemeneBepaling}
+                      </dd>
+                      <dt>
+                        {
+                          dossier.financieel.huidigePeriode
+                            .titelFinancieelRegime
+                        }
+                      </dt>
+                      <dd>{dossier.financieel.huidigePeriode.regime}</dd>
+                      <dt>
+                        {dossier.financieel.huidigePeriode.titelFinancieelCanon}
+                      </dt>
+                      <dd>
+                        <OrderedList markers={false}>
+                          {dossier.financieel.huidigePeriode.canons.map(
+                            (canon) => {
+                              return (
+                                <OrderedList.Item key={canon.samengesteld}>
+                                  {canon.samengesteld}
+                                </OrderedList.Item>
+                              );
+                            }
                           )}
-                        >
-                          {periode.titelFinancieelToekomstigePeriodeVan}{' '}
-                          {periode.periodeVan} t/m {periode.periodeTm}
-                        </Heading>
-                        <dl>
-                          <dt>
-                            {periode.titelFinancieelToekomstigeAlgemeneBepaling}
-                          </dt>
-                          <dd>{periode.algemeneBepaling}</dd>
-                          <dt>{periode.titelFinancieelToekomstigeRegime}</dt>
-                          <dd>{periode.regime}</dd>
-                          <dt>{periode.titelFinancieelToekomstigeCanon}</dt>
-                          <dd>
-                            <OrderedList markers={false}>
-                              {periode.canonOmschrijvingen.map(
-                                (omschrijving) => {
-                                  return (
-                                    <OrderedList.Item>
-                                      {omschrijving}
-                                    </OrderedList.Item>
-                                  );
-                                }
-                              )}
-                            </OrderedList>
-                          </dd>
-                        </dl>
-                      </>
-                    );
-                  })}
+                        </OrderedList>
+                      </dd>
+                    </dl>
+                  )}
+                  {dossier.financieel?.toekomstigePeriodeList?.map(
+                    (periode) => {
+                      return (
+                        <>
+                          <Heading
+                            level={3}
+                            className={classname(
+                              styles.Section__heading,
+                              styles.Section__heading_nested
+                            )}
+                          >
+                            {periode.titelFinancieelToekomstigePeriodeVan}{' '}
+                            {periode.periodeVan} t/m {periode.periodeTm}
+                          </Heading>
+                          <dl>
+                            <dt>
+                              {
+                                periode.titelFinancieelToekomstigeAlgemeneBepaling
+                              }
+                            </dt>
+                            <dd>{periode.algemeneBepaling}</dd>
+                            <dt>{periode.titelFinancieelToekomstigeRegime}</dt>
+                            <dd>{periode.regime}</dd>
+                            <dt>{periode.titelFinancieelToekomstigeCanon}</dt>
+                            <dd>
+                              <OrderedList markers={false}>
+                                {periode.canonOmschrijvingen.map(
+                                  (omschrijving) => {
+                                    return (
+                                      <OrderedList.Item>
+                                        {omschrijving}
+                                      </OrderedList.Item>
+                                    );
+                                  }
+                                )}
+                              </OrderedList>
+                            </dd>
+                          </dl>
+                        </>
+                      );
+                    }
+                  )}
                 </CollapsiblePanel>
               </Grid.Cell>
               <Grid.Cell className={styles.Section} start={1} span={11}>
                 <CollapsiblePanel title="Facturen">
                   <Grid className={styles.FacturenBetaler}>
                     <Grid.Cell span={3} start={1}>
-                      <dl>
-                        <dt>{dossier.titelBetaler}</dt>
-                        <dd>{dossier.facturen.betaler}</dd>
-                      </dl>
+                      {!!dossier.facturen && (
+                        <dl>
+                          <dt>{dossier.titelBetaler}</dt>
+                          <dd>{dossier.facturen.betaler}</dd>
+                        </dl>
+                      )}
                     </Grid.Cell>
                     <Grid.Cell span={3} start={4}>
-                      <dl>
-                        <dt>Debiteurnummer</dt>
-                        <dd>{dossier.facturen.debiteurnummer}</dd>
-                      </dl>
+                      {!!dossier.facturen && (
+                        <dl>
+                          <dt>Debiteurnummer</dt>
+                          <dd>{dossier.facturen.debiteurnummer}</dd>
+                        </dl>
+                      )}
                     </Grid.Cell>
                     <Grid.Cell start={1} span={11}>
-                      {!!dossier.facturen.notas.length && (
+                      {!!dossier.facturen?.notas?.length && (
                         <TableV2
                           titleKey="dossieradres"
                           items={dossier.facturen.notas}

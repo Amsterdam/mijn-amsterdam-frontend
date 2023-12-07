@@ -18,6 +18,21 @@ import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 
+interface DisplayPropsDossiers {
+  voorkeursadres: string;
+  dossierNummer: string;
+  zaaknummer?: string;
+  wijzigingsAanvragen?: string;
+}
+
+interface DisplayPropsFacturen {
+  dossierAdres: string;
+  notaNummer: string;
+  formattedFactuurBedrag: string;
+  status: string;
+  vervalDatum: string;
+}
+
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
   const dossiers_ = addLinkElementToProperty(
@@ -41,9 +56,9 @@ export function useErfpachtV2Data() {
       });
     });
 
-  let displayPropsDossiers = {};
+  let displayPropsDossiers: DisplayPropsDossiers | null = null;
   let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
-  let displayPropsOpenFacturen = {};
+  let displayPropsOpenFacturen: DisplayPropsFacturen | null = null;
   let titleOpenFacturen = ERFPACHTv2.content?.titelOpenFacturenKop;
 
   if (dossiers.length) {
@@ -51,9 +66,14 @@ export function useErfpachtV2Data() {
     displayPropsDossiers = {
       voorkeursadres: dossier.titelVoorkeursadres,
       dossierNummer: dossier.titelDossierNummer,
-      zaaknummer: dossier.titelZaaknummer,
-      wijzigingsAanvragen: dossier.titelWijzigingsAanvragen,
     };
+    if ('zaaknummer' in dossier) {
+      displayPropsDossiers.zaaknummer = dossier.titelZaaknummer;
+    }
+    if ('wijzigingsAanvragen' in dossier) {
+      displayPropsDossiers.wijzigingsAanvragen =
+        dossier.titelWijzigingsAanvragen;
+    }
   }
   if (openFacturen.length) {
     const [openFactuur] = openFacturen;
@@ -94,7 +114,6 @@ export default function Erfpacht() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        isLoading={isLoading(ERFPACHTv2)}
         icon={<ChapterIcon />}
       >
         {ChapterTitles.ERFPACHTv2}
@@ -114,7 +133,7 @@ export default function Erfpacht() {
               ontvangen? Stuur een e-mail naar
               erfpachtadministratie@amsterdam.nl. Zet in het onderwerp
               'Adreswijziging'. Vermeld in de mail uw debiteurennummer of het
-              E-dossiernummer en uw nieuwe adresgegevens. U jgt binnen 3
+              E-dossiernummer en uw nieuwe adresgegevens. U krijgt binnen 3
               werkdagen een reactie.
             </MaParagraph>
             <Heading level={4} size="level-4">
@@ -159,58 +178,68 @@ export default function Erfpacht() {
             <Grid.Cell fullWidth>
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
-                  We kunnen op dit moment geen erfpacht dossiers tonen.
+                  We kunnen op dit moment geen erfpachtrechten tonen.
                 </Paragraph>
               </Alert>
             </Grid.Cell>
           )}
 
-          <Grid.Cell fullWidth>
-            <Heading level={3} size="level-2">
-              {titleDossiers}
-            </Heading>
+          {isLoading(ERFPACHTv2) && (
+            <Grid.Cell fullWidth>
+              <Paragraph>Erfpacht gegevens worden opgehaald...</Paragraph>
+            </Grid.Cell>
+          )}
 
-            {!!dossiers.length ? (
-              <TableV2
-                titleKey="voorkeursadres"
-                items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                displayProps={displayPropsDossiers}
-              />
-            ) : (
-              <MaParagraph>
-                U heeft geen {titleDossiers?.toLowerCase()}
-              </MaParagraph>
-            )}
+          {!isLoading(ERFPACHTv2) && (
+            <Grid.Cell fullWidth>
+              <Heading level={3} size="level-2">
+                {titleDossiers ?? 'Erfpachtrechten'}
+              </Heading>
 
-            {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+              {!!dossiers.length ? (
+                <TableV2
+                  titleKey="voorkeursadres"
+                  items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                  displayProps={displayPropsDossiers ?? {}}
+                />
+              ) : (
+                <MaParagraph>
+                  U heeft geen{' '}
+                  {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
+                </MaParagraph>
+              )}
+
+              {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+                <MaParagraph textAlign="right">
+                  <LinkToListPage
+                    count={dossiers.length}
+                    route={AppRoutes['ERFPACHTv2/DOSSIERS']}
+                  />
+                </MaParagraph>
+              )}
+              <Heading level={3} size="level-2">
+                {titleOpenFacturen ?? 'Open facturen'}
+              </Heading>
+              {!!openFacturen.length ? (
+                <TableV2
+                  titleKey="dossieradres"
+                  items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                  displayProps={displayPropsOpenFacturen ?? {}}
+                />
+              ) : (
+                <MaParagraph>
+                  U heeft geen{' '}
+                  {titleOpenFacturen?.toLowerCase() ?? 'open facturen'}.
+                </MaParagraph>
+              )}
               <MaParagraph textAlign="right">
                 <LinkToListPage
-                  count={dossiers.length}
-                  route={AppRoutes['ERFPACHTv2/DOSSIERS']}
+                  count={openFacturen.length}
+                  route={AppRoutes['ERFPACHTv2/FACTUREN']}
                 />
               </MaParagraph>
-            )}
-            <Heading level={3} size="level-2">
-              {titleOpenFacturen}
-            </Heading>
-            {!!openFacturen.length ? (
-              <TableV2
-                titleKey="dossieradres"
-                items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                displayProps={displayPropsOpenFacturen}
-              />
-            ) : (
-              <MaParagraph>
-                U heeft geen {titleOpenFacturen?.toLowerCase()}
-              </MaParagraph>
-            )}
-            <MaParagraph textAlign="right">
-              <LinkToListPage
-                count={openFacturen.length}
-                route={AppRoutes['ERFPACHTv2/FACTUREN']}
-              />
-            </MaParagraph>
-          </Grid.Cell>
+            </Grid.Cell>
+          )}
         </Grid>
       </Screen>
     </OverviewPage>

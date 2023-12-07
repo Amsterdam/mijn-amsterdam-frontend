@@ -1,135 +1,131 @@
 {
-  "dossierNummer": "E12345/987",
+  "dossierNummer": "E7418/31",
   "titelDossierNummer": "Dossiernummer",
-  "eersteUitgifte": "string",
+  "eersteUitgifte": "1999-02-01",
   "titelEersteUitgifte": "Datum eerste uitgifte",
-  "voorkeursadres": "string",
+  "voorkeursadres": "Cycladenlaan 6",
   "titelVoorkeursadres": "Adres",
-  "kadastraleaanduiding": [
+  "kadastraleaanduidingen": [
     {
-      "gemeenteCode": "string",
-      "gemeenteNaam": "string",
-      "sectie": "string",
-      "perceelsnummer": 0,
-      "letter": "string",
-      "volgnummer": 0,
-      "samengesteld": "string"
+      "gemeenteCode": "STN02",
+      "gemeenteNaam": "Sloten Noord-Holland",
+      "sectie": "G",
+      "perceelnummer": "4589",
+      "letter": "G",
+      "volgnummer": "0",
+      "samengesteld": "STN02/G/4589/G/0"
     }
   ],
   "titelKadastraleaanduiding": "Kadastrale aanduiding",
   "plaatselijkeaanduidingen": [
     {
-      "straatnaam": "string",
-      "titelStraatnaam": "string",
-      "titelHuisnummer": "string",
-      "huisnummer": "string",
-      "huisnummerLetter": "string",
-      "huisnummerToevoeging": "string",
-      "titelPostcode": "string",
-      "postcode": "string",
-      "titelGemeente": "string",
-      "gemeente": "string",
-      "samengesteld": "string"
+      "titelStraatnaam": "Straatnaam",
+      "straatnaam": "Cycladenlaan",
+      "titelHuisnummer": "Huisnummer",
+      "huisnummer": "6",
+      "titelPostcode": "Postcode",
+      "postcode": "1060LW",
+      "titelGemeente": "Gemeente",
+      "gemeente": "Amsterdam",
+      "samengesteld": "Cycladenlaan 6   1060LW Amsterdam"
     }
   ],
-  "titelPlaatselijkeaanduidingen": "string",
+  "titelPlaatselijkeaanduidingen": "Plaatselijke aanduidingen",
   "relaties": [
     {
-      "relatieNaam": "H. Karveel",
+      "relatieNaam": "Persoon 20181164 ó 999990512",
+      "relatieCode": "20181164",
+      "erfpachter": true,
       "betaler": true,
       "indicatieGeheim": false
     },
     {
-      "relatieNaam": "C. Bedankt",
-      "betaler": false,
+      "relatieNaam": "Persoon 20181165",
+      "relatieCode": "20181165",
+      "erfpachter": true,
+      "betaler": true,
       "indicatieGeheim": false
     },
     {
-      "relatieNaam": "G.H.I Jeeka",
-      "betaler": false,
-      "indicatieGeheim": true
+      "relatieNaam": "DEBITEUR 782579",
+      "relatieCode": "0",
+      "erfpachter": false,
+      "betaler": true,
+      "indicatieGeheim": false
     }
   ],
   "titelBetaler": "Betaler",
   "juridisch": {
-    "ingangsdatum": "2021-06-30",
+    "ingangsdatum": "23 september 2021",
     "titelIngangsdatum": "Ingangsdatum",
     "algemeneBepaling": "AB2016",
     "titelAlgemeneBepaling": "Algemene bepaling",
-    "soortErfpacht": "string",
-    "uitgeschrevenSoortErfpacht": "string",
+    "soortErfpacht": "E",
+    "uitgeschrevenSoortErfpacht": "Eeuwigdurend",
     "titelSoortErfpacht": "Soort erfpacht"
   },
   "bestemmingen": [
     {
-      "samengesteldeOmschrijving": "Koopwoning/Woning",
+      "omschrijving": "Wonen/Koopwoning/Woning",
       "titelBestemmingOmschrijving": "Bestemming",
       "categorie": "Wonen",
-      "subCategorie": "Koopwoning",
-      "omschrijving": "Woning",
-      "oppervlakte": 160,
-      "eenheid": "string",
+      "oppervlakte": "160",
+      "eenheid": "m² WOZ",
+      "titelBestemmingEenheidBVO": "Bruto vloeroppervlak",
+      "titelBestemmingEenheidGO": "Gebruiksoppervlak"
+    },
+    {
+      "omschrijving": "Wonen/Koopwoning/Tuin",
+      "titelBestemmingOmschrijving": "Bestemming",
+      "categorie": "Wonen",
+      "oppervlakte": "0",
       "titelBestemmingEenheidBVO": "Bruto vloeroppervlak",
       "titelBestemmingEenheidGO": "Gebruiksoppervlak"
     }
   ],
   "financieel": {
     "huidigePeriode": {
-      "periodeVan": "string",
+      "periodeVan": "2021-09-23",
       "titelFinancieelPeriodeVan": "Huidige periode",
-      "periodeTm": "string",
       "algemeneBepaling": "AB2016",
       "titelFinancieelAlgemeneBepaling": "Algemene bepaling",
-      "regime": "Afkoop",
-      "titelFinancieelRegime": "Regime",
+      "algemeneBepalingJuridisch": "AB2016",
+      "regime": "1 jaarlijkse indexering",
+      "titelFInancieelRegime": "Regime",
       "canons": [
         {
-          "canonBedrag": "12.34",
-          "formattedCanonBedrag": "€ 12,34",
-          "canonBeginJaar": "string",
-          "samengesteld": "string"
+          "samengesteld": "€ 1.502,55 na indexering 2021",
+          "canonBedrag": "1502.55",
+          "formattedCanonBedrag": "€ 1.502,55",
+          "canonBeginJaar": "2021"
+        },
+        {
+          "samengesteld": "€ 1.532,60 na indexering 2022",
+          "canonBedrag": "1532.60",
+          "formattedCanonBedrag": "€ 1.532,60",
+          "canonBeginJaar": "2022"
+        },
+        {
+          "samengesteld": "€ 1.664,40 na indexering 2023",
+          "canonBedrag": "1664.40",
+          "formattedCanonBedrag": "€ 1.664,40",
+          "canonBeginJaar": "2023"
+        },
+        {
+          "samengesteld": "€ 1.759,27 na indexering 2024",
+          "canonBedrag": "1759.27",
+          "formattedCanonBedrag": "€ 1.759,27",
+          "canonBeginJaar": "2024"
         }
       ],
       "titelFinancieelCanon": "Canon"
-    },
-    "toekomstigePeriodeList": [
-      {
-        "periodeVan": "string",
-        "titelFinancieelToekomstigePeriodeVan": "Toekomstige periode",
-        "periodeTm": "string",
-        "algemeneBepaling": "AB2016",
-        "titelFinancieelToekomstigeAlgemeneBepaling": "Algemene bepaling",
-        "regime": "Afkoop",
-        "titelFinancieelToekomstigeRegime": "Regime",
-        "canonOmschrijvingen": [
-          "string"
-        ],
-        "titelFinancieelToekomstigeCanon": "Opbouw toekomstige canon"
-      }
-    ]
+    }
   },
-  "facturen": {
-    "betaler": "string",
-    "debiteurnummer": "string",
-    "notas": [
-      {
-        "dossierAdres": "string",
-        "titelFacturenDossierAdres": "string",
-        "status": "string",
-        "titelFacturenStatus": "string",
-        "stopcode": "string",
-        "open": true,
-        "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
-        "titelFacturenNotaNummer": "Factuurnummer",
-        "factuurBedrag": "string",
-        "formattedFactuurBedrag": "€ 12,34",
-        "titelFacturenFactuurBedrag": "Factuurbedrag",
-        "openstaandBedrag": "string",
-        "formattedOpenstaandBedrag": "€ 12,34",
-        "titelFacturenOpenstaandBedrag": "Openstaand",
-        "vervalDatum": "string",
-        "titelFacturenVervaldatum": "Vervaldatum"
-      }
-    ]
+  "id": "mi1wN5pd_XGG-fqqqvz0d_h0gOxlZ_5DfR1MtCZx8pM",
+  "dossierNummerUrlParam": "E.7418.31",
+  "title": "E7418/31 - Cycladenlaan 6",
+  "link": {
+    "to": "/erfpacht/dossier/E.7418.31",
+    "title": "E7418/31 - Cycladenlaan 6"
   }
 }

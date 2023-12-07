@@ -1,40 +1,81 @@
 {
-  "titelDossiersKop": "Dossier overzicht",
   "dossiers": [
     {
-      "dossierNummer": "E12345/987",
+      "dossierNummer": "E6470/243",
       "titelDossierNummer": "Dossiernummer",
-      "voorkeursadres": "Dam 1 Amsterdam",
+      "voorkeursadres": "Valutaboulevard 51",
       "titelVoorkeursadres": "Adres",
-      "titelZaaknummer": "Zaaknummer",
-      "zaaknummer": "123-456-abc",
-      "titelWijzigingsAanvragen": "Wijzigingsaanvragen",
-      "wijzigingsAanvragen": [
-        "Wijziging 1",
-        "Wijziging 2",
-        "Wijziging 3"
-      ]
+      "titelZaaknummer": "Zaak nummer",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvraag",
+      "id": "o6XkR-cL1LOBWjxOBHm48NhGkjoTc_tE_3IkQqEYR0A",
+      "dossierNummerUrlParam": "E.6470.243",
+      "title": "E6470/243 - Valutaboulevard 51",
+      "link": {
+        "to": "/erfpacht/dossier/E.6470.243",
+        "title": "E6470/243 - Valutaboulevard 51"
+      }
+    },
+    {
+      "dossierNummer": "E477/44",
+      "titelDossierNummer": "Dossiernummer",
+      "voorkeursadres": "Pijnackerstraat 20 H",
+      "titelVoorkeursadres": "Adres",
+      "titelZaaknummer": "Zaak nummer",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvraag",
+      "id": "rIlO81BdTQ6jLqiPPSZrEhpVhCdLVvxSKGgWjqchnlc",
+      "dossierNummerUrlParam": "E.477.44",
+      "title": "E477/44 - Pijnackerstraat 20 H",
+      "link": {
+        "to": "/erfpacht/dossier/E.477.44",
+        "title": "E477/44 - Pijnackerstraat 20 H"
+      }
+    },
+    {
+      "dossierNummer": "E477/46",
+      "titelDossierNummer": "Dossiernummer",
+      "voorkeursadres": "Pijnackerstraat 22 H",
+      "titelVoorkeursadres": "Adres",
+      "titelZaaknummer": "Zaak nummer",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvraag",
+      "id": "wd4Pgy2WmEN2_S-SStE2EiExSUM2ZLdwn-he6lcfckk",
+      "dossierNummerUrlParam": "E.477.46",
+      "title": "E477/46 - Pijnackerstraat 22 H",
+      "link": {
+        "to": "/erfpacht/dossier/E.477.46",
+        "title": "E477/46 - Pijnackerstraat 22 H"
+      }
+    },
+    {
+      "dossierNummer": "E7418/35",
+      "titelDossierNummer": "Dossiernummer",
+      "voorkeursadres": "Cycladenlaan 14",
+      "titelVoorkeursadres": "Adres",
+      "titelZaaknummer": "Zaak nummer",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvraag",
+      "id": "TC-d0CHXsJi66KCf1MwFwehEHe3f4fkVx4URYbM3c10",
+      "dossierNummerUrlParam": "E.7418.35",
+      "title": "E7418/35 - Cycladenlaan 14",
+      "link": {
+        "to": "/erfpacht/dossier/E.7418.35",
+        "title": "E7418/35 - Cycladenlaan 14"
+      }
+    },
+    {
+      "dossierNummer": "E477/48",
+      "titelDossierNummer": "Dossiernummer",
+      "voorkeursadres": "(behorende bij) Pijnackerstraat 22 H",
+      "titelVoorkeursadres": "Adres",
+      "titelZaaknummer": "Zaak nummer",
+      "titelWijzigingsAanvragen": "Wijzigingsaanvraag",
+      "id": "58KjQFuxQTLidLKloz62AaskXS7xK2rqd-cc2Ji7Q9Y",
+      "dossierNummerUrlParam": "E.477.48",
+      "title": "E477/48 - (behorende bij) Pijnackerstraat 22 H",
+      "link": {
+        "to": "/erfpacht/dossier/E.477.48",
+        "title": "E477/48 - (behorende bij) Pijnackerstraat 22 H"
+      }
     }
   ],
-  "titelOpenFacturenKop": "Open facturen",
-  "openFacturen": [
-    {
-      "dossierAdres": "Dam 1 Amsterdam",
-      "titelFacturenDossierAdres": "Adres",
-      "status": "Openstaand",
-      "titelFacturenStatus": "Status",
-      "stopcode": "string",
-      "open": true,
-      "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
-      "titelFacturenNotaNummer": "Factuurnummer",
-      "factuurBedrag": "string",
-      "formattedFactuurBedrag": "€ 12,34",
-      "titelFacturenFactuurBedrag": "Factuurbedrag",
-      "openstaandBedrag": "string",
-      "formattedOpenstaandBedrag": "€ 12,34",
-      "titelFacturenOpenstaandBedrag": "Openstaand",
-      "vervalDatum": "2023-11-24",
-      "titelFacturenVervaldatum": "Vervaldatum"
-    }
-  ]
+  "titelDossiersKop": "Erfpachtrechten",
+  "titelOpenFacturenKop": "Openstaande Facturen"
 }
