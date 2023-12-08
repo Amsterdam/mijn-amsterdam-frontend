@@ -45,7 +45,7 @@ export default function ErfpachtDossierDetail() {
   const isWideScreen = useWidescreen();
   const isMediumScreen = useMediumScreen();
   const relaties = dossier?.relaties
-    ? Array.from({ length: 20 }, () => dossier.relaties).flat()
+    ? Array.from({ length: 20 }, () => dossier.relaties ?? []).flat()
     : [];
 
   return (
@@ -225,7 +225,7 @@ export default function ErfpachtDossierDetail() {
                       </dt>
                       <dd>
                         <OrderedList markers={false}>
-                          {dossier.financieel.huidigePeriode.canons.map(
+                          {dossier.financieel?.huidigePeriode?.canons?.map(
                             (canon) => {
                               return (
                                 <OrderedList.Item key={canon.samengesteld}>
@@ -264,7 +264,7 @@ export default function ErfpachtDossierDetail() {
                             <dt>{periode.titelFinancieelToekomstigeCanon}</dt>
                             <dd>
                               <OrderedList markers={false}>
-                                {periode.canons.map((canon) => {
+                                {periode.canons?.map((canon) => {
                                   return (
                                     <OrderedList.Item>
                                       {canon.samengesteld}
@@ -348,15 +348,16 @@ export default function ErfpachtDossierDetail() {
                           }}
                         />
                       )}
-                      {dossier.facturen?.facturen?.length >
-                        MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-                        <MaParagraph textAlign="right">
-                          <LinkToListPage
-                            count={dossier.facturen.facturen.length}
-                            route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
-                          />
-                        </MaParagraph>
-                      )}
+                      {!!dossier.facturen?.facturen?.length &&
+                        dossier.facturen.facturen.length >
+                          MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+                          <MaParagraph textAlign="right">
+                            <LinkToListPage
+                              count={dossier.facturen.facturen.length}
+                              route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+                            />
+                          </MaParagraph>
+                        )}
                       {!dossier.facturen?.facturen?.length && (
                         <Paragraph>U heeft geen facturen.</Paragraph>
                       )}

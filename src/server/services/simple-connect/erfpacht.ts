@@ -164,7 +164,7 @@ interface ErfpachtDossierDetailToekomstigePeriode {
   titelAfgekocht: string;
   betalenVanaf: string;
   titelBetalenVanaf: string;
-  canons: ErfpachtCanon[];
+  canons?: ErfpachtCanon[];
   titelFinancieelToekomstigeCanon: string;
 }
 
@@ -187,7 +187,7 @@ interface ErfpachtDossierDetailHuidigePeriode {
   afgekocht: string;
   titelAfgekocht: string;
   titelGeenCanon: string;
-  canons: ErfpachtCanon[];
+  canons?: ErfpachtCanon[];
   titelFinancieelCanon: 'Canon';
 }
 
@@ -240,13 +240,13 @@ interface ErfpachtV2DossiersDetailSource {
   titelKopBijzondereBepalingen: string;
   titelKopFinancieel: string;
   titelKopFacturen: string;
-  kadastraleaanduidingen: ErfpachtDossierDetailKadastraleAanduiding[];
+  kadastraleaanduidingen?: ErfpachtDossierDetailKadastraleAanduiding[];
   titelKadastraleaanduiding: string;
-  relaties: ErfpachtDossierDetailRelatie[];
+  relaties?: ErfpachtDossierDetailRelatie[];
   titelBetaler: string;
-  juridisch: ErfpachtDossierDetailJuridisch;
-  bijzondereBepalingen: ErfpachtDossierDetailBijzondereBepaling[];
-  financieel: {
+  juridisch?: ErfpachtDossierDetailJuridisch;
+  bijzondereBepalingen?: ErfpachtDossierDetailBijzondereBepaling[];
+  financieel?: {
     huidigePeriode: ErfpachtDossierDetailHuidigePeriode;
     toekomstigePeriodeList: ErfpachtDossierDetailToekomstigePeriode[];
   };
@@ -268,7 +268,7 @@ interface ErfpachtV2DossiersDetailSource {
     titelResultatenGevonden: string;
     titelGeenResultatenGevonden: string;
     titelFactuurHelpTekstRegel1: string;
-    facturen: ErfpachtDossierFactuur[];
+    facturen?: ErfpachtDossierFactuur[];
   };
 }
 
@@ -303,7 +303,7 @@ interface ErfpachtV2DossiersResponseSource {
   titelVerklarendeTekstStartPagina: string;
   titelLinkErfpachtrechten: string;
   titelDossiersKop: string;
-  dossiers: {
+  dossiers?: {
     dossiers: ErfpachtV2DossierSource[];
     titelDossierNummer: string;
     titelVoorkeursadres: string;
@@ -317,7 +317,7 @@ interface ErfpachtV2DossiersResponseSource {
   };
   titelOpenFacturenKop: string;
   titelLinkFacturen: string;
-  openstaandeFacturen: {
+  openstaandeFacturen?: {
     betaler: string;
     titelBetaler: string;
     debiteurnummer: string;
@@ -335,7 +335,7 @@ interface ErfpachtV2DossiersResponseSource {
     titelResultatenGevonden: string;
     titelGeenResultatenGevonden: string;
     titelFactuurHelpTekstRegel1: string;
-    facturen: ErfpachtDossierFactuur[];
+    facturen?: ErfpachtDossierFactuur[];
   };
 }
 
@@ -361,13 +361,13 @@ function transformErfpachtDossierProperties<
   const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
-  if ('relaties' in dossier) {
+  if ('relaties' in dossier && !!dossier.relaties) {
     dossier.relaties = dossier.relaties.filter(
       (relatie) => relatie.indicatieGeheim === false
     );
   }
 
-  if ('juridisch' in dossier) {
+  if ('juridisch' in dossier && !!dossier?.juridisch?.ingangsdatum) {
     dossier.juridisch.ingangsdatum = defaultDateFormat(
       dossier.juridisch.ingangsdatum
     );

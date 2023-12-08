@@ -80,7 +80,7 @@ export function useErfpachtV2Data() {
     const [openFactuur] = openFacturen;
     displayPropsOpenFacturen = {
       dossierAdres: openFactuur.titelFacturenDossierAdres,
-      notaNummer: openFactuur.titelFacturenNotaNummer,
+      notaNummer: openFactuur.titelFacturenNummer,
       formattedFactuurBedrag: openFactuur.titelFacturenFactuurBedrag,
       status: openFactuur.titelFacturenStatus,
       vervalDatum: openFactuur.titelFacturenVervaldatum,
