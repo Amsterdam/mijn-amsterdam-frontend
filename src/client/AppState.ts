@@ -46,18 +46,10 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult({ isKnown: false }),
-  ERFPACHTv2: apiPristineResult(
-    {
-      dossiers: [],
-      openFacturen: [],
-      titelDossiersKop: '',
-      titelOpenFacturenKop: '',
-    },
-    {
-      isActive: FeatureToggle.erfpachtV2Active,
-      profileTypes: ['private', 'commercial'],
-    }
-  ),
+  ERFPACHTv2: apiPristineResult(null, {
+    isActive: FeatureToggle.erfpachtV2Active,
+    profileTypes: ['private', 'commercial'],
+  }),
   SUBSIDIE: apiPristineResult(
     { isKnown: false, notifications: [] },
     { isActive: FeatureToggle.subsidieActive }
